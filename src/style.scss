@@ -1,0 +1,203 @@
+.wp-block-formello-form .formello {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1em;
+
+  legend {
+    margin: .5em 0;
+    font-weight: bold;
+  }
+
+  fieldset {
+    margin: .5em 0;
+  }
+
+  .error {
+    border-color: red; 
+  }
+  
+  label {
+    font-weight: bold;
+    padding: 0 10px 0 0;
+    margin: 0;
+    flex: 0 1 200px;
+    &.align-top {
+      align-self: flex-start;
+    }
+    &.align-bottom {
+      align-self: flex-end;
+    }
+    &.align-right {
+      text-align: right;
+    }
+  }
+
+  span {
+    margin-left: 5px;
+  }
+
+  input {
+    flex: 1 1 auto;
+  }
+
+  textarea {
+    width: auto;
+  }
+
+  small {
+    width: 100%;
+    margin-left: 200px;
+  }
+
+  button {
+    margin-left: 200px;
+    align-self: flex-start;
+    &.center {
+      align-self: center;
+    }
+    &.right {
+      align-self: flex-end;
+    }
+    &.wide {
+      align-self: auto;
+    }
+    span{
+      transition: all 1s;
+      opacity:1;
+    }
+    svg {
+      display:none; 
+      transition: all 1s;
+      stroke-width: 5;
+      fill-rule: evenodd;
+      margin: auto;
+      height: 100%;
+    }
+  }
+
+  button.loading-start {
+    span{
+      display: none;  
+      opacity: 0;
+    }
+    svg {
+      display: block; 
+      opacity: 1;
+    }
+  }
+
+  .required {
+    color: red;
+  }
+
+  .error-message {
+    color: red;
+    order: 3;
+    margin-left: 200px;
+  }
+
+  &.hide {
+    display: none;
+  }
+
+  /********** checkbox ********/
+  &.formello-checkbox {
+
+    flex-direction: row;
+    align-items: center;
+    margin-left: 200px;
+
+    label {
+      order: 2;
+      font-weight: normal;
+      margin: 0;
+      flex: 0 1 auto;
+    }
+
+    input {
+      order: 1;
+      margin: 0 5px 0 0;
+      flex: 0 1 auto;
+    }
+
+    small {
+      order: 3;
+      width: auto;
+      margin: 0;
+    }
+  }
+
+  /******** tooltip ***********/
+  .tooltip {
+    font-size: .7em;
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted #666;
+    cursor: pointer;
+  }
+
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+    background-color: #009cdc;
+    box-shadow:0 1px 8px rgba(0,0,0,0.5);
+  }
+
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #009cdc transparent transparent transparent;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+}
+
+.column .formello {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  label, small, button {
+    flex: auto;
+    margin: 0px;
+  }
+  &.formello-checkbox {
+    margin-left: 0;
+  }
+  .error-message {
+    margin-left: 0;
+  }
+}
+
+.formello-message {
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  &.success {
+    background-color: #dff0d8;
+    border-color: #d0e9c6;
+    color: #3c763d;
+  }
+  &.warning {
+    background-color: #fcf8e3;
+    border-color: #faf2cc;
+    color: #8a6d3b;  
+  }
+}

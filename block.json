@@ -1,0 +1,15 @@
+{
+	"name": "formello/form",
+	"title": "Formello",
+	"category": "formello",
+	"icon": "smiley",
+	"description": "The Gutenberg WordPress Form Builder. Build forms directly within Gutenberg editor live. Add & arrange form fields like blocks.",
+	"textdomain": "formello",
+	"supports": {
+		"html": false
+	},
+	"editorScript": "file:./build/index.js",
+	"editorStyle": "file:./build/index.css",
+	"style": "file:./build/style-index.css"
+	"script": "file:./build/index.js"
+}

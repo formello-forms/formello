@@ -1,0 +1,19 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-formello-form {
+	border: 1px dashed grey;
+	min-height: 100px;
+	padding: 20px;
+}
+
+div.formello p {
+	margin-bottom: 0px !important;
+}
+
+.formello-row {
+	flex-direction: row;
+}

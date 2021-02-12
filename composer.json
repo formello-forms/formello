@@ -1,0 +1,23 @@
+{
+    "name": "tareq1988/vue-wp-starter",
+    "description": "A WordPress Vue.js starter plugin",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Francesco Pepe",
+            "email": "info@francescopepe.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "rakit/validation": "dev-master",
+        "drewm/mailchimp-api": "dev-master"
+    },
+    "autoload": {
+        "classmap": [
+            "includes/"
+        ],
+        "files": [ "includes/defaults.php" ]
+    }
+}

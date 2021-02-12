@@ -1,0 +1,40 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-formello-form {
+	fieldset {
+		padding: 10px;
+		border: 1px solid black;
+	}
+	select {
+		max-width: inherit;
+	}
+	input:disabled, input.disabled, select:disabled, select.disabled, textarea:disabled, textarea.disabled {
+		background-color: #fff;
+		border: 1px solid #7e8993;
+		opacity: 1;
+	}
+	.block-editor-block-list__block {
+		margin: 5px 0;
+	}
+	.formello {
+	  padding: 10px;
+	}
+	.formello small {
+	  padding: 0;
+	}
+}
+
+.formello-checkbox {
+	input {
+		margin: 0;
+	}
+}
+
+.formello-hidden {
+	display: flex;
+	align-items: center;
+}

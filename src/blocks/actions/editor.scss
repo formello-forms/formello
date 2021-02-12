@@ -1,0 +1,25 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-formello-actions {
+	padding: 10px;
+	border: 1px dashed grey;
+}
+
+.wp-block-formello-actions h4 {
+	margin: 0px;
+}
+
+.formello-fieldset {
+	padding: 10px;
+	border: 1px solid grey;
+	margin-bottom: 10px;
+}
+
+.formello-fieldset button.is-destructive {
+	margin-top: 10px;
+}
+

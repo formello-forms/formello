@@ -1,0 +1,25 @@
+{
+	"name": "formaster",
+	"version": "0.1.0",
+	"description": "Example block written with ESNext standard and JSX support – build step required.",
+	"author": "The WordPress Contributors",
+	"license": "GPL-2.0-or-later",
+	"main": "build/index.js",
+	"scripts": {
+		"build": "wp-scripts build src/index.js src/dashboard.js src/frontend/frontend.js",
+		"format:js": "wp-scripts format-js",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"start": "wp-scripts start",
+		"start:custom": "wp-scripts start src/index.js src/dashboard.js src/frontend/frontend.js",
+		"packages-update": "wp-scripts packages-update"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^12.6.1"
+	},
+	"dependencies": {
+		"@wordpress/icons": "^2.9.0",
+		"flatpickr": "^4.6.9",
+		"formbouncerjs": "^1.4.6"
+	}
+}

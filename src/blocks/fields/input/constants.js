@@ -1,0 +1,15 @@
+export const SUPPORTED_ATTRIBUTES = {
+	text: 		[ 'required', 'value', 'readonly', 'maxlength', 'minlength', 'pattern', 'placeholder' ],
+	tel: 		[ 'required', 'value', 'readonly', 'maxlength', 'minlength', 'pattern', 'placeholder' ],
+	url: 		[ 'required', 'value', 'readonly', 'maxlength', 'minlength', 'pattern', 'placeholder' ],
+	email:		[ 'required', 'value', 'readonly' ],
+	number:		[ 'required', 'value', 'readonly', 'max', 'min', 'step', 'placeholder' ],
+	date:		[ 'required', 'value', 'readonly', 'step' ],
+	time:		[ 'required', 'value', 'readonly', 'step', 'min', 'max' ],
+	range:		[ 'required', 'readonly', 'max', 'min', 'step' ],
+	checkbox:	[ 'required', 'value', 'readonly', 'checked' ],
+	radio: 		[ 'required', 'value', 'readonly', 'checked' ],
+	hidden: 	[ 'value' ],
+	color: 		[ 'value', 'readonly' ],
+	textarea:	[ 'required', 'value', 'readonly', 'maxlength', 'minlength', 'placeholder', 'cols', 'rows' ],
+}
