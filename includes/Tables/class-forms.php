@@ -33,7 +33,8 @@ class Forms extends \WP_List_Table {
 
 		$table = "{$wpdb->prefix}formello_forms";
 
-		return $wpdb->query( 'SELECT COUNT(*) FROM {$table}' );
+		return $wpdb->query( "SELECT COUNT(*) FROM $table" );
+
 	}
 
 	/** Text displayed when no form data is available */

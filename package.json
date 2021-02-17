@@ -1,6 +1,6 @@
 {
 	"name": "formaster",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"description": "Example block written with ESNext standard and JSX support – build step required.",
 	"author": "The WordPress Contributors",
 	"license": "GPL-2.0-or-later",
@@ -15,7 +15,11 @@
 		"packages-update": "wp-scripts packages-update"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^12.6.1"
+		"@wordpress/scripts": "^12.6.1",
+		"grunt": "^1.3.0",
+		"grunt-contrib-clean": "^2.0.0",
+		"grunt-contrib-compress": "^2.0.0",
+		"grunt-contrib-copy": "^1.0.0"
 	},
 	"dependencies": {
 		"@wordpress/icons": "^2.9.0",

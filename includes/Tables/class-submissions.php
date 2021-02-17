@@ -31,7 +31,7 @@ class Submissions extends \WP_List_Table {
 
 		$this->date_format     = get_option( 'date_format' );
 		$this->datetime_format = sprintf( '%s %s', $this->date_format, get_option( 'time_format' ) );
-		$this->form_id         = isset( $_GET['form'] ) ? $_GET['form'] : 1;
+		$this->form_id         = isset( $_GET['form'] ) ? absint( $_GET['form'] ) : 1;
 
 	}
 

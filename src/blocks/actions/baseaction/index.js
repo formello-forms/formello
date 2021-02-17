@@ -87,7 +87,7 @@ registerBlockType( 'formello/actions-mailchimp', {
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: getIcon( 'mailchimp' ),
+	icon: 'smiley',
 
 	/**
 	 * Optional block extended support features.

@@ -1,16 +1,18 @@
 <?php
-/*
-Plugin Name: Formello
-Plugin URI: https://example.com/
-Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
-Version: 1.0.0
-Author: Tropicalista
-Author URI: https://www.francescopepe.com/
-License: GPL2
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: formello
-Domain Path: /languages
-*/
+/**
+ * Plugin Name: Formello
+ * Plugin URI: https://example.com/
+ * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
+ * Version: 1.0.0
+ * Author: Tropicalista
+ * Author URI: https://www.francescopepe.com/
+ * License: GPL2
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain: formello
+ * Domain Path: /languages
+ *
+ * @package Formello
+ */
 
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit;
@@ -108,7 +110,8 @@ final class Formello {
 
 			// create table for storing submissions.
 			$table = $wpdb->prefix . 'formello_submissions';
-			$wpdb->query("CREATE TABLE IF NOT EXISTS {$table}(
+			$wpdb->query(
+				"CREATE TABLE IF NOT EXISTS {$table}(
 				`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 				`form_id` VARCHAR(255) NOT NULL,
 				`data` TEXT NOT NULL,
@@ -116,7 +119,8 @@ final class Formello {
 				`ip_address` VARCHAR(255) NULL,
 				`referer_url` VARCHAR(255) NULL,
 				`submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};");
+				) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+			);
 
 			// create table for storing forms.
 			$table = $wpdb->prefix . 'formello_forms';
@@ -125,7 +129,8 @@ final class Formello {
 				`name` VARCHAR(255),
 				`settings` TEXT NOT NULL,
 				`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};");
+				) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+			);
 
 		}
 
