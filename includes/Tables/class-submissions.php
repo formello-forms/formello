@@ -299,7 +299,7 @@ class Submissions extends \WP_List_Table {
 		$actions = array(
 			'edit' => sprintf(
 				'<a href="?page=%s&action=%s&submission=%s">View</a>',
-				esc_attr( $_REQUEST['page'] ),
+				sanitize_text_field( $_REQUEST['page'] ),
 				'view',
 				absint( $item['id'] )
 			),
