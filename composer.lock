@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fb0d01cd0a25066aea86641f0b2076f",
+    "content-hash": "6882cee347dc426ec5680af303724d13",
     "packages": [
         {
             "name": "drewm/mailchimp-api",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/drewm/mailchimp-api.git",
-                "reference": "9ef249daef679255078f1dc8347ec2745a4b756e"
+                "reference": "62da03fa38a0d3d855486f059c1f917976d02372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/drewm/mailchimp-api/zipball/9ef249daef679255078f1dc8347ec2745a4b756e",
-                "reference": "9ef249daef679255078f1dc8347ec2745a4b756e",
+                "url": "https://api.github.com/repos/drewm/mailchimp-api/zipball/62da03fa38a0d3d855486f059c1f917976d02372",
+                "reference": "62da03fa38a0d3d855486f059c1f917976d02372",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 "issues": "https://github.com/drewm/mailchimp-api/issues",
                 "source": "https://github.com/drewm/mailchimp-api/tree/master"
             },
-            "time": "2020-01-08T14:47:56+00:00"
+            "time": "2021-02-02T16:29:03+00:00"
         },
         {
             "name": "rakit/validation",

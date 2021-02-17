@@ -2,17 +2,32 @@
 
 namespace Formello\Composer;
 
+use Formello\Composer\Autoload\ClassLoader;
 use Formello\Composer\Semver\VersionParser;
 class InstalledVersions
 {
-    private static $installed = array('root' => array('pretty_version' => '1.0.0+no-version-set', 'version' => '1.0.0.0', 'aliases' => array(), 'reference' => NULL, 'name' => 'tareq1988/vue-wp-starter'), 'versions' => array('drewm/mailchimp-api' => array('pretty_version' => 'dev-master', 'version' => 'dev-master', 'aliases' => array(0 => '9999999-dev'), 'reference' => '9ef249daef679255078f1dc8347ec2745a4b756e'), 'rakit/validation' => array('pretty_version' => 'dev-master', 'version' => 'dev-master', 'aliases' => array(0 => '9999999-dev'), 'reference' => 'ff003a35cdf5030a5f2482299f4c93f344a35b29'), 'tareq1988/vue-wp-starter' => array('pretty_version' => '1.0.0+no-version-set', 'version' => '1.0.0.0', 'aliases' => array(), 'reference' => NULL)));
+    private static $installed = array('root' => array('pretty_version' => 'dev-main', 'version' => 'dev-main', 'aliases' => array(), 'reference' => '5cc38c79754bc0af3d597956b2a6bdccfc5df6e8', 'name' => 'formello/forms'), 'versions' => array('drewm/mailchimp-api' => array('pretty_version' => 'dev-master', 'version' => 'dev-master', 'aliases' => array(0 => '9999999-dev'), 'reference' => '62da03fa38a0d3d855486f059c1f917976d02372'), 'formello/forms' => array('pretty_version' => 'dev-main', 'version' => 'dev-main', 'aliases' => array(), 'reference' => '5cc38c79754bc0af3d597956b2a6bdccfc5df6e8'), 'rakit/validation' => array('pretty_version' => 'dev-master', 'version' => 'dev-master', 'aliases' => array(0 => '9999999-dev'), 'reference' => 'ff003a35cdf5030a5f2482299f4c93f344a35b29')));
+    private static $canGetVendors;
+    private static $installedByVendor = array();
     public static function getInstalledPackages()
     {
-        return \array_keys(self::$installed['versions']);
+        $packages = array();
+        foreach (self::getInstalled() as $installed) {
+            $packages[] = \array_keys($installed['versions']);
+        }
+        if (1 === \count($packages)) {
+            return $packages[0];
+        }
+        return \array_keys(\array_flip(\call_user_func_array('array_merge', $packages)));
     }
     public static function isInstalled($packageName)
     {
-        return isset(self::$installed['versions'][$packageName]);
+        foreach (self::getInstalled() as $installed) {
+            if (isset($installed['versions'][$packageName])) {
+                return \true;
+            }
+        }
+        return \false;
     }
     public static function satisfies(\Formello\Composer\Semver\VersionParser $parser, $packageName, $constraint)
     {
@@ -22,57 +37,70 @@ class InstalledVersions
     }
     public static function getVersionRanges($packageName)
     {
-        if (!isset(self::$installed['versions'][$packageName])) {
-            throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+            $ranges = array();
+            if (isset($installed['versions'][$packageName]['pretty_version'])) {
+                $ranges[] = $installed['versions'][$packageName]['pretty_version'];
+            }
+            if (\array_key_exists('aliases', $installed['versions'][$packageName])) {
+                $ranges = \array_merge($ranges, $installed['versions'][$packageName]['aliases']);
+            }
+            if (\array_key_exists('replaced', $installed['versions'][$packageName])) {
+                $ranges = \array_merge($ranges, $installed['versions'][$packageName]['replaced']);
+            }
+            if (\array_key_exists('provided', $installed['versions'][$packageName])) {
+                $ranges = \array_merge($ranges, $installed['versions'][$packageName]['provided']);
+            }
+            return \implode(' || ', $ranges);
         }
-        $ranges = array();
-        if (isset(self::$installed['versions'][$packageName]['pretty_version'])) {
-            $ranges[] = self::$installed['versions'][$packageName]['pretty_version'];
-        }
-        if (\array_key_exists('aliases', self::$installed['versions'][$packageName])) {
-            $ranges = \array_merge($ranges, self::$installed['versions'][$packageName]['aliases']);
-        }
-        if (\array_key_exists('replaced', self::$installed['versions'][$packageName])) {
-            $ranges = \array_merge($ranges, self::$installed['versions'][$packageName]['replaced']);
-        }
-        if (\array_key_exists('provided', self::$installed['versions'][$packageName])) {
-            $ranges = \array_merge($ranges, self::$installed['versions'][$packageName]['provided']);
-        }
-        return \implode(' || ', $ranges);
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
     }
     public static function getVersion($packageName)
     {
-        if (!isset(self::$installed['versions'][$packageName])) {
-            throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+            if (!isset($installed['versions'][$packageName]['version'])) {
+                return null;
+            }
+            return $installed['versions'][$packageName]['version'];
         }
-        if (!isset(self::$installed['versions'][$packageName]['version'])) {
-            return null;
-        }
-        return self::$installed['versions'][$packageName]['version'];
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
     }
     public static function getPrettyVersion($packageName)
     {
-        if (!isset(self::$installed['versions'][$packageName])) {
-            throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+            if (!isset($installed['versions'][$packageName]['pretty_version'])) {
+                return null;
+            }
+            return $installed['versions'][$packageName]['pretty_version'];
         }
-        if (!isset(self::$installed['versions'][$packageName]['pretty_version'])) {
-            return null;
-        }
-        return self::$installed['versions'][$packageName]['pretty_version'];
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
     }
     public static function getReference($packageName)
     {
-        if (!isset(self::$installed['versions'][$packageName])) {
-            throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
+        foreach (self::getInstalled() as $installed) {
+            if (!isset($installed['versions'][$packageName])) {
+                continue;
+            }
+            if (!isset($installed['versions'][$packageName]['reference'])) {
+                return null;
+            }
+            return $installed['versions'][$packageName]['reference'];
         }
-        if (!isset(self::$installed['versions'][$packageName]['reference'])) {
-            return null;
-        }
-        return self::$installed['versions'][$packageName]['reference'];
+        throw new \OutOfBoundsException('Package "' . $packageName . '" is not installed');
     }
     public static function getRootPackage()
     {
-        return self::$installed['root'];
+        $installed = self::getInstalled();
+        return $installed[0]['root'];
     }
     public static function getRawData()
     {
@@ -81,5 +109,24 @@ class InstalledVersions
     public static function reload($data)
     {
         self::$installed = $data;
+        self::$installedByVendor = array();
+    }
+    private static function getInstalled()
+    {
+        if (null === self::$canGetVendors) {
+            self::$canGetVendors = \method_exists('Formello\\Composer\\Autoload\\ClassLoader', 'getRegisteredLoaders');
+        }
+        $installed = array();
+        if (self::$canGetVendors) {
+            foreach (\Formello\Composer\Autoload\ClassLoader::getRegisteredLoaders() as $vendorDir => $loader) {
+                if (isset(self::$installedByVendor[$vendorDir])) {
+                    $installed[] = self::$installedByVendor[$vendorDir];
+                } elseif (\is_file($vendorDir . '/composer/installed.php')) {
+                    $installed[] = self::$installedByVendor[$vendorDir] = (require $vendorDir . '/composer/installed.php');
+                }
+            }
+        }
+        $installed[] = self::$installed;
+        return $installed;
     }
 }

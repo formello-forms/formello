@@ -286,7 +286,8 @@ class MailChimp
             if (empty($line)) {
                 continue;
             }
-            list($key, $value) = \explode(': ', $line);
+            list($key, $value) = \explode(':', $line);
+            $value = \ltrim($value);
             if ($key == 'Link') {
                 $value = \array_merge(array('_raw' => $value), $this->getLinkHeaderAsArray($value));
             }

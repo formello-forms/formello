@@ -659,7 +659,7 @@ class App extends Component {
 
 					<PanelBody
 						initialOpen={ false }
-						title={ __( 'mailChimp Api Key', 'formello' ) }
+						title={ __( 'MailChimp Api Key', 'formello' ) }
 					>
 						<div className="formello-dashboard-panel-row-wrapper">
 

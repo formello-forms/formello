@@ -79,10 +79,11 @@ export default function Edit( {
 		newSettings[ name ] = value;
 		setAttributes( { settings: newSettings } );
 	};
+	
 	useEffect(
 		() => {
+			let idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace(/-/g, '')
 			if( attributes.name.length < 1 ){
-				let idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace(/-/g, '')
 				setAttributes( {
 					name: 'form-' + idx
 				} )
@@ -92,7 +93,7 @@ export default function Edit( {
 					path: '/formello/v1/form/create',
 					method: 'POST',
 					data: {
-						name: attributes.name
+						name: 'form-' + idx
 					},
 				} ).then( ( result ) => {
 					setAttributes({
@@ -100,7 +101,6 @@ export default function Edit( {
 					});
 				} );
 			}
-
 			setAttributes( {
 				blockId: clientId,
 			} )		

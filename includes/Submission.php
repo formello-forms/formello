@@ -14,8 +14,8 @@ class Submission {
 	public function save() {
 		global $wpdb;
 		$table = $wpdb->prefix . 'formello_submissions';
-		$data = array(
-			'data'    => json_encode( $this->data ),
+		$data  = array(
+			'data'    => wp_json_encode( $this->data ),
 			'form_id' => $this->form_id,
 		);
 
@@ -41,16 +41,8 @@ class Submission {
 	 */
 	public static function from_object( $object ) {
 		$data = empty( $object->data ) ? array() : (array) json_decode( $object->data, true );
-
-		$submission               = new Submission();
-		$submission->id           = (int) $object->id;
-		$submission->form_id      = (int) $object->form_id;
-		$submission->data         = $data;
-		$submission->ip_address   = (string) $object->ip_address;
-		$submission->user_agent   = (string) $object->user_agent;
-		$submission->referer_url  = (string) $object->referer_url;
-		$submission->submitted_at = $object->submitted_at;
-		return $submission;
+		$object->data = $data;
+		return $object;
 	}
 
 }

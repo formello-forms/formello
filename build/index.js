@@ -7944,6 +7944,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+console.log('mailchimp');
 /**
  * Every block starts by registering a new block type definition.
  *
@@ -11187,8 +11188,9 @@ function Edit(_ref) {
   };
 
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    var idx = clientId.substr(2, 9).replace('-', '').replace(/-/g, '');
+
     if (attributes.name.length < 1) {
-      var idx = clientId.substr(2, 9).replace('-', '').replace(/-/g, '');
       setAttributes({
         name: 'form-' + idx
       });
@@ -11199,7 +11201,7 @@ function Edit(_ref) {
         path: '/formello/v1/form/create',
         method: 'POST',
         data: {
-          name: attributes.name
+          name: 'form-' + idx
         }
       }).then(function (result) {
         setAttributes({

@@ -835,7 +835,7 @@ var App = /*#__PURE__*/function (_Component) {
         className: "formello-settings-main"
       }, applyFilters('formello.dashboard.beforeSettings', '', this), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelBody, {
         initialOpen: false,
-        title: __('mailChimp Api Key', 'formello')
+        title: __('MailChimp Api Key', 'formello')
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
         className: "formello-dashboard-panel-row-wrapper"
       }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(PanelRow, null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(TextControl, {

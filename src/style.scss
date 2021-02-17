@@ -41,7 +41,8 @@
     flex: 1 1 auto;
   }
 
-  textarea {
+  textarea, select {
+    flex: 1 1 auto;
     width: auto;
   }
 

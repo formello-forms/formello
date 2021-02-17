@@ -6,15 +6,15 @@ $loader = require_once __DIR__.'/autoload.php';
 
 // Aliases for the whitelisted classes. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/README.md#class-whitelisting
-if (!class_exists('ComposerAutoloaderInitbde446d1e10d2f3a19c72be5b31ec727', false) && !interface_exists('ComposerAutoloaderInitbde446d1e10d2f3a19c72be5b31ec727', false) && !trait_exists('ComposerAutoloaderInitbde446d1e10d2f3a19c72be5b31ec727', false)) {
-    spl_autoload_call('Formello\ComposerAutoloaderInitbde446d1e10d2f3a19c72be5b31ec727');
+if (!class_exists('ComposerAutoloaderInitf423cdf8da23ba441e93938b453bc40a', false) && !interface_exists('ComposerAutoloaderInitf423cdf8da23ba441e93938b453bc40a', false) && !trait_exists('ComposerAutoloaderInitf423cdf8da23ba441e93938b453bc40a', false)) {
+    spl_autoload_call('Formello\ComposerAutoloaderInitf423cdf8da23ba441e93938b453bc40a');
 }
 
 // Functions whitelisting. For more information see:
 // https://github.com/humbug/php-scoper/blob/master/README.md#functions-whitelisting
-if (!function_exists('composerRequirebde446d1e10d2f3a19c72be5b31ec727')) {
-    function composerRequirebde446d1e10d2f3a19c72be5b31ec727() {
-        return \Formello\composerRequirebde446d1e10d2f3a19c72be5b31ec727(...func_get_args());
+if (!function_exists('composerRequiref423cdf8da23ba441e93938b453bc40a')) {
+    function composerRequiref423cdf8da23ba441e93938b453bc40a() {
+        return \Formello\composerRequiref423cdf8da23ba441e93938b453bc40a(...func_get_args());
     }
 }
 

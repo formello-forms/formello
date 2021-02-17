@@ -28,6 +28,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import getIcon from '../../../utils/get-icon';
 import edit from './edit';
 
+console.log('mailchimp')
 /**
  * Every block starts by registering a new block type definition.
  *

@@ -61,7 +61,8 @@
 .wp-block-formello-form .formello input {
   flex: 1 1 auto;
 }
-.wp-block-formello-form .formello textarea {
+.wp-block-formello-form .formello textarea, .wp-block-formello-form .formello select {
+  flex: 1 1 auto;
   width: auto;
 }
 .wp-block-formello-form .formello small {

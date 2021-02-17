@@ -4,10 +4,10 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitbde446d1e10d2f3a19c72be5b31ec727
+class ComposerStaticInitf423cdf8da23ba441e93938b453bc40a
 {
     public static $files = array (
-        '0788272585a82d5eef0485078a4376f4' => __DIR__ . '/../..' . '/includes/defaults.php',
+        '0c4dff0430e9906a4e175b46345a6ef0' => __DIR__ . '/../..' . '/includes/defaults.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -31,22 +31,22 @@ class ComposerStaticInitbde446d1e10d2f3a19c72be5b31ec727
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Formello\\Actions\\Action' => __DIR__ . '/../..' . '/includes/Actions/Action.php',
-        'Formello\\Actions\\Email' => __DIR__ . '/../..' . '/includes/Actions/Email.php',
-        'Formello\\Actions\\MailChimp' => __DIR__ . '/../..' . '/includes/Actions/MailChimp.php',
+        'Formello\\Actions\\Action' => __DIR__ . '/../..' . '/includes/Actions/class-action.php',
+        'Formello\\Actions\\Email' => __DIR__ . '/../..' . '/includes/Actions/class-email.php',
+        'Formello\\Actions\\MailChimp' => __DIR__ . '/../..' . '/includes/Actions/class-mailchimp.php',
         'Formello\\Admin' => __DIR__ . '/../..' . '/includes/Admin.php',
         'Formello\\Api' => __DIR__ . '/../..' . '/includes/Api.php',
-        'Formello\\Api\\Form' => __DIR__ . '/../..' . '/includes/Api/Form.php',
-        'Formello\\Api\\MailChimp' => __DIR__ . '/../..' . '/includes/Api/MailChimp.php',
-        'Formello\\Api\\Settings' => __DIR__ . '/../..' . '/includes/Api/Settings.php',
+        'Formello\\Api\\Form' => __DIR__ . '/../..' . '/includes/Api/class-form.php',
+        'Formello\\Api\\MailChimp' => __DIR__ . '/../..' . '/includes/Api/class-mailchimp.php',
+        'Formello\\Api\\Settings' => __DIR__ . '/../..' . '/includes/Api/class-settings.php',
         'Formello\\Assets' => __DIR__ . '/../..' . '/includes/Assets.php',
         'Formello\\Block' => __DIR__ . '/../..' . '/includes/Block.php',
         'Formello\\Data' => __DIR__ . '/../..' . '/includes/Data.php',
         'Formello\\Form' => __DIR__ . '/../..' . '/includes/Form.php',
         'Formello\\Frontend' => __DIR__ . '/../..' . '/includes/Frontend.php',
         'Formello\\Submission' => __DIR__ . '/../..' . '/includes/Submission.php',
-        'Formello\\Tables\\Forms' => __DIR__ . '/../..' . '/includes/Tables/Forms.php',
-        'Formello\\Tables\\Submissions' => __DIR__ . '/../..' . '/includes/Tables/Submissions.php',
+        'Formello\\Tables\\Forms' => __DIR__ . '/../..' . '/includes/Tables/class-forms.php',
+        'Formello\\Tables\\Submissions' => __DIR__ . '/../..' . '/includes/Tables/class-submissions.php',
         'Formello\\TagReplacers\\Fields' => __DIR__ . '/../..' . '/includes/TagReplacers/Fields.php',
         'Formello\\TagReplacers\\Other' => __DIR__ . '/../..' . '/includes/TagReplacers/Other.php',
         'Formello\\TagReplacers\\Replacer' => __DIR__ . '/../..' . '/includes/TagReplacers/Replacer.php',
@@ -56,9 +56,9 @@ class ComposerStaticInitbde446d1e10d2f3a19c72be5b31ec727
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitbde446d1e10d2f3a19c72be5b31ec727::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitbde446d1e10d2f3a19c72be5b31ec727::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitbde446d1e10d2f3a19c72be5b31ec727::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf423cdf8da23ba441e93938b453bc40a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf423cdf8da23ba441e93938b453bc40a::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitf423cdf8da23ba441e93938b453bc40a::$classMap;
 
         }, null, ClassLoader::class);
     }

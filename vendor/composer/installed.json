@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https:\/\/github.com\/drewm\/mailchimp-api.git",
-                "reference": "9ef249daef679255078f1dc8347ec2745a4b756e"
+                "reference": "62da03fa38a0d3d855486f059c1f917976d02372"
             },
             "dist": {
                 "type": "zip",
-                "url": "https:\/\/api.github.com\/repos\/drewm\/mailchimp-api\/zipball\/9ef249daef679255078f1dc8347ec2745a4b756e",
-                "reference": "9ef249daef679255078f1dc8347ec2745a4b756e",
+                "url": "https:\/\/api.github.com\/repos\/drewm\/mailchimp-api\/zipball\/62da03fa38a0d3d855486f059c1f917976d02372",
+                "reference": "62da03fa38a0d3d855486f059c1f917976d02372",
                 "shasum": ""
             },
             "require": {
@@ -24,10 +24,10 @@
                 "phpunit\/phpunit": "7.0.*",
                 "vlucas\/phpdotenv": "^2.0"
             },
-            "time": "2020-01-08T14:47:56+00:00",
+            "time": "2021-02-02T16:29:03+00:00",
             "default-branch": true,
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Formello\\DrewM\\MailChimp\\": "src"
@@ -79,7 +79,7 @@
             "time": "2020-08-27T05:07:01+00:00",
             "default-branch": true,
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "Formello\\Rakit\\Validation\\": "src"
@@ -103,6 +103,6 @@
             "install-path": "..\/rakit\/validation"
         }
     ],
-    "dev": false,
+    "dev": true,
     "dev-package-names": []
 }
