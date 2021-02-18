@@ -1,13 +1,30 @@
 <?php
+/**
+ * Manage the frontend submissions.
+ *
+ * @package Formello
+ */
+
 namespace Formello;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use Formello\Rakit\Validation\Validator;
 
 /**
  * Frontend Pages Handler
+ *
+ * @since 1.0.0
  */
 class Frontend {
 
+	/**
+	 * Validator
+	 *
+	 * @var $validator
+	 */
 	private $validator;
 
 	/**
@@ -50,7 +67,7 @@ class Frontend {
 			*
 			* @param array $names
 			*/
-			$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'g-recaptcha-response' ) );
+			$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'g-recaptcha-response', 'action' ) );
 
 			// sanitize data: strip tags etc.
 			$store = new Data( $data, $form_id, $ignored_field_names );
@@ -221,70 +238,14 @@ class Frontend {
 	}
 
 	/**
-	 * Sanitize array with values before saving. Can be called recursively.
-	 *
-	 * @param mixed $value The value to sanitize.
-	 * @return mixed
-	 */
-	public function sanitize( $value ) {
-		if ( is_string( $value ) ) {
-			// do nothing if empty string.
-			if ( '' === $value ) {
-				return $value;
-			}
-
-			// strip slashes.
-			$value = stripslashes( $value );
-
-			// strip all whitespace.
-			$value = trim( $value );
-
-			// convert &amp; back to &.
-			$value = html_entity_decode( $value, ENT_NOQUOTES );
-		} elseif ( is_array( $value ) || is_object( $value ) ) {
-			$new_value = array();
-			$vars      = is_array( $value ) ? $value : get_object_vars( $value );
-
-			// do nothing if empty array or object.
-			if ( count( $vars ) === 0 ) {
-				return $value;
-			}
-
-			foreach ( $vars as $key => $sub_value ) {
-				// strip all whitespace & HTML from keys (!).
-				$key = trim( wp_strip_all_tags( $key ) );
-
-				// sanitize sub value.
-				$new_value[ $key ] = $this->sanitize( $sub_value );
-				$new_value[ $key ] = $this->replaceTags( $sub_value );
-			}
-
-			$value = is_object( $value ) ? (object) $new_value : $new_value;
-		}
-
-		return $value;
-	}
-
-	/**
 	 * Get the data sent
 	 *
 	 * @return array
 	 */
 	public function get_request_data() {
 		$data = $_POST;
+		// we don't need action name.
 		unset( $data['action'] );
-
-		if ( ! empty( $_FILES ) ) {
-
-			foreach ( $_FILES as $field_name => $file ) {
-				// only add non-empty files so that required field validation works as expected.
-				// upload could still have errored at this point.
-				if ( UPLOAD_ERR_NO_FILE !== $file['error'] ) {
-					$data[ $field_name ] = $file;
-				}
-			}
-		}
-
 		return $data;
 	}
 

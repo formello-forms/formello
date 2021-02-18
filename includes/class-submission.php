@@ -28,7 +28,7 @@ class Submission {
 			return;
 		}
 
-		// insert new row
+		// insert new row.
 		$num_rows = $wpdb->insert( $table, $data );
 		if ( $num_rows > 0 ) {
 			$this->id = $wpdb->insert_id;
@@ -36,7 +36,9 @@ class Submission {
 	}
 
 	/**
-	 * @param $object
+	 * Get submission object from DB
+	 *
+	 * @param object $object The query Object.
 	 * @return Submission
 	 */
 	public static function from_object( $object ) {

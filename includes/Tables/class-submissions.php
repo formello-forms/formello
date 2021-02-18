@@ -12,9 +12,32 @@ namespace Formello\Tables;
  */
 class Submissions extends \WP_List_Table {
 
+	/**
+	 * The date formate var.
+	 *
+	 * @var $date_format
+	 */
 	protected $date_format;
+
+	/**
+	 * The datetime formate var.
+	 *
+	 * @var $datetime_format
+	 */
 	protected $datetime_format;
+
+	/**
+	 * The id of the form.
+	 *
+	 * @var $form_id
+	 */
 	protected $form_id;
+
+	/**
+	 * Data of submissions.
+	 *
+	 * @var $data
+	 */
 	protected $data;
 
 
@@ -50,7 +73,6 @@ class Submissions extends \WP_List_Table {
 		);
 	}
 
-
 	/**
 	 * Returns the count of records in the database.
 	 *
@@ -58,11 +80,10 @@ class Submissions extends \WP_List_Table {
 	 */
 	public static function record_count() {
 		global $wpdb;
-		$form_id = absint( $_GET['form'] );
-		$table   = $wpdb->prefix . 'formello_submissions';
+		$form_id = isset( $_GET['form'] ) ? absint( $_GET['form'] ) : 0;
 
 		return $wpdb->get_var(
-			$wpdb->prepare( 'SELECT COUNT(*) FROM %1s WHERE form_id = %d', array( $table, $form_id ) )
+			$wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d", array( $form_id ) )
 		);
 	}
 
@@ -106,7 +127,7 @@ class Submissions extends \WP_List_Table {
 		$hidden   = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 
-		$per_page     = $this->get_items_per_page( 'forms_per_page', 5 );
+		$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
 		$current_page = $this->get_pagenum();
 		$total_items  = self::record_count();
 
@@ -157,7 +178,7 @@ class Submissions extends \WP_List_Table {
 
 			}
 			// refresh table.
-			$per_page     = $this->get_items_per_page( 'forms_per_page', 5 );
+			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
 			$current_page = $this->get_pagenum();
 			$this->data   = $this->table_data( $per_page, $current_page );
 
@@ -194,6 +215,10 @@ class Submissions extends \WP_List_Table {
 		return array(
 			'submitted_at' => array(
 				'submitted_at',
+				false,
+			),
+			'id'           => array(
+				'id',
 				false,
 			),
 		);
@@ -289,6 +314,7 @@ class Submissions extends \WP_List_Table {
 			esc_attr(
 				add_query_arg(
 					array(
+						'page'       => 'formello-submission',
 						'submission' => $item['id'],
 					)
 				)
@@ -298,10 +324,12 @@ class Submissions extends \WP_List_Table {
 
 		$actions = array(
 			'edit' => sprintf(
-				'<a href="?page=%s&action=%s&submission=%s">View</a>',
-				sanitize_text_field( $_REQUEST['page'] ),
-				'view',
-				absint( $item['id'] )
+				'<a href="?page=%s&form=%s&submission=%s&paged=%s">%s</a>',
+				'formello-submission',
+				sanitize_text_field( $_REQUEST['form'] ),
+				absint( $item['id'] ),
+				isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : '',
+				__( 'View', 'formello' )
 			),
 		);
 
@@ -330,10 +358,11 @@ class Submissions extends \WP_List_Table {
 	 */
 	private function get_data() {
 		if ( empty( $this->data ) ) {
-			$per_page     = $this->get_items_per_page( 'forms_per_page', 5 );
+			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
 			$current_page = $this->get_pagenum();
 			$this->data   = $this->table_data( $per_page, $current_page );
 		}
+
 		return $this->data;
 	}
 

@@ -12,7 +12,9 @@ namespace Formello\Tables;
  */
 class Forms extends \WP_List_Table {
 
-	/** Class constructor */
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		parent::__construct(
 			array(
@@ -30,11 +32,7 @@ class Forms extends \WP_List_Table {
 	 */
 	public static function record_count() {
 		global $wpdb;
-
-		$table = "{$wpdb->prefix}formello_forms";
-
-		return $wpdb->query( "SELECT COUNT(*) FROM $table" );
-
+		return $wpdb->query( "SELECT COUNT(*) FROM {$wpdb->prefix}formello_forms" );
 	}
 
 	/** Text displayed when no form data is available */
@@ -55,11 +53,14 @@ class Forms extends \WP_List_Table {
 			esc_attr(
 				add_query_arg(
 					array(
+						'page'      => 'formello-submissions',
 						'form'      => $item['id'],
 						'form_name' => $item['name'],
 						'paged'     => false,
+						'order'     => false,
+						'orderby'   => false,
 					)
-				)
+				),
 			),
 			$item['name']
 		);
@@ -78,7 +79,7 @@ class Forms extends \WP_List_Table {
 		/** Process bulk action */
 		$this->process_bulk_action();
 
-		$per_page     = $this->get_items_per_page( 'forms_per_page', 5 );
+		$per_page     = $this->get_items_per_page( 'forms_per_page', 10 );
 		$current_page = $this->get_pagenum();
 		$total_items  = self::record_count();
 
@@ -122,12 +123,19 @@ class Forms extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_sortable_columns() {
-		return array( 'name' => array( 'name', false ) );
+		return array(
+			'name' => array(
+				'name',
+				false,
+			),
+		);
 	}
 
 	/**
 	 * Get the table data
 	 *
+	 * @param int $per_page Number of record per page.
+	 * @param int $page_number Page number.
 	 * @return Array
 	 */
 	private function table_data( $per_page = 5, $page_number = 1 ) {
@@ -164,7 +172,7 @@ class Forms extends \WP_List_Table {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param  Array $item Data
+	 * @param  Array  $item Data of column.
 	 * @param  String $column_name - Current column name.
 	 *
 	 * @return Mixed

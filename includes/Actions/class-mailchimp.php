@@ -1,4 +1,9 @@
 <?php
+/**
+ * Perform MailChimp Action.
+ *
+ * @package Formello
+ */
 
 namespace Formello\Actions;
 
@@ -7,8 +12,15 @@ use Formello\Data;
 use Formello\DrewM\MailChimp\MailChimp as SDK;
 use Formello\TagReplacers\Replacer;
 
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
  * Class MailChimp action
+ *
+ * @since 1.0.0
  */
 class MailChimp extends Action {
 
@@ -25,12 +37,14 @@ class MailChimp extends Action {
 	 * @var string $label Action label.
 	 */
 	protected $label = 'MailChimp API';
+
 	/**
 	 * The action label.
 	 *
 	 * @var array $settings Array of settings.
 	 */
 	protected $settings = array();
+
 	/**
 	 * The replacer object.
 	 *

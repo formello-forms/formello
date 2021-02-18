@@ -109,9 +109,8 @@ final class Formello {
 			global $wpdb;
 
 			// create table for storing submissions.
-			$table = $wpdb->prefix . 'formello_submissions';
 			$wpdb->query(
-				"CREATE TABLE IF NOT EXISTS {$table}(
+				"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions (
 				`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 				`form_id` VARCHAR(255) NOT NULL,
 				`data` TEXT NOT NULL,
@@ -123,8 +122,8 @@ final class Formello {
 			);
 
 			// create table for storing forms.
-			$table = $wpdb->prefix . 'formello_forms';
-			$wpdb->query("CREATE TABLE IF NOT EXISTS {$table}(
+			$wpdb->query(
+				"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
 				`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 				`name` VARCHAR(255),
 				`settings` TEXT NOT NULL,

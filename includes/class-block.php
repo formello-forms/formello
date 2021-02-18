@@ -1,8 +1,20 @@
 <?php
+/**
+ * Block handler.
+ *
+ * @package Formello
+ */
+
 namespace Formello;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
 /**
- * Frontend Pages Handler
+ * Block Handler
+ *
+ * @since 1.0.0
  */
 class Block {
 
@@ -34,7 +46,7 @@ class Block {
 						'type'    => 'boolean',
 						'default' => false,
 					),
-					'hide'        => array(
+					'hide'             => array(
 						'type'    => 'boolean',
 						'default' => false,
 					),

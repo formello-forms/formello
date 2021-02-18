@@ -1,23 +1,39 @@
 <?php
+/**
+ * Set our block attribute defaults.
+ *
+ * @package Formello
+ */
+
 namespace Formello;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * Admin Pages Handler
+ *
+ * @since 1.0.0
  */
 class Admin {
 
 	protected $forms_table;
 	protected $submissions_table;
 
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
 		add_filter( 'pre_post_update', array( $this, 'formello_pre_insert' ), 10, 2 );
-		add_action( 'admin_action_formello_bulk_delete_submissions', array( $this, 'process_bulk_delete_submissions' ) );
-		// remove for now.
-		// add_filter( 'set-screen-option', [ $this, 'set_screen' ], 10, 3 );
+		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
 	}
 
+	/**
+	 * Hooks
+	 */
 	public function hooks() {}
 
 	/**
@@ -34,22 +50,53 @@ class Admin {
 
 		add_menu_page( __( 'Formello', 'formello' ), __( 'Formello', 'formello' ), $capability, $slug, array( $this, 'forms_page' ), 'dashicons-text' );
 
-		$submission_hook = add_submenu_page( $slug, __( 'Submissions', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello', array( $this, 'forms_page' ) );
-		$settings_hook   = add_submenu_page( $slug, __( 'Settings', 'formello' ), __( 'Settings', 'formello' ), $capability, 'formello-settings', array( $this, 'settings_page' ) );
+		$form_hook        = add_submenu_page( $slug, __( 'Forms', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello', array( $this, 'forms_page' ) );
+		$submissions_hook = add_submenu_page( $slug, __( 'Submissions', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello-submissions', array( $this, 'submissions_page' ) );
+		$submission_hook  = add_submenu_page( $slug, __( 'Submission', 'formello' ), __( 'Submission', 'formello' ), $capability, 'formello-submission', array( $this, 'submission_page_detail' ) );
+		$settings_hook    = add_submenu_page( $slug, __( 'Settings', 'formello' ), __( 'Settings', 'formello' ), $capability, 'formello-settings', array( $this, 'settings_page' ) );
 
-		add_action( "load-$submission_hook", array( $this, 'screen_option' ) );
+		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
+		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
 		add_action( "load-$settings_hook", array( $this, 'settings_hooks' ) );
+		add_filter( 'submenu_file', array( $this, 'remove_submenu' ) );
 
 	}
 
 	/**
-	 * Screen options
+	 * Remove submenu item
+	 *
+	 * @param string $submenu_file the submenu to hide.
 	 */
-	public function screen_option() {
+	public function remove_submenu( $submenu_file ) {
+
+		global $plugin_page;
+
+		$hidden_submenus = array(
+			'formello-submissions' => true,
+			'formello-submission'  => true,
+		);
+
+		// Select another submenu item to highlight (optional).
+		if ( $plugin_page && isset( $hidden_submenus[ $plugin_page ] ) ) {
+			$submenu_file = 'formello';
+		}
+
+		// Hide the submenu.
+		foreach ( $hidden_submenus as $submenu => $unused ) {
+			remove_submenu_page( 'formello', $submenu );
+		}
+
+		return $submenu_file;
+	}
+
+	/**
+	 * Forms Screen options
+	 */
+	public function forms_screen_option() {
 
 		$option = 'per_page';
 		$args   = array(
-			'label'   => 'Records',
+			'label'   => 'Forms',
 			'default' => 5,
 			'option'  => 'forms_per_page',
 		);
@@ -57,12 +104,34 @@ class Admin {
 		add_screen_option( $option, $args );
 
 		$this->forms_table = new Tables\Forms();
-		if ( isset( $_GET['form'] ) ) {
-			$this->submissions_table = new Tables\Submissions();
-		}
+	}
+
+	/**
+	 * Submissions Screen options
+	 */
+	public function submissions_screen_option() {
+
+		$option = 'per_page';
+		$args   = array(
+			'label'   => 'Submissions',
+			'default' => 10,
+			'option'  => 'submissions_per_page',
+		);
+
+		add_screen_option( $option, $args );
+
+		$this->submissions_table = new Tables\Submissions();
 	}
 
 	public static function set_screen( $status, $option, $value ) {
+		$option = 'per_page';
+		$args   = array(
+			'label'   => 'Forms',
+			'default' => 10,
+			'option'  => 'forms_per_page',
+		);
+
+		add_screen_option( $option, $args );
 		return $value;
 	}
 
@@ -119,61 +188,39 @@ class Admin {
 
 	/**
 	 * Add settings container.
-	 *
-	 * @since 1.2.0
 	 */
-	public function submission_page_detail( $form ) {
-		$id = (int) $form;
+	public function submission_page_detail() {
+		if ( isset( $_GET['submission'] ) ) {
+			$id = (int) sanitize_text_field( wp_unslash( $_GET['submission'] ) );
+		}
 
 		global $wpdb;
 		$table      = $wpdb->prefix . 'formello_submissions';
 		$object     = $wpdb->get_row( $wpdb->prepare( 'SELECT s.* FROM %1s s WHERE s.id = %d;', array( $table, $id ) ), OBJECT );
 
+		if ( empty( $object ) ) {
+			return _e( 'Invalid submission ID.' );
+		}
 		$submission = Submission::from_object( $object );
 
 		require dirname( __FILE__ ) . '/views/submission.php';
 	}
 
 	/**
-	 * Add settings container.
-	 *
-	 * @since 1.2.0
+	 * Output forms table.
 	 */
-	public function submissions_page( $form ) {
-		require dirname( __FILE__ ) . '/views/submissions.php';
-	}
-
-	public function get_submission_columns( array $submissions ) {
-		$columns = array();
-		foreach ( $submissions as $s ) {
-			if ( ! is_array( $s->data ) ) {
-				continue;
-			}
-
-			foreach ( $s->data as $field => $value ) {
-				if ( ! isset( $columns[ $field ] ) ) {
-					$columns[ $field ] = esc_html( ucfirst( strtolower( str_replace( '_', ' ', $field ) ) ) );
-				}
-			}
-		}
-		return $columns;
+	public function forms_page() {
+		require dirname( __FILE__ ) . '/views/forms.php';
 	}
 
 	/**
 	 * Output our Dashboard HTML.
-	 *
-	 * @since 0.1
 	 */
-	public function forms_page() {
-		if ( isset( $_GET['submission'] ) ) {
-			$submission = sanitize_text_field( wp_unslash( $_GET['submission'] ) );
-			return $this->submission_page_detail( $submission );
-		}
+	public function submissions_page() {
 		if ( isset( $_GET['form'] ) ) {
 			$form = sanitize_text_field( wp_unslash( $_GET['form'] ) );
-			return $this->submissions_page( $form );
 		}
-		require dirname( __FILE__ ) . '/views/forms.php';
+		require dirname( __FILE__ ) . '/views/submissions.php';
 	}
 
 	/**
@@ -330,7 +377,7 @@ class Admin {
 			}
 		}
 
-		// escape value
+		// escape value.
 		if ( null !== $escape_function && is_callable( $escape_function ) ) {
 			$value = $escape_function( $value );
 		}

@@ -1,9 +1,28 @@
 <?php
+/**
+ * Manage Data submitted.
+ *
+ * @package Formello
+ */
 
 namespace Formello;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Data Handler
+ *
+ * @since 1.0.0
+ */
 class Data {
 
+	/**
+	 * The replacer
+	 *
+	 * @var $replacer
+	 */
 	private $replacer;
 	private $raw;
 	private $form_id;
@@ -14,6 +33,9 @@ class Data {
 	private $referer_url = '';
 	private $submitted_at;
 
+	/**
+	 * Constructor
+	 */
 	public function __construct( $data, $form_id, $ignored_field_names = array() ) {
 		$this->replacer            = new TagReplacers\Replacer();
 		$this->raw                 = $data;
@@ -22,6 +44,11 @@ class Data {
 		$this->process( $data );
 	}
 
+	/**
+	 * Process data
+	 *
+	 * @param array $data the data submitted.
+	 */
 	public function process( $data ) {
 		// filter out ignored field names.
 		foreach ( $data as $key => $value ) {
@@ -31,7 +58,7 @@ class Data {
 			}
 
 			// this detects the WPBruiser token field to ensure it isn't stored
-			// CAVEAT: this will detect any non-uppercase string with 2 dashes in the field name and no whitespace in the field value
+			// CAVEAT: this will detect any non-uppercase string with 2 dashes in the field name and no whitespace in the field value.
 			if ( class_exists( 'GoodByeCaptcha' ) && is_string( $key ) && is_string( $value ) && strtoupper( $key ) !== $key && substr_count( $key, '-' ) >= 2 && substr_count( trim( $value ), ' ' ) === 0 ) {
 				unset( $data[ $key ] );
 				continue;
@@ -48,7 +75,7 @@ class Data {
 	/**
 	 * Sanitize array with values before saving. Can be called recursively.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value the value to sanitize.
 	 * @return mixed
 	 */
 	public function sanitize( $value ) {
@@ -72,13 +99,13 @@ class Data {
 			$new_value = array();
 			$vars      = is_array( $value ) ? $value : get_object_vars( $value );
 
-			// do nothing if empty array or object
+			// do nothing if empty array or object.
 			if ( count( $vars ) === 0 ) {
 				return $value;
 			}
 
 			foreach ( $vars as $key => $sub_value ) {
-				// strip all whitespace & HTML from keys (!)
+				// strip all whitespace & HTML from keys (!).
 				$key = trim( wp_strip_all_tags( $key ) );
 
 				// sanitize sub value.
@@ -92,6 +119,11 @@ class Data {
 		return $value;
 	}
 
+	/**
+	 * Replace tags if any.
+	 *
+	 * @param string $template String template.
+	 */
 	private function replace_tags( $template ) {
 
 		$template = $this->replacer->parse( $template );
@@ -100,6 +132,9 @@ class Data {
 
 	}
 
+	/**
+	 * Save form submission in DB.
+	 */
 	public function save() {
 		global $wpdb;
 		$table = $wpdb->prefix . 'formello_submissions';
@@ -117,7 +152,7 @@ class Data {
 			return null;
 		}
 
-		// insert new row
+		// insert new row.
 		$num_rows = $wpdb->insert( $table, $data );
 		if ( $num_rows > 0 ) {
 			$this->id = $wpdb->insert_id;
@@ -125,11 +160,13 @@ class Data {
 	}
 
 	/**
-	 * @param $object
+	 * Create an Data object from query.
+	 *
+	 * @param object $object The object query.
 	 * @return Submission
 	 */
 	public static function from_object( $object ) {
-		$data = empty( $object->data ) ? array() : (array) json_decode( $object->data, true );
+		$data         = empty( $object->data ) ? array() : (array) json_decode( $object->data, true );
 		$object->data = $data;
 		return $object;
 	}

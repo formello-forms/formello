@@ -1,8 +1,20 @@
 <?php
+/**
+ * Manage all assets.
+ *
+ * @package Formello
+ */
+
 namespace Formello;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * Scripts and Styles Class
+ *
+ * @since 1.0.0
  */
 class Assets {
 

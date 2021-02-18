@@ -1,12 +1,23 @@
 <?php
+/**
+ * Set our block attribute defaults.
+ *
+ * @package Formello
+ */
 
 namespace Formello\Actions;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use Formello\Form;
 use Formello\Data;
 
 /**
- * Action class
+ * Action Handler
+ *
+ * @since 1.0.0
  */
 abstract class Action {
 

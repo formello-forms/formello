@@ -1,0 +1,1867 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"form",
+				"form_page"
+			],
+			[
+				"column",
+				"_column_headers"
+			],
+			[
+				"saniti",
+				"sanitize_file_name"
+			],
+			[
+				"captc",
+				"captcha_validate"
+			],
+			[
+				"order",
+				"order_by"
+			],
+			[
+				"defaul",
+				"defaultOpts"
+			],
+			[
+				"sett",
+				"settingname"
+			],
+			[
+				"defa",
+				"defaultOpts"
+			],
+			[
+				"is",
+				"isOpen"
+			],
+			[
+				"M",
+				"MergeTags"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"page",
+				"page_number"
+			],
+			[
+				"Pane",
+				"PanelRow"
+			],
+			[
+				"actio",
+				"action_settings"
+			],
+			[
+				"block",
+				"blockId"
+			],
+			[
+				"get_col",
+				"get_column_info"
+			],
+			[
+				"sub",
+				"subject"
+			],
+			[
+				"act",
+				"action_settings"
+			],
+			[
+				"formE",
+				"formEl"
+			],
+			[
+				"submit",
+				"submitForm"
+			],
+			[
+				"select",
+				"selectedOpt"
+			],
+			[
+				"see",
+				"selectedOpt"
+			],
+			[
+				"default",
+				"defaultValue"
+			],
+			[
+				"selec",
+				"selectedOpt"
+			],
+			[
+				"on",
+				"onClick"
+			],
+			[
+				"a",
+				"attributes"
+			],
+			[
+				"ignored",
+				"ignored_field_names"
+			],
+			[
+				"ignore",
+				"ignored_field_names"
+			],
+			[
+				"Blo",
+				"BlockEdit"
+			],
+			[
+				"add",
+				"addElm"
+			],
+			[
+				"re",
+				"replacement"
+			],
+			[
+				"submi",
+				"submission"
+			],
+			[
+				"recap",
+				"recaptchaUrl"
+			],
+			[
+				"fomrl",
+				"formello"
+			],
+			[
+				"unse",
+				"unset"
+			],
+			[
+				"getOp",
+				"get_option"
+			],
+			[
+				"list",
+				"listElement"
+			],
+			[
+				"erro",
+				"errorWrapper"
+			],
+			[
+				"G",
+				"_GET"
+			],
+			[
+				"date",
+				"datetime_format"
+			],
+			[
+				"per",
+				"per_page"
+			],
+			[
+				"col",
+				"column_name"
+			],
+			[
+				"_",
+				"_GET"
+			],
+			[
+				"messa",
+				"messageDiv"
+			],
+			[
+				"mess",
+				"messageDiv"
+			],
+			[
+				"array",
+				"array_push"
+			],
+			[
+				"va",
+				"var_dump"
+			],
+			[
+				"error",
+				"error_code"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"pop",
+				"populate"
+			],
+			[
+				"sc",
+				"script_asset"
+			],
+			[
+				"forme",
+				"formello_pre_insert"
+			],
+			[
+				"scrip",
+				"script_asset_path"
+			],
+			[
+				"lis",
+				"listen_for_submit"
+			],
+			[
+				"bl",
+				"blockId"
+			],
+			[
+				"pro",
+				"propName"
+			],
+			[
+				"db",
+				"dbId"
+			],
+			[
+				"const",
+				"constraints"
+			],
+			[
+				"get",
+				"getConstraints"
+			],
+			[
+				"for",
+				"formBlock"
+			],
+			[
+				"field",
+				"fieldsId"
+			],
+			[
+				"fields",
+				"fieldsBlock"
+			],
+			[
+				"all",
+				"allowed"
+			],
+			[
+				"inner",
+				"innerBlocks"
+			],
+			[
+				"child",
+				"child_fields"
+			],
+			[
+				"arra",
+				"array_obj"
+			],
+			[
+				"blo",
+				"blockName"
+			],
+			[
+				"con",
+				"constraints"
+			],
+			[
+				"field_",
+				"field_merge_tags"
+			],
+			[
+				"root",
+				"rootBlock"
+			],
+			[
+				"A",
+				"ALLOWED_BLOCKS"
+			],
+			[
+				"Button",
+				"ButtonBlockAppender"
+			],
+			[
+				"para",
+				"paragraph"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"allowed",
+				"allowed_block_types"
+			],
+			[
+				"strok",
+				"strokeWidth"
+			],
+			[
+				"Tab",
+				"TabPanel"
+			],
+			[
+				"but",
+				"Button"
+			],
+			[
+				"tab",
+				"tableAmt"
+			],
+			[
+				"par",
+				"parseInt"
+			],
+			[
+				"to",
+				"toFixed"
+			],
+			[
+				"inter",
+				"interestRate"
+			],
+			[
+				"month",
+				"monthlyRate"
+			],
+			[
+				"response",
+				"responseDiv"
+			],
+			[
+				"class",
+				"className"
+			],
+			[
+				"clas",
+				"className"
+			],
+			[
+				"set",
+				"setAttributes"
+			],
+			[
+				"cla",
+				"className"
+			],
+			[
+				"post",
+				"post_id"
+			],
+			[
+				"fr",
+				"Fragment"
+			],
+			[
+				"desc",
+				"description"
+			],
+			[
+				"number",
+				"numberPattern"
+			],
+			[
+				"regi",
+				"registerBlockVariation"
+			],
+			[
+				"show",
+				"showLegend"
+			],
+			[
+				"setShow",
+				"setShowRaw"
+			],
+			[
+				"pare",
+				"parentId"
+			],
+			[
+				"use",
+				"useEffect"
+			],
+			[
+				"op",
+				"options"
+			],
+			[
+				"ra",
+				"rawOptions"
+			],
+			[
+				"text",
+				"TextareaControl"
+			],
+			[
+				"paren",
+				"parentAttributes"
+			],
+			[
+				"checbox",
+				"Checkboxes"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"ToolBar",
+				"ToolbarGroup"
+			],
+			[
+				"isVi",
+				"isVisible2"
+			],
+			[
+				"Merge",
+				"mergeTags"
+			],
+			[
+				"Se",
+				"SelectControl"
+			],
+			[
+				"Panel",
+				"PanelBody"
+			],
+			[
+				"formllo",
+				"formello_var"
+			],
+			[
+				"min",
+				"minLength"
+			],
+			[
+				"wp_enqueue",
+				"wp_enqueue_script"
+			],
+			[
+				"append",
+				"appendChild"
+			],
+			[
+				"selected",
+				"selectedForm"
+			],
+			[
+				"form_",
+				"form_id"
+			],
+			[
+				"ALl",
+				"AllForms"
+			],
+			[
+				"defau",
+				"defaultAttr"
+			],
+			[
+				"se",
+				"settings"
+			],
+			[
+				"inputDta",
+				"inputData"
+			],
+			[
+				"wp_enqueu",
+				"wp_enqueue_style"
+			],
+			[
+				"transl",
+				"translate3d()\ttransform"
+			],
+			[
+				"backgroud",
+				"background-color\tproperty"
+			],
+			[
+				"l",
+				"label\tTag"
+			],
+			[
+				"schema",
+				"schema2"
+			],
+			[
+				"chartQ",
+				"chartQuery2"
+			],
+			[
+				"day",
+				"dayjs"
+			],
+			[
+				"fo",
+				"form\tTag"
+			],
+			[
+				"ma",
+				"margin-top\tproperty"
+			],
+			[
+				"inli",
+				"inline-block\tdisplay"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Gruntfile.js",
+			"settings":
+			{
+				"buffer_size": 1424,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/Francesco/AppData/Roaming/Sublime Text 3/Packages/User/phpcs.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 2653,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php\n/**\n * Manage the frontend submissions.\n *\n * @package Formello\n */\n\nnamespace Formello;\n\nif ( ! defined( 'ABSPATH' ) ) {\n\texit; // Exit if accessed directly.\n}\n\nuse Formello\\Rakit\\Validation\\Validator;\n\n/**\n * Frontend Pages Handler\n *\n * @since 1.0.0\n */\nclass Frontend {\n\n\t/**\n\t * Validator\n\t *\n\t * @var $validator\n\t */\n\tprivate $validator;\n\n\t/**\n\t * Constructor\n\t */\n\tpublic function __construct() {\n\t\t$this->validator = new Validator();\n\n\t\tadd_action( 'wp_post_formello', array( $this, 'listen_for_submit' ) );\n\t\tadd_action( 'wp_post_nopriv_formello', array( $this, 'listen_for_submit' ) );\n\t\tadd_action( 'wp_ajax_formello', array( $this, 'listen_for_submit' ) );\n\t\tadd_action( 'wp_ajax_nopriv_formello', array( $this, 'listen_for_submit' ) );\n\t}\n\n\t/**\n\t * Listen for form submit\n\t */\n\tpublic function listen_for_submit() {\n\n\t\t// only respond to AJAX requests with _formello_form_id set.\n\t\tif ( empty( $_POST['_formello_id'] ) ) {\n\t\t\treturn;\n\t\t}\n\n\t\t$data       = $this->get_request_data();\n\t\t$form_id    = (int) $data['_formello_id'];\n\t\t$form       = new Form( $form_id );\n\t\t$error_code = $this->validate_form( $form, $data );\n\n\t\t// at this point we don't need anymore recaptcha.\n\t\tif ( isset( $data['g-recaptcha-response'] ) ) {\n\t\t\tunset( $data['g-recaptcha-response'] );\n\t\t}\n\n\t\tif ( empty( $error_code ) ) {\n\n\t\t\t/**\n\t\t\t* Filters the field names that should be ignored on the Submission object.\n\t\t\t* Fields starting with an underscore (_) are ignored by default.\n\t\t\t*\n\t\t\t* @param array $names\n\t\t\t*/\n\t\t\t$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'g-recaptcha-response' ) );\n\n\t\t\t// sanitize data: strip tags etc.\n\t\t\t$store = new Data( $data, $form_id, $ignored_field_names );\n\t\t\t$store->process( $data );\n\n\t\t\t// save submission object so that other form processor have an insert ID to work with (eg file upload).\n\t\t\tif ( $form->settings['storeSubmissions'] ) {\n\t\t\t\t$store->save();\n\t\t\t}\n\n\t\t\t/**\n\t\t\t* General purpose hook that runs before all form actions, so we can still modify the submission object that is passed to actions.\n\t\t\t*/\n\t\t\tdo_action( 'formello_process_form', $form, $store );\n\n\t\t\t// re-save submission object for convenience in form processors hooked into formello_process_form.\n\t\t\tif ( $form->settings['storeSubmissions'] ) {\n\t\t\t\t$store->save();\n\t\t\t}\n\n\t\t\t// process form actions.\n\t\t\tif ( isset( $form->settings['actions'] ) ) {\n\t\t\t\tforeach ( $form->settings['actions'] as $action_settings ) {\n\t\t\t\t\t/**\n\t\t\t\t\t * Processes the specified form action and passes related data.\n\t\t\t\t\t *\n\t\t\t\t\t * @param array $action_settings\n\t\t\t\t\t * @param Submission $store\n\t\t\t\t\t * @param Form $form\n\t\t\t\t\t */\n\t\t\t\t\tdo_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings['settings'], $store, $form );\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t/**\n\t\t\t * General purpose hook after all form actions have been processed for this specific form. The dynamic portion of the hook refers to the form slug.\n\t\t\t *\n\t\t\t * @param Submission $store\n\t\t\t * @param Form $form\n\t\t\t */\n\t\t\tdo_action( \"formello_form_{$form->slug}_success\", $store, $form );\n\n\t\t\t/**\n\t\t\t * General purpose hook after all form actions have been processed.\n\t\t\t *\n\t\t\t * @param Submission $store\n\t\t\t * @param Form $form\n\t\t\t */\n\t\t\tdo_action( 'formello_form_success', $store, $form );\n\t\t} else {\n\t\t\t/**\n\t\t\t * General purpose hook for when a form error occurred\n\t\t\t *\n\t\t\t * @param string $error_code\n\t\t\t * @param Form $form\n\t\t\t * @param array $data\n\t\t\t */\n\t\t\tdo_action( 'formello_form_error', $error_code, $form, $data );\n\t\t}\n\n\t\t$response = $this->get_response_for_error_code( $error_code, $form, $data );\n\n\t\twp_send_json( $response, 200 );\n\t\twp_die();\n\n\t}\n\n\t/**\n\t * Form validation\n\t *\n\t * @param Form  $form The form.\n\t * @param array $data Form data.\n\t * @return string\n\t */\n\tpublic function validate_form( Form $form, array $data ) {\n\n\t\t// validate honeypot field.\n\t\t$honeypot_key = sprintf( '_formello_h%d', $form->ID );\n\t\tif ( ! isset( $data[ $honeypot_key ] ) || '' !== $data[ $honeypot_key ] ) {\n\t\t\treturn 'spam';\n\t\t}\n\t\t// validate recaptcha.\n\t\tif ( isset( $data['g-recaptcha-response'] ) ) {\n\t\t\t$captcha_validate = $this->validate_recaptcha( $form, $data );\n\t\t}\n\n\t\tif ( isset( $captcha_validate ) && ( false === $captcha_validate ) ) {\n\t\t\treturn array( 'captcha' => 'invalid captcha' );\n\t\t}\n\n\t\t// perform validation.\n\t\t$validation = $this->validator->make( $data, $form->constraints );\n\n\t\t// then validate.\n\t\t$validation->validate();\n\n\t\tif ( $validation->fails() ) {\n\t\t\t// handling errors.\n\t\t\t$errors = $validation->errors();\n\n\t\t\treturn $errors->firstOfAll();\n\n\t\t}\n\n\t\t$error_code = '';\n\n\t\t/**\n\t\t * This filter allows you to perform your own form validation. The dynamic portion of the hook refers to the form slug.\n\t\t *\n\t\t * Return a non-empty string if you want to raise an error.\n\t\t * Error codes with a specific error message are: \"required_field_missing\", \"invalid_email\", and \"error\"\n\t\t *\n\t\t * @param string $error_code\n\t\t * @param Form $form\n\t\t * @param array $data\n\t\t */\n\t\t$error_code = apply_filters( 'formello_validate_form_' . $form->id, $error_code, $form, $data );\n\n\t\t/**\n\t\t * This filter allows you to perform your own form validation.\n\t\t *\n\t\t * Return a non-empty string if you want to raise an error.\n\t\t * Error codes with a specific error message are: \"required_field_missing\", \"invalid_email\", and \"error\"\n\t\t *\n\t\t * @param string $error_code\n\t\t * @param Form $form\n\t\t * @param array $data\n\t\t */\n\t\t$error_code = apply_filters( 'formello_validate_form', $error_code, $form, $data );\n\n\t\tif ( ! empty( $error_code ) ) {\n\t\t\treturn $error_code;\n\t\t}\n\n\t\t// all good: no errors!\n\t\treturn '';\n\t}\n\n\t/**\n\t * ReCaptcha validation\n\t *\n\t * @param Form  $form The form.\n\t * @param array $data Form data.\n\t * @return string\n\t */\n\tprivate function validate_recaptcha( $form, $data ) {\n\n\t\t$captcha_postdata = http_build_query(\n\t\t\tarray(\n\t\t\t\t'secret'   => $form->settings['recaptcha']['secret_key'],\n\t\t\t\t'response' => $data['g-recaptcha-response'],\n\t\t\t\t'remoteip' => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',\n\t\t\t)\n\t\t);\n\n\t\t$captcha_opts = array(\n\t\t\t'http' => array(\n\t\t\t\t'method'  => 'POST',\n\t\t\t\t'header'  => 'Content-type: application/x-www-form-urlencoded',\n\t\t\t\t'content' => $captcha_postdata,\n\t\t\t),\n\t\t);\n\n\t\t$captcha_context  = stream_context_create( $captcha_opts );\n\t\t$captcha_response = json_decode( wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify', false, $captcha_context ), true );\n\n\t\treturn $captcha_response['success'];\n\t}\n\n\t/**\n\t * Get the data sent\n\t *\n\t * @return array\n\t */\n\tpublic function get_request_data() {\n\t\t$data = $_POST;\n\t\tunset( $data['action'] );\n\n\t\tif ( ! empty( $_FILES ) ) {\n\n\t\t\tforeach ( $_FILES as $field_name => $file ) {\n\t\t\t\t// only add non-empty files so that required field validation works as expected.\n\t\t\t\t// upload could still have errored at this point.\n\t\t\t\tif ( UPLOAD_ERR_NO_FILE !== $file['error'] ) {\n\t\t\t\t\t$data[ $field_name ] = sanitize_text_field( $file );\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\treturn $data;\n\t}\n\n\t/**\n\t * Get the response\n\t *\n\t * @param int   $error_code The error code number.\n\t * @param Form  $form The error code number.\n\t * @param array $data The error code number.\n\t * @return array\n\t */\n\tprivate function get_response_for_error_code( $error_code, Form $form, $data = array() ) {\n\t\t// return success response for empty error code string or spam (to trick bots).\n\t\tif ( '' === $error_code || 'spam' === $error_code ) {\n\t\t\t$response = array(\n\t\t\t\t'message'   => array(\n\t\t\t\t\t'type' => 'success',\n\t\t\t\t\t'text' => $form->get_message( 'success' ),\n\t\t\t\t),\n\t\t\t\t'hide_form' => (bool) $form->settings['hide'],\n\t\t\t);\n\n\t\t\tif ( ! empty( $form->settings['redirect_url'] ) ) {\n\t\t\t\t$response['redirect_url'] = formello_replace_data_variables( $form->settings['redirectUrl'], $data, 'urlencode' );\n\t\t\t}\n\n\t\t\treturn apply_filters( 'formello_form_response', $response, $form, $data );\n\t\t}\n\n\t\t// get error message.\n\t\t$message = $form->get_message( 'error' );\n\t\tif ( empty( $message ) ) {\n\t\t\t$message = $form->get_message( 'error' );\n\t\t}\n\n\t\t// return error response.\n\t\treturn array(\n\t\t\t'message' => array(\n\t\t\t\t'type'   => 'warning',\n\t\t\t\t'text'   => $message,\n\t\t\t\t'errors' => $error_code,\n\t\t\t),\n\t\t);\n\t}\n\n\t/*\n\tprivate function processUploads( $file, $form_id ){\n\n\t\t// Define data.\n\t\t$file_name            = sanitize_file_name( $file['name'] );\n\t\t$file_ext             = pathinfo( $file_name, PATHINFO_EXTENSION );\n\t\t$file_base            = wp_basename( $file_name, \".$file_ext\" );\n\t\t$file_name_new        = sprintf( '%s-%s.%s', $file_base, wp_hash( $file_name . uniqid() . $form_id ), strtolower( $file_ext ) );\n\t\t$uploads              = wp_upload_dir();\n\t\t$formello_uploads_root = trailingslashit( $uploads['basedir'] ) . 'formello';\n\n\t\t// Add filter to allow redefine store directory.\n\t\t$custom_uploads_root = apply_filters( 'formello_upload_root', $formello_uploads_root );\n\t\tif ( wp_is_writable( $custom_uploads_root ) ) {\n\t\t\t$formello_uploads_root = $custom_uploads_root;\n\t\t}\n\n\t\t$form_directory       = absint( $form_id ) . '-' . md5( $form_id );\n\t\t$formello_uploads_form = trailingslashit( $formello_uploads_root ) . $form_directory;\n\t\t$file_new             = trailingslashit( $formello_uploads_form ) . $file_name_new;\n\t\t$file_url             = trailingslashit( $uploads['baseurl'] ) . 'formello/' . trailingslashit( $form_directory ) . $file_name_new;\n\t\t$attachment_id        = '0';\n\n\t\t// Check for form upload directory destination.\n\t\tif ( ! file_exists( $formello_uploads_form ) ) {\n\t\t\twp_mkdir_p( $formello_uploads_form );\n\t\t}\n\n\t\t// Check if the index.html exists in the root uploads director, if not create it.\n\t\tif ( ! file_exists( trailingslashit( $formello_uploads_root ) . 'index.html' ) ) {\n\t\t\tfile_put_contents( trailingslashit( $formello_uploads_root ) . 'index.html', '' );\n\t\t}\n\n\t\t// Check if the index.html exists in the form uploads director, if not create it.\n\t\tif ( ! file_exists( trailingslashit( $formello_uploads_form ) . 'index.html' ) ) {\n\t\t\tfile_put_contents( trailingslashit( $formello_uploads_form ) . 'index.html', '' );\n\t\t}\n\n\t\t// Move the file to the uploads dir - similar to _wp_handle_upload().\n\t\t$move_new_file = @move_uploaded_file( $file['tmp_name'], $file_new );\n\n\t\t// Set correct file permissions.\n\t\t$stat  = stat( dirname( $file_new ) );\n\t\t$perms = $stat['mode'] & 0000666;\n\t\t@ chmod( $file_new, $perms );\n\n\t}\n\t*/\n}\n",
+			"file": "/C/Users/Francesco/AppData/Local/Temp/Rar$DIa0.509/class-frontend.php",
+			"file_size": 10702,
+			"file_write_time": 132580730780000000,
+			"settings":
+			{
+				"buffer_size": 10349,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/views/forms.php",
+			"settings":
+			{
+				"buffer_size": 393,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "includes/views/submissions.php",
+			"settings":
+			{
+				"buffer_size": 782,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "includes/views/submission.php",
+			"settings":
+			{
+				"buffer_size": 2455,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "phpcs.xml",
+			"settings":
+			{
+				"buffer_size": 1959,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/TagReplacers/class-wp.php",
+			"settings":
+			{
+				"buffer_size": 3284,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "includes/class-admin.php",
+			"settings":
+			{
+				"buffer_size": 10637,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "formello.php",
+			"settings":
+			{
+				"buffer_size": 5403,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/Tables/class-submissions.php",
+			"settings":
+			{
+				"buffer_size": 8233,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/xampp/htdocs/affiliateblog/wp-admin/includes/class-wp-list-table.php",
+			"settings":
+			{
+				"buffer_size": 41155,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "includes/Tables/class-forms.php",
+			"settings":
+			{
+				"buffer_size": 4014,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 24 files for \"{$wpdb->prefix}\"\n\nC:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes\\Tables\\class-forms.php:\n   33  \tpublic static function record_count() {\n   34  \t\tglobal $wpdb;\n   35: \t\treturn $wpdb->query( \"SELECT COUNT(*) FROM {$wpdb->prefix}formello_forms\" );\n   36  \t}\n   37  \n   ..\n  135  \t\tglobal $wpdb;\n  136  \t\t$params = array();\n  137: \t\t$table  = \"{$wpdb->prefix}formello_forms\";\n  138  \n  139  \t\t$sql = 'SELECT id, name, created_at FROM ' . $table;\n\nC:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes\\Tables\\class-submissions.php:\n   68  \n   69  \t\t$wpdb->delete(\n   70: \t\t\t\"{$wpdb->prefix}formello_submissions\",\n   71  \t\t\tarray( 'id' => absint( $id ) ),\n   72  \t\t\tarray( '%d' )\n   ..\n   85  \n   86  \t\treturn $wpdb->get_var(\n   87: \t\t\t$wpdb->prepare( 'SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d', array( $form_id ) )\n   88  \t\t);\n   89  \t}\n   ..\n  234  \t\tglobal $wpdb;\n  235  \n  236: \t\t$sql = \"SELECT id, data, submitted_at FROM {$wpdb->prefix}formello_submissions WHERE form_id = {$this->form_id}\";\n  237  \n  238  \t\tif ( ! empty( $_REQUEST['orderby'] ) ) {\n\n5 matches across 2 files\n\n\nSearching 24 files for \"foreach ( $_FILES as $field_name => $file )\"\n\nC:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes\\class-frontend.php:\n  294  \t\tif ( ! empty( $_FILES ) ) {\n  295  \n  296: \t\t\tforeach ( $_FILES as $field_name => $file ) {\n  297  \t\t\t\t// only add non-empty files so that required field validation works as expected.\n  298  \t\t\t\t// upload could still have errored at this point.\n\n1 match in 1 file\n\n\nSearching 2 files for \"form_id\"\n\nC:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes\\Tables\\class-submissions.php:\n   30  \t * The id of the form.\n   31  \t *\n   32: \t * @var $form_id\n   33  \t */\n   34: \tprotected $form_id;\n   35  \n   36  \t/**\n   ..\n   55  \t\t$this->date_format     = get_option( 'date_format' );\n   56  \t\t$this->datetime_format = sprintf( '%s %s', $this->date_format, get_option( 'time_format' ) );\n   57: \t\t$this->form_id         = isset( $_GET['form'] ) ? absint( $_GET['form'] ) : 1;\n   58  \n   59  \t}\n   ..\n   82  \tpublic static function record_count() {\n   83  \t\tglobal $wpdb;\n   84: \t\t$form_id = isset( $_GET['form'] ) ? absint( $_GET['form'] ) : 0;\n   85  \n   86  \t\treturn $wpdb->get_var(\n   87: \t\t\t$wpdb->prepare( \"SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d\", array( $form_id ) )\n   88  \t\t);\n   89  \t}\n   ..\n  238  \t\tglobal $wpdb;\n  239  \n  240: \t\t$sql = \"SELECT id, data, submitted_at FROM {$wpdb->prefix}formello_submissions WHERE form_id = {$this->form_id}\";\n  241  \n  242  \t\tif ( ! empty( $_REQUEST['orderby'] ) ) {\n  ...\n  326  \t\t$actions = array(\n  327  \t\t\t'edit' => sprintf(\n  328: \t\t\t\t'<a href=\"?page=%s&form_id=%s&submission=%s\">View</a>',\n  329  \t\t\t\t'formello-submission',\n  330  \t\t\t\tsanitize_text_field( $_REQUEST['form'] ),\n\n9 matches in 1 file\n\n\nSearching 24 files for \"stocazzo\"\n\nC:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes\\class-admin.php:\n  200  \n  201  \t\tif ( empty( $object ) ) {\n  202: \t\t\treturn _e( 'stocazzo' );\n  203  \t\t}\n  204  \t\t$submission = Submission::from_object( $object );\n\n1 match in 1 file\n",
+			"settings":
+			{
+				"buffer_size": 3224,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "includes/class-frontend.php",
+			"settings":
+			{
+				"buffer_size": 10359,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/Actions/class-email.php",
+			"settings":
+			{
+				"buffer_size": 2622,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "includes/class-api.php",
+			"settings":
+			{
+				"buffer_size": 971,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/class-assets.php",
+			"settings":
+			{
+				"buffer_size": 3693,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/class-block.php",
+			"settings":
+			{
+				"buffer_size": 2596,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/class-data.php",
+			"settings":
+			{
+				"buffer_size": 4471,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/class-form.php",
+			"settings":
+			{
+				"buffer_size": 1709,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "includes/defaults.php",
+			"settings":
+			{
+				"buffer_size": 1847,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 137.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"PHP Code Sniffer: ",
+				"PHP Code Sniffer: Switch coding standard"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"prefe",
+				"Preferences: SublimeLinter Settings"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"INSTA",
+				"Package Control: Install Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: install",
+				"Package Control: Install Package"
+			],
+			[
+				"Raw Line Edit: Toggle",
+				"Raw Line Edit: Toggle"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 436.0
+	},
+	"console":
+	{
+		"height": 171.0,
+		"history":
+		[
+			"raw line edit",
+			"RawLineEdit: toggle",
+			"Raw Line Edit: Toggle"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Actions",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Api",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Tables",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/views"
+	],
+	"file_history":
+	[
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Actions/class-action.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Actions/class-mailchimp.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Api/class-form.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Api/class-mailchimp.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Api/class-settings.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Tables/class-forms.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Tables/class-submissions.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/.editorconfig",
+		"/C/Users/Francesco/AppData/Roaming/Sublime Text 3/Packages/User/SublimeLinter.sublime-settings",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/class-wp.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/Wp.php",
+		"/C/Users/Francesco/AppData/Roaming/Sublime Text 3/Packages/User/phpcs.sublime-settings",
+		"/C/Users/Francesco/AppData/Roaming/Sublime Text 3/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/defaults.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/class-submission.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/phpcs.xml",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/index.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/views/forms.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/views/submission.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/views/submissions.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/class-replacer.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/uninstall.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/actions/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/Gruntfile.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/readme.txt",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/actions/baseaction/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/class-fields.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/class-other.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/class-frontend.php",
+		"/C/Users/Francesco/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/Francesco/AppData/Roaming/Sublime Text 3/Packages/Phpcs/phpcs.sublime-settings",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/class-form.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/formello.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/package.json",
+		"/C/Users/Francesco/AppData/Local/Temp/Rar$DIa0.193/formello.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/Other.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/Fields.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Admin.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/TagReplacers/Replacer.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Frontend.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Api.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Assets.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Block.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Data.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Actions/class-email.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/dashboard.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/debug.log",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/.git/config",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/build/composer.json",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Submission.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Form.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/composer.json",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/composer.lock",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/actions/mailchimp/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/phpcs.xml.dist",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/scoper.inc.php",
+		"/F/Progetti/CodeCanyon/Refactoring/apiservertest/lumen/dashy/vendor/mockery/mockery/tests/Mockery/Fixtures/SemiReservedWordsAsMethods.php",
+		"/C/Users/Francesco/AppData/Roaming/Composer/vendor/squizlabs/php_codesniffer/phpcs.xml.dist",
+		"/C/Users/Francesco/AppData/Roaming/Composer/vendor/squizlabs/php_codesniffer/.cspell.json",
+		"/C/Users/Francesco/AppData/Roaming/Composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf.dist",
+		"/C/Users/Francesco/AppData/Roaming/Composer/config.json",
+		"/C/xampp/php/pear/Archive/Tar.php",
+		"/C/Users/Francesco/AppData/Roaming/Composer/composer.json",
+		"/C/Users/Francesco/AppData/Roaming/Composer/vendor/squizlabs/php_codesniffer/composer.json",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/config.json",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Api/Form.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/form/edit.js",
+		"/C/xampp/php/php.ini",
+		"/C/xampp/php/pear/PEAR.php",
+		"/C/xampp/php/pear/pearcmd.php",
+		"/C/xampp/php/go-pear.phar.php",
+		"/C/xampp/php/go-pear.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Tables/Forms.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/dasdsa/composer.json",
+		"/C/Users/Francesco/AppData/Roaming/Composer/vendor/squizlabs/php_codesniffer/CodeSniffer.conf",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/style.scss",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/select/edit.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formello/includes/Frontend.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/select/attributes.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/select/opts.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/actions/base/filterMergeTags.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/button/edit.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/frontend/frontend.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/button/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/button/save.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/input/variations.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/input/attributes.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/form/save.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/select/save.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/input/edit.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/input/save.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/starter-block-old/src/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/testGrunt/Gruntfile.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/select/editor.scss",
+		"/C/Users/Francesco/AppData/Local/Temp/Rar$DIa0.378/class-drop-uploader.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Tables/Submissions.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/input/editor.scss",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/input/style.scss",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/tagList.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/editor.scss",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/style_old.scss",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/actions/mailchimp/edit.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Api/MailChimp.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/actions/base/filters.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/build/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/form/attributes.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Actions/MailChimp.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/functions.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/editor.scss",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/tagSelector.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/actions/baseaction/edit.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/gutenforms/includes/global/block-file.php",
+		"/C/xampp/htdocs/affiliateblog/wp-config.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/formaster.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/input/constants.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/searchTags.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/html-forms/src/functions.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fieldset/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/fields/select/index.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/build/vendor/rakit/validation/src/Helper.php",
+		"/C/Users/Francesco/AppData/Local/Temp/Rar$DIa0.044/API.php",
+		"/C/Users/Francesco/AppData/Local/Temp/Rar$DIa0.303/PHPExcel.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/tagListNew.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/src/blocks/components/merge-tags/list.js",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Actions/Action.php",
+		"/C/xampp/htdocs/affiliateblog/wp-content/plugins/formaster/includes/Actions/Email.php"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 362.0,
+		"where_history":
+		[
+			"C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes",
+			"C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes\\Tables",
+			"C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formaster\\includes"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"get_request_data",
+			", 5",
+			"5,",
+			"stocazzo",
+			"screen",
+			"this->",
+			"formello_pre_insert",
+			"process_bulk_delete_submissions",
+			"form",
+			"paged",
+			"so3902760_wp_admin_submenu_filter",
+			"forms_page",
+			"this->",
+			"forms_page",
+			"get_request_data",
+			"get_items_per_page",
+			"get_request_data",
+			"submissions_per_page",
+			", 5",
+			"forms_per_page",
+			", 5",
+			"submissions_per_page",
+			"created",
+			"name",
+			"$form_id",
+			"form_id",
+			"get_items_per_page",
+			"get_submission_columns",
+			"submission_page_detail",
+			"get_hidden_columns",
+			"5",
+			"name",
+			"submitted_at",
+			"set_screen",
+			"submission_page_detail",
+			"forms",
+			"forms_per_page",
+			"forms_",
+			"set_screen",
+			"submissions_page",
+			"submissions_page2",
+			"submissions_page",
+			"forms_page",
+			"submission_hook",
+			"get_request_data",
+			"replaceTags",
+			"sanitize",
+			"$this->saniti",
+			"this->saniti",
+			"sanitize",
+			"validate_form",
+			"get_request_data",
+			"foreach ( $_FILES as $field_name => $file )",
+			"{$wpdb->prefix}",
+			"$this->"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 20,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Gruntfile.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1424,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								379,
+								379
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 16,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/Francesco/AppData/Roaming/Sublime Text 3/Packages/User/phpcs.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2653,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 840.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/Francesco/AppData/Local/Temp/Rar$DIa0.509/class-frontend.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10349,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4670.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "includes/views/forms.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 393,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								339,
+								339
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "includes/views/submissions.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 782,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								505,
+								505
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "includes/views/submission.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2455,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2358,
+								2358
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "phpcs.xml",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1959,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1467,
+								1467
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 21,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "includes/TagReplacers/class-wp.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3284,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1432,
+								1432
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 20,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "includes/class-admin.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10637,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3115,
+								3115
+							],
+							[
+								3413,
+								3413
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1980.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "formello.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5403,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4298,
+								4298
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3360.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "includes/Tables/class-submissions.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8233,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2649,
+								2649
+							],
+							[
+								4080,
+								4080
+							],
+							[
+								8089,
+								8089
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2899.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "/C/xampp/htdocs/affiliateblog/wp-admin/includes/class-wp-list-table.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 41155,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								28533,
+								28564
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 20415.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "includes/Tables/class-forms.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4014,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1707,
+								1707
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1200.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3224,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										257,
+										272
+									],
+									[
+										386,
+										401
+									],
+									[
+										630,
+										645
+									],
+									[
+										828,
+										843
+									],
+									[
+										1016,
+										1031
+									],
+									[
+										1386,
+										1429
+									],
+									[
+										1796,
+										1803
+									],
+									[
+										1835,
+										1842
+									],
+									[
+										2052,
+										2059
+									],
+									[
+										2229,
+										2236
+									],
+									[
+										2423,
+										2430
+									],
+									[
+										2446,
+										2453
+									],
+									[
+										2611,
+										2618
+									],
+									[
+										2629,
+										2636
+									],
+									[
+										2790,
+										2797
+									],
+									[
+										3122,
+										3130
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								3126,
+								3126
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 4,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1780.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "includes/class-frontend.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								952,
+								952
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 799.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "includes/Actions/class-email.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2622,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								438,
+								438
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1860.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
+					"file": "includes/class-api.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 971,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								226,
+								6
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 19,
+					"type": "text"
+				},
+				{
+					"buffer": 17,
+					"file": "includes/class-assets.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3693,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								30,
+								30
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2340.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "includes/class-block.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2596,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								907,
+								907
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 540.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 18,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "includes/class-data.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4471,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2601,
+								2601
+							],
+							[
+								3132,
+								3132
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 719.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 20,
+					"file": "includes/class-form.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1709,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 21,
+					"file": "includes/defaults.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1847,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								366,
+								366
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 420.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 17,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 126.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "formello.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 391.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -5,10 +5,16 @@
 </style>
 <?php
 defined( 'ABSPATH' ) || exit;
-
-$this->forms_table->prepare_items();
-$this->forms_table->display();
-
-
 ?>
+
+<form method="post">
+
+<?php
+$this->forms_table->prepare_items();
+//$this->forms_table->search_box( 'search', 'search_id' );
+$this->forms_table->display();
+?>
+
+</form>
+
 </div>

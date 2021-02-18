@@ -1,4 +1,10 @@
 <?php
+/**
+ * Manage FORM API.
+ *
+ * @package Formello
+ */
+
 namespace Formello\Api;
 
 use WP_REST_Controller;
@@ -53,12 +59,6 @@ class Form extends WP_REST_Controller {
 					'args'                => array( $this->get_collection_params() ),
 				),
 				array(
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'update_item' ),
-					'permission_callback' => array( $this, 'update_item_permissions_check' ),
-					'args'                => array( $this->get_collection_params() ),
-				),
-				array(
 					'methods'             => \WP_REST_Server::DELETABLE,
 					'callback'            => array( $this, 'delete_item' ),
 					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
@@ -79,9 +79,9 @@ class Form extends WP_REST_Controller {
 	public function get_items( $request ) {
 		$args = array(
 			'numberposts'    => -1, // -1 is for all
-			'post_type'      => 'formello-form', // or 'post', 'page'.
-			'orderby'        => 'date', // or 'date', 'rand'.
-			'order'          => 'ASC', // or 'DESC'.
+			'post_type'      => 'formello-form', // or post, page.
+			'orderby'        => 'date', // or date, rand.
+			'order'          => 'ASC', // or DESC.
 			'page'           => 1,
 			'posts_per_page' => 2,
 		);
@@ -148,16 +148,6 @@ class Form extends WP_REST_Controller {
 		$response = rest_ensure_response( array( 'id' => $wpdb->insert_id ) );
 
 		return $response;
-
-	}
-
-	/**
-	 * Update one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function update_item( $request ) {
 
 	}
 

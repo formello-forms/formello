@@ -4,7 +4,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $form_name = isset( $_GET['form_name'] ) ? sanitize_text_field( wp_unslash( $_GET['form_name'] ) ) : '';
-
+$form_page = add_query_arg( array( 'page' => 'formello' ) );
 ?>
 
 <h2>
@@ -20,10 +20,11 @@ $form_name = isset( $_GET['form_name'] ) ? sanitize_text_field( wp_unslash( $_GE
 <form method="post">
 	<?php
 	$this->submissions_table->prepare_items();
+	//$this->submissions_table->search_box( 'search', 'search_id' );
 	$this->submissions_table->display();
 	?>
 </form>
 
 <div class="hf-small-margin">
-	<p><a href="<?php echo esc_attr( remove_query_arg( array( 'form', 'paged', 'form_name' ) ) ); ?>">&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?></a></p>
+	<p><a href="<?php echo esc_attr( $form_page ); ?>">&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?></a></p>
 </div>

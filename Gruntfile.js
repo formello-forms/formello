@@ -35,7 +35,7 @@ module.exports = function( grunt ) {
 					'!composer.json',
 					'!composer.lock',
 					'!package-lock.json',
-					'!phpcs.xml.dist',
+					'!phpcs.xml',
 				],
 				dest: 'formello/',
 			},

@@ -1,4 +1,9 @@
 <?php
+/**
+ * Manage Settings API.
+ *
+ * @package Formello
+ */
 
 namespace Formello\Api;
 

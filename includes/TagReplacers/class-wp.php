@@ -35,7 +35,9 @@ class Wp {
 	 */
 	public function post_title() {
 		$post_id = $this->post_id();
-		if ( ! $post_id ) return;
+		if ( ! $post_id ) {
+			return;
+		}
 		$post = get_post( $post_id );
 		return ( $post ) ? $post->post_title : '';
 	}
@@ -45,7 +47,9 @@ class Wp {
 	 */
 	public function post_url() {
 		$post_id = $this->post_id();
-		if ( ! $post_id ) return;
+		if ( ! $post_id ) {
+			return;
+		}
 		$post = get_post( $post_id );
 		return ( $post ) ? get_permalink( $post->ID ) : '';
 	}
@@ -55,9 +59,13 @@ class Wp {
 	 */
 	public function post_author() {
 		$post_id = $this->post_id();
-		if ( ! $post_id ) return;
+		if ( ! $post_id ) {
+			return;
+		}
 		$post = get_post( $post_id );
-		if ( ! $post ) return '';
+		if ( ! $post ) {
+			return '';
+		}
 		$author = get_user_by( 'id', $post->post_author );
 		return $author->display_name;
 	}
@@ -67,9 +75,13 @@ class Wp {
 	 */
 	public function post_author_email() {
 		$post_id = $this->post_id();
-		if ( ! $post_id ) return;
+		if ( ! $post_id ) {
+			return;
+		}
 		$post = get_post( $post_id );
-		if ( ! $post ) return '';
+		if ( ! $post ) {
+			return '';
+		}
 		$author = get_user_by( 'id', $post->post_author );
 		return $author->user_email;
 	}
@@ -165,7 +177,9 @@ class Wp {
 	 */
 	public function post_meta( $meta ) {
 		$post_id = $this->post_id();
-		if ( ! $post_id ) return;
+		if ( ! $post_id ) {
+			return;
+		}
 		$result = get_post_meta( $post_id, $meta );
 
 		return ( $result ) ? $result : '';

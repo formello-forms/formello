@@ -1,11 +1,17 @@
 <?php
+/**
+ * Manage MailChimp API.
+ *
+ * @package Formello
+ */
+
 namespace Formello\Api;
 
 use WP_REST_Controller;
 use Formello\DrewM\MailChimp\MailChimp as SDK;
 
 /**
- * REST_API Handler
+ * MailChimp API Handler
  */
 class MailChimp extends WP_REST_Controller {
 

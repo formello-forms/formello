@@ -1,10 +1,22 @@
 <?php
+/**
+ * Manage API request.
+ *
+ * @package Formello
+ */
+
 namespace Formello;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 use WP_REST_Controller;
 
 /**
  * REST_API Handler
+ *
+ * @since 1.0.0
  */
 class Api extends WP_REST_Controller {
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Set our block attribute defaults.
+ * Set defaults settings.
  *
  * @package Formello
  */
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Get defaults for our general options.
  *
- * @since 0.1
+ * @since 1.0.0
  */
 function formello_get_option_defaults() {
 	return apply_filters(
@@ -59,4 +59,3 @@ function formello_get_option_defaults() {
 		)
 	);
 }
-

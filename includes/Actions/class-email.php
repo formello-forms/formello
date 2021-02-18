@@ -1,4 +1,9 @@
 <?php
+/**
+ * Perform email Action.
+ *
+ * @package Formello
+ */
 
 namespace Formello\Actions;
 
@@ -24,6 +29,7 @@ class Email extends Action {
 	 * @var string $label Action label.
 	 */
 	protected $label = 'Send Email';
+
 	/**
 	 * The action label.
 	 *

@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 $date_format     = get_option( 'date_format' );
 $datetime_format = sprintf( '%s %s', $date_format, get_option( 'time_format' ) );
-
+$submissions_page = add_query_arg( array( 'page' => 'formello-submissions' ) );
 ?>
 
 <h2>
@@ -88,6 +88,6 @@ $datetime_format = sprintf( '%s %s', $date_format, get_option( 'time_format' ) )
 
 <div>
 	<p>
-		<a href="<?php echo esc_attr( remove_query_arg( 'submission' ) ); ?>">&lsaquo; <?php esc_html_e( 'Back to submissions list', 'formello' ); ?></a>
+		<a href="<?php echo esc_attr( $submissions_page ); ?>">&lsaquo; <?php esc_html_e( 'Back to submissions list', 'formello' ); ?></a>
 	</p>
 </div>

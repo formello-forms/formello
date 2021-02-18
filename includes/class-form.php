@@ -1,7 +1,21 @@
 <?php
+/**
+ * Set our block attribute defaults.
+ *
+ * @package Formello
+ */
 
 namespace Formello;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Get defaults for our general options.
+ *
+ * @since 1.0.0
+ */
 class Form {
 
 	public $ID          = 0;
@@ -13,7 +27,7 @@ class Form {
 	/**
 	 * Form constructor.
 	 *
-	 * @param $id
+	 * @param int $id The form id.
 	 */
 	public function __construct( $id ) {
 
@@ -34,20 +48,9 @@ class Form {
 	}
 
 	/**
-	 * Magic method for accessing unexisting properties, eg lowercase "id".
+	 * Insert form in DB
 	 *
-	 * @param string $property
-	 * @return mixed
-	 */
-	public function __get( $property ) {
-		if ( 'id' === $property ) {
-			return $this->ID;
-		}
-	}
-
-	/**
-	 *
-	 * @param int $id
+	 * @param int $id The form ID.
 	 * @return Form
 	 */
 	public function populate( $id ) {
@@ -62,17 +65,15 @@ class Form {
 	}
 
 	/**
-	 * @param string $code
+	 * Get form message
+	 *
+	 * @param string $code The code response.
 	 * @return string
 	 */
 	public function get_message( $code ) {
 		$form    = $this;
 		$message = isset( $this->messages[ $code ] ) ? $this->messages[ $code ] : '';
 
-		/**
-		* @param string $message
-		* @param Form $form
-		*/
 		$message = apply_filters( 'formello_form_message_' . $code, $message, $form );
 		return $message;
 	}
