@@ -1,4 +1,4 @@
-=== Formaster ===
+=== Formello ===
 Contributors:      Francesco Pepe
 Tags:              block
 Requires at least: 5.5.0

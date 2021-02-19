@@ -64,7 +64,8 @@ registerBlockType( 'formello/fieldset', {
 	 */
 	supports: {
 		// Removes support for an HTML mode.
-		html: true,
+		className: false,
+		html: false,
 		reusable: false,
 	},
 

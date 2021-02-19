@@ -83,7 +83,7 @@ class Submissions extends \WP_List_Table {
 		$form_id = isset( $_GET['form'] ) ? absint( $_GET['form'] ) : 0;
 
 		return $wpdb->get_var(
-			$wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d", array( $form_id ) )
+			$wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d;", array( $form_id ) )
 		);
 	}
 
@@ -296,6 +296,9 @@ class Submissions extends \WP_List_Table {
 				if ( 'on' === $item ) {
 					return 'Yes';
 				}
+				if ( is_array( $item ) ) {
+					$item = implode( ',', $item );
+				}
 				return esc_html( $item );
 		}
 	}
@@ -328,7 +331,7 @@ class Submissions extends \WP_List_Table {
 				'formello-submission',
 				sanitize_text_field( $_REQUEST['form'] ),
 				absint( $item['id'] ),
-				isset( $_REQUEST['paged'] ) ? $_REQUEST['paged'] : '',
+				isset( $_REQUEST['paged'] ) ? sanitize_text_field( $_REQUEST['paged'] ) : '',
 				__( 'View', 'formello' )
 			),
 		);

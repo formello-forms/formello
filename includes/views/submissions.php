@@ -3,13 +3,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$form_name = isset( $_GET['form_name'] ) ? sanitize_text_field( wp_unslash( $_GET['form_name'] ) ) : '';
 $form_page = add_query_arg( array( 'page' => 'formello' ) );
 ?>
 
 <h2>
 <?php
-	esc_html_e( wp_sprintf( 'Submissions for %s', $form_name ), 'formello' );
+	esc_html_e( wp_sprintf( 'Submissions for %s', $form->name ), 'formello' );
 ?>
 </h2>
 

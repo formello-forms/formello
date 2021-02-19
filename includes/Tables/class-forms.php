@@ -32,7 +32,7 @@ class Forms extends \WP_List_Table {
 	 */
 	public static function record_count() {
 		global $wpdb;
-		return $wpdb->query( "SELECT COUNT(*) FROM {$wpdb->prefix}formello_forms" );
+		return $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->prefix}formello_forms;" );
 	}
 
 	/** Text displayed when no form data is available */
@@ -55,7 +55,6 @@ class Forms extends \WP_List_Table {
 					array(
 						'page'      => 'formello-submissions',
 						'form'      => $item['id'],
-						'form_name' => $item['name'],
 						'paged'     => false,
 						'order'     => false,
 						'orderby'   => false,

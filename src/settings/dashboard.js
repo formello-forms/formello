@@ -138,7 +138,7 @@ class App extends Component {
 
 							<PanelRow>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Site Key', 'formello' ) }
 									help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
 									value={ this.getSetting( 'recaptcha', 'site_key' ) }
 									onChange={ ( value ) => {
@@ -156,7 +156,7 @@ class App extends Component {
 							</PanelRow>
 							<PanelRow>
 								<TextControl
-									label={ __( 'Secret Key' ) }
+									label={ __( 'Secret Key', 'formello' ) }
 									help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
 									value={ this.getSetting( 'recaptcha', 'secret_key' ) }
 									onChange={ ( value ) => {
@@ -347,7 +347,7 @@ class App extends Component {
 
 							<PanelRow>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Email' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.email }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -365,7 +365,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Url' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.url }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -383,7 +383,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Number' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.number }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -401,7 +401,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Color', 'formello' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.color }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -419,7 +419,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Date', 'formello' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.date }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -437,7 +437,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Time', 'formello' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.time }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -455,7 +455,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Month', 'formello' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.month }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -473,7 +473,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Default', 'formello' ) }
 									value={ this.state.settings.validation_messages.patternMismatch.default }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -525,7 +525,7 @@ class App extends Component {
 
 							<PanelRow>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Over Range', 'formello' ) }
 									value={ this.state.settings.validation_messages.outOfRange.over }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -543,7 +543,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Under Range', 'formello' ) }
 									value={ this.state.settings.validation_messages.outOfRange.under }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -595,7 +595,7 @@ class App extends Component {
 
 							<PanelRow>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Over Length', 'formello' ) }
 									value={ this.state.settings.validation_messages.wrongLength.over }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -613,7 +613,7 @@ class App extends Component {
 									} }
 								/>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Under Length', 'formello' ) }
 									value={ this.state.settings.validation_messages.wrongLength.under }
 									onChange={ ( value ) => {
 										this.setState( {
@@ -665,7 +665,7 @@ class App extends Component {
 
 							<PanelRow>
 								<TextControl
-									label={ __( 'Site Key' ) }
+									label={ __( 'Api Key', 'formello' ) }
 									value={ this.state.settings.integrations.mailchimp.key }
 									onChange={ ( value ) => {
 										this.setState( {

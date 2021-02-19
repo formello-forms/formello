@@ -44,7 +44,7 @@ class Fields {
 
 			$field = $this->maybe_sanitize( $field );
 
-			$return .= '<tr><td>' . apply_filters( 'ninja_forms_merge_label', $field['label'], $field, $this->form_id ) .':</td><td>' . $field['value'] . '</td></tr>';
+			$return .= '<tr><td>' . apply_filters( 'ninja_forms_merge_label', $field['label'], $field, $this->form_id ) . ':</td><td>' . $field['value'] . '</td></tr>';
 		}
 		$return .= '</table>';
 		return $return;

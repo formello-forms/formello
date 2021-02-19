@@ -52,7 +52,7 @@ export default function Edit( {
 		() => {
 			let idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace(/-/g, '')
 			setAttributes( {
-				id: 'field-' + idx,
+				id: 'field_' + idx,
 			} )			
 			if( attributes.name.length < 1 ){
 				setAttributes( {

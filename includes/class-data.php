@@ -24,7 +24,6 @@ class Data {
 	 * @var $replacer
 	 */
 	private $replacer;
-	private $raw;
 	private $form_id;
 	private $ignored_field_names;
 	private $data        = array();
@@ -35,13 +34,15 @@ class Data {
 
 	/**
 	 * Constructor
+	 *
+	 * @param Int   $form_id The form ID.
+	 * @param Array $ignored_field_names The fields to ignore.
 	 */
-	public function __construct( $data, $form_id, $ignored_field_names = array() ) {
+	public function __construct( $form_id, $ignored_field_names = array() ) {
 		$this->replacer            = new TagReplacers\Replacer();
-		$this->raw                 = $data;
 		$this->form_id             = $form_id;
 		$this->ignored_field_names = $ignored_field_names;
-		$this->process( $data );
+		$this->process( $_POST );
 	}
 
 	/**
@@ -50,21 +51,10 @@ class Data {
 	 * @param array $data the data submitted.
 	 */
 	public function process( $data ) {
+
 		// filter out ignored field names.
 		foreach ( $data as $key => $value ) {
-			if ( '_' === $key[0] || in_array( $key, $this->ignored_field_names, false ) ) {
-				unset( $data[ $key ] );
-				continue;
-			}
-
-			// this detects the WPBruiser token field to ensure it isn't stored
-			// CAVEAT: this will detect any non-uppercase string with 2 dashes in the field name and no whitespace in the field value.
-			if ( class_exists( 'GoodByeCaptcha' ) && is_string( $key ) && is_string( $value ) && strtoupper( $key ) !== $key && substr_count( $key, '-' ) >= 2 && substr_count( trim( $value ), ' ' ) === 0 ) {
-				unset( $data[ $key ] );
-				continue;
-			}
-
-			$this->data[ $key ] = $this->sanitize( $value );
+			$this->data[ sanitize_key( $key ) ] = $this->sanitize( $value );
 		}
 		$this->ip_address   = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 		$this->user_agent   = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
@@ -136,6 +126,9 @@ class Data {
 	 * Save form submission in DB.
 	 */
 	public function save() {
+		// remove useless data.
+		$this->clean();
+
 		global $wpdb;
 		$table = $wpdb->prefix . 'formello_submissions';
 		$data  = array(
@@ -169,6 +162,40 @@ class Data {
 		$data         = empty( $object->data ) ? array() : (array) json_decode( $object->data, true );
 		$object->data = $data;
 		return $object;
+	}
+
+	/**
+	 * Get a Data array.
+	 *
+	 * @return array
+	 */
+	public function get_data() {
+		return $this->data;
+	}
+
+	/**
+	 * Get a clean Data array.
+	 *
+	 * @return array
+	 */
+	public function clean() {
+
+		// filter out ignored field names.
+		foreach ( $this->data as $key => $value ) {
+			if ( '_' === $key[0] || in_array( $key, $this->ignored_field_names, false ) ) {
+				unset( $this->data[ $key ] );
+				continue;
+			}
+
+			// this detects the WPBruiser token field to ensure it isn't stored
+			// CAVEAT: this will detect any non-uppercase string with 2 dashes in the field name and no whitespace in the field value.
+			if ( class_exists( 'GoodByeCaptcha' ) && is_string( $key ) && is_string( $value ) && strtoupper( $key ) !== $key && substr_count( $key, '-' ) >= 2 && substr_count( trim( $value ), ' ' ) === 0 ) {
+				unset( $this->data[ $key ] );
+				continue;
+			}
+
+		}
+
 	}
 
 }

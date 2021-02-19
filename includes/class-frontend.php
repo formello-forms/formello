@@ -49,29 +49,25 @@ class Frontend {
 			return;
 		}
 
-		$data       = $this->get_request_data();
-		$form_id    = (int) $data['_formello_id'];
-		$form       = new Form( $form_id );
+		$form_id = (int) $_POST['_formello_id'];
+		$form    = new Form( $form_id );
+
+		/**
+		* Filters the field names that should be ignored on the Submission object.
+		* Fields starting with an underscore (_) are ignored by default.
+		*
+		* @param array $names
+		*/
+		$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'action' ) );
+
+		// sanitize data: strip tags etc.
+		$store = new Data( $form_id, $ignored_field_names );
+		$data  = $store->get_data();
+
+		// perform validation on sanitized data.
 		$error_code = $this->validate_form( $form, $data );
 
-		// at this point we don't need anymore recaptcha.
-		if ( isset( $data['g-recaptcha-response'] ) ) {
-			unset( $data['g-recaptcha-response'] );
-		}
-
 		if ( empty( $error_code ) ) {
-
-			/**
-			* Filters the field names that should be ignored on the Submission object.
-			* Fields starting with an underscore (_) are ignored by default.
-			*
-			* @param array $names
-			*/
-			$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'g-recaptcha-response', 'action' ) );
-
-			// sanitize data: strip tags etc.
-			$store = new Data( $data, $form_id, $ignored_field_names );
-			$store->process( $data );
 
 			// save submission object so that other form processor have an insert ID to work with (eg file upload).
 			if ( $form->settings['storeSubmissions'] ) {
@@ -82,11 +78,6 @@ class Frontend {
 			* General purpose hook that runs before all form actions, so we can still modify the submission object that is passed to actions.
 			*/
 			do_action( 'formello_process_form', $form, $store );
-
-			// re-save submission object for convenience in form processors hooked into formello_process_form.
-			if ( $form->settings['storeSubmissions'] ) {
-				$store->save();
-			}
 
 			// process form actions.
 			if ( isset( $form->settings['actions'] ) ) {
@@ -238,23 +229,11 @@ class Frontend {
 	}
 
 	/**
-	 * Get the data sent
-	 *
-	 * @return array
-	 */
-	public function get_request_data() {
-		$data = $_POST;
-		// we don't need action name.
-		unset( $data['action'] );
-		return $data;
-	}
-
-	/**
 	 * Get the response
 	 *
 	 * @param int   $error_code The error code number.
-	 * @param Form  $form The error code number.
-	 * @param array $data The error code number.
+	 * @param Form  $form The form.
+	 * @param array $data The input data.
 	 * @return array
 	 */
 	private function get_response_for_error_code( $error_code, Form $form, $data = array() ) {

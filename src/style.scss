@@ -1,3 +1,12 @@
+.wp-block-formello-form {
+
+  fieldset {
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+
+}
+
 .wp-block-formello-form .formello {
   display: flex;
   align-items: center;
@@ -7,10 +16,6 @@
   legend {
     margin: .5em 0;
     font-weight: bold;
-  }
-
-  fieldset {
-    margin: .5em 0;
   }
 
   .error {

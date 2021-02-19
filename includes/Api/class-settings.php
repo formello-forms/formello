@@ -73,11 +73,11 @@ class Settings extends WP_REST_Controller {
 	/**
 	 * Update Settings.
 	 *
-	 * @param WP_REST_Request $request  request object.
+	 * @param \WP_REST_Request $request  request object.
 	 *
 	 * @return mixed
 	 */
-	public function update_settings( WP_REST_Request $request ) {
+	public function update_settings( \WP_REST_Request $request ) {
 		$current_settings = get_option( 'formello', array() );
 		$new_settings     = $request->get_param( 'settings' );
 

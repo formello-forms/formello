@@ -195,11 +195,17 @@ class Admin {
 		}
 
 		global $wpdb;
-		$table      = $wpdb->prefix . 'formello_submissions';
-		$object     = $wpdb->get_row( $wpdb->prepare( 'SELECT s.* FROM %1s s WHERE s.id = %d;', array( $table, $id ) ), OBJECT );
+		$object = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT s.* FROM {$wpdb->prefix}formello_submissions s WHERE s.id = %d;",
+				array( $id )
+			),
+			OBJECT
+		);
 
 		if ( empty( $object ) ) {
-			return _e( 'Invalid submission ID.' );
+			$message = __( 'No submissions found.', 'formello' );
+			return $this->error_notice( $message );
 		}
 		$submission = Submission::from_object( $object );
 
@@ -218,7 +224,20 @@ class Admin {
 	 */
 	public function submissions_page() {
 		if ( isset( $_GET['form'] ) ) {
-			$form = sanitize_text_field( wp_unslash( $_GET['form'] ) );
+			$id = sanitize_text_field( wp_unslash( $_GET['form'] ) );
+		}
+		global $wpdb;
+		$table = $wpdb->prefix . 'formello_forms';
+		$form  = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT s.* FROM {$wpdb->prefix}formello_forms s WHERE s.id = %d;",
+				array( $id )
+			),
+			OBJECT
+		);
+		if ( empty( $form ) ) {
+			$message = __( 'No submissions found for this form.', 'formello' );
+			return $this->error_notice( $message );
 		}
 		require dirname( __FILE__ ) . '/views/submissions.php';
 	}
@@ -230,7 +249,7 @@ class Admin {
 	 */
 	public function settings_page() {
 		?>
-			<div class="wrap formello-dashboard-wrap">
+			<div class="formello-dashboard-wrap">
 				<h1><?php esc_html_e( 'Settings', 'formello' ); ?></h1>
 
 				<div class="formello-settings-area">
@@ -243,7 +262,8 @@ class Admin {
 	/**
 	 * Store Formello form settings in DB.
 	 *
-	 * @since 0.1
+	 * @param Int   $id The id of form.
+	 * @param mixed $data The data to save.
 	 */
 	public function formello_pre_insert( $id, $data ) {
 
@@ -263,7 +283,8 @@ class Admin {
 	/**
 	 * Store Formello form settings in DB.
 	 *
-	 * @since 0.1
+	 * @param Int   $id The id of form.
+	 * @param mixed $block The block to save.
 	 */
 	public function formello_insert( $id, $block ) {
 
@@ -313,7 +334,8 @@ class Admin {
 	/**
 	 * Store Formello action settings in DB.
 	 *
-	 * @since 0.1
+	 * @param mixed $blocks The blocks actions.
+	 * @since 1.0.0
 	 */
 	protected function formello_get_actions( $blocks ) {
 
@@ -322,7 +344,7 @@ class Admin {
 		foreach ( $blocks as $block ) {
 
 			$actions[ $block['attrs']['name'] ] = array(
-				'settings' => $block['attrs']['settings'] ?: array(),
+				'settings' => $block['attrs']['settings'] ? $block['attrs']['settings'] : array(),
 				'type'     => $block['attrs']['type'], // str_replace( 'formello/actions-', '', $block['blockName']
 			);
 
@@ -336,11 +358,11 @@ class Admin {
 	 *
 	 * Caveat: if value is a file, an HTML string is returned (which means email action should use "Content-Type: html" when it includes a file field).
 	 *
-	 * @param string|array   $value
-	 * @param int            $limit
-	 * @param Closure|string $escape_function
+	 * @param string|array   $value The value of input.
+	 * @param int            $limit The limit.
+	 * @param Closure|string $escape_function The function for escaping.
 	 * @return string
-	 * @since 1.3.1
+	 * @since 1.0.0
 	 */
 	protected function formello_field_value( $value, $limit = 0, $escape_function = 'esc_html' ) {
 		if ( '' === $value ) {
@@ -367,7 +389,7 @@ class Admin {
 			$value = join( ', ', $value );
 		}
 
-		// limit string to certain length
+		// limit string to certain length.
 		if ( $limit > 0 ) {
 			$limited = strlen( $value ) > $limit;
 			$value   = substr( $value, 0, $limit );
@@ -388,7 +410,7 @@ class Admin {
 	/**
 	 * Returns true if value is a "file"
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The file value.
 	 * @return bool
 	 */
 	protected function formello_is_file( $value ) {
@@ -401,9 +423,9 @@ class Admin {
 	/**
 	 * Returns true if value looks like a date-string submitted from a <input type="date">
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The date value.
 	 * @return bool
-	 * @since 1.3.1
+	 * @since 1.0.0
 	 */
 	protected function formello_is_date( $value ) {
 
@@ -418,8 +440,10 @@ class Admin {
 	}
 
 	/**
-	 * @param int $size
-	 * @param int $precision
+	 * Human file size
+	 *
+	 * @param int $size The size of file.
+	 * @param int $precision The precision.
 	 * @return string
 	 */
 	protected function formello_human_filesize( $size, $precision = 2 ) {
@@ -430,5 +454,13 @@ class Admin {
 		return round( $size, $precision ) . $steps[ $i ];
 	}
 
-
+	/**
+	 * Add settings container.
+	 *
+	 * @param string $message The precision.	 
+	 */
+	public function error_notice( $message ) {
+		$class = 'notice notice-error';
+		return printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+	}
 }
