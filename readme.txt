@@ -1,8 +1,8 @@
-=== Formello ===
+=== Formellos ===
 Contributors:      Francesco Pepe
 Tags:              block
 Requires at least: 5.5.0
-Tested up to:      5.5.1
+Tested up to:      5.6.1
 Stable tag:        1.0.0
 Requires PHP:      7.0.0
 License:           GPL-2.0-or-later
