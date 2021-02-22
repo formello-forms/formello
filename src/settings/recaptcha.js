@@ -3,19 +3,15 @@ import {
   PanelRow,
   PanelBody,
   Button,
+  RadioControl,
   SelectControl,
-  Icon,
+  __experimentalNumberControl as NumberControl
 } from '@wordpress/components';
 
 import { __ } from '@wordpress/i18n';
-import MergeTags from '../../components/merge-tags';
 
-const OptionsList = props => {
+export default function recaptcha( props ) {
 
-  return props.options.map((obj, idx) => {
-
-    let key = obj.key,
-        value = obj.value;
     return (
 
 		<PanelBody
@@ -26,42 +22,24 @@ const OptionsList = props => {
 				<PanelRow className="formello-css-print-method">
 				    <RadioControl
 				        label="ReCaptcha type"
-				        help="The type of the current user"
-						selected={ this.getSetting( 'recaptcha', 'version' ) }
+						selected={ props.getSetting( 'recaptcha', 'version' ) }
 				        options={ [
 				            { label: 'ReCaptcha v2 checkbox', value: '1' },
 				            //{ label: 'ReCaptcha v2 invisible', value: 'uno' },
 				            { label: 'ReCaptcha v3 invisible', value: '3' },
 				        ] }
-						onChange={ ( value ) => {
-							this.setState( {
-								settings: {
-									...this.state.settings,
-									recaptcha: {
-										...this.state.settings.recaptcha,
-										version: value,
-									}
-								},
-							} );
+						onChange={ (val) => {
+							props.changeSettings( 'recaptcha', 'version', val )
 						} }
 				    />
 				</PanelRow>
-
 				<PanelRow>
 					<TextControl
 						label={ __( 'Site Key', 'formello' ) }
 						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-						value={ this.getSetting( 'recaptcha', 'site_key' ) }
-						onChange={ ( value ) => {
-							this.setState( {
-								settings: {
-									...this.state.settings,
-									recaptcha: {
-										...this.state.settings.recaptcha,
-										site_key: value,
-									}
-								},
-							} );
+						value={ props.getSetting( 'recaptcha', 'site_key' ) }
+						onChange={ (val) => {
+							props.changeSettings( 'recaptcha', 'site_key', val )
 						} }
 					/>
 				</PanelRow>
@@ -69,58 +47,31 @@ const OptionsList = props => {
 					<TextControl
 						label={ __( 'Secret Key', 'formello' ) }
 						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-						value={ this.getSetting( 'recaptcha', 'secret_key' ) }
-						onChange={ ( value ) => {
-							this.setState( {
-								settings: {
-									...this.state.settings,
-									recaptcha: {
-										...this.state.settings.recaptcha,
-										secret_key: value,
-									}
-								},
-							} );
+						value={ props.getSetting( 'recaptcha', 'secret_key' ) }
+						onChange={ (val) => {
+							props.changeSettings( 'recaptcha', 'secret_key', val )
 						} }
 					/>
 				</PanelRow>
+				{ ( props.getSetting( 'recaptcha', 'version' ) == 3 ) && 
 				<PanelRow>
-					<TextControl
+					<NumberControl
 						label={ __( 'Threshold' ) }
 						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-						value={ this.getSetting( 'recaptcha', 'threshold' ) }
-						onChange={ ( value ) => {
-							this.setState( {
-								settings: {
-									...this.state.settings,
-									recaptcha: {
-										...this.state.settings.recaptcha,
-										threshold: value,
-									}
-								},
-							} );
+						value={ props.getSetting( 'recaptcha', 'threshold' ) }
+						onChange={ (val) => {
+							props.changeSettings( 'recaptcha', 'threshold', val )
 						} }
+						step='0.1'
+						min='0'
+						max='1'
 					/>
 				</PanelRow>
-
-				{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-				<div className="formello-action-button">
-					<Button
-						isPrimary
-						disabled={ this.state.isAPISaving }
-						onClick={ ( e ) => this.updateSettings( e ) }
-					>
-						{ this.state.isAPISaving && <Spinner /> }
-						{ ! this.state.isAPISaving && __( 'Save' ) }
-					</Button>
-
-					<span className="formello-action-message"></span>
-				</div>
+				}
 
 			</div>
 		</PanelBody>
 
     );
-  });
+
 };
-export default OptionsList;

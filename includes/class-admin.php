@@ -150,31 +150,20 @@ class Admin {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
-		wp_enqueue_style(
-			'formello-dashboard',
-			FORMELLO_URL . '/build/dashboard.css',
-			array( 'wp-components' ),
-			FORMELLO_VERSION
-		);
-
-		wp_enqueue_script(
-			'formello-settings',
-			FORMELLO_URL . '/build/dashboard.js',
-			array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ),
-			FORMELLO_VERSION,
-			true
-		);
+		wp_enqueue_script( 'formello-settings' );
+		wp_enqueue_style( 'formello-settings' );
 
 		wp_localize_script(
 			'formello-settings',
 			'formelloSettings',
 			array(
 				'settings' => wp_parse_args(
-					get_option( 'formello', array() ),
-					formello_get_option_defaults()
+					get_option( 'formello', formello_get_option_defaults() )
 				),
 			)
 		);
+
+		do_action( 'formello_settings_scripts' );
 	}
 
 	/**
@@ -207,7 +196,7 @@ class Admin {
 			$message = __( 'No submissions found.', 'formello' );
 			return $this->error_notice( $message );
 		}
-		$submission = Submission::from_object( $object );
+		$submission = Data::from_object( $object );
 
 		require dirname( __FILE__ ) . '/views/submission.php';
 	}
@@ -250,8 +239,6 @@ class Admin {
 	public function settings_page() {
 		?>
 			<div class="formello-dashboard-wrap">
-				<h1><?php esc_html_e( 'Settings', 'formello' ); ?></h1>
-
 				<div class="formello-settings-area">
 					<?php do_action( 'formello_settings_area' ); ?>
 				</div>
@@ -267,7 +254,7 @@ class Admin {
 	 */
 	public function formello_pre_insert( $id, $data ) {
 
-		// at this point, if it's not a new post, $postarr["ID"] should be set.
+		// parse the content.
 		$blocks = parse_blocks( $data['post_content'] );
 
 		foreach ( $blocks as $block ) {
@@ -288,23 +275,7 @@ class Admin {
 	 */
 	public function formello_insert( $id, $block ) {
 
-		$default_settings = array(
-			'recaptchaEnabled' => false,
-			'hide'             => false,
-			'storeSubmissions' => false,
-		);
-
-		$db_settings = get_option( 'formello', formello_get_option_defaults() );
-
-		// remove validation messages, we get this globally.
-		unset( $db_settings['validation_messages'] );
-		// unset( $db_settings['integrations'] );
-
-		$settings = array_merge( $db_settings, $block['attrs'] );
-		$settings = array_merge( $default_settings, $settings );
-
-		$settings['constraints'] = $block['attrs']['constraints'];
-
+		$settings            = $block['attrs'];
 		$settings['actions'] = array();
 
 		foreach ( $block['innerBlocks'] as $b ) {
@@ -313,8 +284,9 @@ class Admin {
 			}
 		}
 
-		$settings = maybe_serialize( $settings );
-		$name     = $block['attrs']['name'];
+		$form_settings = maybe_serialize( $settings );
+
+		$name = $block['attrs']['name'];
 
 		global $wpdb;
 
@@ -322,7 +294,7 @@ class Admin {
 		$wpdb->update(
 			$table,
 			array(
-				'settings' => $settings,
+				'settings' => $form_settings,
 				'name'     => $name,
 			),
 			array(
@@ -345,7 +317,7 @@ class Admin {
 
 			$actions[ $block['attrs']['name'] ] = array(
 				'settings' => $block['attrs']['settings'] ? $block['attrs']['settings'] : array(),
-				'type'     => $block['attrs']['type'], // str_replace( 'formello/actions-', '', $block['blockName']
+				'type'     => $block['attrs']['type'],
 			);
 
 		}

@@ -58,7 +58,7 @@ class Settings extends WP_REST_Controller {
 					'secret_key' => 'sanitize_text_field',
 					'message'    => 'sanitize_text_field',
 				),
-			),
+			)
 		);
 
 		$callback = $callbacks[ $name ];
@@ -95,7 +95,7 @@ class Settings extends WP_REST_Controller {
 			array(
 				'success'  => true,
 				'response' => __( 'Settings saved.', 'formello' ),
-			),
+			)
 		);
 	}
 

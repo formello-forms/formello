@@ -1,0 +1,504 @@
+# Copyright (C) 2021 Tropicalista
+# This file is distributed under the same license as the Formello plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Formello 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/formello\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-02-21T19:15:33+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: formello\n"
+
+#. Plugin Name of the plugin
+#: includes/class-admin.php:51
+msgid "Formello"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://example.com/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support."
+msgstr ""
+
+#. Author of the plugin
+msgid "Tropicalista"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://www.francescopepe.com/"
+msgstr ""
+
+#: includes/Actions/class-email.php:44
+msgid "Send Email"
+msgstr ""
+
+#: includes/Api/class-settings.php:87
+msgid "No changes found."
+msgstr ""
+
+#: includes/Api/class-settings.php:97
+msgid "Settings saved."
+msgstr ""
+
+#: includes/class-admin.php:53
+#: includes/Tables/class-forms.php:22
+#: includes/views/forms.php:2
+msgid "Forms"
+msgstr ""
+
+#: includes/class-admin.php:53
+#: includes/class-admin.php:54
+#: includes/Tables/class-submissions.php:50
+msgid "Submissions"
+msgstr ""
+
+#: includes/class-admin.php:55
+#: includes/Tables/class-submissions.php:49
+msgid "Submission"
+msgstr ""
+
+#: includes/class-admin.php:56
+msgid "Settings"
+msgstr ""
+
+#: includes/class-admin.php:209
+msgid "No submissions found."
+msgstr ""
+
+#: includes/class-admin.php:241
+msgid "No submissions found for this form."
+msgstr ""
+
+#: includes/class-form.php:45
+msgid "Success"
+msgstr ""
+
+#: includes/class-form.php:46
+msgid "Error"
+msgstr ""
+
+#: includes/Tables/class-forms.php:21
+#: build/index.js:11103
+#: src/blocks/form/index.js:24
+msgid "Form"
+msgstr ""
+
+#: includes/Tables/class-forms.php:40
+msgid "No forms available."
+msgstr ""
+
+#: includes/Tables/class-submissions.php:92
+msgid "No submissions available."
+msgstr ""
+
+#: includes/Tables/class-submissions.php:335
+msgid "View"
+msgstr ""
+
+#: includes/views/submission.php:37
+msgid "Fields"
+msgstr ""
+
+#: includes/views/submission.php:56
+msgid "Additional info"
+msgstr ""
+
+#: includes/views/submission.php:60
+msgid "Timestamp"
+msgstr ""
+
+#: includes/views/submission.php:66
+msgid "User Agent"
+msgstr ""
+
+#: includes/views/submission.php:73
+msgid "IP Address"
+msgstr ""
+
+#: includes/views/submission.php:79
+msgid "Referrer URL"
+msgstr ""
+
+#: includes/views/submission.php:91
+msgid "Back to submissions list"
+msgstr ""
+
+#: includes/views/submissions.php:28
+msgid "Back to forms list"
+msgstr ""
+
+#: build/dashboard.js:554
+#: src/settings/integrations.js:30
+msgid "Integrations"
+msgstr ""
+
+#: build/dashboard.js:557
+#: src/settings/integrations.js:35
+msgid "Here you can add integration settings."
+msgstr ""
+
+#: build/dashboard.js:592
+msgid "MIssing Value"
+msgstr ""
+
+#: build/dashboard.js:627
+msgid "Pattern Mismatch"
+msgstr ""
+
+#: build/dashboard.js:680
+msgid "Out of Range"
+msgstr ""
+
+#: build/dashboard.js:697
+msgid "Wrong Length"
+msgstr ""
+
+#: build/dashboard.js:740
+#: src/settings/recaptcha.js:19
+msgid "Google ReCaptcha"
+msgstr ""
+
+#: build/dashboard.js:760
+#: src/settings/recaptcha.js:38
+msgid "Site Key"
+msgstr ""
+
+#: build/dashboard.js:761
+#: build/dashboard.js:768
+#: build/dashboard.js:775
+#: src/settings/recaptcha.js:39
+#: src/settings/recaptcha.js:49
+#: src/settings/recaptcha.js:59
+msgid "Sync our responsive preview controls with the editor responsive previews."
+msgstr ""
+
+#: build/dashboard.js:767
+#: src/settings/recaptcha.js:48
+msgid "Secret Key"
+msgstr ""
+
+#: build/index.js:7352
+#: build/index.js:7353
+#: build/index.js:9287
+#: build/index.js:10228
+#: build/index.js:10979
+#: src/blocks/actions/base/option-fields.js:22
+#: src/blocks/actions/base/option-fields.js:23
+#: src/blocks/fields/input/edit.js:80
+#: src/blocks/fields/select/edit.js:135
+#: src/blocks/form/edit.js:120
+msgid "Name"
+msgstr ""
+
+#: build/index.js:7359
+#: build/index.js:7361
+#: build/index.js:9304
+#: build/index.js:10514
+#: src/blocks/actions/base/option-fields.js:28
+#: src/blocks/actions/base/option-fields.js:30
+#: src/blocks/fields/input/edit.js:94
+#: src/blocks/fields/select/opts.js:18
+msgid "Value"
+msgstr ""
+
+#: build/index.js:7535
+#: src/blocks/actions/email/edit.js:136
+msgid "Enter message..."
+msgstr ""
+
+#: build/index.js:7598
+#: src/blocks/actions/email/index.js:41
+msgid "Email action"
+msgstr ""
+
+#: build/index.js:7604
+#: src/blocks/actions/email/index.js:47
+msgid "Set email acion to perform on form submit."
+msgstr ""
+
+#: build/index.js:7712
+#: src/blocks/actions/index.js:31
+msgid "Form actions"
+msgstr ""
+
+#: build/index.js:7718
+#: src/blocks/actions/index.js:37
+msgid "Add your form actions."
+msgstr ""
+
+#: build/index.js:8421
+#: src/blocks/components/merge-tags/tagSelector.js:39
+msgid "Search Tags"
+msgstr ""
+
+#: build/index.js:8501
+#: src/blocks/fields/button/edit.js:41
+msgid "Align Button Left"
+msgstr ""
+
+#: build/index.js:8505
+#: src/blocks/fields/button/edit.js:46
+msgid "Align Button Center"
+msgstr ""
+
+#: build/index.js:8509
+#: src/blocks/fields/button/edit.js:51
+msgid "Align Button Right"
+msgstr ""
+
+#: build/index.js:8513
+#: src/blocks/fields/button/edit.js:56
+msgid "Wide Button"
+msgstr ""
+
+#: build/index.js:8548
+#: src/blocks/fields/button/edit.js:97
+msgid "Text"
+msgstr ""
+
+#: build/index.js:8632
+#: src/blocks/fields/button/index.js:41
+msgid "Button"
+msgstr ""
+
+#: build/index.js:8638
+#: src/blocks/fields/button/index.js:47
+msgid "Submit Button."
+msgstr ""
+
+#: build/index.js:8881
+#: build/index.js:10684
+#: src/blocks/fields/checkboxes/edit.js:94
+#: src/blocks/fieldset/edit.js:79
+msgid "Enter legend..."
+msgstr ""
+
+#: build/index.js:9295
+#: build/index.js:10236
+#: build/index.js:10520
+#: src/blocks/fields/input/edit.js:87
+#: src/blocks/fields/select/edit.js:142
+#: src/blocks/fields/select/opts.js:27
+msgid "Label"
+msgstr ""
+
+#: build/index.js:9312
+#: src/blocks/fields/input/edit.js:103
+msgid "Placeholder"
+msgstr ""
+
+#: build/index.js:9320
+#: build/index.js:10252
+#: src/blocks/fields/input/edit.js:114
+#: src/blocks/fields/select/edit.js:161
+msgid "Required"
+msgstr ""
+
+#: build/index.js:9328
+#: build/index.js:10260
+#: src/blocks/fields/input/edit.js:122
+#: src/blocks/fields/select/edit.js:169
+msgid "Mark as Required"
+msgstr ""
+
+#: build/index.js:9336
+#: src/blocks/fields/input/edit.js:134
+msgid "Checked"
+msgstr ""
+
+#: build/index.js:9344
+#: src/blocks/fields/input/edit.js:144
+msgid "Show Description"
+msgstr ""
+
+#: build/index.js:9352
+#: src/blocks/fields/input/edit.js:155
+msgid "Add Tooltip"
+msgstr ""
+
+#: build/index.js:9360
+#: src/blocks/fields/input/edit.js:164
+msgid "Tooltip message"
+msgstr ""
+
+#: build/index.js:9372
+#: src/blocks/fields/input/edit.js:179
+msgid "Min Value"
+msgstr ""
+
+#: build/index.js:9382
+#: src/blocks/fields/input/edit.js:188
+msgid "Max Value"
+msgstr ""
+
+#: build/index.js:9391
+#: src/blocks/fields/input/edit.js:196
+msgid "Step Value"
+msgstr ""
+
+#: build/index.js:9399
+#: src/blocks/fields/input/edit.js:208
+msgid "Min Length"
+msgstr ""
+
+#: build/index.js:9407
+#: src/blocks/fields/input/edit.js:215
+msgid "Max Length"
+msgstr ""
+
+#: build/index.js:9415
+#: src/blocks/fields/input/edit.js:227
+msgid "Pattern"
+msgstr ""
+
+#: build/index.js:9423
+#: src/blocks/fields/input/edit.js:234
+msgid "Custom Validation Message"
+msgstr ""
+
+#: build/index.js:9431
+#: src/blocks/fields/input/edit.js:243
+msgid "Cols"
+msgstr ""
+
+#: build/index.js:9439
+#: src/blocks/fields/input/edit.js:250
+msgid "Rows"
+msgstr ""
+
+#: build/index.js:9450
+#: src/blocks/fields/input/edit.js:267
+msgid "Label alignment"
+msgstr ""
+
+#: build/index.js:9465
+#: src/blocks/fields/input/edit.js:276
+msgid "Label vertical alignment"
+msgstr ""
+
+#: build/index.js:9483
+#: src/blocks/fields/input/edit.js:286
+msgid "Label Class"
+msgstr ""
+
+#: build/index.js:9491
+#: src/blocks/fields/input/edit.js:293
+msgid "Field Class"
+msgstr ""
+
+#: build/index.js:9499
+#: src/blocks/fields/input/edit.js:300
+msgid "Description Class"
+msgstr ""
+
+#: build/index.js:9548
+#: build/index.js:10357
+#: src/blocks/fields/input/edit.js:361
+#: src/blocks/fields/select/edit.js:285
+msgid "Enter help message..."
+msgstr ""
+
+#: build/index.js:9630
+#: src/blocks/fields/input/index.js:43
+msgid "Input"
+msgstr ""
+
+#: build/index.js:9636
+#: src/blocks/fields/input/index.js:49
+msgid "Input field."
+msgstr ""
+
+#: build/index.js:9990
+#: src/blocks/fields/select/attributes.js:14
+msgid "select"
+msgstr ""
+
+#: build/index.js:9994
+#: src/blocks/fields/select/attributes.js:18
+msgid "Select field"
+msgstr ""
+
+#: build/index.js:10244
+#: src/blocks/fields/select/edit.js:149
+msgid "Allow multiple choices?"
+msgstr ""
+
+#: build/index.js:10268
+#: src/blocks/fields/select/edit.js:177
+msgid "Selected option"
+msgstr ""
+
+#: build/index.js:10288
+#: src/blocks/fields/select/edit.js:198
+msgid "Show description"
+msgstr ""
+
+#: build/index.js:10738
+#: src/blocks/fieldset/index.js:22
+msgid "Fieldset"
+msgstr ""
+
+#: build/index.js:10744
+#: src/blocks/fieldset/index.js:28
+msgid "Fieldset to group input."
+msgstr ""
+
+#: build/index.js:10987
+#: src/blocks/form/edit.js:125
+msgid "Display in row"
+msgstr ""
+
+#: build/index.js:10995
+#: src/blocks/form/edit.js:130
+msgid "Redirect Url"
+msgstr ""
+
+#: build/index.js:11003
+#: src/blocks/form/edit.js:135
+msgid "Store submissions"
+msgstr ""
+
+#: build/index.js:11011
+#: src/blocks/form/edit.js:140
+msgid "Enable ReCaptcha"
+msgstr ""
+
+#: build/index.js:11019
+#: src/blocks/form/edit.js:145
+msgid "Hide form after submission"
+msgstr ""
+
+#: build/index.js:11027
+#: src/blocks/form/edit.js:153
+msgid "Success Message"
+msgstr ""
+
+#: build/index.js:11035
+#: src/blocks/form/edit.js:158
+msgid "Error Message"
+msgstr ""
+
+#: build/index.js:11104
+#: src/blocks/form/index.js:25
+msgid "Drive conversions with beautiful forms."
+msgstr ""
+
+#: src/blocks/actions/baseaction/index.js:41
+#: src/blocks/actions/mailchimp/index.js:42
+msgid "Mailchimp"
+msgstr ""
+
+#: src/blocks/actions/baseaction/index.js:47
+msgid "Example block written with ESNext standard and JSX support – build step required."
+msgstr ""
+
+#: src/blocks/actions/mailchimp/index.js:48
+msgid "Set MailChimp action to perform on form submit."
+msgstr ""

@@ -98,7 +98,7 @@ function createRequestHandler (formEl) {
           console.log('Formello: failed to parse AJAX response.\n\nError: "' + error + '"')
           return
         }
-
+console.log(response)
         emitEvent('submitted', formEl)
 
         if (response.error) {
@@ -124,7 +124,7 @@ function createRequestHandler (formEl) {
         }
 
         // clear form
-        if (!response.error) {
+        if (!response.message.errors) {
           formEl.reset()
         }
       } else {
@@ -149,19 +149,21 @@ function validate( formEl ){
     return
   }
 
-  if( !formello.settings.recaptchaEnabled ){
+  var settings = formEl.dataset
+
+  if( !settings.recaptchaEnabled ){
     submitForm( formEl )
     return
   }
 
-  if( !formello.settings.recaptcha.site_key ){
+  if( !settings.recaptcha.site_key ){
     submitForm( formEl )
     return
   }
 
-  if( formello.settings.recaptcha.version == 3 ){
+  if( settings.recaptcha.version == 3 ){
     grecaptcha.ready(function() {
-      grecaptcha.execute( formello.settings.recaptcha.site_key, {action: 'submit'}).then(function(token) {
+      grecaptcha.execute( settings.recaptcha.site_key, {action: 'submit'}).then(function(token) {
 
         submitForm( formEl, token )
 
@@ -169,7 +171,7 @@ function validate( formEl ){
     });
   }
 
-  if( formello.settings.recaptcha.version == 1 ){
+  if( settings.recaptcha.version == 1 ){
         submitForm( formEl )
   }
 
@@ -178,8 +180,25 @@ function validate( formEl ){
 document.addEventListener('submit', handleSubmitEvents, true) // useCapture=false to ensure we bubble upwards (and thus can cancel propagation)
 
 var bouncer = new Bouncer('form', {
-  disableSubmit: false
+  disableSubmit: false,
+  messages: formello.settings.messages
 })
 
+window.formelloCallback = () => {
+  let buttons = document.querySelectorAll('.wp-block-formello-button')
+
+  for (var i = 0; i < buttons.length; i++) {
+
+    let gReCaptcha = document.createElement('div')
+    gReCaptcha.className = 'g-recaptcha'
+    buttons[i].appendChild(gReCaptcha);
+
+    grecaptcha.render( gReCaptcha, {
+      'sitekey' : formello.settings.recaptcha
+    });
+
+  }
+
+};
 
 console.log("formello loaded")

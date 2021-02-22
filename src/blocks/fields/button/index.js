@@ -90,9 +90,9 @@ registerBlockType( 'formello/button', {
 	 * Optional block extended support features.
 	 */
 	supports: {
-		className: false,
+		className: true,
+		html: false,
 		reusable: false,
-		multiple: false,
 		fontSize: false, // Enable padding UI control.
 	},
 

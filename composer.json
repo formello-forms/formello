@@ -11,8 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "rakit/validation": "dev-master",
-        "drewm/mailchimp-api": "dev-master"
+        "rakit/validation": "dev-master"
     },
     "scripts": {
         "php": [

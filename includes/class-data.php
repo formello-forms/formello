@@ -7,6 +7,8 @@
 
 namespace Formello;
 
+use Formello\Form;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -21,39 +23,77 @@ class Data {
 	/**
 	 * The replacer
 	 *
-	 * @var $replacer
+	 * @var TagReplacers\Replacer
 	 */
 	private $replacer;
-	private $form_id;
+	/**
+	 * Form ID
+	 *
+	 * @var Int
+	 */
+	private $form;
+	/**
+	 * The ignored fields array
+	 *
+	 * @var array
+	 */
 	private $ignored_field_names;
-	private $data        = array();
-	private $ip_address  = '';
-	private $user_agent  = '';
+	/**
+	 * The data array
+	 *
+	 * @var array
+	 */
+	private $data = array();
+	/**
+	 * IP address
+	 *
+	 * @var string
+	 */
+	private $ip_address = '';
+	/**
+	 * User agent
+	 *
+	 * @var String
+	 */
+	private $user_agent = '';
+	/**
+	 * Referrer url
+	 *
+	 * @var String
+	 */
 	private $referer_url = '';
+	/**
+	 * Date submitted
+	 *
+	 * @var DateTime
+	 */
 	private $submitted_at;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Int   $form_id The form ID.
+	 * @param Form  $form The form object.
 	 * @param Array $ignored_field_names The fields to ignore.
 	 */
-	public function __construct( $form_id, $ignored_field_names = array() ) {
+	public function __construct( Form $form, $ignored_field_names = array() ) {
 		$this->replacer            = new TagReplacers\Replacer();
-		$this->form_id             = $form_id;
+		$this->form                = $form;
 		$this->ignored_field_names = $ignored_field_names;
-		$this->process( $_POST );
+		$this->process( $form );
 	}
 
 	/**
 	 * Process data
 	 *
-	 * @param array $data the data submitted.
+	 * @param Form $form The form object.
 	 */
-	public function process( $data ) {
+	public function process( Form $form ) {
 
 		// filter out ignored field names.
-		foreach ( $data as $key => $value ) {
+		foreach ( $_POST as $key => $value ) {
+			if ( ! in_array( $key, $form->get_fields(), true ) ) {
+				continue;
+			};
 			$this->data[ sanitize_key( $key ) ] = $this->sanitize( $value );
 		}
 		$this->ip_address   = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
@@ -133,7 +173,7 @@ class Data {
 		$table = $wpdb->prefix . 'formello_submissions';
 		$data  = array(
 			'data'    => wp_json_encode( $this->data ),
-			'form_id' => $this->form_id,
+			'form_id' => $this->form->get_id(),
 		);
 
 		foreach ( array( 'ip_address', 'user_agent', 'submitted_at', 'referer_url' ) as $prop ) {
@@ -175,14 +215,12 @@ class Data {
 
 	/**
 	 * Get a clean Data array.
-	 *
-	 * @return array
 	 */
 	public function clean() {
 
 		// filter out ignored field names.
 		foreach ( $this->data as $key => $value ) {
-			if ( '_' === $key[0] || in_array( $key, $this->ignored_field_names, false ) ) {
+			if ( '_' === $key[0] || in_array( $key, $this->ignored_field_names, true ) ) {
 				unset( $this->data[ $key ] );
 				continue;
 			}
@@ -193,7 +231,6 @@ class Data {
 				unset( $this->data[ $key ] );
 				continue;
 			}
-
 		}
 
 	}

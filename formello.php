@@ -197,8 +197,8 @@ final class Formello {
 		$email_action = new Formello\Actions\Email();
 		$email_action->hook();
 
-		$mailchimp_action = new Formello\Actions\MailChimp();
-		$mailchimp_action->hook();
+		//$mailchimp_action = new Formello\Actions\MailChimp();
+		//$mailchimp_action->hook();
 
 	}
 

@@ -1,6 +1,6 @@
 === Formello ===
 Contributors:      Francesco Pepe
-Tags:              contact form block, form builder, form block
+Tags:              contact form block, form builder, form block, gutenberg form
 Requires at least: 5.5.0
 Tested up to:      5.6.1
 Stable tag:        1.0.1
@@ -16,8 +16,12 @@ Formello is a Gutenberg form builder that helps you build beautiful html forms t
 
 == Installation ==
 
-1. Upload the plugin files to the `/wp-content/plugins/formello` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
+There's two ways to install Formello.
+
+1. Go to "Plugins > Add New" in your Dashboard and search for: Formello. Then activate the plugin through the 'Plugins' screen in WordPress
+2. Download the .zip from WordPress.org, and upload the folder to the `/wp-content/plugins/` directory via FTP.
+
+In most cases, #1 will work fine and is way easier.
 
 == Frequently Asked Questions ==
 

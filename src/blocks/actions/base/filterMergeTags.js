@@ -46,10 +46,10 @@ const withMergeControls = createHigherOrderComponent( ( BlockEdit ) => {
 			                    return (
 			                    	<Fragment>
 										<MergeTags {...props} 
-											label={ props.label }
-											value={ props.value }
-											settingname={ props.settingname }
-											onChange={ ( val ) => { updateSetting( props.settingname, val ) } } />
+											label={ fillProps.label }
+											value={ fillProps.value }
+											settingname={ fillProps.settingname }
+											onChange={ ( val ) => { updateSetting( fillProps.settingname, val ) } } />
 									</Fragment>
 			                    )
 			                }

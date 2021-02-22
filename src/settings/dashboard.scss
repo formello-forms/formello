@@ -110,6 +110,9 @@ $settings-container-width: 750px;
 				& > *:last-child {
 					margin-bottom: 0;
 				}
+				label {
+					font-weight: bold;
+				}
 			}
 
 			.components-panel__row {
@@ -146,6 +149,10 @@ $settings-container-width: 750px;
 	}
 }
 
+.formello-tablist .components-tab-panel__tabs {
+	background-color: white;	
+}
+
 .components-radio-control__input[type="radio"]:checked::before {
 	border: 0;
 }
@@ -154,6 +161,7 @@ $settings-container-width: 750px;
 	display: inline;
 }
 
-.components-base-control__label {
-	font-weight: bold;
+.components-tab-panel__tabs-item:focus:not(:disabled) {
+	box-shadow: inset 0 0 0 1.5px transparent, inset 0 -4px 0 0 var(--wp-admin-theme-color);
+	outline: none;
 }

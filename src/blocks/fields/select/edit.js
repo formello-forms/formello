@@ -66,7 +66,7 @@ export default function Edit( {
 	useEffect(
 		() =>
 			setAttributes( {
-				id: 'field-' + clientId.substr( 2, 9 ).replace( '-', '' ),
+				id: 'field_' + clientId.substr( 2, 9 ).replace( '-', '' ),
 			} ),
 		[]
 	);
@@ -135,7 +135,7 @@ export default function Edit( {
 						label={ __( 'Name', 'formello' ) }
 						value={ attributes.name }
 						onChange={ ( val ) =>
-							setAttributes( { name: val } )
+							setAttributes( { name: val.replace(/\W/g, '') } )
 						}
 					/>
 					<TextControl

@@ -14,5 +14,7 @@ package-lock.json
 package.json
 composer.json
 composer.lock
-phpcs.xml.dist
+phpcs.xml
 Gruntfile.js
+
+*.zip

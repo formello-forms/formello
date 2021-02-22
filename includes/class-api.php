@@ -51,7 +51,6 @@ class Api extends WP_REST_Controller {
 	public function register_routes() {
 		( new Api\Settings() )->register_routes();
 		( new Api\Form() )->register_routes();
-		( new Api\MailChimp() )->register_routes();
 	}
 
 }

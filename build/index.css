@@ -1,8 +1,115 @@
-.wp-block-formello-form{border:1px dashed gray;min-height:100px;padding:20px}div.formello p{margin-bottom:0px !important}.formello-row{flex-direction:row}
-.formello-tag-option{cursor:pointer;margin-bottom:5px}.formello-tag-option:hover{color:#007cba}
-.formello-opts button{margin-bottom:8px}
-.wp-block-create-block-formaster{border:1px dotted red}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-formello-form {
+  border: 1px dashed grey;
+  min-height: 100px;
+  padding: 20px;
+}
 
-.wp-block-create-block-formaster{border:1px dotted red}
-.wp-block-formello-form fieldset{padding:10px;border:1px solid #000}.wp-block-formello-form select{max-width:inherit}.wp-block-formello-form input:disabled,.wp-block-formello-form input.disabled,.wp-block-formello-form select:disabled,.wp-block-formello-form select.disabled,.wp-block-formello-form textarea:disabled,.wp-block-formello-form textarea.disabled{background-color:#fff;border:1px solid #7e8993;opacity:1}.wp-block-formello-form .block-editor-block-list__block{margin:5px 0}.wp-block-formello-form .formello{padding:10px}.wp-block-formello-form .formello small{padding:0}.formello-checkbox input{margin:0}.formello-hidden{display:flex;align-items:center}
-.wp-block-formello-actions{padding:10px;border:1px dashed gray}.wp-block-formello-actions h4{margin:0px}.formello-fieldset{padding:10px;border:1px solid gray;margin-bottom:10px}.formello-fieldset button.is-destructive{margin-top:10px}
+div.formello p {
+  margin-bottom: 0px !important;
+}
+
+.formello-row {
+  flex-direction: row;
+}
+.formello-tag-option {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.formello-tag-option:hover {
+  color: #007cba;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.formello-opts button {
+  margin-bottom: 8px;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-create-block-formaster {
+  border: 1px dotted #f00;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-create-block-formaster {
+  border: 1px dotted #f00;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-formello-form fieldset {
+  padding: 10px;
+  border: 1px solid black;
+}
+.wp-block-formello-form select {
+  max-width: inherit;
+}
+.wp-block-formello-form input:disabled, .wp-block-formello-form input.disabled, .wp-block-formello-form select:disabled, .wp-block-formello-form select.disabled, .wp-block-formello-form textarea:disabled, .wp-block-formello-form textarea.disabled {
+  background-color: #fff;
+  border: 1px solid #7e8993;
+  opacity: 1;
+}
+.wp-block-formello-form .block-editor-block-list__block {
+  margin: 5px 0;
+}
+.wp-block-formello-form .formello {
+  padding: 10px;
+}
+.wp-block-formello-form .formello small {
+  padding: 0;
+}
+
+.formello-checkbox input {
+  margin: 0;
+}
+
+.formello-hidden {
+  display: flex;
+  align-items: center;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-formello-actions {
+  padding: 10px;
+  border: 1px dashed grey;
+}
+
+.wp-block-formello-actions h4 {
+  margin: 0px;
+}
+
+.formello-fieldset {
+  padding: 10px;
+  border: 1px solid grey;
+  margin-bottom: 10px;
+}
+
+.formello-fieldset button.is-destructive {
+  margin-top: 10px;
+}
+
+/*# sourceMappingURL=index.css.map*/

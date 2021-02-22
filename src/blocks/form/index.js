@@ -35,6 +35,7 @@ registerBlockType( 'formello/form', {
 	supports: {
 		reusable: true,
 		className: true,
+		html: false,
 	},
 	edit: edit,
 	save: save,

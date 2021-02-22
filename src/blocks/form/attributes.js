@@ -13,11 +13,11 @@ export default {
 	},
 	successMessage: {
 		type: 'string',
-		default: '',
+		default: 'Success',
 	},
 	errorMessage: {
 		type: 'string',
-		default: '',
+		default: 'Error',
 	},
 	redirectUrl: {
 		type: 'string',
@@ -36,6 +36,9 @@ export default {
 		default: false,
 	},
 	constraints: {
+		type: 'array'
+	},
+	fields: {
 		type: 'array'
 	},
 	formSettings: {

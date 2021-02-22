@@ -13,10 +13,7 @@ import classnames from 'classnames';
 
 import {
 	getConstraints,
-	getWordpressTags,
-	getFormTags,
-	getOtherTags,
-	getMetaTags,
+	getFieldsName
 } from '../components/merge-tags/functions';
 
 /**
@@ -29,10 +26,11 @@ import {
  * @return {WPElement} Element to render.
  */
 export default function save( { attributes, className, innerBlocks } ) {
+
 	if( attributes.blockId ){
+		attributes.fields = getFieldsName(attributes.blockId)
 		attributes.constraints = getConstraints( attributes.blockId );
 	}
-	delete attributes['blockId']; 
 
 	className = classnames( {
 		'column': !attributes.asRow,
@@ -46,6 +44,7 @@ export default function save( { attributes, className, innerBlocks } ) {
 			data-hide={ attributes.hide } 
 			data-recaptcha={ attributes.recaptchaEnabled } 
 			data-redirect={ attributes.redirectUrl } 
+			data-sitekey={ attributes.settings.recaptcha.site_key }
 			data-id={ attributes.id }>
 			<input type="hidden" name="_formello_id" value={ attributes.id } />
 			<input type="hidden" name={ honeypot } />

@@ -62,27 +62,15 @@ class Block {
 
 					if ( $attributes['recaptchaEnabled'] && ! empty( $settings['recaptcha']['site_key'] ) ) {
 						if ( 1 === (int) $settings['recaptcha']['version'] ) {
-							wp_enqueue_script( 'google-recaptcha', $recaptcha_url, array(), false, true );
+							wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?onload=formelloCallback&render=explicit', array(), FORMELLO_VERSION, true );
 						} else {
-							wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?render=' . $settings['recaptcha']['site_key'], array(), false, true );
+							wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?render=' . $settings['recaptcha']['site_key'], array(), FORMELLO_VERSION, true );
 						}
 					}
 
 					wp_enqueue_script( 'formello-form-block' );
 					wp_enqueue_style( 'formello-form-block' );
 
-					unset( $settings['integrations'] );
-					unset( $settings['recaptcha']['secret_key'] );
-					$settings = array_merge( $settings, $attributes );
-
-					wp_localize_script(
-						'formello-form-block',
-						'formello',
-						array(
-							'ajax_url' => admin_url( 'admin-ajax.php' ),
-							'settings' => $settings,
-						)
-					);
 					return $content;
 				},
 			)

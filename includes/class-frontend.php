@@ -44,13 +44,33 @@ class Frontend {
 	 */
 	public function listen_for_submit() {
 
-		// only respond to AJAX requests with _formello_form_id set.
-		if ( empty( $_POST['_formello_id'] ) ) {
+		// only respond to AJAX requests with _hf_form_id set.
+		if ( empty( $_POST['_formello_id'] )
+			|| empty( $_SERVER['HTTP_X_REQUESTED_WITH'] )
+			|| strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) !== strtolower( 'XMLHttpRequest' ) ) {
 			return;
 		}
 
 		$form_id = (int) $_POST['_formello_id'];
 		$form    = new Form( $form_id );
+
+		if ( ! $this->is_spam( $form ) ) {
+			$this->process_form( $form );
+		}
+
+		$response = $this->get_response_for_error_code( 'spam', $form, $data );
+
+		wp_send_json( $response, 200 );
+		wp_die();
+
+	}
+
+	/**
+	 * Listen for form submit
+	 *
+	 * @param Form $form The form object.
+	 */
+	public function process_form( Form $form ) {
 
 		/**
 		* Filters the field names that should be ignored on the Submission object.
@@ -58,10 +78,10 @@ class Frontend {
 		*
 		* @param array $names
 		*/
-		$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'action' ) );
+		$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'action', 'g-recaptcha-response' ) );
 
 		// sanitize data: strip tags etc.
-		$store = new Data( $form_id, $ignored_field_names );
+		$store = new Data( $form, $ignored_field_names );
 		$data  = $store->get_data();
 
 		// perform validation on sanitized data.
@@ -69,8 +89,10 @@ class Frontend {
 
 		if ( empty( $error_code ) ) {
 
+			$form_settings = $form->get_settings();
+
 			// save submission object so that other form processor have an insert ID to work with (eg file upload).
-			if ( $form->settings['storeSubmissions'] ) {
+			if ( $form_settings['storeSubmissions'] ) {
 				$store->save();
 			}
 
@@ -80,8 +102,8 @@ class Frontend {
 			do_action( 'formello_process_form', $form, $store );
 
 			// process form actions.
-			if ( isset( $form->settings['actions'] ) ) {
-				foreach ( $form->settings['actions'] as $action_settings ) {
+			if ( isset( $form_settings['actions'] ) ) {
+				foreach ( $form_settings['actions'] as $action_settings ) {
 					/**
 					 * Processes the specified form action and passes related data.
 					 *
@@ -133,24 +155,37 @@ class Frontend {
 	 * @param array $data Form data.
 	 * @return string
 	 */
-	public function validate_form( Form $form, array $data ) {
+	public function is_spam( Form $form ) {
 
 		// validate honeypot field.
-		$honeypot_key = sprintf( '_formello_h%d', $form->ID );
-		if ( ! isset( $data[ $honeypot_key ] ) || '' !== $data[ $honeypot_key ] ) {
-			return 'spam';
+		$honeypot_key = sprintf( '_formello_h%d', $form->get_id() );
+		if ( ! isset( $_POST[ $honeypot_key ] ) || '' !== $_POST[ $honeypot_key ] ) {
+			return true;
 		}
 		// validate recaptcha.
-		if ( isset( $data['g-recaptcha-response'] ) ) {
+		if ( isset( $_POST['g-recaptcha-response'] ) ) {
 			$captcha_validate = $this->validate_recaptcha( $form, $data );
 		}
 
 		if ( isset( $captcha_validate ) && ( false === $captcha_validate ) ) {
-			return array( 'captcha' => 'invalid captcha' );
+			return true;
 		}
 
+		// all good: no errors!
+		return false;
+	}
+
+	/**
+	 * Form validation
+	 *
+	 * @param Form  $form The form.
+	 * @param array $data Form data.
+	 * @return string
+	 */
+	public function validate_form( Form $form, array $data ) {
+
 		// perform validation.
-		$validation = $this->validator->make( $data, $form->constraints );
+		$validation = $this->validator->make( $data, $form->get_constraints() );
 
 		// then validate.
 		$validation->validate();
@@ -175,7 +210,7 @@ class Frontend {
 		 * @param Form $form
 		 * @param array $data
 		 */
-		$error_code = apply_filters( 'formello_validate_form_' . $form->id, $error_code, $form, $data );
+		$error_code = apply_filters( 'formello_validate_form_' . $form->get_id(), $error_code, $form, $data );
 
 		/**
 		 * This filter allows you to perform your own form validation.
@@ -196,6 +231,7 @@ class Frontend {
 		// all good: no errors!
 		return '';
 	}
+
 
 	/**
 	 * ReCaptcha validation
@@ -237,33 +273,38 @@ class Frontend {
 	 * @return array
 	 */
 	private function get_response_for_error_code( $error_code, Form $form, $data = array() ) {
+		$settings = $form->get_settings();
+
 		// return success response for empty error code string or spam (to trick bots).
-		if ( '' === $error_code || 'spam' === $error_code ) {
+		if ( '' === $error_code ) {
 			$response = array(
 				'message'   => array(
 					'type' => 'success',
 					'text' => $form->get_message( 'success' ),
 				),
-				'hide_form' => (bool) $form->settings['hide'],
+				'hide_form' => (bool) $settings['hide'],
 			);
 
-			if ( ! empty( $form->settings['redirect_url'] ) ) {
-				$response['redirect_url'] = formello_replace_data_variables( $form->settings['redirectUrl'], $data, 'urlencode' );
+			if ( ! empty( $settings['redirect_url'] ) ) {
+				$response['redirect_url'] = $form->settings['redirectUrl'];
 			}
 
 			return apply_filters( 'formello_form_response', $response, $form, $data );
 		}
 
 		// get error message.
-		$message = $form->get_message( 'error' );
 		if ( empty( $message ) ) {
 			$message = $form->get_message( 'error' );
+		}
+
+		if ( 'spam' === $error_code ) {
+			$error_code = array( 'Are you human or bot?' );
 		}
 
 		// return error response.
 		return array(
 			'message' => array(
-				'type'   => 'warning',
+				'type'   => 'error',
 				'text'   => $message,
 				'errors' => $error_code,
 			),

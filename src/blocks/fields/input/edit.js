@@ -50,13 +50,10 @@ export default function Edit( {
 
 	useEffect(
 		() => {
-			let idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace(/-/g, '')
-			setAttributes( {
-				id: 'field_' + idx,
-			} )			
+			let idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace(/-/g, '')	
 			if( attributes.name.length < 1 ){
 				setAttributes( {
-					name: 'field-' + idx,
+					name: 'field_' + idx,
 				} )	
 			}			
 		},
@@ -82,7 +79,7 @@ export default function Edit( {
 					<TextControl
 						label={ __( 'Name', 'formello' ) }
 						value={ attributes.name }
-						onChange={ ( val ) => setAttributes( { name: val.replace(/\s+/g, '_') } ) }
+						onChange={ ( val ) => setAttributes( { name: val.replace(/\W/g, '') } ) }
 					/>
 					{
 						!(attributes.type == 'hidden') &&					

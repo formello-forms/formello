@@ -74,6 +74,23 @@ export function getFieldsBlock( clientId ) {
  *
  * @param {string} clientId The id of the form block of which we are finding the children fields
  */
+export function getFieldsName( clientId ) {
+
+	let fields = [];
+	const fieldsBlock = getFieldsBlock( clientId )
+
+	fieldsBlock.forEach( ( b ) => {
+		fields.push( b.attributes.name )
+	});
+
+	return fields;
+}
+
+/**
+ * Find the root form block.
+ *
+ * @param {string} clientId The id of the form block of which we are finding the children fields
+ */
 export function serializeFields( clientId ) {
 
 	let fields = [];

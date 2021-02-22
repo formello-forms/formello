@@ -7,5 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Formello\\Rakit\\Validation\\' => array($vendorDir . '/rakit/validation/src'),
-    'Formello\\DrewM\\MailChimp\\' => array($vendorDir . '/drewm/mailchimp-api/src'),
 );

@@ -201,9 +201,13 @@
     border-color: #d0e9c6;
     color: #3c763d;
   }
-  &.warning {
+  &.error {
     background-color: #fcf8e3;
     border-color: #faf2cc;
     color: #8a6d3b;  
   }
+}
+
+.g-recaptcha {
+  margin: 1em 0;
 }

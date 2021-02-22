@@ -17,29 +17,29 @@ const OptionsList = props => {
 	let key = obj.key,
 		value = obj.value;
 	return (
-	  <fieldset className="formello-fieldset" key={idx}>
-		  <TextControl
-			label={ __( 'Name', 'formello' ) }
-			placeholder={ __( 'Name', 'formello' ) }
-			value={ key }
-			onChange={ (val) => { props.onChange( val, idx, 'key' ) } } 
-		  />
-		  <MergeTags  
-			label={ __( 'Value', 'formello' ) }
-			clientId={ props.clientId }
-			placeholder={ __( 'Value', 'formello' ) }
-			value={ value }
-			onChange={ (val) => { 
-			  props.onChange( val, idx, 'value' ) 
-			} } 
-		  />
-		  <Button
-			isDestructive
-			isSmall
-			onClick={ () => props.delete(obj, idx) }
-		  >Delete
-		  </Button>
-	  </fieldset>
+		<fieldset className="formello-fieldset" key={idx}>
+			<TextControl
+				label={ __( 'Name', 'formello' ) }
+				placeholder={ __( 'Name', 'formello' ) }
+				value={ key }
+				onChange={ (val) => { props.onChange( val, idx, 'key' ) } } 
+			/>
+			<MergeTags  
+				label={ __( 'Value', 'formello' ) }
+				clientId={ props.clientId }
+				placeholder={ __( 'Value', 'formello' ) }
+				value={ value }
+				onChange={ (val) => { 
+				  props.onChange( val, idx, 'value' ) 
+				} } 
+			/>
+			<Button
+				isDestructive
+				isSmall
+				onClick={ () => props.delete(obj, idx) }
+			>Delete
+			</Button>
+		</fieldset>
 	);
   });
 };

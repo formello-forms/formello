@@ -49,6 +49,12 @@ class Assets {
 	 * @return void
 	 */
 	private function register_scripts( $scripts ) {
+		$options       = get_option( 'formello', formello_get_option_defaults() );
+		$frontend_opts = array();
+
+		$frontend_opts['messages']  = $options['validation_messages'];
+		$frontend_opts['recaptcha'] = $options['recaptcha']['site_key'];
+
 		foreach ( $scripts as $handle => $script ) {
 			$deps      = isset( $script['deps'] ) ? $script['deps'] : false;
 			$in_footer = isset( $script['in_footer'] ) ? $script['in_footer'] : false;
@@ -62,7 +68,15 @@ class Assets {
 			'formello',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => get_option( 'formello', formello_get_option_defaults() ),
+				'settings' => $options,
+			)
+		);
+		wp_localize_script(
+			'formello-form-block',
+			'formello',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'settings' => $frontend_opts,
 			)
 		);
 	}
@@ -104,7 +118,7 @@ class Assets {
 			'formello-form-block-editor' => array(
 				'src'       => FORMELLO_ASSETS . '/index.js',
 				'version'   => $script_asset['version'],
-				'deps'      => $script_asset['version'],
+				'deps'      => $script_asset['dependencies'],
 				'in_footer' => true,
 			),
 			'formello-form-block'        => array(
@@ -116,7 +130,20 @@ class Assets {
 				'src'       => 'https://www.google.com/recaptcha/api.js#asyncload',
 				'in_footer' => true,
 			),
+			'formello-settings'         => array(
+				'src'       => FORMELLO_ASSETS . '/dashboard.js',
+				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ),
+				'version'   => $script_asset['version'],
+				'in_footer' => true,
+			),
 		);
+
+		/**
+		* Filter to add additional JS to dashboard.
+		*
+		* @param array $scripts
+		*/
+		$scripts = apply_filters( 'formello_scripts', $scripts );
 
 		return $scripts;
 	}
@@ -134,6 +161,10 @@ class Assets {
 			),
 			'formello-form-block'        => array(
 				'src' => FORMELLO_ASSETS . '/style-index.css',
+			),
+			'formello-settings'          => array(
+				'src'  => FORMELLO_ASSETS . '/dashboard.css',
+				'deps' => array( 'wp-components' ),
 			),
 		);
 

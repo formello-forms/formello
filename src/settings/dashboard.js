@@ -32,10 +32,39 @@ const {
 	applyFilters,
 } = wp.hooks;
 
+const tabs = [
+	{
+		name: 'recaptcha',
+		title: 'ReCaptcha',
+	},
+	{
+		name: 'integrations',
+		title: 'Integrations',
+	},
+	{
+		name: 'messages',
+		title: 'Messages',
+	},
+	{
+		name: 'other',
+		title: 'Other',
+	},
+];
+
 /**
  * Internal dependencies
  */
 import './dashboard.scss';
+
+import Recaptcha from './recaptcha.js';
+import Messages from './messages.js';
+import Integrations from './integrations.js';
+
+const components = {
+    recaptcha: Recaptcha,
+    messages: Messages,
+    integrations: Integrations,
+};
 
 class App extends Component {
 	constructor() {
@@ -93,6 +122,18 @@ class App extends Component {
 		} );
 	}
 
+	changeSettings( group, name, value ) {
+		this.setState( {
+			settings: {
+				...this.state.settings,
+				[group]: {
+					...this.state.settings[group],
+					[name]: value,
+				}
+			},
+		} );
+	};
+
 	render() {
 		if ( ! this.state.isAPILoaded ) {
 			return (
@@ -105,602 +146,38 @@ class App extends Component {
 		return (
 			<Fragment>
 				<div className="formello-settings-main">
+
 					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
 
-					<PanelBody
-						initialOpen={ true }
-						title={ __( 'Google ReCaptcha', 'formello' ) }
+					<TabPanel
+						className='formello-tablist'
+						tabs={ tabs }
 					>
-						<div className="formello-dashboard-panel-row-wrapper">
-							<PanelRow className="formello-css-print-method">
-							    <RadioControl
-							        label="ReCaptcha type"
-							        help="The type of the current user"
-									selected={ this.getSetting( 'recaptcha', 'version' ) }
-							        options={ [
-							            { label: 'ReCaptcha v2 checkbox', value: '1' },
-							            //{ label: 'ReCaptcha v2 invisible', value: 'uno' },
-							            { label: 'ReCaptcha v3 invisible', value: '3' },
-							        ] }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												recaptcha: {
-													...this.state.settings.recaptcha,
-													version: value,
-												}
-											},
-										} );
-									} }
-							    />
-							</PanelRow>
+						{ ( tab ) => {
+						    const SettingsTab = components[tab.name];
+						    return <SettingsTab 
+										changeSettings={ this.changeSettings.bind(this) }
+										getSetting={ this.getSetting.bind(this) }
+						    		/>;
 
-							<PanelRow>
-								<TextControl
-									label={ __( 'Site Key', 'formello' ) }
-									help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-									value={ this.getSetting( 'recaptcha', 'site_key' ) }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												recaptcha: {
-													...this.state.settings.recaptcha,
-													site_key: value,
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
-							<PanelRow>
-								<TextControl
-									label={ __( 'Secret Key', 'formello' ) }
-									help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-									value={ this.getSetting( 'recaptcha', 'secret_key' ) }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												recaptcha: {
-													...this.state.settings.recaptcha,
-													secret_key: value,
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
-							<PanelRow>
-								<TextControl
-									label={ __( 'Threshold' ) }
-									help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-									value={ this.getSetting( 'recaptcha', 'threshold' ) }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												recaptcha: {
-													...this.state.settings.recaptcha,
-													threshold: value,
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
+						}}
 
-							{ applyFilters( 'formello.dashboard.settings', '', this ) }
+					</TabPanel>
 
-							<div className="formello-action-button">
-								<Button
-									isPrimary
-									disabled={ this.state.isAPISaving }
-									onClick={ ( e ) => this.updateSettings( e ) }
-								>
-									{ this.state.isAPISaving && <Spinner /> }
-									{ ! this.state.isAPISaving && __( 'Save' ) }
-								</Button>
+					{ applyFilters( 'formello.dashboard.settings', '', this ) }
 
-								<span className="formello-action-message"></span>
-							</div>
+					<div className="formello-action-button">
+						<Button
+							isPrimary
+							disabled={ this.state.isAPISaving }
+							onClick={ ( e ) => this.updateSettings( e ) }
+						>
+							{ this.state.isAPISaving && <Spinner /> }
+							{ ! this.state.isAPISaving && __( 'Save' ) }
+						</Button>
 
-						</div>
-					</PanelBody>
-
-					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
-				</div>
-
-				<div className="formello-settings-main">
-					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
-
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Missing values', 'formello' ) }
-					>
-						<div className="formello-dashboard-panel-row-wrapper">
-
-							<PanelRow>
-								<TextControl
-									label={ __( 'Default' ) }
-									value={ this.state.settings.validation_messages.missingValue.default }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													missingValue: {	
-														...this.state.settings.validation_messages.missingValue,
-														default: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Checkbox' ) }
-									value={ this.state.settings.validation_messages.missingValue.checkbox }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													missingValue: {	
-														...this.state.settings.validation_messages.missingValue,
-														checkbox: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Radio' ) }
-									value={ this.state.settings.validation_messages.missingValue.radio }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													missingValue: {	
-														...this.state.settings.validation_messages.missingValue,
-														radio: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Select' ) }
-									value={ this.state.settings.validation_messages.missingValue.select }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													missingValue: {	
-														...this.state.settings.validation_messages.missingValue,
-														select: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Select multiple' ) }
-									value={ this.state.settings.validation_messages.missingValue['select-multiple'] }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													missingValue: {	
-														...this.state.settings.validation_messages.missingValue,
-														'select-multiple': value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
-
-							{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-							<div className="formello-action-button">
-								<Button
-									isPrimary
-									disabled={ this.state.isAPISaving }
-									onClick={ ( e ) => this.updateSettings( e ) }
-								>
-									{ this.state.isAPISaving && <Spinner /> }
-									{ ! this.state.isAPISaving && __( 'Save' ) }
-								</Button>
-
-								<span className="formello-action-message"></span>
-							</div>
-
-						</div>
-					</PanelBody>
-
-					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
-
-				</div>
-
-				<div className="formello-settings-main">
-					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
-
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Pattern mismatch', 'formello' ) }
-					>
-						<div className="formello-dashboard-panel-row-wrapper">
-
-							<PanelRow>
-								<TextControl
-									label={ __( 'Email' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.email }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														email: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Url' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.url }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														url: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Number' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.number }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														number: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Color', 'formello' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.color }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														color: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Date', 'formello' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.date }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														date: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Time', 'formello' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.time }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														time: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Month', 'formello' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.month }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														month: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Default', 'formello' ) }
-									value={ this.state.settings.validation_messages.patternMismatch.default }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													patternMismatch: {	
-														...this.state.settings.validation_messages.patternMismatch,
-														default: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
-
-							{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-							<div className="formello-action-button">
-								<Button
-									isPrimary
-									disabled={ this.state.isAPISaving }
-									onClick={ ( e ) => this.updateSettings( e ) }
-								>
-									{ this.state.isAPISaving && <Spinner /> }
-									{ ! this.state.isAPISaving && __( 'Save' ) }
-								</Button>
-
-								<span className="formello-action-message"></span>
-							</div>
-
-						</div>
-					</PanelBody>
-
-					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
-
-				</div>
-
-				<div className="formello-settings-main">
-					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
-
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Out of Range', 'formello' ) }
-					>
-						<div className="formello-dashboard-panel-row-wrapper">
-
-							<PanelRow>
-								<TextControl
-									label={ __( 'Over Range', 'formello' ) }
-									value={ this.state.settings.validation_messages.outOfRange.over }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,													
-													outOfRange: {	
-														...this.state.settings.validation_messages.outOfRange,
-														over: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Under Range', 'formello' ) }
-									value={ this.state.settings.validation_messages.outOfRange.under }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													outOfRange: {	
-														...this.state.settings.validation_messages.outOfRange,
-														under: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
-
-							{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-							<div className="formello-action-button">
-								<Button
-									isPrimary
-									disabled={ this.state.isAPISaving }
-									onClick={ ( e ) => this.updateSettings( e ) }
-								>
-									{ this.state.isAPISaving && <Spinner /> }
-									{ ! this.state.isAPISaving && __( 'Save' ) }
-								</Button>
-
-								<span className="formello-action-message"></span>
-							</div>
-
-						</div>
-					</PanelBody>
-
-					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
-
-				</div>
-
-				<div className="formello-settings-main">
-					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
-
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'Wrong Length', 'formello' ) }
-					>
-						<div className="formello-dashboard-panel-row-wrapper">
-
-							<PanelRow>
-								<TextControl
-									label={ __( 'Over Length', 'formello' ) }
-									value={ this.state.settings.validation_messages.wrongLength.over }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													wrongLength: {	
-														...this.state.settings.validation_messages.wrongLength,
-														over: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-								<TextControl
-									label={ __( 'Under Length', 'formello' ) }
-									value={ this.state.settings.validation_messages.wrongLength.under }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												validation_messages: {
-													...this.state.settings.validation_messages,
-													wrongLength: {	
-														...this.state.settings.validation_messages.wrongLength,
-														under: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
-
-							{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-							<div className="formello-action-button">
-								<Button
-									isPrimary
-									disabled={ this.state.isAPISaving }
-									onClick={ ( e ) => this.updateSettings( e ) }
-								>
-									{ this.state.isAPISaving && <Spinner /> }
-									{ ! this.state.isAPISaving && __( 'Save' ) }
-								</Button>
-
-								<span className="formello-action-message"></span>
-							</div>
-
-						</div>
-					</PanelBody>
-
-					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
-
-				</div>
-
-				<div className="formello-settings-main">
-					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
-
-					<PanelBody
-						initialOpen={ false }
-						title={ __( 'MailChimp Api Key', 'formello' ) }
-					>
-						<div className="formello-dashboard-panel-row-wrapper">
-
-							<PanelRow>
-								<TextControl
-									label={ __( 'Api Key', 'formello' ) }
-									value={ this.state.settings.integrations.mailchimp.key }
-									onChange={ ( value ) => {
-										this.setState( {
-											settings: {
-												...this.state.settings,
-												integrations: {
-													...this.state.settings.integrations,
-													mailchimp: {	
-														...this.state.settings.integrations.mailchimp,
-														key: value,
-													}
-												}
-											},
-										} );
-									} }
-								/>
-							</PanelRow>
-
-							{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-							<div className="formello-action-button">
-								<Button
-									isPrimary
-									disabled={ this.state.isAPISaving }
-									onClick={ ( e ) => this.updateSettings( e ) }
-								>
-									{ this.state.isAPISaving && <Spinner /> }
-									{ ! this.state.isAPISaving && __( 'Save' ) }
-								</Button>
-
-								<span className="formello-action-message"></span>
-							</div>
-
-						</div>
-					</PanelBody>
+						<span className="formello-action-message"></span>
+					</div>
 
 					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
 
