@@ -14,12 +14,19 @@ import { __ } from '@wordpress/i18n';
 import './editor.scss';
 
 import { useState, useEffect, Fragment } from '@wordpress/element';
-import { withDispatch, useDispatch, useSelect, select } from '@wordpress/data';
+import { withSelect, useSelect, select, dispatch } from '@wordpress/data';
+import { compose } from '@wordpress/compose';
 
 import {
 	InspectorControls,
 	InnerBlocks,
+	__experimentalBlockVariationPicker ,
 } from '@wordpress/block-editor';
+
+import {
+	createBlocksFromInnerBlocksTemplate,
+	createBlock
+} from '@wordpress/blocks';
 
 import apiFetch from '@wordpress/api-fetch';
 
@@ -37,15 +44,16 @@ import {
 	ToolbarGroup,
 	Icon,
 } from '@wordpress/components';
-import { cog, more, insert } from '@wordpress/icons';
+
 import classnames from 'classnames';
 
-import MergeTags from '../components/merge-tags';
+import getIcon from '../../utils/get-icon';
 
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
 	'core/heading',
 	'core/columns',
+	'create-block/formello-conditional-fields',
 	'formello/actions',
 	'formello/columns',
 	'formello/button',
@@ -66,7 +74,7 @@ const ALLOWED_BLOCKS = [
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( {
+function Edit( {
 	attributes,
 	className,
 	setAttributes,
@@ -171,3 +179,74 @@ export default function Edit( {
 		</div>
 	);
 }
+
+function Placeholder ( props ) {
+
+	const { className, blockType, defaultVariation, hasInnerBlocks, variations } = props;
+	const {
+		insertBlock,
+		replaceInnerBlocks,
+	} = dispatch( 'core/block-editor' );
+
+	return (
+		<Fragment>
+			<__experimentalBlockVariationPicker
+				icon={ getIcon( 'form' ) }
+				label={ 'succhia' }
+				instructions={ __( 'Select a form to start with.', 'formello' ) }
+				variations={ variations }
+				allowSkip
+				onSelect={ ( nextVariation = defaultVariation ) => {
+					if ( nextVariation.attributes ) {
+						setAttributes( nextVariation.attributes );
+					}
+					if ( nextVariation.innerBlocks ) {
+						replaceInnerBlocks(
+							props.clientId,
+							createBlocksFromInnerBlocksTemplate(
+								nextVariation.innerBlocks
+							),
+							true
+						);
+					}
+				} }
+			/>
+		</Fragment>
+	);
+}
+
+const applyWithSelect = withSelect( ( select, props ) => {
+	const { getBlocks } = select( 'core/block-editor' );
+	const { getBlocksByClientId } = select( 'core/editor' );
+	const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
+	const innerBlocks = getBlocks( props.clientId );
+
+	return {
+		// Subscribe to changes of the innerBlocks to control the display of the layout selection placeholder.
+		blockType: getBlockType( props.name ),
+		defaultVariation: typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name ),
+		getBlocksByClientId,
+		hasInnerBlocks: select( 'core/block-editor' ).getBlocks( props.clientId ).length > 0,
+		innerBlocks,
+		variations: typeof getBlockVariations === 'undefined' ? null : getBlockVariations( props.name ),
+	};
+} );
+
+const FormEdit = ( props ) => {
+	const { clientId } = props;
+	const hasInnerBlocks = useSelect(
+		( select ) => {
+			const { getBlock } = select( 'core/block-editor' );
+			const block = getBlock( clientId );
+			return !! ( block && block.innerBlocks.length );
+		},
+		[ clientId ]
+	);
+	const Component = hasInnerBlocks
+		? Edit
+		: Placeholder;
+
+	return <Component { ...props } />;
+};
+
+export default compose( [ applyWithSelect ] )( FormEdit );

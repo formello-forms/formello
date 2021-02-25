@@ -167,7 +167,7 @@ class Data {
 	 */
 	public function save() {
 		// remove useless data.
-		$this->clean();
+		//$this->clean();
 
 		global $wpdb;
 		$table = $wpdb->prefix . 'formello_submissions';

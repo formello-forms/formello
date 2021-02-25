@@ -743,7 +743,7 @@ function recaptcha(props) {
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], {
     className: "formello-css-print-method"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RadioControl"], {
-    label: "ReCaptcha type",
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('ReCaptcha type', 'formello'),
     selected: props.getSetting('recaptcha', 'version'),
     options: [{
       label: 'ReCaptcha v2 checkbox',
@@ -771,15 +771,15 @@ function recaptcha(props) {
       props.changeSettings('recaptcha', 'secret_key', val);
     }
   })), props.getSetting('recaptcha', 'version') == 3 && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalNumberControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Threshold'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Threshold', 'formello'),
     help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Sync our responsive preview controls with the editor responsive previews.', 'formello'),
     value: props.getSetting('recaptcha', 'threshold'),
     onChange: function onChange(val) {
       props.changeSettings('recaptcha', 'threshold', val);
     },
-    step: "0.1",
-    min: "0",
-    max: "1"
+    step: '0.1',
+    min: '0',
+    max: '1'
   }))));
 }
 ;

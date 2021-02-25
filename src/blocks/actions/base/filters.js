@@ -6,7 +6,7 @@ const { createHigherOrderComponent } = wp.compose;
 const { Fragment }	= wp.element;
 const { Button, Fill } = wp.components;
 const { InspectorAdvancedControls }	= wp.editor;
-import OptionsList from "../base/option-fields";
+import OptionsList from "./option-fields";
 import { useState } from '@wordpress/element';
 
 /**

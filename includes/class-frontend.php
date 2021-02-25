@@ -54,11 +54,11 @@ class Frontend {
 		$form_id = (int) $_POST['_formello_id'];
 		$form    = new Form( $form_id );
 
-		if ( ! $this->is_spam( $form ) ) {
+		if ( ! $this->is_spam( $form_id, $form->get_settings() ) ) {
 			$this->process_form( $form );
 		}
 
-		$response = $this->get_response_for_error_code( 'spam', $form, $data );
+		$response = $this->get_response_for_error_code( 'spam', $form );
 
 		wp_send_json( $response, 200 );
 		wp_die();
@@ -108,7 +108,7 @@ class Frontend {
 					 * Processes the specified form action and passes related data.
 					 *
 					 * @param array $action_settings
-					 * @param Submission $store
+					 * @param Data $store
 					 * @param Form $form
 					 */
 					do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings['settings'], $store, $form );
@@ -118,7 +118,7 @@ class Frontend {
 			/**
 			 * General purpose hook after all form actions have been processed for this specific form. The dynamic portion of the hook refers to the form slug.
 			 *
-			 * @param Submission $store
+			 * @param Data $store
 			 * @param Form $form
 			 */
 			do_action( "formello_form_{$form->slug}_success", $store, $form );
@@ -126,7 +126,7 @@ class Frontend {
 			/**
 			 * General purpose hook after all form actions have been processed.
 			 *
-			 * @param Submission $store
+			 * @param Data $store
 			 * @param Form $form
 			 */
 			do_action( 'formello_form_success', $store, $form );
@@ -151,23 +151,32 @@ class Frontend {
 	/**
 	 * Form validation
 	 *
-	 * @param Form  $form The form.
-	 * @param array $data Form data.
+	 * @param Int   $id The form ID.
+	 * @param array $settings Form data.
 	 * @return string
 	 */
-	public function is_spam( Form $form ) {
+	public function is_spam( $form_id, $settings ) {
 
 		// validate honeypot field.
-		$honeypot_key = sprintf( '_formello_h%d', $form->get_id() );
+		$honeypot_key = sprintf( '_formello_h%d', $form_id );
 		if ( ! isset( $_POST[ $honeypot_key ] ) || '' !== $_POST[ $honeypot_key ] ) {
 			return true;
 		}
+
 		// validate recaptcha.
-		if ( isset( $_POST['g-recaptcha-response'] ) ) {
-			$captcha_validate = $this->validate_recaptcha( $form, $data );
+		if ( $settings['recaptchaEnabled'] && ! isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
+			return true;
 		}
 
-		if ( isset( $captcha_validate ) && ( false === $captcha_validate ) ) {
+		// validate recaptcha.
+		if ( isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
+			return true;
+		}
+
+		// validate recaptcha.
+		$captcha_validate = $this->validate_recaptcha();
+
+		if ( false === $captcha_validate ) {
 			return true;
 		}
 
@@ -240,12 +249,14 @@ class Frontend {
 	 * @param array $data Form data.
 	 * @return string
 	 */
-	private function validate_recaptcha( $form, $data ) {
+	private function validate_recaptcha() {
+
+		$settings = get_option( 'formello', formello_get_option_defaults() );
 
 		$captcha_postdata = http_build_query(
 			array(
-				'secret'   => $form->settings['recaptcha']['secret_key'],
-				'response' => $data['g-recaptcha-response'],
+				'secret'   => $settings['recaptcha']['secret_key'],
+				'response' => $_POST['g-recaptcha-response'],
 				'remoteip' => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
 			)
 		);

@@ -29,10 +29,10 @@ class Block {
 	/**
 	 * Render frontend app
 	 *
-	 * @param  array  $atts The attributes of block.
+	 * @param  array  $attrs The attributes of block.
 	 * @param  string $content The bock content.
 	 */
-	public function register_block( $atts, $content = '' ) {
+	public function register_block( $attrs, $content = '' ) {
 
 		register_block_type(
 			'formello/form',
@@ -54,7 +54,7 @@ class Block {
 				'editor_script'   => 'formello-form-block-editor',
 				'editor_style'    => 'formello-form-block-editor',
 				'style'           => 'formello-form-block',
-				'script'          => 'formello-form-block',
+				//'script'          => 'formello-form-block',
 				'render_callback' => function( $attributes, $content = null ) {
 
 					$settings = get_option( 'formello', formello_get_option_defaults() );
@@ -75,6 +75,7 @@ class Block {
 				},
 			)
 		);
+
 	}
 
 	/**

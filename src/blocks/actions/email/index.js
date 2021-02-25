@@ -68,7 +68,7 @@ registerBlockType( 'formello/actions-email', {
 		},
 		name: {
 			type: 'string',
-			default: '',
+			default: __( 'Send email notification', 'formello' )
 		},
 		settings: {
 			type: 'object',

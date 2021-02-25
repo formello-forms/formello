@@ -93,7 +93,7 @@ registerBlockType( 'formello/button', {
 		className: true,
 		html: false,
 		reusable: false,
-		fontSize: false, // Enable padding UI control.
+		fontSize: false
 	},
 
 	/**

@@ -16,6 +16,7 @@ return array(
     'Formello\\Assets' => $baseDir . '/includes/class-assets.php',
     'Formello\\Block' => $baseDir . '/includes/class-block.php',
     'Formello\\Data' => $baseDir . '/includes/class-data.php',
+    'Formello\\Encryption' => $baseDir . '/includes/class-encryption.php',
     'Formello\\Form' => $baseDir . '/includes/class-form.php',
     'Formello\\Frontend' => $baseDir . '/includes/class-frontend.php',
     'Formello\\Tables\\Forms' => $baseDir . '/includes/Tables/class-forms.php',

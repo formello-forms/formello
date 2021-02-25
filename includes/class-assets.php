@@ -130,10 +130,14 @@ class Assets {
 				'src'       => 'https://www.google.com/recaptcha/api.js#asyncload',
 				'in_footer' => true,
 			),
-			'formello-settings'         => array(
+			'formello-settings'          => array(
 				'src'       => FORMELLO_ASSETS . '/dashboard.js',
 				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ),
 				'version'   => $script_asset['version'],
+				'in_footer' => true,
+			),
+			'formello-flatpickr'         => array(
+				'src'       => 'https://cdn.jsdelivr.net/npm/flatpickr',
 				'in_footer' => true,
 			),
 		);

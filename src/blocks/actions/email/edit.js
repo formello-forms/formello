@@ -62,11 +62,9 @@ export default function Edit( props ) {
 
 	useEffect(
 		() => {
-			if( attributes.type.length < 1 ){
-				setAttributes( {
-					type: 'email'
-				} )
-			}				
+			setAttributes( {
+				type: 'email'
+			} )
 			if( attributes.settings.length < 1 ){
 				setAttributes( {
 					settings: []

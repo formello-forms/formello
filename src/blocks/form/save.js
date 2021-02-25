@@ -47,7 +47,7 @@ export default function save( { attributes, className, innerBlocks } ) {
 			data-sitekey={ attributes.settings.recaptcha.site_key }
 			data-id={ attributes.id }>
 			<input type="hidden" name="_formello_id" value={ attributes.id } />
-			<input type="hidden" name={ honeypot } />
+			<input type="text" name={ honeypot } className="formello-hp" />
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
 			{

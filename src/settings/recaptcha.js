@@ -21,7 +21,7 @@ export default function recaptcha( props ) {
 			<div className="formello-dashboard-panel-row-wrapper">
 				<PanelRow className="formello-css-print-method">
 				    <RadioControl
-				        label="ReCaptcha type"
+				        label={ __( 'ReCaptcha type', 'formello' ) }
 						selected={ props.getSetting( 'recaptcha', 'version' ) }
 				        options={ [
 				            { label: 'ReCaptcha v2 checkbox', value: '1' },
@@ -56,15 +56,15 @@ export default function recaptcha( props ) {
 				{ ( props.getSetting( 'recaptcha', 'version' ) == 3 ) && 
 				<PanelRow>
 					<NumberControl
-						label={ __( 'Threshold' ) }
+						label={ __( 'Threshold', 'formello' ) }
 						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
 						value={ props.getSetting( 'recaptcha', 'threshold' ) }
 						onChange={ (val) => {
 							props.changeSettings( 'recaptcha', 'threshold', val )
 						} }
-						step='0.1'
-						min='0'
-						max='1'
+						step={ '0.1' }
+						min={ '0' }
+						max={ '1' }
 					/>
 				</PanelRow>
 				}

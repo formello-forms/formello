@@ -35,6 +35,7 @@ class ComposerStaticInitdf688030c867bd8521f7909e766f69c6
         'Formello\\Assets' => __DIR__ . '/../..' . '/includes/class-assets.php',
         'Formello\\Block' => __DIR__ . '/../..' . '/includes/class-block.php',
         'Formello\\Data' => __DIR__ . '/../..' . '/includes/class-data.php',
+        'Formello\\Encryption' => __DIR__ . '/../..' . '/includes/class-encryption.php',
         'Formello\\Form' => __DIR__ . '/../..' . '/includes/class-form.php',
         'Formello\\Frontend' => __DIR__ . '/../..' . '/includes/class-frontend.php',
         'Formello\\Tables\\Forms' => __DIR__ . '/../..' . '/includes/Tables/class-forms.php',

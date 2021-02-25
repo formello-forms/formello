@@ -48,7 +48,6 @@ export default {
 	},
 	checked: {
 		type: 'boolean',
-		default: false,
 	},
 	markRequired: {
 		type: 'boolean',
@@ -75,6 +74,7 @@ export default {
 	},
 	rows: {
 		type: 'number',
+		default: 5
 	},
 	minlength: {
 		type: 'number',

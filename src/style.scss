@@ -23,7 +23,6 @@
   }
   
   label {
-    font-weight: bold;
     padding: 0 10px 0 0;
     margin: 0;
     flex: 0 1 200px;
@@ -210,4 +209,9 @@
 
 .g-recaptcha {
   margin: 1em 0;
+}
+
+.formello-hp {
+  position: absolute;
+  left: -500px;
 }

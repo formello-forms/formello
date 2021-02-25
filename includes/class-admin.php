@@ -27,7 +27,7 @@ class Admin {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
-		add_filter( 'pre_post_update', array( $this, 'formello_pre_insert' ), 10, 2 );
+		add_action( 'pre_post_update', array( $this, 'formello_pre_insert' ), 10, 2 );
 		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
 	}
 
@@ -264,7 +264,6 @@ class Admin {
 			}
 		}
 
-		return $data;
 	}
 
 	/**
@@ -429,7 +428,7 @@ class Admin {
 	/**
 	 * Add settings container.
 	 *
-	 * @param string $message The precision.	 
+	 * @param string $message The precision.
 	 */
 	public function error_notice( $message ) {
 		$class = 'notice notice-error';

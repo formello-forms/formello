@@ -8,6 +8,7 @@
 namespace Formello\Api;
 
 use WP_REST_Controller;
+use Formello\Encryption;
 
 /**
  * REST_API Handler
@@ -88,7 +89,14 @@ class Settings extends WP_REST_Controller {
 		}
 
 		if ( is_array( $sanitized ) ) {
+
+			$crypto = new \Formello\Encryption();
+
+			$sanitized['recaptcha']['secret_key'] = $crypto->encrypt( $sanitized['recaptcha']['secret_key'] );
+
 			update_option( 'formello', array_merge( $current_settings, $sanitized ) );
+
+			do_action( 'formello_mailchimp_action', $sanitized );
 		}
 
 		return rest_ensure_response(

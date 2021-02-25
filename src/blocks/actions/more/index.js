@@ -26,26 +26,26 @@ import { InnerBlocks } from '@wordpress/block-editor';
  * Internal dependencies
  */
 import getIcon from '../../../utils/get-icon';
-import edit from './edit';
+import Edit from './edit';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'formello/actions-mailchimp', {
+registerBlockType( 'formello/actions-more', {
 	/**
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
 	 */
-	title: __( 'Mailchimp', 'formello' ),
+	title: __( 'More', 'formello' ),
 
 	/**
 	 * This is a short description for your block, can be translated with `i18n` functions.
 	 * It will be shown in the Block Tab in the Settings Sidebar.
 	 */
 	description: __(
-		'Example block written with ESNext standard and JSX support – build step required.',
+		'Do you want more?',
 		'formello'
 	),
 
@@ -56,38 +56,15 @@ registerBlockType( 'formello/actions-mailchimp', {
 	category: 'formello',
 
 	// Only allow this block when it is nested in a Formello block
-	//parent: [ 'formello/actions' ],
-
-	/**
-	 * Block attributes
-	 */
-	attributes: {
-		settings: {
-			type: 'object',
-			default: {
-				key: formello.settings.integrations.mailchimp.key,
-				list: '',
-				options: []
-			}
-		},
-		name: {
-			type: 'string',
-			default: '',
-		},
-		type: {
-			type: 'string',
-			default: '',
-		},
-		mailchimp_list: {
-			type: 'string'
-		}
-	},
+	parent: [ 'formello/actions' ],
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: 'smiley',
+	icon: 'insert',
+
+	attributes: {},
 
 	/**
 	 * Optional block extended support features.
@@ -102,7 +79,7 @@ registerBlockType( 'formello/actions-mailchimp', {
 	/**
 	 * @see ./edit.js
 	 */
-	edit: edit,
+	edit: Edit,
 
 	/**
 	 * @see ./save.js

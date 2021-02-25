@@ -45,11 +45,7 @@ function formello_get_option_defaults() {
 					'under' => 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.',
 				),
 			),
-			'integrations'        => array(
-				'mailchimp' => array(
-					'key' => '',
-				),
-			),
+			'integrations'        => array(),
 			'recaptcha'           => array(
 				'version'    => 3,
 				'site_key'   => '',
@@ -58,4 +54,18 @@ function formello_get_option_defaults() {
 			),
 		)
 	);
+}
+
+add_filter( 'option_formello', 'formello_general_option' );
+
+/**
+ * Filter to retrieve unencrypted reCaptcha
+ *
+ * @param mixed $settings The general settings.
+ */
+function formello_general_option( $settings ) {
+	$crypto = new Formello\Encryption();
+
+	$settings['recaptcha']['secret_key'] = $crypto->decrypt( $settings['recaptcha']['secret_key'] );
+	return $settings;
 }

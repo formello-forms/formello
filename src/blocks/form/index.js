@@ -4,6 +4,7 @@
 
 import './editor.scss';
 
+import variations from './variations';
 import edit from './edit';
 import save from './save';
 import getIcon from '../../utils/get-icon';
@@ -28,6 +29,7 @@ registerBlockType( 'formello/form', {
 	keywords: [ __( 'form' ), __( 'forms' ), __( 'formello' ) ],
 	
 	attributes: blockAttributes,
+	variations: variations,
 	providesContext: {
 		'formello/recaptchaEnabled'	: 'recaptchaEnabled',
 		'formello/settings'		: 'settings',
@@ -35,7 +37,7 @@ registerBlockType( 'formello/form', {
 	supports: {
 		reusable: true,
 		className: true,
-		html: false,
+		html: false
 	},
 	edit: edit,
 	save: save,

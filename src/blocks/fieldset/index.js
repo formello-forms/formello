@@ -8,6 +8,7 @@ import { InnerBlocks } from '@wordpress/block-editor';
  */
 import getIcon from '../../utils/get-icon';
 import edit from './edit';
+import variations from './variations';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -52,6 +53,8 @@ registerBlockType( 'formello/fieldset', {
 			default: '',
 		},
 	},
+
+	variations: variations,
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.

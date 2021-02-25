@@ -204,20 +204,24 @@ export default function Edit( {
 					{
 						supported.includes('minlength') && 
 							<Fragment>
-							<NumberControl
-								label={ __( 'Min Length', 'formello' ) }
-								value={ attributes.minlength || '' }
-								onChange={ ( val ) =>
-									setAttributes( { minlength: val } )
-								}
-							/>
-							<NumberControl
-								label={ __( 'Max Length', 'formello' ) }
-								value={ attributes.maxlength || '' }
-								onChange={ ( val ) =>
-									setAttributes( { maxlength: val } )
-								}
-							/>
+							<PanelRow>
+								<NumberControl
+									label={ __( 'Min Length', 'formello' ) }
+									value={ attributes.minlength || '' }
+									onChange={ ( val ) =>
+										setAttributes( { minlength: val } )
+									}
+								/>
+							</PanelRow>
+							<PanelRow>
+								<NumberControl
+									label={ __( 'Max Length', 'formello' ) }
+									value={ attributes.maxlength || '' }
+									onChange={ ( val ) =>
+										setAttributes( { maxlength: val } )
+									}
+								/>
+							</PanelRow>
 							</Fragment>
 					}
 					{
@@ -239,13 +243,16 @@ export default function Edit( {
 					}
 					{ 'textarea' == attributes.type && (
 						<Fragment>
-						<NumberControl
-							label={ __( 'Cols', 'formello' ) }
-							value={ attributes.cols || '' }
-							onChange={ ( val ) =>
-								setAttributes( { cols: val } )
-							}
-						/>
+						<PanelRow>
+							<NumberControl
+								label={ __( 'Cols', 'formello' ) }
+								value={ attributes.cols || '' }
+								onChange={ ( val ) =>
+									setAttributes( { cols: val } )
+								}
+							/>
+						</PanelRow>
+						<PanelRow>
 						<NumberControl
 							label={ __( 'Rows', 'formello' ) }
 							value={ attributes.rows || '' }
@@ -253,6 +260,7 @@ export default function Edit( {
 								setAttributes( { rows: val } )
 							}
 						/>
+						</PanelRow>
 						</Fragment>
 					) }
 					{
@@ -263,6 +271,7 @@ export default function Edit( {
 					}
 				</PanelBody>
 				<PanelBody title="CSS Class" initialOpen={ false }>
+
 					<SelectControl
 				        label={ __( 'Label alignment', 'formello' ) }
 				        value={ attributes.labelAlign }
@@ -272,6 +281,7 @@ export default function Edit( {
 				        ] }
 				        onChange={ ( align ) => { setAttributes( { labelAlign: align } ) } }
 					/>
+
 					<SelectControl
 				        label={ __( 'Label vertical alignment', 'formello' ) }
 				        value={ attributes.labelVAlign }

@@ -16,14 +16,6 @@ div.formello p {
 .formello-row {
   flex-direction: row;
 }
-.formello-tag-option {
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-
-.formello-tag-option:hover {
-  color: #007cba;
-}
 /**
  * The following styles get applied inside the editor only.
  *
@@ -45,6 +37,14 @@ div.formello p {
  *
  * Replace them with your own styles or remove the file completely.
  */
+.formello-tag-option {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.formello-tag-option:hover {
+  color: #007cba;
+}
 /**
  * The following styles get applied inside the editor only.
  *
