@@ -12,6 +12,11 @@ import { __ } from '@wordpress/i18n';
 
 export default function recaptcha( props ) {
 
+	const {
+		getSetting,
+		changeSettings
+	} = props;
+
     return (
 
 		<PanelBody
@@ -22,14 +27,14 @@ export default function recaptcha( props ) {
 				<PanelRow className="formello-css-print-method">
 				    <RadioControl
 				        label={ __( 'ReCaptcha type', 'formello' ) }
-						selected={ props.getSetting( 'recaptcha', 'version' ) }
+						selected={ getSetting( 'recaptcha', 'version' ) }
 				        options={ [
 				            { label: 'ReCaptcha v2 checkbox', value: '1' },
 				            //{ label: 'ReCaptcha v2 invisible', value: 'uno' },
 				            { label: 'ReCaptcha v3 invisible', value: '3' },
 				        ] }
 						onChange={ (val) => {
-							props.changeSettings( 'recaptcha', 'version', val )
+							changeSettings( 'recaptcha', 'version', val )
 						} }
 				    />
 				</PanelRow>
@@ -37,9 +42,9 @@ export default function recaptcha( props ) {
 					<TextControl
 						label={ __( 'Site Key', 'formello' ) }
 						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-						value={ props.getSetting( 'recaptcha', 'site_key' ) }
+						value={ getSetting( 'recaptcha', 'site_key' ) }
 						onChange={ (val) => {
-							props.changeSettings( 'recaptcha', 'site_key', val )
+							changeSettings( 'recaptcha', 'site_key', val )
 						} }
 					/>
 				</PanelRow>
@@ -47,20 +52,20 @@ export default function recaptcha( props ) {
 					<TextControl
 						label={ __( 'Secret Key', 'formello' ) }
 						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-						value={ props.getSetting( 'recaptcha', 'secret_key' ) }
+						value={ getSetting( 'recaptcha', 'secret_key' ) }
 						onChange={ (val) => {
-							props.changeSettings( 'recaptcha', 'secret_key', val )
+							changeSettings( 'recaptcha', 'secret_key', val )
 						} }
 					/>
 				</PanelRow>
-				{ ( props.getSetting( 'recaptcha', 'version' ) == 3 ) && 
+				{ ( getSetting( 'recaptcha', 'version' ) == 3 ) && 
 				<PanelRow>
 					<NumberControl
 						label={ __( 'Threshold', 'formello' ) }
 						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
-						value={ props.getSetting( 'recaptcha', 'threshold' ) }
+						value={ getSetting( 'recaptcha', 'threshold' ) }
 						onChange={ (val) => {
-							props.changeSettings( 'recaptcha', 'threshold', val )
+							changeSettings( 'recaptcha', 'threshold', val )
 						} }
 						step={ '0.1' }
 						min={ '0' }

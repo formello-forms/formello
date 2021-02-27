@@ -116,6 +116,18 @@ function Edit( {
 		[]
 	);
 
+	const getRecaptcha = () => {
+		apiFetch( {
+			path: '/formello/v1/settings',
+			method: 'GET',
+		} ).then( ( result ) => {
+			setAttributes({
+				id: result.id
+			});
+		} );
+
+	}
+
 	className = classnames( className, {
 		'column': !attributes.asRow,
 	} )
@@ -130,7 +142,7 @@ function Edit( {
 						onChange={ ( val ) => setAttributes( { 'name': val } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Display in row', 'formello' ) }
+						label={ __( 'Label on left', 'formello' ) }
 						checked={ attributes.asRow }
 						onChange={ ( val ) => setAttributes( { 'asRow': val } ) }
 					/>
@@ -147,7 +159,10 @@ function Edit( {
 					<ToggleControl
 						label={ __( 'Enable ReCaptcha', 'formello' ) }
 						checked={ attributes.recaptchaEnabled }
-						onChange={ ( val ) => setAttributes( { 'recaptchaEnabled': val } ) }
+						onChange={ ( val ) => {
+
+							setAttributes( { 'recaptchaEnabled': val } ) 
+						} }
 					/>
 					<ToggleControl
 						label={ __(

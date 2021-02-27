@@ -98,7 +98,7 @@ function createRequestHandler (formEl) {
           console.log('Formello: failed to parse AJAX response.\n\nError: "' + error + '"')
           return
         }
-console.log(response)
+
         emitEvent('submitted', formEl)
 
         if (response.error) {
@@ -151,7 +151,7 @@ function validate( formEl ){
 
   var settings = formEl.dataset
 
-  if( !settings.recaptchaEnabled ){
+  if( !settings.recaptcha ){
     submitForm( formEl )
     return
   }
@@ -161,7 +161,7 @@ function validate( formEl ){
     return
   }
 
-  if( settings.recaptcha.version == 3 ){
+  if( formello.settings.recaptcha.version == 3 ){
     grecaptcha.ready(function() {
       grecaptcha.execute( settings.recaptcha.site_key, {action: 'submit'}).then(function(token) {
 
@@ -171,7 +171,7 @@ function validate( formEl ){
     });
   }
 
-  if( settings.recaptcha.version == 1 ){
+  if( formello.settings.recaptcha.version == 1 ){
         submitForm( formEl )
   }
 

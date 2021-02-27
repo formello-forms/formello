@@ -20,6 +20,10 @@ export default function save( { attributes, className } ) {
 		return item.value
 	} )
 
+	if ( !attributes.name ) {
+		attributes.name = attributes.id
+	}
+
 	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign )
 
 	return (

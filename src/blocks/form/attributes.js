@@ -31,10 +31,6 @@ export default {
 		type: 'number',
 		default: 3,
 	},
-	recaptchaKey: {
-		type: 'string',
-		default: '',
-	},
 	storeSubmissions: {
 		type: 'boolean',
 		default: false,

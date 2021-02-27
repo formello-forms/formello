@@ -18,7 +18,7 @@ function formello_get_option_defaults() {
 	return apply_filters(
 		'formello_option_defaults',
 		array(
-			'validation_messages' => array(
+			'messages'  => array(
 				'missingValue'    => array(
 					'default'         => 'Please fill out this field.',
 					'checkbox'        => 'This field is required.',
@@ -45,27 +45,26 @@ function formello_get_option_defaults() {
 					'under' => 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.',
 				),
 			),
-			'integrations'        => array(),
-			'recaptcha'           => array(
-				'version'    => 3,
+			'recaptcha' => array(
+				'version'    => '',
 				'site_key'   => '',
 				'secret_key' => '',
-				'threshold'  => 0.4,
+				'threshold'  => '',
 			),
 		)
 	);
 }
 
-add_filter( 'option_formello', 'formello_general_option' );
+add_filter( 'option_formello_recaptcha', 'formello_recaptcha_option' );
 
 /**
  * Filter to retrieve unencrypted reCaptcha
  *
  * @param mixed $settings The general settings.
  */
-function formello_general_option( $settings ) {
+function formello_recaptcha_option( $settings ) {
 	$crypto = new Formello\Encryption();
 
-	$settings['recaptcha']['secret_key'] = $crypto->decrypt( $settings['recaptcha']['secret_key'] );
-	return $settings;
+	$settings = $crypto->decrypt( $settings );
+	return unserialize( $settings );
 }

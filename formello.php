@@ -193,12 +193,8 @@ final class Formello {
 		$this->container['assets'] = new Formello\Assets();
 
 		// hook actions.
-
 		$email_action = new Formello\Actions\Email();
 		$email_action->hook();
-
-		//$mailchimp_action = new Formello\Actions\MailChimp();
-		//$mailchimp_action->hook();
 
 	}
 

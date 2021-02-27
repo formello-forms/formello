@@ -29,9 +29,7 @@ import {
 	SelectControl,
 	Toolbar,
 	ToolbarButton,
-	ToolbarGroup,
-	Icon,
-	IconButton
+	ToolbarGroup
 } from '@wordpress/components';
 
 import {

@@ -86,10 +86,10 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js":
-/*!**********************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/assertThisInitialized.js ***!
-  \**********************************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/assertThisInitialized/index.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/assertThisInitialized/index.js ***!
+  \****************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -102,13 +102,14 @@ function _assertThisInitialized(self) {
 }
 
 module.exports = _assertThisInitialized;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/classCallCheck.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
-  \***************************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/classCallCheck/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/classCallCheck/index.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -119,13 +120,14 @@ function _classCallCheck(instance, Constructor) {
 }
 
 module.exports = _classCallCheck;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/createClass.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
-  \************************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/createClass/index.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/createClass/index.js ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -146,13 +148,14 @@ function _createClass(Constructor, protoProps, staticProps) {
 }
 
 module.exports = _createClass;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/defineProperty.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/defineProperty.js ***!
-  \***************************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/defineProperty/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/defineProperty/index.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -172,13 +175,14 @@ function _defineProperty(obj, key, value) {
 }
 
 module.exports = _defineProperty;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/getPrototypeOf.js ***!
-  \***************************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/getPrototypeOf/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/getPrototypeOf/index.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -186,21 +190,23 @@ function _getPrototypeOf(o) {
   module.exports = _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
     return o.__proto__ || Object.getPrototypeOf(o);
   };
+  module.exports["default"] = module.exports, module.exports.__esModule = true;
   return _getPrototypeOf(o);
 }
 
 module.exports = _getPrototypeOf;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/inherits.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/inherits.js ***!
-  \*********************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/inherits/index.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/inherits/index.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var setPrototypeOf = __webpack_require__(/*! ./setPrototypeOf */ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js");
+var setPrototypeOf = __webpack_require__(/*! @babel/runtime/helpers/setPrototypeOf */ "./node_modules/@babel/runtime/helpers/setPrototypeOf/index.js");
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -218,19 +224,20 @@ function _inherits(subClass, superClass) {
 }
 
 module.exports = _inherits;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js":
-/*!**************************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js ***!
-  \**************************************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn/index.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/possibleConstructorReturn/index.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof.js");
+var _typeof = __webpack_require__(/*! @babel/runtime/helpers/typeof */ "./node_modules/@babel/runtime/helpers/typeof/index.js")["default"];
 
-var assertThisInitialized = __webpack_require__(/*! ./assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+var assertThisInitialized = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized/index.js");
 
 function _possibleConstructorReturn(self, call) {
   if (call && (_typeof(call) === "object" || typeof call === "function")) {
@@ -241,13 +248,14 @@ function _possibleConstructorReturn(self, call) {
 }
 
 module.exports = _possibleConstructorReturn;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/setPrototypeOf.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/setPrototypeOf.js ***!
-  \***************************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/setPrototypeOf/index.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/setPrototypeOf/index.js ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -257,17 +265,19 @@ function _setPrototypeOf(o, p) {
     return o;
   };
 
+  module.exports["default"] = module.exports, module.exports.__esModule = true;
   return _setPrototypeOf(o, p);
 }
 
 module.exports = _setPrototypeOf;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/helpers/typeof.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
-  \*******************************************************/
+/***/ "./node_modules/@babel/runtime/helpers/typeof/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@babel/runtime/helpers/typeof/index.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -278,16 +288,21 @@ function _typeof(obj) {
     module.exports = _typeof = function _typeof(obj) {
       return typeof obj;
     };
+
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
   } else {
     module.exports = _typeof = function _typeof(obj) {
       return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
+
+    module.exports["default"] = module.exports, module.exports.__esModule = true;
   }
 
   return _typeof(obj);
 }
 
 module.exports = _typeof;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
@@ -300,19 +315,19 @@ module.exports = _typeof;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/defineProperty */ "./node_modules/@babel/runtime/helpers/defineProperty/index.js");
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck.js");
+/* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/classCallCheck */ "./node_modules/@babel/runtime/helpers/classCallCheck/index.js");
 /* harmony import */ var _babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass.js");
+/* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/createClass */ "./node_modules/@babel/runtime/helpers/createClass/index.js");
 /* harmony import */ var _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized.js");
+/* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @babel/runtime/helpers/assertThisInitialized */ "./node_modules/@babel/runtime/helpers/assertThisInitialized/index.js");
 /* harmony import */ var _babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits.js");
+/* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @babel/runtime/helpers/inherits */ "./node_modules/@babel/runtime/helpers/inherits/index.js");
 /* harmony import */ var _babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ "./node_modules/@babel/runtime/helpers/possibleConstructorReturn/index.js");
 /* harmony import */ var _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf.js");
+/* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ "./node_modules/@babel/runtime/helpers/getPrototypeOf/index.js");
 /* harmony import */ var _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__);
@@ -336,7 +351,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6___default()(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _babel_runtime_helpers_getPrototypeOf__WEBPACK_IMPORTED_MODULE_6___default()(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_5___default()(this, result); }; }
 
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 
 /**
  * WordPress dependencies
@@ -401,8 +416,7 @@ var App = /*#__PURE__*/function (_Component) {
     _this.state = {
       isAPILoaded: false,
       isAPISaving: false,
-      isRegeneratingCSS: false,
-      settings: formelloSettings.settings
+      settings: {}
     };
     _this.getSetting = _this.getSetting.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this));
     _this.updateSettings = _this.updateSettings.bind(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_3___default()(_this));
@@ -412,8 +426,17 @@ var App = /*#__PURE__*/function (_Component) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(App, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      this.setState({
-        isAPILoaded: true
+      var _this2 = this;
+
+      apiFetch({
+        path: '/formello/v1/settings',
+        method: 'GET'
+      }).then(function (result) {
+        _this2.state.settings = result.response;
+
+        _this2.setState({
+          isAPILoaded: true
+        });
       });
     }
   }, {
@@ -430,7 +453,7 @@ var App = /*#__PURE__*/function (_Component) {
   }, {
     key: "updateSettings",
     value: function updateSettings(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.setState({
         isAPISaving: true
@@ -443,7 +466,7 @@ var App = /*#__PURE__*/function (_Component) {
           settings: this.state.settings
         }
       }).then(function (result) {
-        _this2.setState({
+        _this3.setState({
           isAPISaving: false
         });
 
@@ -460,6 +483,20 @@ var App = /*#__PURE__*/function (_Component) {
       });
     }
   }, {
+    key: "showMessage",
+    value: function showMessage(message) {
+      message.classList.add('formello-action-message--show');
+      message.textContent = result.response;
+
+      if (!result.success || !result.response) {
+        message.classList.add('formello-action-message--error');
+      } else {
+        setTimeout(function () {
+          message.classList.remove('formello-action-message--show');
+        }, 3000);
+      }
+    }
+  }, {
     key: "changeSettings",
     value: function changeSettings(group, name, value) {
       this.setState({
@@ -469,7 +506,7 @@ var App = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (!this.state.isAPILoaded) {
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Placeholder, {
@@ -485,8 +522,8 @@ var App = /*#__PURE__*/function (_Component) {
       }, function (tab) {
         var SettingsTab = components[tab.name];
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(SettingsTab, {
-          changeSettings: _this3.changeSettings.bind(_this3),
-          getSetting: _this3.getSetting.bind(_this3)
+          changeSettings: _this4.changeSettings.bind(_this4),
+          getSetting: _this4.getSetting.bind(_this4)
         });
       }), applyFilters('formello.dashboard.settings', '', this), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("div", {
         className: "formello-action-button"
@@ -494,7 +531,7 @@ var App = /*#__PURE__*/function (_Component) {
         isPrimary: true,
         disabled: this.state.isAPISaving,
         onClick: function onClick(e) {
-          return _this3.updateSettings(e);
+          return _this4.updateSettings(e);
         }
       }, this.state.isAPISaving && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])(Spinner, null), !this.state.isAPISaving && __('Save')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_7__["createElement"])("span", {
         className: "formello-action-message"
@@ -543,12 +580,8 @@ __webpack_require__.r(__webpack_exports__);
 var applyFilters = wp.hooks.applyFilters;
 
 function integrations(props) {
-  var updateSetting = function updateSetting(group, field, value) {
-    var newSettings = Object.assign({}, props.getSetting('validation_messages', group));
-    newSettings[field] = value;
-    props.changeSettings('validation_messages', group, newSettings);
-  };
-
+  var getSetting = props.getSetting,
+      changeSettings = props.changeSettings;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
     initialOpen: true,
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Integrations', 'formello')
@@ -581,44 +614,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function messages(props) {
+  var getSetting = props.getSetting,
+      changeSettings = props.changeSettings;
+
   var updateSetting = function updateSetting(group, field, value) {
-    var newSettings = Object.assign({}, props.getSetting('validation_messages', group));
+    var newSettings = Object.assign({}, getSetting('messages', group));
     newSettings[field] = value;
-    props.changeSettings('validation_messages', group, newSettings);
+    changeSettings('messages', group, newSettings);
   };
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
     initialOpen: true,
-    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('MIssing Value', 'formello')
+    title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Missing Value', 'formello')
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "formello-dashboard-panel-row-wrapper"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Default'),
-    value: props.getSetting('validation_messages', 'missingValue').default,
+    value: getSetting('messages', 'missingValue').default,
     onChange: function onChange(val) {
       updateSetting('missingValue', 'default', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Checkbox'),
-    value: props.getSetting('validation_messages', 'missingValue').checkbox,
+    value: getSetting('messages', 'missingValue').checkbox,
     onChange: function onChange(val) {
       updateSetting('missingValue', 'checkbox', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Radio'),
-    value: props.getSetting('validation_messages', 'missingValue').radio,
+    value: getSetting('messages', 'missingValue').radio,
     onChange: function onChange(val) {
       updateSetting('missingValue', 'radio', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Select'),
-    value: props.getSetting('validation_messages', 'missingValue').select,
+    value: getSetting('messages', 'missingValue').select,
     onChange: function onChange(val) {
       updateSetting('missingValue', 'select', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Select Multiple'),
-    value: props.getSetting('validation_messages', 'missingValue')['select-multiple'],
+    value: getSetting('messages', 'missingValue')['select-multiple'],
     onChange: function onChange(val) {
       updateSetting('missingValue', ['select-multiple'], val);
     }
@@ -629,49 +665,49 @@ function messages(props) {
     className: "formello-dashboard-panel-row-wrapper"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Email'),
-    value: props.getSetting('validation_messages', 'patternMismatch').email,
+    value: getSetting('messages', 'patternMismatch').email,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'email', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Url'),
-    value: props.getSetting('validation_messages', 'patternMismatch').url,
+    value: getSetting('messages', 'patternMismatch').url,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'url', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Number'),
-    value: props.getSetting('validation_messages', 'patternMismatch').number,
+    value: getSetting('messages', 'patternMismatch').number,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'number', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Color'),
-    value: props.getSetting('validation_messages', 'patternMismatch').color,
+    value: getSetting('messages', 'patternMismatch').color,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'color', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Date'),
-    value: props.getSetting('validation_messages', 'patternMismatch').date,
+    value: getSetting('messages', 'patternMismatch').date,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'date', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Time'),
-    value: props.getSetting('validation_messages', 'patternMismatch').time,
+    value: getSetting('messages', 'patternMismatch').time,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'time', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Month'),
-    value: props.getSetting('validation_messages', 'patternMismatch').month,
+    value: getSetting('messages', 'patternMismatch').month,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'month', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Default'),
-    value: props.getSetting('validation_messages', 'patternMismatch').default,
+    value: getSetting('messages', 'patternMismatch').default,
     onChange: function onChange(val) {
       updateSetting('patternMismatch', 'default', val);
     }
@@ -682,13 +718,13 @@ function messages(props) {
     className: "formello-dashboard-panel-row-wrapper"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Over Range'),
-    value: props.getSetting('validation_messages', 'outOfRange').over,
+    value: getSetting('messages', 'outOfRange').over,
     onChange: function onChange(val) {
       updateSetting('outOfRange', 'over', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Under Range'),
-    value: props.getSetting('validation_messages', 'outOfRange').under,
+    value: getSetting('messages', 'outOfRange').under,
     onChange: function onChange(val) {
       updateSetting('outOfRange', 'under', val);
     }
@@ -699,13 +735,13 @@ function messages(props) {
     className: "formello-dashboard-panel-row-wrapper"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Over Length'),
-    value: props.getSetting('validation_messages', 'wrongLength').over,
+    value: getSetting('messages', 'wrongLength').over,
     onChange: function onChange(val) {
       updateSetting('wrongLength', 'over', val);
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Under Length'),
-    value: props.getSetting('validation_messages', 'wrongLength').under,
+    value: getSetting('messages', 'wrongLength').under,
     onChange: function onChange(val) {
       updateSetting('wrongLength', 'under', val);
     }
@@ -735,6 +771,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function recaptcha(props) {
+  var getSetting = props.getSetting,
+      changeSettings = props.changeSettings;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelBody"], {
     initialOpen: true,
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Google ReCaptcha', 'formello')
@@ -744,7 +782,7 @@ function recaptcha(props) {
     className: "formello-css-print-method"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["RadioControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('ReCaptcha type', 'formello'),
-    selected: props.getSetting('recaptcha', 'version'),
+    selected: getSetting('recaptcha', 'version'),
     options: [{
       label: 'ReCaptcha v2 checkbox',
       value: '1'
@@ -754,28 +792,28 @@ function recaptcha(props) {
       value: '3'
     }],
     onChange: function onChange(val) {
-      props.changeSettings('recaptcha', 'version', val);
+      changeSettings('recaptcha', 'version', val);
     }
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Site Key', 'formello'),
     help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Sync our responsive preview controls with the editor responsive previews.', 'formello'),
-    value: props.getSetting('recaptcha', 'site_key'),
+    value: getSetting('recaptcha', 'site_key'),
     onChange: function onChange(val) {
-      props.changeSettings('recaptcha', 'site_key', val);
+      changeSettings('recaptcha', 'site_key', val);
     }
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Secret Key', 'formello'),
     help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Sync our responsive preview controls with the editor responsive previews.', 'formello'),
-    value: props.getSetting('recaptcha', 'secret_key'),
+    value: getSetting('recaptcha', 'secret_key'),
     onChange: function onChange(val) {
-      props.changeSettings('recaptcha', 'secret_key', val);
+      changeSettings('recaptcha', 'secret_key', val);
     }
-  })), props.getSetting('recaptcha', 'version') == 3 && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalNumberControl"], {
+  })), getSetting('recaptcha', 'version') == 3 && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["__experimentalNumberControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Threshold', 'formello'),
     help: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Sync our responsive preview controls with the editor responsive previews.', 'formello'),
-    value: props.getSetting('recaptcha', 'threshold'),
+    value: getSetting('recaptcha', 'threshold'),
     onChange: function onChange(val) {
-      props.changeSettings('recaptcha', 'threshold', val);
+      changeSettings('recaptcha', 'threshold', val);
     },
     step: '0.1',
     min: '0',

@@ -38,3 +38,25 @@
 	display: flex;
 	align-items: center;
 }
+
+.formello button {
+	background: #abb8c3;
+    color: #fff;
+    border: 1px solid transparent;
+    cursor: pointer;
+    -webkit-appearance: button;
+    padding: 10px 20px;
+}
+
+.cta {
+	cursor: pointer;
+	border: 1px solid;
+}
+
+.mailchimp {
+	height: 50px;
+ 	background-image: url( ../assets/images/mailchimp.png );
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}

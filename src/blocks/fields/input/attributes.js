@@ -8,7 +8,6 @@ export default {
 	},
 	name: {
 		type: 'string',
-		default: '',
 	},
 	label: {
 		type: 'string',
@@ -97,9 +96,5 @@ export default {
 	supported: {
 		type: 'array',
 		default: ['maxlength', 'minlength', 'pattern', 'placeholder', 'readonly', 'required']
-	},
-	settings: {
-		type: 'object',
-		default: formello.settings
 	}
 };

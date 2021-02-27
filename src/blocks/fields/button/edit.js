@@ -13,7 +13,15 @@ import { __ } from '@wordpress/i18n';
  */
 import './editor.scss';
 
-import { InspectorControls, BlockControls, AlignmentToolbar } from '@wordpress/block-editor';
+import { 
+	InspectorControls, 
+	BlockControls, 
+	AlignmentToolbar,
+	PanelColorSettings,
+	withColors,
+	getColorObjectByColorValue,
+	__experimentalUseEditorFeature as useEditorFeature
+} from '@wordpress/block-editor';
 import {
 	TextControl,
 	ToggleControl,
@@ -21,7 +29,9 @@ import {
 	PanelBody,
 	FontSizePicker
 } from '@wordpress/components';
-import { useEffect, Fragment } from '@wordpress/element';
+import { compose } from '@wordpress/compose';
+import classnames from 'classnames';
+import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -34,7 +44,7 @@ import { useEffect, Fragment } from '@wordpress/element';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( { attributes, className, setAttributes, context } ) {
+function Edit( { attributes, setAttributes, context, textColor, setTextColor, backgroundColor, setBackgroundColor } ) {
 	const ALIGNMENT_CONTROLS = [
 		{
 			icon: 'editor-alignleft',
@@ -57,29 +67,66 @@ export default function Edit( { attributes, className, setAttributes, context } 
 			align: 'wide',
 		},
 	];
-    const fontSizes = [
-        {
-            name: __( 'Small' ),
-            slug: 'small',
-            size: 12,
-        },
-        {
-            name: __( 'Big' ),
-            slug: 'big',
-            size: 26,
-        },
-    ];
-    const fallbackFontSize = 16;
 
-	/*useEffect(
-		() => {
-			setAttributes( { recaptcha: context['formello/recaptchaEnabled'] } );
-		},
-		[context['formello/recaptchaEnabled']]
-	);*/
+	const colors = useEditorFeature( 'color.palette' ) || EMPTY_ARRAY;
 
-	//attributes.recaptcha = context['formello/recaptchaEnabled']
-	
+	const className = classnames( attributes.alignment, textColor.class, backgroundColor.class, {
+		'has-text-color': attributes.textColor || attributes.style?.color?.text,
+		'has-background': attributes.backgroundColor || attributes.style?.color?.background
+	} );
+
+	const styleProp =
+		attributes.style?.color?.background || attributes.style?.color?.text || attributes.style?.color?.gradient
+			? {
+					background: attributes.style?.color?.gradient
+						? attributes.style.color.gradient
+						: undefined,
+					backgroundColor: attributes.style?.color?.background
+						? attributes.style.color.background
+						: undefined,
+					color: attributes.style?.color?.text ? attributes.style.color.text : undefined,
+			  }
+			: {};
+	/**
+	 * Removed undefined values from nested object.
+	 *
+	 * @param {*} object
+	 * @return {*} Object cleaned from undefined values
+	 */
+	const cleanEmptyObject = ( object ) => {
+		if ( ! isObject( object ) ) {
+			return object;
+		}
+		const cleanedNestedObjects = pickBy(
+			mapValues( object, cleanEmptyObject ),
+			identity
+		);
+		return isEqual( cleanedNestedObjects, {} )
+			? undefined
+			: cleanedNestedObjects;
+	};
+
+	const onChangeColor = ( name ) => ( value ) => {
+		const colorObject = getColorObjectByColorValue( colors, value );
+		const attributeName = name + 'Color';
+		const newStyle = {
+			...attributes.style,
+			color: {
+				...attributes?.style?.color,
+				[ name ]: colorObject?.slug ? undefined : value,
+			},
+		};
+
+		const newNamedColor = colorObject?.slug ? colorObject.slug : undefined;
+		const newAttributes = {
+			style: cleanEmptyObject( newStyle ),
+			[ attributeName ]: newNamedColor,
+		};
+
+		setAttributes( newAttributes );
+
+	}
+
 	return (
 		<div className={ 'formello' }>
 			<BlockControls>
@@ -95,14 +142,31 @@ export default function Edit( { attributes, className, setAttributes, context } 
 				<PanelBody title="Options" initialOpen={ true }>
 					<TextControl
 						label={ __( 'Text', 'formello' ) }
-						value={ attributes.txt }
-						onChange={ ( val ) => setAttributes( { txt: val } ) }
+						value={ attributes.text }
+						onChange={ ( val ) => setAttributes( { text: val } ) }
 					/>
 				</PanelBody>
+				<PanelColorSettings 
+					title={__('Color settings')}
+					colorSettings={[
+						{
+							value: textColor.color,
+							onChange: onChangeColor( 'text' ),
+							label: __('Text color')
+						},
+						{
+							value: backgroundColor.color,
+							onChange: onChangeColor( 'background' ),
+							label: __('Background color')
+						},
+					]}
+				/>
 			</InspectorControls>
-			<button disabled className={ attributes.alignment }>
-				{ attributes.txt }
+			<button disabled className={ className } style={ styleProp } >
+				{ attributes.text }
 			</button>
 		</div>
 	);
 }
+
+export default compose( withColors( {textColor: 'color', backgroundColor: 'background-color'} ) )( Edit );

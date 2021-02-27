@@ -15,11 +15,10 @@ import { __ } from '@wordpress/i18n';
 
 export default function integrations( props ) {
 
-	const updateSetting = ( group, field, value ) => {
-		var newSettings = Object.assign( {}, props.getSetting( 'validation_messages', group ) );
-		newSettings[ field ] = value;
-		props.changeSettings( 'validation_messages', group, newSettings )
-	};
+	const {
+		getSetting,
+		changeSettings
+	} = props;
 
     return (
 

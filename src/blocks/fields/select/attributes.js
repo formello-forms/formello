@@ -55,6 +55,12 @@ export default {
 		type: 'string',
 		default: '',
 	},
+	labelAlign: {
+		type: 'string',
+	},
+	labelVAlign: {
+		type: 'string',
+	},
 	labelClass: {
 		type: 'string',
 		default: '',

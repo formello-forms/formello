@@ -34,6 +34,18 @@ class Settings extends WP_REST_Controller {
 			'/' . $this->rest_base,
 			array(
 				array(
+					'methods'             => \WP_REST_Server::READABLE,
+					'callback'            => array( $this, 'get_settings' ),
+					'permission_callback' => array( $this, 'update_settings_permissions' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base,
+			array(
+				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'update_settings' ),
 					'permission_callback' => array( $this, 'update_settings_permissions' ),
@@ -57,7 +69,7 @@ class Settings extends WP_REST_Controller {
 				'recaptcha' => array(
 					'site_key'   => 'sanitize_text_field',
 					'secret_key' => 'sanitize_text_field',
-					'message'    => 'sanitize_text_field',
+					'version'    => 'sanitize_text_field',
 				),
 			)
 		);
@@ -79,7 +91,7 @@ class Settings extends WP_REST_Controller {
 	 * @return mixed
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
-		$current_settings = get_option( 'formello', array() );
+		$current_settings = get_option( 'formello' );
 		$new_settings     = $request->get_param( 'settings' );
 
 		$sanitized = $this->recursive_sanitize_text_field( $new_settings );
@@ -90,19 +102,58 @@ class Settings extends WP_REST_Controller {
 
 		if ( is_array( $sanitized ) ) {
 
-			$crypto = new \Formello\Encryption();
+			$crypto    = new \Formello\Encryption();
+			$recaptcha = $crypto->encrypt( serialize( $sanitized['recaptcha'] ) );
 
-			$sanitized['recaptcha']['secret_key'] = $crypto->encrypt( $sanitized['recaptcha']['secret_key'] );
+			// remove the secret from frontend options.
+			unset( $sanitized['recaptcha']['secret_key'] );
 
 			update_option( 'formello', array_merge( $current_settings, $sanitized ) );
+			update_option( 'formello_recaptcha', $recaptcha );
 
-			do_action( 'formello_mailchimp_action', $sanitized );
+			do_action( 'formello_settings_update', $sanitized );
 		}
 
 		return rest_ensure_response(
 			array(
 				'success'  => true,
 				'response' => __( 'Settings saved.', 'formello' ),
+			)
+		);
+	}
+
+	/**
+	 * Get Settings.
+	 *
+	 * @param \WP_REST_Request $request  request object.
+	 *
+	 * @return mixed
+	 */
+	public function get_settings( \WP_REST_Request $request ) {
+		$settings             = array();
+		$frontend_settings    = get_option( 'formello', formello_get_option_defaults() );
+
+		$settings['messages'] = $frontend_settings['messages'];
+
+		$settings['recaptcha'] = get_option(
+			'formello_recaptcha',
+			array(
+				'version'    => 3,
+				'site_key'   => '',
+				'secret_key' => '',
+				'threshold'  => 0.4,
+			)
+		);
+
+		$settings['integrations'] = array();
+
+		// filter to add integrations options
+		$settings = apply_filters( 'formello_settings', $settings );
+
+		return rest_ensure_response(
+			array(
+				'success'  => true,
+				'response' => $settings,
 			)
 		);
 	}

@@ -49,11 +49,8 @@ class Assets {
 	 * @return void
 	 */
 	private function register_scripts( $scripts ) {
-		$options       = get_option( 'formello', formello_get_option_defaults() );
-		$frontend_opts = array();
 
-		$frontend_opts['messages']  = $options['validation_messages'];
-		$frontend_opts['recaptcha'] = $options['recaptcha']['site_key'];
+		$settings = get_option( 'formello' );
 
 		foreach ( $scripts as $handle => $script ) {
 			$deps      = isset( $script['deps'] ) ? $script['deps'] : false;
@@ -68,15 +65,7 @@ class Assets {
 			'formello',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => $options,
-			)
-		);
-		wp_localize_script(
-			'formello-form-block',
-			'formello',
-			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => $frontend_opts,
+				'settings' => $settings,
 			)
 		);
 	}

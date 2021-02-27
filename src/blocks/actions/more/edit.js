@@ -18,6 +18,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 import {
 	PanelRow,
 	PanelBody,
+	Button
 } from '@wordpress/components';
 
 import {
@@ -43,6 +44,7 @@ export default function Edit() {
 			<InspectorControls>
 				<PanelBody title="More Blocks" initialOpen={ true }>
 					<p>We are working on more blocks.</p>
+					<div className="cta mailchimp" onClick={ () => console.log(123) }></div>
 				</PanelBody>
 			</InspectorControls>
 			<b>[More] Do you want more actions? please visit <a href="http://www.formello.net">our site</a></b>

@@ -59,8 +59,8 @@ class Form {
 
 		$this->settings = maybe_unserialize( $form->settings );
 		$this->messages = array(
-			'success' => isset( $this->settings['successMessage'] ) ? $this->settings['successMessage'] : __( 'Success', 'formello' ),
-			'error'   => isset( $this->settings['errorMessage'] ) ? $this->settings['errorMessage'] : __( 'Error', 'formello' ),
+			'success' => isset( $this->settings['successMessage'] ) ? $this->settings['successMessage'] : __( 'Thanks for submitting this form.', 'formello' ),
+			'error'   => isset( $this->settings['errorMessage'] ) ? $this->settings['errorMessage'] : __( 'Ops. An error occurred.', 'formello' ),
 		);
 	}
 

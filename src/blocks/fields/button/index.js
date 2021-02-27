@@ -62,7 +62,7 @@ registerBlockType( 'formello/button', {
 	 * Block attributes
 	 */
 	attributes: {
-		txt: {
+		text: {
 			type: 'string',
 			default: 'Submit',
 		},
@@ -70,14 +70,19 @@ registerBlockType( 'formello/button', {
 			type: 'string',
 			default: 'left',
 		},
-		recaptcha: {
-			type: 'boolean',
-			default: false,
-		},
 		fontSize: {
 			type: 'number',
 			default: '14',
-		}
+		},
+		textColor: {
+			type: 'string'
+		},
+		backgroundColor: {
+			type: 'string'
+		},
+		style: {
+			type: 'object'
+		},
 	},
 
 	/**

@@ -16,14 +16,19 @@ import classnames from 'classnames';
  */
 export default function save( { attributes, className } ) {
 
-	//className = 'formello';
+	// if value is empty assign undefined;
 	if ( 'checkbox' == attributes.type || 'radio' == attributes.type ) {
 		attributes.value = attributes.value ? attributes.value : undefined;
 	}
 
+	if ( !attributes.name ) {
+		attributes.name = attributes.id
+	}
+
 	className = classnames( 'formello', {
 		'formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
-		'hide': 'hidden' == attributes.type
+		'hide': 'hidden' == attributes.type,
+		'formello-date': ( attributes.type == 'date' || attributes.type == 'time' )
 	} )
 
 	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign )

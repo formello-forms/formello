@@ -25,6 +25,10 @@
 .wp-block-formello-form fieldset {
   padding: 1em;
   margin-bottom: 1em;
+  border: 1px solid;
+}
+.wp-block-formello-form fieldset .no-border {
+  border: none;
 }
 
 .wp-block-formello-form .formello {

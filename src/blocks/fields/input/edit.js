@@ -51,9 +51,9 @@ export default function Edit( {
 	useEffect(
 		() => {
 			let idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace(/-/g, '')	
-			if( attributes.name.length < 1 ){
+			if( !attributes.id ){
 				setAttributes( {
-					name: 'field_' + idx,
+					id: 'field_' + idx,
 				} )	
 			}			
 		},
@@ -63,6 +63,8 @@ export default function Edit( {
 		'formello': true,
 		'formello-row formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 	} )
+
+	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign );
 
 	const label = ( val ) => {
 		let txt = attributes.label
@@ -317,7 +319,7 @@ export default function Edit( {
 			</InspectorControls>
 			{ !(attributes.type == 'hidden') ? (
 			<label
-				className={ attributes.labelClass }
+				className={ labelClassName }
 				htmlFor={ attributes.id }
 			>
 				{ attributes.label }

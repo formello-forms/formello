@@ -22,6 +22,7 @@ import {
 import {
 	TextControl,
 	ToggleControl,
+	SelectControl,
 	Panel,
 	Tooltip,
 	PanelBody,
@@ -36,7 +37,6 @@ import {
 	FormTokenField,
 	Draggable,
 } from '@wordpress/components';
-import { cog, more, insert } from '@wordpress/icons';
 
 import { useState, useEffect, Fragment } from '@wordpress/element';
 import { withDispatch, useDispatch, useSelect } from '@wordpress/data';
@@ -44,6 +44,7 @@ import { withDispatch, useDispatch, useSelect } from '@wordpress/data';
 const { createBlock, cloneBlock } = wp.blocks;
 
 import OptionsList from './opts';
+import classnames from 'classnames';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -73,6 +74,7 @@ export default function Edit( {
 
 	const [ showRaw, setShowRaw ] = useState( false );
 	const [ options, setOptions ] = useState( attributes.options );
+	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign );
 
 	const addNewRow = (e) => {
 		setAttributes( {
@@ -247,12 +249,56 @@ export default function Edit( {
 						</Fragment>
 					}
 				
-
 				</PanelBody>
+				<PanelBody title="CSS Class" initialOpen={ false }>
+
+					<SelectControl
+				        label={ __( 'Label alignment', 'formello' ) }
+				        value={ attributes.labelAlign }
+				        options={ [
+				            { label: 'left', value: 'align-left' },
+				            { label: 'right', value: 'align-right' }
+				        ] }
+				        onChange={ ( align ) => { setAttributes( { labelAlign: align } ) } }
+					/>
+
+					<SelectControl
+				        label={ __( 'Label vertical alignment', 'formello' ) }
+				        value={ attributes.labelVAlign }
+				        options={ [
+				            { label: 'top', value: 'align-top' },
+				            { label: 'center', value: 'align-center' },
+				            { label: 'bottom', value: 'align-bottom' }
+				        ] }
+				        onChange={ ( align ) => { setAttributes( { labelVAlign: align } ) } }
+					/>
+					<TextControl
+						label={ __( 'Label Class', 'formello' ) }
+						value={ attributes.labelClass }
+						onChange={ ( val ) =>
+							setAttributes( { labelClass: val } )
+						}
+					/>
+					<TextControl
+						label={ __( 'Field Class', 'formello' ) }
+						value={ attributes.fieldClass }
+						onChange={ ( val ) =>
+							setAttributes( { fieldClass: val } )
+						}
+					/>
+					<TextControl
+						label={ __( 'Description Class', 'formello' ) }
+						value={ attributes.descriptionClass }
+						onChange={ ( val ) =>
+							setAttributes( { descriptionClass: val } )
+						}
+					/>
+
+				</PanelBody>				
 			</InspectorControls>
 			<Fragment>
 				<label
-					className={ attributes.labelClass }
+					className={ labelClassName }
 					htmlFor={ attributes.id }
 				>
 					{ attributes.label }

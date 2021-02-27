@@ -28,13 +28,17 @@ import {
 export default function save( { attributes, className, innerBlocks } ) {
 
 	if( attributes.blockId ){
-		attributes.fields = getFieldsName(attributes.blockId)
+		attributes.fields = getFieldsName(attributes.blockId);
 		attributes.constraints = getConstraints( attributes.blockId );
 	}
 
 	className = classnames( {
 		'column': !attributes.asRow,
 	} )
+
+	if ( !attributes.name ) {
+		attributes.name = 'form_' + attributes.id;
+	}
 
 	let honeypot = '_formello_h' + attributes.id;
 	return (
@@ -44,19 +48,11 @@ export default function save( { attributes, className, innerBlocks } ) {
 			data-hide={ attributes.hide } 
 			data-recaptcha={ attributes.recaptchaEnabled } 
 			data-redirect={ attributes.redirectUrl } 
-			data-sitekey={ attributes.settings.recaptcha.site_key }
 			data-id={ attributes.id }>
 			<input type="hidden" name="_formello_id" value={ attributes.id } />
 			<input type="text" name={ honeypot } className="formello-hp" />
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
-			{
-				(attributes.recaptchaEnabled && attributes.settings.recaptcha.version == 1) &&
-				<div 
-					class="g-recaptcha" 
-					data-sitekey={ attributes.settings.recaptcha.site_key }>
-				</div>
-			}
 		</form>
 	);
 }

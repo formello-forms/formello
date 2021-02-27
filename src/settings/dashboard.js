@@ -73,8 +73,7 @@ class App extends Component {
 		this.state = {
 			isAPILoaded: false,
 			isAPISaving: false,
-			isRegeneratingCSS: false,
-			settings: formelloSettings.settings,
+			settings: {},
 		};
 
 		this.getSetting = this.getSetting.bind( this );
@@ -82,8 +81,16 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.setState( {
-			isAPILoaded: true,
+		apiFetch( {
+			path: '/formello/v1/settings',
+			method: 'GET'
+		} ).then( ( result ) => {
+			this.state.settings = result.response 
+			
+			this.setState( {
+				isAPILoaded: true,
+			} );
+
 		} );
 	}
 
@@ -120,6 +127,19 @@ class App extends Component {
 				}, 3000 );
 			}
 		} );
+	}
+
+	showMessage( message ) {
+		message.classList.add( 'formello-action-message--show' );
+		message.textContent = result.response;
+
+		if ( ! result.success || ! result.response ) {
+			message.classList.add( 'formello-action-message--error' );
+		} else {
+			setTimeout( function() {
+				message.classList.remove( 'formello-action-message--show' );
+			}, 3000 );
+		}
 	}
 
 	changeSettings( group, name, value ) {

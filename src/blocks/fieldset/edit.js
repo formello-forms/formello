@@ -67,6 +67,13 @@ export default function Edit( {
 							setAttributes( { showLegend: newval } )
 						}
 					/>
+					<ToggleControl
+						label="Show Border"
+						checked={ attributes.showBorder }
+						onChange={ ( newval ) =>
+							setAttributes( { showBorder: newval } )
+						}
+					/>
 				</PanelBody>
 			</InspectorControls>
 			<fieldset>

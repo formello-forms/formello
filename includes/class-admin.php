@@ -153,17 +153,9 @@ class Admin {
 		wp_enqueue_script( 'formello-settings' );
 		wp_enqueue_style( 'formello-settings' );
 
-		wp_localize_script(
-			'formello-settings',
-			'formelloSettings',
-			array(
-				'settings' => wp_parse_args(
-					get_option( 'formello', formello_get_option_defaults() )
-				),
-			)
-		);
-
+		// add settings script from addon
 		do_action( 'formello_settings_scripts' );
+
 	}
 
 	/**
