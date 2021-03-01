@@ -7554,17 +7554,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ "./src/blocks/actions/base/filterMergeTags.js":
-/*!****************************************************!*\
-  !*** ./src/blocks/actions/base/filterMergeTags.js ***!
-  \****************************************************/
-/*! no exports provided */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/source-map-loader/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\src\\blocks\\actions\\base\\filterMergeTags.js'");
-
-/***/ }),
-
 /***/ "./src/blocks/actions/base/filters.js":
 /*!********************************************!*\
   !*** ./src/blocks/actions/base/filters.js ***!
@@ -11799,18 +11788,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_fields_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/fields/select */ "./src/blocks/fields/select/index.js");
 /* harmony import */ var _blocks_fields_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/fields/input */ "./src/blocks/fields/input/index.js");
 /* harmony import */ var _blocks_fields_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/fields/button */ "./src/blocks/fields/button/index.js");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _blocks_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/actions */ "./src/blocks/actions/index.js");
-/* harmony import */ var _blocks_actions_email__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/actions/email */ "./src/blocks/actions/email/index.js");
-/* harmony import */ var _blocks_actions_base_filterMergeTags__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/actions/base/filterMergeTags */ "./src/blocks/actions/base/filterMergeTags.js");
-/* harmony import */ var _blocks_actions_more__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./blocks/actions/more */ "./src/blocks/actions/more/index.js");
+/* harmony import */ var _blocks_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/actions */ "./src/blocks/actions/index.js");
+/* harmony import */ var _blocks_actions_email__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/actions/email */ "./src/blocks/actions/email/index.js");
+/* harmony import */ var _blocks_actions_more__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/actions/more */ "./src/blocks/actions/more/index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_9__);
 /**
- * Formaster
+ * Formello
  */
-
 
 
 
