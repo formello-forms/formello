@@ -48,9 +48,9 @@ registerBlockType( 'formello/fieldset', {
 			type: 'boolean',
 			default: true,
 		},
-		showBorder: {
+		hideBorder: {
 			type: 'boolean',
-			default: true,
+			default: false,
 		},
 		legend: {
 			type: 'string',
@@ -85,7 +85,7 @@ registerBlockType( 'formello/fieldset', {
 	 * @see ./save.js
 	 */
 	save: ( { attributes } ) => {
-		let className = attributes.showBorder ? '' : 'no-border';
+		let className = attributes.hideBorder ? 'no-border' : undefined;
 		return (
 			<fieldset className={ className }>
 				{ attributes.showLegend && (

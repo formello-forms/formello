@@ -56,6 +56,8 @@ export default function Edit( {
 		[ clientId ]
 	);
 
+	className = attributes.hideBorder ? 'no-border' : undefined;
+
 	return (
 		<>
 			<InspectorControls>
@@ -68,15 +70,15 @@ export default function Edit( {
 						}
 					/>
 					<ToggleControl
-						label="Show Border"
-						checked={ attributes.showBorder }
+						label="Hide Border"
+						checked={ attributes.hideBorder }
 						onChange={ ( newval ) =>
-							setAttributes( { showBorder: newval } )
+							setAttributes( { hideBorder: newval } )
 						}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<fieldset>
+			<fieldset className={ className }>
 				{ attributes.showLegend && (
 					<RichText
 						tagName="legend"

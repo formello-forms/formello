@@ -14,6 +14,8 @@ Gutenberg contact form builder plugin.
 
 Formello is a Gutenberg form builder that helps you build beautiful html forms that seamless integrate in almost every theme with minimal effort.
 
+You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form.
+
 == Installation ==
 
 There's two ways to install Formello.
@@ -33,7 +35,21 @@ No. jQuery is not needed to perform ajax form submitting, therefore your site wi
 
 Yes. Your submissions will be stored in database, so you can keep track of them.
 
+= Is there spam protection? =
+
+Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. Also we have support for Google ReCaptcha (v2,v3) to stop spam bot sending form and to help you take things clean. Apart from this, data submitted are always validated and sanitized.
+
 == Changelog ==
+
+= 1.0.2 =
+* [Improvements] Added placeholder and starter template to form
+* [Improvements] Added label options
+* [Improvements] Added color options styling to button
+* [Improvements] Added support for date/time in old browsers
+* Small bug fixes
+
+= 1.0.1 =
+* Small bug fixes
 
 = 1.0.0 =
 * Release

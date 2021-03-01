@@ -27,11 +27,15 @@ export default function save( { attributes, className } ) {
 
 	className = classnames( 'formello', {
 		'formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
-		'hide': 'hidden' == attributes.type,
-		'formello-date': ( attributes.type == 'date' || attributes.type == 'time' )
+		'hide': 'hidden' == attributes.type
 	} )
 
 	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign )
+
+	let fieldClass = classnames( attributes.fieldClass, {
+		'formello-date': attributes.type == 'date',
+		'formello-time': attributes.type == 'time'
+	} )
 
 	return (
 		<div className={ className }>
@@ -63,7 +67,7 @@ export default function save( { attributes, className } ) {
 				</textarea>
 			) : (
 				<input
-					className={ attributes.fieldClass }
+					className={ fieldClass }
 					type={ attributes.type }
 					name={ attributes.name }
 					id={ attributes.id }

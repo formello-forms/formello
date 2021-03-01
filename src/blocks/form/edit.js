@@ -20,7 +20,7 @@ import { compose } from '@wordpress/compose';
 import {
 	InspectorControls,
 	InnerBlocks,
-	__experimentalBlockVariationPicker ,
+	__experimentalBlockVariationPicker,
 } from '@wordpress/block-editor';
 
 import {
@@ -142,7 +142,7 @@ function Edit( {
 						onChange={ ( val ) => setAttributes( { 'name': val } ) }
 					/>
 					<ToggleControl
-						label={ __( 'Label on left', 'formello' ) }
+						label={ __( 'Label on side', 'formello' ) }
 						checked={ attributes.asRow }
 						onChange={ ( val ) => setAttributes( { 'asRow': val } ) }
 					/>
@@ -207,7 +207,7 @@ function Placeholder ( props ) {
 		<Fragment>
 			<__experimentalBlockVariationPicker
 				icon={ getIcon( 'form' ) }
-				label={ 'succhia' }
+				label={ 'Form' }
 				instructions={ __( 'Select a form to start with.', 'formello' ) }
 				variations={ variations }
 				allowSkip

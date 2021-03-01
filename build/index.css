@@ -29,14 +29,6 @@ div.formello p {
  *
  * Replace them with your own styles or remove the file completely.
  */
-.wp-block-create-block-formaster {
-  border: 1px dotted #f00;
-}
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
 .formello-tag-option {
   cursor: pointer;
   margin-bottom: 5px;
@@ -122,16 +114,6 @@ div.formello p {
 
 .wp-block-formello-actions h4 {
   margin: 0px;
-}
-
-.formello-fieldset {
-  padding: 10px;
-  border: 1px solid grey;
-  margin-bottom: 10px;
-}
-
-.formello-fieldset button.is-destructive {
-  margin-top: 10px;
 }
 
 /*# sourceMappingURL=index.css.map*/

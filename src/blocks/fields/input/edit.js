@@ -103,7 +103,7 @@ export default function Edit( {
 						supported.includes('placeholder') && 
 						<TextControl
 							label={ __( 'Placeholder', 'formello' ) }
-							value={ attributes.placeholder ? attributes.placeholder : '' }
+							value={ attributes.placeholder }
 							onChange={ ( val ) =>
 								setAttributes( { placeholder: val } )
 							}
@@ -248,20 +248,20 @@ export default function Edit( {
 						<PanelRow>
 							<NumberControl
 								label={ __( 'Cols', 'formello' ) }
-								value={ attributes.cols || '' }
+								value={ attributes.cols }
 								onChange={ ( val ) =>
 									setAttributes( { cols: val } )
 								}
 							/>
 						</PanelRow>
 						<PanelRow>
-						<NumberControl
-							label={ __( 'Rows', 'formello' ) }
-							value={ attributes.rows || '' }
-							onChange={ ( val ) =>
-								setAttributes( { rows: val } )
-							}
-						/>
+							<NumberControl
+								label={ __( 'Rows', 'formello' ) }
+								value={ attributes.rows }
+								onChange={ ( val ) =>
+									setAttributes( { rows: val } )
+								}
+							/>
 						</PanelRow>
 						</Fragment>
 					) }
@@ -334,28 +334,21 @@ export default function Edit( {
 			(
 			<div className='formello-hidden'>{ hiddenIcon }<label>Hidden field [{ attributes.name }] </label></div>
 			) }
-			{ attributes.type == 'textarea' ? (
+			{ 'textarea' == attributes.type ? (
 				<textarea
 					readOnly
 					cols={ attributes.cols }
 					rows={ attributes.rows }
+					value={ attributes.value }
 					className={ attributes.fieldClass }
-					name={ attributes.name }
-					required={ attributes.required }
 					placeholder={ attributes.placeholder }
+					disabled={ true }
 				></textarea>
 			) : (
 				<input
 					className={ attributes.fieldClass }
 					type={ attributes.type }
 					value={ attributes.value }
-					/*value={
-						('text' == attributes.type || 
-						'number' == attributes.type || 
-						'email' == attributes.type) 
-							? attributes.value
-							: undefined
-					}*/
 					readOnly
 					disabled={ true }
 					//disabled={ attributes.type == 'color' ? true : false }

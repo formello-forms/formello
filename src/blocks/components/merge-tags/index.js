@@ -34,11 +34,13 @@ export default function mergeTags( props ) {
 	const icon = 'list-view';
 
 	return (
+		<PanelRow>
 			<InputControl 
 				className='components-base-control'
 				value={ value }
 				label={ label }
 				onChange={ (val) => onChange(val) }
+				labelPosition="top"
 				suffix={ 
 				    <Dropdown
 				        className="my-container-class-name"
@@ -58,5 +60,6 @@ export default function mergeTags( props ) {
 				    />
 				}
 			 />
+		</PanelRow>
 	);
 }

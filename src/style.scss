@@ -5,7 +5,7 @@
     border: 1px solid;
   }
 
-  fieldset .no-border {
+  fieldset.no-border {
     border: none;
   }
 }
@@ -217,4 +217,8 @@
 .formello-hp {
   position: absolute;
   left: -500px;
+}
+
+[hidden] {
+  display: none !important;
 }

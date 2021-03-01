@@ -39,7 +39,7 @@ const variations = [
 		title: __( 'Contact' ),
 		description: __( 'A simple contact form' ),
 		icon: (
-			<SVG xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 0 48 48" width="48">
+			<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
 				<Path d="m37 17c0-1.1-.9-2-2-2h-22c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h22c1.1 0 2-.9 2-2zm-2 0-11 7-11-7zm0 16h-22v-14l11 7 11-7z" />
 			</SVG>
 		),
@@ -55,19 +55,10 @@ const variations = [
 	{
 		name: 'event',
 		title: __( 'Event' ),
-		description: __( 'Bokk event form' ),
+		description: __( 'Book event form' ),
 		icon: (
-			<SVG
-				width="48"
-				height="48"
-				viewBox="0 0 48 48"
-				xmlns="http://www.w3.org/2000/svg"
-			>
-				<Path
-					fillRule="evenodd"
-					clipRule="evenodd"
-					d="M39 12C40.1046 12 41 12.8954 41 14V34C41 35.1046 40.1046 36 39 36H9C7.89543 36 7 35.1046 7 34V14C7 12.8954 7.89543 12 9 12H39ZM39 34V14H20V34H39ZM18 34H9V14H18V34Z"
-				/>
+			<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+				<Path d="m34 16h-1v-2h-2v2h-14v-2h-2v2h-1c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h20c1.1 0 2-.9 2-2v-16c0-1.1-.9-2-2-2zm0 18h-20v-11h20zm0-13h-20v-3h20zm-18 4h4v4h-4z"></Path>
 			</SVG>
 		),
 		innerBlocks: [ 

@@ -48,7 +48,7 @@ class Admin {
 		$capability = 'manage_options';
 		$slug       = 'formello';
 
-		add_menu_page( __( 'Formello', 'formello' ), __( 'Formello', 'formello' ), $capability, $slug, array( $this, 'forms_page' ), 'dashicons-text' );
+		add_menu_page( __( 'Formello', 'formello' ), __( 'Formello', 'formello' ), $capability, $slug, array( $this, 'forms_page' ), 'dashicons-feedback' );
 
 		$form_hook        = add_submenu_page( $slug, __( 'Forms', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello', array( $this, 'forms_page' ) );
 		$submissions_hook = add_submenu_page( $slug, __( 'Submissions', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello-submissions', array( $this, 'submissions_page' ) );

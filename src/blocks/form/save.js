@@ -36,7 +36,7 @@ export default function save( { attributes, className, innerBlocks } ) {
 		'column': !attributes.asRow,
 	} )
 
-	if ( !attributes.name ) {
+	if ( !attributes.name && attributes.id ) {
 		attributes.name = 'form_' + attributes.id;
 	}
 

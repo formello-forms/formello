@@ -56,7 +56,7 @@ registerBlockType( 'formello/actions-email', {
 	category: 'formello',
 
 	// Only allow this block when it is nested in a Formello block
-	//parent: [ 'formello/actions' ],
+	parent: [ 'formello/actions' ],
 
 	/**
 	 * Block attributes

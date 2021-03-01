@@ -15,13 +15,13 @@ export default {
 	},
 	description: {
 		type: 'string',
-		default: '',
 	},
 	placeholder: {
 		type: 'string',
 	},
 	value: {
 		type: 'string',
+		default: ''
 	},
 	validation: {
 		type: 'string',
@@ -92,9 +92,5 @@ export default {
 	},
 	step: {
 		type: 'number',
-	},
-	supported: {
-		type: 'array',
-		default: ['maxlength', 'minlength', 'pattern', 'placeholder', 'readonly', 'required']
 	}
 };

@@ -10,5 +10,13 @@ function checkDateInput() {
 }
 
 if ( !checkDateInput ) {
-	flatpickr(".formello-date", {});
+
+	var script = document.createElement('script');
+	script.onload = function () {
+	    //do stuff with the script
+		flatpickr(".formello-date", {});
+	};
+	script.src = something;
+
+	document.head.appendChild(script); //or something of the likes
 }

@@ -418,7 +418,39 @@ window.formelloCallback = function () {
       'sitekey': formello.settings.recaptcha
     });
   }
-};
+}; // check if the input date is supported
+
+
+function checkDateInput() {
+  var input = document.createElement('input');
+  input.setAttribute('type', 'date');
+  var notADateValue = 'not-a-date';
+  input.setAttribute('value', notADateValue);
+  return input.value !== notADateValue;
+}
+
+if (!checkDateInput()) {
+  var script = document.createElement('script');
+
+  script.onload = function () {
+    var date = flatpickr(".formello-date", {});
+    var time = flatpickr(".formello-time", {
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i"
+    });
+  };
+
+  script.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
+  document.head.appendChild(script); //or something of the likes
+
+  var link = document.createElement("link");
+  link.href = 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css';
+  link.type = "text/css";
+  link.rel = "stylesheet";
+  link.media = "screen,print";
+  document.getElementsByTagName("head")[0].appendChild(link);
+}
 
 console.log("formello loaded");
 

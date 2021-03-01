@@ -114,6 +114,7 @@ final class Formello {
 				`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 				`form_id` VARCHAR(255) NOT NULL,
 				`data` TEXT NOT NULL,
+				`is_new` BOOLEAN DEFAULT true,
 				`user_agent` TEXT NULL,
 				`ip_address` VARCHAR(255) NULL,
 				`referer_url` VARCHAR(255) NULL,

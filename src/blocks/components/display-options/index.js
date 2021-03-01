@@ -33,6 +33,7 @@ export default function displayOpts( props ) {
 		            { label: 'left', value: 'align-left' },
 		            { label: 'right', value: 'align-right' }
 		        ] }
+		        labelPosition="top"
 		        onChange={ ( align ) => { setAttributes( { labelAlign: align } ) } }
 			/>
 

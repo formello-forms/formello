@@ -59,6 +59,7 @@ import './dashboard.scss';
 import Recaptcha from './recaptcha.js';
 import Messages from './messages.js';
 import Integrations from './integrations.js';
+import Other from './other.js';
 
 const components = {
     recaptcha: Recaptcha,
