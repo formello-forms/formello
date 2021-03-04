@@ -24,11 +24,6 @@ div.formello p {
 .formello-opts button {
   margin-bottom: 8px;
 }
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
 .formello-tag-option {
   cursor: pointer;
   margin-bottom: 5px;
@@ -79,7 +74,7 @@ div.formello p {
   margin: 5px 0;
 }
 .wp-block-formello-form .formello {
-  padding: 10px;
+  padding: 10px 0;
 }
 .wp-block-formello-form .formello small {
   padding: 0;
@@ -94,13 +89,39 @@ div.formello p {
   align-items: center;
 }
 
-.formello button {
+.wp-block-formello-button .button-span {
   background: #abb8c3;
   color: #fff;
   border: 1px solid transparent;
   cursor: pointer;
-  -webkit-appearance: button;
   padding: 10px 20px;
+  min-width: 80px;
+  align-self: flex-start;
+}
+.wp-block-formello-button .button-span.center {
+  -ms-grid-row-align: center;
+      align-self: center;
+}
+.wp-block-formello-button .button-span.right {
+  align-self: flex-end;
+}
+.wp-block-formello-button .button-span.wide {
+  -ms-grid-row-align: auto;
+      align-self: auto;
+}
+
+.formello-group div {
+  display: flex;
+  flex: 1 0 auto;
+}
+.formello-group div input {
+  height: 100%;
+}
+.formello-group div [data-type="formello/button"] {
+  flex: 0 1 auto;
+}
+.formello-group div.formello {
+  padding: 0;
 }
 
 .cta {

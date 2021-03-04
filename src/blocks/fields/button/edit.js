@@ -15,6 +15,7 @@ import './editor.scss';
 
 import { 
 	InspectorControls, 
+	InspectorAdvancedControls, 
 	BlockControls, 
 	AlignmentToolbar,
 	PanelColorSettings,
@@ -27,11 +28,13 @@ import {
 	ToggleControl,
 	PanelRow,
 	PanelBody,
-	FontSizePicker
+	FontSizePicker,
+	SelectControl
 } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import classnames from 'classnames';
 import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
+import { useState } from '@wordpress/element';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -44,7 +47,7 @@ import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
  *
  * @return {WPElement} Element to render.
  */
-function Edit( { attributes, setAttributes, context, textColor, setTextColor, backgroundColor, setBackgroundColor } ) {
+function Edit( { attributes, setAttributes, context, textColor, setTextColor, backgroundColor, setBackgroundColor, className } ) {
 	const ALIGNMENT_CONTROLS = [
 		{
 			icon: 'editor-alignleft',
@@ -68,12 +71,18 @@ function Edit( { attributes, setAttributes, context, textColor, setTextColor, ba
 		},
 	];
 
+	const [ showIcon, setShowIcon ] = useState( false );
 	const colors = useEditorFeature( 'color.palette' ) || EMPTY_ARRAY;
 
-	const className = classnames( attributes.alignment, textColor.class, backgroundColor.class, {
+	const buttonClass = classnames( 'button-span', textColor.class, backgroundColor.class, attributes.iconPosition, {
 		'has-text-color': attributes.textColor || attributes.style?.color?.text,
-		'has-background': attributes.backgroundColor || attributes.style?.color?.background
+		'has-background': attributes.backgroundColor || attributes.style?.color?.background,
+		'running': showIcon
 	} );
+
+	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
+
+	const containerClass = classnames( className, attributes.alignment );
 
 	const styleProp =
 		attributes.style?.color?.background || attributes.style?.color?.text || attributes.style?.color?.gradient
@@ -128,7 +137,7 @@ function Edit( { attributes, setAttributes, context, textColor, setTextColor, ba
 	}
 
 	return (
-		<div className={ 'formello' }>
+		<div className={ containerClass }>
 			<BlockControls>
 				<AlignmentToolbar
 					value={ attributes.alignment }
@@ -162,9 +171,37 @@ function Edit( { attributes, setAttributes, context, textColor, setTextColor, ba
 					]}
 				/>
 			</InspectorControls>
-			<button disabled className={ className } style={ styleProp } >
-				{ attributes.text }
-			</button>
+			<InspectorAdvancedControls>
+				<ToggleControl
+					label={ __( 'Show loading icon', 'formello' ) }
+					checked={ showIcon}
+					onChange={ ( val ) => setShowIcon( val ) }
+				/>
+				<SelectControl
+			        label={ __( 'Label horizontal position', 'formello' ) }
+			        value={ attributes.iconPosition }
+			        options={ [
+			            { label: 'over', value: 'ld-over' },
+			            { label: 'left', value: 'ld-ext-left' },
+			            { label: 'right', value: 'ld-ext-right' }
+			        ] }
+			        onChange={ ( val ) => { setAttributes( { iconPosition: val } ) } }
+				/>
+				<SelectControl
+			        label={ __( 'Icon type', 'formello' ) }
+			        value={ attributes.iconType }
+			        options={ [
+			            { label: 'ring', value: 'ld-ring' },
+			            { label: 'hourglass', value: 'ld-hourglass' },
+			            { label: 'spinner', value: 'ld-spinner' }
+			        ] }
+			        onChange={ ( val ) => { setAttributes( { iconType: val } ) } }
+				/>
+			</InspectorAdvancedControls>
+			<div className={ buttonClass } style={ styleProp } >
+				<span>{ attributes.text }</span>
+				<div className={ iconClass }></div>
+			</div>
 		</div>
 	);
 }

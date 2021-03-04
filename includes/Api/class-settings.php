@@ -91,7 +91,7 @@ class Settings extends WP_REST_Controller {
 	 * @return mixed
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
-		$current_settings = get_option( 'formello' );
+		$current_settings = get_option( 'formello', formello_get_option_defaults() );
 		$new_settings     = $request->get_param( 'settings' );
 
 		$sanitized = $this->recursive_sanitize_text_field( $new_settings );

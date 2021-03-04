@@ -22,8 +22,7 @@
 
 .wp-block-formello-form .formello {
   display: flex;
-  flex-direction: column;
-  align-items: inherit;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 1em;
 
@@ -34,12 +33,15 @@
   label {
     padding: 0 10px 0 0;
     margin: 0;
-    flex: 0 1 auto;
+    flex: 0 1 200px;
     &.align-top {
       align-self: flex-start;
     }
     &.align-bottom {
       align-self: flex-end;
+    }
+    &.align-right {
+      text-align: right;
     }
   }
 
@@ -58,6 +60,7 @@
 
   small {
     width: 100%;
+    margin-left: 200px;
   }
 
   .required {
@@ -67,6 +70,7 @@
   .error-message {
     color: red;
     order: 3;
+    margin-left: 200px;
   }
 
   &.hide {
@@ -78,10 +82,11 @@
 
     flex-direction: row;
     align-items: center;
+    margin-left: 200px;
 
     label {
       order: 2;
-      font-weight: normal !important;
+      font-weight: normal;
       margin: 0;
       flex: 0 1 auto;
     }
@@ -147,45 +152,46 @@
   }
 }
 
-.wp-block-formello-form.label-left {
-  .formello label {
-    text-align: left;
-  }
-}
-
 .wp-block-formello-form.label-right {
   .formello label {
     text-align: right;
   }
 }
 
-@media screen and (min-width: 600px) {
-
-  .as-row .formello {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    label {
-      flex: 0 1 200px;
-    }
-    &.formello-checkbox {
-      margin-left: 200px;
-    }
-    .error-message {
-      margin-left: 200px;
-    }
+.wp-block-formello-form.label-left {
+  .formello label {
+    text-align: left;
   }
+}
 
+.column .formello {
+  display: flex;
+  flex-direction: column;
+  align-items: inherit;
+  label, small, button {
+    flex: auto;
+    margin: 0px;
+  }
+  &.formello-checkbox {
+    margin-left: 0;
+  }
+  .error-message {
+    margin-left: 0;
+  }
 }
 
 .formello-group {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: flex-end;
+
   .formello {
     display: flex;
     flex: auto;
+    & label {
+      display: none;
+    }
+
     & input {
       flex-grow: 1;
       width: 100%;
@@ -193,7 +199,7 @@
 
     &.wp-block-formello-button {
       flex: 0 1 auto;
-      padding-left: 0 !important;
+      padding-left: 0;
     }
 
     &.wp-block-formello-button button {
@@ -232,10 +238,7 @@
   display: none !important;
 }
 
-output {
-  margin: 0 1em 1em 1em;
-  border: 1px solid #d7dbdd;
-  font-size: 1em;
-  padding: .4em .6em;
-  border-radius: 3px;
+@media screen and (min-width: 600px) {
+  .formello {
+  }
 }

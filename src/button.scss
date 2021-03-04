@@ -1,0 +1,68 @@
+.wp-block-formello-button {
+  
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  &.center {
+    justify-content: center;
+  }
+  &.right {
+    justify-content: flex-end;
+  }
+  &.wide {
+    button {
+      width: 100%;
+    }
+  }
+
+  button {
+    span{
+      transition: all 1s;
+      opacity:1;
+    }
+    svg {
+      display:none; 
+      transition: all 1s;
+      stroke-width: 5;
+      fill-rule: evenodd;
+      margin: auto;
+      height: 100%;
+    }
+  }
+
+  button:hover {
+    opacity: .8;
+  }
+
+  button.loading-start {
+    span{
+      display: none;  
+      opacity: 0;
+    }
+    svg {
+      display: block; 
+      opacity: 1;
+    }
+  }
+
+}
+
+@media screen and (min-width: 600px) {
+
+  .as-row .wp-block-formello-button {
+    padding-left: 200px;
+    flex-direction: row;
+  }
+  
+}
+
+.formello-group .wp-block-formello-button {
+  padding-left: 0;
+  flex-direction: row;
+  margin-left: 10px;
+}
+
+.wp-block-formello-button.group {
+  margin-left: 0;
+}

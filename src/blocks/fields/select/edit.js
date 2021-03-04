@@ -45,6 +45,7 @@ const { createBlock, cloneBlock } = wp.blocks;
 
 import OptionsList from './opts';
 import classnames from 'classnames';
+import DisplayOpts from '../../components/display-options'
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -57,13 +58,15 @@ import classnames from 'classnames';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( {
-	attributes,
-	className,
-	setAttributes,
-	clientId,
-} ) {
-	// componentDidMount -> set field id
+export default function Edit( props ) {
+
+	const {
+		attributes,
+		setAttributes,
+		className,
+		clientId
+	} = props;
+
 	useEffect(
 		() =>
 			setAttributes( {
@@ -252,49 +255,10 @@ export default function Edit( {
 				</PanelBody>
 				<PanelBody title="CSS Class" initialOpen={ false }>
 
-					<SelectControl
-				        label={ __( 'Label alignment', 'formello' ) }
-				        value={ attributes.labelAlign }
-				        options={ [
-				            { label: 'left', value: 'align-left' },
-				            { label: 'right', value: 'align-right' }
-				        ] }
-				        onChange={ ( align ) => { setAttributes( { labelAlign: align } ) } }
-					/>
+					<DisplayOpts {...props}/>		
 
-					<SelectControl
-				        label={ __( 'Label vertical alignment', 'formello' ) }
-				        value={ attributes.labelVAlign }
-				        options={ [
-				            { label: 'top', value: 'align-top' },
-				            { label: 'center', value: 'align-center' },
-				            { label: 'bottom', value: 'align-bottom' }
-				        ] }
-				        onChange={ ( align ) => { setAttributes( { labelVAlign: align } ) } }
-					/>
-					<TextControl
-						label={ __( 'Label Class', 'formello' ) }
-						value={ attributes.labelClass }
-						onChange={ ( val ) =>
-							setAttributes( { labelClass: val } )
-						}
-					/>
-					<TextControl
-						label={ __( 'Field Class', 'formello' ) }
-						value={ attributes.fieldClass }
-						onChange={ ( val ) =>
-							setAttributes( { fieldClass: val } )
-						}
-					/>
-					<TextControl
-						label={ __( 'Description Class', 'formello' ) }
-						value={ attributes.descriptionClass }
-						onChange={ ( val ) =>
-							setAttributes( { descriptionClass: val } )
-						}
-					/>
+				</PanelBody>
 
-				</PanelBody>				
 			</InspectorControls>
 			<Fragment>
 				<label

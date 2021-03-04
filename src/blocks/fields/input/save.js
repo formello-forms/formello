@@ -4,6 +4,7 @@
 import { __ } from '@wordpress/i18n';
 import { RichText } from '@wordpress/block-editor';
 import classnames from 'classnames';
+import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -37,6 +38,9 @@ export default function save( { attributes, className } ) {
 		'formello-time': attributes.type == 'time'
 	} )
 
+	const htmlAttrs = pickBy( attributes, identity);
+	htmlAttrs.className = fieldClass ? fieldClass : undefined;
+
 	return (
 		<div className={ className }>
 			{ !(attributes.type == 'hidden') && (
@@ -52,36 +56,11 @@ export default function save( { attributes, className } ) {
 			</label>
 			) }
 			{ attributes.type == 'textarea' ? (
-				<textarea
-					className={ attributes.fieldClass }
-					name={ attributes.name }
-					id={ attributes.id }
-					cols={ attributes.cols }
-					rows={ attributes.rows }
-					minLength={ attributes.minlength }
-					maxLength={ attributes.maxlength }
-					required={ attributes.required }
-					placeholder={ attributes.placeholder }
-				>
+				<textarea {...htmlAttrs} >
 					{ attributes.value }
 				</textarea>
 			) : (
-				<input
-					className={ fieldClass }
-					type={ attributes.type }
-					name={ attributes.name }
-					id={ attributes.id }
-					checked={ attributes.checked }
-					min={ attributes.min }
-					max={ attributes.max }
-					step={ attributes.step }
-					minLength={ attributes.minlength }
-					maxLength={ attributes.maxlength }
-					required={ attributes.required }
-					placeholder={ attributes.placeholder }
-					value={ attributes.value }
-					data-bouncer-message={ attributes.validation }
-				/>
+				<input {...htmlAttrs} />
 			) }
 			{
 				attributes.showHelp && 

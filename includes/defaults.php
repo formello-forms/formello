@@ -1,6 +1,6 @@
 <?php
 /**
- * Set defaults settings.
+ * Functions available globally
  *
  * @package Formello
  */
@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Get defaults for our general options.
+ * Get defaults for our general otions.
  *
  * @since 1.0.0
  */
@@ -18,7 +18,7 @@ function formello_get_option_defaults() {
 	return apply_filters(
 		'formello_option_defaults',
 		array(
-			'messages'  => array(
+			'messages' => array(
 				'missingValue'    => array(
 					'default'         => 'Please fill out this field.',
 					'checkbox'        => 'This field is required.',

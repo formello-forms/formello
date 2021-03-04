@@ -55,11 +55,9 @@ export default {
 		type: 'string',
 		default: '',
 	},
-	labelAlign: {
-		type: 'string',
-	},
 	labelVAlign: {
 		type: 'string',
+		default: '',
 	},
 	labelClass: {
 		type: 'string',

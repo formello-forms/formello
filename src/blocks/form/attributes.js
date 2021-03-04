@@ -31,6 +31,14 @@ export default {
 		type: 'number',
 		default: 3,
 	},
+	labelIsBold: {
+		type: 'boolean',
+		default: false,
+	},
+	labelAlign: {
+		type: 'string',
+		default: '',
+	},
 	storeSubmissions: {
 		type: 'boolean',
 		default: false,

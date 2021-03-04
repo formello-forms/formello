@@ -47,7 +47,7 @@ export default function Edit() {
 					<div className="cta mailchimp" onClick={ () => console.log(123) }></div>
 				</PanelBody>
 			</InspectorControls>
-			<b>[More] Do you want more actions? please visit <a href="http://www.formello.net">our site</a></b>
+			<b>[More] Do you want more actions? please visit <a href="http://www.formello.net" target="_blank">our site</a></b>
 		</div>
 	);
 }

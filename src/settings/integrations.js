@@ -37,7 +37,7 @@ export default function integrations( props ) {
 			</div>
 		</PanelBody>
 
-		{ applyFilters( 'formello.dashboard.integrations', props ) }
+		{ applyFilters( 'formello.dashboard.integrations', '', props ) }
 
 		</div>
 

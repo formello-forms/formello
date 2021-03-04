@@ -1,41 +1,25 @@
+
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-
-import { __experimentalUseInnerBlocksProps as useInnerBlocksProps, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
-import {
-	Button,
-} from '@wordpress/components';
-
-const ALLOWED_BLOCKS = [
-	'formello/actions-more',
-	'formello/actions-email',
-	'formello/actions-mailchimp',
-	'formello/actions-sendy',
-	'formello/actions-getresponse',
-];
-
-import './editor.scss';
-
-import getIcon from '../../utils/get-icon';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'formello/actions', {
+registerBlockType( 'formello/output', {
 	/**
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
 	 */
-	title: __( 'Form actions', 'formello' ),
+	title: __( 'Output.', 'formello' ),
 
 	/**
 	 * This is a short description for your block, can be translated with `i18n` functions.
 	 * It will be shown in the Block Tab in the Settings Sidebar.
 	 */
 	description: __(
-		'Add your form actions.',
+		'Example block written with ESNext standard and JSX support – build step required.',
 		'formello'
 	),
 
@@ -45,37 +29,37 @@ registerBlockType( 'formello/actions', {
 	 */
 	category: 'formello',
 
-	// Only allow this block when it is nested in a Formello block
-	parent: [ 'formello/form' ],
+	// Only allow this block when it is nested in a Columns block
+	parent: [],
+
+	/**
+	 * Block attributes
+	 */
+	attributes: {},
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: getIcon('actions'),
+	icon: 'smiley',
 
 	/**
 	 * Optional block extended support features.
 	 */
 	supports: {
+		// Removes support for an HTML mode.
 		html: false,
-		className: true,
-		reusable: false
+		reusable: false,
+		className: false
 	},
 
 	/**
 	 * @see ./edit.js
 	 */
-	edit: ({ hasChildBlocks, className }) => {
+	edit: ( { attributes } ) => {
 		return (
-			<div className={ className }>
-			<b>Form Actions</b>
-			<InnerBlocks
-				allowedBlocks={ ALLOWED_BLOCKS }
-				renderAppender={ ( hasChildBlocks ? undefined : () => <InnerBlocks.ButtonBlockAppender /> ) }
-			/>
-			</div>
-		)
+			<output></output>
+		);
 	},
 
 	/**
@@ -83,7 +67,7 @@ registerBlockType( 'formello/actions', {
 	 */
 	save: ( { attributes } ) => {
 		return (
-			<InnerBlocks.Content />
+			<output></output>
 		);
 	},
 } );

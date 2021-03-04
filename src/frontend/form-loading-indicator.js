@@ -12,16 +12,16 @@ function Loader (formElement) {
 Loader.prototype.start = function () {
   if (this.button) {
     this.button.disabled = true;
-    this.button.style.width = this.button.getBoundingClientRect().width + 'px'
-    this.button.style.height = this.button.getBoundingClientRect().height + 'px'
-    this.button.classList.add("loading-start");
+    //this.button.style.width = this.button.getBoundingClientRect().width + 'px'
+    //this.button.style.height = this.button.getBoundingClientRect().height + 'px'
+    this.button.classList.add("running");
   }
 }
 
 Loader.prototype.stop = function () {
   if (this.button) {
     this.button.disabled = false;
-    this.button.classList.remove("loading-start");
+    this.button.classList.remove("running");
     this.button = this.originalButton
   } else {
     this.form.style.opacity = ''

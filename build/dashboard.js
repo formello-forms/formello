@@ -401,7 +401,8 @@ var tabs = [{
 var components = {
   recaptcha: _recaptcha_js__WEBPACK_IMPORTED_MODULE_9__["default"],
   messages: _messages_js__WEBPACK_IMPORTED_MODULE_10__["default"],
-  integrations: _integrations_js__WEBPACK_IMPORTED_MODULE_11__["default"]
+  integrations: _integrations_js__WEBPACK_IMPORTED_MODULE_11__["default"],
+  other: _other_js__WEBPACK_IMPORTED_MODULE_12__["default"]
 };
 
 var App = /*#__PURE__*/function (_Component) {
@@ -589,7 +590,7 @@ function integrations(props) {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Integrations', 'formello')
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "formello-dashboard-panel-row-wrapper"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Here you can add integration settings.', 'formello'))))), applyFilters('formello.dashboard.integrations', props));
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Here you can add integration settings.', 'formello'))))), applyFilters('formello.dashboard.integrations', '', props));
 }
 ;
 

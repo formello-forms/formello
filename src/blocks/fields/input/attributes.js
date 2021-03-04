@@ -1,23 +1,25 @@
 export default {
 	type: {
 		type: 'string',
-		default: 'text',
+		default: 'text'
 	},
 	id: {
-		type: 'string',
+		type: 'string'
 	},
 	name: {
-		type: 'string',
+		type: 'string'
 	},
 	label: {
 		type: 'string',
-		default: 'Input Text',
+		default: 'Input Text'
 	},
 	description: {
 		type: 'string',
+		default: ''
 	},
 	placeholder: {
 		type: 'string',
+		default: ''
 	},
 	value: {
 		type: 'string',
@@ -25,44 +27,55 @@ export default {
 	},
 	validation: {
 		type: 'string',
+		default: ''
 	},
 	fieldClass: {
 		type: 'string',
-	},
-	labelAlign: {
-		type: 'string',
+		default: ''
 	},
 	labelVAlign: {
 		type: 'string',
+		default: ''
 	},
 	labelClass: {
 		type: 'string',
+		default: ''
 	},
 	descriptionClass: {
 		type: 'string',
+		default: ''
 	},
 	required: {
 		type: 'boolean',
 		default: false,
 	},
+	disabled: {
+		type: 'boolean',
+		default: false
+	},
+	readOnly: {
+		type: 'boolean',
+		default: false
+	},
 	checked: {
 		type: 'boolean',
+		default: false
 	},
 	markRequired: {
 		type: 'boolean',
-		default: false,
+		default: false
 	},
 	showHelp: {
 		type: 'boolean',
-		default: false,
+		default: false
 	},
 	help: {
 		type: 'string',
-		default: '',
+		default: ''
 	},
 	tooltip: {
 		type: 'string',
-		default: '',
+		default: ''
 	},
 	hasTooltip: {
 		type: 'boolean',
@@ -70,27 +83,34 @@ export default {
 	},
 	cols: {
 		type: 'number',
+		default: ''
 	},
 	rows: {
 		type: 'number',
-		default: 5
+		default: ''
 	},
 	minlength: {
 		type: 'number',
+		default: ''
 	},
 	maxlength: {
 		type: 'number',
+		default: ''
 	},
 	pattern: {
 		type: 'string',
+		default: ''
 	},
 	min: {
 		type: 'number',
+		default: ''
 	},
 	max: {
 		type: 'number',
+		default: ''
 	},
 	step: {
 		type: 'number',
+		default: '',
 	}
 };

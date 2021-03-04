@@ -153,6 +153,11 @@ class Forms extends \WP_List_Table {
 			$sql               .= ' ORDER BY %s %s';
 		}
 
+		if ( ! empty( $_REQUEST['s'] ) ) {
+			$params['search'] = '%' . sanitize_text_field( $_REQUEST['s'] ) . '%';
+			$sql .= ' WHERE name LIKE %s';
+		}
+
 		$params['per_page'] = $per_page;
 		$params['offset']   = ( $page_number - 1 ) * $per_page;
 
@@ -186,4 +191,5 @@ class Forms extends \WP_List_Table {
 				return esc_html( $item );
 		}
 	}
+
 }

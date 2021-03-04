@@ -19,6 +19,7 @@ import { compose } from '@wordpress/compose';
 
 import {
 	InspectorControls,
+	InspectorAdvancedControls,
 	InnerBlocks,
 	__experimentalBlockVariationPicker,
 } from '@wordpress/block-editor';
@@ -128,8 +129,9 @@ function Edit( {
 
 	}
 
-	className = classnames( className, {
-		'column': !attributes.asRow,
+	className = classnames( className, attributes.labelAlign, {
+		'as-row': attributes.asRow,
+		'is-bold': attributes.labelIsBold,
 	} )
 
 	return (
@@ -140,11 +142,6 @@ function Edit( {
 						label={ __( 'Name', 'formello' ) }
 						value={ attributes.name }
 						onChange={ ( val ) => setAttributes( { 'name': val } ) }
-					/>
-					<ToggleControl
-						label={ __( 'Label on side', 'formello' ) }
-						checked={ attributes.asRow }
-						onChange={ ( val ) => setAttributes( { 'asRow': val } ) }
 					/>
 					<TextControl
 						label={ __( 'Redirect Url', 'formello' ) }
@@ -184,6 +181,30 @@ function Edit( {
 					/>
 				</PanelBody>
 			</InspectorControls>
+			<InspectorAdvancedControls>
+				<ToggleControl
+					label={ __( 'Label on side', 'formello' ) }
+					checked={ attributes.asRow }
+					onChange={ ( val ) => setAttributes( { 'asRow': val } ) }
+				/>
+				{
+					attributes.asRow && 
+					<SelectControl
+				        label={ __( 'Label horizontal position', 'formello' ) }
+				        value={ attributes.labelAlign }
+				        options={ [
+				            { label: 'left', value: 'label-left' },
+				            { label: 'right', value: 'label-right' }
+				        ] }
+				        onChange={ ( val ) => { setAttributes( { labelAlign: val } ) } }
+					/>
+				}
+				<ToggleControl
+					label={ __( 'Bolded label', 'formello' ) }
+					checked={ attributes.labelIsBold }
+					onChange={ ( val ) => setAttributes( { 'labelIsBold': val } ) }
+				/>
+			</InspectorAdvancedControls>
 			<form className={ className }>
 				<InnerBlocks
 					allowedBlocks={ ALLOWED_BLOCKS }

@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-import './editor.scss';
 
 import {
 	InspectorControls,
@@ -24,6 +23,7 @@ import classnames from 'classnames';
 
 import getIcon from '../../../utils/get-icon';
 import MergeTags from '../../components/merge-tags';
+import DisplayOpts from '../../components/display-options'
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
@@ -39,12 +39,13 @@ const hiddenIcon = getIcon('hidden');
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( {
-	attributes,
-	className,
-	setAttributes,
-	clientId,
-} ) {
+export default function Edit( props ) {
+
+	const {
+		attributes,
+		setAttributes,
+		clientId
+	} = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[attributes.type]
 
@@ -59,7 +60,7 @@ export default function Edit( {
 		},
 		[]
 	);
-	className = classnames( {
+	const className = classnames( {
 		'formello': true,
 		'formello-row formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 	} )
@@ -153,13 +154,13 @@ export default function Edit( {
 					) }
 					{
 						!(attributes.type == 'hidden') &&					
-					<ToggleControl
-						label={ __( 'Add Tooltip', 'formello' ) }
-						checked={ attributes.hasTooltip }
-						onChange={ ( newval ) =>
-							setAttributes( { hasTooltip: newval } )
-						}
-					/>
+						<ToggleControl
+							label={ __( 'Add Tooltip', 'formello' ) }
+							checked={ attributes.hasTooltip }
+							onChange={ ( newval ) =>
+								setAttributes( { hasTooltip: newval } )
+							}
+						/>
 					}
 					{ attributes.hasTooltip && (
 						<TextareaControl
@@ -265,6 +266,21 @@ export default function Edit( {
 						</PanelRow>
 						</Fragment>
 					) }
+						<ToggleControl
+							label={ __( 'Disabled', 'formello' ) }
+							checked={ attributes.disabled }
+							onChange={ ( newval ) =>
+								setAttributes( { disabled: newval } )
+							}
+						/>
+						<ToggleControl
+							label={ __( 'Read only', 'formello' ) }
+							checked={ attributes.readOnly }
+							onChange={ ( newval ) =>
+								setAttributes( { readOnly: newval } )
+							}
+						/>
+
 					{
 						('hidden' == attributes.type || 
 						'checkbox' == attributes.type || 
@@ -274,47 +290,8 @@ export default function Edit( {
 				</PanelBody>
 				<PanelBody title="CSS Class" initialOpen={ false }>
 
-					<SelectControl
-				        label={ __( 'Label alignment', 'formello' ) }
-				        value={ attributes.labelAlign }
-				        options={ [
-				            { label: 'left', value: 'align-left' },
-				            { label: 'right', value: 'align-right' }
-				        ] }
-				        onChange={ ( align ) => { setAttributes( { labelAlign: align } ) } }
-					/>
+					<DisplayOpts { ...props } />
 
-					<SelectControl
-				        label={ __( 'Label vertical alignment', 'formello' ) }
-				        value={ attributes.labelVAlign }
-				        options={ [
-				            { label: 'top', value: 'align-top' },
-				            { label: 'center', value: 'align-center' },
-				            { label: 'bottom', value: 'align-bottom' }
-				        ] }
-				        onChange={ ( align ) => { setAttributes( { labelVAlign: align } ) } }
-					/>
-					<TextControl
-						label={ __( 'Label Class', 'formello' ) }
-						value={ attributes.labelClass }
-						onChange={ ( val ) =>
-							setAttributes( { labelClass: val } )
-						}
-					/>
-					<TextControl
-						label={ __( 'Field Class', 'formello' ) }
-						value={ attributes.fieldClass }
-						onChange={ ( val ) =>
-							setAttributes( { fieldClass: val } )
-						}
-					/>
-					<TextControl
-						label={ __( 'Description Class', 'formello' ) }
-						value={ attributes.descriptionClass }
-						onChange={ ( val ) =>
-							setAttributes( { descriptionClass: val } )
-						}
-					/>
 				</PanelBody>
 			</InspectorControls>
 			{ !(attributes.type == 'hidden') ? (
@@ -338,7 +315,7 @@ export default function Edit( {
 				<textarea
 					readOnly
 					cols={ attributes.cols }
-					rows={ attributes.rows }
+					rows={ attributes.rows ? attributes.rows : 5 }
 					value={ attributes.value }
 					className={ attributes.fieldClass }
 					placeholder={ attributes.placeholder }

@@ -65,6 +65,7 @@ const components = {
     recaptcha: Recaptcha,
     messages: Messages,
     integrations: Integrations,
+    other: Other,
 };
 
 class App extends Component {

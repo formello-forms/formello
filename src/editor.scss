@@ -21,7 +21,7 @@
 		margin: 5px 0;
 	}
 	.formello {
-	  padding: 10px;
+	  padding: 10px 0;
 	}
 	.formello small {
 	  padding: 0;
@@ -39,13 +39,37 @@
 	align-items: center;
 }
 
-.formello button {
+.wp-block-formello-button .button-span {
 	background: #abb8c3;
     color: #fff;
     border: 1px solid transparent;
     cursor: pointer;
-    -webkit-appearance: button;
     padding: 10px 20px;
+    min-width: 80px;
+    align-self: flex-start;
+    &.center {
+      align-self: center;
+    }
+    &.right {
+      align-self: flex-end;
+    }
+    &.wide {
+      align-self: auto;
+    }
+}
+
+.formello-group div {
+	display: flex;
+	flex: 1 0 auto;
+	& input {
+		height: 100%;
+	}
+	& [data-type='formello/button'] {
+		flex:0 1 auto;
+	}
+	&.formello {
+		padding: 0;
+	}
 }
 
 .cta {

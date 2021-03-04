@@ -26,16 +26,6 @@ export default function displayOpts( props ) {
 
 	return (
 		<Fragment>
-			<SelectControl
-		        label={ __( 'Label alignment', 'formello' ) }
-		        value={ attributes.labelAlign }
-		        options={ [
-		            { label: 'left', value: 'align-left' },
-		            { label: 'right', value: 'align-right' }
-		        ] }
-		        labelPosition="top"
-		        onChange={ ( align ) => { setAttributes( { labelAlign: align } ) } }
-			/>
 
 			<SelectControl
 		        label={ __( 'Label vertical alignment', 'formello' ) }

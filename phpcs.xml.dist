@@ -25,13 +25,11 @@
 		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
 		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict"/>
 		<exclude name="Generic.Files.LineEndings" />
-		<exclude name="Generic.ControlStructures.InlineControlStructure.NotAllowed" />
 		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning" />
 	</rule>
 
 	<!-- Let's also check that everything is properly documented. -->
 	<rule ref="WordPress-Docs"/>
-	<rule ref="PHPCompatibility"/>
 
 	<config name="minimum_supported_wp_version" value="5.0.0"/>
 	<config name="testVersion" value="5.6-"/>

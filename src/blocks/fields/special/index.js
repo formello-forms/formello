@@ -11,41 +11,33 @@ import { registerBlockType } from '@wordpress/blocks';
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * All files containing `style` keyword are bundled together. The code used
- * gets applied both to the front of your site and to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './style.scss';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
  */
 import Edit from './edit';
-import save from './save';
 import getIcon from '../../../utils/get-icon';
+import variations from './variations';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'formello/button', {
+registerBlockType( 'formello/inputflex', {
 	/**
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
 	 */
-	title: __( 'Button', 'formello' ),
+	title: __( 'Input with button', 'formello' ),
 
 	/**
 	 * This is a short description for your block, can be translated with `i18n` functions.
 	 * It will be shown in the Block Tab in the Settings Sidebar.
 	 */
 	description: __(
-		'Submit Button.',
+		'Example block written with ESNext standard and JSX support – build step required.',
 		'formello'
 	),
 
@@ -55,59 +47,31 @@ registerBlockType( 'formello/button', {
 	 */
 	category: 'formello',
 
-	// Only allow this block when it is nested in a Form block
-	parent: [ 'formello/form' ],
+	// Only allow this block when it is nested in a Columns block
+	parent: [ 'formello/form', 'core/column' ],
 
 	/**
 	 * Block attributes
 	 */
-	attributes: {
-		text: {
-			type: 'string',
-			default: 'Submit',
-		},
-		iconPosition: {
-			type: 'string',
-			default: 'ld-ext-right',
-		},
-		iconType: {
-			type: 'string',
-			default: 'ld-ring',
-		},
-		alignment: {
-			type: 'string',
-			default: 'left',
-		},
-		fontSize: {
-			type: 'number',
-			default: '14',
-		},
-		textColor: {
-			type: 'string'
-		},
-		backgroundColor: {
-			type: 'string'
-		},
-		style: {
-			type: 'object'
-		},
-	},
+	attributes: {},
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: getIcon('button'),
+	icon: getIcon( 'input-button' ),
 
 	/**
 	 * Optional block extended support features.
 	 */
 	supports: {
-		className: true,
+		// Removes support for an HTML mode.
 		html: false,
 		reusable: false,
-		fontSize: false
+		className: false
 	},
+
+	variations,
 
 	/**
 	 * @see ./edit.js
@@ -117,5 +81,11 @@ registerBlockType( 'formello/button', {
 	/**
 	 * @see ./save.js
 	 */
-	save,
+	save: ( { attributes } ) => {
+		return (
+			<div className="formello-group">
+				<InnerBlocks.Content />
+			</div>
+		);
+	},
 } );

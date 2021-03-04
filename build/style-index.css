@@ -10,12 +10,186 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-/**
- * The following styles get applied both on the front of your site
- * and in the editor.
- *
- * Replace them with your own styles or remove the file completely.
- */
+.wp-block-formello-button {
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.wp-block-formello-button.center {
+  justify-content: center;
+}
+.wp-block-formello-button.right {
+  justify-content: flex-end;
+}
+.wp-block-formello-button.wide button {
+  width: 100%;
+}
+.wp-block-formello-button button span {
+  transition: all 1s;
+  opacity: 1;
+}
+.wp-block-formello-button button svg {
+  display: none;
+  transition: all 1s;
+  stroke-width: 5;
+  fill-rule: evenodd;
+  margin: auto;
+  height: 100%;
+}
+.wp-block-formello-button button:hover {
+  opacity: 0.8;
+}
+.wp-block-formello-button button.loading-start span {
+  display: none;
+  opacity: 0;
+}
+.wp-block-formello-button button.loading-start svg {
+  display: block;
+  opacity: 1;
+}
+
+@media screen and (min-width: 600px) {
+  .as-row .wp-block-formello-button {
+    padding-left: 200px;
+    flex-direction: row;
+  }
+}
+.formello-group .wp-block-formello-button {
+  padding-left: 0;
+  flex-direction: row;
+  margin-left: 10px;
+}
+
+.wp-block-formello-button.group {
+  margin-left: 0;
+}
+
+.ld-ext-right, .ld-ext-left, .ld-ext-bottom, .ld-ext-top, .ld-over, .ld-over-inverse, .ld-over-full, .ld-over-full-inverse {
+  position: relative;
+  transition: all 0.3s;
+  transition-timing-function: ease-in;
+}
+.ld-ext-right > .ld, .ld-ext-left > .ld, .ld-ext-bottom > .ld, .ld-ext-top > .ld, .ld-over > .ld, .ld-over-inverse > .ld, .ld-over-full > .ld, .ld-over-full-inverse > .ld {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1em;
+  height: 1em;
+  margin: -0.5em;
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.3s;
+  transition-timing-function: ease-in;
+}
+.ld-ext-right > .ld > *, .ld-ext-left > .ld > *, .ld-ext-bottom > .ld > *, .ld-ext-top > .ld > *, .ld-over > .ld > *, .ld-over-inverse > .ld > *, .ld-over-full > .ld > *, .ld-over-full-inverse > .ld > * {
+  width: 1em;
+  height: 1em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-0.5em, -0.5em);
+}
+.ld-ext-right.running > .ld, .ld-ext-left.running > .ld, .ld-ext-bottom.running > .ld, .ld-ext-top.running > .ld, .ld-over.running > .ld, .ld-over-inverse.running > .ld, .ld-over-full.running > .ld, .ld-over-full-inverse.running > .ld {
+  opacity: 1;
+  z-index: auto;
+  visibility: visible;
+}
+
+.ld-ext-right.running {
+  padding-right: 2.5em !important;
+}
+
+.ld-ext-right > .ld {
+  top: 50%;
+  left: auto;
+  right: 1.25em;
+}
+
+.ld-ext-left.running {
+  padding-left: 2.5em !important;
+}
+
+.ld-ext-left > .ld {
+  top: 50%;
+  right: auto;
+  left: 1.25em;
+}
+
+.ld-ball, .ld-ring, .ld-hourglass, .ld-loader, .ld-spinner {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  color: inherit;
+  display: inline-block;
+  box-sizing: content-box;
+}
+.ld-ball:after, .ld-ring:after, .ld-hourglass:after, .ld-loader:after, .ld-spinner:after {
+  content: " ";
+  display: block;
+  width: 2em;
+  height: 2em;
+  box-sizing: border-box;
+  transform-origin: 0em 0em;
+  transform: translateZ(0) scale(0.5);
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.ld-ring:after {
+  border-radius: 50%;
+  border: 0.3em solid currentColor;
+  border-left-color: transparent;
+}
+
+.ld-hourglass:after {
+  border-radius: 50%;
+  border: 1em solid currentColor;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.ld-spinner:after {
+  position: absolute;
+  width: 0.4em;
+  height: 0.4em;
+  transform: translateZ(0) scale(0.5) translate(0.8em, 0.8em);
+  border-radius: 50%;
+  background: none;
+  box-shadow: 0 1em 0 currentColor, 0 -1em 0 currentColor, 1em 0 0 currentColor, -1em 0 0 currentColor, 0.70710678em 0.70710678em 0 currentColor, -0.70710678em 0.70710678em 0 currentColor, 0.70710678em -0.70710678em 0 currentColor, -0.70710678em -0.70710678em 0 currentColor;
+}
+
+.ld-loader {
+  background-size: cover;
+}
+
+.ld {
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+}
+
+@-webkit-keyframes ld-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ld-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.ld.ld-spin {
+  -webkit-animation: ld-spin 0.7s infinite linear;
+          animation: ld-spin 0.7s infinite linear;
+}
+
 .wp-block-formello-form fieldset {
   padding: 1em;
   margin-bottom: 1em;
@@ -24,18 +198,19 @@
 .wp-block-formello-form fieldset.no-border {
   border: none;
 }
+.wp-block-formello-form legend {
+  margin: 0.5em 0;
+  font-weight: bold;
+}
 
 .wp-block-formello-form .formello {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: inherit;
   flex-wrap: wrap;
   margin-bottom: 1em;
   /********** checkbox ********/
   /******** tooltip ***********/
-}
-.wp-block-formello-form .formello legend {
-  margin: 0.5em 0;
-  font-weight: bold;
 }
 .wp-block-formello-form .formello .error {
   border-color: red;
@@ -43,16 +218,13 @@
 .wp-block-formello-form .formello label {
   padding: 0 10px 0 0;
   margin: 0;
-  flex: 0 1 200px;
+  flex: 0 1 auto;
 }
 .wp-block-formello-form .formello label.align-top {
   align-self: flex-start;
 }
 .wp-block-formello-form .formello label.align-bottom {
   align-self: flex-end;
-}
-.wp-block-formello-form .formello label.align-right {
-  text-align: right;
 }
 .wp-block-formello-form .formello span {
   margin-left: 5px;
@@ -66,42 +238,6 @@
 }
 .wp-block-formello-form .formello small {
   width: 100%;
-  margin-left: 200px;
-}
-.wp-block-formello-form .formello button {
-  margin-left: 200px;
-  align-self: flex-start;
-}
-.wp-block-formello-form .formello button.center {
-  -ms-grid-row-align: center;
-      align-self: center;
-}
-.wp-block-formello-form .formello button.right {
-  align-self: flex-end;
-}
-.wp-block-formello-form .formello button.wide {
-  -ms-grid-row-align: auto;
-      align-self: auto;
-}
-.wp-block-formello-form .formello button span {
-  transition: all 1s;
-  opacity: 1;
-}
-.wp-block-formello-form .formello button svg {
-  display: none;
-  transition: all 1s;
-  stroke-width: 5;
-  fill-rule: evenodd;
-  margin: auto;
-  height: 100%;
-}
-.wp-block-formello-form .formello button.loading-start span {
-  display: none;
-  opacity: 0;
-}
-.wp-block-formello-form .formello button.loading-start svg {
-  display: block;
-  opacity: 1;
 }
 .wp-block-formello-form .formello .required {
   color: red;
@@ -109,7 +245,6 @@
 .wp-block-formello-form .formello .error-message {
   color: red;
   order: 3;
-  margin-left: 200px;
 }
 .wp-block-formello-form .formello.hide {
   display: none;
@@ -117,11 +252,10 @@
 .wp-block-formello-form .formello.formello-checkbox {
   flex-direction: row;
   align-items: center;
-  margin-left: 200px;
 }
 .wp-block-formello-form .formello.formello-checkbox label {
   order: 2;
-  font-weight: normal;
+  font-weight: normal !important;
   margin: 0;
   flex: 0 1 auto;
 }
@@ -171,20 +305,54 @@
   visibility: visible;
 }
 
-.column .formello {
+.wp-block-formello-form.is-bold .formello label {
+  font-weight: bold;
+}
+
+.wp-block-formello-form.label-left .formello label {
+  text-align: left;
+}
+
+.wp-block-formello-form.label-right .formello label {
+  text-align: right;
+}
+
+@media screen and (min-width: 600px) {
+  .as-row .formello {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .as-row .formello label {
+    flex: 0 1 200px;
+  }
+  .as-row .formello.formello-checkbox {
+    margin-left: 200px;
+  }
+  .as-row .formello .error-message {
+    margin-left: 200px;
+  }
+}
+.formello-group {
   display: flex;
-  flex-direction: column;
-  align-items: inherit;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-end;
 }
-.column .formello label, .column .formello small, .column .formello button {
+.formello-group .formello {
+  display: flex;
   flex: auto;
-  margin: 0px;
 }
-.column .formello.formello-checkbox {
-  margin-left: 0;
+.formello-group .formello input {
+  flex-grow: 1;
+  width: 100%;
 }
-.column .formello .error-message {
-  margin-left: 0;
+.formello-group .formello.wp-block-formello-button {
+  flex: 0 1 auto;
+  padding-left: 0 !important;
+}
+.formello-group .formello.wp-block-formello-button button {
+  margin: 0;
 }
 
 .formello-message {
@@ -209,11 +377,19 @@
 
 .formello-hp {
   position: absolute;
-  left: -500px;
+  top: -500px;
 }
 
 [hidden] {
   display: none !important;
+}
+
+output {
+  margin: 0 1em 1em 1em;
+  border: 1px solid #d7dbdd;
+  font-size: 1em;
+  padding: 0.4em 0.6em;
+  border-radius: 3px;
 }
 
 /*# sourceMappingURL=style-index.css.map*/

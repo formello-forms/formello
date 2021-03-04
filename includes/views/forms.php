@@ -8,13 +8,11 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <form method="post">
-
-<?php
-$this->forms_table->prepare_items();
-//$this->forms_table->search_box( 'search', 'search_id' );
-$this->forms_table->display();
-?>
-
+	<?php
+	$this->forms_table->prepare_items();
+	$this->forms_table->search_box( 'Search', 'search' );
+	$this->forms_table->display();
+	?>
 </form>
 
 </div>
