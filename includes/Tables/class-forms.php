@@ -48,6 +48,7 @@ class Forms extends \WP_List_Table {
 	 * @return string
 	 */
 	public function column_name( $item ) {
+		$badge = '';
 		$title = sprintf(
 			'<a href="%s">%s</a>',
 			esc_attr(
@@ -61,9 +62,16 @@ class Forms extends \WP_List_Table {
 					)
 				),
 			),
-			$item['name']
+			$item['form_name'],
 		);
-		return $title;
+		if ( ! empty( $item['news'] ) ) {
+			$badge = sprintf(
+				'<span class="badge">%s</span>',
+				$item['news']
+			);
+		}
+
+		return $title . $badge;
 	}
 
 	/**
@@ -141,9 +149,10 @@ class Forms extends \WP_List_Table {
 
 		global $wpdb;
 		$params = array();
-		$table  = "{$wpdb->prefix}formello_forms";
+		$table_forms  = "{$wpdb->prefix}formello_forms";
+		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
-		$sql = 'SELECT id, name, created_at FROM ' . $table;
+		$sql = 'SELECT id, name as form_name, created_at, (SELECT count(*) FROM wp_formello_submissions s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM ' . $table_forms . ' f';
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$order              = sanitize_text_field( $_REQUEST['order'] );

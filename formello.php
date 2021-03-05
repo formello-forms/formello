@@ -236,3 +236,14 @@ final class Formello {
 } // FORMELLO
 
 $formello = Formello::init();
+
+
+function intercept_publishing( $post_ID, $data ) {
+	$post = get_post( $post_ID );
+
+	if ( 'wp_block' !== $data->post_type ) {
+		add_post_meta( $post_ID, 'category', 'formello' );
+	}
+
+}
+add_action( 'save_post', 'intercept_publishing', 10, 2 );

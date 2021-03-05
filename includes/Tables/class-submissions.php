@@ -217,8 +217,12 @@ class Submissions extends \WP_List_Table {
 				'submitted_at',
 				false,
 			),
-			'id'           => array(
+			'id' => array(
 				'id',
+				false,
+			),
+			'is_new' => array(
+				'is_new',
 				false,
 			),
 		);
@@ -236,7 +240,7 @@ class Submissions extends \WP_List_Table {
 
 		global $wpdb;
 
-		$sql = "SELECT id, data, submitted_at FROM {$wpdb->prefix}formello_submissions WHERE form_id = {$this->form_id}";
+		$sql = "SELECT id, is_new, data, submitted_at FROM {$wpdb->prefix}formello_submissions WHERE form_id = {$this->form_id}";
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
@@ -254,6 +258,7 @@ class Submissions extends \WP_List_Table {
 			$data                 = empty( $s->data ) ? array() : (array) json_decode( $s->data, true );
 			$data['id']           = (int) $s->id;
 			$data['submitted_at'] = $s->submitted_at;
+			$data['is_new'] 	  = $s->is_new;
 			$submissions[]        = $data;
 		}
 		return $submissions;
@@ -264,6 +269,7 @@ class Submissions extends \WP_List_Table {
 		$columns                 = array();
 		$columns['cb']           = '<input type="checkbox" />';
 		$columns['id']           = 'ID';
+		$columns['is_new']       = 'New';
 		$columns['submitted_at'] = 'Submitted At';
 
 		foreach ( $submissions as $s ) {
@@ -291,6 +297,8 @@ class Submissions extends \WP_List_Table {
 			case 'id':
 			case 'submitted_at':
 				return $item[ $column_name ];
+			case 'is_new':
+				return $item[ $column_name ] ? '<span class="badge"> </span>' : '';
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
 				if ( 'on' === $item ) {

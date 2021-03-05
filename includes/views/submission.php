@@ -5,6 +5,14 @@ defined( 'ABSPATH' ) || exit;
 $date_format     = get_option( 'date_format' );
 $datetime_format = sprintf( '%s %s', $date_format, get_option( 'time_format' ) );
 $submissions_page = add_query_arg( array( 'page' => 'formello-submissions' ) );
+
+if ( $submission->is_new ) {
+	global $wpdb;
+	$submission_table = $wpdb->prefix . 'formello_submissions';
+
+	$wpdb->update( $table, array( 'is_new' => false ), array( 'id' => $submission->id ) );
+}
+
 ?>
 
 <h2>
