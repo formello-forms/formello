@@ -42,6 +42,15 @@ You can create forms directly inside Gutenberg editor, save submitted data and a
 
 For each of this input field you can set all html attribute (required, pattern, max, min step etc...). You can also add a description underneath the field and a tooltip.
 
+== Screenshots ==
+
+1. Form preview
+2. Button options
+3. All blocks
+4. Form option
+5. Form with label on side
+6. Validation
+
 == Installation ==
 
 There's two ways to install Formello.
