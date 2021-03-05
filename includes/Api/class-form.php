@@ -36,7 +36,7 @@ class Form extends WP_REST_Controller {
 				'callback'            => array( $this, 'get_items' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				'args'                => array( $this->get_collection_params() ),
-			),
+			)
 		);
 		register_rest_route(
 			$this->namespace,
@@ -46,7 +46,7 @@ class Form extends WP_REST_Controller {
 				'callback'            => array( $this, 'create_item' ),
 				'permission_callback' => array( $this, 'create_item_permissions_check' ),
 				'args'                => array( $this->get_collection_params() ),
-			),
+			)
 		);
 		register_rest_route(
 			$this->namespace,

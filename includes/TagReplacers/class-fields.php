@@ -15,6 +15,9 @@ class Fields {
 	 * @param string $param form data.
 	 */
 	public function get_data( $param ) {
+		if ( 'all_data' === $param ) {
+			return $this->all_fields();
+		}
 		return isset( $_POST[ $param ] ) ? sanitize_text_field( wp_unslash( $_POST[ $param ] ) ) : false;
 	}
 
@@ -30,13 +33,9 @@ class Fields {
 			$return = '<table>';
 		}
 
-		$hidden_field_types = array( 'html', 'submit', 'password', 'passwordconfirm' );
-
 		foreach ( $this->get_fields_sorted() as $field ) {
 
 			if ( ! isset( $field['type'] ) ) continue;
-
-			if ( in_array( $field['type'], array_values( $hidden_field_types ) ) ) continue;
 
 			$field['value'] = apply_filters( 'ninja_forms_merge_tag_value_' . $field['type'], $field['value'], $field );
 

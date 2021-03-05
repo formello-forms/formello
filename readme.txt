@@ -1,6 +1,6 @@
 === Formello ===
 Contributors:      Formello
-Tags:              contact form block, form builder, form block, gutenberg form
+Tags:              contact form, form builder, form block, gutenberg form
 Requires at least: 5.4.0
 Tested up to:      5.7.0
 Stable tag:        1.0.2
@@ -8,7 +8,7 @@ Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Gutenberg contact form builder plugin.
+The Gutenberg WordPress Form Builder. Build forms directly within Gutenberg editor. Add & arrange form fields like blocks.
 
 == Description ==
 
@@ -16,9 +16,28 @@ Formello is a Gutenberg form builder that helps you build beautiful html forms t
 
 You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form.
 
+== Features ==
+
+* Form validation
+* ReCaptcha protection (v2 and v3 invisible)
+* Store submissions
+* Email notification
+* Form customization: you can arrange field and display stacked field or in a row with label on side. You can change button colors and also choose loading icon and icon position.
+
 == Supported form input ==
 
-
+* Text
+* Email
+* Tel
+* Url
+* Hidden
+* Checkbox
+* Radio
+* Date
+* Time
+* Textarea
+* Range
+* Color
 
 == Installation ==
 

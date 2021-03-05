@@ -2,8 +2,7 @@
 	"name": "formello/form",
 	"title": "Formello",
 	"category": "formello",
-	"icon": "smiley",
-	"description": "The Gutenberg WordPress Form Builder. Build forms directly within Gutenberg editor live. Add & arrange form fields like blocks.",
+	"icon": "block-default",
 	"textdomain": "formello",
 	"supports": {
 		"html": false

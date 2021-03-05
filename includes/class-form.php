@@ -126,7 +126,7 @@ class Form {
 	public function get_message( $code ) {
 		$message = isset( $this->messages[ $code ] ) ? $this->messages[ $code ] : '';
 
-		$message = apply_filters( 'formello_form_message_' . $code, $message, $form );
+		$message = apply_filters( 'formello_form_message_' . $code, $message );
 		return $message;
 	}
 
