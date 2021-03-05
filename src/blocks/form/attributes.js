@@ -13,11 +13,11 @@ export default {
 	},
 	successMessage: {
 		type: 'string',
-		default: 'Success',
+		default: '',
 	},
 	errorMessage: {
 		type: 'string',
-		default: 'Error',
+		default: '',
 	},
 	redirectUrl: {
 		type: 'string',
