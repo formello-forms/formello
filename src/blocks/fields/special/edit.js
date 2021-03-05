@@ -42,11 +42,28 @@ const { createBlock } = wp.blocks;
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( props ) {
+export default function Edit( { attributes, setAttributes } ) {
+	const className = attributes.grouped ? 'formello-group grouped' : 'formello-group';
 
 	return (
 		<>
-			<div className="formello-group">
+			<InspectorControls>
+				<PanelBody title="Options" initialOpen={ true }>
+					<ToggleControl
+						label={ __(
+							'Group button with input',
+							'formello'
+						) }
+						checked={ attributes.grouped }
+						onChange={ ( val ) =>
+							setAttributes( { 
+								grouped: val
+							} )
+						}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<div className={ className }>
 				<InnerBlocks
 					templateLock={ 'all' }
 					templateInsertUpdatesSelection={ false }

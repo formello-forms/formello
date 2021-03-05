@@ -118,6 +118,9 @@ div.formello p {
 .formello-group div input {
   height: 100%;
 }
+.formello-group div.wp-block-formello-button .button-span {
+  padding: 2px 20px;
+}
 .formello-group div [data-type="formello/button"] {
   flex: 0 1 auto;
 }

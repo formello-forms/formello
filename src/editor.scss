@@ -65,6 +65,9 @@
 	& input {
 		height: 100%;
 	}
+	&.wp-block-formello-button .button-span {
+		padding: 2px 20px;
+	}
 	& [data-type='formello/button'] {
 		flex:0 1 auto;
 	}

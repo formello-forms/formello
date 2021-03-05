@@ -53,7 +53,12 @@ registerBlockType( 'formello/inputflex', {
 	/**
 	 * Block attributes
 	 */
-	attributes: {},
+	attributes: {
+		grouped: {
+			type: 'boolean',
+			default: false
+		}
+	},
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
@@ -82,8 +87,9 @@ registerBlockType( 'formello/inputflex', {
 	 * @see ./save.js
 	 */
 	save: ( { attributes } ) => {
+		const className = attributes.grouped ? 'formello-group grouped' : 'formello-group';
 		return (
-			<div className="formello-group">
+			<div className={ className }>
 				<InnerBlocks.Content />
 			</div>
 		);
