@@ -36,8 +36,11 @@ You can create forms directly inside Gutenberg editor, save submitted data and a
 * Date
 * Time
 * Textarea
+* Number
 * Range
 * Color
+
+For each of this input field you can set all html attribute (required, pattern, max, min step etc...). You can also add a description underneath the field and a tooltip.
 
 == Installation ==
 

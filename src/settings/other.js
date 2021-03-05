@@ -31,7 +31,8 @@ export default function other( props ) {
 			<div className="formello-dashboard-panel-row-wrapper">
 
 				<PanelRow>
-					<p>{ __( 'Here you can add integration settings.', 'formello' ) }</p>
+					<p>{ __( 'Here you can find', 'formello' ) }: <a href="https://wordpress.org/support/plugin/formello/">support</a>.</p>
+					<p>{ __( 'If you like the plugin, you can share a review ', 'formello' ) }: <a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">here</a>.</p>
 				</PanelRow>
 
 			</div>

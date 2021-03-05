@@ -113,25 +113,12 @@ function Edit( {
 			setAttributes( {
 				blockId: clientId,
 			} )		
+			if( !attributes.asRow ){
+				setAttributes( { labelAlign: '' } );
+			}
 		},
 		[]
 	);
-
-	const getRecaptcha = () => {
-		apiFetch( {
-			path: '/formello/v1/settings',
-			method: 'GET',
-		} ).then( ( result ) => {
-			setAttributes({
-				id: result.id
-			});
-		} );
-
-	}
-
-	if( !attributes.asRow ){
-		setAttributes( { labelAlign: '' } );
-	}
 
 	className = classnames( className, attributes.labelAlign, {
 		'as-row': attributes.asRow,
@@ -213,7 +200,7 @@ function Edit( {
 				<InnerBlocks
 					allowedBlocks={ ALLOWED_BLOCKS }
 					templateLock={ false }
-					renderAppender={ ( hasChildBlocks ? undefined : () => <InnerBlocks.ButtonBlockAppender /> ) }
+					renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
 				/>
 			</form>
 		</div>

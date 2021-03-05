@@ -30,7 +30,6 @@ export default function recaptcha( props ) {
 						selected={ getSetting( 'recaptcha', 'version' ) }
 				        options={ [
 				            { label: 'ReCaptcha v2 checkbox', value: '1' },
-				            //{ label: 'ReCaptcha v2 invisible', value: 'uno' },
 				            { label: 'ReCaptcha v3 invisible', value: '3' },
 				        ] }
 						onChange={ (val) => {
@@ -41,7 +40,6 @@ export default function recaptcha( props ) {
 				<PanelRow>
 					<TextControl
 						label={ __( 'Site Key', 'formello' ) }
-						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
 						value={ getSetting( 'recaptcha', 'site_key' ) }
 						onChange={ (val) => {
 							changeSettings( 'recaptcha', 'site_key', val )
@@ -51,7 +49,6 @@ export default function recaptcha( props ) {
 				<PanelRow>
 					<TextControl
 						label={ __( 'Secret Key', 'formello' ) }
-						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
 						value={ getSetting( 'recaptcha', 'secret_key' ) }
 						onChange={ (val) => {
 							changeSettings( 'recaptcha', 'secret_key', val )
@@ -62,7 +59,6 @@ export default function recaptcha( props ) {
 				<PanelRow>
 					<NumberControl
 						label={ __( 'Threshold', 'formello' ) }
-						help={ __( 'Sync our responsive preview controls with the editor responsive previews.', 'formello' ) }
 						value={ getSetting( 'recaptcha', 'threshold' ) }
 						onChange={ (val) => {
 							changeSettings( 'recaptcha', 'threshold', val )
