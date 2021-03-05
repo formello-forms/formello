@@ -97,7 +97,7 @@ class Block {
 				// 'script'          => 'formello-form-block' this will include script sitewide for now disabled it
 				'render_callback' => function( $attributes, $content = null ) {
 
-					$settings = get_option( 'formello' );
+					$settings = get_option( 'formello', formello_get_option_defaults() );
 					$recaptcha_url = 'https://www.google.com/recaptcha/api.js';
 
 					if ( ! is_admin() && $attributes['recaptchaEnabled'] && ! empty( $settings['recaptcha']['site_key'] ) ) {

@@ -32,6 +32,10 @@ export default function save( { attributes, className, innerBlocks } ) {
 		attributes.constraints = getConstraints( attributes.blockId );
 	}
 
+	if( !attributes.asRow ){
+		attributes.labelAlign = ''
+	}
+
 	className = classnames( className, attributes.labelAlign, {
 		'as-row': attributes.asRow,
 		'is-bold': attributes.labelIsBold,

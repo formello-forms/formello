@@ -14,7 +14,7 @@ function SearchTags( props ) {
 
 	const getFilteredTags = () => {
 		const fields = getFieldsTags(props.clientId, false);
-		console.log(fields)
+
 		const filteredFields = fields.filter((field) => {
 			const title = get(field, 'title');
 

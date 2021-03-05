@@ -7934,64 +7934,9 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('for
   !*** ./src/blocks/actions/more/edit.js ***!
   \*****************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-
-
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-//import './editor.scss';
-
-
-
-
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @param {Object} [props]           Properties passed from the editor.
- * @param {string} [props.className] Class name generated for the block.
- *
- * @return {WPElement} Element to render.
- */
-
-function Edit() {
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
-    title: "More Blocks",
-    initialOpen: true
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "We are working on more blocks."), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "cta mailchimp",
-    onClick: function onClick() {
-      return console.log(123);
-    }
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("b", null, "[More] Do you want more actions? please visit ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-    href: "http://www.formello.net",
-    target: "_blank"
-  }, "our site")));
-}
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\src\\blocks\\actions\\more\\edit.js: Unexpected token, expected \"}\" (47:101)\n\n\u001b[0m \u001b[90m 45 |\u001b[39m \t\t\t\t\u001b[33m<\u001b[39m\u001b[33mPanelBody\u001b[39m title\u001b[33m=\u001b[39m\u001b[32m\"More Blocks\"\u001b[39m initialOpen\u001b[33m=\u001b[39m{ \u001b[36mtrue\u001b[39m }\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 46 |\u001b[39m \t\t\t\t\t\u001b[33m<\u001b[39m\u001b[33mp\u001b[39m\u001b[33m>\u001b[39m\u001b[33mWe\u001b[39m are working on more blocks\u001b[33m.\u001b[39m\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mp\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 47 |\u001b[39m \t\t\t\t\t\u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"cta mailchimp\"\u001b[39m onClick\u001b[33m=\u001b[39m{ () \u001b[33m=>\u001b[39m window\u001b[33m.\u001b[39mopen(\u001b[32m'https://www.formello.net'\u001b[39m\u001b[33m,\u001b[39m \u001b[32m'_blank'\u001b[39m)\u001b[33m;\u001b[39m }\u001b[33m>\u001b[39m\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m \t\t\t\t\t                                                                                                \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 48 |\u001b[39m \t\t\t\t\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mPanelBody\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 49 |\u001b[39m \t\t\t\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mInspectorControls\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 50 |\u001b[39m \t\t\t\u001b[33m<\u001b[39m\u001b[33mb\u001b[39m\u001b[33m>\u001b[39m[\u001b[33mMore\u001b[39m] \u001b[33mDo\u001b[39m you want more actions\u001b[33m?\u001b[39m please visit \u001b[33m<\u001b[39m\u001b[33ma\u001b[39m href\u001b[33m=\u001b[39m\u001b[32m\"http://www.formello.net\"\u001b[39m target\u001b[33m=\u001b[39m\u001b[32m\"_blank\"\u001b[39m\u001b[33m>\u001b[39mour site\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33ma\u001b[39m\u001b[33m>\u001b[39m\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mb\u001b[39m\u001b[33m>\u001b[39m\u001b[0m\n    at Object._raise (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:776:17)\n    at Object.raiseWithData (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:769:17)\n    at Object.raise (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:737:17)\n    at Object.unexpected (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:9675:16)\n    at Object.expect (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:9661:28)\n    at Object.jsxParseExpressionContainer (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5031:10)\n    at Object.jsxParseAttributeValue (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:4994:21)\n    at Object.jsxParseAttribute (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5046:44)\n    at Object.jsxParseOpeningElementAfterName (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5066:28)\n    at Object.jsxParseOpeningElementAt (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5059:17)\n    at Object.jsxParseElementAt (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5091:33)\n    at Object.jsxParseElementAt (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5107:32)\n    at Object.jsxParseElementAt (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5107:32)\n    at Object.jsxParseElementAt (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5107:32)\n    at Object.jsxParseElement (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5165:17)\n    at Object.parseExprAtom (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5172:19)\n    at Object.parseExprSubscripts (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10644:23)\n    at Object.parseUpdate (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10624:21)\n    at Object.parseMaybeUnary (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10602:23)\n    at Object.parseExprOps (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10463:23)\n    at Object.parseMaybeConditional (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10437:23)\n    at Object.parseMaybeAssign (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10400:21)\n    at C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10367:39\n    at Object.allowInAnd (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:12043:12)\n    at Object.parseMaybeAssignAllowIn (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10367:17)\n    at Object.parseParenAndDistinguishExpression (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:11246:28)\n    at Object.parseExprAtom (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10964:21)\n    at Object.parseExprAtom (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:5177:20)\n    at Object.parseExprSubscripts (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10644:23)\n    at Object.parseUpdate (C:\\xampp\\htdocs\\affiliateblog\\wp-content\\plugins\\formello\\node_modules\\@babel\\parser\\lib\\index.js:10624:21)");
 
 /***/ }),
 
@@ -8628,7 +8573,6 @@ function SearchTags(props) {
 
   var getFilteredTags = function getFilteredTags() {
     var fields = Object(_functions__WEBPACK_IMPORTED_MODULE_2__["getFieldsTags"])(props.clientId, false);
-    console.log(fields);
     var filteredFields = fields.filter(function (field) {
       var title = Object(lodash__WEBPACK_IMPORTED_MODULE_4__["get"])(field, 'title');
       return title.toLowerCase().search(search.toLowerCase()) !== -1;
@@ -9293,7 +9237,7 @@ function save(_ref) {
       className = _ref.className;
   var textClass = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["getColorClassName"])('color', attributes.textColor);
   var backgroundClass = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["getColorClassName"])('background-color', attributes.backgroundColor);
-  var buttonClass = classnames__WEBPACK_IMPORTED_MODULE_2___default()(textClass, backgroundClass, 'ld-ext-right', {
+  var buttonClass = classnames__WEBPACK_IMPORTED_MODULE_2___default()(textClass, backgroundClass, attributes.iconPosition, {
     'has-text-color': attributes.textColor || ((_attributes$style = attributes.style) === null || _attributes$style === void 0 ? void 0 : (_attributes$style$col = _attributes$style.color) === null || _attributes$style$col === void 0 ? void 0 : _attributes$style$col.text),
     'has-background-color': attributes.backgroundColor || ((_attributes$style2 = attributes.style) === null || _attributes$style2 === void 0 ? void 0 : (_attributes$style2$co = _attributes$style2.color) === null || _attributes$style2$co === void 0 ? void 0 : _attributes$style2$co.background)
   });
@@ -10812,324 +10756,6 @@ function save(_ref) {
 
 /***/ }),
 
-/***/ "./src/blocks/fields/special/edit.js":
-/*!*******************************************!*\
-  !*** ./src/blocks/fields/special/edit.js ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Edit; });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/index.js");
-
-
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-
-
-
-
-
-var createBlock = wp.blocks.createBlock;
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @param {Object} [props]           Properties passed from the editor.
- * @param {string} [props.className] Class name generated for the block.
- *
- * @return {WPElement} Element to render.
- */
-
-function Edit(props) {
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "formello-group"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InnerBlocks"], {
-    templateLock: 'all',
-    templateInsertUpdatesSelection: false,
-    allowedBlocks: ['formello/input', 'formello/button']
-  })));
-}
-
-/***/ }),
-
-/***/ "./src/blocks/fields/special/index.js":
-/*!********************************************!*\
-  !*** ./src/blocks/fields/special/index.js ***!
-  \********************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edit */ "./src/blocks/fields/special/edit.js");
-/* harmony import */ var _utils_get_icon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../utils/get-icon */ "./src/utils/get-icon/index.js");
-/* harmony import */ var _variations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./variations */ "./src/blocks/fields/special/variations.js");
-
-
-/**
- * Registers a new block provided a unique name and an object defining its behavior.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
- */
-
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-
-
-
-/**
- * Internal dependencies
- */
-
-
-
-
-/**
- * Every block starts by registering a new block type definition.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
- */
-
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('formello/inputflex', {
-  /**
-   * This is the display title for your block, which can be translated with `i18n` functions.
-   * The block inserter will show this name.
-   */
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Input with button', 'formello'),
-
-  /**
-   * This is a short description for your block, can be translated with `i18n` functions.
-   * It will be shown in the Block Tab in the Settings Sidebar.
-   */
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Example block written with ESNext standard and JSX support – build step required.', 'formello'),
-
-  /**
-   * Blocks are grouped into categories to help users browse and discover them.
-   * The categories provided by core are `common`, `embed`, `formatting`, `layout` and `widgets`.
-   */
-  category: 'formello',
-  // Only allow this block when it is nested in a Columns block
-  parent: ['formello/form', 'core/column'],
-
-  /**
-   * Block attributes
-   */
-  attributes: {},
-
-  /**
-   * An icon property should be specified to make it easier to identify a block.
-   * These can be any of WordPress’ Dashicons, or a custom svg element.
-   */
-  icon: Object(_utils_get_icon__WEBPACK_IMPORTED_MODULE_5__["default"])('input-button'),
-
-  /**
-   * Optional block extended support features.
-   */
-  supports: {
-    // Removes support for an HTML mode.
-    html: false,
-    reusable: false,
-    className: false
-  },
-  variations: _variations__WEBPACK_IMPORTED_MODULE_6__["default"],
-
-  /**
-   * @see ./edit.js
-   */
-  edit: _edit__WEBPACK_IMPORTED_MODULE_4__["default"],
-
-  /**
-   * @see ./save.js
-   */
-  save: function save(_ref) {
-    var attributes = _ref.attributes;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      className: "formello-group"
-    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["InnerBlocks"].Content, null));
-  }
-});
-
-/***/ }),
-
-/***/ "./src/blocks/fields/special/output.js":
-/*!*********************************************!*\
-  !*** ./src/blocks/fields/special/output.js ***!
-  \*********************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
-/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-/**
- * Every block starts by registering a new block type definition.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
- */
-
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('formello/output', {
-  /**
-   * This is the display title for your block, which can be translated with `i18n` functions.
-   * The block inserter will show this name.
-   */
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Output.', 'formello'),
-
-  /**
-   * This is a short description for your block, can be translated with `i18n` functions.
-   * It will be shown in the Block Tab in the Settings Sidebar.
-   */
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Example block written with ESNext standard and JSX support – build step required.', 'formello'),
-
-  /**
-   * Blocks are grouped into categories to help users browse and discover them.
-   * The categories provided by core are `common`, `embed`, `formatting`, `layout` and `widgets`.
-   */
-  category: 'formello',
-  // Only allow this block when it is nested in a Columns block
-  parent: [],
-
-  /**
-   * Block attributes
-   */
-  attributes: {},
-
-  /**
-   * An icon property should be specified to make it easier to identify a block.
-   * These can be any of WordPress’ Dashicons, or a custom svg element.
-   */
-  icon: 'smiley',
-
-  /**
-   * Optional block extended support features.
-   */
-  supports: {
-    // Removes support for an HTML mode.
-    html: false,
-    reusable: false,
-    className: false
-  },
-
-  /**
-   * @see ./edit.js
-   */
-  edit: function edit(_ref) {
-    var attributes = _ref.attributes;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("output", null);
-  },
-
-  /**
-   * @see ./save.js
-   */
-  save: function save(_ref2) {
-    var attributes = _ref2.attributes;
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("output", null);
-  }
-});
-
-/***/ }),
-
-/***/ "./src/blocks/fields/special/variations.js":
-/*!*************************************************!*\
-  !*** ./src/blocks/fields/special/variations.js ***!
-  \*************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils_get_icon__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/get-icon */ "./src/utils/get-icon/index.js");
-/**
- * WordPress dependencies
- */
-
-
-
-/** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
-
-/**
- * Template option choices for predefined columns layouts.
- *
- * @type {WPBlockVariation[]}
- */
-
-var variations = [{
-  name: 'formello/input-button',
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Input with button'),
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Display an input with a button on same row.'),
-  icon: Object(_utils_get_icon__WEBPACK_IMPORTED_MODULE_2__["default"])('input-button'),
-  isDefault: true,
-  innerBlocks: [['formello/input', {
-    type: 'email',
-    label: 'Email'
-  }], ['formello/button']],
-  scope: ['inserter']
-}, {
-  name: 'formello/range-output',
-  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Input range with value'),
-  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Display an output field with the value of the range selected.'),
-  icon: Object(_utils_get_icon__WEBPACK_IMPORTED_MODULE_2__["default"])('range'),
-  innerBlocks: [['formello/input', {
-    type: 'range',
-    label: 'Range'
-  }], ['formello/output']],
-  scope: ['inserter']
-}];
-/**
- * Add `isActive` function to all `embed` variations, if not defined.
- * `isActive` function is used to find a variation match from a created
- *  Block by providing its attributes.
- */
-
-variations.forEach(function (variation) {
-  if (variation.isActive) return;
-
-  variation.isActive = function (blockAttributes, variationAttributes) {
-    return blockAttributes.type === variationAttributes.type;
-  };
-});
-/* harmony default export */ __webpack_exports__["default"] = (variations);
-
-/***/ }),
-
 /***/ "./src/blocks/fieldset/edit.js":
 /*!*************************************!*\
   !*** ./src/blocks/fieldset/edit.js ***!
@@ -11636,6 +11262,12 @@ function Edit(_ref) {
     });
   };
 
+  if (!attributes.asRow) {
+    setAttributes({
+      labelAlign: ''
+    });
+  }
+
   className = classnames__WEBPACK_IMPORTED_MODULE_9___default()(className, attributes.labelAlign, {
     'as-row': attributes.asRow,
     'is-bold': attributes.labelIsBold
@@ -11930,6 +11562,10 @@ function save(_ref) {
     attributes.constraints = Object(_components_merge_tags_functions__WEBPACK_IMPORTED_MODULE_4__["getConstraints"])(attributes.blockId);
   }
 
+  if (!attributes.asRow) {
+    attributes.labelAlign = '';
+  }
+
   className = classnames__WEBPACK_IMPORTED_MODULE_3___default()(className, attributes.labelAlign, {
     'as-row': attributes.asRow,
     'is-bold': attributes.labelIsBold
@@ -12108,24 +11744,22 @@ var variations = [{
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./blocks/form */ "./src/blocks/form/index.js");
 /* harmony import */ var _blocks_fieldset__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./blocks/fieldset */ "./src/blocks/fieldset/index.js");
-/* harmony import */ var _blocks_fields_special__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/fields/special */ "./src/blocks/fields/special/index.js");
-/* harmony import */ var _blocks_fields_special_output__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/fields/special/output */ "./src/blocks/fields/special/output.js");
-/* harmony import */ var _blocks_fields_select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/fields/select */ "./src/blocks/fields/select/index.js");
-/* harmony import */ var _blocks_fields_input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/fields/input */ "./src/blocks/fields/input/index.js");
-/* harmony import */ var _blocks_fields_button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/fields/button */ "./src/blocks/fields/button/index.js");
-/* harmony import */ var _blocks_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/actions */ "./src/blocks/actions/index.js");
-/* harmony import */ var _blocks_actions_email__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/actions/email */ "./src/blocks/actions/email/index.js");
-/* harmony import */ var _blocks_actions_more__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/actions/more */ "./src/blocks/actions/more/index.js");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _blocks_fields_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./blocks/fields/select */ "./src/blocks/fields/select/index.js");
+/* harmony import */ var _blocks_fields_input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./blocks/fields/input */ "./src/blocks/fields/input/index.js");
+/* harmony import */ var _blocks_fields_button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./blocks/fields/button */ "./src/blocks/fields/button/index.js");
+/* harmony import */ var _blocks_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./blocks/actions */ "./src/blocks/actions/index.js");
+/* harmony import */ var _blocks_actions_email__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./blocks/actions/email */ "./src/blocks/actions/email/index.js");
+/* harmony import */ var _blocks_actions_more__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./blocks/actions/more */ "./src/blocks/actions/more/index.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_style_scss__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_editor_scss__WEBPACK_IMPORTED_MODULE_9__);
 /**
  * Formello
  */
 
-
-
+ //import './blocks/fields/special';
+//import './blocks/fields/special/output';
 
 
 

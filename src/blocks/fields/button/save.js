@@ -22,7 +22,7 @@ export default function save( { attributes, className } ) {
 
 	const textClass = getColorClassName( 'color', attributes.textColor );
 	const backgroundClass = getColorClassName( 'background-color', attributes.backgroundColor );
-	const buttonClass = classnames( textClass, backgroundClass, 'ld-ext-right', {
+	const buttonClass = classnames( textClass, backgroundClass, attributes.iconPosition, {
 		'has-text-color': attributes.textColor || attributes.style?.color?.text,
 		'has-background-color': attributes.backgroundColor || attributes.style?.color?.background
 	} )

@@ -4,8 +4,8 @@
  * Plugin URI: https://example.com/
  * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
  * Version: 1.0.2
- * Author: Tropicalista
- * Author URI: https://www.francescopepe.com/
+ * Author: Formello
+ * Author URI: https://formello.net
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: formello

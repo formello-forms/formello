@@ -1,10 +1,10 @@
 === Formello ===
-Contributors:      Francesco Pepe
+Contributors:      Formello
 Tags:              contact form block, form builder, form block, gutenberg form
-Requires at least: 5.5.0
-Tested up to:      5.6.1
-Stable tag:        1.0.1
-Requires PHP:      7.0.0
+Requires at least: 5.4.0
+Tested up to:      5.7.0
+Stable tag:        1.0.2
+Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,6 +15,10 @@ Gutenberg contact form builder plugin.
 Formello is a Gutenberg form builder that helps you build beautiful html forms that seamless integrate in almost every theme with minimal effort.
 
 You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form.
+
+== Supported form input ==
+
+
 
 == Installation ==
 
@@ -29,7 +33,7 @@ In most cases, #1 will work fine and is way easier.
 
 = Does this require jQuery? =
 
-No. jQuery is not needed to perform ajax form submitting, therefore your site will be light and fast.
+No. jQuery is not needed to perform ajax form submitting, therefore we don't include on frontend and your site will be light and fast.
 
 = Can I store submissions? =
 

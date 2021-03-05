@@ -129,6 +129,10 @@ function Edit( {
 
 	}
 
+	if( !attributes.asRow ){
+		setAttributes( { labelAlign: '' } );
+	}
+
 	className = classnames( className, attributes.labelAlign, {
 		'as-row': attributes.asRow,
 		'is-bold': attributes.labelIsBold,
