@@ -61,6 +61,7 @@
 .formello-group div {
 	display: flex;
 	flex: 1 0 auto;
+ 	align-items: flex-end;
 	& input {
 		height: 100%;
 	}

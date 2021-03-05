@@ -186,6 +186,11 @@
   .formello {
     display: flex;
     flex: auto;
+    & label {
+      margin: 0;
+      text-align: left !important;
+    }
+
     & input {
       flex-grow: 1;
       width: 100%;

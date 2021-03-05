@@ -29,24 +29,8 @@
   transition: all 1s;
   opacity: 1;
 }
-.wp-block-formello-button button svg {
-  display: none;
-  transition: all 1s;
-  stroke-width: 5;
-  fill-rule: evenodd;
-  margin: auto;
-  height: 100%;
-}
 .wp-block-formello-button button:hover {
   opacity: 0.8;
-}
-.wp-block-formello-button button.loading-start span {
-  display: none;
-  opacity: 0;
-}
-.wp-block-formello-button button.loading-start svg {
-  display: block;
-  opacity: 1;
 }
 
 @media screen and (min-width: 600px) {
@@ -61,7 +45,7 @@
   margin-left: 10px;
 }
 
-.wp-block-formello-button.group {
+.wp-block-formello-button.grouped {
   margin-left: 0;
 }
 
@@ -342,6 +326,10 @@
 .formello-group .formello {
   display: flex;
   flex: auto;
+}
+.formello-group .formello label {
+  margin: 0;
+  text-align: left !important;
 }
 .formello-group .formello input {
   flex-grow: 1;

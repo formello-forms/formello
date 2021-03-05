@@ -4,8 +4,8 @@
 
 import './blocks/form';
 import './blocks/fieldset';
-//import './blocks/fields/special';
-//import './blocks/fields/special/output';
+import './blocks/fields/special';
+import './blocks/fields/special/output';
 import './blocks/fields/select';
 import './blocks/fields/input';
 import './blocks/fields/button';

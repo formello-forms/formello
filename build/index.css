@@ -113,6 +113,7 @@ div.formello p {
 .formello-group div {
   display: flex;
   flex: 1 0 auto;
+  align-items: flex-end;
 }
 .formello-group div input {
   height: 100%;

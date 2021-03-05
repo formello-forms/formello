@@ -44,7 +44,7 @@ export default function Edit() {
 			<InspectorControls>
 				<PanelBody title="More Blocks" initialOpen={ true }>
 					<p>We are working on more blocks.</p>
-					<div className="cta mailchimp" onClick={ () => window.open('https://www.formello.net', '_blank'); }></div>
+					<div className="cta mailchimp" onClick={ () => window.open('https://www.formello.net', '_blank') }></div>
 				</PanelBody>
 			</InspectorControls>
 			<b>[More] Do you want more actions? please visit <a href="http://www.formello.net" target="_blank">our site</a></b>
