@@ -62,7 +62,7 @@ class Forms extends \WP_List_Table {
 					)
 				)
 			),
-			$item['form_name'],
+			$item['form_name']
 		);
 		if ( ! empty( $item['news'] ) ) {
 			$badge = sprintf(
