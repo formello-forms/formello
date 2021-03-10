@@ -260,11 +260,11 @@ class Admin {
 	/**
 	 * Store Formello form settings in DB.
 	 *
-	 * @param Int   $id The id of form.
+	 * @param Int      $id The id of form.
 	 * @param \WP_Post $post The post to save.
 	 */
 	public function formello_pre_insert_cpt( $id, $post ) {
-error_log( 'CPT ' . $id);
+
 		$blocks = $this->find_forms( parse_blocks( $post->post_content ) );
 
 		foreach ( $blocks as $block ) {
@@ -304,7 +304,6 @@ error_log( 'CPT ' . $id);
 	 * @param mixed $data The data to save.
 	 */
 	public function formello_pre_insert( $id, $data ) {
-error_log( 'normal ' . $id);
 
 		// parse the content.
 		$blocks = $this->find_forms( parse_blocks( $data['post_content'] ) );
@@ -326,7 +325,13 @@ error_log( 'normal ' . $id);
 	 */
 	public function formello_insert( $id, $block ) {
 
-		$settings            = $block['attrs'];
+		$defaults = array(
+			'recaptchaEnabled' => false,
+			'storeSubmissions' => false,
+			'hide' => false,
+		);
+
+		$settings            = array_merge( $defaults, $block['attrs'] );
 		$settings['actions'] = array();
 
 		foreach ( $block['innerBlocks'] as $b ) {

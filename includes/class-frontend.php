@@ -139,7 +139,7 @@ class Frontend {
 			 * @param Data $store
 			 * @param Form $form
 			 */
-			do_action( "formello_form_{$form->slug}_success", $store, $form );
+			do_action( "formello_form_{$form->ID}_success", $store, $form );
 
 			/**
 			 * General purpose hook after all form actions have been processed.
@@ -182,7 +182,7 @@ class Frontend {
 		}
 
 		// validate recaptcha.
-		if ( $settings['recaptchaEnabled'] && ! isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
+		if ( $settings['recaptchaEnabled'] && isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
 			return true;
 		}
 
@@ -192,9 +192,11 @@ class Frontend {
 		}
 
 		// validate recaptcha.
-		$captcha_validate = $this->validate_recaptcha();
+		if ( $settings['recaptchaEnabled'] ) {
+			$captcha_validate = $this->validate_recaptcha();
+		}
 
-		if ( false === $captcha_validate ) {
+		if ( isset( $captcha_validate ) && false === $captcha_validate ) {
 			return true;
 		}
 

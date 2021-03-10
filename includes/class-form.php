@@ -24,18 +24,21 @@ class Form {
 	 * @var Int
 	 */
 	public $ID = 0;
+
 	/**
 	 * The form name
 	 *
 	 * @var string
 	 */
 	public $name = '';
+
 	/**
 	 * The form settings
 	 *
 	 * @var array
 	 */
 	public $settings = array();
+
 	/**
 	 * The form messages
 	 *
