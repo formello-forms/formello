@@ -56,7 +56,7 @@ class Form extends WP_REST_Controller {
 				'callback'            => array( $this, 'delete_item' ),
 				'permission_callback' => array( $this, 'delete_item_permissions_check' ),
 				'args'                => array( $this->get_collection_params() ),
-			),
+			)
 		);
 		register_rest_route(
 			$this->namespace,
