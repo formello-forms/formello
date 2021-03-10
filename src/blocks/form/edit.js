@@ -21,10 +21,11 @@ import {
 	InspectorControls,
 	InspectorAdvancedControls,
 	InnerBlocks,
-	__experimentalBlockVariationPicker,
+	__experimentalBlockVariationPicker
 } from '@wordpress/block-editor';
 
 import {
+	isReusableBlock,
 	createBlocksFromInnerBlocksTemplate,
 	createBlock
 } from '@wordpress/blocks';
@@ -83,12 +84,6 @@ function Edit( {
 	hasChildBlocks
 } ) {
 
-	const updateSetting = ( name, value ) => {
-		var newSettings = Object.assign( {}, attributes.settings );
-		newSettings[ name ] = value;
-		setAttributes( { settings: newSettings } );
-	};
-	
 	useEffect(
 		() => {
 			let idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace(/-/g, '')
@@ -115,6 +110,16 @@ function Edit( {
 			} )		
 			if( !attributes.asRow ){
 				setAttributes( { labelAlign: '' } );
+			}
+			return () => {
+				setAttributes({ id: undefined })
+				/*apiFetch( {
+					path: '/formello/v1/form/delete/',
+					method: 'DELETE',
+					data: {
+						id: attributes.id
+					}
+				} )*/
 			}
 		},
 		[]

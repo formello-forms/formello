@@ -56,10 +56,6 @@ export default {
 	formSettings: {
 		type: 'object',
 	},
-	settings: {
-		type: 'object',
-		default: formello.settings
-	},
 	asRow: {
 		type: 'boolean',
 		default: false

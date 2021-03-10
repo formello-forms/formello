@@ -60,7 +60,7 @@ class Forms extends \WP_List_Table {
 						'order'     => false,
 						'orderby'   => false,
 					)
-				),
+				)
 			),
 			$item['form_name'],
 		);

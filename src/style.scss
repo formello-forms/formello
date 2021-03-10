@@ -186,6 +186,7 @@
   .formello {
     display: flex;
     flex: auto;
+    align-items: flex-start;
     & label {
       margin: 0;
       text-align: left !important;

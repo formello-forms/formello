@@ -50,18 +50,22 @@ class Form extends WP_REST_Controller {
 		);
 		register_rest_route(
 			$this->namespace,
+			'/' . $this->rest_base . '/delete',
+			array(
+				'methods'             => \WP_REST_Server::DELETABLE,
+				'callback'            => array( $this, 'delete_item' ),
+				'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+				'args'                => array( $this->get_collection_params() ),
+			),
+		);
+		register_rest_route(
+			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_item' ),
 					'permission_callback' => array( $this, 'get_item_permissions_check' ),
-					'args'                => array( $this->get_collection_params() ),
-				),
-				array(
-					'methods'             => \WP_REST_Server::DELETABLE,
-					'callback'            => array( $this, 'delete_item' ),
-					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
 					'args'                => array( $this->get_collection_params() ),
 				),
 			)
@@ -160,8 +164,24 @@ class Form extends WP_REST_Controller {
 	public function delete_item( $request ) {
 		$id = $request->get_param( 'id' );
 
-		$item     = wp_delete_post( $id );
-		$response = rest_ensure_response( $item );
+		global $wpdb;
+		$table = $wpdb->prefix . 'formello_forms';
+
+		$data = array(
+			'is_trashed' => 1,
+		);
+
+		$where = array(
+			'id' => $id,
+		);
+
+		$wpdb->update(
+			$table,
+			$data,
+			$where
+		);
+
+		$response = rest_ensure_response( 'form trashed - ' . $id );
 
 		return $response;
 

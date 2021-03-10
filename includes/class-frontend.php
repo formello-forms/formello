@@ -28,6 +28,24 @@ class Frontend {
 	private $validator;
 
 	/**
+	 * Class instance.
+	 *
+	 * @access private
+	 * @var $instance Class instance.
+	 */
+	private static $instance;
+
+	/**
+	 * Initiator
+	 */
+	public static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {

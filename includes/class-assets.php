@@ -19,6 +19,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Assets {
 
 	/**
+	 * Class instance.
+	 *
+	 * @access private
+	 * @var $instance Class instance.
+	 */
+	private static $instance;
+
+	/**
+	 * Initiator
+	 */
+	public static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -50,8 +68,6 @@ class Assets {
 	 */
 	private function register_scripts( $scripts ) {
 
-		$settings = get_option( 'formello' );
-
 		foreach ( $scripts as $handle => $script ) {
 			$deps      = isset( $script['deps'] ) ? $script['deps'] : false;
 			$in_footer = isset( $script['in_footer'] ) ? $script['in_footer'] : false;
@@ -60,14 +76,7 @@ class Assets {
 			wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
 		}
 		wp_set_script_translations( 'formello-form-block-editor', 'formello' );
-		wp_localize_script(
-			'formello-form-block-editor',
-			'formello',
-			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => $settings,
-			)
-		);
+
 	}
 
 	/**

@@ -147,7 +147,7 @@ class Settings extends WP_REST_Controller {
 
 		$settings['integrations'] = array();
 
-		// filter to add integrations options
+		// filter to add integrations options.
 		$settings = apply_filters( 'formello_settings', $settings );
 
 		return rest_ensure_response(

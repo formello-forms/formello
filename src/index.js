@@ -3,6 +3,7 @@
  */
 
 import './blocks/form';
+import './blocks/form/reusable';
 import './blocks/fieldset';
 import './blocks/fields/special';
 import './blocks/fields/special/output';

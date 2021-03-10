@@ -8,7 +8,7 @@ import {
   __experimentalNumberControl as NumberControl
 } from '@wordpress/components';
 
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 export default function recaptcha( props ) {
 

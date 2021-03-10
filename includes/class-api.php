@@ -21,6 +21,24 @@ use WP_REST_Controller;
 class Api extends WP_REST_Controller {
 
 	/**
+	 * Class instance.
+	 *
+	 * @access private
+	 * @var $instance Class instance.
+	 */
+	private static $instance;
+
+	/**
+	 * Initiator
+	 */
+	public static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {

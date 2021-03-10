@@ -75,7 +75,7 @@ class Form {
 		global $wpdb;
 		$table = $wpdb->prefix . 'formello_forms';
 		$form  = $wpdb->get_row(
-			$wpdb->prepare( 'SELECT * from %1s WHERE id=%d;', array( $table, $id ) )
+			$wpdb->prepare( 'SELECT * from `%1s` WHERE id=%d;', array( $table, $id ) )
 		);
 
 		return $form;

@@ -22,12 +22,31 @@ class Admin {
 	protected $submissions_table;
 
 	/**
+	 * Class instance.
+	 *
+	 * @access private
+	 * @var $instance Class instance.
+	 */
+	private static $instance;
+
+	/**
+	 * Initiator
+	 */
+	public static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
 		add_action( 'pre_post_update', array( $this, 'formello_pre_insert' ), 10, 2 );
+		add_action( 'save_post', array( $this, 'formello_pre_insert_cpt' ), 10, 2 );
 		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
 	}
 
@@ -50,7 +69,7 @@ class Admin {
 
 		add_menu_page( __( 'Formello', 'formello' ), __( 'Formello', 'formello' ), $capability, $slug, array( $this, 'forms_page' ), 'dashicons-feedback' );
 
-		$form_hook        = add_submenu_page( $slug, __( 'Forms', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello', array( $this, 'forms_page' ) );
+		$form_hook        = add_submenu_page( $slug, __( 'Submissions by Forms', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello', array( $this, 'forms_page' ) );
 		$submissions_hook = add_submenu_page( $slug, __( 'Submissions', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello-submissions', array( $this, 'submissions_page' ) );
 		$submission_hook  = add_submenu_page( $slug, __( 'Submission', 'formello' ), __( 'Submission', 'formello' ), $capability, 'formello-submission', array( $this, 'submission_page_detail' ) );
 		$settings_hook    = add_submenu_page( $slug, __( 'Settings', 'formello' ), __( 'Settings', 'formello' ), $capability, 'formello-settings', array( $this, 'settings_page' ) );
@@ -242,12 +261,53 @@ class Admin {
 	 * Store Formello form settings in DB.
 	 *
 	 * @param Int   $id The id of form.
+	 * @param \WP_Post $post The post to save.
+	 */
+	public function formello_pre_insert_cpt( $id, $post ) {
+error_log( 'CPT ' . $id);
+		$blocks = $this->find_forms( parse_blocks( $post->post_content ) );
+
+		foreach ( $blocks as $block ) {
+			if ( 'formello/form' === $block['blockName'] ) {
+				$id = $block['attrs']['id'];
+				$this->formello_insert( $id, $block );
+			}
+		}
+
+	}
+
+	/**
+	 * Recursively find form blocks.
+	 *
+	 * @param mixed $blocks The data to parse.
+	 */
+	private function find_forms( $blocks ) {
+		$list = array();
+
+		foreach ( $blocks as $block ) {
+			if ( 'formello/form' === $block['blockName'] ) {
+				// add current item, if it's a formello block.
+				$list[] = $block;
+			} elseif ( ! empty( $block['innerBlocks'] ) ) {
+				// or call the function recursively, to find formello blocks in inner blocks.
+				$list = array_merge( $list, $this->find_forms( $block['innerBlocks'] ) );
+			}
+		}
+
+		return $list;
+	}
+
+	/**
+	 * Store Formello form settings in DB.
+	 *
+	 * @param Int   $id The id of form.
 	 * @param mixed $data The data to save.
 	 */
 	public function formello_pre_insert( $id, $data ) {
+error_log( 'normal ' . $id);
 
 		// parse the content.
-		$blocks = parse_blocks( $data['post_content'] );
+		$blocks = $this->find_forms( parse_blocks( $data['post_content'] ) );
 
 		foreach ( $blocks as $block ) {
 			if ( 'formello/form' === $block['blockName'] ) {

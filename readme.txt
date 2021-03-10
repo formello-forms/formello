@@ -1,9 +1,10 @@
 === Formello ===
 Contributors:      Formello
-Tags:              contact form, form builder, form block, gutenberg form
+Donate link: 	   https://generateblocks.com
+Tags:              contact form, form builder, form block, gutenberg form, blocks
 Requires at least: 5.4.0
 Tested up to:      5.7.0
-Stable tag:        1.0.4
+Stable tag:        1.0.5
 Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -75,6 +76,12 @@ Yes. Your submissions will be stored in database, so you can keep track of them.
 Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. Also we have support for Google ReCaptcha (v2,v3) to stop spam bot sending form and to help you take things clean. Apart from this, data submitted are always validated and sanitized.
 
 == Changelog ==
+
+= 1.0.4 =
+* Some cleanup and tweak for speed optimization
+
+= 1.0.3 =
+* Added status notification on submission table
 
 = 1.0.2 =
 * [Improvements] Added placeholder and starter template to form

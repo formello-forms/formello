@@ -15,6 +15,7 @@ return array(
     'Formello\\Api\\Settings' => $baseDir . '/includes/Api/class-settings.php',
     'Formello\\Assets' => $baseDir . '/includes/class-assets.php',
     'Formello\\Block' => $baseDir . '/includes/class-block.php',
+    'Formello\\CPT' => $baseDir . '/includes/class-cpt.php',
     'Formello\\Data' => $baseDir . '/includes/class-data.php',
     'Formello\\Encryption' => $baseDir . '/includes/class-encryption.php',
     'Formello\\Form' => $baseDir . '/includes/class-form.php',

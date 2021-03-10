@@ -265,6 +265,13 @@ class Submissions extends \WP_List_Table {
 
 	}
 
+	/**
+	 * Define what data to show on each column of the table
+	 *
+	 * @param  Array $submissions The data.
+	 *
+	 * @return Array
+	 */
 	private function get_submission_columns( array $submissions ) {
 		$columns                 = array();
 		$columns['cb']           = '<input type="checkbox" />';
@@ -275,7 +282,6 @@ class Submissions extends \WP_List_Table {
 		foreach ( $submissions as $s ) {
 
 			foreach ( $s as $field => $value ) {
-
 				if ( ! isset( $columns[ $field ] ) ) {
 					$columns[ $field ] = esc_html( ucfirst( strtolower( str_replace( '_', ' ', $field ) ) ) );
 				}

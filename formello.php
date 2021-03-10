@@ -3,7 +3,7 @@
  * Plugin Name: Formello
  * Plugin URI: https://formello.net/
  * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: Formello
  * Author URI: https://formello.net
  * License: GPL2
@@ -29,7 +29,7 @@ final class Formello {
 	 *
 	 * @var string
 	 */
-	public $version = '1.0.4';
+	public $version = '1.0.5';
 
 	/**
 	 * Holds various class instances
@@ -101,37 +101,35 @@ final class Formello {
 	 */
 	public function activate() {
 
-		$installed = get_option( 'formello_installed' );
+		$version = get_option( 'formello_version' );
+		global $wpdb;
 
-		if ( ! $installed ) {
-			update_option( 'formello_installed', time() );
+		update_option( 'formello_installed', time() );
 
-			global $wpdb;
+		// create table for storing forms.
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
+			`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+			`name` VARCHAR(255),
+			`settings` TEXT NOT NULL,
+			`is_trashed` BOOLEAN DEFAULT false,
+			`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+		);
 
-			// create table for storing forms.
-			$wpdb->query(
-				"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
-				`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-				`name` VARCHAR(255),
-				`settings` TEXT NOT NULL,
-				`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-				) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
-			);
-
-			// create table for storing submissions.
-			$wpdb->query(
-				"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions (
-				`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            	`form_id` INT UNSIGNED NOT NULL,
-				`data` TEXT NOT NULL,
-				`is_new` BOOLEAN DEFAULT true,
-				`user_agent` TEXT NULL,
-				`ip_address` VARCHAR(255) NULL,
-				`referer_url` VARCHAR(255) NULL,
-				`submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-				) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
-			);
-		}
+		// create table for storing submissions.
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions (
+			`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        	`form_id` INT UNSIGNED NOT NULL,
+			`data` TEXT NOT NULL,
+			`is_new` BOOLEAN DEFAULT true,
+			`user_agent` TEXT NULL,
+			`ip_address` VARCHAR(255) NULL,
+			`referer_url` VARCHAR(255) NULL,
+			`submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+		);
 
 		update_option( 'formello_version', FORMELLO_VERSION );
 	}
@@ -166,12 +164,12 @@ final class Formello {
 	 */
 	public function init_hooks() {
 
-		$this->container['frontend'] = new Formello\Block();
+		Formello\Block::get_instance();
 		add_action( 'init', array( $this, 'init_classes' ) );
 		add_action( 'rest_init', array( $this, 'init_classes' ) );
 
 		// Localize our plugin.
-		add_action( 'init', array( $this, 'localization_setup' ) );
+		add_action( 'plugins_loaded', array( $this, 'formello_localization_setup' ) );
 	}
 
 	/**
@@ -181,16 +179,11 @@ final class Formello {
 	 */
 	public function init_classes() {
 
-		if ( $this->is_request( 'frontend' ) ) {
-			$this->container['frontend'] = new Formello\Frontend();
-		}
-
-		if ( $this->is_request( 'admin' ) ) {
-			$this->container['admin'] = new Formello\Admin();
-		}
-
-		$this->container['api']    = new Formello\Api();
-		$this->container['assets'] = new Formello\Assets();
+		Formello\Frontend::get_instance();
+		Formello\Assets::get_instance();
+		Formello\Admin::get_instance();
+		Formello\Api::get_instance();
+		Formello\CPT::get_instance();
 
 		// hook actions.
 		$email_action = new Formello\Actions\Email();
@@ -203,34 +196,8 @@ final class Formello {
 	 *
 	 * @uses load_plugin_textdomain()
 	 */
-	public function localization_setup() {
+	public function formello_localization_setup() {
 		load_plugin_textdomain( 'formello', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
-
-	/**
-	 * What type of request is this?
-	 *
-	 * @param  string $type admin, ajax, cron or frontend.
-	 *
-	 * @return bool
-	 */
-	private function is_request( $type ) {
-		switch ( $type ) {
-			case 'admin':
-				return is_admin() && ! defined( 'DOING_AJAX' );
-
-			case 'ajax':
-				return defined( 'DOING_AJAX' );
-
-			case 'rest':
-				return defined( 'REST_REQUEST' );
-
-			case 'cron':
-				return defined( 'DOING_CRON' );
-
-			case 'frontend':
-				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
-		}
 	}
 
 } // FORMELLO

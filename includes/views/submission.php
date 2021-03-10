@@ -10,7 +10,7 @@ if ( $submission->is_new ) {
 	global $wpdb;
 	$submission_table = $wpdb->prefix . 'formello_submissions';
 
-	$wpdb->update( $table, array( 'is_new' => false ), array( 'id' => $submission->id ) );
+	$wpdb->update( $submission_table, array( 'is_new' => false ), array( 'id' => $submission->id ) );
 }
 
 ?>

@@ -19,11 +19,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Block {
 
 	/**
+	 * Class instance.
+	 *
+	 * @access private
+	 * @var $instance Class instance.
+	 */
+	private static $instance;
+
+	/**
+	 * Initiator
+	 */
+	public static function get_instance() {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'register_block' ) );
-		add_filter( 'block_categories', array( $this, 'formello_block_category' ) );
+		add_action( 'init', array( $this, 'register_blocks' ) );
+		add_filter( 'block_categories', array( $this, 'register_block_category' ) );
 	}
 
 	/**
@@ -33,9 +51,15 @@ class Block {
 	 */
 	public function register_blocks() {
 		register_block_type(
-			'formello/input',
+			'formello/form-reusable',
 			array(
-				'render_callback' => array( $this, 'do_container_block' ),
+				'attributes' => array(
+					'id' => array(
+						'type'    => 'string',
+						'default' => 0,
+					),
+				),
+				'render_callback' => array( $this, 'do_reusable_block' ),
 			)
 		);
 
@@ -59,7 +83,6 @@ class Block {
 				'editor_script'   => 'formello-form-block-editor',
 				'editor_style'    => 'formello-form-block-editor',
 				'style'           => 'formello-form-block',
-				//'script'        => 'formello-form-block',
 				'render_callback' => array( $this, 'do_formello_block' ),
 			)
 		);
@@ -69,61 +92,61 @@ class Block {
 	/**
 	 * Render frontend app
 	 *
-	 * @param  array  $attrs The attributes of block.
+	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
 	 */
-	public function register_block( $attrs, $content = '' ) {
+	public function do_formello_block( $attributes, $content = '', $block ) {
 
-		register_block_type(
-			'formello/form',
+		$settings = get_option( 'formello', formello_get_option_defaults() );
+		$recaptcha_url = 'https://www.google.com/recaptcha/api.js';
+
+		if ( ! is_admin() && $attributes['recaptchaEnabled'] && ! empty( $settings['recaptcha']['site_key'] ) ) {
+			if ( 1 === (int) $settings['recaptcha']['version'] ) {
+				wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?onload=formelloCallback&render=explicit', array(), FORMELLO_VERSION, true );
+			} else {
+				wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?render=' . $settings['recaptcha']['site_key'], array(), FORMELLO_VERSION, true );
+			}
+		}
+
+		wp_enqueue_script( 'formello-form-block' );
+		wp_enqueue_style( 'formello-form-block' );
+
+		wp_localize_script(
+			'formello-form-block',
+			'formello',
 			array(
-				'attributes'      => array(
-					'recaptchaEnabled' => array(
-						'type'    => 'boolean',
-						'default' => false,
-					),
-					'storeSubmissions' => array(
-						'type'    => 'boolean',
-						'default' => false,
-					),
-					'hide'             => array(
-						'type'    => 'boolean',
-						'default' => false,
-					),
-				),
-				'editor_script'   => 'formello-form-block-editor',
-				'editor_style'    => 'formello-form-block-editor',
-				'style'           => 'formello-form-block',
-				// 'script'          => 'formello-form-block' this will include script sitewide for now disabled it
-				'render_callback' => function( $attributes, $content = null ) {
-
-					$settings = get_option( 'formello', formello_get_option_defaults() );
-					$recaptcha_url = 'https://www.google.com/recaptcha/api.js';
-
-					if ( ! is_admin() && $attributes['recaptchaEnabled'] && ! empty( $settings['recaptcha']['site_key'] ) ) {
-						if ( 1 === (int) $settings['recaptcha']['version'] ) {
-							wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?onload=formelloCallback&render=explicit', array(), FORMELLO_VERSION, true );
-						} else {
-							wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?render=' . $settings['recaptcha']['site_key'], array(), FORMELLO_VERSION, true );
-						}
-					}
-
-					wp_enqueue_script( 'formello-form-block' );
-					wp_enqueue_style( 'formello-form-block' );
-
-					wp_localize_script(
-						'formello-form-block',
-						'formello',
-						array(
-							'ajax_url' => admin_url( 'admin-ajax.php' ),
-							'settings' => $settings,
-						)
-					);
-
-					return $content;
-				},
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'settings' => $settings,
 			)
 		);
+
+		return $content;
+
+	}
+
+	/**
+	 * Render frontend app
+	 *
+	 * @param  array  $attributes The attributes of block.
+	 * @param  string $content The bock content.
+	 */
+	public function do_reusable_block( $attributes, $content = '' ) {
+
+		if ( empty( $attributes['id'] ) ) {
+			return '';
+		}
+
+		$form = get_post( $attributes['id'] );
+
+		if ( ! $form || 'formello_form' !== $form->post_type ) {
+			return '';
+		}
+
+		if ( 'publish' !== $form->post_status || ! empty( $form->post_password ) ) {
+			return '';
+		}
+
+		return do_blocks( $form->post_content );
 
 	}
 
@@ -132,7 +155,7 @@ class Block {
 	 *
 	 * @param  array $categories The categories of Gutenberg.
 	 */
-	public function formello_block_category( $categories ) {
+	public function register_block_category( $categories ) {
 		return array_merge(
 			$categories,
 			array(
