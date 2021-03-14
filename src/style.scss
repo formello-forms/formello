@@ -182,7 +182,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  align-items: flex-end;
+  align-items: flex-start;
   .formello {
     display: flex;
     flex: auto;
@@ -190,6 +190,7 @@
     & label {
       margin: 0;
       text-align: left !important;
+      display: none;
     }
 
     & input {
@@ -230,8 +231,8 @@
 }
 
 .formello-hp {
-  position: absolute;
-  top: -500px;
+  position: absolute !important;
+  left: -5000px;
 }
 
 [hidden] {

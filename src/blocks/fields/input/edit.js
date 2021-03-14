@@ -328,10 +328,7 @@ export default function Edit( props ) {
 					value={ attributes.value }
 					readOnly
 					disabled={ true }
-					//disabled={ attributes.type == 'color' ? true : false }
-					//checked={ attributes.type == 'checkbox' ? attributes.checked : false }
 					checked={ attributes.checked }
-					//required={ attributes.required }
 					placeholder={ attributes.placeholder }
 				/>
 			) }

@@ -156,14 +156,14 @@ function validate( formEl ){
     return
   }
 
-  if( !settings.recaptcha.site_key ){
+  if( !formello.settings.recaptcha.site_key ){
     submitForm( formEl )
     return
   }
 
   if( formello.settings.recaptcha.version == 3 ){
     grecaptcha.ready(function() {
-      grecaptcha.execute( settings.recaptcha.site_key, {action: 'submit'}).then(function(token) {
+      grecaptcha.execute( formello.settings.recaptcha.site_key, {action: 'submit'}).then(function(token) {
 
         submitForm( formEl, token )
 
@@ -191,10 +191,10 @@ window.formelloCallback = () => {
 
     let gReCaptcha = document.createElement('div')
     gReCaptcha.className = 'g-recaptcha'
-    buttons[i].appendChild(gReCaptcha);
+    buttons[i].parentNode.appendChild(gReCaptcha);
 
     grecaptcha.render( gReCaptcha, {
-      'sitekey' : formello.settings.recaptcha
+      'sitekey' : formello.settings.recaptcha.site_key
     });
 
   }
