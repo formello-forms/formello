@@ -152,7 +152,7 @@ class Forms extends \WP_List_Table {
 		$table_forms  = "{$wpdb->prefix}formello_forms";
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
-		$sql = 'SELECT id, name as form_name, created_at, (SELECT count(*) FROM wp_formello_submissions s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM ' . $table_forms . ' f';
+		$sql = "SELECT id, name as form_name, created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM " . $table_forms . " f";
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$order              = sanitize_text_field( $_REQUEST['order'] );

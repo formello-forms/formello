@@ -14,7 +14,7 @@ $form_page = add_query_arg( array( 'page' => 'formello' ) );
 
 <style type="text/css">
 .column-id { text-align: left; width:50px !important; overflow:hidden }
-.column-new { text-align: left; width:50px !important; overflow:hidden }
+.column-is_new { text-align: left; width:50px !important; overflow:hidden }
 .badge { background-color: #337ab7; height: 10px; width: 10px; display: inline-block; border-radius: 50%; }
 </style>
 

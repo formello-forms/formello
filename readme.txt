@@ -1,5 +1,5 @@
-=== Formello ===
-Contributors:      Formello - Contact form builder for Gutenberg
+=== Formello - Contact form builder for Gutenberg ===
+Contributors:      Formello
 Donate link: 	   https://formello.net
 Tags:              contact form, form builder, form block, gutenberg form, blocks
 Requires at least: 5.4.0

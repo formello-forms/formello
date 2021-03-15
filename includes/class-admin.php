@@ -44,6 +44,7 @@ class Admin {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_item' ), 500 );
 		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
 		add_action( 'pre_post_update', array( $this, 'formello_pre_insert' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'formello_pre_insert_cpt' ), 10, 2 );
@@ -379,6 +380,38 @@ class Admin {
 		}
 
 		return $actions;
+	}
+
+	/**
+	 * Store Formello action settings in DB.
+	 *
+	 * @param WP_Admin_Bar $admin_bar The admin bar.
+	 * @since 1.0.0
+	 */
+	public function admin_bar_item( \WP_Admin_Bar $admin_bar ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		global $wpdb;
+		$table_submissions  = "{$wpdb->prefix}formello_submissions";
+
+		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1;";
+
+		$result = $wpdb->get_row( $sql );
+		$badge = sprintf(
+			'<span style="background-color: #337ab7; padding: 0 5px; margin-left: 10px; color: white; border-radius: 20%%;">%s</span>',
+			$result->total
+		);
+
+		$admin_bar->add_menu(
+			array(
+				'id'    => 'menu-id',
+				'parent' => null,
+				'group'  => null,
+				'title' => 'Formello: ' . $badge,
+				'href'  => admin_url( 'admin.php?page=formello' ),
+			)
+		);
 	}
 
 	/**

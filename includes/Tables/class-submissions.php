@@ -74,6 +74,26 @@ class Submissions extends \WP_List_Table {
 	}
 
 	/**
+	 * Delete a customer record.
+	 *
+	 * @param int $id customer ID.
+	 */
+	public static function mark_submission( $id ) {
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'formello_submissions';
+
+		$wpdb->query(
+			$wpdb->prepare(
+				"UPDATE {$table} SET is_new = %d WHERE id = %d;",
+				0,
+				$id
+			)
+		);
+
+	}
+
+	/**
 	 * Returns the count of records in the database.
 	 *
 	 * @return null|string
@@ -99,6 +119,7 @@ class Submissions extends \WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
+			'mark-as-read' => 'Mark as Read',
 			'bulk-delete' => 'Delete',
 		);
 
@@ -157,12 +178,34 @@ class Submissions extends \WP_List_Table {
 			// In our file that handles the request, verify the nonce.
 			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
-			if ( ! wp_verify_nonce( $nonce, 'sp_delete_submission' ) ) {
+			if ( ! wp_verify_nonce( $nonce, 'sp_delete_customer' ) ) {
 				die( 'Go get a life script kiddies' );
 			} else {
-				self::delete_submission( absint( $_GET['customer'] ) );
-				echo '<div class="notice notice-success is-dismissible"><p>Bulk Deleted..</p></div>';
+				//self::delete_submission( absint( $_GET['customer'] ) );
+				//echo '<div class="notice notice-success is-dismissible"><p>Bulk Deleted..</p></div>';
 			}
+		}
+
+		// If the delete bulk action is triggered.
+		if ( ( isset( $_POST['action'] ) && 'mark-as-read' === $_POST['action'] )
+			|| ( isset( $_POST['action2'] ) && 'mark-as-read' === $_POST['action2'] )
+		) {
+
+			$marked_ids = esc_sql( $_POST['bulk-delete'] );
+
+			// loop over the array of record IDs and delete them.
+			foreach ( $marked_ids as $id ) {
+				self::mark_submission( $id );
+
+			}
+
+			// refresh table.
+			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
+			$current_page = $this->get_pagenum();
+			$this->data   = $this->table_data( $per_page, $current_page );
+
+			echo '<div class="notice notice-success is-dismissible"><p>Submission(s) marked as read.</p></div>';
+
 		}
 
 		// If the delete bulk action is triggered.
