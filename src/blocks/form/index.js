@@ -28,7 +28,7 @@ registerBlockType( 'formello/form', {
 	attributes: blockAttributes,	
 	variations: variations,
 	supports: {
-		reusable: true,
+		reusable: false,
 		className: true,
 		html: false
 	},

@@ -46,8 +46,8 @@ const tabs = [
 		title: 'Messages',
 	},
 	{
-		name: 'other',
-		title: 'Other',
+		name: 'about',
+		title: 'About',
 	},
 ];
 
@@ -59,13 +59,13 @@ import './dashboard.scss';
 import Recaptcha from './recaptcha.js';
 import Messages from './messages.js';
 import Integrations from './integrations.js';
-import Other from './other.js';
+import About from './about.js';
 
 const components = {
     recaptcha: Recaptcha,
     messages: Messages,
     integrations: Integrations,
-    other: Other,
+    about: About,
 };
 
 class App extends Component {

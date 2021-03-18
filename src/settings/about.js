@@ -26,13 +26,13 @@ export default function other( props ) {
 
 		<PanelBody
 			initialOpen={ true }
-			title={ __( 'Integrations', 'formello' ) }
+			title={ __( 'About', 'formello' ) }
 		>
 			<div className="formello-dashboard-panel-row-wrapper">
 
 				<PanelRow>
-					<p>{ __( 'Here you can find', 'formello' ) }: <a href="https://wordpress.org/support/plugin/formello/">support</a>.</p>
-					<p>{ __( 'If you like the plugin, you can share a review ', 'formello' ) }: <a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">here</a>.</p>
+					<p>{ __( 'Here you can find', 'formello' ) } <a href="https://wordpress.org/support/plugin/formello/">{ __( 'support' ) }</a>.</p>
+					<p>{ __( 'If you like the plugin, you can share a review ', 'formello' ) } <a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">{ __( 'here' ) }</a>.</p>
 				</PanelRow>
 
 			</div>

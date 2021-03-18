@@ -35,7 +35,7 @@
 
 @media screen and (min-width: 600px) {
   .as-row .wp-block-formello-button {
-    padding-left: 200px;
+    padding-left: 180px;
     flex-direction: row;
   }
 }
@@ -308,13 +308,13 @@
     align-items: center;
   }
   .as-row .formello label {
-    flex: 0 1 200px;
+    flex: 0 1 180px;
   }
   .as-row .formello.formello-checkbox {
-    margin-left: 200px;
+    margin-left: 180px;
   }
   .as-row .formello .error-message {
-    margin-left: 200px;
+    margin-left: 180px;
   }
 }
 .formello-group {

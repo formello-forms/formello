@@ -8567,7 +8567,7 @@ function mergeTags(props) {
       setAttributes = props.setAttributes,
       _onChange = props.onChange;
   var icon = 'list-view';
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelRow"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
     className: "components-base-control",
     value: value,
     label: label,
@@ -8595,7 +8595,7 @@ function mergeTags(props) {
         }));
       }
     })
-  }));
+  });
 }
 
 /***/ }),
@@ -9750,11 +9750,8 @@ function Edit(props) {
     type: attributes.type,
     value: attributes.value,
     readOnly: true,
-    disabled: true //disabled={ attributes.type == 'color' ? true : false }
-    //checked={ attributes.type == 'checkbox' ? attributes.checked : false }
-    ,
-    checked: attributes.checked //required={ attributes.required }
-    ,
+    disabled: true,
+    checked: attributes.checked,
     placeholder: attributes.placeholder
   }), attributes.showHelp && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
     tagName: "small",
@@ -11546,6 +11543,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _utils_get_icon__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils/get-icon */ "./src/utils/get-icon/index.js");
+/* harmony import */ var _wordpress_reusable_blocks__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/reusable-blocks */ "@wordpress/reusable-blocks");
+/* harmony import */ var _wordpress_reusable_blocks__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_reusable_blocks__WEBPACK_IMPORTED_MODULE_11__);
 
 
 /**
@@ -11572,6 +11571,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ALLOWED_BLOCKS = ['core/paragraph', 'core/heading', 'core/columns', 'create-block/formello-conditional-fields', 'formello/actions', 'formello/columns', 'formello/button', 'formello/input', 'formello/email', 'formello/checkboxes', 'formello/select'];
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -11590,6 +11590,10 @@ function Edit(_ref) {
       setAttributes = _ref.setAttributes,
       clientId = _ref.clientId,
       hasChildBlocks = _ref.hasChildBlocks;
+
+  var _useDispatch = Object(_wordpress_data__WEBPACK_IMPORTED_MODULE_3__["useDispatch"])(_wordpress_reusable_blocks__WEBPACK_IMPORTED_MODULE_11__["store"]),
+      __experimentalConvertBlocksToReusable = _useDispatch.__experimentalConvertBlocksToReusable;
+
   Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     var idx = clientId.substr(2, 9).replace('-', '').replace(/-/g, '');
 
@@ -11623,10 +11627,8 @@ function Edit(_ref) {
       });
     }
 
-    return function () {
-      setAttributes({
-        id: undefined
-      });
+    return function () {//setAttributes({ id: undefined })
+
       /*apiFetch( {
       	path: '/formello/v1/form/delete/',
       	method: 'DELETE',
@@ -11640,7 +11642,17 @@ function Edit(_ref) {
     'as-row': attributes.asRow,
     'is-bold': attributes.labelIsBold
   });
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["PanelBody"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Toolbar"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarButton"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add to reusable block'),
+    icon: 'controls-repeat',
+    onClick: function onClick() {
+      setAttributes({
+        id: undefined
+      });
+
+      __experimentalConvertBlocksToReusable([clientId]);
+    }
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["PanelBody"], {
     title: "Form Settings",
     initialOpen: true
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["TextControl"], {
@@ -11868,7 +11880,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_5__["registerBlockType"])('for
   attributes: _attributes__WEBPACK_IMPORTED_MODULE_4__["default"],
   variations: _variations__WEBPACK_IMPORTED_MODULE_0__["default"],
   supports: {
-    reusable: true,
+    reusable: false,
     className: true,
     html: false
   },
@@ -12755,6 +12767,17 @@ function getIcon(icon) {
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["primitives"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/reusable-blocks":
+/*!****************************************!*\
+  !*** external ["wp","reusableBlocks"] ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["reusableBlocks"]; }());
 
 /***/ }),
 

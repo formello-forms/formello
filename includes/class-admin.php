@@ -48,6 +48,7 @@ class Admin {
 		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
 		add_action( 'pre_post_update', array( $this, 'formello_pre_insert' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'formello_pre_insert_cpt' ), 10, 2 );
+		add_action( 'rest_insert_wp_block', array( $this, 'formello_pre_insert_cpt' ), 10, 2 );
 		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
 	}
 
@@ -397,21 +398,45 @@ class Admin {
 
 		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1;";
 
+		$badge = '';
 		$result = $wpdb->get_row( $sql );
-		$badge = sprintf(
-			'<span style="background-color: #337ab7; padding: 0 5px; margin-left: 10px; color: white; border-radius: 20%%;">%s</span>',
-			$result->total
+		if ( $result->total ) {
+			$badge = sprintf(
+				'<span style="background-color: #337ab7; padding: 0 5px; margin-left: 10px; color: white; border-radius: 20%%;">%s</span>',
+				$result->total
+			);
+		}
+
+		$admin_bar->add_menu(
+			array(
+				'id'    => 'formello-menu',
+				'parent' => null,
+				'group'  => null,
+				'title' => 'Formello ' . $badge,
+				'href'  => admin_url( 'admin.php?page=formello' ),
+			)
 		);
 
 		$admin_bar->add_menu(
 			array(
-				'id'    => 'menu-id',
-				'parent' => null,
-				'group'  => null,
-				'title' => 'Formello: ' . $badge,
-				'href'  => admin_url( 'admin.php?page=formello' ),
+				'id' => 'formello-docs',
+				'parent' => 'formello-menu',
+				'title' => 'Docs',
+				'href' => 'https://docs.formello.net',
+				'meta' => array( 'target' => '_blank' ),
 			)
 		);
+
+		$admin_bar->add_menu(
+			array(
+				'id' => 'formello-support',
+				'parent' => 'formello-menu',
+				'title' => 'Support',
+				'href' => 'https://wordpress.org/support/plugin/formello/',
+				'meta' => array( 'target' => '_blank' ),
+			)
+		);
+
 	}
 
 	/**

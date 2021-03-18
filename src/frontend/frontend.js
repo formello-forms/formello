@@ -179,7 +179,7 @@ function validate( formEl ){
 
 document.addEventListener('submit', handleSubmitEvents, true) // useCapture=false to ensure we bubble upwards (and thus can cancel propagation)
 
-var bouncer = new Bouncer('form', {
+var bouncer = new Bouncer('.wp-block-formello-form', {
   disableSubmit: false,
   messages: formello.settings.messages
 })

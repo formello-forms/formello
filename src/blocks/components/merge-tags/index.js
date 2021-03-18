@@ -34,32 +34,30 @@ export default function mergeTags( props ) {
 	const icon = 'list-view';
 
 	return (
-		<PanelRow>
-			<InputControl 
-				className='components-base-control'
-				value={ value }
-				label={ label }
-				onChange={ (val) => onChange(val) }
-				labelPosition="top"
-				suffix={ 
-				    <Dropdown
-				        className="my-container-class-name"
-				        contentClassName="my-popover-content-classname"
-				        position="bottom right"
-				        renderToggle={ ( { isOpen, onToggle } ) => (
-				            <Button 
-				            	isSmall
-				            	icon={ icon } 
-								onClick={ onToggle }
-				            	aria-expanded={ isOpen }
-				            />
-				        ) }
-				        renderContent={ () => (
-							<TagSelector {...props} insertTag={ onChange } />
-				        ) }
-				    />
-				}
-			 />
-		</PanelRow>
+		<InputControl 
+			className='components-base-control'
+			value={ value }
+			label={ label }
+			onChange={ (val) => onChange(val) }
+			labelPosition="top"
+			suffix={ 
+			    <Dropdown
+			        className="my-container-class-name"
+			        contentClassName="my-popover-content-classname"
+			        position="bottom right"
+			        renderToggle={ ( { isOpen, onToggle } ) => (
+			            <Button 
+			            	isSmall
+			            	icon={ icon } 
+							onClick={ onToggle }
+			            	aria-expanded={ isOpen }
+			            />
+			        ) }
+			        renderContent={ () => (
+						<TagSelector {...props} insertTag={ onChange } />
+			        ) }
+			    />
+			}
+		 />
 	);
 }

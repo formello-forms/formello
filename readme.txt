@@ -77,6 +77,14 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.0.9 =
+* Better support to reusable blocks
+* Added adminbar menu
+
+= 1.0.8 =
+* Added notification for new submission on admin bar
+* FIx CSS discrepancy
+
 = 1.0.4 =
 * Some cleanup and tweak for speed optimization
 

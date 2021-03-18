@@ -14,12 +14,13 @@ import { __ } from '@wordpress/i18n';
 import './editor.scss';
 
 import { useState, useEffect, Fragment } from '@wordpress/element';
-import { withSelect, useSelect, select, dispatch } from '@wordpress/data';
+import { withSelect, useSelect, select, dispatch, useDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 
 import {
 	InspectorControls,
 	InspectorAdvancedControls,
+	BlockControls,
 	InnerBlocks,
 	__experimentalBlockVariationPicker
 } from '@wordpress/block-editor';
@@ -64,6 +65,7 @@ const ALLOWED_BLOCKS = [
 	'formello/checkboxes',
 	'formello/select',
 ];
+import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -84,6 +86,7 @@ function Edit( {
 	hasChildBlocks
 } ) {
 
+	const { __experimentalConvertBlocksToReusable } = useDispatch( reusableBlocksStore );
 	useEffect(
 		() => {
 			let idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace(/-/g, '')
@@ -112,7 +115,7 @@ function Edit( {
 				setAttributes( { labelAlign: '' } );
 			}
 			return () => {
-				setAttributes({ id: undefined })
+				//setAttributes({ id: undefined })
 				/*apiFetch( {
 					path: '/formello/v1/form/delete/',
 					method: 'DELETE',
@@ -132,6 +135,20 @@ function Edit( {
 
 	return (
 		<div>
+            <BlockControls>
+                <Toolbar>
+	                <ToolbarButton
+	                	label={ __( 'Add to reusable block' ) }
+	                    icon={ 'controls-repeat' }
+	                    onClick={ ()=> { 
+							setAttributes( {
+								id: undefined
+							} )
+							__experimentalConvertBlocksToReusable( [ clientId ] )
+	                    } }
+	                />
+                </Toolbar>
+            </BlockControls>
 			<InspectorControls>
 				<PanelBody title="Form Settings" initialOpen={ true }>
 					<TextControl
