@@ -80,6 +80,8 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 = 1.0.9 =
 * Better support to reusable blocks
 * Added adminbar menu
+* Added url suggestion
+* Fixed label position
 
 = 1.0.8 =
 * Added notification for new submission on admin bar
