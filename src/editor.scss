@@ -54,7 +54,14 @@
       align-self: flex-end;
     }
     &.wide {
-      align-self: auto;
+      width: 100%;
+    }
+}
+
+.wp-block-formello-button.wide {
+    .button-span {
+      width: 100%;
+      text-align: center;
     }
 }
 
@@ -87,4 +94,12 @@
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
+}
+
+.formello-urlinput {
+	input {
+		width: 100% !important;
+	    border-radius: 2px !important;
+	    border: 1px solid #757575 !important;
+	}
 }

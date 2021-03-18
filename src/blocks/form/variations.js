@@ -47,7 +47,7 @@ const variations = [
 			[ 'formello/input', { type: 'text', label: 'Name' } ],
 			[ 'formello/input', { type: 'email', label: 'Email', required: true } ], 
 			[ 'formello/input', { type: 'text', label: 'Subject' } ],
-			[ 'formello/input', { type: 'textarea', label: 'Message' } ], 
+			[ 'formello/input', { type: 'textarea', label: 'Message', rows: 5 } ], 
 			[ 'formello/button', { txt: 'Send' } ] 
 		],
 		scope: [ 'block' ],

@@ -1,0 +1,549 @@
+# Copyright (C) 2021 Formello
+# This file is distributed under the same license as the Formello plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Formello 1.0.9\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/formello\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2021-03-18T04:00:20+01:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: formello\n"
+
+#. Plugin Name of the plugin
+#. Author of the plugin
+#: includes/class-admin.php:72
+msgid "Formello"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://formello.net/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support."
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://formello.net"
+msgstr ""
+
+#: includes/Actions/class-email.php:44
+msgid "Send Email"
+msgstr ""
+
+#: includes/Api/class-settings.php:100
+msgid "No changes found."
+msgstr ""
+
+#: includes/Api/class-settings.php:120
+msgid "Settings saved."
+msgstr ""
+
+#: includes/class-admin.php:74
+msgid "Submissions by Forms"
+msgstr ""
+
+#: includes/class-admin.php:74
+#: includes/class-admin.php:75
+#: includes/Tables/class-submissions.php:50
+msgid "Submissions"
+msgstr ""
+
+#: includes/class-admin.php:76
+#: includes/Tables/class-submissions.php:49
+msgid "Submission"
+msgstr ""
+
+#: includes/class-admin.php:77
+msgid "Settings"
+msgstr ""
+
+#: includes/class-admin.php:209
+msgid "No submissions found."
+msgstr ""
+
+#: includes/class-admin.php:241
+msgid "No submissions found for this form."
+msgstr ""
+
+#: includes/class-form.php:65
+msgid "Thanks for submitting this form."
+msgstr ""
+
+#: includes/class-form.php:66
+msgid "Ops. An error occurred."
+msgstr ""
+
+#: includes/Tables/class-forms.php:21
+#: src/blocks/form/index.js:23
+msgid "Form"
+msgstr ""
+
+#: includes/Tables/class-forms.php:22
+#: includes/views/forms.php:2
+msgid "Forms"
+msgstr ""
+
+#: includes/Tables/class-forms.php:40
+msgid "No forms available."
+msgstr ""
+
+#: includes/Tables/class-submissions.php:112
+msgid "No submissions available."
+msgstr ""
+
+#: includes/Tables/class-submissions.php:392
+msgid "View"
+msgstr ""
+
+#: includes/views/submission.php:45
+msgid "Fields"
+msgstr ""
+
+#: includes/views/submission.php:64
+msgid "Additional info"
+msgstr ""
+
+#: includes/views/submission.php:68
+msgid "Timestamp"
+msgstr ""
+
+#: includes/views/submission.php:74
+msgid "User Agent"
+msgstr ""
+
+#: includes/views/submission.php:81
+msgid "IP Address"
+msgstr ""
+
+#: includes/views/submission.php:87
+msgid "Referrer URL"
+msgstr ""
+
+#: includes/views/submission.php:99
+msgid "Back to submissions list"
+msgstr ""
+
+#: includes/views/submissions.php:30
+msgid "Back to forms list"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/recaptcha.js:24
+msgid "Google ReCaptcha"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/recaptcha.js:29
+msgid "ReCaptcha type"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/recaptcha.js:42
+msgid "Site Key"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/recaptcha.js:51
+msgid "Secret Key"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/recaptcha.js:61
+msgid "Threshold"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Missing Value"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Pattern Mismatch"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Out of Range"
+msgstr ""
+
+#: build/dashboard.js:1
+msgid "Wrong Length"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/integrations.js:29
+msgid "Integrations"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/integrations.js:34
+msgid "We are working on integrations. They will be available soon."
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/about.js:29
+msgid "About"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/about.js:34
+msgid "Here you can find"
+msgstr ""
+
+#: build/dashboard.js:1
+#: src/settings/about.js:35
+msgid "If you like the plugin, you can share a review "
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:83
+#: src/blocks/fields/select/edit.js:140
+#: src/blocks/form/edit.js:155
+msgid "Name"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:160
+msgid "Redirect Url"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:165
+msgid "Store submissions"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:170
+msgid "Enable ReCaptcha"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:178
+msgid "Hide form after submission"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:186
+msgid "Success Message"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:191
+msgid "Error Message"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:199
+msgid "Label on side"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:206
+msgid "Label horizontal position"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:216
+msgid "Bolded label"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/form/edit.js:245
+msgid "Select a form to start with."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fieldset/index.js:23
+msgid "Fieldset"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fieldset/index.js:29
+msgid "Fieldset to group input."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fieldset/edit.js:88
+msgid "Enter legend..."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/special/index.js:33
+msgid "Input with button"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/special/index.js:39
+#: src/blocks/fields/special/output.js:21
+msgid "Example block written with ESNext standard and JSX support – build step required."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/special/edit.js:53
+msgid "Group button with input"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/special/output.js:15
+msgid "Output."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:97
+#: src/blocks/fields/select/opts.js:18
+msgid "Value"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:90
+#: src/blocks/fields/select/edit.js:147
+#: src/blocks/fields/select/opts.js:27
+msgid "Label"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/components/display-options/index.js:31
+msgid "Label vertical alignment"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/components/display-options/index.js:41
+msgid "Label Class"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/components/display-options/index.js:48
+msgid "Field Class"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/components/display-options/index.js:55
+msgid "Description Class"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/select/attributes.js:14
+msgid "select"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/select/attributes.js:18
+msgid "Select field"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/select/edit.js:154
+msgid "Allow multiple choices?"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:117
+#: src/blocks/fields/select/edit.js:166
+msgid "Required"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:125
+#: src/blocks/fields/select/edit.js:174
+msgid "Mark as Required"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/select/edit.js:182
+msgid "Selected option"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/select/edit.js:203
+msgid "Show description"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:340
+#: src/blocks/fields/select/edit.js:295
+msgid "Enter help message..."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/index.js:34
+msgid "Input"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/index.js:40
+msgid "Input field."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:106
+msgid "Placeholder"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:137
+msgid "Checked"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:147
+msgid "Show Description"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:158
+msgid "Add Tooltip"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:167
+msgid "Tooltip message"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:182
+msgid "Min Value"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:191
+msgid "Max Value"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:199
+msgid "Step Value"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:212
+msgid "Min Length"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:221
+msgid "Max Length"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:234
+msgid "Pattern"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:241
+msgid "Custom Validation Message"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:251
+msgid "Cols"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:260
+msgid "Rows"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:270
+msgid "Disabled"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/input/edit.js:277
+msgid "Read only"
+msgstr ""
+
+#: build/index.js:1
+msgid "Align Button Left"
+msgstr ""
+
+#: build/index.js:1
+msgid "Align Button Center"
+msgstr ""
+
+#: build/index.js:1
+msgid "Align Button Right"
+msgstr ""
+
+#: build/index.js:1
+msgid "Wide Button"
+msgstr ""
+
+#: build/index.js:1
+msgid "Text"
+msgstr ""
+
+#: build/index.js:1
+msgid "Show loading icon"
+msgstr ""
+
+#: build/index.js:1
+msgid "Icon type"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/button/index.js:41
+msgid "Button"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/fields/button/index.js:47
+msgid "Submit Button."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/index.js:31
+msgid "Form actions"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/index.js:37
+msgid "Add your form actions."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/email/index.js:41
+msgid "Email action"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/email/index.js:47
+msgid "Set email acion to perform on form submit."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/email/index.js:71
+msgid "Send email notification"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/email/edit.js:132
+msgid "Enter message..."
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/more/index.js:41
+msgid "More"
+msgstr ""
+
+#: build/index.js:1
+#: src/blocks/actions/more/index.js:47
+msgid "Do you want more?"
+msgstr ""
+
+#: src/blocks/components/merge-tags/tagSelector.js:39
+msgid "Search Tags"
+msgstr ""
+
+#: src/blocks/form/index.js:24
+msgid "Drive conversions with beautiful forms."
+msgstr ""
+
+#: src/blocks/form/reusable.js:65
+msgid "Choose a form"
+msgstr ""

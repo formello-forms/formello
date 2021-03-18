@@ -106,8 +106,12 @@ div.formello p {
   align-self: flex-end;
 }
 .wp-block-formello-button .button-span.wide {
-  -ms-grid-row-align: auto;
-      align-self: auto;
+  width: 100%;
+}
+
+.wp-block-formello-button.wide .button-span {
+  width: 100%;
+  text-align: center;
 }
 
 .formello-group div {
@@ -139,6 +143,12 @@ div.formello p {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+}
+
+.formello-urlinput input {
+  width: 100% !important;
+  border-radius: 2px !important;
+  border: 1px solid #757575 !important;
 }
 
 /*# sourceMappingURL=index.css.map*/

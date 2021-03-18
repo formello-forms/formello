@@ -9740,7 +9740,7 @@ function Edit(props) {
   }, hiddenIcon, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("label", null, "Hidden field [", attributes.name, "] ")), 'textarea' == attributes.type ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("textarea", {
     readOnly: true,
     cols: attributes.cols,
-    rows: attributes.rows ? attributes.rows : 5,
+    rows: attributes.rows,
     value: attributes.value,
     className: attributes.fieldClass,
     placeholder: attributes.placeholder,
@@ -10125,7 +10125,7 @@ var variations = [{
     type: 'textarea',
     label: 'Textarea',
     cols: 3,
-    rows: 3
+    rows: 5
   },
   scope: ['block', 'inserter', 'transform']
 }];
@@ -11620,13 +11620,6 @@ function Edit(_ref) {
     setAttributes({
       blockId: clientId
     });
-
-    if (!attributes.asRow) {
-      setAttributes({
-        labelAlign: ''
-      });
-    }
-
     return function () {//setAttributes({ id: undefined })
 
       /*apiFetch( {
@@ -11638,11 +11631,18 @@ function Edit(_ref) {
       } )*/
     };
   }, []);
-  className = classnames__WEBPACK_IMPORTED_MODULE_9___default()(className, attributes.labelAlign, {
-    'as-row': attributes.asRow,
-    'is-bold': attributes.labelIsBold
+
+  var getBlockClassNames = function getBlockClassNames() {
+    return classnames__WEBPACK_IMPORTED_MODULE_9___default()(className, attributes.asRow ? attributes.labelAlign : undefined, {
+      'as-row': attributes.asRow,
+      'is-bold': attributes.labelIsBold
+    });
+  };
+
+  var blockProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["useBlockProps"])({
+    className: getBlockClassNames()
   });
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["Toolbar"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarButton"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToolbarButton"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add to reusable block'),
     icon: 'controls-repeat',
     onClick: function onClick() {
@@ -11663,15 +11663,17 @@ function Edit(_ref) {
         'name': val
       });
     }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["TextControl"], {
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Redirect Url', 'formello'),
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["BaseControl"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Redirect Url', 'formello')
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["URLInput"], {
     value: attributes.redirectUrl,
-    onChange: function onChange(val) {
+    onChange: function onChange(newURL) {
       return setAttributes({
-        'redirectUrl': val
+        redirectUrl: newURL
       });
-    }
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToggleControl"], {
+    },
+    className: 'formello-urlinput'
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_8__["ToggleControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Store submissions', 'formello'),
     checked: attributes.storeSubmissions,
     onChange: function onChange(val) {
@@ -11742,15 +11744,13 @@ function Edit(_ref) {
         'labelIsBold': val
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("form", {
-    className: className
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["InnerBlocks"], {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["InnerBlocks"], {
     allowedBlocks: ALLOWED_BLOCKS,
     templateLock: false,
     renderAppender: function renderAppender() {
       return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["InnerBlocks"].ButtonBlockAppender, null);
     }
-  })));
+  }));
 }
 
 function Placeholder(props) {
@@ -12049,8 +12049,7 @@ function save(_ref) {
     attributes.constraints = Object(_components_merge_tags_functions__WEBPACK_IMPORTED_MODULE_4__["getConstraints"])(attributes.blockId);
   }
 
-  var labelAlign = attributes.labelAlign ? attributes.labelAlign : '';
-  className = classnames__WEBPACK_IMPORTED_MODULE_3___default()(className, labelAlign, {
+  className = classnames__WEBPACK_IMPORTED_MODULE_3___default()(className, attributes.asRow ? attributes.labelAlign : undefined, {
     'as-row': attributes.asRow,
     'is-bold': attributes.labelIsBold
   });
@@ -12159,7 +12158,8 @@ var variations = [{
     label: 'Subject'
   }], ['formello/input', {
     type: 'textarea',
-    label: 'Message'
+    label: 'Message',
+    rows: 5
   }], ['formello/button', {
     txt: 'Send'
   }]],

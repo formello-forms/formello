@@ -22,7 +22,9 @@ import {
 	InspectorAdvancedControls,
 	BlockControls,
 	InnerBlocks,
-	__experimentalBlockVariationPicker
+	__experimentalBlockVariationPicker,
+	useBlockProps,
+	URLInput
 } from '@wordpress/block-editor';
 
 import {
@@ -34,6 +36,7 @@ import {
 import apiFetch from '@wordpress/api-fetch';
 
 import {
+	BaseControl,
 	TextControl,
 	TextareaControl,
 	ToggleControl,
@@ -45,7 +48,7 @@ import {
 	Toolbar,
 	ToolbarButton,
 	ToolbarGroup,
-	Icon,
+	Icon
 } from '@wordpress/components';
 
 import classnames from 'classnames';
@@ -111,9 +114,6 @@ function Edit( {
 			setAttributes( {
 				blockId: clientId,
 			} )		
-			if( !attributes.asRow ){
-				setAttributes( { labelAlign: '' } );
-			}
 			return () => {
 				//setAttributes({ id: undefined })
 				/*apiFetch( {
@@ -128,15 +128,28 @@ function Edit( {
 		[]
 	);
 
-	className = classnames( className, attributes.labelAlign, {
-		'as-row': attributes.asRow,
-		'is-bold': attributes.labelIsBold,
-	} )
+	const getBlockClassNames = () => {
+
+		return classnames(
+			className, 
+			attributes.asRow
+				? attributes.labelAlign
+				: undefined,
+			{
+				'as-row': attributes.asRow,
+				'is-bold': attributes.labelIsBold
+			}
+		);
+	};
+
+	const blockProps = useBlockProps( {
+		className: getBlockClassNames(),
+	} );
 
 	return (
-		<div>
+		<div {...blockProps}>
             <BlockControls>
-                <Toolbar>
+                <ToolbarGroup>
 	                <ToolbarButton
 	                	label={ __( 'Add to reusable block' ) }
 	                    icon={ 'controls-repeat' }
@@ -147,7 +160,7 @@ function Edit( {
 							__experimentalConvertBlocksToReusable( [ clientId ] )
 	                    } }
 	                />
-                </Toolbar>
+                </ToolbarGroup>
             </BlockControls>
 			<InspectorControls>
 				<PanelBody title="Form Settings" initialOpen={ true }>
@@ -156,11 +169,15 @@ function Edit( {
 						value={ attributes.name }
 						onChange={ ( val ) => setAttributes( { 'name': val } ) }
 					/>
-					<TextControl
+					<BaseControl
 						label={ __( 'Redirect Url', 'formello' ) }
-						value={ attributes.redirectUrl }
-						onChange={ ( val ) => setAttributes( { 'redirectUrl': val } ) }
-					/>
+					>
+						<URLInput
+							value={ attributes.redirectUrl }
+							onChange={ newURL => setAttributes( { redirectUrl: newURL } ) }
+							className={ 'formello-urlinput' }
+						/>
+					</BaseControl>
 					<ToggleControl
 						label={ __( 'Store submissions', 'formello' ) }
 						checked={ attributes.storeSubmissions }
@@ -218,13 +235,13 @@ function Edit( {
 					onChange={ ( val ) => setAttributes( { 'labelIsBold': val } ) }
 				/>
 			</InspectorAdvancedControls>
-			<form className={ className }>
-				<InnerBlocks
-					allowedBlocks={ ALLOWED_BLOCKS }
-					templateLock={ false }
-					renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
-				/>
-			</form>
+
+			<InnerBlocks
+				allowedBlocks={ ALLOWED_BLOCKS }
+				templateLock={ false }
+				renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
+			/>
+
 		</div>
 	);
 }

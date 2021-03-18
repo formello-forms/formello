@@ -315,7 +315,7 @@ export default function Edit( props ) {
 				<textarea
 					readOnly
 					cols={ attributes.cols }
-					rows={ attributes.rows ? attributes.rows : 5 }
+					rows={ attributes.rows }
 					value={ attributes.value }
 					className={ attributes.fieldClass }
 					placeholder={ attributes.placeholder }

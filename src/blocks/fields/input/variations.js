@@ -169,7 +169,7 @@ const variations = [
 			type: 'textarea',
 			label: 'Textarea',
 			cols: 3,
-			rows: 3,
+			rows: 5,
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},

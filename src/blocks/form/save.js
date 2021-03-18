@@ -32,12 +32,16 @@ export default function save( { attributes, className, innerBlocks } ) {
 		attributes.constraints = getConstraints( attributes.blockId );
 	}
 
-	const labelAlign = attributes.labelAlign ? attributes.labelAlign : '';
-
-	className = classnames( className, labelAlign, {
-		'as-row': attributes.asRow,
-		'is-bold': attributes.labelIsBold,
-	} )
+	className = classnames( 
+		className,
+		attributes.asRow
+			? attributes.labelAlign
+			: undefined,
+		{
+			'as-row': attributes.asRow,
+			'is-bold': attributes.labelIsBold,
+		} 
+	)
 
 	if ( !attributes.name && attributes.id ) {
 		attributes.name = 'form_' + attributes.id;
