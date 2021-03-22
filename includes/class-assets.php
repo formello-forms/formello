@@ -76,7 +76,13 @@ class Assets {
 			wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
 		}
 		wp_set_script_translations( 'formello-form-block-editor', 'formello' );
-
+		wp_localize_script(
+			'formello-form-block-editor',
+			'formello',
+			array(
+				'templatesURL' => admin_url( 'edit.php?post_type=formello_form' ),
+			)
+		);
 	}
 
 	/**

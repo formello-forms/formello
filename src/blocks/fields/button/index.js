@@ -13,15 +13,6 @@ import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * All files containing `style` keyword are bundled together. The code used
- * gets applied both to the front of your site and to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './style.scss';
-
-/**
  * Internal dependencies
  */
 import Edit from './edit';
@@ -56,7 +47,7 @@ registerBlockType( 'formello/button', {
 	category: 'formello',
 
 	// Only allow this block when it is nested in a Form block
-	parent: [ 'formello/form' ],
+	parent: [ 'formello/form', 'core/column' ],
 
 	/**
 	 * Block attributes
@@ -82,10 +73,46 @@ registerBlockType( 'formello/button', {
 			type: 'number',
 			default: '14',
 		},
+		backgroundColor: {
+			type: 'string',
+		},
+		backgroundColorOpacity: {
+			type: 'number',
+		},
+		textColor: {
+			type: 'string',
+		},
+		backgroundColorHover: {
+			type: 'string',
+		},
+		backgroundColorHoverOpacity: {
+			type: 'number',
+		},
+		textColorHover: {
+			type: 'string',
+		},
+		borderColor: {
+			type: 'string',
+		},
+		borderColorOpacity: {
+			type: 'number',
+		},
+		borderColorHover: {
+			type: 'string',
+		},
+		borderColorHoverOpacity: {
+			type: 'number',
+		},
 		textColor: {
 			type: 'string'
 		},
-		backgroundColor: {
+		borderSize: {
+			type: 'numeric'
+		},
+		borderRadius: {
+			type: 'numeric'
+		},
+		borderColor: {
 			type: 'string'
 		},
 		style: {
@@ -106,7 +133,7 @@ registerBlockType( 'formello/button', {
 		className: true,
 		html: false,
 		reusable: false,
-		fontSize: false
+		color: false
 	},
 
 	/**

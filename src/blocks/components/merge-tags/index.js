@@ -29,13 +29,14 @@ export default function mergeTags( props ) {
 		attributes,
 		setAttributes,
 		onChange,
+		className
 	} = props;
 
 	const icon = 'list-view';
 
 	return (
 		<InputControl 
-			className='components-base-control'
+			className={ className }
 			value={ value }
 			label={ label }
 			onChange={ (val) => onChange(val) }

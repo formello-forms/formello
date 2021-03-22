@@ -57,6 +57,14 @@ registerBlockType( 'formello/inputflex', {
 		grouped: {
 			type: 'boolean',
 			default: false
+		},
+		label: {
+			type: 'string',
+			default: ''
+		},
+		help: {
+			type: 'string',
+			default: ''
 		}
 	},
 
@@ -90,7 +98,9 @@ registerBlockType( 'formello/inputflex', {
 		const className = attributes.grouped ? 'formello-group grouped' : 'formello-group';
 		return (
 			<div className={ className }>
+				<label>{ attributes.label }</label>
 				<InnerBlocks.Content />
+				<small>{ attributes.help }</small>
 			</div>
 		);
 	},

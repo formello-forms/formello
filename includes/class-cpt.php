@@ -54,22 +54,49 @@ class CPT {
 	public function register() {
 		$args = array(
 			'labels' => array(
-				'name'      => 'Forms',
-				'all_items' => 'Forms',
+				'name'                => _x( 'Forms', 'Post Type General Name', 'formello' ),
+				'singular_name'       => _x( 'Form', 'Post Type Singular Name', 'formello' ),
+				'menu_name'           => __( 'Forms', 'formello' ),
+				'parent_item_colon'   => __( 'Parent Form', 'formello' ),
+				'all_items'           => __( 'Forms', 'formello' ),
+				'view_item'           => __( 'View Form', 'formello' ),
+				'add_new_item'        => __( 'Add New Form', 'formello' ),
+				'add_new'             => __( 'Add New', 'formello' ),
+				'edit_item'           => __( 'Edit Form', 'formello' ),
+				'update_item'         => __( 'Update Form', 'formello' ),
+				'search_items'        => __( 'Search Form', 'formello' ),
+				'not_found'           => __( 'Not Found', 'formello' ),
+				'not_found_in_trash'  => __( 'Not found in Trash', 'formello' ),
 			),
-			'show_in_menu' => 'formello',
-			'show_in_rest' => true,
-			'public' => true,
-			'has_archive' => false,
+			'public'              => false,
+			'publicly_queryable'  => false,
+			'has_archive'         => false,
+			'show_ui'             => true,
 			'exclude_from_search' => true,
-			'publicly_queryable' => false,
-			'query_var' => false,
-			'supports' => array( 'title', 'editor' ),
-			'rewrite' => array( 'slug' => 'formello_form' ),
-			'menu_icon' => 'dashicons-feedback',
+			'show_in_nav_menus'   => false,
+			'rewrite'             => false,
+			'hierarchical'        => false,
+			'show_in_menu'        => 'formello',
+			'show_in_admin_bar'   => true,
+			'show_in_rest'        => true,
+			'capability_type'     => 'post',
+			'supports'            => array(
+				'title',
+				'editor',
+				'thumbnail',
+				'custom-fields',
+			),
 		);
 		register_post_type( 'formello_form', $args );
 
+		register_meta(
+			'post',
+			'stocazzo',
+			array(
+				'show_in_rest'   => true,
+				'object_subtype' => 'formello_form',
+			)
+		);
 	}
 
 	/**
@@ -84,7 +111,15 @@ class CPT {
 
 		if ( 'formello_form' === $post->post_type ) {
 			return array(
+				'core/group',
+				'core/columns',
+				'core/paragraph',
+				'core/heading',
+				'core/spacer',
+				'core/separator',
+				'core/image',
 				'formello/form',
+				'formello/fieldset',
 				'formello/input',
 				'formello/inputflex',
 				'formello/output',

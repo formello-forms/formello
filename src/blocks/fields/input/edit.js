@@ -93,6 +93,7 @@ export default function Edit( props ) {
 					/>
 					}
 					<MergeTags 
+						className={ 'formello-flex' }
 						clientId={ clientId }
 						label={ __( 'Value', 'formello' ) }
 						value={ attributes.value }
@@ -122,10 +123,10 @@ export default function Edit( props ) {
 						/>
 					{ attributes.required && (
 						<ToggleControl
-							label={ __( 'Mark as Required', 'formello' ) }
-							checked={ attributes.markRequired }
+							label={ __( 'Hide asterisk', 'formello' ) }
+							checked={ attributes.hideRequired }
 							onChange={ ( newval ) =>
-								setAttributes( { markRequired: newval } )
+								setAttributes( { hideRequired: newval } )
 							}
 						/>
 					) }
@@ -266,26 +267,29 @@ export default function Edit( props ) {
 						</PanelRow>
 						</Fragment>
 					) }
-						<ToggleControl
-							label={ __( 'Disabled', 'formello' ) }
-							checked={ attributes.disabled }
-							onChange={ ( newval ) =>
-								setAttributes( { disabled: newval } )
-							}
-						/>
-						<ToggleControl
-							label={ __( 'Read only', 'formello' ) }
-							checked={ attributes.readOnly }
-							onChange={ ( newval ) =>
-								setAttributes( { readOnly: newval } )
-							}
-						/>
 
 					{
-						('hidden' == attributes.type || 
-						'checkbox' == attributes.type || 
-						'email' == attributes.type) &&
-							<p>No advanced options for this field type.</p>						
+						'hidden' != attributes.type &&
+						<Fragment>
+							<ToggleControl
+								label={ __( 'Disabled', 'formello' ) }
+								checked={ attributes.disabled }
+								onChange={ ( newval ) =>
+									setAttributes( { disabled: newval } )
+								}
+							/>
+							<ToggleControl
+								label={ __( 'Read only', 'formello' ) }
+								checked={ attributes.readOnly }
+								onChange={ ( newval ) =>
+									setAttributes( { readOnly: newval } )
+								}
+							/>
+						</Fragment>
+					}
+					{
+						'hidden' == attributes.type &&
+						<p>No advanced options for this field type.</p>						
 					}
 				</PanelBody>
 				<PanelBody title="CSS Class" initialOpen={ false }>
@@ -294,13 +298,13 @@ export default function Edit( props ) {
 
 				</PanelBody>
 			</InspectorControls>
-			{ !(attributes.type == 'hidden') ? (
+			{ 'hidden' !== attributes.type ? (
 			<label
 				className={ labelClassName }
 				htmlFor={ attributes.id }
 			>
 				{ attributes.label }
-				{ attributes.required && attributes.markRequired && (
+				{ attributes.required && !attributes.hideRequired && (
 					<span>*</span>
 				) }
 				{ attributes.hasTooltip && <span className='tooltip'>?</span> }

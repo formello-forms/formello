@@ -41,6 +41,10 @@ export default function save( { attributes, className } ) {
 	const htmlAttrs = pickBy( attributes, identity);
 	htmlAttrs.className = fieldClass ? fieldClass : undefined;
 
+	if( attributes.noWrapper ){
+		return <input {...htmlAttrs}/>
+	}
+
 	return (
 		<div className={ className }>
 			{ !(attributes.type == 'hidden') && (

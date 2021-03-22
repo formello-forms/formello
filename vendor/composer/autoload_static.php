@@ -32,6 +32,7 @@ class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
         'Formello\\Api' => __DIR__ . '/../..' . '/includes/class-api.php',
         'Formello\\Api\\Form' => __DIR__ . '/../..' . '/includes/Api/class-form.php',
         'Formello\\Api\\Settings' => __DIR__ . '/../..' . '/includes/Api/class-settings.php',
+        'Formello\\Api\\Template' => __DIR__ . '/../..' . '/includes/Api/class-template.php',
         'Formello\\Assets' => __DIR__ . '/../..' . '/includes/class-assets.php',
         'Formello\\Block' => __DIR__ . '/../..' . '/includes/class-block.php',
         'Formello\\CPT' => __DIR__ . '/../..' . '/includes/class-cpt.php',

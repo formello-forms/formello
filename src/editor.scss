@@ -16,15 +16,21 @@
 		background-color: #fff;
 		border: 1px solid #7e8993;
 		opacity: 1;
+		border-radius: 0;
+		line-height: normal;
 	}
-	.block-editor-block-list__block {
-		margin: 5px 0;
+	input:disabled[ type=radio ] {
+		border: 1px solid #7e8993;
+		border-radius: 50%;
 	}
 	.formello {
-	  padding: 10px 0;
+	  padding: 0;
 	}
 	.formello small {
 	  padding: 0;
+	}
+	.block-editor-block-list__block, .editor-styles-wrapper [data-block] {
+		margin: 0 !important;
 	}
 }
 
@@ -40,12 +46,12 @@
 }
 
 .wp-block-formello-button .button-span {
+    cursor: pointer;
+	font-size: 14px;
+    padding: 5px 10px;
 	background: #abb8c3;
     color: #fff;
     border: 1px solid transparent;
-    cursor: pointer;
-    padding: 10px 20px;
-    min-width: 80px;
     align-self: flex-start;
     &.center {
       align-self: center;
@@ -56,6 +62,7 @@
     &.wide {
       width: 100%;
     }
+
 }
 
 .wp-block-formello-button.wide {
@@ -65,21 +72,31 @@
     }
 }
 
+.formello-group.grouped {
+	input {
+		border-right: 0;
+	}
+}
+
 .formello-group div {
 	display: flex;
 	flex: 1 0 auto;
- 	align-items: flex-end;
-	& input {
-		height: 100%;
-	}
-	&.wp-block-formello-button .button-span {
-		padding: 2px 20px;
-	}
+
 	& [data-type='formello/button'] {
 		flex:0 1 auto;
 	}
 	&.formello {
 		padding: 0;
+		margin: 0;
+		label {
+			display: none;
+		}
+		small {
+			display: none;
+		}
+	}
+	.editor-styles-wrapper [data-block] {
+		margin: 0 !important;
 	}
 }
 
@@ -104,6 +121,6 @@
 	}
 }
 
-.formello-flex {
-	margin-bottom: 24px;
+.formello-group div.ld-spin {
+	display: inline-block;
 }

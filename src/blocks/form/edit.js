@@ -22,7 +22,6 @@ import {
 	InspectorAdvancedControls,
 	BlockControls,
 	InnerBlocks,
-	__experimentalBlockVariationPicker,
 	useBlockProps,
 	URLInput
 } from '@wordpress/block-editor';
@@ -34,6 +33,7 @@ import {
 } from '@wordpress/blocks';
 
 import apiFetch from '@wordpress/api-fetch';
+import BlockVariationPicker from './variation-picker';
 
 import {
 	BaseControl,
@@ -89,6 +89,11 @@ function Edit( {
 	hasChildBlocks
 } ) {
 
+	const postType = useSelect(
+		( select ) => select( 'core/editor' ).getCurrentPostType(),
+		[]
+	);
+
 	const { __experimentalConvertBlocksToReusable } = useDispatch( reusableBlocksStore );
 	useEffect(
 		() => {
@@ -98,7 +103,7 @@ function Edit( {
 					name: 'form-' + idx
 				} )
 			}			
-			if( undefined == attributes.id ){
+			if( undefined === attributes.id && 'wp_block' !== postType ){
 				apiFetch( {
 					path: '/formello/v1/form/create',
 					method: 'POST',
@@ -187,7 +192,6 @@ function Edit( {
 						label={ __( 'Enable ReCaptcha', 'formello' ) }
 						checked={ attributes.recaptchaEnabled }
 						onChange={ ( val ) => {
-
 							setAttributes( { 'recaptchaEnabled': val } ) 
 						} }
 					/>
@@ -248,36 +252,35 @@ function Edit( {
 
 function Placeholder ( props ) {
 
-	const { className, blockType, defaultVariation, hasInnerBlocks, variations } = props;
+	const { className, blockType, defaultVariation, hasInnerBlocks, variations, clientId } = props;
 	const {
 		insertBlock,
 		replaceInnerBlocks,
 	} = dispatch( 'core/block-editor' );
 
 	return (
-		<Fragment>
-			<__experimentalBlockVariationPicker
-				icon={ getIcon( 'form' ) }
-				label={ 'Form' }
-				instructions={ __( 'Select a form to start with.', 'formello' ) }
-				variations={ variations }
-				allowSkip
-				onSelect={ ( nextVariation = defaultVariation ) => {
-					if ( nextVariation.attributes ) {
-						setAttributes( nextVariation.attributes );
-					}
-					if ( nextVariation.innerBlocks ) {
-						replaceInnerBlocks(
-							props.clientId,
-							createBlocksFromInnerBlocksTemplate(
-								nextVariation.innerBlocks
-							),
-							true
-						);
-					}
-				} }
-			/>
-		</Fragment>
+		<BlockVariationPicker
+			icon={ getIcon( 'form' ) }
+			label={ 'Form' }
+			instructions={ __( 'Select a form to start with.', 'formello' ) }
+			variations={ variations }
+			clientId={ clientId }
+			allowSkip
+			onSelect={ ( nextVariation = defaultVariation ) => {
+				if ( nextVariation.attributes ) {
+					setAttributes( nextVariation.attributes );
+				}
+				if ( nextVariation.innerBlocks ) {
+					replaceInnerBlocks(
+						props.clientId,
+						createBlocksFromInnerBlocksTemplate(
+							nextVariation.innerBlocks
+						),
+						true
+					);
+				}
+			} }
+		/>
 	);
 }
 

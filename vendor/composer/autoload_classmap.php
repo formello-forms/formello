@@ -13,6 +13,7 @@ return array(
     'Formello\\Api' => $baseDir . '/includes/class-api.php',
     'Formello\\Api\\Form' => $baseDir . '/includes/Api/class-form.php',
     'Formello\\Api\\Settings' => $baseDir . '/includes/Api/class-settings.php',
+    'Formello\\Api\\Template' => $baseDir . '/includes/Api/class-template.php',
     'Formello\\Assets' => $baseDir . '/includes/class-assets.php',
     'Formello\\Block' => $baseDir . '/includes/class-block.php',
     'Formello\\CPT' => $baseDir . '/includes/class-cpt.php',

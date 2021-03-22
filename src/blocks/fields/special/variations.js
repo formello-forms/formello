@@ -19,7 +19,7 @@ const variations = [
 		description: __( 'Display an input with a button on same row.' ),
 		icon: getIcon( 'input-button' ),
 		isDefault: true,
-		innerBlocks: [ [ 'formello/input', { type: 'email', label: 'Email' } ], [ 'formello/button' ] ],
+		innerBlocks: [ [ 'formello/input', { type: 'email', label: 'Email', noWrapper: true } ], [ 'formello/button' ] ],
 		scope: [ 'inserter' ],
 	},
 	{

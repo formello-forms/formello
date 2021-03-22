@@ -61,7 +61,7 @@ export default {
 		type: 'boolean',
 		default: false
 	},
-	markRequired: {
+	hideRequired: {
 		type: 'boolean',
 		default: false
 	},
@@ -108,6 +108,10 @@ export default {
 	max: {
 		type: 'number',
 		default: ''
+	},
+	noWrapper: {
+		type: 'boolean',
+		default: false,
 	},
 	step: {
 		type: 'number',

@@ -27,7 +27,8 @@ import {
 } from '@wordpress/components';
 import { cog, more, insert } from '@wordpress/icons';
 
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
 
 const { createBlock } = wp.blocks;
 
@@ -42,8 +43,25 @@ const { createBlock } = wp.blocks;
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( { attributes, setAttributes } ) {
+export default function Edit( { attributes, setAttributes, clientId } ) {
 	const className = attributes.grouped ? 'formello-group grouped' : 'formello-group';
+
+	const parentBlock = useSelect ( (select) => select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ] );
+	const childBlocks = parentBlock.innerBlocks;
+	const label = childBlocks[0].attributes.label;
+	const help = childBlocks[0].attributes.help;
+
+	useEffect(
+		() => {
+			setAttributes( {
+				label: label,
+			} )	
+			setAttributes( {
+				help: help,
+			} )	
+		},
+		[label,help]
+	);
 
 	return (
 		<>
@@ -64,11 +82,13 @@ export default function Edit( { attributes, setAttributes } ) {
 				</PanelBody>
 			</InspectorControls>
 			<div className={ className }>
+				<label>{ attributes.label }</label>
 				<InnerBlocks
 					templateLock={ 'all' }
 					templateInsertUpdatesSelection={ false }
 					allowedBlocks={ [ 'formello/input', 'formello/button' ] }
 				/>
+				<small>{ help }</small>
 			</div>
 		</>
 	);

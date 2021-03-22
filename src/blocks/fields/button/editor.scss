@@ -1,9 +1,30 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
+.formello-control-tabs .components-tab-panel__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e8eaeb;
+}
 
-.wp-block-create-block-formaster {
-	border: 1px dotted #f00;
+.formello-control-tabs .components-tab-panel__tabs button {
+    padding: 8px;
+    height: auto;
+    margin: 0;
+    margin-bottom: -1px;
+    cursor: pointer;
+    border: none;
+    border: 0;
+    border-radius: 0;
+    outline-offset: -1px;
+    flex: 1;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 400;
+
+    &.active-tab {
+        position: relative;
+        z-index: 1;
+        background: #222 !important;
+        color: #fff !important;
+        box-shadow: 0 0 0 !important;
+    }
 }

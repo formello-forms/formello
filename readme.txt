@@ -1,7 +1,7 @@
 === Formello - Contact form builder for Gutenberg ===
 Contributors:      Formello
 Donate link: 	   https://formello.net
-Tags:              contact form, form builder, form block, gutenberg form, blocks
+Tags:              contact form, form builder, form block, gutenberg form, forms
 Requires at least: 5.4.0
 Tested up to:      5.7.0
 Stable tag:        1.0.9

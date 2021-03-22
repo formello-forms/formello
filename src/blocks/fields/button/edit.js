@@ -5,14 +5,6 @@
  */
 import { __ } from '@wordpress/i18n';
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss';
-
 import { 
 	InspectorControls, 
 	InspectorAdvancedControls, 
@@ -28,6 +20,7 @@ import {
 	ToggleControl,
 	PanelRow,
 	PanelBody,
+	RangeControl,
 	FontSizePicker,
 	SelectControl
 } from '@wordpress/components';
@@ -47,7 +40,7 @@ import { useState } from '@wordpress/element';
  *
  * @return {WPElement} Element to render.
  */
-function Edit( { attributes, setAttributes, context, textColor, setTextColor, backgroundColor, setBackgroundColor, className } ) {
+function Edit( { attributes, setAttributes, context, textColor, backgroundColor, className } ) {
 	const ALIGNMENT_CONTROLS = [
 		{
 			icon: 'editor-alignleft',
@@ -70,6 +63,7 @@ function Edit( { attributes, setAttributes, context, textColor, setTextColor, ba
 			align: 'wide',
 		},
 	];
+	const EMPTY_ARRAY = [];
 
 	const [ showIcon, setShowIcon ] = useState( false );
 	const colors = useEditorFeature( 'color.palette' ) || EMPTY_ARRAY;
@@ -84,7 +78,7 @@ function Edit( { attributes, setAttributes, context, textColor, setTextColor, ba
 
 	const containerClass = classnames( className, attributes.alignment );
 
-	const styleProp =
+	const style =
 		attributes.style?.color?.background || attributes.style?.color?.text || attributes.style?.color?.gradient
 			? {
 					background: attributes.style?.color?.gradient
@@ -198,7 +192,7 @@ function Edit( { attributes, setAttributes, context, textColor, setTextColor, ba
 			        onChange={ ( val ) => { setAttributes( { iconType: val } ) } }
 				/>
 			</InspectorAdvancedControls>
-			<div className={ buttonClass } style={ styleProp } >
+			<div className={ buttonClass } style={ style } >
 				<span>{ attributes.text }</span>
 				<div className={ iconClass }></div>
 			</div>
@@ -206,4 +200,4 @@ function Edit( { attributes, setAttributes, context, textColor, setTextColor, ba
 	);
 }
 
-export default compose( withColors( {textColor: 'color', backgroundColor: 'background-color'} ) )( Edit );
+export default compose( withColors( { textColor: 'color', backgroundColor: 'background-color' } ) )( Edit );

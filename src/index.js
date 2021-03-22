@@ -4,6 +4,7 @@
 
 import './blocks/form';
 import './blocks/form/reusable';
+import './blocks/form-templates';
 import './blocks/fieldset';
 import './blocks/fields/special';
 import './blocks/fields/special/output';
@@ -13,6 +14,8 @@ import './blocks/fields/button';
 import './blocks/actions';
 import './blocks/actions/email';
 import './blocks/actions/more';
+
+import './store';
 
 import './style.scss';
 import './editor.scss';

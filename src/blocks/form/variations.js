@@ -63,8 +63,8 @@ const variations = [
 		),
 		innerBlocks: [ 
 			[ 'core/columns', {}, [
-			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'Name' } ] ] ],
-			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'Name' } ] ] ]
+			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'First Name' } ] ] ],
+			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'Last Name' } ] ] ]
 			] ],
 			[ 'formello/input', { type: 'email', label: 'Email', required: true } ], 
 			[ 'formello/input', { type: 'tel', label: 'Phone', required: true } ], 
@@ -72,7 +72,7 @@ const variations = [
 			    [ 'core/column', {}, [ [ 'formello/input', { type: 'date', label: 'Date', required: true } ] ] ],
 			    [ 'core/column', {}, [ [ 'formello/input', { type: 'time', label: 'Hour' } ] ] ]
 			] ],
-			[ 'formello/input', { type: 'textarea', label: 'Message' } ], 
+			[ 'formello/input', { type: 'textarea', label: 'Message', rows: 5 } ], 
 			[ 'formello/button', { txt: 'Book appointment' } ] 
 		],
 		scope: [ 'block' ],

@@ -1,6 +1,403 @@
-.wp-block-formello-form{border:1px dashed gray;min-height:100px;padding:20px}div.formello p{margin-bottom:0px !important}.formello-row{flex-direction:row}
-.formello-opts button{margin-bottom:8px}
-.formello-tag-option{cursor:pointer;margin-bottom:5px}.formello-tag-option:hover{color:#007cba}
-.wp-block-create-block-formaster{border:1px dotted red}
-.wp-block-formello-actions{padding:10px;border:1px dashed gray}.wp-block-formello-actions h4{margin:0px}
-.wp-block-formello-form fieldset{padding:10px;border:1px solid #000}.wp-block-formello-form select{max-width:inherit}.wp-block-formello-form input:disabled,.wp-block-formello-form input.disabled,.wp-block-formello-form select:disabled,.wp-block-formello-form select.disabled,.wp-block-formello-form textarea:disabled,.wp-block-formello-form textarea.disabled{background-color:#fff;border:1px solid #7e8993;opacity:1}.wp-block-formello-form .block-editor-block-list__block{margin:5px 0}.wp-block-formello-form .formello{padding:10px 0}.wp-block-formello-form .formello small{padding:0}.formello-checkbox input{margin:0}.formello-hidden{display:flex;align-items:center}.wp-block-formello-button .button-span{background:#abb8c3;color:#fff;border:1px solid transparent;cursor:pointer;padding:10px 20px;min-width:80px;align-self:flex-start}.wp-block-formello-button .button-span.center{-ms-grid-row-align:center;align-self:center}.wp-block-formello-button .button-span.right{align-self:flex-end}.wp-block-formello-button .button-span.wide{width:100%}.wp-block-formello-button.wide .button-span{width:100%;text-align:center}.formello-group div{display:flex;flex:1 0 auto;align-items:flex-end}.formello-group div input{height:100%}.formello-group div.wp-block-formello-button .button-span{padding:2px 20px}.formello-group div [data-type="formello/button"]{flex:0 1 auto}.formello-group div.formello{padding:0}.cta{cursor:pointer;border:1px solid}.mailchimp{height:50px;background-image:url(images/mailchimp.a618b840.png);background-repeat:no-repeat;background-size:contain;background-position:center}.formello-urlinput input{width:100% !important;border-radius:2px !important;border:1px solid #757575 !important}.formello-flex{margin-bottom:24px}
+/**
+ * Editor Styles
+ */
+.formello-plugin-templates-modal.formello-plugin-templates-modal-loading .formello-control-tabs {
+  pointer-events: none;
+  opacity: 0.3;
+}
+.formello-plugin-templates-modal.formello-plugin-templates-modal-loading .formello-plugin-templates-modal-loading-spinner {
+  position: absolute;
+  top: 14px;
+  right: 50px;
+  z-index: 10;
+}
+.formello-plugin-templates-modal.formello-plugin-templates-modal-loading .formello-plugin-templates-modal-loading-spinner .components-spinner {
+  float: none;
+  margin-left: 0;
+}
+.formello-plugin-templates-modal .formello-plugin-templates-categories-row {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.formello-plugin-templates-modal .formello-plugin-templates-categories-select {
+  max-width: 170px;
+  margin-bottom: 10px;
+}
+.formello-plugin-templates-modal .formello-plugin-templates-count {
+  max-width: 170px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.formello-plugin-templates-spinner .components-spinner {
+  float: none;
+  margin-left: 0;
+}
+
+.formello-plugin-templates-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item {
+  flex: 0 0 33.333%;
+  width: 33.333%;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+@media screen and (max-width: 840px) {
+  .formello-plugin-templates-list > .formello-plugin-templates-list-item {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .formello-plugin-templates-list > .formello-plugin-templates-list-item {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px #fff;
+  transition: 0.2s border-color, 0.2s box-shadow;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button:hover, .formello-plugin-templates-list > .formello-plugin-templates-list-item > button:focus, .formello-plugin-templates-list > .formello-plugin-templates-list-item > button:active {
+  box-shadow: 0 0 0 2px #216eb7;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image {
+  position: relative;
+  display: block;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image .formello-plugin-templates-list-item-image-sizer {
+  width: 100%;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image .formello-plugin-templates-list-item-image-sizer + .lazyload-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item .formello-plugin-templates-list-item-title {
+  padding: 5px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.formello-plugin-templates-list-item-no-thumb .formello-plugin-templates-list-item-title {
+  border-top: 0 !important;
+}
+
+.formello-component-modal .components-modal__header {
+  margin-bottom: 0;
+}
+
+.formello-component-modal-tab-panel .components-tab-panel__tab-content {
+  min-height: 300px;
+}
+
+.formello-plugin-templates-modal {
+  min-width: 600px;
+  width: 60%;
+}
+
+.wp-block-formello-form {
+  border: 1px dashed grey;
+  min-height: 100px;
+  padding: 20px;
+}
+
+div.formello p {
+  margin-bottom: 0px !important;
+}
+
+.formello-row {
+  flex-direction: row;
+}
+/**
+ * Editor Styles
+ */
+.formello-plugin-templates-modal.formello-plugin-templates-modal-loading .formello-control-tabs {
+  pointer-events: none;
+  opacity: 0.3;
+}
+.formello-plugin-templates-modal.formello-plugin-templates-modal-loading .formello-plugin-templates-modal-loading-spinner {
+  position: absolute;
+  top: 14px;
+  right: 50px;
+  z-index: 10;
+}
+.formello-plugin-templates-modal.formello-plugin-templates-modal-loading .formello-plugin-templates-modal-loading-spinner .components-spinner {
+  float: none;
+  margin-left: 0;
+}
+.formello-plugin-templates-modal .formello-plugin-templates-categories-row {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.formello-plugin-templates-modal .formello-plugin-templates-categories-select {
+  max-width: 170px;
+  margin-bottom: 10px;
+}
+.formello-plugin-templates-modal .formello-plugin-templates-count {
+  max-width: 170px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+.formello-plugin-templates-spinner .components-spinner {
+  float: none;
+  margin-left: 0;
+}
+
+.formello-plugin-templates-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item {
+  flex: 0 0 33.333%;
+  width: 33.333%;
+  padding-top: 15px;
+  padding-left: 15px;
+}
+@media screen and (max-width: 840px) {
+  .formello-plugin-templates-list > .formello-plugin-templates-list-item {
+    flex: 0 0 50%;
+    width: 50%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .formello-plugin-templates-list > .formello-plugin-templates-list-item {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px;
+  text-align: center;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px #fff;
+  transition: 0.2s border-color, 0.2s box-shadow;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button:hover, .formello-plugin-templates-list > .formello-plugin-templates-list-item > button:focus, .formello-plugin-templates-list > .formello-plugin-templates-list-item > button:active {
+  box-shadow: 0 0 0 2px #216eb7;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image {
+  position: relative;
+  display: block;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image .formello-plugin-templates-list-item-image-sizer {
+  width: 100%;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item > button .formello-plugin-templates-list-item-image .formello-plugin-templates-list-item-image-sizer + .lazyload-wrapper img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+.formello-plugin-templates-list > .formello-plugin-templates-list-item .formello-plugin-templates-list-item-title {
+  padding: 5px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.formello-plugin-templates-list-item-no-thumb .formello-plugin-templates-list-item-title {
+  border-top: 0 !important;
+}
+
+.formello-component-modal .components-modal__header {
+  margin-bottom: 0;
+}
+
+.formello-component-modal-tab-panel .components-tab-panel__tab-content {
+  min-height: 300px;
+}
+
+.formello-plugin-templates-modal {
+  min-width: 600px;
+  width: 60%;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.formello-opts button {
+  margin-bottom: 8px;
+}
+.formello-tag-option {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.formello-tag-option:hover {
+  color: #007cba;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-formello-actions {
+  padding: 10px;
+  border: 1px dashed grey;
+}
+
+.wp-block-formello-actions h4 {
+  margin: 0px;
+}
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+.wp-block-formello-form fieldset {
+  padding: 10px;
+  border: 1px solid black;
+}
+.wp-block-formello-form select {
+  max-width: inherit;
+}
+.wp-block-formello-form input:disabled, .wp-block-formello-form input.disabled, .wp-block-formello-form select:disabled, .wp-block-formello-form select.disabled, .wp-block-formello-form textarea:disabled, .wp-block-formello-form textarea.disabled {
+  background-color: #fff;
+  border: 1px solid #7e8993;
+  opacity: 1;
+  border-radius: 0;
+  line-height: normal;
+}
+.wp-block-formello-form input:disabled[type=radio] {
+  border: 1px solid #7e8993;
+  border-radius: 50%;
+}
+.wp-block-formello-form .formello {
+  padding: 0;
+}
+.wp-block-formello-form .formello small {
+  padding: 0;
+}
+.wp-block-formello-form .block-editor-block-list__block, .wp-block-formello-form .editor-styles-wrapper [data-block] {
+  margin: 0 !important;
+}
+
+.formello-checkbox input {
+  margin: 0;
+}
+
+.formello-hidden {
+  display: flex;
+  align-items: center;
+}
+
+.wp-block-formello-button .button-span {
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 10px;
+  background: #abb8c3;
+  color: #fff;
+  border: 1px solid transparent;
+  align-self: flex-start;
+}
+.wp-block-formello-button .button-span.center {
+  -ms-grid-row-align: center;
+      align-self: center;
+}
+.wp-block-formello-button .button-span.right {
+  align-self: flex-end;
+}
+.wp-block-formello-button .button-span.wide {
+  width: 100%;
+}
+
+.wp-block-formello-button.wide .button-span {
+  width: 100%;
+  text-align: center;
+}
+
+.formello-group.grouped input {
+  border-right: 0;
+}
+
+.formello-group div {
+  display: flex;
+  flex: 1 0 auto;
+}
+.formello-group div [data-type="formello/button"] {
+  flex: 0 1 auto;
+}
+.formello-group div.formello {
+  padding: 0;
+  margin: 0;
+}
+.formello-group div.formello label {
+  display: none;
+}
+.formello-group div.formello small {
+  display: none;
+}
+.formello-group div .editor-styles-wrapper [data-block] {
+  margin: 0 !important;
+}
+
+.cta {
+  cursor: pointer;
+  border: 1px solid;
+}
+
+.mailchimp {
+  height: 50px;
+  background-image: url(images/mailchimp.a618b840.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.formello-urlinput input {
+  width: 100% !important;
+  border-radius: 2px !important;
+  border: 1px solid #757575 !important;
+}
+
+.formello-group div.ld-spin {
+  display: inline-block;
+}
+
+/*# sourceMappingURL=index.css.map*/
