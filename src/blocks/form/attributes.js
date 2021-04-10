@@ -41,7 +41,7 @@ export default {
 	},
 	storeSubmissions: {
 		type: 'boolean',
-		default: false,
+		default: true,
 	},
 	hide: {
 		type: 'boolean',

@@ -178,7 +178,7 @@ function TemplatesModal ( props ) {
 
 			{ allTemplates &&
 				<TabPanel
-					className="formello-control-tabs formello-component-modal-tab-panel"
+					className="formello-component-modal-tab-panel"
 					tabs={ [
 						{
 							name: 'local',

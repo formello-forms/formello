@@ -18,10 +18,6 @@
     font-weight: bold;
   }
 
-  button {
-    padding: 5px 10px;
-  }
-
 }
 
 .wp-block-formello-form .formello, .wp-block-formello-form .formello-group {
@@ -50,7 +46,6 @@
   input {
     flex: 1 1 auto;
     margin: 0 !important;
-    padding: 5px 10px;
     height: auto;
   }
 
@@ -110,6 +105,7 @@
     display: inline-block;
     border-bottom: 1px dotted #666;
     cursor: pointer;
+    margin: 0 10px;
   }
 
   .tooltip .tooltiptext {
@@ -147,6 +143,9 @@
 
 .wp-block-formello-form.is-bold {
   .formello label {
+    font-weight: bold;
+  }
+  .formello-group label {
     font-weight: bold;
   }
 }
@@ -189,7 +188,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
   margin-bottom: 1em;
 
     label {

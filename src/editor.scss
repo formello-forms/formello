@@ -29,9 +29,6 @@
 	.formello small {
 	  padding: 0;
 	}
-	.block-editor-block-list__block, .editor-styles-wrapper [data-block] {
-		margin: 0 !important;
-	}
 }
 
 .formello-checkbox {
@@ -97,6 +94,9 @@
 	}
 	.editor-styles-wrapper [data-block] {
 		margin: 0 !important;
+	}
+	.block-editor-block-list__layout .wp-block {
+		margin: 0;
 	}
 }
 

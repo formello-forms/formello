@@ -1,6 +1,11 @@
 .formello-control-tabs .components-tab-panel__tabs {
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e8eaeb;
+}
+
+.formello-control-tabs {
     margin-bottom: 15px;
     border-bottom: 1px solid #e8eaeb;
 }

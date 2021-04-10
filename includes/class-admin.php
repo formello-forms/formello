@@ -329,7 +329,7 @@ class Admin {
 
 		$defaults = array(
 			'recaptchaEnabled' => false,
-			'storeSubmissions' => false,
+			'storeSubmissions' => true,
 			'hide' => false,
 		);
 

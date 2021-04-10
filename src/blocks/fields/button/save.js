@@ -8,7 +8,6 @@ import classnames from 'classnames';
 import { 
 	getColorClassName 
 } from '@wordpress/block-editor';
-import hexToRGBA from '../../../utils/hex-to-rgba';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -23,33 +22,35 @@ export default function save( { attributes, className } ) {
 
 	const {
 		backgroundColor,
-		backgroundColorOpacity,
-		backgroundColorHover,
-		backgroundColorHoverOpacity,
 		textColor,
-		textColorHover,
 		borderColor,
-		borderColorOpacity,
-		borderColorHover,
-		borderColorHoverOpacity,
 		text,
 		alignment,
 		iconType,
-		iconPosition
+		iconPosition,
+		customBackgroundColor,
+		customTextColor,
+		customBorderColor,
 	} = attributes;
+
+	const containerClass = classnames( className, alignment );
+	const iconClass = classnames( 'ld', 'ld-spin', iconType );
 
 	const textClass = getColorClassName( 'color', textColor );
 	const backgroundClass = getColorClassName( 'background-color', backgroundColor );
-	const buttonClass = classnames( textClass, backgroundClass, iconPosition, {
-		'has-text-color': textColor || style?.color?.text,
-		'has-background-color': backgroundColor || style?.color?.background
-	} )
-	const containerClass = classnames( className, alignment );
-	const iconClass = classnames( 'ld', 'ld-spin', iconType );
+	const borderClass = getColorClassName( 'border-color', borderColor );
+	const buttonClass = classnames( 'button-span', attributes.iconPosition, {
+		'has-background': backgroundColor,
+		[ textClass ]: textClass,
+		[ backgroundClass ]: backgroundClass,
+	} );
+
 	const style = {
-		color: textColor ? hexToRGBA( textColor ) : undefined,
-		backgroundColor: backgroundColor ? hexToRGBA( backgroundColor, backgroundColorOpacity ) : undefined,
-		borderColor: borderColor ? hexToRGBA( borderColor, borderColorOpacity ) : undefined
+		'backgroundColor': customBackgroundColor,
+		'color': customTextColor,
+		'borderWidth': attributes.borderWidth,
+		'borderRadius': attributes.borderRadius,
+		'borderColor': customBorderColor
 	}
 
 	return (

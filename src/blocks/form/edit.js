@@ -93,6 +93,19 @@ function Edit( {
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
 		[]
 	);
+	const postTitle = useSelect(
+		( select ) => select( 'core/editor' ).getPostEdits().title,
+		[]
+	);
+
+	useEffect(
+		() => {
+			if( 'formello_form' == postType && undefined !== postTitle ){
+				setAttributes( { name: postTitle } )
+			}
+		},
+		[ postTitle ]
+	);
 
 	const { __experimentalConvertBlocksToReusable } = useDispatch( reusableBlocksStore );
 	useEffect(
@@ -102,7 +115,10 @@ function Edit( {
 				setAttributes( {
 					name: 'form-' + idx
 				} )
-			}			
+			}
+			if( 'formello_form' == postType && undefined !== postTitle ){
+				setAttributes( { name: postTitle } )
+			}
 			if( undefined === attributes.id && 'wp_block' !== postType ){
 				apiFetch( {
 					path: '/formello/v1/form/create',

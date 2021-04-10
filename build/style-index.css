@@ -20,11 +20,7 @@
   width: 100%;
 }
 .wp-block-formello-button button span {
-  transition: all 1s;
-  opacity: 1;
-}
-.wp-block-formello-button button:hover {
-  opacity: 0.8;
+  transition: all 1s, hover 0ms;
 }
 
 @media screen and (min-width: 600px) {
@@ -35,8 +31,7 @@
 }
 .ld-ext-right, .ld-ext-left, .ld-ext-bottom, .ld-ext-top, .ld-over, .ld-over-inverse, .ld-over-full, .ld-over-full-inverse {
   position: relative;
-  transition: all 0.3s;
-  transition-timing-function: ease-in;
+  transition: all 0.3s ease-in, hover 1ms;
 }
 .ld-ext-right > .ld, .ld-ext-left > .ld, .ld-ext-bottom > .ld, .ld-ext-top > .ld, .ld-over > .ld, .ld-over-inverse > .ld, .ld-over-full > .ld, .ld-over-full-inverse > .ld {
   position: absolute;
@@ -47,8 +42,7 @@
   margin: -0.5em;
   opacity: 0;
   z-index: -1;
-  transition: all 0.3s;
-  transition-timing-function: ease-in;
+  transition: all 0.3s ease-in, hover 1ms;
 }
 .ld-ext-right > .ld > *, .ld-ext-left > .ld > *, .ld-ext-bottom > .ld > *, .ld-ext-top > .ld > *, .ld-over > .ld > *, .ld-over-inverse > .ld > *, .ld-over-full > .ld > *, .ld-over-full-inverse > .ld > * {
   width: 1em;
@@ -170,9 +164,6 @@
   margin: 0.5em 0;
   font-weight: bold;
 }
-.wp-block-formello-form button {
-  padding: 5px 10px;
-}
 
 .wp-block-formello-form .formello, .wp-block-formello-form .formello-group {
   display: flex;
@@ -200,7 +191,6 @@
 .wp-block-formello-form .formello input, .wp-block-formello-form .formello-group input {
   flex: 1 1 auto;
   margin: 0 !important;
-  padding: 5px 10px;
   height: auto;
 }
 .wp-block-formello-form .formello textarea, .wp-block-formello-form .formello select, .wp-block-formello-form .formello-group textarea, .wp-block-formello-form .formello-group select {
@@ -247,6 +237,7 @@
   display: inline-block;
   border-bottom: 1px dotted #666;
   cursor: pointer;
+  margin: 0 10px;
 }
 .wp-block-formello-form .formello .tooltip .tooltiptext, .wp-block-formello-form .formello-group .tooltip .tooltiptext {
   visibility: hidden;
@@ -278,6 +269,9 @@
 }
 
 .wp-block-formello-form.is-bold .formello label {
+  font-weight: bold;
+}
+.wp-block-formello-form.is-bold .formello-group label {
   font-weight: bold;
 }
 
@@ -312,7 +306,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: flex-start;
   margin-bottom: 1em;
 }
 .wp-block-formello-form .formello-group label {

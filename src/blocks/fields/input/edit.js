@@ -7,13 +7,12 @@ import {
 } from '@wordpress/block-editor';
 
 import {
-	TextControl,
 	ToggleControl,
 	PanelRow,
 	PanelBody,
 	TextareaControl,
+	BaseControl,
 	SelectControl,
-	__experimentalNumberControl as NumberControl,
 	__experimentalInputControl as InputControl
 } from '@wordpress/components';
 
@@ -79,18 +78,22 @@ export default function Edit( props ) {
 		<div className={ className }>
 			<InspectorControls>
 				<PanelBody title="Field Options" initialOpen={ true }>
-					<TextControl
+					<BaseControl>
+					<InputControl
 						label={ __( 'Name', 'formello' ) }
 						value={ attributes.name }
 						onChange={ ( val ) => setAttributes( { name: val.replace(/\W/g, '') } ) }
 					/>
+					</BaseControl>
 					{
 						!(attributes.type == 'hidden') &&					
-					<TextControl
+					<BaseControl>
+					<InputControl
 						label={ __( 'Label', 'formello' ) }
 						value={ attributes.label }
 						onChange={ ( val ) => setAttributes( { label: val } ) }
 					/>
+					</BaseControl>
 					}
 					<MergeTags 
 						className={ 'formello-flex' }
@@ -103,13 +106,15 @@ export default function Edit( props ) {
 					/>
 					{
 						supported.includes('placeholder') && 
-						<TextControl
-							label={ __( 'Placeholder', 'formello' ) }
-							value={ attributes.placeholder }
-							onChange={ ( val ) =>
-								setAttributes( { placeholder: val } )
-							}
-						/>
+						<BaseControl>
+							<InputControl
+								label={ __( 'Placeholder', 'formello' ) }
+								value={ attributes.placeholder }
+								onChange={ ( val ) =>
+									setAttributes( { placeholder: val } )
+								}
+							/>
+						</BaseControl>
 					}
 					{
 						supported.includes('required') && 
@@ -153,6 +158,115 @@ export default function Edit( props ) {
 						/>
 						</Fragment>		
 					) }
+				</PanelBody>
+
+				<PanelBody title="Advanced Options" initialOpen={ false }>
+					{
+					supported.includes('step') && 
+							<Fragment>
+								<BaseControl>
+								<InputControl
+									label={ __( 'Min Value', 'formello' ) }
+									value={ attributes.min || '' }
+									min={ '0' }
+									type={ 'range' == attributes.type ? 'number' : attributes.type }
+									onChange={ ( val ) =>
+										setAttributes( { min: val } )
+									}
+								/>
+								</BaseControl>
+								<BaseControl>
+								<InputControl
+									label={ __( 'Max Value', 'formello' ) }
+									value={ attributes.max || '' }
+									type={ 'range' == attributes.type ? 'number' : attributes.type }
+									onChange={ ( val ) =>
+										setAttributes( { max: val } )
+									}
+								/>
+								</BaseControl>
+								<BaseControl>
+								<InputControl
+									type="number"
+									label={ __( 'Step Value', 'formello' ) }
+									value={ attributes.step || '' }
+									onChange={ ( val ) =>
+										setAttributes( { step: val } )
+									}
+								/>
+								</BaseControl>
+							</Fragment>
+					}
+					{
+						supported.includes('minlength') && 
+							<Fragment>
+							<BaseControl>
+								<InputControl
+									type="number"
+									label={ __( 'Min Length', 'formello' ) }
+									value={ attributes.minlength || '' }
+									onChange={ ( val ) =>
+										setAttributes( { minlength: val } )
+									}
+								/>
+							</BaseControl>
+							<BaseControl>
+								<InputControl
+									type="number"
+									label={ __( 'Max Length', 'formello' ) }
+									value={ attributes.maxlength || '' }
+									onChange={ ( val ) =>
+										setAttributes( { maxlength: val } )
+									}
+								/>
+							</BaseControl>
+							</Fragment>
+					}
+					{
+						supported.includes('pattern') && 
+							<Fragment>
+							<BaseControl>
+							<InputControl
+								label={ __( 'Pattern', 'formello' ) }
+								value={ attributes.pattern || '' }
+								onChange={ ( val ) =>
+									setAttributes( { pattern: val } )
+								}
+							/>
+							</BaseControl>
+							<BaseControl>
+							<InputControl
+								label={ __( 'Custom Validation Message', 'formello' ) }
+								value={ attributes.validation }
+								onChange={ ( val ) => setAttributes( { validation: val } ) }
+							/>
+							</BaseControl>
+							</Fragment>
+					}
+					{ 'textarea' == attributes.type && (
+						<Fragment>
+						<BaseControl>
+							<InputControl
+								type="number"
+								label={ __( 'Cols', 'formello' ) }
+								value={ attributes.cols }
+								onChange={ ( val ) =>
+									setAttributes( { cols: val } )
+								}
+							/>
+						</BaseControl>
+						<BaseControl>
+							<InputControl
+								type="number"
+								label={ __( 'Rows', 'formello' ) }
+								value={ attributes.rows }
+								onChange={ ( val ) =>
+									setAttributes( { rows: val } )
+								}
+							/>
+						</BaseControl>
+						</Fragment>
+					) }
 					{
 						!(attributes.type == 'hidden') &&					
 						<ToggleControl
@@ -173,101 +287,6 @@ export default function Edit( props ) {
 							}
 						/>
 					) }
-				</PanelBody>
-
-				<PanelBody title="Advanced Options" initialOpen={ false }>
-					{
-					supported.includes('step') && 
-							<Fragment>
-								<InputControl
-									label={ __( 'Min Value', 'formello' ) }
-									value={ attributes.min || '' }
-									min={ '0' }
-									type={ 'range' == attributes.type ? 'number' : attributes.type }
-									onChange={ ( val ) =>
-										setAttributes( { min: val } )
-									}
-								/>
-								<InputControl
-									label={ __( 'Max Value', 'formello' ) }
-									value={ attributes.max || '' }
-									type={ 'range' == attributes.type ? 'number' : attributes.type }
-									onChange={ ( val ) =>
-										setAttributes( { max: val } )
-									}
-								/>
-								<NumberControl
-									label={ __( 'Step Value', 'formello' ) }
-									value={ attributes.step || '' }
-									onChange={ ( val ) =>
-										setAttributes( { step: val } )
-									}
-								/>
-							</Fragment>
-					}
-					{
-						supported.includes('minlength') && 
-							<Fragment>
-							<PanelRow>
-								<NumberControl
-									label={ __( 'Min Length', 'formello' ) }
-									value={ attributes.minlength || '' }
-									onChange={ ( val ) =>
-										setAttributes( { minlength: val } )
-									}
-								/>
-							</PanelRow>
-							<PanelRow>
-								<NumberControl
-									label={ __( 'Max Length', 'formello' ) }
-									value={ attributes.maxlength || '' }
-									onChange={ ( val ) =>
-										setAttributes( { maxlength: val } )
-									}
-								/>
-							</PanelRow>
-							</Fragment>
-					}
-					{
-						supported.includes('pattern') && 
-							<Fragment>
-							<TextControl
-								label={ __( 'Pattern', 'formello' ) }
-								value={ attributes.pattern || '' }
-								onChange={ ( val ) =>
-									setAttributes( { pattern: val } )
-								}
-							/>
-							<TextControl
-								label={ __( 'Custom Validation Message', 'formello' ) }
-								value={ attributes.validation }
-								onChange={ ( val ) => setAttributes( { validation: val } ) }
-							/>
-							</Fragment>
-					}
-					{ 'textarea' == attributes.type && (
-						<Fragment>
-						<PanelRow>
-							<NumberControl
-								label={ __( 'Cols', 'formello' ) }
-								value={ attributes.cols }
-								onChange={ ( val ) =>
-									setAttributes( { cols: val } )
-								}
-							/>
-						</PanelRow>
-						<PanelRow>
-							<NumberControl
-								label={ __( 'Rows', 'formello' ) }
-								value={ attributes.rows }
-								onChange={ ( val ) =>
-									setAttributes( { rows: val } )
-								}
-							/>
-						</PanelRow>
-						</Fragment>
-					) }
-
 					{
 						'hidden' != attributes.type &&
 						<Fragment>
@@ -305,10 +324,9 @@ export default function Edit( props ) {
 			>
 				{ attributes.label }
 				{ attributes.required && !attributes.hideRequired && (
-					<span>*</span>
+					<span className='required'>*</span>
 				) }
-				{ attributes.hasTooltip && <span className='tooltip'>?</span> }
-
+				{ ( attributes.hasTooltip && attributes.tooltip.length > 0 ) && <span className='tooltip'>?<span className="tooltiptext">{ attributes.tooltip }</span></span> }
 			</label>
 			)
 			:

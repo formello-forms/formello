@@ -89,11 +89,44 @@ class CPT {
 		);
 		register_post_type( 'formello_form', $args );
 
+	    register_meta( 'post', 'succhia', [
+	        'single' => true,
+	        'show_in_rest' => true,
+	        'description'  => 'A meta key associated with a string meta value.',
+	        'type' => 'string'
+	    ] );
+
 		register_meta(
 			'post',
 			'stocazzo',
 			array(
-				'show_in_rest'   => true,
+				'single' => true,
+				'type' => 'array',
+				'show_in_rest'   => array(
+					'schema' => array(
+						'type'  => 'array',
+						'items' => array(
+							'type'       => 'object',
+							'properties' => array(
+								'name'    => array(
+									'type' => 'string',
+								),
+								'where'    => array(
+									'type' => 'string',
+								),
+								'condition'    => array(
+									'type' => 'string',
+								),
+								'operator' => array(
+									'type'   => 'string',
+								),
+								'selectedPosts' => array(
+									'type'   => 'array',
+								),
+							),
+						),
+					),
+				),
 				'object_subtype' => 'formello_form',
 			)
 		);
@@ -125,6 +158,8 @@ class CPT {
 				'formello/output',
 				'formello/select',
 				'formello/actions',
+				'formello/actions-email',
+				'formello/actions-more',
 			);
 		}
 

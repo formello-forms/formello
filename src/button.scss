@@ -18,13 +18,8 @@
 
   button {
     span{
-      transition: all 1s;
-      opacity:1;
+      transition: all 1s, hover 0ms;
     }
-  }
-
-  button:hover {
-    opacity: .8;
   }
 
 }

@@ -21,6 +21,7 @@ import {
 	PanelRow,
 	PanelBody,
 	RangeControl,
+	__experimentalBoxControl as BoxControl,
 	FontSizePicker,
 	SelectControl
 } from '@wordpress/components';
@@ -28,6 +29,7 @@ import { compose } from '@wordpress/compose';
 import classnames from 'classnames';
 import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
 import { useState } from '@wordpress/element';
+import shorthandCSS from '../../../utils/shorthand-css';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -40,7 +42,7 @@ import { useState } from '@wordpress/element';
  *
  * @return {WPElement} Element to render.
  */
-function Edit( { attributes, setAttributes, context, textColor, backgroundColor, className } ) {
+function Edit( props ) {
 	const ALIGNMENT_CONTROLS = [
 		{
 			icon: 'editor-alignleft',
@@ -65,12 +67,56 @@ function Edit( { attributes, setAttributes, context, textColor, backgroundColor,
 	];
 	const EMPTY_ARRAY = [];
 
+	const {
+		attributes,
+		setAttributes,
+		mergeBlocks,
+		onReplace,
+		className,
+		borderColor,
+		backgroundColor,
+		textColor,
+		setBorderColor,
+		setBackgroundColor,
+		setTextColor,
+	} = props;
+
+	const {
+		paddingTop,
+		paddingRight,
+		paddingBottom,
+		paddingLeft,
+	} = attributes;
+
+    const units = [
+        { value: 'px', label: 'px', default: 0 },
+        { value: '%', label: '%', default: 10 },
+        { value: 'em', label: 'em', default: 0 },
+    ];
+
+    const [ values, setValues ] = useState( {
+		top: paddingTop,
+		left: paddingLeft,
+		right: paddingRight,
+		bottom: paddingBottom,
+    } );
+
+    const setPadding = ( { top, right, bottom, left } ) => {
+    	setAttributes( {
+			paddingTop: top || paddingTop,
+			paddingLeft: left || paddingLeft,
+			paddingRight: right || paddingRight,
+			paddingBottom: bottom || paddingBottom,
+    	} )
+    }
+
 	const [ showIcon, setShowIcon ] = useState( false );
 	const colors = useEditorFeature( 'color.palette' ) || EMPTY_ARRAY;
 
 	const buttonClass = classnames( 'button-span', textColor.class, backgroundColor.class, attributes.iconPosition, {
-		'has-text-color': attributes.textColor || attributes.style?.color?.text,
-		'has-background': attributes.backgroundColor || attributes.style?.color?.background,
+		'has-background': backgroundColor.value,
+		[backgroundColor.class]: backgroundColor.class,
+		[textColor.class]: textColor.class,
 		'running': showIcon
 	} );
 
@@ -78,56 +124,13 @@ function Edit( { attributes, setAttributes, context, textColor, backgroundColor,
 
 	const containerClass = classnames( className, attributes.alignment );
 
-	const style =
-		attributes.style?.color?.background || attributes.style?.color?.text || attributes.style?.color?.gradient
-			? {
-					background: attributes.style?.color?.gradient
-						? attributes.style.color.gradient
-						: undefined,
-					backgroundColor: attributes.style?.color?.background
-						? attributes.style.color.background
-						: undefined,
-					color: attributes.style?.color?.text ? attributes.style.color.text : undefined,
-			  }
-			: {};
-	/**
-	 * Removed undefined values from nested object.
-	 *
-	 * @param {*} object
-	 * @return {*} Object cleaned from undefined values
-	 */
-	const cleanEmptyObject = ( object ) => {
-		if ( ! isObject( object ) ) {
-			return object;
-		}
-		const cleanedNestedObjects = pickBy(
-			mapValues( object, cleanEmptyObject ),
-			identity
-		);
-		return isEqual( cleanedNestedObjects, {} )
-			? undefined
-			: cleanedNestedObjects;
-	};
-
-	const onChangeColor = ( name ) => ( value ) => {
-		const colorObject = getColorObjectByColorValue( colors, value );
-		const attributeName = name + 'Color';
-		const newStyle = {
-			...attributes.style,
-			color: {
-				...attributes?.style?.color,
-				[ name ]: colorObject?.slug ? undefined : value,
-			},
-		};
-
-		const newNamedColor = colorObject?.slug ? colorObject.slug : undefined;
-		const newAttributes = {
-			style: cleanEmptyObject( newStyle ),
-			[ attributeName ]: newNamedColor,
-		};
-
-		setAttributes( newAttributes );
-
+	const style = {
+		'backgroundColor': backgroundColor.color,
+		'color': textColor.color,
+		'borderWidth': attributes.borderWidth,
+		'borderRadius': attributes.borderRadius,
+		'borderColor': borderColor.color,
+		'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
 	}
 
 	return (
@@ -154,16 +157,53 @@ function Edit( { attributes, setAttributes, context, textColor, backgroundColor,
 					colorSettings={[
 						{
 							value: textColor.color,
-							onChange: onChangeColor( 'text' ),
+							onChange: setTextColor,
 							label: __('Text color')
 						},
 						{
 							value: backgroundColor.color,
-							onChange: onChangeColor( 'background' ),
+							onChange: setBackgroundColor,
 							label: __('Background color')
+						},
+						{
+							value: borderColor.color,
+							onChange: setBorderColor,
+							label: __('Border color')
 						},
 					]}
 				/>
+				<PanelBody>
+					<RangeControl
+						value={ attributes.borderWidth }
+						label={ __( 'Border Width', 'formello' ) }
+						onChange={ ( val ) => {
+							setAttributes( { borderWidth: val } );
+						} }
+						min={ 0 }
+						max={ 50 }
+						allowReset
+					/>
+					<RangeControl
+						value={ attributes.borderRadius }
+						label={ __( 'Border Radius', 'formello' ) }
+						onChange={ ( val ) => {
+							setAttributes( { borderRadius: val } );
+						} }
+						min={ 0 }
+						max={ 50 }
+						allowReset
+					/>
+					<BoxControl
+						label={ __( 'Padding', 'formello' ) }
+						values={ values }
+						units={ units }
+            			onChange={ ( nextValues ) => { 
+            				setValues( nextValues ) 
+            				setPadding( nextValues ) 
+            			} }
+						showValues={ true }
+					/>
+				</PanelBody>
 			</InspectorControls>
 			<InspectorAdvancedControls>
 				<ToggleControl
@@ -200,4 +240,4 @@ function Edit( { attributes, setAttributes, context, textColor, backgroundColor,
 	);
 }
 
-export default compose( withColors( { textColor: 'color', backgroundColor: 'background-color' } ) )( Edit );
+export default compose( withColors( 'backgroundColor', 'borderColor', { textColor: 'color' } ) )( Edit );

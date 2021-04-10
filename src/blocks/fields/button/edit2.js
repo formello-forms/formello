@@ -23,14 +23,19 @@ import {
 	RangeControl,
 	FontSizePicker,
 	SelectControl,
+	__experimentalUnitControl as UnitControl,
+	__experimentalBoxControl as BoxControl,
 	TabPanel
 } from '@wordpress/components';
 import { compose } from '@wordpress/compose';
 import classnames from 'classnames';
 import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
-import { useState, Fragment } from '@wordpress/element';
+import { useState, Fragment, useEffect } from '@wordpress/element';
 import ColorPicker from '../../components/color-picker';
 import hexToRGBA from '../../../utils/hex-to-rgba';
+import buildCSS from '../../../utils/build-css';
+import { useSelect } from '@wordpress/data';
+import MainCSS from './generateCss';
 
 import './editor.scss';
 /**
@@ -44,7 +49,7 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-function Edit( { attributes, setAttributes, context, className } ) {
+function Edit( { attributes, setAttributes, context, className, clientId } ) {
 
 	const {
 		backgroundColor,
@@ -57,16 +62,115 @@ function Edit( { attributes, setAttributes, context, className } ) {
 		borderColorOpacity,
 		borderColorHover,
 		borderColorHoverOpacity,
+		paddingTop,
+		paddingRight,
+		paddingBottom,
+		paddingLeft,
+		fontSize,
+		iconPosition,
+		showIcon,
+		iconType,
+		alignment
 	} = attributes;
 
-	const style = {
-		color: textColor ? hexToRGBA( textColor ) : undefined,
-		backgroundColor: backgroundColor ? hexToRGBA( backgroundColor, backgroundColorOpacity ) : undefined,
-		borderColor: borderColor ? hexToRGBA( borderColor, borderColorOpacity ) : undefined
-	}
+    const units = [
+        { value: 'px', label: 'px', default: 0 },
+        { value: '%', label: '%', default: 10 },
+        { value: 'em', label: 'em', default: 0 },
+    ];
+
+    const fontSizes = [
+        {
+            name: __( 'Small' ),
+            slug: 'small',
+            size: 12,
+        },
+        {
+            name: __( 'Medium' ),
+            slug: 'medium',
+            size: 14,
+        },
+        {
+            name: __( 'Big' ),
+            slug: 'big',
+            size: 16,
+        },
+    ];
+    const fallbackFontSize = 16;
+
+	const ALIGNMENT_CONTROLS = [
+		{
+			icon: 'editor-alignleft',
+			title: __( 'Align Button Left', 'formello' ),
+			align: 'left',
+		},
+		{
+			icon: 'editor-aligncenter',
+			title: __( 'Align Button Center', 'formello' ),
+			align: 'center',
+		},
+		{
+			icon: 'editor-alignright',
+			title: __( 'Align Button Right', 'formello' ),
+			align: 'right',
+		},
+		{
+			icon: 'align-wide',
+			title: __( 'Wide Button', 'formello' ),
+			align: 'wide',
+		},
+	];
+
+	const buttonClass = classnames( 'button-span', iconPosition, {
+		'running': showIcon
+	} );
+
+	const iconClass = classnames( 'ld', 'ld-spin', iconType );
+	const containerClass = classnames( className, alignment );
+
+	let form_id, block_id;
+
+	useSelect( (select)=>{
+		let form = select( 'core/block-editor' ).getBlockParentsByBlockName( clientId, 'formello/form' )
+		form_id = select( 'core/block-editor' ).getBlock( form[0] ).attributes.id
+		block_id = form[0]
+	} )
+
+	useEffect(
+		() => {
+			setAttributes( { form_id: form_id } )
+		}
+	)
+
+    const [ values, setValues ] = useState( {
+		top: paddingTop,
+		left: paddingLeft,
+		right: paddingRight,
+		bottom: paddingBottom,
+    } );
+
+    const setPadding = ( { top, right, bottom, left } ) => {
+    	setAttributes( {
+			paddingTop: top || paddingTop,
+			paddingLeft: left || paddingLeft,
+			paddingRight: right || paddingRight,
+			paddingBottom: bottom || paddingBottom,
+    	} )
+    }
 
 	return (
-		<div className={ className }>
+		<>
+		<MainCSS { ...attributes } formid={ 'block-' + clientId } />
+		<div className={ containerClass }>
+			<BlockControls>
+				<AlignmentToolbar
+					value={ attributes.alignment }
+					alignmentControls={ ALIGNMENT_CONTROLS }
+					onChange={ ( nextAlign ) => {
+						setAttributes( { alignment: nextAlign } );
+					} }
+				/>
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody title="Options" initialOpen={ true }>
 					<TextControl
@@ -74,16 +178,14 @@ function Edit( { attributes, setAttributes, context, className } ) {
 						value={ attributes.text }
 						onChange={ ( val ) => setAttributes( { text: val } ) }
 					/>
-					<RangeControl
-						value={ attributes.borderRadius }
-						label={ __( 'Border Radius', 'formello' ) }
-						onChange={ ( val ) => {
-							setAttributes( { borderRadius: val } );
-						} }
-						min={ 0 }
-						max={ 50 }
-						allowReset
-					/>
+			        <FontSizePicker
+			            fontSizes={ fontSizes }
+			            value={ fontSize }
+			            fallbackFontSize={ fallbackFontSize }
+			            onChange={ ( newFontSize ) => {
+			                setAttributes( { fontSize: newFontSize } );
+			            } }
+			        />
 				</PanelBody>
 				<PanelBody>
 					<TabPanel className="layout-tab-panel formello-control-tabs"
@@ -111,7 +213,7 @@ function Edit( { attributes, setAttributes, context, className } ) {
 												<ColorPicker
 													label={ __( 'Background Color', 'formello' ) }
 													value={ backgroundColor }
-													alpha={ true }
+													alpha={ false }
 													valueOpacity={ backgroundColorOpacity }
 													attrOpacity={ 'backgroundColorOpacity' }
 													key={ 'buttonBackgroundColor' }
@@ -129,12 +231,12 @@ function Edit( { attributes, setAttributes, context, className } ) {
 
 												<ColorPicker
 													label={ __( 'Text Color', 'formello' ) }
-													value={ textColor }
+													value={ textColorHover }
 													alpha={ false }
-													key={ 'buttonTextColor' }
-													onChange={ ( nextTextColor ) =>
+													key={ 'buttonColor' }
+													onChange={ ( nextColor ) =>
 														setAttributes( {
-															textColor: nextTextColor,
+															textColorHover: nextColor,
 														} )
 													}
 												/>
@@ -142,7 +244,7 @@ function Edit( { attributes, setAttributes, context, className } ) {
 												<ColorPicker
 													label={ __( 'Border Color', 'formello' ) }
 													value={ borderColor }
-													alpha={ true }
+													alpha={ false }
 													valueOpacity={ borderColorOpacity }
 													attrOpacity={ 'borderColorOpacity' }
 													key={ 'buttonBorderColor' }
@@ -186,10 +288,10 @@ function Edit( { attributes, setAttributes, context, className } ) {
 													label={ __( 'Text Color', 'formello' ) }
 													value={ textColorHover }
 													alpha={ false }
-													key={ 'buttonTextColorHover' }
-													onChange={ ( nextTextColorHover ) =>
+													key={ 'buttonColorHover' }
+													onChange={ ( nextColorHover ) =>
 														setAttributes( {
-															textColorHover: nextTextColorHover,
+															textColorHover: nextColorHover,
 														} )
 													}
 												/>
@@ -197,7 +299,7 @@ function Edit( { attributes, setAttributes, context, className } ) {
 												<ColorPicker
 													label={ __( 'Border Color', 'formello' ) }
 													value={ borderColorHover }
-													alpha={ true }
+													alpha={ false }
 													valueOpacity={ borderColorHoverOpacity }
 													attrOpacity={ 'borderColorHoverOpacity' }
 													key={ 'buttonBorderColorHover' }
@@ -212,7 +314,6 @@ function Edit( { attributes, setAttributes, context, className } ) {
 														} )
 													}
 												/>
-
 											</Fragment>
 										) }
 									</div>
@@ -220,14 +321,45 @@ function Edit( { attributes, setAttributes, context, className } ) {
 							}
 						}
 					</TabPanel>
+					<RangeControl
+						value={ attributes.borderWidth }
+						label={ __( 'Border Width', 'formello' ) }
+						onChange={ ( val ) => {
+							setAttributes( { borderWidth: val } );
+						} }
+						min={ 0 }
+						max={ 50 }
+						allowReset
+					/>
+					<RangeControl
+						value={ attributes.borderRadius }
+						label={ __( 'Border Radius', 'formello' ) }
+						onChange={ ( val ) => {
+							setAttributes( { borderRadius: val } );
+						} }
+						min={ 0 }
+						max={ 50 }
+						allowReset
+					/>
+					<BoxControl
+						label={ __( 'Padding', 'formello' ) }
+						values={ values }
+						units={ units }
+            			onChange={ ( nextValues ) => { 
+            				setValues( nextValues ) 
+            				setPadding( nextValues ) 
+            			} }
+						showValues={ true }
+					/>
 				</PanelBody>
 
 			</InspectorControls>
 
-			<div className='button-span' style={ style }>
+			<button className={ buttonClass } disabled>
 				<span>{ attributes.text }</span>
-			</div>
+			</button>
 		</div>
+		</>
 	);
 }
 

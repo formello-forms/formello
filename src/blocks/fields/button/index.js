@@ -53,6 +53,9 @@ registerBlockType( 'formello/button', {
 	 * Block attributes
 	 */
 	attributes: {
+		form_id: {
+			type: 'number'
+		},
 		text: {
 			type: 'string',
 			default: 'Submit',
@@ -76,44 +79,41 @@ registerBlockType( 'formello/button', {
 		backgroundColor: {
 			type: 'string',
 		},
-		backgroundColorOpacity: {
-			type: 'number',
-		},
-		textColor: {
+		customBackgroundColor: {
 			type: 'string',
-		},
-		backgroundColorHover: {
-			type: 'string',
-		},
-		backgroundColorHoverOpacity: {
-			type: 'number',
-		},
-		textColorHover: {
-			type: 'string',
-		},
-		borderColor: {
-			type: 'string',
-		},
-		borderColorOpacity: {
-			type: 'number',
-		},
-		borderColorHover: {
-			type: 'string',
-		},
-		borderColorHoverOpacity: {
-			type: 'number',
 		},
 		textColor: {
 			type: 'string'
 		},
-		borderSize: {
+		customTextColor: {
+			type: 'string'
+		},
+		borderColor: {
+			type: 'string',
+		},
+		customBorderColor: {
+			type: 'string',
+		},
+		borderWidth: {
 			type: 'numeric'
 		},
 		borderRadius: {
 			type: 'numeric'
 		},
-		borderColor: {
-			type: 'string'
+		paddingTop: {
+			type: 'string',
+		},
+		paddingRight: {
+			type: 'string',
+		},
+		paddingBottom: {
+			type: 'string',
+		},
+		paddingLeft: {
+			type: 'string',
+		},
+		paddingUnit: {
+			type: 'string',
 		},
 		style: {
 			type: 'object'
@@ -133,7 +133,7 @@ registerBlockType( 'formello/button', {
 		className: true,
 		html: false,
 		reusable: false,
-		color: false
+		color: false,
 	},
 
 	/**

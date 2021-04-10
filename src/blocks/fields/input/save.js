@@ -53,10 +53,10 @@ export default function save( { attributes, className } ) {
 				htmlFor={ attributes.id }
 			>
 				{ attributes.label }
-				{ attributes.required && attributes.markRequired && (
+				{ attributes.required && !attributes.hideRequired && (
 					<span className='required'>*</span>
 				) }
-				{ ( attributes.hasTooltip && attributes.tooltip.length > 0 ) && <span className='tooltip'>?<span class="tooltiptext">{ attributes.tooltip }</span></span> }
+				{ ( attributes.hasTooltip && attributes.tooltip.length > 0 ) && <span className='tooltip'>?<span className="tooltiptext">{ attributes.tooltip }</span></span> }
 			</label>
 			) }
 			{ attributes.type == 'textarea' ? (
