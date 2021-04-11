@@ -135,33 +135,6 @@ div.formello p {
   flex-direction: row;
 }
 /**
- * Editor Styles
- */
-.formello-dropdown-rules {
-  min-width: 400px;
-  width: 600px;
-}
-
-.formello-rules {
-  margin: 10px 0;
-  padding: 5px;
-  border: 1px solid #dedede;
-  display: flex;
-  align-items: center;
-}
-.formello-rules span {
-  flex: 1 0 auto;
-}
-
-.formello-rules .components-button.has-icon {
-  min-width: 25px;
-  height: 25px;
-  padding: 2px;
-}
-.formello-rules .components-button.has-icon .dashicon {
-  margin: 0;
-}
-/**
  * The following styles get applied inside the editor only.
  *
  * Replace them with your own styles or remove the file completely.

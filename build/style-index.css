@@ -191,7 +191,6 @@
 .wp-block-formello-form .formello input, .wp-block-formello-form .formello-group input {
   flex: 1 1 auto;
   margin: 0 !important;
-  height: auto;
 }
 .wp-block-formello-form .formello textarea, .wp-block-formello-form .formello select, .wp-block-formello-form .formello-group textarea, .wp-block-formello-form .formello-group select {
   flex: 1 1 auto;

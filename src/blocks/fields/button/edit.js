@@ -28,7 +28,7 @@ import {
 import { compose } from '@wordpress/compose';
 import classnames from 'classnames';
 import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
-import { useState } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import shorthandCSS from '../../../utils/shorthand-css';
 
 /**
@@ -132,6 +132,15 @@ function Edit( props ) {
 		'borderColor': borderColor.color,
 		'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
 	}
+
+	useEffect(
+		() => {
+			if( undefined !== borderColor ){
+				setAttributes( { customBorderColor: borderColor.color } )
+			}
+		},
+		[ borderColor ]
+	);
 
 	return (
 		<div className={ containerClass }>

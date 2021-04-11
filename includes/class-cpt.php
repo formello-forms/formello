@@ -154,11 +154,14 @@ class CPT {
 				'formello/form',
 				'formello/fieldset',
 				'formello/input',
+				'formello/button',
 				'formello/inputflex',
 				'formello/output',
 				'formello/select',
 				'formello/actions',
 				'formello/actions-email',
+				'formello/actions-webhooks',
+				'formello/actions-mailchimp',
 				'formello/actions-more',
 			);
 		}

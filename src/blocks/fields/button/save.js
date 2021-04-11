@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import { 
 	getColorClassName 
 } from '@wordpress/block-editor';
+import shorthandCSS from '../../../utils/shorthand-css';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -31,6 +32,10 @@ export default function save( { attributes, className } ) {
 		customBackgroundColor,
 		customTextColor,
 		customBorderColor,
+		paddingTop,
+		paddingBottom,
+		paddingLeft,
+		paddingRight
 	} = attributes;
 
 	const containerClass = classnames( className, alignment );
@@ -50,7 +55,8 @@ export default function save( { attributes, className } ) {
 		'color': customTextColor,
 		'borderWidth': attributes.borderWidth,
 		'borderRadius': attributes.borderRadius,
-		'borderColor': customBorderColor
+		'borderColor': customBorderColor,
+		'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
 	}
 
 	return (
