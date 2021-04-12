@@ -82,6 +82,7 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 * Added adminbar menu
 * Added url suggestion
 * Fixed label position
+* Fix library
 
 = 1.0.8 =
 * Added notification for new submission on admin bar
