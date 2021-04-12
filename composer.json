@@ -28,6 +28,6 @@
         "classmap": [
             "includes/"
         ],
-        "files": [ "includes/defaults.php", "includes/functions.php" ]
+        "files": [ "includes/defaults.php" ]
     }
 }
