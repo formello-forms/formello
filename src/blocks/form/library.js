@@ -49,6 +49,8 @@ import {
 	SelectControl,
 	Modal,
 } from '@wordpress/components';
+//import { parse } from '@wordpress/block-serialization-default-parser';
+import { BlockPreview } from '@wordpress/block-editor';
 
 function TemplatesModal ( props ) {
 
@@ -59,7 +61,7 @@ function TemplatesModal ( props ) {
 		clientId,
 		templates = false,
 	} = props;
-	
+
 	const [ loading, setLoading ] = useState( false )
 	const [ activeCategory, setActiveCategory ] = useState( {} )
 	const [ error, setError ] = useState( false )
@@ -216,13 +218,11 @@ function TemplatesModal ( props ) {
 										<div>
 											{ 'local' === tabType ? (
 												<Fragment>
-													<p style={ {
-														marginTop: 0,
-													} }>{ __( 'No templates found.', 'formello' ) }</p>
+													<p>{ __( 'No templates found.', 'formello' ) }</p>
 													<a className="components-button is-button is-primary" href={ formello.templatesURL } target="_blank" rel="noopener noreferrer">{ __( 'Add New', 'formello' ) }</a>
 												</Fragment>
 											) : (
-												__( 'No templates found.', 'formello' )
+												<p>{ __( 'No templates found.', 'formello' ) }</p>
 											) }
 										</div>
 									}
@@ -243,7 +243,7 @@ function TemplatesModal ( props ) {
 												</div>
 											</div>
 											{ error }
-											<Masonry
+											<ul
 												className="formello-plugin-templates-list"
 												elementType="ul"
 												disableImagesLoaded={ false }
@@ -254,6 +254,7 @@ function TemplatesModal ( props ) {
 											>
 												{ currentTemplates.map( ( template ) => {
 													const withThumb = !! template.thumbnail;
+													const withPreview = !! template.content;
 													const templateTitle = decodeEntities( template.title );
 
 													let thumbAspectRatio = false;
@@ -267,7 +268,7 @@ function TemplatesModal ( props ) {
 															className={ classnames( 'formello-plugin-templates-list-item', withThumb ? '' : 'formello-plugin-templates-list-item-no-thumb' ) }
 															key={ template.id }
 														>
-															<button
+															<a
 																onClick={ () => {
 																	setLoading( true );
 																	getTemplateData( {
@@ -304,12 +305,17 @@ function TemplatesModal ( props ) {
 																		</LazyLoad>
 																	</div>
 																}
+																{ withPreview &&
+																	<BlockPreview
+																		blocks={ parse( template.content ) }
+																	/>
+																}
 																<div className="formello-plugin-templates-list-item-title">{ templateTitle }</div>
-															</button>
+															</a>
 														</li>
 													);
 												} ) }
-											</Masonry>
+											</ul>
 
 											{ 'local' === tabType &&
 												<Fragment>

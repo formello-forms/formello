@@ -57,7 +57,7 @@
 
     > .formello-plugin-templates-list-item {
         flex: 0 0 33.333%;
-         width: 33.333%;
+        width: 33.333%;
         padding-top: 15px;
 		padding-left: 15px;
 
@@ -71,7 +71,7 @@
             width: 100%;
         }
 
-        > button {
+        > a {
             display: block;
             width: 100%;
             cursor: pointer;
@@ -116,7 +116,7 @@
 
         .formello-plugin-templates-list-item-title {
             padding: 5px;
-            font-size: 10px;
+            font-size: 14px;
             font-weight: 600;
         }
     }

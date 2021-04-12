@@ -37,9 +37,9 @@ registerBlockType( 'formello/form', {
 		}
 	},
 	styles: [
-		{ name: 'normal', label: __( 'Normal' ), isDefault: true },
-		{ name: 'medium', label: __( 'Medium' ) },
-		{ name: 'big', label: __( 'Big' ) },
+		//{ name: 'normal', label: __( 'Normal' ), isDefault: true },
+		//{ name: 'medium', label: __( 'Medium' ) },
+		//{ name: 'big', label: __( 'Big' ) },
 	],
 	example: {
 		innerBlocks: [

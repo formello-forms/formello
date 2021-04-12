@@ -83,53 +83,11 @@ class CPT {
 			'supports'            => array(
 				'title',
 				'editor',
-				'thumbnail',
 				'custom-fields',
 			),
 		);
 		register_post_type( 'formello_form', $args );
 
-	    register_meta( 'post', 'succhia', [
-	        'single' => true,
-	        'show_in_rest' => true,
-	        'description'  => 'A meta key associated with a string meta value.',
-	        'type' => 'string'
-	    ] );
-
-		register_meta(
-			'post',
-			'stocazzo',
-			array(
-				'single' => true,
-				'type' => 'array',
-				'show_in_rest'   => array(
-					'schema' => array(
-						'type'  => 'array',
-						'items' => array(
-							'type'       => 'object',
-							'properties' => array(
-								'name'    => array(
-									'type' => 'string',
-								),
-								'where'    => array(
-									'type' => 'string',
-								),
-								'condition'    => array(
-									'type' => 'string',
-								),
-								'operator' => array(
-									'type'   => 'string',
-								),
-								'selectedPosts' => array(
-									'type'   => 'array',
-								),
-							),
-						),
-					),
-				),
-				'object_subtype' => 'formello_form',
-			)
-		);
 	}
 
 	/**

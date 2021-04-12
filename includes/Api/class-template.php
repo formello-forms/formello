@@ -99,7 +99,7 @@ class Template extends WP_REST_Controller {
 		 */
 		$args = array(
 			'post_type'     => 'formello_form',
-			'fields'        => 'ids',
+			'fields'        => '',
 			'no_found_rows' => true,
 			'post_status'   => 'any',
 			'numberposts'   => 500, // phpcs:ignore
@@ -108,22 +108,23 @@ class Template extends WP_REST_Controller {
 		$all_templates = get_posts( $args );
 		$local_templates = array();
 
-		foreach ( $all_templates as $id ) {
-			$image_id   = get_post_thumbnail_id( $id );
-			$image_data = wp_get_attachment_image_src( $image_id, 'large' );
+		foreach ( $all_templates as $template ) {
+			//$image_id   = get_post_thumbnail_id( $template );
+			//$image_data = wp_get_attachment_image_src( $image_id, 'large' );
 
 			$local_templates[] = array(
-				'id'    => $id,
-				'title' => get_the_title( $id ),
+				'id'    => $template->ID,
+				'title' => $template->post_title,
 				'types' => array(
 					array(
 						'slug' => 'local',
 					),
 				),
-				'url'              => get_post_permalink( $id ),
-				'thumbnail'        => isset( $image_data[0] ) ? $image_data[0] : false,
-				'thumbnail_width'  => isset( $image_data[1] ) ? $image_data[1] : false,
-				'thumbnail_height' => isset( $image_data[2] ) ? $image_data[2] : false,
+				'content' => $template->post_content,
+				'url' => $template->guid,
+				//'thumbnail'        => isset( $image_data[0] ) ? $image_data[0] : false,
+				//'thumbnail_width'  => isset( $image_data[1] ) ? $image_data[1] : false,
+				//'thumbnail_height' => isset( $image_data[2] ) ? $image_data[2] : false,
 			);
 		}
 
