@@ -4,7 +4,7 @@ Donate link: 	   https://formello.net
 Tags:              contact form, form builder, form block, gutenberg form, forms
 Requires at least: 5.4.0
 Tested up to:      5.7.0
-Stable tag:        1.1.1
+Stable tag:        1.1.2
 Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -24,6 +24,7 @@ You can create forms directly inside Gutenberg editor, save submitted data and a
 * Store submissions
 * Email notification
 * Form customization: you can arrange field and display stacked field or in a row with label on side. You can change button colors and also choose loading icon and icon position.
+* Form Library
 
 == Supported form input ==
 
@@ -77,7 +78,7 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
-= 1.1.1 =
+= 1.1.2 =
 * Fix library using wrong id
 * Fix library output form that has fixed position addon
 * Improve the submission table sql
