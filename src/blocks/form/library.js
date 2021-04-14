@@ -49,7 +49,6 @@ import {
 	SelectControl,
 	Modal,
 } from '@wordpress/components';
-//import { parse } from '@wordpress/block-serialization-default-parser';
 import { BlockPreview } from '@wordpress/block-editor';
 
 function TemplatesModal ( props ) {

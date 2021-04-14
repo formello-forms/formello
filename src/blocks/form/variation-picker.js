@@ -43,7 +43,7 @@ function BlockVariationPicker( {
 			<ul
 				className="block-editor-block-variation-picker__variations"
 				role="list"
-				aria-label={ __( 'Block variations' ) }
+				aria-label={ __( 'Block variations', 'formello' ) }
 			>
 				{ variations.map( ( variation ) => (
 					<li key={ variation.name }>
@@ -78,7 +78,7 @@ function BlockVariationPicker( {
 						{ __( 'Open Library', 'formello' ) }
 					</Button>
 					<Button isLink onClick={ () => onSelect() }>
-						{ __( 'Skip' ) }
+						{ __( 'Skip', 'formello' ) }
 					</Button>
 				</div>
 			) }

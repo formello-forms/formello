@@ -15,6 +15,7 @@ import './editor.scss';
 
 import { useState, useEffect, Fragment } from '@wordpress/element';
 import { withSelect, useSelect, select, dispatch, useDispatch } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
 import { compose } from '@wordpress/compose';
 
 import {
@@ -98,6 +99,27 @@ function Edit( {
 		[]
 	);
 
+	const [ meta, setMeta ] = useEntityProp(
+		'postType',
+		postType,
+		'meta'
+	);
+	const metaFieldValue = meta['formello_position'];
+
+	const setId = () => {
+		apiFetch( {
+			path: '/formello/v1/form/create',
+			method: 'POST',
+			data: {
+				name: 'form-' + attributes.name
+			},
+		} ).then( ( result ) => {
+			setAttributes({
+				id: result.id
+			});
+		} );		
+	}
+
 	useEffect(
 		() => {
 			if( 'formello_form' == postType && undefined !== postTitle ){
@@ -107,7 +129,18 @@ function Edit( {
 		[ postTitle ]
 	);
 
-	const { __experimentalConvertBlocksToReusable } = useDispatch( reusableBlocksStore );
+	useEffect(
+		() => {
+			if( 'formello_form' == postType && true !== metaFieldValue.post_end ){
+				setId()
+			}
+			if( 'formello_form' == postType && false !== metaFieldValue.post_end ){
+				setAttributes( { id: undefined } )
+			}
+		},
+		[ metaFieldValue ]
+	);
+
 	useEffect(
 		() => {
 			let idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace(/-/g, '')
@@ -119,7 +152,7 @@ function Edit( {
 			if( 'formello_form' == postType && undefined !== postTitle ){
 				setAttributes( { name: postTitle } )
 			}
-			if( undefined === attributes.id && 'wp_block' !== postType ){
+			if( undefined === attributes.id && 'formello_form' !== postType ){
 				apiFetch( {
 					path: '/formello/v1/form/create',
 					method: 'POST',
@@ -169,20 +202,6 @@ function Edit( {
 
 	return (
 		<div {...blockProps}>
-            <BlockControls>
-                <ToolbarGroup>
-	                <ToolbarButton
-	                	label={ __( 'Add to reusable block' ) }
-	                    icon={ 'controls-repeat' }
-	                    onClick={ ()=> { 
-							setAttributes( {
-								id: undefined
-							} )
-							__experimentalConvertBlocksToReusable( [ clientId ] )
-	                    } }
-	                />
-                </ToolbarGroup>
-            </BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings', 'formello' ) } initialOpen={ true }>
 					<TextControl

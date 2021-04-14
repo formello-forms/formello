@@ -78,6 +78,12 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 == Changelog ==
 
 = 1.1.1 =
+* Fix library using wrong id
+* Fix library output form that has fixed position addon
+* Improve the submission table sql
+* Fix autocomplete on honeypot
+
+= 1.1.1 =
 * Added italian translations
 * Fixed button padding, border and color
 * Fixed menu

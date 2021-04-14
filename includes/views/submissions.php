@@ -12,6 +12,11 @@ $form_page = add_query_arg( array( 'page' => 'formello' ) );
 ?>
 </h2>
 
+
+<?php
+do_action( 'formello_forms_table' );
+?>
+
 <style type="text/css">
 .column-id { text-align: left; width:50px !important; overflow:hidden }
 .column-is_new { text-align: left; width:90px !important; overflow:hidden }

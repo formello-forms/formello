@@ -195,7 +195,7 @@ class App extends Component {
 							onClick={ ( e ) => this.updateSettings( e ) }
 						>
 							{ this.state.isAPISaving && <Spinner /> }
-							{ ! this.state.isAPISaving && __( 'Save' ) }
+							{ ! this.state.isAPISaving && __( 'Save', 'formello' ) }
 						</Button>
 
 						<span className="formello-action-message"></span>

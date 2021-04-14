@@ -171,17 +171,17 @@ function Edit( props ) {
 						{
 							value: textColor.color,
 							onChange: setTextColor,
-							label: __('Text color')
+							label: __( 'Text color', 'formello' )
 						},
 						{
 							value: backgroundColor.color,
 							onChange: setBackgroundColor,
-							label: __('Background color')
+							label: __( 'Background color', 'formello' )
 						},
 						{
 							value: borderColor.color,
 							onChange: setBorderColor,
-							label: __('Border color')
+							label: __( 'Border color', 'formello' )
 						},
 					]}
 				/>

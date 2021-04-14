@@ -57,7 +57,7 @@ export default function save( { attributes, className, innerBlocks } ) {
 			data-redirect={ attributes.redirectUrl } 
 			data-id={ attributes.id }>
 			<input type="hidden" name="_formello_id" value={ attributes.id } />
-			<input type="text" name={ honeypot } className="formello-hp" />
+			<input type="text" name={ honeypot } className="formello-hp" autocomplete="off" />
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
 		</form>

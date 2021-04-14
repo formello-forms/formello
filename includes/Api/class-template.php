@@ -111,6 +111,13 @@ class Template extends WP_REST_Controller {
 
 		foreach ( $all_templates as $template ) {
 
+			// if formello-position addon activated, skip the form that has attrinute id.
+			$position_meta = get_post_meta( $template->ID, 'formello_position', true );
+
+			if ( ! empty( $position_meta ) && $position_meta['post_end'] ) {
+				continue;
+			};
+
 			$local_templates[] = array(
 				'id'    => $template->ID,
 				'title' => $template->post_title,
