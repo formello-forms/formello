@@ -77,6 +77,11 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.1.1 =
+* Added italian translations
+* Fixed button padding, border and color
+* Fixed menu
+
 = 1.1.0 =
 * Better handling of CPT
 
