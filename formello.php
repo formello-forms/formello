@@ -169,7 +169,7 @@ final class Formello {
 		add_action( 'rest_init', array( $this, 'init_classes' ) );
 
 		// Localize our plugin.
-		add_action( 'plugins_loaded', array( $this, 'formello_localization_setup' ) );
+		load_plugin_textdomain( 'formello', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
@@ -189,15 +189,6 @@ final class Formello {
 		$email_action = new Formello\Actions\Email();
 		$email_action->hook();
 
-	}
-
-	/**
-	 * Initialize plugin for localization
-	 *
-	 * @uses load_plugin_textdomain()
-	 */
-	public function formello_localization_setup() {
-		load_plugin_textdomain( 'formello', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 } // FORMELLO

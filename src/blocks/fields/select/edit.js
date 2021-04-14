@@ -135,7 +135,7 @@ export default function Edit( props ) {
 	return (
 		<div className="formello">
 			<InspectorControls>
-				<PanelBody title="Field Options" initialOpen={ true }>
+				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<TextControl
 						label={ __( 'Name', 'formello' ) }
 						value={ attributes.name }
@@ -217,7 +217,7 @@ export default function Edit( props ) {
 						/>
 					) }
 				</PanelBody>
-				<PanelBody title="Options Select" initialOpen={ true }>
+				<PanelBody title={ __( 'Select Options', 'formello' ) } initialOpen={ false }>
 					<ToggleControl
 						label="Bulk add"
 						checked={ showRaw }
@@ -253,7 +253,7 @@ export default function Edit( props ) {
 					}
 				
 				</PanelBody>
-				<PanelBody title="CSS Class" initialOpen={ false }>
+				<PanelBody title={ __( 'CSS Class', 'formello' ) } initialOpen={ false }>
 
 					<DisplayOpts {...props}/>		
 

@@ -71,7 +71,8 @@ class Template extends WP_REST_Controller {
 	 * @return mixed
 	 */
 	public function get_templates() {
-		$url       = 'https://library.formello.net/wp-json/templates/get_templates';
+
+		$url       = 'https://formello.net/wp-json/formello/v1/formello_templates?nocache=' . time();
 		$templates = get_transient( 'formello_templates', false );
 
 		/*
@@ -84,8 +85,8 @@ class Template extends WP_REST_Controller {
 				$new_templates = wp_remote_retrieve_body( $requested_templates );
 				$new_templates = json_decode( $new_templates, true );
 
-				if ( $new_templates && isset( $new_templates['response'] ) && is_array( $new_templates['response'] ) ) {
-					$templates = $new_templates['response'];
+				if ( $new_templates && is_array( $new_templates ) ) {
+					$templates = $new_templates;
 
 					set_transient( 'formello_templates', $templates, DAY_IN_SECONDS );
 				}
@@ -109,8 +110,6 @@ class Template extends WP_REST_Controller {
 		$local_templates = array();
 
 		foreach ( $all_templates as $template ) {
-			//$image_id   = get_post_thumbnail_id( $template );
-			//$image_data = wp_get_attachment_image_src( $image_id, 'large' );
 
 			$local_templates[] = array(
 				'id'    => $template->ID,
@@ -122,9 +121,6 @@ class Template extends WP_REST_Controller {
 				),
 				'content' => $template->post_content,
 				'url' => $template->guid,
-				//'thumbnail'        => isset( $image_data[0] ) ? $image_data[0] : false,
-				//'thumbnail_width'  => isset( $image_data[1] ) ? $image_data[1] : false,
-				//'thumbnail_height' => isset( $image_data[2] ) ? $image_data[2] : false,
 			);
 		}
 
@@ -146,7 +142,7 @@ class Template extends WP_REST_Controller {
 	 * @return mixed
 	 */
 	public function get_template_data( \WP_REST_Request $request ) {
-		$url           = 'https://library.formello.net/wp-json/templates/get_template';
+		$url           = 'https://formello.net/wp-json/templates/get_template';
 		$id            = $request->get_param( 'id' );
 		$type          = $request->get_param( 'type' );
 		$template_data = false;

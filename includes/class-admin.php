@@ -67,14 +67,40 @@ class Admin {
 		global $submenu;
 
 		$capability = 'manage_options';
-		$slug       = 'formello';
+		$slug       = 'edit.php?post_type=formello_form';
 
-		add_menu_page( __( 'Formello', 'formello' ), __( 'Formello', 'formello' ), $capability, $slug, array( $this, 'forms_page' ), 'dashicons-feedback' );
-
-		$form_hook        = add_submenu_page( $slug, __( 'Submissions by Forms', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello', array( $this, 'forms_page' ) );
-		$submissions_hook = add_submenu_page( $slug, __( 'Submissions', 'formello' ), __( 'Submissions', 'formello' ), $capability, 'formello-submissions', array( $this, 'submissions_page' ) );
-		$submission_hook  = add_submenu_page( $slug, __( 'Submission', 'formello' ), __( 'Submission', 'formello' ), $capability, 'formello-submission', array( $this, 'submission_page_detail' ) );
-		$settings_hook    = add_submenu_page( $slug, __( 'Settings', 'formello' ), __( 'Settings', 'formello' ), $capability, 'formello-settings', array( $this, 'settings_page' ) );
+		$form_hook = add_submenu_page(
+			$slug,
+			__( 'Submissions by Forms', 'formello' ),
+			__( 'Submissions', 'formello' ),
+			$capability,
+			'formello',
+			array( $this, 'forms_page' )
+		);
+		$submissions_hook = add_submenu_page(
+			$slug,
+			__( 'Submissions', 'formello' ),
+			__( 'Submissions', 'formello' ),
+			$capability,
+			'formello-submissions',
+			array( $this, 'submissions_page' )
+		);
+		$submission_hook = add_submenu_page(
+			$slug,
+			__( 'Submission', 'formello' ),
+			__( 'Submission', 'formello' ),
+			$capability,
+			'formello-submission',
+			array( $this, 'submission_page_detail' )
+		);
+		$settings_hook = add_submenu_page(
+			$slug,
+			__( 'Settings', 'formello' ),
+			__( 'Settings', 'formello' ),
+			$capability,
+			'formello-settings',
+			array( $this, 'settings_page' )
+		);
 
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
 		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
@@ -104,7 +130,7 @@ class Admin {
 
 		// Hide the submenu.
 		foreach ( $hidden_submenus as $submenu => $unused ) {
-			remove_submenu_page( 'formello', $submenu );
+			remove_submenu_page( 'edit.php?post_type=formello_form', $submenu );
 		}
 
 		return $submenu_file;

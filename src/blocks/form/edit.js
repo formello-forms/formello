@@ -184,7 +184,7 @@ function Edit( {
                 </ToolbarGroup>
             </BlockControls>
 			<InspectorControls>
-				<PanelBody title="Form Settings" initialOpen={ true }>
+				<PanelBody title={ __( 'Settings', 'formello' ) } initialOpen={ true }>
 					<TextControl
 						label={ __( 'Name', 'formello' ) }
 						value={ attributes.name }

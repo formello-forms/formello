@@ -103,10 +103,10 @@ function Edit( props ) {
 
     const setPadding = ( { top, right, bottom, left } ) => {
     	setAttributes( {
-			paddingTop: top || paddingTop,
-			paddingLeft: left || paddingLeft,
-			paddingRight: right || paddingRight,
-			paddingBottom: bottom || paddingBottom,
+			paddingTop: top || undefined,
+			paddingLeft: left || undefined,
+			paddingRight: right || undefined,
+			paddingBottom: bottom || undefined,
     	} )
     }
 
@@ -130,7 +130,11 @@ function Edit( props ) {
 		'borderWidth': attributes.borderWidth,
 		'borderRadius': attributes.borderRadius,
 		'borderColor': borderColor.color,
-		'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
+		//'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
+		'paddingTop': paddingTop,
+		'paddingRight': paddingRight,
+		'paddingBottom': paddingBottom,
+		'paddingLeft': paddingLeft,
 	}
 
 	useEffect(
@@ -154,7 +158,7 @@ function Edit( props ) {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title="Options" initialOpen={ true }>
+				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<TextControl
 						label={ __( 'Text', 'formello' ) }
 						value={ attributes.text }
@@ -162,7 +166,7 @@ function Edit( props ) {
 					/>
 				</PanelBody>
 				<PanelColorSettings 
-					title={__('Color settings')}
+					title={ __( 'Color settings', 'formello' ) }
 					colorSettings={[
 						{
 							value: textColor.color,
@@ -181,7 +185,7 @@ function Edit( props ) {
 						},
 					]}
 				/>
-				<PanelBody>
+				<PanelBody title={ __( 'Advanced Options', 'formello' ) } initialOpen={ false }>
 					<RangeControl
 						value={ attributes.borderWidth }
 						label={ __( 'Border Width', 'formello' ) }

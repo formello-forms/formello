@@ -95,42 +95,42 @@ export default function messages( props ) {
 						} }
 					/>
 					<TextControl
-						label={ __( 'Number' ) }
+						label={ __( 'Number', 'formello' ) }
 						value={ getSetting( 'messages', 'patternMismatch' ).number }
 						onChange={ ( val ) => {
 							updateSetting( 'patternMismatch', 'number', val )
 						} }
 					/>
 					<TextControl
-						label={ __( 'Color' ) }
+						label={ __( 'Color', 'formello' ) }
 						value={ getSetting( 'messages', 'patternMismatch' ).color }
 						onChange={ ( val ) => {
 							updateSetting( 'patternMismatch', 'color', val )
 						} }
 					/>
 					<TextControl
-						label={ __( 'Date' ) }
+						label={ __( 'Date', 'formello' ) }
 						value={ getSetting( 'messages', 'patternMismatch' ).date }
 						onChange={ ( val ) => {
 							updateSetting( 'patternMismatch', 'date', val )
 						} }
 					/>
 					<TextControl
-						label={ __( 'Time' ) }
+						label={ __( 'Time', 'formello' ) }
 						value={ getSetting( 'messages', 'patternMismatch' ).time }
 						onChange={ ( val ) => {
 							updateSetting( 'patternMismatch', 'time', val )
 						} }
 					/>
 					<TextControl
-						label={ __( 'Month' ) }
+						label={ __( 'Month', 'formello' ) }
 						value={ getSetting( 'messages', 'patternMismatch' ).month }
 						onChange={ ( val ) => {
 							updateSetting( 'patternMismatch', 'month', val )
 						} }
 					/>
 					<TextControl
-						label={ __( 'Default' ) }
+						label={ __( 'Default', 'formello' ) }
 						value={ getSetting( 'messages', 'patternMismatch' ).default }
 						onChange={ ( val ) => {
 							updateSetting( 'patternMismatch', 'default', val )
@@ -150,14 +150,14 @@ export default function messages( props ) {
 
 				<PanelRow>
 					<TextControl
-						label={ __( 'Over Range' ) }
+						label={ __( 'Over Range', 'formello' ) }
 						value={ getSetting( 'messages', 'outOfRange' ).over }
 						onChange={ ( val ) => {
 							updateSetting( 'outOfRange', 'over', val )
 						} }
 					/>
 					<TextControl
-						label={ __( 'Under Range' ) }
+						label={ __( 'Under Range', 'formello' ) }
 						value={ getSetting( 'messages', 'outOfRange' ).under }
 						onChange={ ( val ) => {
 							updateSetting( 'outOfRange', 'under', val )
@@ -177,14 +177,14 @@ export default function messages( props ) {
 
 				<PanelRow>
 					<TextControl
-						label={ __( 'Over Length' ) }
+						label={ __( 'Over Length', 'formello' ) }
 						value={ getSetting( 'messages', 'wrongLength' ).over }
 						onChange={ ( val ) => {
 							updateSetting( 'wrongLength', 'over', val )
 						} }
 					/>
 					<TextControl
-						label={ __( 'Under Length' ) }
+						label={ __( 'Under Length', 'formello' ) }
 						value={ getSetting( 'messages', 'wrongLength' ).under }
 						onChange={ ( val ) => {
 							updateSetting( 'wrongLength', 'under', val )

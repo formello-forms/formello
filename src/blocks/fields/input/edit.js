@@ -77,7 +77,7 @@ export default function Edit( props ) {
 	return (
 		<div className={ className }>
 			<InspectorControls>
-				<PanelBody title="Field Options" initialOpen={ true }>
+				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<BaseControl>
 					<InputControl
 						label={ __( 'Name', 'formello' ) }
@@ -160,7 +160,7 @@ export default function Edit( props ) {
 					) }
 				</PanelBody>
 
-				<PanelBody title="Advanced Options" initialOpen={ false }>
+				<PanelBody title={ __( 'Advanced Options', 'formello' ) } initialOpen={ false }>
 					{
 					supported.includes('step') && 
 							<Fragment>
@@ -311,7 +311,7 @@ export default function Edit( props ) {
 						<p>No advanced options for this field type.</p>						
 					}
 				</PanelBody>
-				<PanelBody title="CSS Class" initialOpen={ false }>
+				<PanelBody title={ __( 'CSS Class', 'formello' ) } initialOpen={ false }>
 
 					<DisplayOpts { ...props } />
 

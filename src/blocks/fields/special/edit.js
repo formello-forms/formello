@@ -66,7 +66,7 @@ export default function Edit( { attributes, setAttributes, clientId } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title="Options" initialOpen={ true }>
+				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<ToggleControl
 						label={ __(
 							'Group button with input',

@@ -56,7 +56,11 @@ export default function save( { attributes, className } ) {
 		'borderWidth': attributes.borderWidth,
 		'borderRadius': attributes.borderRadius,
 		'borderColor': customBorderColor,
-		'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
+		//'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
+		'paddingTop': paddingTop,
+		'paddingRight': paddingRight,
+		'paddingBottom': paddingBottom,
+		'paddingLeft': paddingLeft,
 	}
 
 	return (

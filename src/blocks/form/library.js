@@ -183,19 +183,19 @@ function TemplatesModal ( props ) {
 					className="formello-component-modal-tab-panel"
 					tabs={ [
 						{
-							name: 'local',
+							name: 'remote',
 							title: (
 								<span>
-									{ __( 'Local Forms', 'formello' ) }
+									{ __( 'Templates', 'formello' ) }
 								</span>
 							),
 							className: 'formello-control-tabs-tab',
 						},
 						{
-							name: 'blocks',
+							name: 'local',
 							title: (
 								<span>
-									{ __( 'Blocks', 'formello' ) }
+									{ __( 'Local Forms', 'formello' ) }
 								</span>
 							),
 							className: 'formello-control-tabs-tab',
@@ -243,68 +243,32 @@ function TemplatesModal ( props ) {
 												</div>
 											</div>
 											{ error }
-											<ul
-												className="formello-plugin-templates-list"
-												elementType="ul"
-												disableImagesLoaded={ false }
-												updateOnEachImageLoad={ true }
-												options={ {
-													transitionDuration: 0,
-												} }
-											>
+											<ul className="formello-plugin-templates-list">
 												{ currentTemplates.map( ( template ) => {
-													const withThumb = !! template.thumbnail;
 													const withPreview = !! template.content;
 													const templateTitle = decodeEntities( template.title );
 
-													let thumbAspectRatio = false;
-
-													if ( template.thumbnail_height && template.thumbnail_width ) {
-														thumbAspectRatio = template.thumbnail_height / template.thumbnail_width;
-													}
-
 													return (
 														<li
-															className={ classnames( 'formello-plugin-templates-list-item', withThumb ? '' : 'formello-plugin-templates-list-item-no-thumb' ) }
+															className={ classnames( 'formello-plugin-templates-list-item', 'formello-plugin-templates-list-item-no-thumb' ) }
 															key={ template.id }
 														>
 															<a
 																onClick={ () => {
 																	setLoading( true );
-																	getTemplateData( {
-																		id: template.id,
-																		type: tabType,
-																	}, ( data ) => {
-																		if ( data && data.success && data.response && data.response.content ) {
-																			insertTemplate( data.response.content, clientId, ( errorResponse ) => {
-																				if ( errorResponse ) {
-																					setError( errorResponse );
-																				} else {
-																					onRequestClose();
-																				}
-																			} );
-																		}
-																		setLoading( true );
-																	} );
+																	if ( template.content ) {
+																		insertTemplate( template.content, clientId, ( errorResponse ) => {
+																			if ( errorResponse ) {
+																				setError( errorResponse );
+																			} else {
+																				onRequestClose();
+																			}
+																		} );
+																	}
+																	setLoading( true );
+
 																} }
 															>
-																{ withThumb &&
-																	<div className="formello-plugin-templates-list-item-image">
-																		{ thumbAspectRatio &&
-																			<div
-																				className="formello-plugin-templates-list-item-image-sizer"
-																				style={ { paddingTop: `${ 100 * thumbAspectRatio }%` } }
-																			/>
-																		}
-
-																		<LazyLoad overflow once>
-																			<img
-																				src={ template.thumbnail }
-																				alt={ template.title }
-																			/>
-																		</LazyLoad>
-																	</div>
-																}
 																{ withPreview &&
 																	<BlockPreview
 																		blocks={ parse( template.content ) }

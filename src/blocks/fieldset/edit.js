@@ -61,16 +61,16 @@ export default function Edit( {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title="Field Options" initialOpen={ true }>
+				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<ToggleControl
-						label="Show Legend"
+						label={ __( 'Show Legend', 'formello' ) }
 						checked={ attributes.showLegend }
 						onChange={ ( newval ) =>
 							setAttributes( { showLegend: newval } )
 						}
 					/>
 					<ToggleControl
-						label="Hide Border"
+						label={ __( 'Hide Border', 'formello' ) }
 						checked={ attributes.hideBorder }
 						onChange={ ( newval ) =>
 							setAttributes( { hideBorder: newval } )
