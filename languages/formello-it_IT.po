@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Formello - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/formello\n"
-"POT-Creation-Date: 2021-04-14T03:16:41+02:00\n"
-"PO-Revision-Date: 2021-04-14 03:17+0200\n"
+"POT-Creation-Date: 2021-04-14T03:28:06+02:00\n"
+"PO-Revision-Date: 2021-04-14 03:28+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -71,7 +71,7 @@ msgstr "Richieste"
 msgid "Submission"
 msgstr "Richiesta"
 
-#: includes/class-admin.php:98 includes/class-admin.php:99
+#: includes/class-admin.php:98 includes/class-admin.php:99 build/index.js:3
 #: src/blocks/form/edit.js:187
 msgid "Settings"
 msgstr "Impostazioni"
@@ -222,12 +222,52 @@ msgid "Pattern Mismatch"
 msgstr "Mancata corrispondenza al pattern"
 
 #: build/dashboard.js:1
+msgid "Number"
+msgstr "Numero"
+
+#: build/dashboard.js:1
+msgid "Color"
+msgstr "Colore"
+
+#: build/dashboard.js:1
+msgid "Date"
+msgstr "Data"
+
+#: build/dashboard.js:1
+msgid "Time"
+msgstr "Ora"
+
+#: build/dashboard.js:1
+msgid "Month"
+msgstr "Mese"
+
+#: build/dashboard.js:1
+msgid "Default"
+msgstr "Default"
+
+#: build/dashboard.js:1
 msgid "Out of Range"
 msgstr "Fuori limite"
 
 #: build/dashboard.js:1
+msgid "Over Range"
+msgstr "Oltre il limite"
+
+#: build/dashboard.js:1
+msgid "Under Range"
+msgstr "Sotto il limite"
+
+#: build/dashboard.js:1
 msgid "Wrong Length"
 msgstr "Lunghezza errata"
+
+#: build/dashboard.js:1
+msgid "Over Length"
+msgstr "Lunghezza superiore"
+
+#: build/dashboard.js:1
+msgid "Under Length"
+msgstr "Lunghezza inferione"
 
 #: build/dashboard.js:1 src/settings/integrations.js:29
 msgid "Integrations"
@@ -332,6 +372,20 @@ msgstr "Fieldset"
 msgid "Fieldset to group input."
 msgstr "Fieldset per raggruppare campi."
 
+#: build/index.js:9 src/blocks/fields/button/edit.js:161
+#: src/blocks/fields/input/edit.js:80 src/blocks/fields/select/edit.js:138
+#: src/blocks/fields/special/edit.js:69 src/blocks/fieldset/edit.js:64
+msgid "Options"
+msgstr "Opzioni"
+
+#: build/index.js:9 src/blocks/fieldset/edit.js:66
+msgid "Show Legend"
+msgstr "Mostra Legenda"
+
+#: build/index.js:9 src/blocks/fieldset/edit.js:73
+msgid "Hide Border"
+msgstr "Nascondi Bordi"
+
 #: build/index.js:9 src/blocks/fieldset/edit.js:88
 msgid "Enter legend..."
 msgstr "Inserisci legenda..."
@@ -341,11 +395,8 @@ msgid "Input with button"
 msgstr "Campo con bottone"
 
 #: build/index.js:9 src/blocks/fields/special/index.js:39
-#: src/blocks/fields/special/output.js:21
-msgid ""
-"Example block written with ESNext standard and JSX support – build step "
-"required."
-msgstr ""
+msgid "Campo flex."
+msgstr "Campo flex."
 
 #: build/index.js:9 src/blocks/fields/special/edit.js:71
 msgid "Group button with input"
@@ -354,6 +405,10 @@ msgstr "Campo con bottone"
 #: build/index.js:9 src/blocks/fields/special/output.js:15
 msgid "Output."
 msgstr "Output."
+
+#: build/index.js:9 src/blocks/fields/special/output.js:21
+msgid "Campo Output."
+msgstr "Campo Output."
 
 #: build/index.js:9 src/blocks/fields/input/edit.js:101
 #: src/blocks/fields/input/inspector-controls.js:65
@@ -414,6 +469,15 @@ msgstr "Opzione selezionata"
 msgid "Show description"
 msgstr "Mostra descrizione"
 
+#: build/index.js:9 src/blocks/fields/select/edit.js:220
+msgid "Select Options"
+msgstr "Opzioni Select"
+
+#: build/index.js:9 src/blocks/fields/input/edit.js:314
+#: src/blocks/fields/select/edit.js:256
+msgid "CSS Class"
+msgstr "Classi CSS"
+
 #: build/index.js:9 src/blocks/fields/input/edit.js:362
 #: src/blocks/fields/select/edit.js:295
 msgid "Enter help message..."
@@ -445,6 +509,11 @@ msgstr "Selezionato"
 #: src/blocks/fields/input/inspector-controls.js:115
 msgid "Show Description"
 msgstr "Mostra descrizione"
+
+#: build/index.js:9 src/blocks/fields/button/edit.js:188
+#: src/blocks/fields/input/edit.js:163
+msgid "Advanced Options"
+msgstr "Opzioni Avanzate"
 
 #: build/index.js:9 src/blocks/fields/input/edit.js:169
 #: src/blocks/fields/input/inspector-controls.js:150
@@ -512,42 +581,38 @@ msgid "Read only"
 msgstr "Sola lettura"
 
 #: build/index.js:9 src/blocks/fields/button/edit.js:49
-#: src/blocks/fields/button/edit2.js:104
 msgid "Align Button Left"
 msgstr "Allinea Bottone a sinistra"
 
 #: build/index.js:9 src/blocks/fields/button/edit.js:54
-#: src/blocks/fields/button/edit2.js:109
 msgid "Align Button Center"
 msgstr "Allinea Bottone al centro"
 
 #: build/index.js:9 src/blocks/fields/button/edit.js:59
-#: src/blocks/fields/button/edit2.js:114
 msgid "Align Button Right"
 msgstr "Allinea Bottone a destra"
 
 #: build/index.js:9 src/blocks/fields/button/edit.js:64
-#: src/blocks/fields/button/edit2.js:119
 msgid "Wide Button"
 msgstr "Bottone largo"
 
 #: build/index.js:9 src/blocks/fields/button/edit.js:163
-#: src/blocks/fields/button/edit2.js:177
 msgid "Text"
 msgstr "Testo"
 
+#: build/index.js:9 src/blocks/fields/button/edit.js:169
+msgid "Color settings"
+msgstr "Impostazioni colore"
+
 #: build/index.js:9 src/blocks/fields/button/edit.js:191
-#: src/blocks/fields/button/edit2.js:326
 msgid "Border Width"
 msgstr "Spessore bordo"
 
 #: build/index.js:9 src/blocks/fields/button/edit.js:201
-#: src/blocks/fields/button/edit2.js:336
 msgid "Border Radius"
 msgstr "Raggio bordo"
 
 #: build/index.js:9 src/blocks/fields/button/edit.js:210
-#: src/blocks/fields/button/edit2.js:345
 msgid "Padding"
 msgstr "Padding"
 
@@ -602,74 +667,24 @@ msgstr "Vuoi di più?"
 #: src/blocks/components/color-picker/index.js:76
 #: src/blocks/components/color-picker/index.js:93
 msgid "Choose Color"
-msgstr ""
+msgstr "Scegli Colore"
 
 #: src/blocks/components/color-picker/index.js:82
 #: src/blocks/components/color-picker/index.js:99
 msgid "Custom color picker"
-msgstr ""
+msgstr "Color picker personalizzato"
 
 #: src/blocks/components/color-picker/index.js:123
 msgid "Opacity"
-msgstr ""
+msgstr "Opacità"
 
 #: src/blocks/components/color-picker/index.js:151
 msgid "Clear Color"
-msgstr ""
+msgstr "Pulisci Colore"
 
 #: src/blocks/components/merge-tags/tagSelector.js:39
 msgid "Search Tags"
-msgstr ""
-
-#: src/blocks/fields/button/edit.js:161 src/blocks/fields/input/edit.js:80
-#: src/blocks/fields/select/edit.js:138 src/blocks/fields/special/edit.js:69
-#: src/blocks/fieldset/edit.js:64
-msgid "Options"
-msgstr ""
-
-#: src/blocks/fields/button/edit.js:169
-msgid "Color settings"
-msgstr "Impostazioni colore"
-
-#: src/blocks/fields/button/edit.js:188 src/blocks/fields/input/edit.js:163
-msgid "Advanced Options"
-msgstr ""
-
-#: src/blocks/fields/button/edit2.js:196
-msgid "Normal"
-msgstr ""
-
-#: src/blocks/fields/button/edit2.js:201
-msgid "Hover"
-msgstr ""
-
-#: src/blocks/fields/button/edit2.js:214 src/blocks/fields/button/edit2.js:269
-msgid "Background Color"
-msgstr "Colore Sfondo"
-
-#: src/blocks/fields/button/edit2.js:233 src/blocks/fields/button/edit2.js:288
-msgid "Text Color"
-msgstr "Colore Testo"
-
-#: src/blocks/fields/button/edit2.js:245 src/blocks/fields/button/edit2.js:300
-msgid "Border Color"
-msgstr "Colore Bordo"
-
-#: src/blocks/fields/input/edit.js:314 src/blocks/fields/select/edit.js:256
-msgid "CSS Class"
-msgstr "Classi CSS"
-
-#: src/blocks/fields/select/edit.js:220
-msgid "Select Options"
-msgstr "Opzioni Select"
-
-#: src/blocks/fieldset/edit.js:66
-msgid "Show Legend"
-msgstr "Mostra Legenda"
-
-#: src/blocks/fieldset/edit.js:73
-msgid "Hide Border"
-msgstr "Nascondi Bordi"
+msgstr "Cerca Tags"
 
 #: src/blocks/form/index.js:24
 msgid "Drive conversions with beautiful forms."
@@ -678,6 +693,12 @@ msgstr "Ottieni conversioni con moduli stupendi."
 #: src/blocks/form/reusable.js:65
 msgid "Choose a form"
 msgstr "Scegli modulo"
+
+#~ msgid "Background Color"
+#~ msgstr "Colore Sfondo"
+
+#~ msgid "Border Color"
+#~ msgstr "Colore Bordo"
 
 #~ msgid "Book event form"
 #~ msgstr "Form registrazione evento"
