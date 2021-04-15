@@ -131,10 +131,10 @@ function Edit( {
 
 	useEffect(
 		() => {
-			if( 'formello_form' == postType && true !== metaFieldValue.post_end ){
+			if( 'formello_form' == postType && undefined !== metaFieldValue && true !== metaFieldValue.post_end ){
 				setId()
 			}
-			if( 'formello_form' == postType && false !== metaFieldValue.post_end ){
+			if( 'formello_form' == postType && undefined !== metaFieldValue && false !== metaFieldValue.post_end ){
 				setAttributes( { id: undefined } )
 			}
 		},
