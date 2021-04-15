@@ -29,7 +29,7 @@ final class Formello {
 	 *
 	 * @var string
 	 */
-	public $version = '1.1.2';
+	public $version = '1.1.3';
 
 	/**
 	 * Holds various class instances
