@@ -4,7 +4,7 @@ Donate link: 	   https://formello.net
 Tags:              contact form, form builder, form block, gutenberg form, forms
 Requires at least: 5.4.0
 Tested up to:      5.7.0
-Stable tag:        1.1.3
+Stable tag:        1.1.4
 Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -77,6 +77,12 @@ Yes. Your submissions will be stored in database, so you can keep track of them.
 Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. Also we have support for Google ReCaptcha (v2,v3) to stop spam bot sending form and to help you take things clean. Apart from this, data submitted are always validated and sanitized.
 
 == Changelog ==
+
+= 1.1.4 =
+* Better handling of form settings async( a lot of code reduction)
+* Improvement on how to embed form on page ( until this is solved: https://github.com/WordPress/gutenberg/issues/29693)
+* Improvement on form actions, now have custom button
+* Small fixes
 
 = 1.1.3 =
 * Small fixes
