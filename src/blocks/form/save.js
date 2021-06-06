@@ -6,15 +6,8 @@
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
-//const { getCurrentPostId } = wp.data.select("core/editor");
-
 import { useState } from '@wordpress/element';
 import classnames from 'classnames';
-
-import {
-	getConstraints,
-	getFieldsName
-} from '../components/merge-tags/functions';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -26,11 +19,6 @@ import {
  * @return {WPElement} Element to render.
  */
 export default function save( { attributes, className, innerBlocks } ) {
-
-	if( attributes.blockId ){
-		attributes.fields = getFieldsName(attributes.blockId);
-		attributes.constraints = getConstraints( attributes.blockId );
-	}
 
 	className = classnames( 
 		className,
@@ -57,7 +45,7 @@ export default function save( { attributes, className, innerBlocks } ) {
 			data-redirect={ attributes.redirectUrl } 
 			data-id={ attributes.id }>
 			<input type="hidden" name="_formello_id" value={ attributes.id } />
-			<input type="text" name={ honeypot } className="formello-hp" autocomplete="off" />
+			<input type="text" name={ honeypot } className="formello-hp" autocomplete="nope" />
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
 		</form>

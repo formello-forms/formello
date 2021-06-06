@@ -41,6 +41,10 @@ export default function save( { attributes, className } ) {
 	const htmlAttrs = pickBy( attributes, identity);
 	htmlAttrs.className = fieldClass ? fieldClass : undefined;
 
+	if( attributes.validation ){
+		htmlAttrs['data-bouncer-message'] = attributes.validation
+	}
+
 	if( attributes.noWrapper ){
 		return <input {...htmlAttrs}/>
 	}

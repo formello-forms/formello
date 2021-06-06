@@ -29,7 +29,6 @@ import { compose } from '@wordpress/compose';
 import classnames from 'classnames';
 import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
 import { useState, useEffect } from '@wordpress/element';
-import shorthandCSS from '../../../utils/shorthand-css';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -130,7 +129,6 @@ function Edit( props ) {
 		'borderWidth': attributes.borderWidth,
 		'borderRadius': attributes.borderRadius,
 		'borderColor': borderColor.color,
-		//'padding': shorthandCSS( paddingTop, paddingRight, paddingBottom, paddingLeft, 'px' )
 		'paddingTop': paddingTop,
 		'paddingRight': paddingRight,
 		'paddingBottom': paddingBottom,

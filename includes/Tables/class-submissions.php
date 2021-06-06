@@ -384,7 +384,7 @@ class Submissions extends \WP_List_Table {
 
 		$actions = array(
 			'edit' => sprintf(
-				'<a href="?page=%s&form=%s&submission=%s&paged=%s">%s</a>',
+				'<a href="?post_type=formello_form&page=%s&form=%s&submission=%s&paged=%s">%s</a>',
 				'formello-submission',
 				sanitize_text_field( $_REQUEST['form'] ),
 				absint( $item['id'] ),

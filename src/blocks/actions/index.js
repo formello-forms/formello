@@ -59,6 +59,7 @@ registerBlockType( 'formello/actions', {
 	 */
 	supports: {
 		html: false,
+		multiple: false,
 		className: true,
 		reusable: false
 	},

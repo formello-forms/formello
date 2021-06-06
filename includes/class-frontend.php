@@ -121,6 +121,7 @@ class Frontend {
 
 			// process form actions.
 			if ( isset( $form_settings['actions'] ) ) {
+
 				foreach ( $form_settings['actions'] as $action_settings ) {
 					/**
 					 * Processes the specified form action and passes related data.
@@ -129,7 +130,7 @@ class Frontend {
 					 * @param Data $store
 					 * @param Form $form
 					 */
-					do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings['settings'], $store, $form );
+					do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings, $store, $form );
 				}
 			}
 

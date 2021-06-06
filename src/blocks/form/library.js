@@ -307,6 +307,9 @@ const TemplatesModalWithSelect = compose( [
 			insertTemplate( content, clientId, cb ) {
 				const parsedBlocks = parse( content );
 
+				// remove the id attribute
+				parsedBlocks[0].attributes.id = undefined
+
 				if ( parsedBlocks.length ) {
 					replaceBlocks( clientId, parsedBlocks );
 
@@ -321,6 +324,7 @@ const TemplatesModalWithSelect = compose( [
 		return {
 			templates,
 			getTemplateData( data, cb ) {
+				console.log(cb)
 				let type = data.type;
 
 				if ( 'local' !== type ) {

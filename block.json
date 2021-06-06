@@ -1,6 +1,7 @@
 {
 	"name": "formello/form",
 	"title": "Form",
+	"description": "A block collection to build forms.",
 	"category": "formello",
 	"icon": "block-default",
 	"textdomain": "formello",

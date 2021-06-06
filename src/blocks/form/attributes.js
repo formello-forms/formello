@@ -4,9 +4,6 @@ export default {
 	id: {
 		type: 'number',
 	},
-	blockId: {
-		type: 'number',
-	},
 	name: {
 		type: 'string',
 		default: '',

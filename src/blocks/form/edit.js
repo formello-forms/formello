@@ -17,6 +17,10 @@ import { useState, useEffect, Fragment } from '@wordpress/element';
 import { withSelect, useSelect, select, dispatch, useDispatch } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 import { compose } from '@wordpress/compose';
+import {
+	getConstraints,
+	getFieldsName
+} from '../components/merge-tags/functions';
 
 import {
 	InspectorControls,
@@ -32,6 +36,17 @@ import {
 	createBlocksFromInnerBlocksTemplate,
 	createBlock
 } from '@wordpress/blocks';
+const {
+	getBlock,
+	getBlocks,
+	getClientIdsOfDescendants,
+	getBlockRootClientId,
+	getBlocksByClientId,
+	getBlockHierarchyRootClientId,
+	getPreviousBlockClientId,
+	getBlockParents,
+	getBlockCount
+} = wp.data.select("core/block-editor");
 
 import apiFetch from '@wordpress/api-fetch';
 import BlockVariationPicker from './variation-picker';
@@ -60,7 +75,6 @@ const ALLOWED_BLOCKS = [
 	'core/paragraph',
 	'core/heading',
 	'core/columns',
-	'create-block/formello-conditional-fields',
 	'formello/actions',
 	'formello/columns',
 	'formello/button',
@@ -70,6 +84,7 @@ const ALLOWED_BLOCKS = [
 	'formello/select',
 ];
 import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
+import { store as blocksStore } from '@wordpress/block-editor';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -87,7 +102,8 @@ function Edit( {
 	className,
 	setAttributes,
 	clientId,
-	hasChildBlocks
+	hasChildBlocks,
+	innerBlocks
 } ) {
 
 	const postType = useSelect(
@@ -99,26 +115,7 @@ function Edit( {
 		[]
 	);
 
-	const [ meta, setMeta ] = useEntityProp(
-		'postType',
-		postType,
-		'meta'
-	);
-	const metaFieldValue = meta['formello_position'];
-
-	const setId = () => {
-		apiFetch( {
-			path: '/formello/v1/form/create',
-			method: 'POST',
-			data: {
-				name: 'form-' + attributes.name
-			},
-		} ).then( ( result ) => {
-			setAttributes({
-				id: result.id
-			});
-		} );		
-	}
+	const [ showActions, setShowActions ] = useState(false);
 
 	useEffect(
 		() => {
@@ -129,17 +126,12 @@ function Edit( {
 		[ postTitle ]
 	);
 
-	useEffect(
-		() => {
-			if( 'formello_form' == postType && undefined !== metaFieldValue && true !== metaFieldValue.post_end ){
-				setId()
-			}
-			if( 'formello_form' == postType && undefined !== metaFieldValue && false !== metaFieldValue.post_end ){
-				setAttributes( { id: undefined } )
-			}
-		},
-		[ metaFieldValue ]
-	);
+	useEffect( () => {
+		setAttributes( {
+			fields: getFieldsName( clientId ),
+			constraints: getConstraints( clientId )
+		} )		
+	}, [innerBlocks] )
 
 	useEffect(
 		() => {
@@ -149,10 +141,10 @@ function Edit( {
 					name: 'form-' + idx
 				} )
 			}
-			if( 'formello_form' == postType && undefined !== postTitle ){
+			if( 'formello_form' === postType && undefined !== postTitle ){
 				setAttributes( { name: postTitle } )
 			}
-			if( undefined === attributes.id && 'formello_form' !== postType ){
+			if( undefined === attributes.id ){
 				apiFetch( {
 					path: '/formello/v1/form/create',
 					method: 'POST',
@@ -165,22 +157,23 @@ function Edit( {
 					});
 				} );
 			}
-			setAttributes( {
-				blockId: clientId,
-			} )		
-			return () => {
-				//setAttributes({ id: undefined })
-				/*apiFetch( {
-					path: '/formello/v1/form/delete/',
-					method: 'DELETE',
-					data: {
-						id: attributes.id
-					}
-				} )*/
-			}
 		},
 		[]
 	);
+
+	const addActions = () => {
+		let hasActions = false
+		let blocks = getBlocks(clientId)
+		blocks.forEach( (b) => {
+			if( 'formello/actions' === b.name ){
+				hasActions = true
+			}
+		} )
+		if( !hasActions ){
+			let insertedBlock = createBlock( 'formello/actions' );
+			wp.data.dispatch('core/block-editor').insertBlocks(insertedBlock, blocks.length, clientId);
+		}
+	}
 
 	const getBlockClassNames = () => {
 
@@ -190,6 +183,7 @@ function Edit( {
 				? attributes.labelAlign
 				: undefined,
 			{
+				'show-actions': showActions,
 				'as-row': attributes.asRow,
 				'is-bold': attributes.labelIsBold
 			}
@@ -203,6 +197,20 @@ function Edit( {
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
+				<BlockControls>
+					<ToolbarGroup>
+						<ToolbarButton
+							label={ __( 'Edit this form', 'formello' ) }
+							icon="admin-settings"
+							isPressed={ showActions }
+							className="my-custom-button"
+							onClick={ () => {
+								setShowActions( !showActions ) 
+								addActions()
+							} }
+						/>
+					</ToolbarGroup>
+				</BlockControls>
 				<PanelBody title={ __( 'Settings', 'formello' ) } initialOpen={ true }>
 					<TextControl
 						label={ __( 'Name', 'formello' ) }

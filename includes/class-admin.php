@@ -46,9 +46,6 @@ class Admin {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_item' ), 500 );
 		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
-		add_action( 'pre_post_update', array( $this, 'formello_pre_insert' ), 10, 2 );
-		add_action( 'save_post', array( $this, 'formello_pre_insert_cpt' ), 10, 2 );
-		add_action( 'rest_insert_wp_block', array( $this, 'formello_pre_insert_cpt' ), 10, 2 );
 		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
 	}
 
@@ -101,10 +98,19 @@ class Admin {
 			'formello-settings',
 			array( $this, 'settings_page' )
 		);
+		$addons_hook = add_submenu_page(
+			$slug,
+			__( 'Addons', 'formello' ),
+			__( 'Addons', 'formello' ),
+			$capability,
+			'formello-addons',
+			array( $this, 'addons_page' )
+		);
 
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
 		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
 		add_action( "load-$settings_hook", array( $this, 'settings_hooks' ) );
+		add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
 		add_filter( 'submenu_file', array( $this, 'remove_submenu' ) );
 
 	}
@@ -286,127 +292,12 @@ class Admin {
 	}
 
 	/**
-	 * Store Formello form settings in DB.
+	 * Output our Dashboard HTML.
 	 *
-	 * @param Int      $id The id of form.
-	 * @param \WP_Post $post The post to save.
+	 * @since 0.1
 	 */
-	public function formello_pre_insert_cpt( $id, $post ) {
-
-		$blocks = $this->find_forms( parse_blocks( $post->post_content ) );
-
-		foreach ( $blocks as $block ) {
-			if ( 'formello/form' === $block['blockName'] ) {
-				$id = $block['attrs']['id'];
-				$this->formello_insert( $id, $block );
-			}
-		}
-
-	}
-
-	/**
-	 * Recursively find form blocks.
-	 *
-	 * @param mixed $blocks The data to parse.
-	 */
-	private function find_forms( $blocks ) {
-		$list = array();
-
-		foreach ( $blocks as $block ) {
-			if ( 'formello/form' === $block['blockName'] ) {
-				// add current item, if it's a formello block.
-				$list[] = $block;
-			} elseif ( ! empty( $block['innerBlocks'] ) ) {
-				// or call the function recursively, to find formello blocks in inner blocks.
-				$list = array_merge( $list, $this->find_forms( $block['innerBlocks'] ) );
-			}
-		}
-
-		return $list;
-	}
-
-	/**
-	 * Store Formello form settings in DB.
-	 *
-	 * @param Int   $id The id of form.
-	 * @param mixed $data The data to save.
-	 */
-	public function formello_pre_insert( $id, $data ) {
-
-		// parse the content.
-		$blocks = $this->find_forms( parse_blocks( $data['post_content'] ) );
-
-		foreach ( $blocks as $block ) {
-			if ( 'formello/form' === $block['blockName'] ) {
-				$id = $block['attrs']['id'];
-				$this->formello_insert( $id, $block );
-			}
-		}
-
-	}
-
-	/**
-	 * Store Formello form settings in DB.
-	 *
-	 * @param Int   $id The id of form.
-	 * @param mixed $block The block to save.
-	 */
-	public function formello_insert( $id, $block ) {
-
-		$defaults = array(
-			'recaptchaEnabled' => false,
-			'storeSubmissions' => true,
-			'hide' => false,
-		);
-
-		$settings            = array_merge( $defaults, $block['attrs'] );
-		$settings['actions'] = array();
-
-		foreach ( $block['innerBlocks'] as $b ) {
-			if ( 'formello/actions' === $b['blockName'] ) {
-				$settings['actions'] = $this->formello_get_actions( $b['innerBlocks'] );
-			}
-		}
-
-		$form_settings = maybe_serialize( $settings );
-
-		$name = $block['attrs']['name'];
-
-		global $wpdb;
-
-		$table = $wpdb->prefix . 'formello_forms';
-		$wpdb->update(
-			$table,
-			array(
-				'settings' => $form_settings,
-				'name'     => $name,
-			),
-			array(
-				'id' => $id,
-			)
-		);
-	}
-
-	/**
-	 * Store Formello action settings in DB.
-	 *
-	 * @param mixed $blocks The blocks actions.
-	 * @since 1.0.0
-	 */
-	protected function formello_get_actions( $blocks ) {
-
-		$actions = array();
-
-		foreach ( $blocks as $block ) {
-
-			$actions[ $block['attrs']['name'] ] = array(
-				'settings' => $block['attrs']['settings'] ? $block['attrs']['settings'] : array(),
-				'type'     => $block['attrs']['type'],
-			);
-
-		}
-
-		return $actions;
+	public function addons_page() {
+		require dirname( __FILE__ ) . '/views/addons.php';
 	}
 
 	/**
@@ -439,7 +330,7 @@ class Admin {
 				'parent' => null,
 				'group'  => null,
 				'title' => 'Formello ' . $badge,
-				'href'  => admin_url( 'admin.php?page=formello' ),
+				'href'  => admin_url( 'edit.php?post_type=formello_form&page=formello' ),
 			)
 		);
 

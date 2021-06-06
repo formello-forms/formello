@@ -7,6 +7,7 @@ import edit from './edit';
 import save from './save';
 import getIcon from '../../utils/get-icon';
 import blockAttributes from './attributes';
+import asyncDb from './asyncDb';
 
 const { __ } = wp.i18n;
 import { registerBlockType } from '@wordpress/blocks';
@@ -32,6 +33,7 @@ registerBlockType( 'formello/form', {
 		reusable: false,
 		className: true,
 		html: false,
+		inserter: 'formello_form' === pagenow ? true : false,
 		spacing: {
 			padding: true,
 		}
@@ -82,3 +84,4 @@ registerBlockType( 'formello/form', {
 	edit: edit,
 	save: save,
 } );
+	

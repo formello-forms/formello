@@ -70,6 +70,18 @@ class Form extends WP_REST_Controller {
 				),
 			)
 		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/(?P<id>[\d]+)',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'update_item' ),
+					'permission_callback' => array( $this, 'get_item_permissions_check' ),
+					'args'                => array( $this->get_collection_params() ),
+				),
+			)
+		);
 
 	}
 
@@ -124,6 +136,40 @@ class Form extends WP_REST_Controller {
 		}
 
 		$response = rest_ensure_response( $item );
+
+		return $response;
+	}
+
+	/**
+	 * Get one item from the collection
+	 *
+	 * @param WP_REST_Request $request Full data about the request.
+	 * @return WP_Error|WP_REST_Response
+	 */
+	public function update_item( $request ) {
+		$id = $request->get_param( 'id' );
+        $name = $request['name'];
+        $settings = $request['settings'];
+
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'formello_forms';
+		$result = $wpdb->update(
+			$table,
+			array(
+				'settings' => serialize($settings),
+				'name'     => $name,
+			),
+			array(
+				'id' => $id,
+			)
+		);
+
+		if ( empty( $result ) ) {
+			$item = new \WP_Error( 'no_posts', __( 'No form found' ), array( 'status' => 404 ) ); // status can be changed to any number.
+		}
+
+		$response = rest_ensure_response( $result );
 
 		return $response;
 	}

@@ -134,6 +134,7 @@ registerBlockType( 'formello/button', {
 		html: false,
 		reusable: false,
 		color: false,
+		multiple: false,
 	},
 
 	/**

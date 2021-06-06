@@ -234,15 +234,15 @@ export default function Edit( props ) {
 								}
 							/>
 							</BaseControl>
-							<BaseControl>
-							<InputControl
-								label={ __( 'Custom Validation Message', 'formello' ) }
-								value={ attributes.validation }
-								onChange={ ( val ) => setAttributes( { validation: val } ) }
-							/>
-							</BaseControl>
 							</Fragment>
 					}
+					<BaseControl>
+						<InputControl
+							label={ __( 'Custom Validation Message', 'formello' ) }
+							value={ attributes.validation }
+							onChange={ ( val ) => setAttributes( { validation: val } ) }
+						/>
+					</BaseControl>
 					{ 'textarea' == attributes.type && (
 						<Fragment>
 						<BaseControl>

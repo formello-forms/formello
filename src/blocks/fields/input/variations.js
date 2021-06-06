@@ -79,7 +79,7 @@ const variations = [
 	{
 		name: 'email',
 		title: __( 'Email' ),
-		description: __( 'Two columns; equal split' ),
+		description: __( 'Email field' ),
 		icon: getIcon('email'),
 		attributes: {
 			name: 'email',

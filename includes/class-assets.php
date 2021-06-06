@@ -83,6 +83,7 @@ class Assets {
 			array(
 				'settingsURL' => admin_url( 'admin.php?page=formello-settings' ),
 				'templatesURL' => admin_url( 'edit.php?post_type=formello_form' ),
+				'formURL' => admin_url( 'post.php?post=' ),
 			)
 		);
 	}
@@ -132,14 +133,20 @@ class Assets {
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),
-			'formello-recaptcha'         => array(
-				'src'       => 'https://www.google.com/recaptcha/api.js#asyncload',
-				'in_footer' => true,
-			),
 			'formello-settings'          => array(
 				'src'       => FORMELLO_ASSETS . '/dashboard.js',
 				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ),
 				'version'   => $script_asset['version'],
+				'in_footer' => true,
+			),
+			'formello-exclude-form'	 => array(
+				'src'       => FORMELLO_ASSETS . '/unregister.js',
+				'deps'      => array( 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ),
+				'version'   => $script_asset['version'],
+				'in_footer' => true,
+			),
+			'formello-recaptcha'         => array(
+				'src'       => 'https://www.google.com/recaptcha/api.js#asyncload',
 				'in_footer' => true,
 			),
 			'formello-flatpickr'         => array(
