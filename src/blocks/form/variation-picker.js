@@ -85,6 +85,7 @@ function BlockVariationPicker( {
 
 			{ 'templates' === isModalOpen &&
 				<TemplatesModal
+					type={ 'remote' }
 					onRequestClose={ () => setModalOpen( false ) }
 					clientId={ clientId }
 				/>

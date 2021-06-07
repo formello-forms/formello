@@ -11,7 +11,7 @@ import {
 	BlockControls
 } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
-import { TemplatesModal } from './library';
+import { TemplatesModal } from '../form/library';
 
 registerBlockType('formello/form-reusable', {
 	title: __('Form'),
@@ -91,7 +91,7 @@ registerBlockType('formello/form-reusable', {
 	            			{blockContent}
 	            		</Disabled>
 	            	:
-	            		<Placeholder>
+	            		<Placeholder label={ __( 'Insert a form', 'formello' ) }>
 							<Button
 								className="plugin-formello-panel-button is-large"
 								isPrimary
@@ -113,6 +113,7 @@ registerBlockType('formello/form-reusable', {
 							}
 						} }
 						clientId={ clientId }
+						type={ 'local' }
 					/>
 				}
 			</div>

@@ -38,14 +38,14 @@ export default function save( { attributes, className, innerBlocks } ) {
 	let honeypot = '_formello_h' + attributes.id;
 	return (
 		<form className={ className } 
-			id={ 'formello-' + attributes.id }
 			method="post" 
+			id={ 'formello-' + attributes.id }
+			data-id={ attributes.id }
 			data-hide={ attributes.hide } 
 			data-recaptcha={ attributes.recaptchaEnabled } 
-			data-redirect={ attributes.redirectUrl } 
-			data-id={ attributes.id }>
+			data-redirect={ attributes.redirectUrl }>
 			<input type="hidden" name="_formello_id" value={ attributes.id } />
-			<input type="text" name={ honeypot } className="formello-hp" autocomplete="nope" />
+			<input type="text" name={ honeypot } className="formello-hp" autoComplete="nope" />
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
 		</form>

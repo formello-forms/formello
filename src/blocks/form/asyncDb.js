@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-const { subscribe, select } = wp.data;
+import { subscribe, select } from '@wordpress/data';
 
 let wasSavingPost = select( 'core/editor' ).isSavingPost();
 let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
@@ -17,10 +17,8 @@ const hasAction = ( innerBlocks ) => {
 const getActions = ( innerBlocks ) => {
 	actions = []
 	innerBlocks.forEach( (i) => {
-		console.log('ssssssss', i)
 		actions.push( i.attributes.settings )
 	} )
-	console.log(actions)
 }
 
 // determine whether to show notice
@@ -42,24 +40,28 @@ subscribe( () => {
 	wasPreviewingPost = isPreviewingPost;
 
 	if ( shouldTriggerAjax ) {
-		let blocks = select( 'core/editor' ).getBlocks()
-		blocks.forEach( (b) => {
-			if( 'formello/form' === b.name ){
-				if( undefined === b.attributes.id ){
+		let blocks = []
+		let root = select( 'core/block-editor' ).getBlocks()
+		let descendants = select( 'core/block-editor' ).getClientIdsWithDescendants( root[0] )
+
+		descendants.forEach( (b) => {
+			let block = select( 'core/block-editor' ).getBlock( b )
+			if( 'formello/form' === block.name ){
+				if( undefined === block.attributes.id ){
 					return
 				}
-				let c = hasAction( b.innerBlocks ) 
+				let c = hasAction( block.innerBlocks ) 
 				apiFetch( {
-					path: '/formello/v1/form/' + b.attributes.id,
+					path: '/formello/v1/form/' + block.attributes.id,
 					method: 'PUT',
 					data: {
-						name: b.attributes.name,
+						name: block.attributes.name,
 						settings: {
-							storeSubmissions: b.attributes.storeSubmissions,
-							recaptchaEnabled: b.attributes.recaptchaEnabled,
-							hide: b.attributes.hide,
-							constraints: b.attributes.constraints,
-							fields: b.attributes.fields,
+							storeSubmissions: block.attributes.storeSubmissions,
+							recaptchaEnabled: block.attributes.recaptchaEnabled,
+							hide: block.attributes.hide,
+							constraints: block.attributes.constraints,
+							fields: block.attributes.fields,
 							actions: actions,
 						},
 					},

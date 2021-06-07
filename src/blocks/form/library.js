@@ -1,7 +1,7 @@
 /**
  * Import CSS
  */
-import './editor.scss';
+//import './editor.scss';
 
 /**
  * External dependencies
@@ -36,7 +36,8 @@ import {
 
 import {
 	withSelect,
-	withDispatch,
+	useDispatch,
+	useSelect
 } from '@wordpress/data';
 
 import {
@@ -51,79 +52,43 @@ import {
 } from '@wordpress/components';
 import { BlockPreview } from '@wordpress/block-editor';
 
-function TemplatesModal ( props ) {
+export function TemplatesModal ( props ) {
 
 	const {
-		insertTemplate,
-		getTemplateData,
 		onRequestClose,
+		type,
 		clientId,
-		templates = false,
 	} = props;
 
 	const [ loading, setLoading ] = useState( false )
-	const [ activeCategory, setActiveCategory ] = useState( {} )
 	const [ error, setError ] = useState( false )
 
-	const getSelectedCategory = ( type ) => {
-		return activeCategory[ type ] || false;
-	}
+	const allTemplates = true;
+	const showLoadingSpinner = loading || ! allTemplates;
+    const templates = useSelect(
+        ( select ) => select( 'formello/templates' ).getTemplates(),
+        []
+    );
 
-	const printCategorySelect = ( type ) => {
-		const templates = getTemplates( type, '' );
-		const categories = {};
-		const selectData = [];
+	const { replaceBlocks } = useDispatch( 'core/block-editor' );
+	
+	const insertTemplate = ( content, clientId, cb ) => {
+		const parsedBlocks = parse( content );
 
-		templates.forEach( ( template ) => {
-			if ( template.categories && template.categories.length ) {
-				template.categories.forEach( ( catData ) => {
-					if ( ! categories[ catData.slug ] ) {
-						categories[ catData.slug ] = true;
-						selectData.push( {
-							value: catData.slug,
-							label: catData.name,
-						} );
-					}
-				} );
-			}
-		} );
+		if ( parsedBlocks.length ) {
+			replaceBlocks( clientId, parsedBlocks );
 
-		if ( selectData.length ) {
-			selectData.unshift( {
-				value: '',
-				label: __( 'Select Category', 'formello' ),
-			} );
-
-			return (
-				<SelectControl
-					value={ getSelectedCategory( type ) }
-					options={ selectData }
-					onChange={ ( value ) => {
-						setState( {
-							activeCategory: {
-								...activeCategory,
-								...{
-									[ type ]: value,
-								},
-							},
-						} );
-					} }
-				/>
-			);
+			cb( false );
 		}
-
-		return null;
 	}
 
-	const getTemplates = ( type, categorySelected = null ) => {
+	const getTemplates = ( type ) => {
 
 		if ( ! templates ) {
 			return templates;
 		}
 
 		const result = [];
-
-		categorySelected = null === categorySelected ? getSelectedCategory( type ) : '';
 
 		templates.forEach( ( template ) => {
 			let allow = ! type;
@@ -137,18 +102,6 @@ function TemplatesModal ( props ) {
 				} );
 			}
 
-			// category check.
-			if ( allow && categorySelected && template.categories ) {
-				let categoryAllow = false;
-
-				template.categories.forEach( ( catData ) => {
-					if ( catData.slug && categorySelected === catData.slug ) {
-						categoryAllow = true;
-					}
-				} );
-				allow = categoryAllow;
-			}
-
 			if ( allow ) {
 				result.push( template );
 			}
@@ -157,12 +110,11 @@ function TemplatesModal ( props ) {
 		return result;
 	}
 
-	const allTemplates = getTemplates();
-	const showLoadingSpinner = loading || ! allTemplates;
+	const localTemplates = getTemplates( type );
 
 	return (
 		<Modal
-			title={ __( 'Templates', 'formello' ) }
+			title={ __( 'Forms', 'formello' ) }
 			className={ classnames(
 				'formello-plugin-templates-modal',
 				'formello-plugin-templates-modal-hide-header',
@@ -176,170 +128,48 @@ function TemplatesModal ( props ) {
 			{ showLoadingSpinner &&
 				<div className="formello-plugin-templates-modal-loading-spinner"><Spinner /></div>
 			}
+			<Fragment>
+			{ localTemplates && localTemplates.length && 
+				<ul className="formello-plugin-templates-list">
+					{ localTemplates.map( ( template ) => {
+						const withPreview = !! template.content;
+						const templateTitle = decodeEntities( template.title );
 
-			{ allTemplates &&
-				<TabPanel
-					className="formello-component-modal-tab-panel"
-					tabs={ [
-						{
-							name: 'remote',
-							title: (
-								<span>
-									{ __( 'Templates', 'formello' ) }
-								</span>
-							),
-							className: 'formello-control-tabs-tab',
-						},
-						{
-							name: 'local',
-							title: (
-								<span>
-									{ __( 'Local Forms', 'formello' ) }
-								</span>
-							),
-							className: 'formello-control-tabs-tab',
-						},
-					] }
-				>
-					{
-						( tabData ) => {
-							const tabType = tabData.name;
-							const currentTemplates = getTemplates( tabType );
-							const selectedCategory = getSelectedCategory( tabType );
-
-							return (
-								<Fragment>
-									{ currentTemplates === false &&
-										<div className="formello-plugin-templates-spinner"><Spinner /></div>
+						return (
+							<li
+								className={ classnames( 'formello-plugin-templates-list-item', 'formello-plugin-templates-list-item-no-thumb' ) }
+								key={ template.id }
+							>
+								<a
+									onClick={ () => {
+										setLoading( true );
+										if ( 'remote' === type && template.content ) {
+											insertTemplate( template.content, clientId, ( errorResponse ) => {
+												if ( errorResponse ) {
+													setError( errorResponse );
+												} else {
+													onRequestClose();
+												}
+											} );
+										}else{
+											onRequestClose( template.id );
+										}
+										setLoading( false );
+									} }
+								>
+									{ withPreview &&
+										<BlockPreview
+											blocks={ parse( template.content ) }
+										/>
 									}
-
-									{ currentTemplates && ! currentTemplates.length &&
-										<div>
-											{ 'local' === tabType ? (
-												<Fragment>
-													<p>{ __( 'No templates found.', 'formello' ) }</p>
-													<a className="components-button is-button is-primary" href={ formello.templatesURL } target="_blank" rel="noopener noreferrer">{ __( 'Add New', 'formello' ) }</a>
-												</Fragment>
-											) : (
-												<p>{ __( 'No templates found.', 'formello' ) }</p>
-											) }
-										</div>
-									}
-
-									{ !! currentTemplates && !! currentTemplates.length &&
-										<Fragment key={ `${ tabType }-${ selectedCategory }` }>
-											<div className="formello-plugin-templates-categories-row">
-												<div className="formello-plugin-templates-categories-select">
-													{ printCategorySelect( tabType ) }</div>
-												<div className="formello-plugin-templates-count">
-													<RawHTML>
-														{ sprintf(
-															/* translators: Number of templates. */
-															__( 'Templates: %s', 'formello' ),
-															`<strong>${ currentTemplates.length }</strong>` )
-														}
-													</RawHTML>
-												</div>
-											</div>
-											{ error }
-											<ul className="formello-plugin-templates-list">
-												{ currentTemplates.map( ( template ) => {
-													const withPreview = !! template.content;
-													const templateTitle = decodeEntities( template.title );
-
-													return (
-														<li
-															className={ classnames( 'formello-plugin-templates-list-item', 'formello-plugin-templates-list-item-no-thumb' ) }
-															key={ template.id }
-														>
-															<a
-																onClick={ () => {
-																	setLoading( true );
-																	if ( template.content ) {
-																		insertTemplate( template.content, clientId, ( errorResponse ) => {
-																			if ( errorResponse ) {
-																				setError( errorResponse );
-																			} else {
-																				onRequestClose();
-																			}
-																		} );
-																	}
-																	setLoading( true );
-
-																} }
-															>
-																{ withPreview &&
-																	<BlockPreview
-																		blocks={ parse( template.content ) }
-																	/>
-																}
-																<div className="formello-plugin-templates-list-item-title">{ templateTitle }</div>
-															</a>
-														</li>
-													);
-												} ) }
-											</ul>
-
-											{ 'local' === tabType &&
-												<Fragment>
-													<a className="components-button is-button is-primary" href={ formello.templatesURL } target="_blank" rel="noopener noreferrer">{ __( 'Add New', 'formello' ) }</a>
-												</Fragment>
-											}
-										</Fragment>
-									}
-								</Fragment>
-							);
-						}
-					}
-				</TabPanel>
+									<div className="formello-plugin-templates-list-item-title">{ templateTitle }</div>
+								</a>
+							</li>
+						);
+					} ) }
+				</ul>
 			}
+			</Fragment>
 		</Modal>
 	);
 }
-
-const TemplatesModalWithSelect = compose( [
-	withDispatch( ( dispatch ) => {
-		const {
-			replaceBlocks,
-		} = dispatch( 'core/block-editor' );
-
-		return {
-			insertTemplate( content, clientId, cb ) {
-				const parsedBlocks = parse( content );
-
-				// remove the id attribute
-				parsedBlocks[0].attributes.id = undefined
-
-				if ( parsedBlocks.length ) {
-					replaceBlocks( clientId, parsedBlocks );
-
-					cb( false );
-				}
-			},
-		};
-	} ),
-	withSelect( ( select ) => {
-		const templates = select( 'formello/templates' ).getTemplates();
-
-		return {
-			templates,
-			getTemplateData( data, cb ) {
-				console.log(cb)
-				let type = data.type;
-
-				if ( 'local' !== type ) {
-					type = 'remote';
-				}
-
-				apiFetch( {
-					path: `/formello/v1/get_template_data/?id=${ data.id }&type=${ type }`,
-					method: 'GET',
-				} ).then( ( result ) => {
-					cb( result );
-				} );
-			},
-		};
-	} ),
-] )( TemplatesModal );
-
-export { TemplatesModalWithSelect as TemplatesModal };

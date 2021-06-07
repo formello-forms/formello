@@ -144,7 +144,7 @@ function Edit( {
 			if( 'formello_form' === postType && undefined !== postTitle ){
 				setAttributes( { name: postTitle } )
 			}
-			if( undefined === attributes.id ){
+			if( undefined === attributes.id || 0 === attributes.id ){
 				apiFetch( {
 					path: '/formello/v1/form/create',
 					method: 'POST',

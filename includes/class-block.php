@@ -55,7 +55,7 @@ class Block {
 			array(
 				'attributes' => array(
 					'id' => array(
-						'type'    => 'string',
+						'type'    => 'number',
 						'default' => 0,
 					),
 				),
