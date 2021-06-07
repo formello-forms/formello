@@ -19,7 +19,7 @@ registerBlockType('formello/form-reusable', {
 	category: 'formello',
 	attributes: {
 		id: {
-			type: 'string'
+			type: 'number'
 		}
 	},
 	supports: {
@@ -53,7 +53,7 @@ registerBlockType('formello/form-reusable', {
 
 		let blockContent = <p>{ __( 'Please, select a form to show' ) }</p>;
 
-	    if ( parseInt( attributes.id ) > 0 ) {
+	    if ( attributes.id > 0 ) {
 	        blockContent = <ServerSideRender
 		            block="formello/form-reusable"
 		            attributes={ attributes }

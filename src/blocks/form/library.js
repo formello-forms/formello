@@ -63,8 +63,6 @@ export function TemplatesModal ( props ) {
 	const [ loading, setLoading ] = useState( false )
 	const [ error, setError ] = useState( false )
 
-	const allTemplates = true;
-	const showLoadingSpinner = loading || ! allTemplates;
     const templates = useSelect(
         ( select ) => select( 'formello/templates' ).getTemplates(),
         []
@@ -110,7 +108,8 @@ export function TemplatesModal ( props ) {
 		return result;
 	}
 
-	const localTemplates = getTemplates( type );
+	const allTemplates = getTemplates( type );
+	const showLoadingSpinner = loading || ! allTemplates;
 
 	return (
 		<Modal
@@ -129,9 +128,35 @@ export function TemplatesModal ( props ) {
 				<div className="formello-plugin-templates-modal-loading-spinner"><Spinner /></div>
 			}
 			<Fragment>
-			{ localTemplates && localTemplates.length && 
+
+				<div className="formello-plugin-templates-categories-row">
+					<div className="formello-plugin-templates-count">
+						<RawHTML>
+							{ sprintf(
+								/* translators: Number of templates. */
+								__( 'Templates: %s', 'formello' ),
+								`<strong>${ allTemplates.length }</strong>` )
+							}
+						</RawHTML>
+					</div>
+				</div>
+
+				{ allTemplates && ! allTemplates.length &&
+					<div>
+						{ 'local' === type ? (
+							<Fragment>
+								<p>{ __( 'No templates found.', 'formello' ) }</p>
+								<a className="components-button is-button is-primary" href={ formello.templatesURL } target="_blank" rel="noopener noreferrer">{ __( 'Add New', 'formello' ) }</a>
+							</Fragment>
+						) : (
+							<p>{ __( 'No templates found.', 'formello' ) }</p>
+						) }
+					</div>
+				}
+
+			{ allTemplates && 
 				<ul className="formello-plugin-templates-list">
-					{ localTemplates.map( ( template ) => {
+					{ allTemplates.map( ( template ) => {
 						const withPreview = !! template.content;
 						const templateTitle = decodeEntities( template.title );
 
