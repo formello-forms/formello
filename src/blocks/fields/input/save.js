@@ -31,7 +31,9 @@ export default function save( { attributes, className } ) {
 		'hide': 'hidden' == attributes.type
 	} )
 
-	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign )
+	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
+		'hide': attributes.label.length < 1,
+	} )
 
 	let fieldClass = classnames( attributes.fieldClass, {
 		'formello-date': attributes.type == 'date',

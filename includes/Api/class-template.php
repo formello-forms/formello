@@ -41,17 +41,6 @@ class Template extends WP_REST_Controller {
 			)
 		);
 
-		// Get template data.
-		register_rest_route(
-			$this->namespace,
-			'/get_template_data/',
-			array(
-				'methods'  => \WP_REST_Server::READABLE,
-				'callback' => array( $this, 'get_template_data' ),
-				'permission_callback' => '__return_true',
-			)
-		);
-
 		// Regenerate CSS Files.
 		register_rest_route(
 			$this->namespace,
@@ -59,7 +48,7 @@ class Template extends WP_REST_Controller {
 			array(
 				'methods'             => \WP_REST_Server::EDITABLE,
 				'callback'            => array( $this, 'sync_template_library' ),
-				'permission_callback' => array( $this, 'update_settings_permission' ),
+				'permission_callback' => '__return_true',
 			)
 		);
 
@@ -111,13 +100,6 @@ class Template extends WP_REST_Controller {
 
 		foreach ( $all_templates as $template ) {
 
-			// if formello-position addon activated, skip the form that has attrinute id.
-			$position_meta = get_post_meta( $template->ID, 'formello_position', true );
-
-			if ( ! empty( $position_meta ) && $position_meta['post_end'] ) {
-				continue;
-			};
-
 			$local_templates[] = array(
 				'id'    => $template->ID,
 				'title' => $template->post_title,
@@ -142,72 +124,6 @@ class Template extends WP_REST_Controller {
 	}
 
 	/**
-	 * Get templates.
-	 *
-	 * @param WP_REST_Request $request  request object.
-	 *
-	 * @return mixed
-	 */
-	public function get_template_data( \WP_REST_Request $request ) {
-		$url           = 'https://formello.net/wp-json/templates/get_template';
-		$id            = $request->get_param( 'id' );
-		$type          = $request->get_param( 'type' );
-		$template_data = false;
-
-		switch ( $type ) {
-			case 'remote':
-				$cached_template_data = get_transient( 'formello_template_data', array() );
-
-				if ( isset( $cached_template_data[ $id ] ) ) {
-					$template_data = $cached_template_data[ $id ];
-				}
-
-				if ( ! $template_data ) {
-					$requested_template_data = wp_remote_get(
-						add_query_arg(
-							array(
-								'id' => $id,
-							),
-							$url
-						)
-					);
-
-					if ( ! is_wp_error( $requested_template_data ) ) {
-						$new_template_data = wp_remote_retrieve_body( $requested_template_data );
-						$new_template_data = json_decode( $new_template_data, true );
-
-						if ( $new_template_data && isset( $new_template_data['response'] ) && is_array( $new_template_data['response'] ) ) {
-							$template_data = $new_template_data['response'];
-
-							$cached_template_data[ $id ] = $template_data;
-							set_transient( 'formello_template_data', $cached_template_data, DAY_IN_SECONDS );
-						}
-					}
-				}
-				break;
-
-			case 'local':
-				$post = get_post( $id );
-
-				if ( $post && 'formello_form' === $post->post_type ) {
-					$template_data = array(
-						'id'      => $post->ID,
-						'title'   => $post->post_title,
-						'content' => $post->post_content,
-					);
-				}
-
-				break;
-		}
-
-		if ( is_array( $template_data ) ) {
-			return $this->success( $template_data );
-		} else {
-			return $this->error( 'no_template_data', __( 'Template data not found.', 'formello' ) );
-		}
-	}
-
-	/**
 	 * Sync the template library.
 	 *
 	 * @param WP_REST_Request $request  request object.
@@ -216,7 +132,6 @@ class Template extends WP_REST_Controller {
 	 */
 	public function sync_template_library( \WP_REST_Request $request ) {
 		delete_transient( 'formello_templates' );
-		delete_transient( 'formello_template_data' );
 
 		return $this->success( true );
 	}

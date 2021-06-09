@@ -102,7 +102,7 @@ export default function Edit( props ) {
 						label="Name"
 						value={ attributes.name }
 						onChange={ ( newval ) =>
-							updateSetting( 'name', newval  )
+							setAttributes( { 'name': newval }  )
 						}
 					/>
 					<MergeTags {...props} 

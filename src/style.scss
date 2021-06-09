@@ -27,6 +27,10 @@
   flex-wrap: wrap;
   margin-bottom: 1em;
 
+  .hide {
+    display: none; 
+  }
+  
   .error {
     border-color: red; 
   }

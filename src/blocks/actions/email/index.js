@@ -77,7 +77,8 @@ registerBlockType( 'formello/actions-email', {
 				from: '',
 				replyTo: '',
 				subject: '',
-				message: '',				
+				message: '',
+				type: 'email'			
 			},
 		},
 

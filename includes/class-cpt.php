@@ -110,6 +110,7 @@ class CPT {
 				'core/spacer',
 				'core/separator',
 				'core/image',
+				'core/media-text',
 				'formello/form',
 				'formello/fieldset',
 				'formello/input',

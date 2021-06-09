@@ -21,6 +21,14 @@ const getActions = ( innerBlocks ) => {
 	} )
 }
 
+const updateTransient = ( innerBlocks ) => {
+	apiFetch( {
+		path: '/formello/v1/sync_template_library/',
+		method: 'POST',
+		data: {},
+	} )
+}
+
 // determine whether to show notice
 subscribe( () => {
 	const isSavingPost = select( 'core/editor' ).isSavingPost();
@@ -66,7 +74,7 @@ subscribe( () => {
 						},
 					},
 				} ).then( ( result ) => {
-					console.log(result);
+					updateTransient();
 				} );
 			}
 		} )
