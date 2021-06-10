@@ -135,6 +135,7 @@ registerBlockType( 'formello/button', {
 		reusable: false,
 		color: false,
 		multiple: false,
+		inserter: 'formello_form' === pagenow ? true : false,
 	},
 
 	/**

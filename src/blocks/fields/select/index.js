@@ -79,6 +79,7 @@ registerBlockType( 'formello/select', {
 		html: true,
 		className: false,
 		reusable: false,
+		inserter: 'formello_form' === pagenow ? true : false,
 	},
 
 	/**

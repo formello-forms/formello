@@ -72,7 +72,8 @@ registerBlockType( 'formello/input', {
 		html: false,
 		reusable: false,
 		className: false,
-		fontSize: false
+		fontSize: false,
+		inserter: 'formello_form' === pagenow ? true : false,
 	},
 
 	/**
