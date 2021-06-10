@@ -145,7 +145,7 @@ class Block {
 		if ( 'publish' !== $form->post_status || ! empty( $form->post_password ) ) {
 			return '';
 		}
-
+		
 		return do_blocks( $form->post_content );
 
 	}

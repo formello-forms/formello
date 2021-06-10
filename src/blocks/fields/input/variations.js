@@ -161,6 +161,35 @@ const variations = [
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
 	{
+		name: 'inputbutton',
+		title: __( 'Input with button' ),
+		description: __( 'Display an input with a button on same row.' ),
+		icon: getIcon( 'input-button' ),
+		attributes: {
+			name: 'email',
+			type: 'email',
+			label: 'Email',
+			checked: undefined,
+			withButton: true
+		},
+		innerBlocks: [ [ 'formello/button' ] ],
+		scope: [ 'block', 'inserter', 'transform' ],
+	},
+	{
+		name: 'rangeoutput',
+		title: __( 'Input range with value' ),
+		description: __( 'Display an output field with the value of the range selected.' ),
+		icon: getIcon( 'range' ),
+		attributes: {
+			name: 'range',
+			type: 'range',
+			label: 'Range',
+			checked: undefined,
+			withOutput: true
+		},
+		scope: [ 'block', 'inserter', 'transform' ],
+	},
+	{
 		name: 'textarea',
 		title: __( 'Textarea' ),
 		description: __( 'Multiline textarea' ),
@@ -181,6 +210,8 @@ const variations = [
  *  Block by providing its attributes.
  */
 variations.forEach( ( variation ) => {
+	if ( 'rangeoutput' !== variation.name ) variation.attributes.withOutput = false;
+	if ( 'inputbutton' !== variation.name ) variation.attributes.withButton = false;
 	if ( variation.isActive ) return;
 	variation.isActive = ( blockAttributes, variationAttributes ) =>
 		blockAttributes.type ===

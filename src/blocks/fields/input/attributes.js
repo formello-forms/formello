@@ -109,6 +109,18 @@ export default {
 		type: 'number',
 		default: ''
 	},
+	withButton: {
+		type: 'boolean',
+		default: false,
+	},
+	grouped: {
+		type: 'boolean',
+		default: false,
+	},
+	withOutput: {
+		type: 'boolean',
+		default: false,
+	},
 	noWrapper: {
 		type: 'boolean',
 		default: false,

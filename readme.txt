@@ -26,7 +26,7 @@ You can create forms directly inside Gutenberg editor, save submitted data and a
 * Form customization: you can arrange field and display stacked field or in a row with label on side. You can change button colors and also choose loading icon and icon position.
 * Form Library
 
-== Extensions == 
+== Extensions ==
 
 * Mailchimp action to send subscriber emails to your lists.
 * Inserter: automatically insert form on posts/page.

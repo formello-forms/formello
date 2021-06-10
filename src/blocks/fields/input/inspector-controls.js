@@ -81,22 +81,22 @@ export default function InputOptions( props ) {
 					{
 						supported.includes('required') && 
 						<Fragment>
-						<ToggleControl
-							label={ __( 'Required', 'formello' ) }
-							checked={ attributes.required }
-							onChange={ ( newval ) =>
-								setAttributes( { required: newval } )
-							}
-						/>
-					{ attributes.required && (
-						<ToggleControl
-							label={ __( 'Mark as Required', 'formello' ) }
-							checked={ attributes.markRequired }
-							onChange={ ( newval ) =>
-								setAttributes( { markRequired: newval } )
-							}
-						/>
-					) }
+							<ToggleControl
+								label={ __( 'Required', 'formello' ) }
+								checked={ attributes.required }
+								onChange={ ( newval ) =>
+									setAttributes( { required: newval } )
+								}
+							/>
+							{ attributes.required && (
+								<ToggleControl
+									label={ __( 'Mark as Required', 'formello' ) }
+									checked={ attributes.markRequired }
+									onChange={ ( newval ) =>
+										setAttributes( { markRequired: newval } )
+									}
+								/>
+							) }
 						</Fragment>
 					}
 					{

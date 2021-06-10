@@ -4,7 +4,8 @@
 import { __ } from '@wordpress/i18n';
 import { RichText } from '@wordpress/block-editor';
 import classnames from 'classnames';
-import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
+import { pickBy, identity } from 'lodash';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -27,6 +28,8 @@ export default function save( { attributes, className } ) {
 	}
 
 	className = classnames( 'formello', {
+		'formello-group': attributes.withButton || attributes.withOutput,
+		'formello-group grouped': attributes.grouped,
 		'formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 		'hide': 'hidden' == attributes.type
 	} )
@@ -45,6 +48,10 @@ export default function save( { attributes, className } ) {
 
 	if( attributes.validation ){
 		htmlAttrs['data-bouncer-message'] = attributes.validation
+	}
+
+	if( attributes.withOutput ){
+		htmlAttrs['oninput'] = "this.nextElementSibling.value = this.value"
 	}
 
 	if( attributes.noWrapper ){
@@ -72,8 +79,14 @@ export default function save( { attributes, className } ) {
 			) : (
 				<input {...htmlAttrs} />
 			) }
+			{ attributes.withButton &&
+				<InnerBlocks.Content />
+			}
+			{ attributes.withOutput && 
+				<output></output>
+			}
 			{
-				attributes.showHelp && 
+				('hidden' !== attributes.type && attributes.showHelp ) && 
 				<RichText.Content tagName="small" value={ attributes.help } />
 			}
 		</div>

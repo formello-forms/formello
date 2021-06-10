@@ -4,6 +4,7 @@ import {
 	InspectorControls,
 	AlignmentToolbar,
 	RichText,
+	InnerBlocks
 } from '@wordpress/block-editor';
 
 import {
@@ -47,6 +48,9 @@ export default function Edit( props ) {
 	} = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[attributes.type]
+	const MY_TEMPLATE = [
+	    [ 'formello/button', {} ],
+	];
 
 	useEffect(
 		() => {
@@ -61,6 +65,8 @@ export default function Edit( props ) {
 	);
 	const className = classnames( {
 		'formello': true,
+		'formello-group': attributes.withButton,
+		'formello-group grouped': attributes.grouped,
 		'formello-row formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 	} )
 
@@ -126,15 +132,15 @@ export default function Edit( props ) {
 								setAttributes( { required: newval } )
 							}
 						/>
-					{ attributes.required && (
-						<ToggleControl
-							label={ __( 'Hide asterisk', 'formello' ) }
-							checked={ attributes.hideRequired }
-							onChange={ ( newval ) =>
-								setAttributes( { hideRequired: newval } )
-							}
-						/>
-					) }
+						{ attributes.required && (
+							<ToggleControl
+								label={ __( 'Hide asterisk', 'formello' ) }
+								checked={ attributes.hideRequired }
+								onChange={ ( newval ) =>
+									setAttributes( { hideRequired: newval } )
+								}
+							/>
+						) }
 						</Fragment>
 					}
 					{
@@ -158,6 +164,20 @@ export default function Edit( props ) {
 						/>
 						</Fragment>		
 					) }
+					{ attributes.withButton && 
+						<ToggleControl
+							label={ __(
+								'Group button with input',
+								'formello'
+							) }
+							checked={ attributes.grouped }
+							onChange={ ( val ) =>
+								setAttributes( { 
+									grouped: val
+								} )
+							}
+						/>						
+					}
 				</PanelBody>
 
 				<PanelBody title={ __( 'Advanced Options', 'formello' ) } initialOpen={ false }>
@@ -354,7 +374,17 @@ export default function Edit( props ) {
 					placeholder={ attributes.placeholder }
 				/>
 			) }
-			{ attributes.showHelp && (
+			{ attributes.withButton && 
+				<InnerBlocks
+					allowedBlocks={ [ 'formello/button' ] }
+					templateLock={ 'all' }
+					template={ MY_TEMPLATE }
+				/>
+			}
+			{ attributes.withOutput && 
+				<output></output>
+			}
+			{ ('hidden' !== attributes.type && attributes.showHelp ) && 
 				<RichText
 					tagName="small"
 					value={ attributes.help }
@@ -368,7 +398,7 @@ export default function Edit( props ) {
 					keepPlaceholderOnFocus={ true }
 					multiline={ false }
 				/>
-			) }
+			}
 		</div>
 	);
 }

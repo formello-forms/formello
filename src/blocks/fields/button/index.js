@@ -47,7 +47,7 @@ registerBlockType( 'formello/button', {
 	category: 'formello',
 
 	// Only allow this block when it is nested in a Form block
-	parent: [ 'formello/form', 'core/column' ],
+	parent: [ 'formello/form', 'formello/input', 'core/column' ],
 
 	/**
 	 * Block attributes

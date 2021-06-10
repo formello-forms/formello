@@ -7,7 +7,6 @@ import {
 } from '@wordpress/components';
 
 const ALLOWED_BLOCKS = [
-	'formello/actions-more',
 	'formello/actions-email',
 	'formello/actions-mailchimp',
 	'formello/actions-sendy',
