@@ -1,6 +1,6 @@
 .ld-ext-right, .ld-ext-left, .ld-ext-bottom, .ld-ext-top, .ld-over, .ld-over-inverse, .ld-over-full, .ld-over-full-inverse {
   position: relative;
-  transition: all .3s ease-in;
+  transition: all .3s ease-in, background 1ms;
   & > .ld {
     position: absolute;
     top: 50%;
@@ -10,7 +10,7 @@
     margin: -.5em;
     opacity: 0;
     z-index: -1;
-    transition: all .3s ease-in;
+    transition: all .3s ease-in, background 1ms;
     & > * {
       width: 1em;
       height: 1em;

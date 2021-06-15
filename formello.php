@@ -66,7 +66,6 @@ final class Formello {
 		if ( ! $instance ) {
 			$instance = new Formello();
 		}
-
 		return $instance;
 	}
 
@@ -106,6 +105,13 @@ final class Formello {
 
 		update_option( 'formello_installed', time() );
 
+		if( $version ){
+			$wpdb->query(
+				"ALTER TABLE {$wpdb->prefix}formello_submissions
+				ADD COLUMN IF NOT EXISTS `log` TEXT NULL AFTER `submitted_at`;"
+			);
+		}
+
 		// create table for storing forms.
 		$wpdb->query(
 			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
@@ -127,7 +133,8 @@ final class Formello {
 			`user_agent` TEXT NULL,
 			`ip_address` VARCHAR(255) NULL,
 			`referer_url` VARCHAR(255) NULL,
-			`submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+			`submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`log` TEXT NULL
 			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
 		);
 

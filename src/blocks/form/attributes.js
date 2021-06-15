@@ -56,5 +56,9 @@ export default {
 	asRow: {
 		type: 'boolean',
 		default: false
+	},
+	actions: {
+		type: 'array',
+		default: []
 	}
 };

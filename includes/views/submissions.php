@@ -12,6 +12,9 @@ $form_page = add_query_arg( array( 'page' => 'formello' ) );
 ?>
 </h2>
 
+<ul class="subsubsub">
+	<li class="all"><a href="edit.php?post_type=formello_form" class="current" aria-current="page">Export <span class="count">(1)</span></a> |</li>
+</ul>
 
 <?php
 do_action( 'formello_forms_table' );
@@ -19,6 +22,7 @@ do_action( 'formello_forms_table' );
 
 <style type="text/css">
 .column-id { text-align: left; width:50px !important; overflow:hidden }
+.column-actions { text-align: left; width: 150px !important; overflow:hidden }
 .column-is_new { text-align: left; width:90px !important; overflow:hidden }
 .badge { background-color: #337ab7; height: 10px; width: 10px; display: inline-block; border-radius: 50%; }
 </style>

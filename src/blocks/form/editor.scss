@@ -145,15 +145,6 @@
     border: 1px dashed grey;
     min-height: 100px;
     padding: 20px;
-    [data-type="formello/actions"] {
-        display: none;
-    }
-}
-
-.wp-block-formello-form.show-actions {
-    [data-type="formello/actions"] {
-        display: block;
-    }
 }
 
 div.formello p {
@@ -162,4 +153,13 @@ div.formello p {
 
 .formello-row {
 	flex-direction: row;
+}
+
+.formello-modal-buttons {
+    display: flex;
+    margin: 20px 0;
+    justify-content: flex-end;
+    button {
+        margin-left: 10px;
+    }
 }

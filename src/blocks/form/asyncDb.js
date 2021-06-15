@@ -5,22 +5,6 @@ let wasSavingPost = select( 'core/editor' ).isSavingPost();
 let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
 let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();
 
-let actions = []
-const hasAction = ( innerBlocks ) => {
-	innerBlocks.forEach( (a) => {
-		if( 'formello/actions' === a.name ){
-			getActions( a.innerBlocks )
-		}
-	} )
-}
-
-const getActions = ( innerBlocks ) => {
-	actions = []
-	innerBlocks.forEach( (i) => {
-		actions.push( i.attributes.settings )
-	} )
-}
-
 const updateTransient = ( innerBlocks ) => {
 	apiFetch( {
 		path: '/formello/v1/sync_template_library/',
@@ -58,7 +42,7 @@ subscribe( () => {
 				if( undefined === block.attributes.id ){
 					return
 				}
-				let c = hasAction( block.innerBlocks ) 
+
 				apiFetch( {
 					path: '/formello/v1/form/' + block.attributes.id,
 					method: 'PUT',
@@ -70,7 +54,7 @@ subscribe( () => {
 							hide: block.attributes.hide,
 							constraints: block.attributes.constraints,
 							fields: block.attributes.fields,
-							actions: actions,
+							actions: block.attributes.actions,
 						},
 					},
 				} ).then( ( result ) => {

@@ -28,7 +28,8 @@ import {
 	BlockControls,
 	InnerBlocks,
 	useBlockProps,
-	URLInput
+	URLInput,
+	Inserter
 } from '@wordpress/block-editor';
 
 import {
@@ -50,6 +51,8 @@ const {
 
 import apiFetch from '@wordpress/api-fetch';
 import BlockVariationPicker from './variation-picker';
+import { ActionsModal } from './actions/modal';
+import { getActions } from './actions/actions';
 
 import {
 	BaseControl,
@@ -64,7 +67,9 @@ import {
 	Toolbar,
 	ToolbarButton,
 	ToolbarGroup,
-	Icon
+	Icon,
+	Dropdown,
+	DropdownMenu
 } from '@wordpress/components';
 
 import classnames from 'classnames';
@@ -97,14 +102,16 @@ import { store as blocksStore } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-function Edit( {
-	attributes,
-	className,
-	setAttributes,
-	clientId,
-	hasChildBlocks,
-	innerBlocks
-} ) {
+function Edit( props ) {
+
+	const {
+		attributes,
+		className,
+		setAttributes,
+		clientId,
+		hasChildBlocks,
+		innerBlocks
+	} = props;
 
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
@@ -115,7 +122,8 @@ function Edit( {
 		[]
 	);
 
-	const [ showActions, setShowActions ] = useState(false);
+	const [ active, setActive ] = useState(false);
+	const [ showActionsModal, setShowActionsModal ] = useState(false);
 
 	useEffect(
 		() => {
@@ -161,20 +169,6 @@ function Edit( {
 		[]
 	);
 
-	const addActions = () => {
-		let hasActions = false
-		let blocks = getBlocks(clientId)
-		blocks.forEach( (b) => {
-			if( 'formello/actions' === b.name ){
-				hasActions = true
-			}
-		} )
-		if( !hasActions ){
-			let insertedBlock = createBlock( 'formello/actions' );
-			wp.data.dispatch('core/block-editor').insertBlocks(insertedBlock, blocks.length, clientId);
-		}
-	}
-
 	const getBlockClassNames = () => {
 
 		return classnames(
@@ -183,11 +177,20 @@ function Edit( {
 				? attributes.labelAlign
 				: undefined,
 			{
-				'show-actions': showActions,
 				'as-row': attributes.asRow,
 				'is-bold': attributes.labelIsBold
 			}
 		);
+	};
+
+	const actions = getActions()
+
+	const addAction = (type) => {
+		actions.map( (a) => {
+			if( a.type === type ){
+				setAttributes( { actions: [ ...attributes.actions, a ] } )
+			}
+		} )
 	};
 
 	const blockProps = useBlockProps( {
@@ -199,16 +202,39 @@ function Edit( {
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
-						<ToolbarButton
-							label={ __( 'Edit this form', 'formello' ) }
-							icon="admin-settings"
-							isPressed={ showActions }
-							className="my-custom-button"
-							onClick={ () => {
-								setShowActions( !showActions ) 
-								addActions()
-							} }
-						/>
+					    <DropdownMenu
+					        icon={ 'admin-settings' }
+					        label="Add an action"
+					        controls={ 
+					        	actions
+								.filter( (a) => {
+								  return a.active
+								})
+					        	.map( (a) => {
+					        		return {
+						        		title: a.title,
+						        		icon: getIcon( a.type ),
+						                onClick: () => {
+											addAction( a.type ) 
+						                },
+						        	}
+					        } ) }
+					    />
+					    {
+					    	attributes.actions.map( ( a, i ) => {
+								return (
+									<ToolbarButton
+										label={ a.title }
+										icon={ getIcon( a.type ) }
+										key={ i }
+										onClick={ () => {
+											setActive(i)
+											setShowActionsModal( a )
+										} }
+									/>
+								)
+					    	} )
+					    }
 					</ToolbarGroup>
 				</BlockControls>
 				<PanelBody title={ __( 'Settings', 'formello' ) } initialOpen={ true }>
@@ -282,7 +308,17 @@ function Edit( {
 					onChange={ ( val ) => setAttributes( { 'labelIsBold': val } ) }
 				/>
 			</InspectorAdvancedControls>
-
+			{
+				showActionsModal &&
+				<ActionsModal
+					{...props}
+					action={ showActionsModal }
+					actionId={ active }
+					onRequestClose={ () => { 
+						setShowActionsModal( false )
+					} }
+				/>
+			}
 			<InnerBlocks
 				allowedBlocks={ ALLOWED_BLOCKS }
 				templateLock={ false }

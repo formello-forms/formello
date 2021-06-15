@@ -138,6 +138,38 @@ class Submissions extends \WP_List_Table {
 	}
 
 	/**
+	 * Method for name column
+	 *
+	 * @param array $item an array of DB data.
+	 *
+	 * @return string
+	 */
+	protected function column_actions( $item ) {
+		$link = sprintf(
+			'<a href="?post_type=formello_form&page=%s&form=%s&submission=%s&paged=%s">%s</a>',
+			'formello-submission',
+			sanitize_text_field( $_REQUEST['form'] ),
+			absint( $item['id'] ),
+			isset( $_REQUEST['paged'] ) ? sanitize_text_field( $_REQUEST['paged'] ) : '',
+			__( 'View' )
+		);
+		$link2 = sprintf(
+			'<a href="%s">%s</a>',
+			esc_attr(
+				add_query_arg(
+					array(
+						'action'		=> 'delete',
+						'submission' 	=> $item['id'],
+						'_wpnonce'		=> wp_create_nonce( 'sp_delete_submission' )
+					)
+				)
+			),
+			__( 'Delete' )
+		);
+		return $link . ' | ' . $link2;
+	}
+
+	/**
 	 * Handles data query and filter, sorting, and pagination.
 	 */
 	public function prepare_items() {
@@ -178,12 +210,15 @@ class Submissions extends \WP_List_Table {
 			// In our file that handles the request, verify the nonce.
 			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
 
-			if ( ! wp_verify_nonce( $nonce, 'sp_delete_customer' ) ) {
-				die( 'Go get a life script kiddies' );
+			if ( ! wp_verify_nonce( $nonce, 'sp_delete_submission' ) ) {
+				echo '<div class="notice notice-error is-dismissible"><p>Go get a life script kiddies.</p></div>';
+				wp_die();
 			} else {
-				//self::delete_submission( absint( $_GET['customer'] ) );
-				//echo '<div class="notice notice-success is-dismissible"><p>Bulk Deleted..</p></div>';
+				self::delete_submission( absint( $_GET['submission'] ) );
+				echo '<div class="notice notice-success is-dismissible"><p>Entry was successfully deleted.</p></div>';
 			}
+			// reset data
+			$this->data = array();
 		}
 
 		// If the delete bulk action is triggered.
@@ -285,6 +320,10 @@ class Submissions extends \WP_List_Table {
 
 		$sql = "SELECT id, is_new, data, submitted_at FROM {$wpdb->prefix}formello_submissions WHERE form_id = {$this->form_id}";
 
+		if ( ! empty( $_REQUEST['new'] ) ) {
+			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
+		}
+
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
 			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
@@ -292,7 +331,7 @@ class Submissions extends \WP_List_Table {
 
 		$sql .= ' LIMIT ' . $per_page;
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
-
+		
 		$results = $wpdb->get_results( $sql, OBJECT_K );
 
 		$submissions = array();
@@ -320,7 +359,6 @@ class Submissions extends \WP_List_Table {
 		$columns['cb']           = '<input type="checkbox" />';
 		$columns['id']           = 'ID';
 		$columns['is_new']       = 'New';
-		$columns['submitted_at'] = 'Submitted At';
 
 		foreach ( $submissions as $s ) {
 
@@ -330,6 +368,8 @@ class Submissions extends \WP_List_Table {
 				}
 			}
 		}
+		$columns['submitted_at'] = 'Submitted At';
+		$columns['actions'] 	 = 'Actions';
 		return $columns;
 	}
 
@@ -382,18 +422,7 @@ class Submissions extends \WP_List_Table {
 			$item['id']
 		);
 
-		$actions = array(
-			'edit' => sprintf(
-				'<a href="?post_type=formello_form&page=%s&form=%s&submission=%s&paged=%s">%s</a>',
-				'formello-submission',
-				sanitize_text_field( $_REQUEST['form'] ),
-				absint( $item['id'] ),
-				isset( $_REQUEST['paged'] ) ? sanitize_text_field( $_REQUEST['paged'] ) : '',
-				__( 'View', 'formello' )
-			),
-		);
-
-		return $title . $this->row_actions( $actions );
+		return $title;
 
 	}
 

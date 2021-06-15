@@ -1,6 +1,10 @@
 @use 'button';
 @use 'spinner';
 
+html {
+  scroll-behavior: smooth;
+}
+
 .wp-block-formello-form {
   
   fieldset {
@@ -69,6 +73,7 @@
   .error-message {
     color: red;
     order: 3;
+    width: 100%;
   }
 
   &.hide {
@@ -97,6 +102,10 @@
     small {
       order: 3;
       width: auto;
+      margin: 0;
+    }
+
+    .error-message {
       margin: 0;
     }
   }

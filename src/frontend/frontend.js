@@ -50,7 +50,6 @@ function handleSubmitEvents (e) {
   e.preventDefault()
   e.stopPropagation()
 
-  //submitForm(formEl)
   validate(formEl) // here we perform captcha and other validation
 }
 
@@ -113,6 +112,10 @@ function createRequestHandler (formEl) {
           emitEvent('message', formEl)
         }
 
+        if( '' !== response.debug ){
+          console.log(response.debug)
+        }
+
         // Should we hide form?
         if (response.hide_form) {
           formEl.style.display = 'none'
@@ -142,10 +145,12 @@ function validate( formEl ){
   loader.start()
 
   // BouncerJs validation
-  var areValid = bouncer.validateAll(formEl);
+  var errors = bouncer.validateAll(formEl);
 
-  if( areValid.length ){
+  if( errors.length ){
     loader.stop()
+    //window.scrollTo(0, errors[0].offsetTop);
+    errors[0].scrollIntoView({behaviour: "smooth", block: "end", inline: "nearest"});
     return
   }
 
@@ -177,13 +182,14 @@ function validate( formEl ){
 
 }
 
-document.addEventListener('submit', handleSubmitEvents, true) // useCapture=false to ensure we bubble upwards (and thus can cancel propagation)
+document.addEventListener('submit', handleSubmitEvents, false) // useCapture=false to ensure we bubble upwards (and thus can cancel propagation)
 
 var bouncer = new Bouncer('.wp-block-formello-form', {
-  disableSubmit: false,
+  disableSubmit: true,
   messages: formello.settings.messages
 })
 
+// add recaptcha div to all formello buttons on page
 window.formelloCallback = () => {
   let buttons = document.querySelectorAll('.wp-block-formello-button')
 
@@ -239,4 +245,4 @@ if ( !checkDateInput() ) {
 
 }
 
-console.log("formello loaded")
+console.log("formello loaded stocazzo")

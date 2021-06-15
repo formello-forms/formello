@@ -20,54 +20,69 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Data {
 
+	
 	/**
 	 * The replacer
 	 *
 	 * @var TagReplacers\Replacer
 	 */
 	private $replacer;
+	
 	/**
 	 * Form ID
 	 *
 	 * @var Int
 	 */
 	private $form;
+	
 	/**
 	 * The ignored fields array
 	 *
 	 * @var array
 	 */
 	private $ignored_field_names;
+	
 	/**
 	 * The data array
 	 *
 	 * @var array
 	 */
 	private $data = array();
+	
 	/**
 	 * IP address
 	 *
 	 * @var string
 	 */
 	private $ip_address = '';
+	
 	/**
 	 * User agent
 	 *
 	 * @var String
 	 */
 	private $user_agent = '';
+	
 	/**
 	 * Referrer url
 	 *
 	 * @var String
 	 */
 	private $referer_url = '';
+	
 	/**
 	 * Date submitted
 	 *
 	 * @var DateTime
 	 */
 	private $submitted_at;
+
+	/**
+	 * Date submitted
+	 *
+	 * @var mixed
+	 */
+	private $log;
 
 	/**
 	 * Constructor
@@ -180,6 +195,8 @@ class Data {
 			$data[ $prop ] = $this->$prop;
 		}
 
+		$data['log'] = maybe_serialize($this->get_log());
+
 		if ( ! empty( $this->id ) ) {
 			$wpdb->update( $table, $data, array( 'id' => $this->id ) );
 			return null;
@@ -211,6 +228,36 @@ class Data {
 	 */
 	public function get_data() {
 		return $this->data;
+	}
+
+	/**
+	 * Get a Data array.
+	 *
+	 * @param array $data The array of data.
+	 * @return array
+	 */
+	public function debug( $data ) {
+		$this->data['debug'][] = $data;
+	}
+
+	/**
+	 * Get a Data array.
+	 *
+	 * @return array
+	 */
+	public function get_log() {
+		return $this->log;
+	}
+
+	/**
+	 * Get a Data array.
+	 *
+	 * @param string $type The action name.
+	 * @param array $data The array of data.
+	 * @return array
+	 */
+	public function set_log( $type, $data = array() ) {
+		$this->log[$type][] = $data;
 	}
 
 	/**

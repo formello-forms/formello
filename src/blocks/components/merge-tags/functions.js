@@ -38,7 +38,10 @@ const allowed = [
  * @param {string} clientId The id of the block of which we are finding the form block
  */
 export function getFormBlock( clientId ) {
-
+	if( 'formello/form' == getBlock( clientId ).name ){
+		return getBlock( clientId )
+	}
+	// if it's not an form block, get parent form.
 	const parents = getBlockParents(clientId);
 
 	for ( const block of parents ) {
@@ -119,7 +122,6 @@ export function getFieldsTags( clientId ) {
 	if( formBlock ){
 		fields = serializeFields( formBlock.clientId );
 	}
-	//getConstraints( formBlock.clientId )
 
 	return [
 		{

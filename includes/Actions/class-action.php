@@ -42,6 +42,13 @@ abstract class Action {
 	protected $settings = array();
 
 	/**
+	 * The action label.
+	 *
+	 * @var array $settings Array of settings.
+	 */
+	protected $log = array();
+
+	/**
 	 * Hooks
 	 */
 	public function hook() {
@@ -69,6 +76,21 @@ abstract class Action {
 			'label'    => $this->label,
 			'type'     => $this->type,
 			'settings' => $this->settings,
+		);
+		return $actions;
+	}
+
+	/**
+	 * Register the actions.
+	 *
+	 * @param string $type Type of log.
+	 * @param mixed $message Message of log.
+	 * @return array
+	 */
+	public function log( $type, $message ) {
+		$this->log[ $this->type ] = array(
+			'type'     => $type,
+			'message'  => $message,
 		);
 		return $actions;
 	}

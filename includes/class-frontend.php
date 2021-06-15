@@ -155,12 +155,16 @@ class Frontend {
 			 *
 			 * @param string $error_code
 			 * @param Form $form
-			 * @param array $data
+			 * @param Data $store
 			 */
-			do_action( 'formello_form_error', $error_code, $form, $data );
+			do_action( 'formello_form_error', $error_code, $form, $store );
 		}
 
-		$response = $this->get_response_for_error_code( $error_code, $form, $data );
+		if( !empty( $store->get_log() ) ){
+			$store->save();
+		}
+
+		$response = $this->get_response_for_error_code( $error_code, $form, $store );
 
 		wp_send_json( $response, 200 );
 		wp_die();
@@ -301,11 +305,12 @@ class Frontend {
 	 *
 	 * @param int   $error_code The error code number.
 	 * @param Form  $form The form.
-	 * @param array $data The input data.
+	 * @param Data $data The input data.
 	 * @return array
 	 */
-	private function get_response_for_error_code( $error_code, Form $form, $data = array() ) {
+	private function get_response_for_error_code( $error_code, Form $form, Data $store ) {
 		$settings = $form->get_settings();
+		$data = $store->get_data();
 
 		// return success response for empty error code string or spam (to trick bots).
 		if ( '' === $error_code ) {
@@ -315,6 +320,7 @@ class Frontend {
 					'text' => $form->get_message( 'success' ),
 				),
 				'hide_form' => (bool) $settings['hide'],
+				'debug'		=> current_user_can('manage_options') ? $data['debug'] : ''
 			);
 
 			if ( ! empty( $settings['redirect_url'] ) ) {
@@ -339,6 +345,7 @@ class Frontend {
 				'type'   => 'error',
 				'text'   => $message,
 				'errors' => $error_code,
+				'debug'  => current_user_can('manage_options') ? $data['debug'] : ''
 			),
 		);
 	}

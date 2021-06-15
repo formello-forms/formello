@@ -31,7 +31,7 @@ export default function integrations( props ) {
 			<div className="formello-dashboard-panel-row-wrapper">
 
 				<PanelRow>
-					<p>{ __( 'We are working on integrations. They will be available soon.', 'formello' ) }</p>
+					<p>{ __( 'We are working on other integrations. A lot more will be available soon.', 'formello' ) }</p>
 				</PanelRow>
 
 			</div>

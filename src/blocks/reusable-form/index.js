@@ -53,7 +53,7 @@ registerBlockType('formello/form-reusable', {
 
 		let blockContent = <p>{ __( 'Please, select a form to show' ) }</p>;
 
-	    if ( attributes.id > 0 ) {
+	    if ( attributes.id ) {
 	        blockContent = <ServerSideRender
 		            block="formello/form-reusable"
 		            attributes={ attributes }
@@ -62,7 +62,7 @@ registerBlockType('formello/form-reusable', {
 
 		return (
 			<div {...blockProps}>
-				{	attributes.id > 0 &&
+				{	attributes.id &&
 					<BlockControls>
 						<ToolbarGroup>
 							<ToolbarButton
@@ -80,13 +80,15 @@ registerBlockType('formello/form-reusable', {
 					        label={ __( 'Choose a form', 'formello' ) }
 					        value={ attributes.id }
 					        options={ options }
-					        onChange={ ( val ) => { setAttributes( { id: val } ) } }
+					        onChange={ ( val ) => { 
+								setAttributes( { id: parseInt( val ) } )
+					        } }
 						/>
 					</PanelBody>
 				</InspectorControls>
 	            <Fragment>
 	            	{ 
-	            		attributes.id > 0 ? 
+	            		attributes.id ? 
 	            		<Disabled>
 	            			{blockContent}
 	            		</Disabled>
