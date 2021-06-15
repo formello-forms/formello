@@ -320,11 +320,14 @@ class Frontend {
 					'text' => $form->get_message( 'success' ),
 				),
 				'hide_form' => (bool) $settings['hide'],
-				'debug'		=> current_user_can('manage_options') ? $data['debug'] : ''
 			);
 
 			if ( ! empty( $settings['redirect_url'] ) ) {
 				$response['redirect_url'] = $form->settings['redirectUrl'];
+			}
+
+			if( current_user_can('manage_options') ){
+				$response['debug'] = $data['debug'];
 			}
 
 			return apply_filters( 'formello_form_response', $response, $form, $data );
