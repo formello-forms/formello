@@ -84,6 +84,11 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 == Changelog ==
 
 = 1.1.8 =
+* Better handling of actions
+* Code reduction and simplify action generation
+* Added debug for admi
+
+= 1.1.8 =
 * Code reduction
 * Better handling of grouped input
 
