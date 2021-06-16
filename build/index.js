@@ -23949,7 +23949,8 @@ function getActions() {
     options: [],
     active: false
   }];
-  return applyFilters('formello.actions.list', '', actions);
+  applyFilters('formello.actions.list', '', actions);
+  return actions;
 }
 
 /***/ }),
@@ -26196,7 +26197,7 @@ function getIcon(icon) {
   }
 
   if ('webhooks' === icon) {
-    return 'no';
+    return 'admin-links';
   }
 }
 

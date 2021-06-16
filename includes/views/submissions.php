@@ -4,16 +4,19 @@
 defined( 'ABSPATH' ) || exit;
 
 $form_page = add_query_arg( array( 'page' => 'formello' ) );
+$all = remove_query_arg( array( 'new' ) );
+$new_submission = add_query_arg( array( 'new' => 1 ) );
 ?>
 
-<h2>
+<h1>
 <?php
 	esc_html_e( wp_sprintf( 'Submissions for %s', $form->name ), 'formello' );
 ?>
-</h2>
+</h1>
 
 <ul class="subsubsub">
-	<li class="all"><a href="edit.php?post_type=formello_form" class="current" aria-current="page">Export <span class="count">(1)</span></a> |</li>
+	<li class="all"><a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All', 'formello' ); ?></a> |</li>
+	<li class="draft"><a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'New', 'formello' ); ?></a></li>
 </ul>
 
 <?php

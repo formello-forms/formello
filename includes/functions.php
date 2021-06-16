@@ -68,3 +68,19 @@ function formello_recaptcha_option( $settings ) {
 	$settings = $crypto->decrypt( $settings );
 	return unserialize( $settings );
 }
+
+function formello_enable_gutenberg_post_type($can_edit, $post) {
+	
+	if (empty($post->ID)) return $can_edit;
+	
+	if ('formello_form' === $post_type) return true;
+	
+	return $can_edit;
+	
+}
+
+// Enable Gutenberg for WP < 5.0 beta
+add_filter('gutenberg_can_edit_post_type', 'formello_enable_gutenberg_post_type', 10, 2);
+
+// Enable Gutenberg for WordPress >= 5.0
+add_filter('use_block_editor_for_post_type', 'formello_enable_gutenberg_post_type', 10, 2);

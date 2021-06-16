@@ -34,6 +34,8 @@ export function getActions(){
 		}
 	]
 
-	return applyFilters( 'formello.actions.list', '', actions )
+	applyFilters( 'formello.actions.list', '', actions )
+
+	return actions
 
 }

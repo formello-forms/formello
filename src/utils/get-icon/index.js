@@ -480,7 +480,7 @@ export default function getIcon( icon ) {
 	}
 	
 	if ( 'webhooks' === icon ) {
-		return 'no'
+		return 'admin-links'
 	}
 	
 }
