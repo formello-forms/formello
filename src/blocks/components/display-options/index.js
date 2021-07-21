@@ -37,6 +37,7 @@ export default function displayOpts( props ) {
 		        ] }
 		        onChange={ ( align ) => { setAttributes( { labelVAlign: align } ) } }
 			/>
+
 			<TextControl
 				label={ __( 'Label Class', 'formello' ) }
 				value={ attributes.labelClass }

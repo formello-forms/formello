@@ -17,11 +17,10 @@ $new_submission = add_query_arg( array( 'new' => 1 ) );
 <ul class="subsubsub">
 	<li class="all"><a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All', 'formello' ); ?></a> |</li>
 	<li class="draft"><a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'New', 'formello' ); ?></a></li>
-</ul>
-
 <?php
 do_action( 'formello_forms_table' );
 ?>
+</ul>
 
 <style type="text/css">
 .column-id { text-align: left; width:50px !important; overflow:hidden }

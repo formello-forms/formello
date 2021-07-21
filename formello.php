@@ -139,6 +139,14 @@ final class Formello {
 		);
 
 		update_option( 'formello_version', FORMELLO_VERSION );
+
+		$upload_dir = wp_upload_dir();
+		$formello_dir = $upload_dir['basedir'] . '/formello';
+		if( !is_dir( $formello_dir ) ){
+			wp_mkdir_p( $formello_dir );
+		}
+		file_put_contents( trailingslashit( $formello_dir ) . 'index.html', '' );
+
 	}
 
 	/**

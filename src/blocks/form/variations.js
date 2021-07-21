@@ -31,7 +31,7 @@ const variations = [
 			</SVG>
 		),
 		isDefault: true,
-		innerBlocks: [ [ 'formello/input', { type: 'text', label: 'Name' } ], [ 'formello/button' ] ],
+		innerBlocks: [ [ 'formello/input', { type: 'text', label: 'Name', name: 'name' } ], [ 'formello/button' ] ],
 		scope: [ 'block' ],
 	},
 	{
@@ -44,10 +44,10 @@ const variations = [
 			</SVG>
 		),
 		innerBlocks: [ 
-			[ 'formello/input', { type: 'text', label: 'Name' } ],
-			[ 'formello/input', { type: 'email', label: 'Email', required: true } ], 
-			[ 'formello/input', { type: 'text', label: 'Subject' } ],
-			[ 'formello/input', { type: 'textarea', label: 'Message', rows: 5 } ], 
+			[ 'formello/input', { type: 'text', label: 'Name', name: 'name' } ],
+			[ 'formello/input', { type: 'email', label: 'Email', name: 'email', required: true } ], 
+			[ 'formello/input', { type: 'text', label: 'Subject', name: 'subject' } ],
+			[ 'formello/input', { type: 'textarea', label: 'Message', name: 'message', rows: 5 } ], 
 			[ 'formello/button', { txt: 'Send' } ] 
 		],
 		scope: [ 'block' ],
@@ -63,16 +63,16 @@ const variations = [
 		),
 		innerBlocks: [ 
 			[ 'core/columns', {}, [
-			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'First Name' } ] ] ],
-			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'Last Name' } ] ] ]
+			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'First Name', name: 'name' } ] ] ],
+			    [ 'core/column', {}, [ [ 'formello/input', { type: 'text', label: 'Last Name', name: 'last_name' } ] ] ]
 			] ],
-			[ 'formello/input', { type: 'email', label: 'Email', required: true } ], 
-			[ 'formello/input', { type: 'tel', label: 'Phone', required: true } ], 
+			[ 'formello/input', { type: 'email', label: 'Email', name: 'email', required: true } ], 
+			[ 'formello/input', { type: 'tel', label: 'Phone', name: 'phone', required: true } ], 
 			[ 'core/columns', {}, [
-			    [ 'core/column', {}, [ [ 'formello/input', { type: 'date', label: 'Date', required: true } ] ] ],
-			    [ 'core/column', {}, [ [ 'formello/input', { type: 'time', label: 'Hour' } ] ] ]
+			    [ 'core/column', {}, [ [ 'formello/input', { type: 'date', label: 'Date', name: 'date', required: true } ] ] ],
+			    [ 'core/column', {}, [ [ 'formello/input', { type: 'time', label: 'Hour', name: 'hour' } ] ] ]
 			] ],
-			[ 'formello/input', { type: 'textarea', label: 'Message', rows: 5 } ], 
+			[ 'formello/input', { type: 'textarea', label: 'Message', name: 'message', rows: 5 } ], 
 			[ 'formello/button', { txt: 'Book appointment' } ] 
 		],
 		scope: [ 'block' ],

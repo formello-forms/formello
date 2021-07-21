@@ -21612,7 +21612,7 @@ function Edit(props) {
       showIcon = _useState4[0],
       setShowIcon = _useState4[1];
 
-  var colors = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["__experimentalUseEditorFeature"])('color.palette') || EMPTY_ARRAY;
+  var colors = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useSetting"])('color.palette') || EMPTY_ARRAY;
   var buttonClass = classnames__WEBPACK_IMPORTED_MODULE_7___default()('button-span', textColor.class, backgroundColor.class, attributes.iconPosition, (_classnames = {
     'has-background': backgroundColor.value
   }, _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_classnames, backgroundColor.class, backgroundColor.class), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_classnames, textColor.class, textColor.class), _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default()(_classnames, 'running', showIcon), _classnames));
@@ -22275,10 +22275,19 @@ function Edit(props) {
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: className
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToolbarButton"], {
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Required'),
+    icon: Object(_utils_get_icon__WEBPACK_IMPORTED_MODULE_5__["default"])('asterisk'),
+    isPressed: attributes.required,
+    onClick: function onClick() {
+      setAttributes({
+        required: !attributes.required
+      });
+    }
+  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Options', 'formello'),
     initialOpen: true
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Name', 'formello'),
     value: attributes.name,
     onChange: function onChange(val) {
@@ -22286,7 +22295,7 @@ function Edit(props) {
         name: val.replace(/\W/g, '')
       });
     }
-  })), !(attributes.type == 'hidden') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }), !(attributes.type == 'hidden') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Label', 'formello'),
     value: attributes.label,
     onChange: function onChange(val) {
@@ -22294,7 +22303,7 @@ function Edit(props) {
         label: val
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_merge_tags__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_components_merge_tags__WEBPACK_IMPORTED_MODULE_6__["default"], {
     className: 'formello-flex',
     clientId: clientId,
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Value', 'formello'),
@@ -22304,7 +22313,7 @@ function Edit(props) {
         value: val
       });
     }
-  }), supported.includes('placeholder') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }), supported.includes('placeholder') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Placeholder', 'formello'),
     value: attributes.placeholder,
     onChange: function onChange(val) {
@@ -22312,7 +22321,7 @@ function Edit(props) {
         placeholder: val
       });
     }
-  })), supported.includes('required') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+  }), supported.includes('required') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Required', 'formello'),
     checked: attributes.required,
     onChange: function onChange(newval) {
@@ -22355,7 +22364,7 @@ function Edit(props) {
   })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Advanced Options', 'formello'),
     initialOpen: false
-  }, supported.includes('step') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }, supported.includes('step') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Min Value', 'formello'),
     value: attributes.min || '',
     min: '0',
@@ -22365,7 +22374,7 @@ function Edit(props) {
         min: val
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Max Value', 'formello'),
     value: attributes.max || '',
     type: 'range' == attributes.type ? 'number' : attributes.type,
@@ -22374,7 +22383,7 @@ function Edit(props) {
         max: val
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     type: "number",
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Step Value', 'formello'),
     value: attributes.step || '',
@@ -22383,7 +22392,7 @@ function Edit(props) {
         step: val
       });
     }
-  }))), supported.includes('minlength') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  })), supported.includes('minlength') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     type: "number",
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Min Length', 'formello'),
     value: attributes.minlength || '',
@@ -22392,7 +22401,7 @@ function Edit(props) {
         minlength: val
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     type: "number",
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Max Length', 'formello'),
     value: attributes.maxlength || '',
@@ -22401,7 +22410,7 @@ function Edit(props) {
         maxlength: val
       });
     }
-  }))), supported.includes('pattern') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  })), supported.includes('pattern') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Pattern', 'formello'),
     value: attributes.pattern || '',
     onChange: function onChange(val) {
@@ -22409,7 +22418,7 @@ function Edit(props) {
         pattern: val
       });
     }
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Custom Validation Message', 'formello'),
     value: attributes.validation,
     onChange: function onChange(val) {
@@ -22417,7 +22426,7 @@ function Edit(props) {
         validation: val
       });
     }
-  })), 'textarea' == attributes.type && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }), 'textarea' == attributes.type && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     type: "number",
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Cols', 'formello'),
     value: attributes.cols,
@@ -22426,7 +22435,7 @@ function Edit(props) {
         cols: val
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["TextControl"], {
     type: "number",
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Rows', 'formello'),
     value: attributes.rows,
@@ -22435,7 +22444,7 @@ function Edit(props) {
         rows: val
       });
     }
-  }))), !(attributes.type == 'hidden') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
+  })), !(attributes.type == 'hidden') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["ToggleControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Add Tooltip', 'formello'),
     checked: attributes.hasTooltip,
     onChange: function onChange(newval) {
@@ -24517,8 +24526,8 @@ function Edit(props) {
     className: getBlockClassNames()
   });
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])("div", blockProps, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10__["InspectorControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_10__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_16__["ToolbarGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_16__["DropdownMenu"], {
-    icon: 'admin-settings',
-    label: "Add an action",
+    icon: 'admin-generic',
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Add action', 'formello'),
     controls: actions.filter(function (a) {
       return a.active;
     }).map(function (a) {
@@ -25237,7 +25246,8 @@ var variations = [{
   isDefault: true,
   innerBlocks: [['formello/input', {
     type: 'text',
-    label: 'Name'
+    label: 'Name',
+    name: 'name'
   }], ['formello/button']],
   scope: ['block']
 }, {
@@ -25254,17 +25264,21 @@ var variations = [{
   })),
   innerBlocks: [['formello/input', {
     type: 'text',
-    label: 'Name'
+    label: 'Name',
+    name: 'name'
   }], ['formello/input', {
     type: 'email',
     label: 'Email',
+    name: 'email',
     required: true
   }], ['formello/input', {
     type: 'text',
-    label: 'Subject'
+    label: 'Subject',
+    name: 'subject'
   }], ['formello/input', {
     type: 'textarea',
     label: 'Message',
+    name: 'message',
     rows: 5
   }], ['formello/button', {
     txt: 'Send'
@@ -25284,28 +25298,35 @@ var variations = [{
   })),
   innerBlocks: [['core/columns', {}, [['core/column', {}, [['formello/input', {
     type: 'text',
-    label: 'First Name'
+    label: 'First Name',
+    name: 'name'
   }]]], ['core/column', {}, [['formello/input', {
     type: 'text',
-    label: 'Last Name'
+    label: 'Last Name',
+    name: 'last_name'
   }]]]]], ['formello/input', {
     type: 'email',
     label: 'Email',
+    name: 'email',
     required: true
   }], ['formello/input', {
     type: 'tel',
     label: 'Phone',
+    name: 'phone',
     required: true
   }], ['core/columns', {}, [['core/column', {}, [['formello/input', {
     type: 'date',
     label: 'Date',
+    name: 'date',
     required: true
   }]]], ['core/column', {}, [['formello/input', {
     type: 'time',
-    label: 'Hour'
+    label: 'Hour',
+    name: 'hour'
   }]]]]], ['formello/input', {
     type: 'textarea',
     label: 'Message',
+    name: 'message',
     rows: 5
   }], ['formello/button', {
     txt: 'Book appointment'
@@ -26198,6 +26219,20 @@ function getIcon(icon) {
 
   if ('webhooks' === icon) {
     return 'admin-links';
+  }
+
+  if ('asterisk' === icon) {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("svg", {
+      width: "20px",
+      height: "20px",
+      viewBox: "0 0 20 20",
+      fill: "none",
+      xmlns: "http://www.w3.org/2000/svg"
+    }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("path", {
+      d: "M10.5999 2.50002C10.5999 2.16865 10.3313 1.90002 9.9999 1.90002C9.66853 1.90002 9.3999 2.16865 9.3999 2.50002V8.55136L5.12094 4.27239C4.88662 4.03808 4.50672 4.03808 4.27241 4.27239C4.03809 4.50671 4.03809 4.8866 4.27241 5.12092L8.55146 9.39997H2.4999C2.16853 9.39997 1.8999 9.6686 1.8999 9.99998C1.8999 10.3313 2.16853 10.6 2.4999 10.6H8.5516L4.27251 14.8791C4.0382 15.1134 4.0382 15.4933 4.27251 15.7276C4.50683 15.9619 4.88673 15.9619 5.12104 15.7276L9.3999 11.4487V17.5C9.3999 17.8314 9.66853 18.1 9.9999 18.1C10.3313 18.1 10.5999 17.8314 10.5999 17.5V11.4484L14.879 15.7275C15.1133 15.9618 15.4932 15.9618 15.7275 15.7275C15.9619 15.4932 15.9619 15.1133 15.7275 14.879L11.4485 10.6H17.4999C17.8313 10.6 18.0999 10.3313 18.0999 9.99998C18.0999 9.6686 17.8313 9.39997 17.4999 9.39997H11.4487L15.7276 5.12099C15.962 4.88667 15.962 4.50677 15.7276 4.27246C15.4933 4.03815 15.1134 4.03815 14.8791 4.27246L10.5999 8.55167V2.50002Z",
+      fill: "#212121",
+      stroke: "currentColor"
+    }));
   }
 }
 

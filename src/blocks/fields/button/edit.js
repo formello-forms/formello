@@ -13,7 +13,7 @@ import {
 	PanelColorSettings,
 	withColors,
 	getColorObjectByColorValue,
-	__experimentalUseEditorFeature as useEditorFeature
+	useSetting
 } from '@wordpress/block-editor';
 import {
 	TextControl,
@@ -110,7 +110,7 @@ function Edit( props ) {
     }
 
 	const [ showIcon, setShowIcon ] = useState( false );
-	const colors = useEditorFeature( 'color.palette' ) || EMPTY_ARRAY;
+	const colors = useSetting( 'color.palette' ) || EMPTY_ARRAY;
 
 	const buttonClass = classnames( 'button-span', textColor.class, backgroundColor.class, attributes.iconPosition, {
 		'has-background': backgroundColor.value,

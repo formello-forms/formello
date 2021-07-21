@@ -110,7 +110,6 @@ class Assets {
 	 * @throws \Error Assets not loaded.
 	 */
 	public function get_scripts() {
-		$prefix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '.min' : '';
 
 		$script_asset_path = FORMELLO_PATH . '/build/index.asset.php';
 		if ( ! file_exists( $script_asset_path ) ) {

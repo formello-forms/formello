@@ -174,7 +174,7 @@ class Forms extends \WP_List_Table {
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
 			$params['search'] = '%' . sanitize_text_field( $_REQUEST['s'] ) . '%';
-			$sql .= ' WHERE name LIKE %s';
+			$sql .= ' AND f.name LIKE %s';
 		}
 
 		$params['per_page'] = $per_page;

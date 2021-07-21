@@ -2,16 +2,19 @@ import { __ } from '@wordpress/i18n';
 
 import {
 	InspectorControls,
+	BlockControls,
 	AlignmentToolbar,
 	RichText,
 	InnerBlocks
 } from '@wordpress/block-editor';
 
 import {
-	ToggleControl,
+	ToolbarGroup,
+	ToolbarButton,
 	PanelRow,
 	PanelBody,
 	TextareaControl,
+	ToggleControl,
 	BaseControl,
 	SelectControl,
 	__experimentalInputControl as InputControl
@@ -83,6 +86,18 @@ export default function Edit( props ) {
 	return (
 		<div className={ className }>
 			<InspectorControls>
+				<BlockControls>
+					<ToolbarGroup>
+						<ToolbarButton
+							label={ __( 'Required' ) }
+							icon={ getIcon( 'asterisk' ) }
+							isPressed={ attributes.required }
+							onClick={ () => {
+								setAttributes( { required: !attributes.required } )
+							} }
+						/>
+					</ToolbarGroup>
+				</BlockControls>
 				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<BaseControl>
 					<InputControl

@@ -203,8 +203,8 @@ function Edit( props ) {
 				<BlockControls>
 					<ToolbarGroup>
 					    <DropdownMenu
-					        icon={ 'admin-settings' }
-					        label="Add an action"
+					        icon={ 'admin-generic' }
+							label={ __( 'Add action', 'formello' ) }
 					        controls={ 
 					        	actions
 								.filter( (a) => {
