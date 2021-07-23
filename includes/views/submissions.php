@@ -17,11 +17,19 @@ $new_submission = add_query_arg( array( 'new' => 1 ) );
 </h1>
 
 <ul class="subsubsub">
-	<li class="all">
-		<a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All', 'formello' ); ?></a> |
+	<li class="draft">
+		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'New' ); ?>
+			<span class="count">
+				(<?php echo esc_attr( $this->submissions_table->get_news() ); ?>)
+			</span>
+		</a> | 
 	</li>
 	<li class="draft">
-		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'New', 'formello' ); ?>(<?php echo esc_attr( $this->submissions_table->get_news() ); ?>)</a>
+		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'Starred', 'formello' ); ?>
+			<span class="count">
+				(<?php echo esc_attr( $this->submissions_table->get_favorites() ); ?>)
+			</span>
+		</a>
 	</li>
 <?php
 do_action( 'formello_forms_table' );
