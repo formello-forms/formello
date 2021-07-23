@@ -408,7 +408,6 @@ class Submissions extends \WP_List_Table {
 
 		global $wpdb;
 
-		$sql = "SELECT DISTINCT field_name FROM {$wpdb->prefix}formello_submissions_meta WHERE form_id = {$this->form_id}";
 		$sql = "SELECT settings FROM {$wpdb->prefix}formello_forms WHERE id = {$this->form_id}";
 
 		$results = $wpdb->get_var( $sql );

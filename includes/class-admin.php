@@ -231,7 +231,7 @@ class Admin {
 		global $wpdb;
 		$object = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT s.* FROM {$wpdb->prefix}formello_submissions s WHERE s.id = %d;",
+				"SELECT s.* FROM '{$wpdb->prefix}formello_submissions' s WHERE s.id = %d;",
 				array( $id )
 			),
 			OBJECT
@@ -330,6 +330,15 @@ class Admin {
 				'parent' => null,
 				'group'  => null,
 				'title' => 'Formello ' . $badge,
+				'href'  => admin_url( 'edit.php?post_type=formello_form&page=formello' ),
+			)
+		);
+
+		$admin_bar->add_menu(
+			array(
+				'id'    => 'formello-submissions',
+				'parent' => 'formello-menu',
+				'title' => __( 'Submissions', 'formello' ),
 				'href'  => admin_url( 'edit.php?post_type=formello_form&page=formello' ),
 			)
 		);
