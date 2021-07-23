@@ -3,6 +3,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+$this->submissions_table->prepare_items();
+
 $form_page = add_query_arg( array( 'page' => 'formello' ) );
 $all = remove_query_arg( array( 'new' ) );
 $new_submission = add_query_arg( array( 'new' => 1 ) );
@@ -15,8 +17,12 @@ $new_submission = add_query_arg( array( 'new' => 1 ) );
 </h1>
 
 <ul class="subsubsub">
-	<li class="all"><a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All', 'formello' ); ?></a> |</li>
-	<li class="draft"><a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'New', 'formello' ); ?></a></li>
+	<li class="all">
+		<a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All', 'formello' ); ?></a> |
+	</li>
+	<li class="draft">
+		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'New', 'formello' ); ?>(<?php echo esc_attr( $this->submissions_table->get_news() ); ?>)</a>
+	</li>
 <?php
 do_action( 'formello_forms_table' );
 ?>
@@ -31,9 +37,9 @@ do_action( 'formello_forms_table' );
 
 <form method="post">
 	<?php
-	$this->submissions_table->prepare_items();
 	//$this->submissions_table->search_box( 'search', 'search_id' );
 	$this->submissions_table->display();
+var_dump($this->submissions_table->get_news());
 	?>
 </form>
 

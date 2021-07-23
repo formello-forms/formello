@@ -356,23 +356,23 @@ class Submissions extends \WP_List_Table {
 		$sql .= ' LIMIT ' . $per_page;
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 		
-		$results = $wpdb->get_results( $sql, OBJECT_K );
-print_r($results);
+		$results = $wpdb->get_results( $sql, ARRAY_A );
 
 		$submissions = array();
 
-		if( !empty( $results ) ){
-			$this->news = $results[0]->news;
+		if( count( $results ) ){
+			$this->news = $results[0]['news'];
+			$this->favorites = $results[0]['favorites'];
 		}
 
 		foreach ( $results as $key => $s ) {
-			$data                 = empty( $s->data ) ? array() : (array) json_decode( $s->data, true );
-			$data['id']           = (int) $s->id;
-			$data['submitted_at'] = $s->submitted_at;
-			$data['is_new'] 	  = $s->is_new;
+			$data                 = empty( $s['data'] ) ? array() : (array) json_decode( $s['data'], true );
+			$data['id']           = (int) $s['id'];
+			$data['submitted_at'] = $s['submitted_at'];
+			$data['is_new'] 	  = $s['is_new'];
 			$submissions[]        = $data;
 		}
-
+print_r($this);
 		return $submissions;
 
 	}
@@ -529,6 +529,24 @@ print_r($results);
 		}
 
 		return $this->data;
+	}
+
+	/**
+	 * Render the news property
+	 *
+	 * @return int
+	 */
+	public function get_news() {
+		return $this->news;
+	}
+
+	/**
+	 * Render the favorites property
+	 *
+	 * @return int
+	 */
+	public function get_favorites() {
+		return $this->favorites;
 	}
 
 }
