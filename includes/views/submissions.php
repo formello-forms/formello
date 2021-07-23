@@ -11,12 +11,13 @@ $new_submission = add_query_arg( array( 'new' => 1 ) );
 $starred = add_query_arg( array( 'starred' => 1 ) );
 ?>
 
-<h1>
+<h1 class="wp-heading-inline">
 <?php
 	esc_html_e( wp_sprintf( 'Submissions for %s', $form->name ), 'formello' );
 ?>
 </h1>
-
+<a href="<?php echo esc_attr( $form_page ); ?>" class="page-title">&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?></a>
+<hr class="wp-header-end">
 <ul class="subsubsub">
 	<li class="draft">
 		<a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All' ); ?>
@@ -44,8 +45,10 @@ do_action( 'formello_forms_table' );
 <style type="text/css">
 .column-id { text-align: left; width:50px !important; overflow:hidden }
 .column-actions { text-align: left; width: 150px !important; overflow:hidden }
-.column-is_new { text-align: left; width:90px !important; overflow:hidden }
-.badge { color: #337ab7; font-size: 14px; margin-top: 3px; }
+.column-is_new { text-align: left; width:70px !important; overflow:hidden }
+.column-starred { text-align: left; width:10px !important; overflow:hidden }
+.badge { color: #337ab7; font-size: 12px; margin-top: 3px; }
+.star { color: #e27730; font-size: 12px; }
 </style>
 
 <form method="post">

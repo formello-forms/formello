@@ -231,7 +231,7 @@ class Admin {
 		global $wpdb;
 		$object = $wpdb->get_row(
 			$wpdb->prepare(
-				"SELECT s.* FROM '{$wpdb->prefix}formello_submissions' s WHERE s.id = %d;",
+				"SELECT s.* FROM {$wpdb->prefix}formello_submissions s WHERE s.id = %d;",
 				array( $id )
 			),
 			OBJECT

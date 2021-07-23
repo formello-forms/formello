@@ -98,15 +98,15 @@ class Submissions extends \WP_List_Table {
 	 *
 	 * @param int $id customer ID.
 	 */
-	public static function mark_submission( $id ) {
+	public static function mark_submission( $id, $column, $value = 1 ) {
 		global $wpdb;
 
 		$table = $wpdb->prefix . 'formello_submissions';
 
 		$wpdb->query(
 			$wpdb->prepare(
-				"UPDATE {$table} SET is_new = %d WHERE id = %d;",
-				0,
+				"UPDATE {$table} SET {$column} = %d WHERE id = %d;",
+				$value,
 				$id
 			)
 		);
@@ -140,6 +140,9 @@ class Submissions extends \WP_List_Table {
 	public function get_bulk_actions() {
 		$actions = array(
 			'mark-as-read' => 'Mark as Read',
+			'mark-as-unread' => 'Mark as Unread',
+			'mark-as-starred' => 'Mark as Starred',
+			'mark-as-unstarred' => 'Mark as Starred',
 			'bulk-delete' => 'Delete',
 		);
 
@@ -246,12 +249,12 @@ class Submissions extends \WP_List_Table {
 		if ( ( isset( $_POST['action'] ) && 'mark-as-read' === $_POST['action'] )
 			|| ( isset( $_POST['action2'] ) && 'mark-as-read' === $_POST['action2'] )
 		) {
-
+			
 			$marked_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
 			foreach ( $marked_ids as $id ) {
-				self::mark_submission( $id );
+				self::mark_submission( $id, 'is_new' );
 
 			}
 
@@ -261,6 +264,28 @@ class Submissions extends \WP_List_Table {
 			$this->data   = $this->table_data( $per_page, $current_page );
 
 			echo '<div class="notice notice-success is-dismissible"><p>Submission(s) marked as read.</p></div>';
+
+		}
+
+		// If the delete bulk action is triggered.
+		if ( ( isset( $_POST['action'] ) && 'mark-as-starred' === $_POST['action'] )
+			|| ( isset( $_POST['action2'] ) && 'mark-as-starred' === $_POST['action2'] )
+		) {
+			
+			$marked_ids = esc_sql( $_POST['bulk-delete'] );
+
+			// loop over the array of record IDs and delete them.
+			foreach ( $marked_ids as $id ) {
+				self::mark_submission( $id, 'starred' );
+
+			}
+
+			// refresh table.
+			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
+			$current_page = $this->get_pagenum();
+			$this->data   = $this->table_data( $per_page, $current_page );
+
+			echo '<div class="notice notice-success is-dismissible"><p>Submission(s) marked as starred.</p></div>';
 
 		}
 
@@ -301,7 +326,7 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array();
+		return array('id');
 	}
 
 	/**
@@ -338,11 +363,15 @@ class Submissions extends \WP_List_Table {
 
 		global $wpdb;
 
-		$sql = "SELECT id, is_new, data, submitted_at, 
-				(select COUNT(*) from wp_formello_submissions WHERE is_new = 1) as news,
-				(select COUNT(*) from wp_formello_submissions WHERE starred = 1) as favorites
+		$sql = "SELECT id, is_new, starred, data, submitted_at, 
+				(select COUNT(*) from wp_formello_submissions WHERE is_new = 1 AND form_id = {$this->form_id}) as news,
+				(select COUNT(*) from wp_formello_submissions WHERE starred = 1 AND form_id = {$this->form_id}) as favorites
 				FROM {$wpdb->prefix}formello_submissions 
 				WHERE form_id = {$this->form_id}";
+
+		if ( ! empty( $_REQUEST['s'] ) ) {
+			$sql .= ' AND data LIKE "%' . esc_sql( $_REQUEST['s'] ) .'%"';
+		}
 
 		if ( ! empty( $_REQUEST['new'] ) ) {
 			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
@@ -370,6 +399,7 @@ class Submissions extends \WP_List_Table {
 			$data['id']           = (int) $s['id'];
 			$data['submitted_at'] = $s['submitted_at'];
 			$data['is_new'] 	  = $s['is_new'];
+			$data['starred'] 	  = $s['starred'];
 			$submissions[]        = $data;
 		}
 
@@ -386,6 +416,7 @@ class Submissions extends \WP_List_Table {
 		$columns                 = array();
 		$columns['cb']           = '<input type="checkbox" />';
 		$columns['id']           = 'ID';
+		$columns['starred']      = '';
 		$columns['is_new']       = 'New';
 
 		global $wpdb;
@@ -425,6 +456,8 @@ class Submissions extends \WP_List_Table {
 				return $item[ $column_name ];
 			case 'is_new':
 				return $item[ $column_name ] ? '<span class="dashicons dashicons-marker badge"> </span>' : '';
+			case 'starred':
+				return $item[ $column_name ] ? '<span class="dashicons dashicons-star-filled star"> </span>' : '';
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
 				if ( 'on' === $item ) {

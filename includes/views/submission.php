@@ -1,3 +1,4 @@
+<div class="wrap">
 <?php
 
 defined( 'ABSPATH' ) || exit;
@@ -15,11 +16,13 @@ if ( $submission->is_new ) {
 
 ?>
 
-<h2>
+<h1 class="wp-heading-inline">
 <?php
 	esc_html_e( wp_sprintf( 'Submission %d', $submission->id ), 'formello' );
 ?>
-</h2>
+</h1>
+<a href="<?php echo esc_attr( $submissions_page ); ?>" class="page-title">&lsaquo; <?php esc_html_e( 'Back to submissions list', 'formello' ); ?></a>
+<hr class="wp-header-end">
 <div class="wrap">
 	<style type="text/css">
 		table.formello-bordered {
@@ -98,4 +101,5 @@ if ( $submission->is_new ) {
 	<p>
 		<a href="<?php echo esc_attr( $submissions_page ); ?>">&lsaquo; <?php esc_html_e( 'Back to submissions list', 'formello' ); ?></a>
 	</p>
+</div>
 </div>
