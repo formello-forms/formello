@@ -47,6 +47,20 @@ class Submissions extends \WP_List_Table {
 	 */
 	protected $columns;
 
+	/**
+	 * Columns.
+	 *
+	 * @var $news
+	 */
+	protected $news;
+
+	/**
+	 * Columns.
+	 *
+	 * @var $favorites
+	 */
+	protected $favorites;
+
 	/** Class constructor */
 	public function __construct() {
 
@@ -324,7 +338,9 @@ class Submissions extends \WP_List_Table {
 
 		global $wpdb;
 
-		$sql = "SELECT id, is_new, data, submitted_at 
+		$sql = "SELECT id, is_new, data, submitted_at, 
+				(select COUNT(*) from wp_formello_submissions WHERE is_new = 1) as news,
+				(select COUNT(*) from wp_formello_submissions WHERE starred = 1) as favorites
 				FROM {$wpdb->prefix}formello_submissions 
 				WHERE form_id = {$this->form_id}";
 
@@ -341,8 +357,13 @@ class Submissions extends \WP_List_Table {
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
 		
 		$results = $wpdb->get_results( $sql, OBJECT_K );
+print_r($results);
 
 		$submissions = array();
+
+		if( !empty( $results ) ){
+			$this->news = $results[0]->news;
+		}
 
 		foreach ( $results as $key => $s ) {
 			$data                 = empty( $s->data ) ? array() : (array) json_decode( $s->data, true );
