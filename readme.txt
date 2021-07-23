@@ -88,6 +88,7 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 * Added starred column
 * Better handling back button
 * ID on table hidden by default
+* Fix errors in submissions table
 
 
 = 1.2.3 =

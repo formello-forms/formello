@@ -212,10 +212,10 @@ class Data {
 			$this->id = $wpdb->insert_id;
 		}
 
-		foreach ($this->data as $key => $value) {
+		foreach ( $this->data as $key => $value ) {
 			$values[] = '(' . $form_id . ',' . $this->id . ', "' . $key . '" , "' . $value . '")';
 		}
-		$sql = implode(',', $values);
+		$sql = implode( ',', $values );
 
 		$wpdb->query(
 			"INSERT INTO $submissions_meta_table
