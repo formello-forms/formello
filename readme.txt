@@ -88,6 +88,9 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 * Simplify submissions table with code reduction
 * Added logic to disable actions if not active
 * Fixed spinner on modal
+* Added column to tables
+* Fixed column show/hide in submissions table
+* Removed css on editor
 
 = 1.2.1 =
 * Fix button for WP 5.8
