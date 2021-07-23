@@ -424,7 +424,7 @@ class Submissions extends \WP_List_Table {
 
 		$columns['submitted_at'] = 'Submitted At';
 		$columns['actions'] 	 = 'Actions';
-		$this->columns = $columns;
+		$this->columns = array_keys($columns);
 		return $columns;
 	}
 
