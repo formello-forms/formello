@@ -3,7 +3,7 @@
  * Plugin Name: Formello
  * Plugin URI: https://formello.net/
  * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
- * Version: 1.2.5
+ * Version: 1.2.6
  * Author: Formello
  * Author URI: https://formello.net
  * License: GPL2
@@ -29,7 +29,7 @@ final class Formello {
 	 *
 	 * @var string
 	 */
-	public $version = '1.2.5';
+	public $version = '1.2.6';
 
 	/**
 	 * Holds various class instances
@@ -107,15 +107,18 @@ final class Formello {
 
 		if( $version ){
 
-			$starred = $wpdb->get_results(  "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'starred'"  );
-			$log = $wpdb->get_results(  "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'log'"  );
+			$starred = $wpdb->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'starred'" );
+			$log = $wpdb->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'log'" );
 
 			if(empty($starred)){
-			   $wpdb->query("ALTER TABLE {$wpdb->prefix}formello_submissions ADD `starred` BOOLEAN DEFAULT false AFTER `is_new`");
+			   $wpdb->query( "ALTER TABLE {$wpdb->prefix}formello_submissions ADD `starred` BOOLEAN DEFAULT false AFTER `is_new`" );
 			}
 			if(empty($log)){
-			   $wpdb->query("ALTER TABLE {$wpdb->prefix}formello_submissions ADD `log` TEXT NULL");
+				$wpdb->query( "ALTER TABLE {$wpdb->prefix}formello_submissions ADD `log` TEXT NULL" );
 			}
+
+			$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}formello_submissions_meta" );
+
 		}
 
 		// create table for storing forms.
@@ -153,8 +156,8 @@ final class Formello {
         	`submission_id` INT UNSIGNED NOT NULL,
 			`field_name` VARCHAR(255) NOT NULL,
 			`field_value` TEXT NULL,
-			FOREIGN KEY (form_id) REFERENCES {$wpdb->prefix}formello_forms(id),
-			FOREIGN KEY (submission_id) REFERENCES {$wpdb->prefix}formello_submissions(id)
+			FOREIGN KEY (form_id) REFERENCES {$wpdb->prefix}formello_forms(id) ON DELETE CASCADE,
+			FOREIGN KEY (submission_id) REFERENCES {$wpdb->prefix}formello_submissions(id) ON DELETE CASCADE
 			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
 		);
 

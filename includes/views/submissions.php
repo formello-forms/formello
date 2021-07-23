@@ -1,15 +1,37 @@
-<div class="wrap">
 <?php
 
 defined( 'ABSPATH' ) || exit;
 
 $this->submissions_table->prepare_items();
 
+$all = sprintf(
+	'<a href="?post_type=formello_form&page=%s&form=%s&paged=%s">%s</a>',
+	'formello-submissions',
+	sanitize_text_field( $_REQUEST['form'] ),
+	isset( $_REQUEST['paged'] ) ? sanitize_text_field( $_REQUEST['paged'] ) : '',
+	__( 'All' )
+);
+
+$news = sprintf(
+	'<a href="?post_type=formello_form&page=%s&form=%s&new=1">%s <span class="count">(%d)</span></a>',
+	'formello-submissions',
+	sanitize_text_field( $_REQUEST['form'] ),
+	__( 'Unread', 'formello' ),
+	$this->submissions_table->get_news()
+);
+
+$starred = sprintf(
+	'<a href="?post_type=formello_form&page=%s&form=%s&starred=1">%s <span class="count">(%d)</span></a>',
+	'formello-submissions',
+	sanitize_text_field( $_REQUEST['form'] ),
+	__( 'Starred', 'formello' ),
+	$this->submissions_table->get_favorites()
+);
+
 $form_page = add_query_arg( array( 'page' => 'formello' ) );
-$all = remove_query_arg( array( 'new' ) );
-$new_submission = add_query_arg( array( 'new' => 1 ) );
-$starred = add_query_arg( array( 'starred' => 1 ) );
+
 ?>
+<div class="wrap">
 
 <h1 class="wp-heading-inline">
 <?php
@@ -20,22 +42,13 @@ $starred = add_query_arg( array( 'starred' => 1 ) );
 <hr class="wp-header-end">
 <ul class="subsubsub">
 	<li class="draft">
-		<a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All' ); ?>
-		</a> | 
+		<?php echo $all; ?> | 
 	</li>
 	<li class="draft">
-		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'Unread' ); ?>
-			<span class="count">
-				(<?php echo esc_attr( $this->submissions_table->get_news() ); ?>)
-			</span>
-		</a> | 
+		<?php echo $news; ?> | 
 	</li>
 	<li class="draft">
-		<a href="<?php echo esc_attr( $starred ); ?>"><?php esc_html_e( 'Starred', 'formello' ); ?>
-			<span class="count">
-				(<?php echo esc_attr( $this->submissions_table->get_favorites() ); ?>)
-			</span>
-		</a>
+		<?php echo $starred; ?>
 	</li>
 <?php
 do_action( 'formello_forms_table' );

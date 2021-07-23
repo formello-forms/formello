@@ -122,8 +122,18 @@ class Submissions extends \WP_List_Table {
 		global $wpdb;
 		$form_id = isset( $_GET['form'] ) ? absint( $_GET['form'] ) : 0;
 
+		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d";
+
+		if ( ! empty( $_REQUEST['new'] ) ) {
+			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
+		}
+
+		if ( ! empty( $_REQUEST['starred'] ) ) {
+			$sql .= ' AND starred = ' . esc_sql( $_REQUEST['starred'] );
+		}
+
 		return $wpdb->get_var(
-			$wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d;", array( $form_id ) )
+			$wpdb->prepare( $sql, array( $form_id ) )
 		);
 	}
 
@@ -375,6 +385,10 @@ class Submissions extends \WP_List_Table {
 
 		if ( ! empty( $_REQUEST['new'] ) ) {
 			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
+		}
+
+		if ( ! empty( $_REQUEST['starred'] ) ) {
+			$sql .= ' AND starred = ' . esc_sql( $_REQUEST['starred'] );
 		}
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
