@@ -43,22 +43,22 @@
 }
 
 .wp-block-formello-button .button-span {
-    cursor: pointer;
+  cursor: pointer;
 	font-size: 14px;
-    padding: 5px 10px;
+  padding: 5px 10px;
 	background: #abb8c3;
-    color: #fff;
-    border: 1px solid transparent;
-    align-self: flex-start;
-    &.center {
-      align-self: center;
-    }
-    &.right {
-      align-self: flex-end;
-    }
-    &.wide {
-      width: 100%;
-    }
+  color: #fff;
+  border: 1px solid transparent;
+  align-self: flex-start;
+  &.center {
+    align-self: center;
+  }
+  &.right {
+    align-self: flex-end;
+  }
+  &.wide {
+    width: 100%;
+  }
 
 }
 
