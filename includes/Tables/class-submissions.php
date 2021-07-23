@@ -372,45 +372,6 @@ class Submissions extends \WP_List_Table {
 			$data['is_new'] 	  = $s['is_new'];
 			$submissions[]        = $data;
 		}
-print_r($this);
-		return $submissions;
-
-	}
-
-	private function table_data2( $per_page = 5, $page_number = 1 ) {
-
-		global $wpdb;
-
-//SELECT GROUP_CONCAT(id)  FROM wp_formello_submissions_meta where form_id=1 group by form_id
-
-		$sql = "SELECT * 
-				FROM {$wpdb->prefix}formello_submissions as submission
-				LEFT JOIN {$wpdb->prefix}formello_submissions_meta as meta
-				ON submission.id = meta.submission_id
-				WHERE meta.form_id = {$this->form_id}";
-
-		if ( ! empty( $_REQUEST['new'] ) ) {
-			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
-		}
-
-		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
-			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
-		}
-
-		$sql .= ' LIMIT ' . $per_page;
-		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
-
-		$results = $wpdb->get_results( $sql, OBJECT_K );
-
-		$submissions = array();
-
-	    foreach($results as $val) {
-	        $submissions[$val->submission_id]['id'] = (int)$val->submission_id;
-	        $submissions[$val->submission_id]['is_new'] = '1';
-	        $submissions[$val->submission_id]['submitted_at'] = '2021-07-22 02:57:32';
-	        $submissions[$val->submission_id][$val->field_name] = $val->field_value;
-	    }
 
 		return $submissions;
 

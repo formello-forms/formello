@@ -8,6 +8,7 @@ $this->submissions_table->prepare_items();
 $form_page = add_query_arg( array( 'page' => 'formello' ) );
 $all = remove_query_arg( array( 'new' ) );
 $new_submission = add_query_arg( array( 'new' => 1 ) );
+$starred = add_query_arg( array( 'starred' => 1 ) );
 ?>
 
 <h1>
@@ -18,14 +19,18 @@ $new_submission = add_query_arg( array( 'new' => 1 ) );
 
 <ul class="subsubsub">
 	<li class="draft">
-		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'New' ); ?>
+		<a href="<?php echo esc_attr( $all ); ?>"><?php esc_html_e( 'All' ); ?>
+		</a> | 
+	</li>
+	<li class="draft">
+		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'Unread' ); ?>
 			<span class="count">
 				(<?php echo esc_attr( $this->submissions_table->get_news() ); ?>)
 			</span>
 		</a> | 
 	</li>
 	<li class="draft">
-		<a href="<?php echo esc_attr( $new_submission ); ?>"><?php esc_html_e( 'Starred', 'formello' ); ?>
+		<a href="<?php echo esc_attr( $starred ); ?>"><?php esc_html_e( 'Starred', 'formello' ); ?>
 			<span class="count">
 				(<?php echo esc_attr( $this->submissions_table->get_favorites() ); ?>)
 			</span>
@@ -44,11 +49,10 @@ do_action( 'formello_forms_table' );
 </style>
 
 <form method="post">
-	<?php
-	//$this->submissions_table->search_box( 'search', 'search_id' );
+<?php
+	$this->submissions_table->search_box( 'search', 'search_id' );
 	$this->submissions_table->display();
-var_dump($this->submissions_table->get_news());
-	?>
+?>
 </form>
 
 <div class="hf-small-margin">

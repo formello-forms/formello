@@ -4,7 +4,7 @@ Donate link: 	   https://formello.net
 Tags:              contact form, form builder, form block, gutenberg form, forms
 Requires at least: 5.4.0
 Tested up to:      5.7.2
-Stable tag:        1.2.2
+Stable tag:        1.2.3
 Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -83,7 +83,7 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
-= 1.2.2 =
+= 1.2.3 =
 * Better handling of form fields
 * Simplify submissions table with code reduction
 * Added logic to disable actions if not active
@@ -91,6 +91,9 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 * Added column to tables
 * Fixed column show/hide in submissions table
 * Removed css on editor
+
+= 1.2.2 =
+* Fixes for WP 5.8
 
 = 1.2.1 =
 * Fix button for WP 5.8
