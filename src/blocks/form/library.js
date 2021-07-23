@@ -83,7 +83,7 @@ export function TemplatesModal ( props ) {
 	const getTemplates = ( type ) => {
 
 		if ( ! templates ) {
-			return [];
+			return templates;
 		}
 
 		const result = [];
@@ -109,6 +109,7 @@ export function TemplatesModal ( props ) {
 	}
 
 	const allTemplates = getTemplates( type );
+	console.log(allTemplates)
 	const showLoadingSpinner = loading || ! allTemplates;
 
 	return (

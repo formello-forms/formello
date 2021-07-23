@@ -24946,7 +24946,7 @@ function TemplatesModal(props) {
 
   var getTemplates = function getTemplates(type) {
     if (!templates) {
-      return [];
+      return templates;
     }
 
     var result = [];
@@ -24969,6 +24969,7 @@ function TemplatesModal(props) {
   };
 
   var allTemplates = getTemplates(type);
+  console.log(allTemplates);
   var showLoadingSpinner = loading || !allTemplates;
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_11__["Modal"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Forms', 'formello'),

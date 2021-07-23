@@ -87,6 +87,7 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 * Better handling of form fields
 * Simplify submissions table with code reduction
 * Added logic to disable actions if not active
+* Fixed spinner on modal
 
 = 1.2.1 =
 * Fix button for WP 5.8
