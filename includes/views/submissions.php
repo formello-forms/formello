@@ -26,7 +26,7 @@ do_action( 'formello_forms_table' );
 .column-id { text-align: left; width:50px !important; overflow:hidden }
 .column-actions { text-align: left; width: 150px !important; overflow:hidden }
 .column-is_new { text-align: left; width:90px !important; overflow:hidden }
-.badge { background-color: #337ab7; height: 10px; width: 10px; display: inline-block; border-radius: 50%; }
+.badge { color: #337ab7; font-size: 14px; margin-top: 3px; }
 </style>
 
 <form method="post">

@@ -106,10 +106,16 @@ final class Formello {
 		update_option( 'formello_installed', time() );
 
 		if( $version ){
-			$wpdb->query(
-				"ALTER TABLE {$wpdb->prefix}formello_submissions
-				ADD COLUMN IF NOT EXISTS `log` TEXT NULL AFTER `submitted_at`;"
-			);
+
+			$starred = $wpdb->get_results(  "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'starred'"  );
+			$log = $wpdb->get_results(  "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'log'"  );
+
+			if(empty($starred)){
+			   $wpdb->query("ALTER TABLE {$wpdb->prefix}formello_submissions ADD `starred` BOOLEAN DEFAULT false AFTER `is_new`");
+			}
+			if(empty($log)){
+			   $wpdb->query("ALTER TABLE {$wpdb->prefix}formello_submissions ADD `log` TEXT NULL");
+			}
 		}
 
 		// create table for storing forms.
@@ -130,6 +136,7 @@ final class Formello {
         	`form_id` INT UNSIGNED NOT NULL,
 			`data` TEXT NOT NULL,
 			`is_new` BOOLEAN DEFAULT true,
+			`starred` BOOLEAN DEFAULT false,
 			`user_agent` TEXT NULL,
 			`ip_address` VARCHAR(255) NULL,
 			`referer_url` VARCHAR(255) NULL,

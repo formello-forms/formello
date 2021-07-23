@@ -109,7 +109,6 @@ export function TemplatesModal ( props ) {
 	}
 
 	const allTemplates = getTemplates( type );
-	console.log(allTemplates)
 	const showLoadingSpinner = loading || ! allTemplates;
 
 	return (

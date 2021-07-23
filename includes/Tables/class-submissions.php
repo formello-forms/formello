@@ -443,11 +443,11 @@ class Submissions extends \WP_List_Table {
 			case 'submitted_at':
 				return $item[ $column_name ];
 			case 'is_new':
-				return $item[ $column_name ] ? '<span class="badge"> </span>' : '';
+				return $item[ $column_name ] ? '<span class="dashicons dashicons-marker badge"> </span>' : '';
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
 				if ( 'on' === $item ) {
-					return 'Yes';
+					return __( 'Yes' );
 				}
 				if ( is_array( $item ) ) {
 					$item = implode( ',', $item );
