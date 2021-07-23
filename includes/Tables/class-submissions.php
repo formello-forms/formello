@@ -40,6 +40,12 @@ class Submissions extends \WP_List_Table {
 	 */
 	protected $data;
 
+	/**
+	 * Columns.
+	 *
+	 * @var $columns
+	 */
+	protected $columns;
 
 	/** Class constructor */
 	public function __construct() {
@@ -145,7 +151,7 @@ class Submissions extends \WP_List_Table {
 	 * @return string
 	 */
 	protected function column_actions( $item ) {
-		$link = sprintf(
+		$view_link = sprintf(
 			'<a href="?post_type=formello_form&page=%s&form=%s&submission=%s&paged=%s">%s</a>',
 			'formello-submission',
 			sanitize_text_field( $_REQUEST['form'] ),
@@ -153,8 +159,8 @@ class Submissions extends \WP_List_Table {
 			isset( $_REQUEST['paged'] ) ? sanitize_text_field( $_REQUEST['paged'] ) : '',
 			__( 'View' )
 		);
-		$link2 = sprintf(
-			'<a href="%s">%s</a>',
+		$delete_link = sprintf(
+			'<a href="%s" onclick="return confirm(\'%s\')">%s</a>',
 			esc_attr(
 				add_query_arg(
 					array(
@@ -164,9 +170,10 @@ class Submissions extends \WP_List_Table {
 					)
 				)
 			),
+			__( 'Are you sure?', 'formello' ),
 			__( 'Delete' )
 		);
-		return $link . ' | ' . $link2;
+		return $view_link . ' | ' . $delete_link;
 	}
 
 	/**
@@ -271,8 +278,7 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_columns() {
-		$data = $this->get_data();
-		return $this->get_submission_columns( $data );
+		return $this->get_submission_columns();
 	}
 
 	/**
@@ -318,7 +324,9 @@ class Submissions extends \WP_List_Table {
 
 		global $wpdb;
 
-		$sql = "SELECT id, is_new, data, submitted_at FROM {$wpdb->prefix}formello_submissions WHERE form_id = {$this->form_id}";
+		$sql = "SELECT id, is_new, data, submitted_at 
+				FROM {$wpdb->prefix}formello_submissions 
+				WHERE form_id = {$this->form_id}";
 
 		if ( ! empty( $_REQUEST['new'] ) ) {
 			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
@@ -343,6 +351,46 @@ class Submissions extends \WP_List_Table {
 			$data['is_new'] 	  = $s->is_new;
 			$submissions[]        = $data;
 		}
+
+		return $submissions;
+
+	}
+
+	private function table_data2( $per_page = 5, $page_number = 1 ) {
+
+		global $wpdb;
+
+//SELECT GROUP_CONCAT(id)  FROM wp_formello_submissions_meta where form_id=1 group by form_id
+
+		$sql = "SELECT * 
+				FROM {$wpdb->prefix}formello_submissions as submission
+				LEFT JOIN {$wpdb->prefix}formello_submissions_meta as meta
+				ON submission.id = meta.submission_id
+				WHERE meta.form_id = {$this->form_id}";
+
+		if ( ! empty( $_REQUEST['new'] ) ) {
+			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
+		}
+
+		if ( ! empty( $_REQUEST['orderby'] ) ) {
+			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
+			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
+		}
+
+		$sql .= ' LIMIT ' . $per_page;
+		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
+
+		$results = $wpdb->get_results( $sql, OBJECT_K );
+
+		$submissions = array();
+
+	    foreach($results as $val) {
+	        $submissions[$val->submission_id]['id'] = (int)$val->submission_id;
+	        $submissions[$val->submission_id]['is_new'] = '1';
+	        $submissions[$val->submission_id]['submitted_at'] = '2021-07-22 02:57:32';
+	        $submissions[$val->submission_id][$val->field_name] = $val->field_value;
+	    }
+
 		return $submissions;
 
 	}
@@ -350,26 +398,34 @@ class Submissions extends \WP_List_Table {
 	/**
 	 * Define what data to show on each column of the table
 	 *
-	 * @param  Array $submissions The data.
-	 *
 	 * @return Array
 	 */
-	private function get_submission_columns( array $submissions ) {
+	private function get_submission_columns() {
 		$columns                 = array();
 		$columns['cb']           = '<input type="checkbox" />';
 		$columns['id']           = 'ID';
 		$columns['is_new']       = 'New';
 
-		foreach ( $submissions as $s ) {
+		global $wpdb;
 
-			foreach ( $s as $field => $value ) {
-				if ( ! isset( $columns[ $field ] ) ) {
-					$columns[ $field ] = esc_html( ucfirst( strtolower( str_replace( '_', ' ', $field ) ) ) );
-				}
+		$sql = "SELECT DISTINCT field_name FROM {$wpdb->prefix}formello_submissions_meta WHERE form_id = {$this->form_id}";
+		$sql = "SELECT settings FROM {$wpdb->prefix}formello_forms WHERE id = {$this->form_id}";
+
+		$results = $wpdb->get_var( $sql );
+
+		$settings = maybe_unserialize($results);
+
+		if( isset( $settings['fields'] ) ){
+			foreach ( $settings['fields'] as $col ) {
+
+				$columns[ $col ] = esc_html( ucfirst( strtolower( str_replace( '_', ' ', $col ) ) ) );
+
 			}
 		}
+
 		$columns['submitted_at'] = 'Submitted At';
 		$columns['actions'] 	 = 'Actions';
+		$this->columns = $columns;
 		return $columns;
 	}
 

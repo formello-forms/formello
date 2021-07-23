@@ -138,6 +138,19 @@ final class Formello {
 			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
 		);
 
+		// create table for storing submissions meta.
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions_meta (
+			`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        	`form_id` INT UNSIGNED NOT NULL,
+        	`submission_id` INT UNSIGNED NOT NULL,
+			`field_name` VARCHAR(255) NOT NULL,
+			`field_value` TEXT NULL,
+			FOREIGN KEY (form_id) REFERENCES {$wpdb->prefix}formello_forms(id),
+			FOREIGN KEY (submission_id) REFERENCES {$wpdb->prefix}formello_submissions(id)
+			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+		);
+
 		update_option( 'formello_version', FORMELLO_VERSION );
 
 		$upload_dir = wp_upload_dir();

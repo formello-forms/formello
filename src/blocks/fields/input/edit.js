@@ -63,6 +63,11 @@ export default function Edit( props ) {
 					id: 'field_' + idx,
 				} )	
 			}			
+			if( !attributes.name ){
+				setAttributes( {
+					name: 'field_' + idx,
+				} )	
+			}			
 		},
 		[]
 	);

@@ -83,6 +83,11 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.2.2 =
+* Better handling of form fields
+* Simplify submissions table with code reduction
+* Added logic to disable actions if not active
+
 = 1.2.1 =
 * Fix button for WP 5.8
 

@@ -222,6 +222,10 @@ function Edit( props ) {
 					    />
 					    {
 					    	attributes.actions.map( ( a, i ) => {
+					    		var action = _.find(actions, {type:a.type});
+					    		if( !action.active ){
+					    			return
+					    		}
 								return (
 									<ToolbarButton
 										label={ a.title }

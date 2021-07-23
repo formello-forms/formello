@@ -83,7 +83,7 @@ export function TemplatesModal ( props ) {
 	const getTemplates = ( type ) => {
 
 		if ( ! templates ) {
-			return templates;
+			return [];
 		}
 
 		const result = [];

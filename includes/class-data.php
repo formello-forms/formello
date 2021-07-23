@@ -185,10 +185,14 @@ class Data {
 		//$this->clean();
 
 		global $wpdb;
-		$table = $wpdb->prefix . 'formello_submissions';
+
+		$values = array();
+		$submissions_table = $wpdb->prefix . 'formello_submissions';
+		$submissions_meta_table = $wpdb->prefix . 'formello_submissions_meta';
+		$form_id = $this->form->get_id();
 		$data  = array(
 			'data'    => wp_json_encode( $this->data ),
-			'form_id' => $this->form->get_id(),
+			'form_id' => $form_id,
 		);
 
 		foreach ( array( 'ip_address', 'user_agent', 'submitted_at', 'referer_url' ) as $prop ) {
@@ -198,15 +202,27 @@ class Data {
 		$data['log'] = maybe_serialize($this->get_log());
 
 		if ( ! empty( $this->id ) ) {
-			$wpdb->update( $table, $data, array( 'id' => $this->id ) );
+			$wpdb->update( $submissions_table, $data, array( 'id' => $this->id ) );
 			return null;
 		}
 
 		// insert new row.
-		$num_rows = $wpdb->insert( $table, $data );
+		$num_rows = $wpdb->insert( $submissions_table, $data );
 		if ( $num_rows > 0 ) {
 			$this->id = $wpdb->insert_id;
 		}
+
+		foreach ($this->data as $key => $value) {
+			$values[] = '(' . $form_id . ',' . $this->id . ', "' . $key . '" , "' . $value . '")';
+		}
+		$sql = implode(',', $values);
+
+		$wpdb->query(
+			"INSERT INTO $submissions_meta_table
+		    (form_id, submission_id, field_name, field_value)
+			VALUES
+			$sql"
+		);
 	}
 
 	/**
