@@ -364,8 +364,8 @@ class Submissions extends \WP_List_Table {
 		global $wpdb;
 
 		$sql = "SELECT id, is_new, starred, data, submitted_at, 
-				(select COUNT(*) from wp_formello_submissions WHERE is_new = 1 AND form_id = {$this->form_id}) as news,
-				(select COUNT(*) from wp_formello_submissions WHERE starred = 1 AND form_id = {$this->form_id}) as favorites
+				(select COUNT(*) from {$wpdb->prefix}formello_submissions WHERE is_new = 1 AND form_id = {$this->form_id}) as news,
+				(select COUNT(*) from {$wpdb->prefix}formello_submissions WHERE starred = 1 AND form_id = {$this->form_id}) as favorites
 				FROM {$wpdb->prefix}formello_submissions 
 				WHERE form_id = {$this->form_id}";
 

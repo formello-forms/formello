@@ -83,6 +83,13 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.2.4 =
+* Fixed submission view
+* Added starred column
+* Better handling back button
+* ID on table hidden by default
+
+
 = 1.2.3 =
 * Better handling of form fields
 * Simplify submissions table with code reduction
