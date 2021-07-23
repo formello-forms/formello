@@ -52,14 +52,14 @@ class Submissions extends \WP_List_Table {
 	 *
 	 * @var $news
 	 */
-	protected $news;
+	protected $news = 0;
 
 	/**
 	 * Columns.
 	 *
 	 * @var $favorites
 	 */
-	protected $favorites;
+	protected $favorites = 0;
 
 	/** Class constructor */
 	public function __construct() {
