@@ -249,9 +249,9 @@ class Submissions extends \WP_List_Table {
 				wp_die();
 			} else {
 				self::delete_submission( absint( $_GET['submission'] ) );
-				echo '<div class="notice notice-success is-dismissible"><p>Entry was successfully deleted.</p></div>';
+				echo '<div class="notice notice-success is-dismissible"><p>Entry successfully deleted.</p></div>';
 			}
-			// reset data
+			// reset data.
 			$this->data = array();
 		}
 
@@ -259,7 +259,7 @@ class Submissions extends \WP_List_Table {
 		if ( ( isset( $_POST['action'] ) && 'mark-as-read' === $_POST['action'] )
 			|| ( isset( $_POST['action2'] ) && 'mark-as-read' === $_POST['action2'] )
 		) {
-			
+
 			$marked_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
@@ -281,7 +281,7 @@ class Submissions extends \WP_List_Table {
 		if ( ( isset( $_POST['action'] ) && 'mark-as-starred' === $_POST['action'] )
 			|| ( isset( $_POST['action2'] ) && 'mark-as-starred' === $_POST['action2'] )
 		) {
-			
+
 			$marked_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
@@ -336,7 +336,7 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array('id');
+		return array( 'id' );
 	}
 
 	/**
