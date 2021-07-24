@@ -22298,7 +22298,7 @@ function Edit(props) {
     value: attributes.name,
     onChange: function onChange(val) {
       return setAttributes({
-        name: val.replace(/\W/g, '')
+        name: val.replace(/\W/g, '_').toLowerCase()
       });
     }
   })), !(attributes.type == 'hidden') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {

@@ -108,7 +108,7 @@ export default function Edit( props ) {
 					<InputControl
 						label={ __( 'Name', 'formello' ) }
 						value={ attributes.name }
-						onChange={ ( val ) => setAttributes( { name: val.replace(/\W/g, '') } ) }
+						onChange={ ( val ) => setAttributes( { name: val.replace(/\W/g, '_').toLowerCase() } ) }
 					/>
 					</BaseControl>
 					{
