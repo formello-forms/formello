@@ -243,10 +243,10 @@ function Edit( props ) {
 			        onChange={ ( val ) => { setAttributes( { iconType: val } ) } }
 				/>
 			</InspectorAdvancedControls>
-			<div className={ buttonClass } style={ style } >
+			<button className={ buttonClass } style={ style } >
 				<span>{ attributes.text }</span>
 				<div className={ iconClass }></div>
-			</div>
+			</button>
 		</div>
 	);
 }

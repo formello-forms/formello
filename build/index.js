@@ -21748,7 +21748,7 @@ function Edit(props) {
         iconType: val
       });
     }
-  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
+  })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("button", {
     className: buttonClass,
     style: style
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("span", null, attributes.text), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])("div", {
@@ -24041,6 +24041,20 @@ function email(content, props, MergeTags, handleUpdate) {
     }
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(MergeTags, {
     clientId: clientId,
+    label: "CC",
+    value: settings.cc,
+    onChange: function onChange(val) {
+      updateSettings('cc', val);
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(MergeTags, {
+    clientId: clientId,
+    label: "BCC",
+    value: settings.bcc,
+    onChange: function onChange(val) {
+      updateSettings('bcc', val);
+    }
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(MergeTags, {
+    clientId: clientId,
     label: "Reply To",
     value: settings.replyTo,
     onChange: function onChange(val) {
@@ -24427,7 +24441,7 @@ var _wp$data$select = wp.data.select("core/block-editor"),
 
 
 
-var ALLOWED_BLOCKS = ['core/paragraph', 'core/heading', 'core/columns', 'formello/actions', 'formello/columns', 'formello/button', 'formello/input', 'formello/email', 'formello/checkboxes', 'formello/select'];
+var ALLOWED_BLOCKS = ['core/paragraph', 'core/heading', 'core/columns', 'formello/actions', 'formello/columns', 'formello/button', 'formello/input', 'formello/email', 'formello/checkboxes', 'formello/select', 'formello/fileupload'];
 
 
 /**
@@ -24524,6 +24538,7 @@ function Edit(props) {
         setAttributes({
           actions: [].concat(_babel_runtime_helpers_toConsumableArray__WEBPACK_IMPORTED_MODULE_1___default()(attributes.actions), [a])
         });
+        setShowActionsModal(a);
       }
     });
   };

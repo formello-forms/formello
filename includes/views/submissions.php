@@ -4,26 +4,31 @@ defined( 'ABSPATH' ) || exit;
 
 $this->submissions_table->prepare_items();
 
+$nonce = wp_create_nonce('formello');
+
 $all = sprintf(
-	'<a href="?post_type=formello_form&page=%s&form=%s&paged=%s">%s</a>',
+	'<a href="?post_type=formello_form&page=%s&form=%s&paged=%s&_wpnonce=%s">%s</a>',
 	'formello-submissions',
 	sanitize_text_field( $_REQUEST['form'] ),
 	isset( $_REQUEST['paged'] ) ? sanitize_text_field( $_REQUEST['paged'] ) : '',
+	$nonce,
 	__( 'All' )
 );
 
 $news = sprintf(
-	'<a href="?post_type=formello_form&page=%s&form=%s&new=1">%s <span class="count">(%d)</span></a>',
+	'<a href="?post_type=formello_form&page=%s&form=%s&new=1&_wpnonce=%s">%s <span class="count">(%d)</span></a>',
 	'formello-submissions',
 	sanitize_text_field( $_REQUEST['form'] ),
+	$nonce,
 	__( 'Unread', 'formello' ),
 	$this->submissions_table->get_news()
 );
 
 $starred = sprintf(
-	'<a href="?post_type=formello_form&page=%s&form=%s&starred=1">%s <span class="count">(%d)</span></a>',
+	'<a href="?post_type=formello_form&page=%s&form=%s&starred=1&_wpnonce=%s">%s <span class="count">(%d)</span></a>',
 	'formello-submissions',
 	sanitize_text_field( $_REQUEST['form'] ),
+	$nonce,
 	__( 'Starred', 'formello' ),
 	$this->submissions_table->get_favorites()
 );

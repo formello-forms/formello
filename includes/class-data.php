@@ -199,7 +199,7 @@ class Data {
 			$data[ $prop ] = $this->$prop;
 		}
 
-		$data['log'] = maybe_serialize($this->get_log());
+		$data['log'] = maybe_serialize( $this->get_log() );
 
 		if ( ! empty( $this->id ) ) {
 			$wpdb->update( $submissions_table, $data, array( 'id' => $this->id ) );
@@ -250,7 +250,6 @@ class Data {
 	 * Get a Data array.
 	 *
 	 * @param array $data The array of data.
-	 * @return array
 	 */
 	public function debug( $data ) {
 		$this->data['debug'][] = $data;
@@ -269,11 +268,10 @@ class Data {
 	 * Get a Data array.
 	 *
 	 * @param string $type The action name.
-	 * @param array $data The array of data.
-	 * @return array
+	 * @param array  $data The array of data.
 	 */
 	public function set_log( $type, $data = array() ) {
-		$this->log[$type][] = $data;
+		$this->log[ $type ][] = $data;
 	}
 
 	/**

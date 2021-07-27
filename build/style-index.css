@@ -318,7 +318,7 @@ html {
 .wp-block-formello-form .formello-group {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-bottom: 1em;
   align-items: center;
 }

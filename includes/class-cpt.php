@@ -118,6 +118,7 @@ class CPT {
 				'formello/inputflex',
 				'formello/output',
 				'formello/select',
+				'formello/fileupload',
 				'formello/actions',
 				'formello/actions-email',
 				'formello/actions-webhooks',

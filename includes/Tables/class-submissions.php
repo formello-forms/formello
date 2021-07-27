@@ -96,16 +96,18 @@ class Submissions extends \WP_List_Table {
 	/**
 	 * Delete a customer record.
 	 *
-	 * @param int $id customer ID.
+	 * @param int     $id customer ID.
+	 * @param string  $column column name.
+	 * @param boolean $value Yes or no.
 	 */
-	public static function mark_submission( $id, $column, $value = 1 ) {
+	public static function mark_submission( $id, $column, $value = 0 ) {
 		global $wpdb;
 
 		$table = $wpdb->prefix . 'formello_submissions';
 
 		$wpdb->query(
 			$wpdb->prepare(
-				"UPDATE {$table} SET {$column} = %d WHERE id = %d;",
+				"UPDATE `{$table}` SET `{$column}` = %d WHERE id = %d;",
 				$value,
 				$id
 			)
@@ -151,8 +153,8 @@ class Submissions extends \WP_List_Table {
 		$actions = array(
 			'mark-as-read' => 'Mark as Read',
 			'mark-as-unread' => 'Mark as Unread',
-			'mark-as-starred' => 'Mark as Starred',
-			'mark-as-unstarred' => 'Mark as Starred',
+			'mark-as-starred' => 'Star',
+			'mark-as-unstarred' => 'Unstar',
 			'bulk-delete' => 'Delete',
 		);
 
@@ -191,13 +193,13 @@ class Submissions extends \WP_List_Table {
 			esc_attr(
 				add_query_arg(
 					array(
-						'action'		=> 'delete',
-						'submission' 	=> $item['id'],
-						'_wpnonce'		=> wp_create_nonce( 'sp_delete_submission' )
+						'action'     => 'delete',
+						'submission' => $item['id'],
+						'_wpnonce'   => wp_create_nonce( 'sp_delete_submission' ),
 					)
 				)
 			),
-			__( 'Are you sure?', 'formello' ),
+			__( 'Do you want delete this record?', 'formello' ),
 			__( 'Delete' )
 		);
 		return $view_link . ' | ' . $delete_link;
@@ -241,10 +243,7 @@ class Submissions extends \WP_List_Table {
 		// Detect when a bulk action is being triggered...
 		if ( 'delete' === $this->current_action() ) {
 
-			// In our file that handles the request, verify the nonce.
-			$nonce = esc_attr( $_REQUEST['_wpnonce'] );
-
-			if ( ! wp_verify_nonce( $nonce, 'sp_delete_submission' ) ) {
+			if ( ! wp_verify_nonce( esc_attr( $_REQUEST['_wpnonce'] ), 'sp_delete_submission' ) ) {
 				echo '<div class="notice notice-error is-dismissible"><p>Go get a life script kiddies.</p></div>';
 				wp_die();
 			} else {
@@ -264,16 +263,12 @@ class Submissions extends \WP_List_Table {
 
 			// loop over the array of record IDs and delete them.
 			foreach ( $marked_ids as $id ) {
-				self::mark_submission( $id, 'is_new' );
+				self::mark_submission( absint( $id ), 'is_new', 0 );
 
 			}
 
 			// refresh table.
-			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
-			$current_page = $this->get_pagenum();
-			$this->data   = $this->table_data( $per_page, $current_page );
-
-			echo '<div class="notice notice-success is-dismissible"><p>Submission(s) marked as read.</p></div>';
+			$this->refresh_table( __( 'Submission(s) marked as read.', 'formello' ) );
 
 		}
 
@@ -286,16 +281,49 @@ class Submissions extends \WP_List_Table {
 
 			// loop over the array of record IDs and delete them.
 			foreach ( $marked_ids as $id ) {
-				self::mark_submission( $id, 'starred' );
+				self::mark_submission( $id, 'starred', 1 );
 
 			}
 
 			// refresh table.
-			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
-			$current_page = $this->get_pagenum();
-			$this->data   = $this->table_data( $per_page, $current_page );
+			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
 
-			echo '<div class="notice notice-success is-dismissible"><p>Submission(s) marked as starred.</p></div>';
+		}
+
+		// If the delete bulk action is triggered.
+		if ( ( isset( $_POST['action'] ) && 'mark-as-unread' === $_POST['action'] )
+			|| ( isset( $_POST['action2'] ) && 'mark-as-unread' === $_POST['action2'] )
+		) {
+
+			$marked_ids = esc_sql( $_POST['bulk-delete'] );
+
+			// loop over the array of record IDs and delete them.
+			foreach ( $marked_ids as $id ) {
+				self::mark_submission( $id, 'is_new', 1 );
+
+			}
+
+			// refresh table.
+			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
+
+		}
+
+		// If the delete bulk action is triggered.
+		if ( ( isset( $_POST['action'] ) && 'mark-as-unstarred' === $_POST['action'] )
+			|| ( isset( $_POST['action2'] ) && 'mark-as-unstarred' === $_POST['action2'] )
+		) {
+
+			$marked_ids = esc_sql( $_POST['bulk-delete'] );
+
+			// loop over the array of record IDs and delete them.
+			foreach ( $marked_ids as $id ) {
+				self::mark_submission( $id, 'starred', 0 );
+
+			}
+
+			// refresh table.
+			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
+
 
 		}
 
@@ -312,11 +340,7 @@ class Submissions extends \WP_List_Table {
 
 			}
 			// refresh table.
-			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
-			$current_page = $this->get_pagenum();
-			$this->data   = $this->table_data( $per_page, $current_page );
-
-			echo '<div class="notice notice-success is-dismissible"><p>Submission(s) Deleted.</p></div>';
+			$this->refresh_table( __( 'Submission(s) deleted.', 'formello' ) );
 
 		}
 	}
@@ -336,7 +360,7 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array( 'id' );
+		return array();
 	}
 
 	/**
@@ -380,7 +404,7 @@ class Submissions extends \WP_List_Table {
 				WHERE form_id = {$this->form_id}";
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			$sql .= ' AND data LIKE "%' . esc_sql( $_REQUEST['s'] ) .'%"';
+			$sql .= ' AND data LIKE "%' . esc_sql( $_REQUEST['s'] ) . '%"';
 		}
 
 		if ( ! empty( $_REQUEST['new'] ) ) {
@@ -391,19 +415,19 @@ class Submissions extends \WP_List_Table {
 			$sql .= ' AND starred = ' . esc_sql( $_REQUEST['starred'] );
 		}
 
-		if ( ! empty( $_REQUEST['orderby'] ) ) {
-			$sql .= ' ORDER BY ' . esc_sql( $_REQUEST['orderby'] );
-			$sql .= ! empty( $_REQUEST['order'] ) ? ' ' . esc_sql( $_REQUEST['order'] ) : ' ASC';
-		}
+		$order_by = ' ORDER BY ' . empty( $_REQUEST['orderby'] ) ? 'id' : esc_sql( $_REQUEST['orderby'] );
+		$order = empty( $_REQUEST['order'] ) ? 'DESC' : esc_sql( $_REQUEST['order'] );
+
+		$sql .= ' ORDER BY ' . $order_by . ' ' . $order;
 
 		$sql .= ' LIMIT ' . $per_page;
 		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
-		
+
 		$results = $wpdb->get_results( $sql, ARRAY_A );
 
 		$submissions = array();
 
-		if( count( $results ) ){
+		if ( count( $results ) ) {
 			$this->news = $results[0]['news'];
 			$this->favorites = $results[0]['favorites'];
 		}
@@ -412,8 +436,8 @@ class Submissions extends \WP_List_Table {
 			$data                 = empty( $s['data'] ) ? array() : (array) json_decode( $s['data'], true );
 			$data['id']           = (int) $s['id'];
 			$data['submitted_at'] = $s['submitted_at'];
-			$data['is_new'] 	  = $s['is_new'];
-			$data['starred'] 	  = $s['starred'];
+			$data['is_new']       = $s['is_new'];
+			$data['starred']      = $s['starred'];
 			$submissions[]        = $data;
 		}
 
@@ -435,23 +459,23 @@ class Submissions extends \WP_List_Table {
 
 		global $wpdb;
 
-		$sql = "SELECT settings FROM {$wpdb->prefix}formello_forms WHERE id = {$this->form_id}";
+		$results = $wpdb->get_var(
+			$wpdb->prepare( "SELECT settings FROM {$wpdb->prefix}formello_forms WHERE id =%d", $this->form_id )
+		);
 
-		$results = $wpdb->get_var( $sql );
+		$settings = maybe_unserialize( $results );
 
-		$settings = maybe_unserialize($results);
-
-		if( isset( $settings['fields'] ) ){
+		if ( isset( $settings['fields'] ) ) {
 			foreach ( $settings['fields'] as $col ) {
 
-				$columns[ $col ] = esc_html( ucfirst( strtolower( str_replace( '_', ' ', $col ) ) ) );
+				$columns[ $col ] = esc_html( ucfirst( trim( strtolower( str_replace( '_', ' ', $col ) ) ) ) );
 
 			}
 		}
 
-		$columns['submitted_at'] = 'Submitted At';
-		$columns['actions'] 	 = 'Actions';
-		$this->columns = array_keys($columns);
+		$columns['submitted_at'] = __( 'Submitted At' );
+		$columns['actions']      = __( 'Actions' );
+		$this->columns = array_keys( $columns );
 		return $columns;
 	}
 
@@ -555,6 +579,24 @@ class Submissions extends \WP_List_Table {
 	 */
 	public function get_favorites() {
 		return $this->favorites;
+	}
+
+	/**
+	 * Refresh table after changes
+	 *
+	 * @return int
+	 */
+	public function refresh_table( $message ) {
+		// refresh table.
+		$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
+		$current_page = $this->get_pagenum();
+		$this->data   = $this->table_data( $per_page, $current_page );
+
+		$message_box = sprintf(
+			'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+			$message
+		);
+		echo $message_box;
 	}
 
 }

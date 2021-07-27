@@ -55,6 +55,20 @@ export default function email( content, props, MergeTags, handleUpdate ) {
 
 			<MergeTags
 				clientId={ clientId }			
+				label="CC"
+				value={ settings.cc }
+				onChange={ ( val ) => { updateSettings( 'cc', val ) } }
+			/>
+
+			<MergeTags
+				clientId={ clientId }			
+				label="BCC"
+				value={ settings.bcc }
+				onChange={ ( val ) => { updateSettings( 'bcc', val ) } }
+			/>
+
+			<MergeTags
+				clientId={ clientId }			
 				label="Reply To"
 				value={ settings.replyTo }
 				onChange={ ( val ) => { updateSettings( 'replyTo', val ) } }

@@ -83,6 +83,11 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.2.7 =
+* Show submission by last inserted
+* Minor fixes
+* Code reduction
+
 = 1.2.6 =
 * Better handling of submissions
 * Fix pagination on tables

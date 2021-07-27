@@ -87,6 +87,7 @@ const ALLOWED_BLOCKS = [
 	'formello/email',
 	'formello/checkboxes',
 	'formello/select',
+	'formello/fileupload',
 ];
 import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
 import { store as blocksStore } from '@wordpress/block-editor';
@@ -189,6 +190,7 @@ function Edit( props ) {
 		actions.map( (a) => {
 			if( a.type === type ){
 				setAttributes( { actions: [ ...attributes.actions, a ] } )
+				setShowActionsModal(a)
 			}
 		} )
 	};

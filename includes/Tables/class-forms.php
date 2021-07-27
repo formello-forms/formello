@@ -130,7 +130,7 @@ class Forms extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array();
+		return array( 'id' );
 	}
 
 	/**
@@ -161,7 +161,6 @@ class Forms extends \WP_List_Table {
 		$table_forms  = "{$wpdb->prefix}formello_forms";
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
-		//$sql = "SELECT id, name as form_name, created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM " . $table_forms . " f";
 		$sql = "SELECT id, name as form_name, created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE EXISTS (SELECT * FROM {$table_submissions} s WHERE f.id = s.form_id)";
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
