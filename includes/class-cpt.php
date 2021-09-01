@@ -42,7 +42,7 @@ class CPT {
 	public function __construct() {
 		$this->register();
 		if ( is_admin() ) {
-			add_filter( 'allowed_block_types', array( $this, 'allowed_block_types'), 10, 2 );
+			add_filter( 'allowed_block_types_all', array( $this, 'allowed_block_types'), 10, 2 );
 		}
 	}
 
@@ -99,9 +99,9 @@ class CPT {
 	 *
 	 * @return array Allowed blocks.
 	 */
-	public function allowed_block_types( $allowed_block_types, $post ) {
+	public function allowed_block_types( $allowed_block_types, $context ) {
 
-		if ( 'formello_form' === $post->post_type ) {
+		if ( 'formello_form' === $context->post->post_type ) {
 			return array(
 				'core/group',
 				'core/columns',
