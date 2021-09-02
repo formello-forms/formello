@@ -202,12 +202,13 @@ html {
 .wp-block-formello-form .formello-group {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   margin-bottom: 1em;
   align-items: center;
     label {
       text-align: left !important;
       width: 100%;
+      display: inline-block;
     }
     small {
       width: 100%;

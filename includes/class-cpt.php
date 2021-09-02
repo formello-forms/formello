@@ -101,7 +101,7 @@ class CPT {
 	 */
 	public function allowed_block_types( $allowed_block_types, $context ) {
 
-		if ( 'formello_form' === $context->post->post_type ) {
+		if ( !is_null( $context->post ) && 'formello_form' === $context->post->post_type ) {
 			return array(
 				'core/group',
 				'core/columns',
