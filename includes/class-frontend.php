@@ -62,7 +62,7 @@ class Frontend {
 	 */
 	public function listen_for_submit() {
 
-		// only respond to AJAX requests with _hf_form_id set.
+		// only respond to AJAX requests with _formello_id set.
 		if ( empty( $_POST['_formello_id'] )
 			|| empty( $_SERVER['HTTP_X_REQUESTED_WITH'] )
 			|| strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) !== strtolower( 'XMLHttpRequest' ) ) {

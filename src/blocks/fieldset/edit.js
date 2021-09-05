@@ -87,7 +87,6 @@ export default function Edit( {
 						onChange={ ( legend ) => setAttributes( { legend } ) }
 						placeholder={ __( 'Enter legend...', 'formello' ) }
 						allowedFormats={ [] }
-						keepPlaceholderOnFocus={ true }
 					/>
 				) }
 				<InnerBlocks

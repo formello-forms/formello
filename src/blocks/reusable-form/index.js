@@ -51,7 +51,7 @@ registerBlockType('formello/form-reusable', {
 		  []
 		);
 
-		let blockContent = <p>{ __( 'Please, select a form to show' ) }</p>;
+		let blockContent = <p>{ __( 'Please, select a form to show', 'formello' ) }</p>;
 
 	    if ( attributes.id ) {
 	        blockContent = <ServerSideRender

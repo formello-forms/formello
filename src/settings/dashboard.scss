@@ -1,5 +1,9 @@
 $settings-container-width: 750px;
 
+.formello_form_page_formello-settings #wpcontent {
+	padding-left: 0;
+}
+
 .formello-dashboard-wrap {
     margin: 0;
     overflow: hidden;
@@ -51,6 +55,16 @@ $settings-container-width: 750px;
 		background: #fff;
 		border: 1px solid #e2e4e7;
 		box-shadow: none;
+	}
+
+	.formello-settings-header {
+		background: #fff;
+		padding: 10px;
+		margin-bottom: 15px;
+		h1 {
+			font-size: 17px;
+		    font-weight: 600;			
+		}
 	}
 
 	.formello-settings-main {

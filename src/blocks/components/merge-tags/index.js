@@ -26,6 +26,7 @@ export default function mergeTags( props ) {
 	const {
 		label,
 		value,
+		placeholder,
 		attributes,
 		setAttributes,
 		onChange,
@@ -42,6 +43,7 @@ export default function mergeTags( props ) {
 				label={ label }
 				onChange={ (val) => onChange(val) }
 				labelPosition="top"
+				placeholder={ placeholder }
 				suffix={ 
 				    <Dropdown
 				        className="my-container-class-name"

@@ -245,4 +245,4 @@ if ( !checkDateInput() ) {
 
 }
 
-console.log("formello loaded stocazzo")
+console.log("formello loaded")

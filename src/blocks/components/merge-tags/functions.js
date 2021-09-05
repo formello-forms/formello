@@ -25,8 +25,6 @@ const {
 	getBlockParents
 } = wp.data.select("core/block-editor");
 
-const { getEditedPostAttribute } = wp.data.select("core/editor");
-
 const allowed = [
 	"formello/input",
 	"formello/select",
@@ -199,6 +197,7 @@ export function getFieldConstraint( field ) {
 }
 
 export function getMetaTags() {
+	const { getEditedPostAttribute } = wp.data.select("core/editor");
 	let meta = getEditedPostAttribute("meta");
 	let metaTags = [];
 

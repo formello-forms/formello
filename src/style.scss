@@ -205,10 +205,10 @@ html {
   flex-wrap: wrap;
   margin-bottom: 1em;
   align-items: center;
+  max-width: 100%;
     label {
       text-align: left !important;
-      width: 100%;
-      display: inline-block;
+      flex-basis: 100%;
     }
     small {
       width: 100%;

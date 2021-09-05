@@ -56,6 +56,7 @@ function formello_get_option_defaults() {
 }
 
 add_filter( 'option_formello_recaptcha', 'formello_recaptcha_option' );
+add_filter( 'option_formello_license', 'formello_recaptcha_option' );
 
 /**
  * Filter to retrieve unencrypted reCaptcha
@@ -67,6 +68,18 @@ function formello_recaptcha_option( $settings ) {
 
 	$settings = $crypto->decrypt( $settings );
 	return unserialize( $settings );
+}
+
+/**
+ * Filter to retrieve unencrypted license
+ *
+ * @param mixed $settings The general settings.
+ */
+function formello_license_option( $settings ) {
+	$crypto = new Formello\Encryption();
+
+	$settings = $crypto->decrypt( $settings );
+	return $settings;
 }
 
 /**

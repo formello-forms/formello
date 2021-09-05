@@ -81,6 +81,12 @@ final class Formello {
 		define( 'FORMELLO_INCLUDES', FORMELLO_PATH . '/includes' );
 		define( 'FORMELLO_URL', plugins_url( '', FORMELLO_FILE ) );
 		define( 'FORMELLO_ASSETS', FORMELLO_URL . '/build' );
+		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
+		define( 'FORMELLO_STORE_URL', 'https://formello.net' );
+		// the download ID for the product in Easy Digital Downloads
+		define( 'FORMELLO_ITEM_ID', 162 );
+		// the name of the product in Easy Digital Downloads
+		define( 'FORMELLO_ITEM_NAME', 'Formello' );
 	}
 
 	/**

@@ -34,6 +34,10 @@ const {
 
 const tabs = [
 	{
+		name: 'license',
+		title: 'General',
+	},
+	{
 		name: 'recaptcha',
 		title: 'ReCaptcha',
 	},
@@ -47,7 +51,7 @@ const tabs = [
 	},
 	{
 		name: 'about',
-		title: 'About',
+		title: 'More',
 	},
 ];
 
@@ -56,12 +60,14 @@ const tabs = [
  */
 import './dashboard.scss';
 
+import License from './license.js';
 import Recaptcha from './recaptcha.js';
 import Messages from './messages.js';
 import Integrations from './integrations.js';
 import About from './about.js';
 
 const components = {
+    license: License,
     recaptcha: Recaptcha,
     messages: Messages,
     integrations: Integrations,
@@ -101,6 +107,10 @@ class App extends Component {
 
 		if ( 'undefined' !== typeof this.state.settings[ group ][ name ] ) {
 			result = this.state.settings[ group ][ name ];
+		}
+
+		if( 'license' === group ){
+			result = this.state.settings[ group ];
 		}
 
 		return result;
@@ -156,6 +166,15 @@ class App extends Component {
 		} );
 	};
 
+	updateLicense( value ) {
+		this.setState( {
+			settings: {
+				...this.state.settings,
+				license: value
+			},
+		} );
+	};
+
 	render() {
 		if ( ! this.state.isAPILoaded ) {
 			return (
@@ -167,6 +186,9 @@ class App extends Component {
 
 		return (
 			<Fragment>
+				<div className="formello-settings-header">
+					<h1>{ __( 'Settings' ) }</h1>
+				</div>
 				<div className="formello-settings-main">
 
 					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
@@ -178,6 +200,7 @@ class App extends Component {
 						{ ( tab ) => {
 						    const SettingsTab = components[tab.name];
 						    return <SettingsTab 
+										updateLicense={ this.updateLicense.bind(this) }
 										changeSettings={ this.changeSettings.bind(this) }
 										getSetting={ this.getSetting.bind(this) }
 						    		/>;

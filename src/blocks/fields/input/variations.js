@@ -15,7 +15,6 @@ const variations = [
 	{
 		name: 'text',
 		title: __( 'Text field' ),
-		description: __( 'Text field' ),
 		icon: getIcon('text'),
 		attributes: {
 			name: 'text',
@@ -28,7 +27,6 @@ const variations = [
 	{
 		name: 'hidden',
 		title: __( 'Hidden' ),
-		description: __( 'Hidden field' ),
 		icon: getIcon('hidden'),
 		attributes: {
 			name: 'hidden',
@@ -42,7 +40,6 @@ const variations = [
 	{
 		name: 'checkbox',
 		title: __( 'Checkbox' ),
-		description: __( 'Checkbox field' ),
 		icon: getIcon('checkbox'),
 		attributes: {
 			name: 'checkbox',
@@ -55,7 +52,6 @@ const variations = [
 	{
 		name: 'radio',
 		title: __( 'Radio' ),
-		description: __( 'Radio field' ),
 		icon: getIcon('radio'),
 		attributes: {
 			name: 'radio',
@@ -67,7 +63,6 @@ const variations = [
 	{
 		name: 'range',
 		title: __( 'Range' ),
-		description: __( 'Range field' ),
 		icon: getIcon('range'),
 		attributes: {
 			name: 'range',
@@ -79,7 +74,6 @@ const variations = [
 	{
 		name: 'email',
 		title: __( 'Email' ),
-		description: __( 'Email field' ),
 		icon: getIcon('email'),
 		attributes: {
 			name: 'email',
@@ -91,7 +85,6 @@ const variations = [
 	{
 		name: 'number',
 		title: __( 'Number' ),
-		description: __( 'Number input' ),
 		icon: getIcon('number'),
 		attributes: {
 			name: 'number',
@@ -103,7 +96,6 @@ const variations = [
 	{
 		name: 'color',
 		title: __( 'Color' ),
-		description: __( 'Color input' ),
 		icon: getIcon('color'),
 		attributes: {
 			name: 'color',
@@ -115,7 +107,6 @@ const variations = [
 	{
 		name: 'date',
 		title: __( 'Date' ),
-		description: __( 'Date input' ),
 		icon: getIcon('date'),
 		attributes: {
 			name: 'date',
@@ -127,7 +118,6 @@ const variations = [
 	{
 		name: 'time',
 		title: __( 'Time' ),
-		description: __( 'Time input' ),
 		icon: getIcon('time'),
 		attributes: {
 			name: 'time',
@@ -139,7 +129,6 @@ const variations = [
 	{
 		name: 'tel',
 		title: __( 'Tel' ),
-		description: __( 'Tel input' ),
 		icon: getIcon('tel'),
 		attributes: {
 			name: 'tel',
@@ -151,7 +140,6 @@ const variations = [
 	{
 		name: 'url',
 		title: __( 'Url' ),
-		description: __( 'Url input' ),
 		icon: getIcon('url'),
 		attributes: {
 			name: 'url',
@@ -192,7 +180,6 @@ const variations = [
 	{
 		name: 'textarea',
 		title: __( 'Textarea' ),
-		description: __( 'Multiline textarea' ),
 		icon: getIcon('textarea'),
 		attributes: {
 			type: 'textarea',

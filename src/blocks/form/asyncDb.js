@@ -1,9 +1,12 @@
 import apiFetch from '@wordpress/api-fetch';
 import { subscribe, select } from '@wordpress/data';
 
-let wasSavingPost = select( 'core/editor' ).isSavingPost();
-let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
-let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();
+// disable on widgets screen
+if( select('core/editor') ){
+	let wasSavingPost = select( 'core/editor' ).isSavingPost();
+	let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
+	let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();
+}
 
 const updateTransient = ( innerBlocks ) => {
 	apiFetch( {
@@ -15,6 +18,11 @@ const updateTransient = ( innerBlocks ) => {
 
 // determine whether to show notice
 subscribe( () => {
+
+	// disable on widgets screen
+	if( !select('core/editor') ){
+		return
+	}
 	const isSavingPost = select( 'core/editor' ).isSavingPost();
 	const isAutosavingPost = select( 'core/editor' ).isAutosavingPost();
 	const isPreviewingPost = select( 'core/editor' ).isPreviewingPost();

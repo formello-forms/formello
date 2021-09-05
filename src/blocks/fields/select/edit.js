@@ -275,7 +275,7 @@ export default function Edit( props ) {
 					name={ attributes.name }
 					className={ attributes.fieldClass }
 					multiple={ attributes.multiple }
-					disabled
+					readOnly
 					value={ defaultOpts( attributes.selectedOpt ) }
 				>
 					{ 
@@ -301,7 +301,6 @@ export default function Edit( props ) {
 							'core/italic',
 							'core/link',
 						] }
-						keepPlaceholderOnFocus={ true }
 					/>
 				) }
 			</Fragment>
