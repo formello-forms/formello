@@ -7,6 +7,12 @@ import {
   __experimentalInputControl as InputControl
 } from '@wordpress/components';
 
+import {
+  RawHTML,
+  useState,
+  Fragment
+} from '@wordpress/element';
+
 import { __, sprintf } from '@wordpress/i18n';
 
 const {
@@ -17,18 +23,24 @@ export default function license( props ) {
 
 	const {
 		getSetting,
-		updateLicense
+		saveLicense
 	} = props;
 
-	const validateLicense = ( val ) => {
+	const [loading, setLoading] = useState(false);
+	const [licenseStatus, setLicenseStatus] = useState( getSetting('license_status') );
+
+	const updateLicense = ( endpoint ) => {
+		console.log(getSetting('license_status'))
+		setLoading( true );
 		apiFetch( {
-			path: '/formello/v1/license',
+			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
 				license: getSetting( 'license' ),
 			},
 		} ).then( ( result ) => {
-			this.setState( { isAPISaving: false } );
+			setLoading( false );
+			setLicenseStatus( !licenseStatus );
 			message.classList.add( 'formello-action-message--show' );
 			message.textContent = result.response;
 
@@ -42,7 +54,7 @@ export default function license( props ) {
 		} );
 	};
 
-    return (
+	return (
 
 		<PanelBody
 			initialOpen={ true }
@@ -50,31 +62,64 @@ export default function license( props ) {
 		>
 			<div className="formello-dashboard-panel-row-wrapper">
 				<PanelRow>
+					<RawHTML>
+						{ sprintf(
+							__( '<p>Your %s key provides access to addons. You can still using Formello without a license key.</p>', 'formello' ),
+							`<strong>free license</strong>` )
+						}
+					</RawHTML>
 					<InputControl
-						type='text'
+						type='password'
 						label={ __( 'License Key', 'formello' ) }
 						value={ getSetting( 'license' ) }
 						onChange={ (val) => {
-							updateLicense( val )
+							saveLicense( val )
 						} }
-						suffix={
-							<Button 
-								isPrimary
-								onClick={ () => validateLicense() }
-							>Validate</Button>
-						}
 					/>
+					{
+						licenseStatus ?
+							<Fragment>
+								<RawHTML>
+									{ sprintf(
+										__( '<p>License status: %s.</p>', 'formello' ),
+										`<strong>active</strong>` )
+									}
+								</RawHTML>
+								<Button 
+									onClick={ () => updateLicense('deactivate') }
+									variant={ 'secondary' }
+									isBusy={ loading }
+								>Deactivate</Button>
+							</Fragment>
+						:
+						<p>
+							<Button 
+								onClick={ () => updateLicense('activate') }
+								variant={ 'primary' }
+								isBusy={ loading }
+							>Activate</Button>
+						</p>
+					}
 				</PanelRow>
 				<PanelRow>
-					<p>{ __( 'Your free license key provides access to addons. You can still using Formello without a license key.', 'formello' ) }</p>
 					<hr/>
-					<p>{ __( 'Here you can find', 'formello' ) } <a href="https://wordpress.org/support/plugin/formello/">{ __( 'support' ) }</a>.</p>
-					<p>{ __( 'If you like the plugin, you can share a review ', 'formello' ) } <a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">{ __( 'here' ) }</a>.</p>
+					<RawHTML>
+						{ sprintf(
+							__( '<p>Here you can find %s.</p>', 'formello' ),
+							`<a href="https://wordpress.org/support/plugin/formello/">support</a>` )
+						}
+					</RawHTML>
+					<RawHTML>
+						{ sprintf(
+							__( '<p>If you like the plugin, you can share a review %s.</p>', 'formello' ),
+							`<a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">here</a>` )
+						}
+					</RawHTML>
 				</PanelRow>
 
 			</div>
 		</PanelBody>
 
-    );
+	);
 
 };

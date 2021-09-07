@@ -135,7 +135,7 @@ export function TemplatesModal ( props ) {
 							{ sprintf(
 								/* translators: Number of templates. */
 								__( 'Templates: %s', 'formello' ),
-								`<strong>${ allTemplates.length }</strong>` )
+								`<strong>${ allTemplates.length ? allTemplates.length : 0 }</strong>` )
 							}
 						</RawHTML>
 					</div>

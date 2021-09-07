@@ -2,7 +2,7 @@ import apiFetch from '@wordpress/api-fetch';
 import { subscribe, select } from '@wordpress/data';
 
 // disable on widgets screen
-if( select('core/editor') ){
+if( select('core/editor') || select('core/block-editor') ){
 	let wasSavingPost = select( 'core/editor' ).isSavingPost();
 	let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
 	let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();

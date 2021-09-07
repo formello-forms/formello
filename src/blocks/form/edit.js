@@ -123,8 +123,29 @@ function Edit( props ) {
 		[]
 	);
 
+    const post_id = useSelect(select =>
+        select("core/editor").getCurrentPostId()
+    );
+
 	const [ active, setActive ] = useState(false);
 	const [ showActionsModal, setShowActionsModal ] = useState(false);
+
+	const [ meta, setMeta ] = useEntityProp(
+		'postType',
+		postType,
+		'meta'
+	);
+	const metaFieldValue = meta['formello_settings'];
+
+	const updateMetaValue = ( name, value ) => {
+		setMeta( { 
+			...meta,
+			formello_settings: {
+				...meta['formello_settings'],
+				[name]: value
+			}
+		} );
+	}
 
 	useEffect(
 		() => {
@@ -139,8 +160,16 @@ function Edit( props ) {
 		setAttributes( {
 			fields: getFieldsName( clientId ),
 			constraints: getConstraints( clientId )
-		} )		
-	}, [innerBlocks] )
+		} )
+		setMeta( { 
+			...meta,
+			formello_settings: {
+				...meta['formello_settings'],
+				fields: getFieldsName( clientId ),
+				constraints: getConstraints( clientId ),
+			}
+		} );
+	}, [innerBlocks,attributes.actions] )
 
 	useEffect(
 		() => {
@@ -153,18 +182,10 @@ function Edit( props ) {
 			if( 'formello_form' === postType && undefined !== postTitle ){
 				setAttributes( { name: postTitle } )
 			}
-			if( undefined === attributes.id || 0 === attributes.id ){
-				apiFetch( {
-					path: '/formello/v1/form/create',
-					method: 'POST',
-					data: {
-						name: 'form-' + idx
-					},
-				} ).then( ( result ) => {
-					setAttributes({
-						id: result.id
-					});
-				} );
+			if( undefined === attributes.id || 0 === attributes.id || attributes.id !== post_id ){
+				setAttributes({
+					id: post_id
+				});
 			}
 		},
 		[]
@@ -261,12 +282,16 @@ function Edit( props ) {
 					<ToggleControl
 						label={ __( 'Store submissions', 'formello' ) }
 						checked={ attributes.storeSubmissions }
-						onChange={ ( val ) => setAttributes( { 'storeSubmissions': val } ) }
+						onChange={ ( val ) => {
+							updateMetaValue( 'storeSubmissions', val )
+							setAttributes( { 'storeSubmissions': val } )
+						} }
 					/>
 					<ToggleControl
 						label={ __( 'Enable ReCaptcha', 'formello' ) }
 						checked={ attributes.recaptchaEnabled }
 						onChange={ ( val ) => {
+							updateMetaValue( 'recaptchaEnabled', val )
 							setAttributes( { 'recaptchaEnabled': val } ) 
 						} }
 					/>
@@ -276,7 +301,10 @@ function Edit( props ) {
 							'formello'
 						) }
 						checked={ attributes.hide }
-						onChange={ ( val ) => setAttributes( { 'hide': val } ) }
+						onChange={ ( val ) => {
+							updateMetaValue( 'hide', val )
+							setAttributes( { 'hide': val } )
+						} }
 					/>
 					<TextareaControl
 						label={ __( 'Success Message', 'formello' ) }
@@ -313,6 +341,17 @@ function Edit( props ) {
 					checked={ attributes.labelIsBold }
 					onChange={ ( val ) => setAttributes( { 'labelIsBold': val } ) }
 				/>
+				<ToggleControl
+					label={ __(
+						'Enable debug',
+						'formello'
+					) }
+					checked={ attributes.debug }
+					onChange={ ( val ) => {
+						updateMetaValue( 'debug', val )
+						setAttributes( { 'debug': val } )
+					} }
+				/>
 			</InspectorAdvancedControls>
 			{
 				showActionsModal &&
@@ -320,6 +359,7 @@ function Edit( props ) {
 					{...props}
 					action={ showActionsModal }
 					actionId={ active }
+					updateMetaValue={ updateMetaValue }
 					onRequestClose={ () => { 
 						setShowActionsModal( false )
 					} }

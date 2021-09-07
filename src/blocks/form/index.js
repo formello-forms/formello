@@ -7,7 +7,7 @@ import edit from './edit';
 import save from './save';
 import getIcon from '../../utils/get-icon';
 import blockAttributes from './attributes';
-import asyncDb from './asyncDb';
+//import asyncDb from './asyncDb';
 
 const { __ } = wp.i18n;
 import { registerBlockType } from '@wordpress/blocks';

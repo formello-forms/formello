@@ -457,13 +457,7 @@ class Submissions extends \WP_List_Table {
 		$columns['starred']      = '';
 		$columns['is_new']       = 'New';
 
-		global $wpdb;
-
-		$results = $wpdb->get_var(
-			$wpdb->prepare( "SELECT settings FROM {$wpdb->prefix}formello_forms WHERE id =%d", $this->form_id )
-		);
-
-		$settings = maybe_unserialize( $results );
+		$settings = get_post_meta( $this->form_id,'formello_settings', true );;
 
 		if ( isset( $settings['fields'] ) ) {
 			foreach ( $settings['fields'] as $col ) {

@@ -55,12 +55,12 @@ class Form {
 
 		$this->ID = $id;
 		if ( ! empty( $id ) ) {
-			$form = $this->populate( $id );
+			//$form = $this->populate( $id );
 		}
-		$this->ID   = $form->id;
-		$this->name = $form->name;
+		$this->ID   = $id;
+		$this->name = '$form->name';
 
-		$this->settings = maybe_unserialize( $form->settings );
+		$this->settings = get_post_meta( $id,'formello_settings', true );
 		$this->messages = array(
 			'success' => isset( $this->settings['successMessage'] ) ? $this->settings['successMessage'] : __( 'Thanks for submitting this form.', 'formello' ),
 			'error'   => isset( $this->settings['errorMessage'] ) ? $this->settings['errorMessage'] : __( 'Ops. An error occurred.', 'formello' ),
@@ -99,7 +99,12 @@ class Form {
 	 * @return array
 	 */
 	public function get_settings() {
-		return $this->settings;
+		$defaults = [
+			'recaptchaEnabled' => false,
+			'hide' => false,
+			'debug' => false,
+		];
+		return wp_parse_args( $this->settings, $defaults );
 	}
 
 	/**
@@ -118,6 +123,15 @@ class Form {
 	 */
 	public function get_fields() {
 		return $this->settings['fields'];
+	}
+
+	/**
+	 * Get debug
+	 *
+	 * @return array
+	 */
+	public function is_debug() {
+		return isset( $this->settings['debug'] ) ?: false;
 	}
 
 	/**

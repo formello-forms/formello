@@ -40,7 +40,7 @@ $form_page = add_query_arg( array( 'page' => 'formello' ) );
 
 <h1 class="wp-heading-inline">
 <?php
-	esc_html_e( wp_sprintf( 'Submissions for %s', $form->name ), 'formello' );
+	esc_html_e( wp_sprintf( 'Submissions for %s', $form->post_title ), 'formello' );
 ?>
 </h1>
 <a href="<?php echo esc_attr( $form_page ); ?>" class="page-title">&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?></a>

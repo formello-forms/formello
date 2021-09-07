@@ -44,7 +44,7 @@ $count = 0;
 	<div class="plugin">
 		<div class="logo">
 		<a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['slug'] ); ?>" class="unstyled">
-			<img src="<?php echo esc_url( FORMELLO_URL . '/assets/addon_images/' . $item['slug'] . '.png' ); ?>" alt="<?php echo $item['slug']; ?>">
+			<img src="<?php echo esc_url( FORMELLO_URL . '/assets/addon_images/' . $item['slug'] . '.png' ); ?>" alt="<?php echo esc_attr( $item['slug'] ); ?>">
 		</a>
 		</div>
 		<div class="caption">
@@ -57,7 +57,7 @@ $count = 0;
 		</div>
 	</div>
 	<?php
-	$i = $count+1;
+	$i = $count + 1;
 	if ( ( $i + 1 ) % 4 === 0 ) {
 		echo '<div style="clear: both;"></div>';
 	}

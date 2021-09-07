@@ -34,10 +34,6 @@ const {
 
 const tabs = [
 	{
-		name: 'license',
-		title: 'General',
-	},
-	{
 		name: 'recaptcha',
 		title: 'ReCaptcha',
 	},
@@ -105,12 +101,12 @@ class App extends Component {
 	getSetting( group, name, defaultVal ) {
 		let result = defaultVal;
 
-		if ( 'undefined' !== typeof this.state.settings[ group ][ name ] ) {
-			result = this.state.settings[ group ][ name ];
+		if( 'license' === group || 'license_status' === group ){
+			result = this.state.settings[ group ];
 		}
 
-		if( 'license' === group ){
-			result = this.state.settings[ group ];
+		if ( 'undefined' !== typeof this.state.settings[ group ][ name ] ) {
+			result = this.state.settings[ group ][ name ];
 		}
 
 		return result;
@@ -166,7 +162,7 @@ class App extends Component {
 		} );
 	};
 
-	updateLicense( value ) {
+	saveLicense( value ) {
 		this.setState( {
 			settings: {
 				...this.state.settings,
@@ -200,7 +196,7 @@ class App extends Component {
 						{ ( tab ) => {
 						    const SettingsTab = components[tab.name];
 						    return <SettingsTab 
-										updateLicense={ this.updateLicense.bind(this) }
+										saveLicense={ this.saveLicense.bind(this) }
 										changeSettings={ this.changeSettings.bind(this) }
 										getSetting={ this.getSetting.bind(this) }
 						    		/>;

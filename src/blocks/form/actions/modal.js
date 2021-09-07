@@ -62,6 +62,7 @@ export function ActionsModal ( props ) {
 
 	const {
 		onRequestClose,
+		updateMetaValue,
 		action,
 		clientId,
 		actionId,
@@ -76,6 +77,7 @@ export function ActionsModal ( props ) {
 		items[actionId] = settings;
 
 		setAttributes( { actions: items } );
+		updateMetaValue( 'actions', items )
 	}
 
 	const deleteAction = () => {
@@ -83,6 +85,7 @@ export function ActionsModal ( props ) {
 		let items = [...attributes.actions]; // make a separate copy of the array
 		items.splice(actionId, 1);
 		setAttributes( { actions: items } );
+		updateMetaValue( 'actions', items )
 		onRequestClose()
 
 	}

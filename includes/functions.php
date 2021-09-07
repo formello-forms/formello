@@ -67,7 +67,7 @@ function formello_recaptcha_option( $settings ) {
 	$crypto = new Formello\Encryption();
 
 	$settings = $crypto->decrypt( $settings );
-	return unserialize( $settings );
+	return maybe_unserialize( $settings );
 }
 
 /**

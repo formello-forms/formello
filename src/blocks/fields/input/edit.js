@@ -93,6 +93,8 @@ export default function Edit( props ) {
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
+					{
+						supported.includes('placeholder') && 
 						<ToolbarButton
 							label={ __( 'Required' ) }
 							icon={ getIcon( 'asterisk' ) }
@@ -101,6 +103,7 @@ export default function Edit( props ) {
 								setAttributes( { required: !attributes.required } )
 							} }
 						/>
+					}
 					</ToolbarGroup>
 				</BlockControls>
 				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>

@@ -31,6 +31,7 @@ class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
         'Formello\\Admin' => __DIR__ . '/../..' . '/includes/class-admin.php',
         'Formello\\Api' => __DIR__ . '/../..' . '/includes/class-api.php',
         'Formello\\Api\\Form' => __DIR__ . '/../..' . '/includes/Api/class-form.php',
+        'Formello\\Api\\License' => __DIR__ . '/../..' . '/includes/Api/class-license.php',
         'Formello\\Api\\Settings' => __DIR__ . '/../..' . '/includes/Api/class-settings.php',
         'Formello\\Api\\Template' => __DIR__ . '/../..' . '/includes/Api/class-template.php',
         'Formello\\Assets' => __DIR__ . '/../..' . '/includes/class-assets.php',
@@ -46,6 +47,7 @@ class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
         'Formello\\TagReplacers\\Other' => __DIR__ . '/../..' . '/includes/TagReplacers/class-other.php',
         'Formello\\TagReplacers\\Replacer' => __DIR__ . '/../..' . '/includes/TagReplacers/class-replacer.php',
         'Formello\\TagReplacers\\Wp' => __DIR__ . '/../..' . '/includes/TagReplacers/class-wp.php',
+        'Formello\\Updater' => __DIR__ . '/../..' . '/includes/class-updater.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

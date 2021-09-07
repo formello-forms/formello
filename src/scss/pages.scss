@@ -1,0 +1,60 @@
+.plugin {
+	width: 320px;
+	border: 1px solid #ccc;
+	margin: 0 20px 20px 0;
+	float: left;
+	background-color: #fff;
+	padding: 10px;
+}
+
+.plugin img {
+	max-width: 100%;
+	height: auto;	
+}
+
+.plugin .type {
+	float: right;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.column-id { 
+	text-align: left; 
+	width:100px !important; 
+	overflow:hidden 
+}
+
+.badge { 
+	background-color: #337ab7; 
+	padding: 0 5px; 
+	margin-left: 10px; 
+	color: white; 
+	border-radius: 20%; 
+}
+
+.column-actions { text-align: left; width: 150px !important; overflow:hidden }
+.column-is_new { text-align: left; width:70px !important; overflow:hidden }
+.column-starred { text-align: left; width:10px !important; overflow:hidden }
+.badge { color: #337ab7; font-size: 12px; margin-top: 3px; }
+.star { color: #e27730; font-size: 12px; }
+
+/* TABLE SUBMISSION STYLE */
+table.formello-bordered {
+	font-size: 13px;
+	border-collapse: collapse;
+	border-spacing: 0;
+	background: white;
+	width: 100%;
+	table-layout: fixed;
+}
+
+table.formello-bordered th, table.formello-bordered td {
+	border: 1px solid #ddd;
+	padding: 12px;
+}
+
+table.formello-bordered th {
+	width: 160px;
+	font-size: 14px;
+	text-align: left;
+}

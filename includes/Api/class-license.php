@@ -31,11 +31,23 @@ class License extends WP_REST_Controller {
 	public function register_routes() {
 		register_rest_route(
 			$this->namespace,
-			'/' . $this->rest_base,
+			'/' . $this->rest_base . '/activate',
 			array(
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'validate_license' ),
+					'callback'            => array( $this, 'activate_license' ),
+					'permission_callback' => array( $this, 'update_settings_permissions' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/deactivate',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'deactivate_license' ),
 					'permission_callback' => array( $this, 'update_settings_permissions' ),
 					'args'                => $this->get_collection_params(),
 				),
@@ -72,15 +84,15 @@ class License extends WP_REST_Controller {
 	}
 
 	/**
-	 * Get Settings.
+	 * Activate license.
 	 *
 	 * @param \WP_REST_Request $request  request object.
 	 *
 	 * @return mixed
 	 */
-	public function validate_license( \WP_REST_Request $request ) {
+	public function activate_license( \WP_REST_Request $request ) {
 
-		$license     = $request->get_param( 'license' );
+		$license = sanitize_text_field( $request->get_param( 'license' ) );
 
 		// data to send in our API request
 		$api_params = array(
@@ -159,6 +171,8 @@ class License extends WP_REST_Controller {
 		}
 
 		// $license_data->license will be either "valid" or "invalid"
+		$crypto    = new \Formello\Encryption();
+		$license = $crypto->encrypt( serialize($license) );
 
 		update_option( 'formello_license', $license );
 		update_option( 'formello_license_status', $license_data->license );
@@ -166,27 +180,66 @@ class License extends WP_REST_Controller {
 		return rest_ensure_response(
 			array(
 				'success'  => true,
-				'response' => $response,
+				'response' => $license_data,
 			)
 		);
 	}
 
 	/**
-	 * Recursive sanitation for an array
+	 * Deactivate license.
 	 *
-	 * @param array $array the array of data.
+	 * @param \WP_REST_Request $request  request object.
 	 *
 	 * @return mixed
 	 */
-	public function recursive_sanitize_text_field( $array ) {
-		foreach ( $array as $key => &$value ) {
-			if ( is_array( $value ) ) {
-				$value = $this->recursive_sanitize_text_field( $value );
+	public function deactivate_license( \WP_REST_Request $request ) {
+
+		// retrieve the license from the database
+		$license = trim( get_option( 'formello_license' ) );
+
+		// data to send in our API request
+		$api_params = array(
+			'edd_action'  => 'deactivate_license',
+			'license'     => $license,
+			'item_name'   => urlencode( FORMELLO_ITEM_NAME ), // the name of our product in EDD
+			'url'         => home_url(),
+			'environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
+		);
+
+		// Call the custom API.
+		$response = wp_remote_post( FORMELLO_STORE_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
+
+		// make sure the response came back okay
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+
+			if ( is_wp_error( $response ) ) {
+				$message = $response->get_error_message();
 			} else {
-				$value = sanitize_text_field( $value );
+				$message = __( 'An error occurred, please try again.' );
 			}
+
+			return rest_ensure_response(
+				array(
+					'success'  => false,
+					'response' => $message,
+				)
+			);
 		}
-		return $array;
+
+		// decode the license data
+		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
+
+		// $license_data->license will be either "deactivated" or "failed"
+		if ( 'deactivated' === $license_data->license ) {
+			update_option( 'formello_license_status', false );
+		}
+
+		return rest_ensure_response(
+			array(
+				'success'  => true,
+				'response' => __( 'License deactivated.', 'formello' ),
+			)
+		);
 	}
 
 	/**

@@ -326,7 +326,7 @@ class Frontend {
 				$response['redirect_url'] = $form->settings['redirectUrl'];
 			}
 
-			if( current_user_can('manage_options') ){
+			if( current_user_can('manage_options') && $form->is_debug() ){
 				$response['debug'] = $data['debug'];
 			}
 

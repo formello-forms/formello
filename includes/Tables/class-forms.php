@@ -71,7 +71,7 @@ class Forms extends \WP_List_Table {
 					)
 				)
 			),
-			$item['form_name']
+			!empty( $item['form_name'] ) ? $item['form_name'] : __( '(No title)' )
 		);
 		if ( ! empty( $item['news'] ) ) {
 			$badge = sprintf(
@@ -158,10 +158,12 @@ class Forms extends \WP_List_Table {
 
 		global $wpdb;
 		$params = array();
-		$table_forms  = "{$wpdb->prefix}formello_forms";
+		$table_forms  = "{$wpdb->prefix}posts";
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
-		$sql = "SELECT id, name as form_name, created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE EXISTS (SELECT * FROM {$table_submissions} s WHERE f.id = s.form_id)";
+		$sql_old = "SELECT id, name as form_name, created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE EXISTS (SELECT * FROM {$table_submissions} s WHERE f.id = s.form_id)";
+
+		$sql = "SELECT id, post_title as form_name, post_date as created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE f.post_type = %s";
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$order              = sanitize_text_field( $_REQUEST['order'] );
@@ -176,6 +178,7 @@ class Forms extends \WP_List_Table {
 			$sql .= ' AND f.name LIKE %s';
 		}
 
+		$params['post_type'] = 'formello_form';
 		$params['per_page'] = $per_page;
 		$params['offset']   = ( $page_number - 1 ) * $per_page;
 

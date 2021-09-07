@@ -243,7 +243,10 @@ class Data {
 	 * @return array
 	 */
 	public function get_data() {
-		return $this->data;
+		$defaults = [
+			'debug' => '',
+		];
+		return wp_parse_args( $this->data, $defaults );
 	}
 
 	/**

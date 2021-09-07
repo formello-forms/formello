@@ -20,6 +20,10 @@ export default {
 		type: 'string',
 		default: '',
 	},
+	debug: {
+		type: 'boolean',
+		default: false,
+	},
 	recaptchaEnabled: {
 		type: 'boolean',
 		default: false,

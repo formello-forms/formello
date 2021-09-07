@@ -11,6 +11,11 @@ const {
 	applyFilters,
 } = wp.hooks;
 
+import {
+  RawHTML,
+  Fragment
+} from '@wordpress/element';
+
 import { __ } from '@wordpress/i18n';
 
 export default function other( props ) {
@@ -31,8 +36,18 @@ export default function other( props ) {
 			<div className="formello-dashboard-panel-row-wrapper">
 
 				<PanelRow>
-					<p>{ __( 'Here you can find', 'formello' ) } <a href="https://wordpress.org/support/plugin/formello/">{ __( 'support' ) }</a>.</p>
-					<p>{ __( 'If you like the plugin, you can share a review ', 'formello' ) } <a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">{ __( 'here' ) }</a>.</p>
+					<RawHTML>
+						{ sprintf(
+							__( '<p>Here you can find %s.</p>', 'formello' ),
+							`<a href="https://wordpress.org/support/plugin/formello/">support</a>` )
+						}
+					</RawHTML>
+					<RawHTML>
+						{ sprintf(
+							__( '<p>If you like the plugin, you can share a review %s.</p>', 'formello' ),
+							`<a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">here</a>` )
+						}
+					</RawHTML>
 				</PanelRow>
 
 			</div>

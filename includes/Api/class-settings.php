@@ -104,7 +104,7 @@ class Settings extends WP_REST_Controller {
 
 			$crypto    = new \Formello\Encryption();
 			$recaptcha = $crypto->encrypt( serialize( $sanitized['recaptcha'] ) );
-			$license = $crypto->encrypt( serialize( $sanitized['license'] ) );
+			//$license = $crypto->encrypt( serialize( $sanitized['license'] ) );
 
 			// remove the secret from frontend options.
 			unset( $sanitized['recaptcha']['secret_key'] );
@@ -116,7 +116,7 @@ class Settings extends WP_REST_Controller {
 
 			// update other oprtions.
 			update_option( 'formello_recaptcha', $recaptcha );
-			update_option( 'formello_license', $license );
+			//update_option( 'formello_license', $license );
 
 			do_action( 'formello_settings_update', $sanitized );
 		}
@@ -143,6 +143,7 @@ class Settings extends WP_REST_Controller {
 
 		$settings['messages'] = $frontend_settings['messages'];
 		$settings['license'] = $license;
+		$settings['license_status'] = get_option( 'formello_license_status' );
 
 		$settings['recaptcha'] = get_option(
 			'formello_recaptcha',

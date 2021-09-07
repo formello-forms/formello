@@ -112,7 +112,7 @@ function createRequestHandler (formEl) {
           emitEvent('message', formEl)
         }
 
-        if( '' !== response.debug ){
+        if( response.debug ){
           console.log(response.debug)
         }
 

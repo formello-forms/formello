@@ -98,19 +98,19 @@ class Admin {
 			'formello-settings',
 			array( $this, 'settings_page' )
 		);
-		$addons_hook = add_submenu_page(
+		/*$addons_hook = add_submenu_page(
 			$slug,
 			__( 'Addons', 'formello' ),
 			__( 'Addons', 'formello' ),
 			$capability,
 			'formello-addons',
 			array( $this, 'addons_page' )
-		);
+		);*/
 
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
 		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
 		add_action( "load-$settings_hook", array( $this, 'settings_hooks' ) );
-		add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
+		//add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
 		add_filter( 'submenu_file', array( $this, 'remove_submenu' ) );
 
 	}
@@ -260,15 +260,7 @@ class Admin {
 		if ( isset( $_GET['form'] ) ) {
 			$id = sanitize_text_field( wp_unslash( $_GET['form'] ) );
 		}
-		global $wpdb;
-		$table = $wpdb->prefix . 'formello_forms';
-		$form  = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT s.* FROM {$wpdb->prefix}formello_forms s WHERE s.id = %d;",
-				array( $id )
-			),
-			OBJECT
-		);
+		$form = get_post( $id );
 		if ( empty( $form ) ) {
 			$message = __( 'No submissions found for this form.', 'formello' );
 			return $this->error_notice( $message );
@@ -472,7 +464,7 @@ class Admin {
 	 * @param string $message The precision.
 	 */
 	public function error_notice( $message ) {
-		$class = 'notice notice-error';
+		$class = 'notice notice-error is-dismissible';
 		return printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
 	}
 }

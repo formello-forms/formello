@@ -3,7 +3,7 @@
  * Plugin Name: Formello
  * Plugin URI: https://formello.net/
  * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
- * Version: 1.2.9
+ * Version: 1.3.0
  * Author: Formello
  * Author URI: https://formello.net
  * License: GPL2
@@ -17,6 +17,40 @@
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit;
 
+if ( ! function_exists( 'formello_fs' ) ) {
+    // Create a helper function for easy SDK access.
+    function formello_fs() {
+        global $formello_fs;
+
+        if ( ! isset( $formello_fs ) ) {
+            // Include Freemius SDK.
+            require_once dirname(__FILE__) . '/freemius/start.php';
+
+            $formello_fs = fs_dynamic_init( array(
+                'id'                  => '8973',
+                'slug'                => 'formello',
+                'type'                => 'plugin',
+                'public_key'          => 'pk_8345ac48669e82bdb9a1813a69a10',
+                'is_premium'          => false,
+                'has_addons'          => true,
+                'has_paid_plans'      => false,
+                'menu'                => array(
+                    'slug'           => 'edit.php?post_type=formello_form',
+                    'account'        => false,
+                    'support'        => false,
+                ),
+            ) );
+        }
+
+        return $formello_fs;
+    }
+
+    // Init Freemius.
+    formello_fs();
+    // Signal that SDK was initiated.
+    do_action( 'formello_fs_loaded' );
+}
+
 /**
  * Formello class
  *
@@ -29,7 +63,7 @@ final class Formello {
 	 *
 	 * @var string
 	 */
-	public $version = '1.2.9';
+	public $version = '1.3.0';
 
 	/**
 	 * Holds various class instances
@@ -162,7 +196,6 @@ final class Formello {
         	`submission_id` INT UNSIGNED NOT NULL,
 			`field_name` VARCHAR(255) NOT NULL,
 			`field_value` TEXT NULL,
-			FOREIGN KEY (form_id) REFERENCES {$wpdb->prefix}formello_forms(id) ON DELETE CASCADE,
 			FOREIGN KEY (submission_id) REFERENCES {$wpdb->prefix}formello_submissions(id) ON DELETE CASCADE
 			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
 		);

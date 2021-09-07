@@ -12,6 +12,7 @@ return array(
     'Formello\\Admin' => $baseDir . '/includes/class-admin.php',
     'Formello\\Api' => $baseDir . '/includes/class-api.php',
     'Formello\\Api\\Form' => $baseDir . '/includes/Api/class-form.php',
+    'Formello\\Api\\License' => $baseDir . '/includes/Api/class-license.php',
     'Formello\\Api\\Settings' => $baseDir . '/includes/Api/class-settings.php',
     'Formello\\Api\\Template' => $baseDir . '/includes/Api/class-template.php',
     'Formello\\Assets' => $baseDir . '/includes/class-assets.php',
@@ -27,4 +28,5 @@ return array(
     'Formello\\TagReplacers\\Other' => $baseDir . '/includes/TagReplacers/class-other.php',
     'Formello\\TagReplacers\\Replacer' => $baseDir . '/includes/TagReplacers/class-replacer.php',
     'Formello\\TagReplacers\\Wp' => $baseDir . '/includes/TagReplacers/class-wp.php',
+    'Formello\\Updater' => $baseDir . '/includes/class-updater.php',
 );

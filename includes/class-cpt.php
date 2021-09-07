@@ -89,6 +89,38 @@ class CPT {
 		);
 		register_post_type( 'formello_form', $args );
 
+		register_post_meta( 'formello_form', 'formello_settings', array(
+			'single' => true,
+			'type'   => 'object',
+			'show_in_rest' => array(
+				'schema' => array(
+					'type'       => 'object',
+					'properties' => array(
+						'storeSubmissions' => array(
+							'type' => 'boolean',
+						),
+						'debug' => array(
+							'type' => 'boolean',
+						),
+						'recaptchaEnabled'  => array(
+							'type' => 'boolean',
+						),
+						'hide'  => array(
+							'type' => 'boolean',
+						),
+						'fields'  => array(
+							'type' => 'array',
+						),
+						'actions'  => array(
+							'type' => 'array',
+						),
+					),
+					'additionalProperties' => array(
+						'type' => 'object',
+					),
+				),
+			),
+		) );
 	}
 
 	/**
