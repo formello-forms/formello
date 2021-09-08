@@ -3,7 +3,7 @@
  * Plugin Name: Formello
  * Plugin URI: https://formello.net/
  * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
- * Version: 1.3.0
+ * Version: 1.3.1
  * Author: Formello
  * Author URI: https://formello.net
  * License: GPL2
@@ -17,40 +17,6 @@
 // don't call the file directly.
 defined( 'ABSPATH' ) || exit;
 
-if ( ! function_exists( 'formello_fs' ) ) {
-    // Create a helper function for easy SDK access.
-    function formello_fs() {
-        global $formello_fs;
-
-        if ( ! isset( $formello_fs ) ) {
-            // Include Freemius SDK.
-            require_once dirname(__FILE__) . '/freemius/start.php';
-
-            $formello_fs = fs_dynamic_init( array(
-                'id'                  => '8973',
-                'slug'                => 'formello',
-                'type'                => 'plugin',
-                'public_key'          => 'pk_8345ac48669e82bdb9a1813a69a10',
-                'is_premium'          => false,
-                'has_addons'          => true,
-                'has_paid_plans'      => false,
-                'menu'                => array(
-                    'slug'           => 'edit.php?post_type=formello_form',
-                    'account'        => false,
-                    'support'        => false,
-                ),
-            ) );
-        }
-
-        return $formello_fs;
-    }
-
-    // Init Freemius.
-    formello_fs();
-    // Signal that SDK was initiated.
-    do_action( 'formello_fs_loaded' );
-}
-
 /**
  * Formello class
  *
@@ -63,7 +29,7 @@ final class Formello {
 	 *
 	 * @var string
 	 */
-	public $version = '1.3.0';
+	public $version = '1.3.1';
 
 	/**
 	 * Holds various class instances
@@ -117,10 +83,6 @@ final class Formello {
 		define( 'FORMELLO_ASSETS', FORMELLO_URL . '/build' );
 		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed
 		define( 'FORMELLO_STORE_URL', 'https://formello.net' );
-		// the download ID for the product in Easy Digital Downloads
-		define( 'FORMELLO_ITEM_ID', 162 );
-		// the name of the product in Easy Digital Downloads
-		define( 'FORMELLO_ITEM_NAME', 'Formello' );
 	}
 
 	/**
@@ -130,6 +92,7 @@ final class Formello {
 	 */
 	public function init_plugin() {
 		$this->includes();
+		$this->updater();
 		$this->init_hooks();
 	}
 
@@ -266,6 +229,27 @@ final class Formello {
 		$email_action = new Formello\Actions\Email();
 		$email_action->hook();
 
+	}
+
+	/**
+	 * Load plugin updater.
+	 *
+	 * @since 1.0.0
+	 */
+	public function updater() {
+
+		if ( ! is_admin() ) {
+			return;
+		}
+
+		$key = get_option( 'formello_license' );
+
+		if ( ! $key ) {
+			//return;
+		}
+
+		// Fire a hook for Addons to register their updater since we know the key is present.
+		do_action( 'formello_updater', $key );
 	}
 
 } // FORMELLO

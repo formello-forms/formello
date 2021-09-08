@@ -98,19 +98,19 @@ class Admin {
 			'formello-settings',
 			array( $this, 'settings_page' )
 		);
-		/*$addons_hook = add_submenu_page(
+		$addons_hook = add_submenu_page(
 			$slug,
 			__( 'Addons', 'formello' ),
 			__( 'Addons', 'formello' ),
 			$capability,
 			'formello-addons',
 			array( $this, 'addons_page' )
-		);*/
+		);
 
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
 		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
 		add_action( "load-$settings_hook", array( $this, 'settings_hooks' ) );
-		//add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
+		add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
 		add_filter( 'submenu_file', array( $this, 'remove_submenu' ) );
 
 	}

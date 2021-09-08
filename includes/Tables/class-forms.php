@@ -163,7 +163,7 @@ class Forms extends \WP_List_Table {
 
 		$sql_old = "SELECT id, name as form_name, created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE EXISTS (SELECT * FROM {$table_submissions} s WHERE f.id = s.form_id)";
 
-		$sql = "SELECT id, post_title as form_name, post_date as created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE f.post_type = %s";
+		$sql = "SELECT id, post_title as form_name, post_date as created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE f.post_type = %s AND f.post_status ='publish'";
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$order              = sanitize_text_field( $_REQUEST['order'] );

@@ -1,67 +1,54 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
-$addons = array(
-	'Mailchimp' => array(
-		'name' => 'Mailchimp',
-		'type' => 'free',
-		'slug' => 'mailchimp',
-		'description' => 'With Mailchimp addon you can easily subscribe your leads to your Mailchimp list and start collecting thousand of emails.'
-	),
-	'Inserter' => array(
-		'name' => 'Inserter',
-		'type' => 'free',
-		'slug' => 'inserter',
-		'description' => 'Automatically insert any forms at the end or in the middle of your posts and set exclusions by categories or tags.'
-	),
-);
-$count = 0;
+$url	= 'https://formello.net/edd-api/products?nocache=' . time();
+$addons = get_transient( 'formello_addons', false );
+
+/*
+ * Get remote addons.
+ */
+if ( ! $addons ) {
+	$requested_addons = wp_remote_get( $url );
+
+	if ( ! is_wp_error( $requested_addons ) ) {
+		$new_addons = wp_remote_retrieve_body( $requested_addons );
+		$new_addons = json_decode( $new_addons, true );
+
+		if ( $new_addons && is_array( $new_addons ) ) {
+			$addons = $new_addons;
+
+			set_transient( 'formello_addons', $addons, DAY_IN_SECONDS );
+		}
+	} else {
+		$addons = array();
+	}
+}
+
 ?>
 
 <div class="wrap">
 <h2><?php esc_html_e( 'Addons', 'formello' ); ?></h2>
-<style type="text/css">
-.plugin {
-	width: 320px;
-	border: 1px solid #ccc;
-	margin: 0 20px 20px 0;
-	float: left;
-	background-color: #fff;
-	padding: 10px;
-}
-.plugin img {
-	max-width: 100%;
-	height: auto;	
-}
-.plugin .type {
-	float: right;
-	text-transform: uppercase;
-	font-weight: bold;
-}
-</style>
 
-<?php foreach ( $addons as $item ) : ?>
-	<div class="plugin">
+<div class="formello-addons">
+	
+<?php foreach ( $addons['products'] as $item ) : ?>
+	<div class="addon">
 		<div class="logo">
-		<a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['slug'] ); ?>" class="unstyled">
-			<img src="<?php echo esc_url( FORMELLO_URL . '/assets/addon_images/' . $item['slug'] . '.png' ); ?>" alt="<?php echo esc_attr( $item['slug'] ); ?>">
+		<a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" target="_blank" rel="noopener noreferrer">
+			<img src="<?php echo esc_url( FORMELLO_URL . '/assets/addon_images/' . $item['info']['slug'] . '-772x250.png' ); ?>" alt="<?php echo esc_attr( $item['info']['slug'] ); ?>">
 		</a>
 		</div>
 		<div class="caption">
-			<h3><a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['slug'] ); ?>" class="unstyled"><?php echo esc_html( $item['name'] ); ?></a></h3>
-			<p><?php echo esc_html( $item['description'] ); ?></p>
+			<h3><a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" class="unstyled"><?php echo esc_html( $item['info']['title'] ); ?></a></h3>
+			<p><?php echo esc_html( $item['info']['excerpt'] ); ?></p>
 			<p>
-				<a class="button" href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['slug'] ); ?>" title="More about <?php echo esc_attr( $item['slug'] ); ?>">Get this Extension</a>
-				<span class="type"><?php echo $item['type']; ?></span>
+				<a class="button" href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" title="More about <?php echo esc_attr( $item['info']['slug'] ); ?>">Get this Extension</a>
+				<span class="type"><?php echo '0.00' === $item['pricing']['amount'] ? 'FREE' : esc_attr( $item['pricing']['amount'] ); ?></span>
 			</p>
 		</div>
 	</div>
-	<?php
-	$i = $count + 1;
-	if ( ( $i + 1 ) % 4 === 0 ) {
-		echo '<div style="clear: both;"></div>';
-	}
-	?>
 <?php endforeach; ?>
+
+</div>
 
 </div>

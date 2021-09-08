@@ -24,26 +24,6 @@ if ( $submission->is_new ) {
 <a href="<?php echo esc_attr( $submissions_page ); ?>" class="page-title">&lsaquo; <?php esc_html_e( 'Back to submissions list', 'formello' ); ?></a>
 <hr class="wp-header-end">
 <div class="wrap">
-	<style type="text/css">
-		table.formello-bordered {
-		font-size: 13px;
-		border-collapse: collapse;
-		border-spacing: 0;
-		background: white;
-		width: 100%;
-		table-layout: fixed;
-		}
-		table.formello-bordered th,
-		table.formello-bordered td {
-			border: 1px solid #ddd;
-			padding: 12px;
-		}
-		table.formello-bordered th {
-			width: 160px;
-			font-size: 14px;
-			text-align: left;
-		}
-	</style>
 	<div>
 		<h3><?php esc_html_e( 'Fields', 'formello' ); ?></h3>
 		<table class="formello-bordered">

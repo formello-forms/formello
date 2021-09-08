@@ -60,15 +60,6 @@ do_action( 'formello_forms_table' );
 ?>
 </ul>
 
-<style type="text/css">
-.column-id { text-align: left; width:50px !important; overflow:hidden }
-.column-actions { text-align: left; width: 150px !important; overflow:hidden }
-.column-is_new { text-align: left; width:70px !important; overflow:hidden }
-.column-starred { text-align: left; width:10px !important; overflow:hidden }
-.badge { color: #337ab7; font-size: 12px; margin-top: 3px; }
-.star { color: #e27730; font-size: 12px; }
-</style>
-
 <form method="post">
 <?php
 	$this->submissions_table->search_box( 'search', 'search_id' );

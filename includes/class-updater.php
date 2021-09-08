@@ -1,5 +1,4 @@
 <?php
-
 namespace Formello;
 
 // Exit if accessed directly
@@ -110,10 +109,9 @@ class Updater {
 
 		$current = $this->get_repo_api_data();
 		if ( false !== $current && is_object( $current ) && isset( $current->new_version ) ) {
-		error_log( $current->new_version );
 
 			if ( version_compare( $this->version, $current->new_version, '<' ) ) {
-error_log($this->name . ' ' . $this->version . ' ' . version_compare( $this->version, $current->new_version, '<' ));
+
 				$_transient_data->response[ $this->name ] = $current;
 			} else {
 				// Populating the no_update information is required to support auto-updates in WordPress 5.5.

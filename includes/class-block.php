@@ -90,7 +90,7 @@ class Block {
 	}
 
 	/**
-	 * Render frontend app
+	 * Render block on frontend
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
@@ -125,7 +125,7 @@ class Block {
 	}
 
 	/**
-	 * Render frontend app
+	 * Render block
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
@@ -145,7 +145,7 @@ class Block {
 		if ( 'publish' !== $form->post_status || ! empty( $form->post_password ) ) {
 			return '';
 		}
-		
+
 		return do_blocks( $form->post_content );
 
 	}

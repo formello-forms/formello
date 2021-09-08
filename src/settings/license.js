@@ -40,7 +40,7 @@ export default function license( props ) {
 			},
 		} ).then( ( result ) => {
 			setLoading( false );
-			setLicenseStatus( !licenseStatus );
+			setLicenseStatus( result.response.success );
 			message.classList.add( 'formello-action-message--show' );
 			message.textContent = result.response;
 
@@ -81,7 +81,7 @@ export default function license( props ) {
 							<Fragment>
 								<RawHTML>
 									{ sprintf(
-										__( '<p>License status: %s.</p>', 'formello' ),
+										__( '<p class="success">License status: %s.</p>', 'formello' ),
 										`<strong>active</strong>` )
 									}
 								</RawHTML>

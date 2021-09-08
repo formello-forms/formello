@@ -24,14 +24,16 @@ export function getActions(){
 			merge_fields: {},
 			active: false
 		},
-		{
+		/*{
 			type: 'webhooks',
 			title: 'Web Hooks',
 			url: '',
 			method: 'POST',
-			options: [],
+			fields: [],
+			headers: [],
+			additionalHeaders: false,
 			active: false
-		}
+		}*/
 	]
 
 	applyFilters( 'formello.actions.list', '', actions )

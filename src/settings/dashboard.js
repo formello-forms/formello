@@ -34,6 +34,10 @@ const {
 
 const tabs = [
 	{
+		name: 'license',
+		title: 'General',
+	},
+	{
 		name: 'recaptcha',
 		title: 'ReCaptcha',
 	},

@@ -138,12 +138,6 @@ class Assets {
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),
-			'formello-exclude-form'	 => array(
-				'src'       => FORMELLO_ASSETS . '/unregister.js',
-				'deps'      => array( 'wp-blocks', 'wp-dom-ready', 'wp-edit-post' ),
-				'version'   => $script_asset['version'],
-				'in_footer' => true,
-			),
 			'formello-recaptcha'         => array(
 				'src'       => 'https://www.google.com/recaptcha/api.js#asyncload',
 				'in_footer' => true,

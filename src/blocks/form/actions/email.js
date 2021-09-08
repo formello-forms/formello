@@ -28,6 +28,7 @@ export default function email( content, props, MergeTags, handleUpdate ) {
 	const [ settings, setSettings ] = useState( Object.assign( {}, action ) );
 
 	const updateSettings = ( prop, val ) => {
+		console.log(prop,val)
 		setSettings( { ...settings, [prop]: val } )
 		handleUpdate( { ...settings, [prop]: val } )
 	}
