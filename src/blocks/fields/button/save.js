@@ -51,7 +51,6 @@ export default function save( { attributes, className } ) {
 	const buttonClasses = classnames(
 		'button-span',
 		colorProps.className,
-		attributes.alignment,
 		attributes.iconPosition
 	);
 	const buttonStyles = {
@@ -61,10 +60,11 @@ export default function save( { attributes, className } ) {
 
 	const getBlockClassNames = () => {
 		return classnames(
+			attributes.alignment,
 			className
 		);
 	};
-
+console.log(attributes.alignment)
 	const blockProps = useBlockProps.save({
 		className: getBlockClassNames()
 	});
