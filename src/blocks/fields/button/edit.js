@@ -22,6 +22,7 @@ import {
 	__experimentalUseBorderProps as useBorderProps,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseColorProps as useColorProps,
+	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 
 import {
@@ -106,6 +107,7 @@ export default function Edit( {
 	const borderRadius = style?.border?.radius;
 	const borderColor = style?.border?.color;
 	const borderProps = useBorderProps( attributes );
+	const spacingProps = useSpacingProps( attributes );
 
 	// Check for old deprecated numerical border radius. Done as a separate
 	// check so that a borderRadius style won't overwrite the longhand
@@ -127,7 +129,8 @@ export default function Edit( {
 	);
 	const buttonStyles = {
 		...colorProps.style,
-		...borderProps.style
+		...borderProps.style,
+		...spacingProps.style
 	};
 
 	const getBlockClassNames = () => {

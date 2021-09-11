@@ -146,7 +146,13 @@ registerBlockType( 'formello/button', {
 			__experimentalSkipSerialization: true
 		},
 		multiple: false,
-		spacing: true,
+		spacing: {
+			__experimentalSkipSerialization: true,
+			padding: [ 'horizontal', 'vertical' ],
+			__experimentalDefaultControls: {
+				padding: true
+			}
+		},
 		inserter: 'formello_form' === pagenow ? true : false,
 	},
 

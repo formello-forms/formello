@@ -21581,7 +21581,8 @@ function Edit(_ref) {
   var colors = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["useSetting"])('color.palette') || EMPTY_ARRAY;
   var borderRadius = style === null || style === void 0 ? void 0 : (_style$border = style.border) === null || _style$border === void 0 ? void 0 : _style$border.radius;
   var borderColor = style === null || style === void 0 ? void 0 : (_style$border2 = style.border) === null || _style$border2 === void 0 ? void 0 : _style$border2.color;
-  var borderProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["__experimentalUseBorderProps"])(attributes); // Check for old deprecated numerical border radius. Done as a separate
+  var borderProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["__experimentalUseBorderProps"])(attributes);
+  var spacingProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_4__["__experimentalGetSpacingClassesAndStyles"])(attributes); // Check for old deprecated numerical border radius. Done as a separate
   // check so that a borderRadius style won't overwrite the longhand
   // per-corner styles.
 
@@ -21595,7 +21596,7 @@ function Edit(_ref) {
     'running': showIcon
   });
 
-  var buttonStyles = _objectSpread(_objectSpread({}, colorProps.style), borderProps.style);
+  var buttonStyles = _objectSpread(_objectSpread(_objectSpread({}, colorProps.style), borderProps.style), spacingProps.style);
 
   var getBlockClassNames = function getBlockClassNames() {
     return classnames__WEBPACK_IMPORTED_MODULE_6___default()(attributes.alignment, className);
@@ -21879,7 +21880,13 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('for
       __experimentalSkipSerialization: true
     },
     multiple: false,
-    spacing: true,
+    spacing: {
+      __experimentalSkipSerialization: true,
+      padding: ['horizontal', 'vertical'],
+      __experimentalDefaultControls: {
+        padding: true
+      }
+    },
     inserter: 'formello_form' === pagenow ? true : false
   },
 

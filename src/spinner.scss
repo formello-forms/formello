@@ -26,17 +26,21 @@
 		visibility: visible;
 	}
 }
+
 .ld-ext-right.running{
 	padding-right: 2.5em!important;
 }
+
 .ld-ext-right > .ld {
 	top: 50%;
 	left: auto;
 	right: 1.25em;
 }
+
 .ld-ext-left.running{
 	padding-left: 2.5em!important;
 }
+
 .ld-ext-left > .ld {
 	top: 50%;
 	right: auto;
@@ -61,17 +65,20 @@
 		backface-visibility: hidden;
 	}
 }
+
 .ld-ring:after{
 	border-radius: 50%;
 	border: .3em solid currentColor;
 	border-left-color: transparent;
 }
+
 .ld-hourglass:after{
 	border-radius: 50%;
 	border: 1em solid currentColor;
 	border-left-color: transparent;
 	border-right-color: transparent;
 }
+
 .ld-spinner:after {
 	position: absolute;
 	width: 0.4em;
@@ -81,10 +88,16 @@
 	background: none;
 	box-shadow: 0 1em 0 currentColor,0 -1em 0 currentColor,1em 0 0 currentColor,-1em 0 0 currentColor,.70710678em .70710678em 0 currentColor,-.70710678em .70710678em 0 currentColor,.70710678em -.70710678em 0 currentColor,-.70710678em -.70710678em 0 currentColor;
 }
+
 .ld-loader {
 	background-size: cover;
 }
-.ld { transform-origin: 50% 50%; transform-box: fill-box; }
+
+.ld { 
+	transform-origin: 50% 50%; 
+	transform-box: fill-box; 
+}
+
 @keyframes ld-spin
 {
 	0% {
