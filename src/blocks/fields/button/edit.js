@@ -5,16 +5,25 @@
  */
 import { __ } from '@wordpress/i18n';
 
-import { 
-	InspectorControls, 
-	InspectorAdvancedControls, 
-	BlockControls, 
-	AlignmentToolbar,
-	PanelColorSettings,
-	withColors,
-	getColorObjectByColorValue,
-	useSetting
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ */
+import {
+    useBlockProps,
+    InspectorControls,
+    AlignmentToolbar,
+    BlockControls,
+    InspectorAdvancedControls,
+    useSetting,
+    RichText,
+	__experimentalUseBorderProps as useBorderProps,
+	__experimentalUnitControl as UnitControl,
+	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
+
 import {
 	TextControl,
 	ToggleControl,
@@ -23,12 +32,21 @@ import {
 	RangeControl,
 	__experimentalBoxControl as BoxControl,
 	FontSizePicker,
+	ColorPicker,
+	ColorIndicator,
+	ColorPalette,
 	SelectControl
 } from '@wordpress/components';
-import { compose } from '@wordpress/compose';
+import { useCallback, useEffect, useState, useRef } from '@wordpress/element';
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+//import './editor.scss';
 import classnames from 'classnames';
-import { pickBy, isEqual, isObject, identity, mapValues } from 'lodash';
-import { useState, useEffect } from '@wordpress/element';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -36,12 +54,28 @@ import { useState, useEffect } from '@wordpress/element';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  *
- * @param {Object} [props]           Properties passed from the editor.
- * @param {string} [props.className] Class name generated for the block.
- *
  * @return {WPElement} Element to render.
  */
-function Edit( props ) {
+export default function Edit( {
+	className,
+	attributes,
+	setAttributes,
+	toggleSelection,
+	isSelected,
+} ) {
+	const {
+		label,
+		showLabel,
+		placeholder,
+		width,
+		widthUnit,
+		align,
+		buttonText,
+		buttonPosition,
+		buttonUseIcon,
+		style,
+	} = attributes;
+
 	const ALIGNMENT_CONTROLS = [
 		{
 			icon: 'editor-alignleft',
@@ -66,86 +100,49 @@ function Edit( props ) {
 	];
 	const EMPTY_ARRAY = [];
 
-	const {
-		attributes,
-		setAttributes,
-		mergeBlocks,
-		onReplace,
-		className,
-		borderColor,
-		backgroundColor,
-		textColor,
-		setBorderColor,
-		setBackgroundColor,
-		setTextColor,
-	} = props;
-
-	const {
-		paddingTop,
-		paddingRight,
-		paddingBottom,
-		paddingLeft,
-	} = attributes;
-
-    const units = [
-        { value: 'px', label: 'px', default: 0 },
-        { value: '%', label: '%', default: 10 },
-        { value: 'em', label: 'em', default: 0 },
-    ];
-
-    const [ values, setValues ] = useState( {
-		top: paddingTop,
-		left: paddingLeft,
-		right: paddingRight,
-		bottom: paddingBottom,
-    } );
-
-    const setPadding = ( { top, right, bottom, left } ) => {
-    	setAttributes( {
-			paddingTop: top || undefined,
-			paddingLeft: left || undefined,
-			paddingRight: right || undefined,
-			paddingBottom: bottom || undefined,
-    	} )
-    }
-
 	const [ showIcon, setShowIcon ] = useState( false );
 	const colors = useSetting( 'color.palette' ) || EMPTY_ARRAY;
 
-	const buttonClass = classnames( 'button-span', textColor.class, backgroundColor.class, attributes.iconPosition, {
-		'has-background': backgroundColor.value,
-		[backgroundColor.class]: backgroundColor.class,
-		[textColor.class]: textColor.class,
-		'running': showIcon
-	} );
+	const borderRadius = style?.border?.radius;
+	const borderColor = style?.border?.color;
+	const borderProps = useBorderProps( attributes );
+
+	// Check for old deprecated numerical border radius. Done as a separate
+	// check so that a borderRadius style won't overwrite the longhand
+	// per-corner styles.
+	if ( typeof borderRadius === 'number' ) {
+		borderProps.style.borderRadius = `${ borderRadius }px`;
+	}
+
+	const colorProps = useColorProps( attributes );
 
 	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
 
-	const containerClass = classnames( className, attributes.alignment );
-
-	const style = {
-		'backgroundColor': backgroundColor.color,
-		'color': textColor.color,
-		'borderWidth': attributes.borderWidth,
-		'borderRadius': attributes.borderRadius,
-		'borderColor': borderColor.color,
-		'paddingTop': paddingTop,
-		'paddingRight': paddingRight,
-		'paddingBottom': paddingBottom,
-		'paddingLeft': paddingLeft,
-	}
-
-	useEffect(
-		() => {
-			if( undefined !== borderColor ){
-				setAttributes( { customBorderColor: borderColor.color } )
-			}
-		},
-		[ borderColor ]
+	const buttonClasses = classnames(
+		'button-span',
+		colorProps.className,
+		attributes.iconPosition, {
+			'running': showIcon,			
+		}
 	);
+	const buttonStyles = {
+		...colorProps.style,
+		...borderProps.style
+	};
+
+	const getBlockClassNames = () => {
+		return classnames(
+			attributes.alignment,
+			className
+		);
+	};
+
+	const blockProps = useBlockProps({
+		className: getBlockClassNames()
+	});
 
 	return (
-		<div className={ containerClass }>
+		<div { ...blockProps }>
 			<BlockControls>
 				<AlignmentToolbar
 					value={ attributes.alignment }
@@ -163,27 +160,7 @@ function Edit( props ) {
 						onChange={ ( val ) => setAttributes( { text: val } ) }
 					/>
 				</PanelBody>
-				<PanelColorSettings 
-					title={ __( 'Color settings', 'formello' ) }
-					colorSettings={[
-						{
-							value: textColor.color,
-							onChange: setTextColor,
-							label: __( 'Text color', 'formello' )
-						},
-						{
-							value: backgroundColor.color,
-							onChange: setBackgroundColor,
-							label: __( 'Background color', 'formello' )
-						},
-						{
-							value: borderColor.color,
-							onChange: setBorderColor,
-							label: __( 'Border color', 'formello' )
-						},
-					]}
-				/>
-				<PanelBody title={ __( 'Advanced Options', 'formello' ) } initialOpen={ false }>
+				<PanelBody title={ __( 'Border Options', 'formello' ) } initialOpen={ false }>
 					<RangeControl
 						value={ attributes.borderWidth }
 						label={ __( 'Border Width', 'formello' ) }
@@ -204,16 +181,11 @@ function Edit( props ) {
 						max={ 50 }
 						allowReset
 					/>
-					<BoxControl
-						label={ __( 'Padding', 'formello' ) }
-						values={ values }
-						units={ units }
-            			onChange={ ( nextValues ) => { 
-            				setValues( nextValues ) 
-            				setPadding( nextValues ) 
-            			} }
-						showValues={ true }
-					/>
+			        <ColorPalette
+			            colors={ colors }
+			            onChange={ ( value ) => setAttributes( { borderColor: value } ) }
+			            //onChange={ ( value ) => console.log(value) }
+			        />
 				</PanelBody>
 			</InspectorControls>
 			<InspectorAdvancedControls>
@@ -223,7 +195,7 @@ function Edit( props ) {
 					onChange={ ( val ) => setShowIcon( val ) }
 				/>
 				<SelectControl
-			        label={ __( 'Label horizontal position', 'formello' ) }
+			        label={ __( 'Icon position', 'formello' ) }
 			        value={ attributes.iconPosition }
 			        options={ [
 			            { label: 'over', value: 'ld-over' },
@@ -243,12 +215,16 @@ function Edit( props ) {
 			        onChange={ ( val ) => { setAttributes( { iconType: val } ) } }
 				/>
 			</InspectorAdvancedControls>
-			<button className={ buttonClass } style={ style } >
-				<span>{ attributes.text }</span>
+			<button className={ buttonClasses } style={ buttonStyles }>
+				<RichText
+					tagName="span"
+					value={ attributes.text }
+					onChange={ ( text ) => setAttributes( { text } ) }
+					placeholder={ __( 'Enter button text...', 'formello' ) }
+					allowedFormats={ [] }
+				/>
 				<div className={ iconClass }></div>
 			</button>
 		</div>
 	);
 }
-
-export default compose( withColors( 'backgroundColor', 'borderColor', { textColor: 'color' } ) )( Edit );

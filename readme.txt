@@ -30,6 +30,9 @@ You can create forms directly inside Gutenberg editor, save submitted data and a
 
 * Mailchimp action to send subscriber emails to your lists.
 * Inserter: automatically insert form on posts/page.
+* Exporter: export all your submission in an Excel ready format.
+* Web Hooks: send your mail submissions to any external endpoint.
+* Conditional fields: add rules to display fields based on your defined conditions.
 
 == Supported form input ==
 
@@ -44,7 +47,7 @@ You can create forms directly inside Gutenberg editor, save submitted data and a
 * Time
 * Textarea
 * Number
-* Range
+* Range (experimental)
 * Color
 
 For each of this input field you can set all html attribute (required, pattern, max, min step etc...). You can also add a description underneath the field and a tooltip.

@@ -25,6 +25,7 @@ import getIcon from '../../../utils/get-icon';
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType( 'formello/button', {
+    apiVersion: 2,
 	/**
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
@@ -78,12 +79,14 @@ registerBlockType( 'formello/button', {
 		},
 		backgroundColor: {
 			type: 'string',
+			default: 'black'
 		},
 		customBackgroundColor: {
 			type: 'string',
 		},
 		textColor: {
-			type: 'string'
+			type: 'string',
+			default: 'white'
 		},
 		customTextColor: {
 			type: 'string'
@@ -133,8 +136,17 @@ registerBlockType( 'formello/button', {
 		className: true,
 		html: false,
 		reusable: false,
-		color: false,
+		color: {
+			gradients: true,
+			__experimentalSkipSerialization: true
+		},
+		__experimentalBorder: {
+			color: true,
+			radius: true,
+			__experimentalSkipSerialization: true
+		},
 		multiple: false,
+		spacing: true,
 		inserter: 'formello_form' === pagenow ? true : false,
 	},
 

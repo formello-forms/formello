@@ -2,7 +2,7 @@
  * Internal dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { RichText } from '@wordpress/block-editor';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { pickBy, identity } from 'lodash';
 import { InnerBlocks } from '@wordpress/block-editor';
@@ -59,7 +59,7 @@ export default function save( { attributes, className } ) {
 	}
 
 	return (
-		<div className={ className }>
+		<div { ...useBlockProps.save() } className={ className }>
 			{ !(attributes.type == 'hidden') && (
 			<label
 				className={ labelClassName }

@@ -7,15 +7,18 @@ import { InnerBlocks } from '@wordpress/block-editor';
  * Internal dependencies
  */
 import getIcon from '../../utils/get-icon';
-import edit from './edit';
+import Edit from './edit';
+import save from './save';
 import variations from './variations';
+import metadata from './block.json';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'formello/fieldset', {
+registerBlockType( metadata, {
+    apiVersion: 2,
 	/**
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
@@ -74,25 +77,22 @@ registerBlockType( 'formello/fieldset', {
 		className: false,
 		html: false,
 		reusable: false,
+		spacing: true,
+		__experimentalBorder: {
+			color: true,
+			radius: true,
+			style: true,
+			width: true
+		},
 	},
 
 	/**
 	 * @see ./edit.js
 	 */
-	edit: edit,
+	edit: Edit,
 
 	/**
 	 * @see ./save.js
 	 */
-	save: ( { attributes } ) => {
-		let className = attributes.hideBorder ? 'no-border' : undefined;
-		return (
-			<fieldset className={ className }>
-				{ attributes.showLegend && (
-					<legend>{ attributes.legend }</legend>
-				) }
-				<InnerBlocks.Content />
-			</fieldset>
-		);
-	},
+	save
 } );

@@ -1,0 +1,36 @@
+{
+	"apiVersion": 2,
+	"name": "formello/fieldset",
+	"title": "Fieldset",
+	"description": "A block to display form fieldset.",
+	"category": "formello",
+	"parent": "formello/form",
+	"icon": "block-default",
+	"textdomain": "formello",
+	"attributes": {
+		"showLegend": {
+			"type": "boolean",
+			"default": true
+		},
+		"hideBorder": {
+			"type": "boolean",
+			"default": false
+		},
+		"legend": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"anchor": true,
+		"html": false,
+		"color": true,
+		"spacing": {
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"__experimentalBorder": true
+	}
+}

@@ -16,6 +16,7 @@ import {
 	InspectorControls,
 	RichText,
 	InnerBlocks,
+	useBlockProps
 } from '@wordpress/block-editor';
 
 const ALLOWED_BLOCKS = [
@@ -56,10 +57,13 @@ export default function Edit( {
 		[ clientId ]
 	);
 
-	className = attributes.hideBorder ? 'no-border' : undefined;
+	///const className = attributes.hideBorder ? 'no-border' : undefined;
+	const blockProps = useBlockProps({
+		className: attributes.hideBorder ? 'no-border' : undefined
+	})
 
 	return (
-		<>
+		<fieldset {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<ToggleControl
@@ -78,23 +82,21 @@ export default function Edit( {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<fieldset className={ className }>
-				{ attributes.showLegend && (
-					<RichText
-						tagName="legend"
-						className={ className }
-						value={ attributes.legend }
-						onChange={ ( legend ) => setAttributes( { legend } ) }
-						placeholder={ __( 'Enter legend...', 'formello' ) }
-						allowedFormats={ [] }
-					/>
-				) }
-				<InnerBlocks
-					allowedBlocks={ ALLOWED_BLOCKS }
-					templateLock={ false }
-					renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
+			{ attributes.showLegend && (
+				<RichText
+					tagName="legend"
+					className={ className }
+					value={ attributes.legend }
+					onChange={ ( legend ) => setAttributes( { legend } ) }
+					placeholder={ __( 'Enter legend...', 'formello' ) }
+					allowedFormats={ [] }
 				/>
-			</fieldset>
-		</>
+			) }
+			<InnerBlocks
+				allowedBlocks={ ALLOWED_BLOCKS }
+				templateLock={ false }
+				renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
+			/>
+		</fieldset>
 	);
 }

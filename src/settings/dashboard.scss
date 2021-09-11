@@ -64,6 +64,13 @@ $settings-container-width: 750px;
 		h1 {
 			font-size: 17px;
 		    font-weight: 600;			
+			display: flex;
+			align-items: center;
+		}
+		svg {
+			width: 25px;
+			height: 25px;
+			margin: 0 10px;
 		}
 	}
 
@@ -199,6 +206,10 @@ $settings-container-width: 750px;
 .addon img {
 	max-width: 100%;
 	height: auto;	
+}
+
+.addon footer {
+	margin-top: auto;	
 }
 
 .addon a {

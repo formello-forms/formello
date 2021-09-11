@@ -15,7 +15,7 @@ export function getActions(){
 			message: '',
 			active: true
 		},
-		{
+		/*{
 			type: 'mailchimp',
 			title: 'Mailchimp',
 			key: '',
@@ -24,7 +24,7 @@ export function getActions(){
 			merge_fields: {},
 			active: false
 		},
-		/*{
+		{
 			type: 'webhooks',
 			title: 'Web Hooks',
 			url: '',

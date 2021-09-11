@@ -2,7 +2,7 @@
  * Internal dependencies.
  */
 import { __ } from '@wordpress/i18n';
-import { RichText } from '@wordpress/block-editor';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 import classnames from 'classnames';
 
 /**
@@ -24,12 +24,16 @@ export default function save( { attributes, className } ) {
 		attributes.name = attributes.id
 	}
 
-	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign )
+	let labelClasses = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign )
+
+	const blockProps = useBlockProps.save({
+		className: 'formello'
+	});
 
 	return (
 		<div className="formello">
 			<label
-				className={ labelClassName }
+				className={ labelClasses }
 				htmlFor={ attributes.id }
 			>
 				{ attributes.label }

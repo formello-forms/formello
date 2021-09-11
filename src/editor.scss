@@ -4,116 +4,91 @@
  * Replace them with your own styles or remove the file completely.
  */
 
-.wp-block-formello-form {
-	fieldset {
-		padding: 10px;
-		border: 1px solid black;
+/* RESET */
+html :where(.editor-styles-wrapper) {
+	select,
+	input[type]:not([type=checkbox]),
+	textarea,
+	button {
+		font-family: system-ui;
+		-webkit-appearance: revert;
+		color: revert;
+		border: revert;
+		border-radius: revert;
+		background: revert;
+		box-shadow: revert;
+		text-shadow: revert;
+		outline: revert;
+		cursor: revert;
+		outline: none;
+		transform: revert;
+		font-size: revert;
+		line-height: revert;
+		padding: revert;
+		margin: revert;
+		min-height: revert;
+		max-width: revert;
+		vertical-align: revert;
+		font-weight: revert;
 	}
-	select {
-		max-width: inherit;
+
+	input[type]:disabled,
+	input[type]:focus, 
+	select:hover,
+	select:focus,
+	button {
+		color: revert;
+		border-color: revert;
+		//background: revert;
+		box-shadow: revert;
+		text-shadow: revert;
+		cursor: revert;
+		transform: revert;
 	}
-	input:disabled, input.disabled, select:disabled, select.disabled, textarea:disabled, textarea.disabled {
+}
+
+.wp-core-ui select {
+	font-size: revert;
+	line-height: revert;
+}
+
+/* STYLE */
+html :where(.wp-block-formello-form) {
+	input[type],
+	select,
+	textarea[readonly] {
 		background-color: #fff;
-		border: 1px solid #7e8993;
-		opacity: 1;
-		border-radius: 0;
-		line-height: normal;
+		outline: none;
+		box-sizing:content-box;
 	}
-	input:disabled[ type=radio ] {
-		border: 1px solid #7e8993;
-		border-radius: 50%;
+	input[type]:not([type=checkbox]):not([type=radio]):not([type=color]),
+	select[readonly],
+	button {
+		min-height: 1em;
+		padding: 10px;
+        max-width: 100%;
 	}
-	.formello {
-	  padding: 0;
+	input[type=date] {
+		padding: 5px;
 	}
-	.formello small {
-	  padding: 0;
+	select[readonly]:hover {
+		color: #000;
 	}
-}
-
-.formello-checkbox {
-	input {
-		margin: 0;
-	}
-}
-
-.formello-hidden {
-	display: flex;
-	align-items: center;
-}
-
-.wp-block-formello-button .button-span {
-  cursor: pointer;
-	font-size: 14px;
-  padding: 5px 10px;
-	background: #abb8c3;
-  color: #fff;
-  border: 1px solid transparent;
-  align-self: flex-start;
-  &.center {
-    align-self: center;
-  }
-  &.right {
-    align-self: flex-end;
-  }
-  &.wide {
-    width: 100%;
-  }
-
-}
-
-.wp-block-formello-button.wide {
-    .button-span {
-      width: 100%;
-      text-align: center;
-    }
-}
-
-.formello-group.grouped {
-	input {
-		border-right: 0;
+	button {
+		background: #ff7e00;
+		color: #000;
+		border: none;
+		font-size: 1rem;	
 	}
 }
 
-.formello-group div {
-	display: flex;
-	flex: 0 0 auto;
-
-	& [data-type='formello/button'] {
-		flex:0 1 auto;
-	}
-	&.formello {
-		padding: 0;
-		margin: 0;
-		label {
-			display: none;
-		}
-		small {
-			display: none;
-		}
-	}
-	.editor-styles-wrapper [data-block] {
-		margin: 0 !important;
-	}
-	.block-editor-block-list__layout .wp-block {
-		margin: 0;
+.formello-group {
+	.block-editor-block-list__block.wp-block-formello-button {
+		margin-top: 0;
 	}
 }
-
-.formello-urlinput {
-	input {
-		width: 100% !important;
-	    border-radius: 2px !important;
-	    border: 1px solid #757575 !important;
-	}
-}
-
-.formello-group div.ld-spin {
-	display: inline-block;
-}
-
-.formello-fieldset-options {
-	padding: 15px;
-	border: 1px solid #eee;
-	margin-bottom: 15px;
+.formello-urlinput input {
+    width: 100% !important;
+    border-radius: 2px !important;
+    border: 1px solid #757575 !important;
 }

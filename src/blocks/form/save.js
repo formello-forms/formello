@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-import { InnerBlocks } from '@wordpress/block-editor';
+import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
 import { useState } from '@wordpress/element';
 import classnames from 'classnames';
@@ -20,8 +20,14 @@ import classnames from 'classnames';
  */
 export default function save( { attributes, className, innerBlocks } ) {
 
+
+	/*if ( !attributes.name && attributes.id ) {
+		attributes.name = 'form_' + attributes.id;
+	}*/
+    //const blockProps = useBlockProps.save();
+	
 	className = classnames( 
-		className,
+		//blockProps.className,
 		attributes.asRow
 			? attributes.labelAlign
 			: undefined,
@@ -31,13 +37,11 @@ export default function save( { attributes, className, innerBlocks } ) {
 		} 
 	)
 
-	if ( !attributes.name && attributes.id ) {
-		attributes.name = 'form_' + attributes.id;
-	}
-
 	let honeypot = '_formello_h' + attributes.id;
 	return (
-		<form className={ className } 
+		<form {...useBlockProps.save({
+				className: className
+			})}
 			method="post" 
 			id={ 'formello-' + attributes.id }
 			data-id={ attributes.id }

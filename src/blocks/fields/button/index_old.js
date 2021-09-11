@@ -11,7 +11,6 @@ import { registerBlockType } from '@wordpress/blocks';
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-import { InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -19,28 +18,27 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import Edit from './edit';
 import save from './save';
 import getIcon from '../../../utils/get-icon';
-import blockAttributes from './attributes';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'formello/select', {
+registerBlockType( 'formello/button', {
     apiVersion: 2,
 	/**
 	 * This is the display title for your block, which can be translated with `i18n` functions.
 	 * The block inserter will show this name.
 	 */
-	title: __( 'Select', 'formaster' ),
+	title: __( 'Button', 'formello' ),
 
 	/**
 	 * This is a short description for your block, can be translated with `i18n` functions.
 	 * It will be shown in the Block Tab in the Settings Sidebar.
 	 */
 	description: __(
-		'A dropdown select.',
-		'formaster'
+		'Submit Button.',
+		'formello'
 	),
 
 	/**
@@ -49,29 +47,100 @@ registerBlockType( 'formello/select', {
 	 */
 	category: 'formello',
 
-	// Only allow this block when it is nested in a Formello/Form block
-	parent: [ 'formello/form' ],
+	// Only allow this block when it is nested in a Form block
+	parent: [ 'formello/form', 'formello/input', 'core/column' ],
 
 	/**
 	 * Block attributes
 	 */
-	attributes: blockAttributes,
+	attributes: {
+		form_id: {
+			type: 'number'
+		},
+		text: {
+			type: 'string',
+			default: 'Submit',
+		},
+		iconPosition: {
+			type: 'string',
+			default: 'ld-ext-right',
+		},
+		iconType: {
+			type: 'string',
+			default: 'ld-ring',
+		},
+		alignment: {
+			type: 'string',
+			default: 'left',
+		},
+		fontSize: {
+			type: 'number',
+			default: '14',
+		},
+		backgroundColor: {
+			type: 'string',
+			default: 'black'
+		},
+		customBackgroundColor: {
+			type: 'string',
+		},
+		textColor: {
+			type: 'string',
+			default: 'white'
+		},
+		customTextColor: {
+			type: 'string'
+		},
+		borderColor: {
+			type: 'string',
+		},
+		customBorderColor: {
+			type: 'string',
+		},
+		borderWidth: {
+			type: 'numeric'
+		},
+		borderRadius: {
+			type: 'numeric'
+		},
+		paddingTop: {
+			type: 'string',
+		},
+		paddingRight: {
+			type: 'string',
+		},
+		paddingBottom: {
+			type: 'string',
+		},
+		paddingLeft: {
+			type: 'string',
+		},
+		paddingUnit: {
+			type: 'string',
+		},
+		style: {
+			type: 'object'
+		},
+	},
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: getIcon( 'select' ),
+	icon: getIcon('button'),
 
 	/**
 	 * Optional block extended support features.
 	 */
 	supports: {
-		// Removes support for an HTML mode.
-		html: true,
-		className: false,
+		className: true,
+		html: false,
 		reusable: false,
+		color: true,
+		multiple: false,
+		spacing: true,
 		inserter: 'formello_form' === pagenow ? true : false,
+		__experimentalBorder: true,
 	},
 
 	/**
@@ -82,5 +151,5 @@ registerBlockType( 'formello/select', {
 	/**
 	 * @see ./save.js
 	 */
-	save: save
+	save,
 } );

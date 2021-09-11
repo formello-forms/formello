@@ -81,13 +81,3 @@ function formello_license_option( $settings ) {
 	$settings = $crypto->decrypt( $settings );
 	return $settings;
 }
-
-/**
- * Function to retrieve upload dir
- *
- * @return string Full path.
- */
-function formello_get_dir(){
-	$upload_dir = wp_upload_dir();
-	return $upload_dir;
-}

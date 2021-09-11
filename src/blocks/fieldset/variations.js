@@ -27,7 +27,7 @@ const variations = [
 			[ 'formello/input', { type: 'checkbox', name:'Option_1', label: 'Option 1' } ], 
 			[ 'formello/input', { type: 'checkbox', name:'Option_1', label: 'Option 1' } ] 
 		],
-		scope: [ 'inserter' ],
+		scope: [ 'inserter', 'block' ],
 	},
 	{
 		name: 'radios',
@@ -39,7 +39,7 @@ const variations = [
 			[ 'formello/input', { type: 'radio', name:'Option_1', label: 'Option 1' } ], 
 			[ 'formello/input', { type: 'radio', name:'Option_1', label: 'Option 1' } ] 
 		],
-		scope: [ 'inserter' ],
+		scope: [ 'inserter', 'block' ],
 	}
 ];
 

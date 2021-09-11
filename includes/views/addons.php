@@ -38,14 +38,12 @@ if ( ! $addons ) {
 			<img src="<?php echo esc_url( FORMELLO_URL . '/assets/addon_images/' . $item['info']['slug'] . '-772x250.png' ); ?>" alt="<?php echo esc_attr( $item['info']['slug'] ); ?>">
 		</a>
 		</div>
-		<div class="caption">
-			<h3><a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" class="unstyled"><?php echo esc_html( $item['info']['title'] ); ?></a></h3>
-			<p><?php echo esc_html( $item['info']['excerpt'] ); ?></p>
-			<p>
-				<a class="button" href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" title="More about <?php echo esc_attr( $item['info']['slug'] ); ?>">Get this Extension</a>
-				<span class="type"><?php echo '0.00' === $item['pricing']['amount'] ? 'FREE' : esc_attr( $item['pricing']['amount'] ); ?></span>
-			</p>
-		</div>
+		<h3><a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" class="unstyled"><?php echo esc_html( $item['info']['title'] ); ?></a></h3>
+		<p><?php echo esc_html( $item['info']['excerpt'] ); ?></p>
+		<footer>
+			<a class="button" href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" title="More about <?php echo esc_attr( $item['info']['slug'] ); ?>">Get this Extension</a>
+			<span class="type"><?php echo '0.00' === $item['pricing']['amount'] ? 'FREE' : esc_attr( $item['pricing']['amount'] ); ?></span>
+		</footer>
 	</div>
 <?php endforeach; ?>
 

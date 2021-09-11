@@ -14,8 +14,8 @@ import ServerSideRender from '@wordpress/server-side-render';
 import { TemplatesModal } from '../form/library';
 
 registerBlockType('formello/form-reusable', {
-	title: __('Form'),
-	description: __('Block showing a Formello form'),
+	title: __('Form Library'),
+	description: __('Block showing all locally registered Formello forms'),
 	category: 'formello',
 	attributes: {
 		id: {
@@ -102,7 +102,9 @@ registerBlockType('formello/form-reusable', {
 								} }
 							>
 								{ __( 'Open Library', 'formello' ) }
-							</Button> <p>or <Button href={ formello.templatesURL }>{ __( 'Create new form', 'formello' ) }</Button></p>
+							</Button> 
+							<p>or </p>
+							<Button isSecondary href={ formello.templatesURL }>{ __( 'Create new form', 'formello' ) }</Button>
 						</Placeholder>
 	            	}
 	            </Fragment>

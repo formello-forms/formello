@@ -21,6 +21,7 @@ import { registerBlockType } from '@wordpress/blocks';
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( 'formello/form', {
+    apiVersion: 2,
 	title: __( 'Form', 'formello' ),
 	description: __( 'Drive conversions with beautiful forms.', 'formello' ),
 	icon: getIcon( 'form' ),

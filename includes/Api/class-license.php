@@ -96,9 +96,9 @@ class License extends WP_REST_Controller {
 
 		// data to send in our API request
 		$api_params = array(
-			'edd_action'  => 'activate_license',
+			'edd_action'  => 'check_license',
 			'license'     => $license,
-			'item_name'   => urlencode( FORMELLO_ITEM_NAME ), // the name of our product in EDD
+			'item_name'   => urlencode( 'Formello' ), // the name of our product in EDD
 			'url'         => home_url(),
 			'environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
 		);
@@ -145,7 +145,7 @@ class License extends WP_REST_Controller {
 						break;
 
 					case 'item_name_mismatch':
-						$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), EDD_SAMPLE_ITEM_NAME );
+						$message = sprintf( __( 'This appears to be an invalid license key for %s.' ), 'Formello' );
 						break;
 					case 'no_activations_left':
 						$message = __( 'Your license key has reached its activation limit.' );
@@ -201,7 +201,7 @@ class License extends WP_REST_Controller {
 		$api_params = array(
 			'edd_action'  => 'deactivate_license',
 			'license'     => $license,
-			'item_name'   => urlencode( FORMELLO_ITEM_NAME ), // the name of our product in EDD
+			'item_name'   => urlencode( 'Formello' ), // the name of our product in EDD
 			'url'         => home_url(),
 			'environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
 		);

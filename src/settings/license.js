@@ -87,7 +87,7 @@ export default function license( props ) {
 								</RawHTML>
 								<Button 
 									onClick={ () => updateLicense('deactivate') }
-									variant={ 'secondary' }
+									isSecondary
 									isBusy={ loading }
 								>Deactivate</Button>
 							</Fragment>

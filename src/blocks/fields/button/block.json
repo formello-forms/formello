@@ -1,0 +1,40 @@
+{
+	"apiVersion": 2,
+	"name": "formello/button",
+	"title": "Button",
+	"description": "A block to display form button.",
+	"category": "formello",
+	"parent": "formello/form",
+	"icon": "block-default",
+	"textdomain": "formello",
+	"attributes": {
+		"text": {
+			"type": "string",
+			"default": "Submit",
+		},
+		"iconPosition": {
+			"type": "string",
+			"default": "ld-ext-right",
+		},
+		"Type": {
+			"type": "string",
+			"default": "ld-ring",
+		},
+		"alignment": {
+			"type": "string",
+			"default": "left",
+		}
+	},
+	"supports": {
+		"html": false,
+		"reusable": false,
+		"color": true,
+		"spacing": {
+			"padding": true,
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"__experimentalBorder": true
+	}
+}

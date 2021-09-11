@@ -59,6 +59,7 @@ const tabs = [
  * Internal dependencies
  */
 import './dashboard.scss';
+import getIcon from '../utils/get-icon';
 
 import License from './license.js';
 import Recaptcha from './recaptcha.js';
@@ -187,7 +188,7 @@ class App extends Component {
 		return (
 			<Fragment>
 				<div className="formello-settings-header">
-					<h1>{ __( 'Settings' ) }</h1>
+					<h1>{ getIcon( 'logo' ) }{ __( 'Settings' ) }</h1>
 				</div>
 				<div className="formello-settings-main">
 

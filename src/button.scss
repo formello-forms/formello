@@ -1,34 +1,33 @@
 .wp-block-formello-button {
-  
-  margin-bottom: 1em;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  &.center {
-    justify-content: center;
-  }
-  &.right {
-    justify-content: flex-end;
-  }
-  &.wide {
-    button {
-      width: 100%;
-    }
-  }
+	
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	&.center {
+		justify-content: center;
+	}
+	&.right {
+		justify-content: flex-end;
+	}
+	&.wide {
+		button {
+			width: 100%;
+		}
+	}
 
-  button {
-    span{
-      transition: all .3s, background 0ms, border 0ms;
-    }
-  }
+	button {
+		span{
+			transition: all .3s, background 1ms, border 1ms;
+		}
+	}
 
 }
 
 @media screen and (min-width: 600px) {
 
-  .as-row .wp-block-formello-button {
-    padding-left: 180px;
-    flex-direction: row;
-  }
-  
+	.as-row .wp-block-formello-button {
+		margin-left: 180px;
+		flex-direction: row;
+	}
+	
 }

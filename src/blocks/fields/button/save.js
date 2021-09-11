@@ -6,7 +6,11 @@
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
 import { 
-	getColorClassName 
+	getColorClassName,
+	useBlockProps,
+	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
+	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles
 } from '@wordpress/block-editor';
 
 /**
@@ -21,52 +25,56 @@ import {
 export default function save( { attributes, className } ) {
 
 	const {
-		backgroundColor,
-		textColor,
-		borderColor,
 		text,
 		alignment,
 		iconType,
 		iconPosition,
-		customBackgroundColor,
-		customTextColor,
-		customBorderColor,
-		paddingTop,
-		paddingBottom,
-		paddingLeft,
-		paddingRight
+		style
 	} = attributes;
 
-	const containerClass = classnames( className, alignment );
-	const iconClass = classnames( 'ld', 'ld-spin', iconType );
+	const borderRadius = style?.border?.radius;
+	const borderColor = style?.border?.color;
+	const borderProps = getBorderClassesAndStyles( attributes );
 
-	const textClass = getColorClassName( 'color', textColor );
-	const backgroundClass = getColorClassName( 'background-color', backgroundColor );
-	const borderClass = getColorClassName( 'border-color', borderColor );
-	const buttonClass = classnames( 'button-span', attributes.iconPosition, {
-		'has-background': backgroundColor,
-		[ textClass ]: textClass,
-		[ backgroundClass ]: backgroundClass,
-	} );
-
-	const style = {
-		'backgroundColor': customBackgroundColor,
-		'color': customTextColor,
-		'borderWidth': attributes.borderWidth,
-		'borderRadius': attributes.borderRadius,
-		'borderColor': customBorderColor,
-		'paddingTop': paddingTop,
-		'paddingRight': paddingRight,
-		'paddingBottom': paddingBottom,
-		'paddingLeft': paddingLeft,
+	// Check for old deprecated numerical border radius. Done as a separate
+	// check so that a borderRadius style won't overwrite the longhand
+	// per-corner styles.
+	if ( typeof borderRadius === 'number' ) {
+		borderProps.style.borderRadius = `${ borderRadius }px`;
 	}
 
+	const colorProps = getColorClassesAndStyles( attributes );
+
+	const containerClass = classnames( className, attributes.alignment );
+	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
+
+	const buttonClasses = classnames(
+		'button-span',
+		colorProps.className,
+		attributes.alignment,
+		attributes.iconPosition
+	);
+	const buttonStyles = {
+		...colorProps.style,
+		...borderProps.style
+	};
+
+	const getBlockClassNames = () => {
+		return classnames(
+			className
+		);
+	};
+
+	const blockProps = useBlockProps.save({
+		className: getBlockClassNames()
+	});
+
 	return (
-		<div className={ containerClass }>
+		<div {...blockProps}>
 			<button 
+				className={ buttonClasses } 
+				style={ buttonStyles }
 				type="submit" 
-				className={ buttonClass }
-				style={ style }
 			>
 				<span>{ text }</span>
 				<div className={ iconClass }></div>

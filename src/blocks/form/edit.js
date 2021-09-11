@@ -138,8 +138,6 @@ function Edit( props ) {
 	const metaFieldValue = meta['formello_settings'];
 
 	const updateMetaValue = ( name, value ) => {
-		console.log(name)
-		console.log(value)
 		setMeta( { 
 			...meta,
 			formello_settings: {
@@ -267,20 +265,6 @@ function Edit( props ) {
 					</ToolbarGroup>
 				</BlockControls>
 				<PanelBody title={ __( 'Settings', 'formello' ) } initialOpen={ true }>
-					<TextControl
-						label={ __( 'Name', 'formello' ) }
-						value={ attributes.name }
-						onChange={ ( val ) => setAttributes( { 'name': val } ) }
-					/>
-					<BaseControl
-						label={ __( 'Redirect Url', 'formello' ) }
-					>
-						<URLInput
-							value={ attributes.redirectUrl }
-							onChange={ newURL => setAttributes( { redirectUrl: newURL } ) }
-							className={ 'formello-urlinput' }
-						/>
-					</BaseControl>
 					<ToggleControl
 						label={ __( 'Store submissions', 'formello' ) }
 						checked={ attributes.storeSubmissions }
@@ -308,6 +292,15 @@ function Edit( props ) {
 							setAttributes( { 'hide': val } )
 						} }
 					/>
+					<BaseControl
+						label={ __( 'Redirect Url', 'formello' ) }
+					>
+						<URLInput
+							value={ attributes.redirectUrl }
+							onChange={ newURL => setAttributes( { redirectUrl: newURL } ) }
+							className={ 'formello-urlinput' }
+						/>
+					</BaseControl>
 					<TextareaControl
 						label={ __( 'Success Message', 'formello' ) }
 						value={ attributes.successMessage }
@@ -386,28 +379,30 @@ function Placeholder ( props ) {
 	} = dispatch( 'core/block-editor' );
 
 	return (
-		<BlockVariationPicker
-			icon={ getIcon( 'form' ) }
-			label={ 'Form' }
-			instructions={ __( 'Select a form to start with.', 'formello' ) }
-			variations={ variations }
-			clientId={ clientId }
-			allowSkip
-			onSelect={ ( nextVariation = defaultVariation ) => {
-				if ( nextVariation.attributes ) {
-					setAttributes( nextVariation.attributes );
-				}
-				if ( nextVariation.innerBlocks ) {
-					replaceInnerBlocks(
-						props.clientId,
-						createBlocksFromInnerBlocksTemplate(
-							nextVariation.innerBlocks
-						),
-						true
-					);
-				}
-			} }
-		/>
+		<div {...useBlockProps()}>
+			<BlockVariationPicker
+				icon={ getIcon( 'form' ) }
+				label={ 'Form' }
+				instructions={ __( 'Select a form to start with.', 'formello' ) }
+				variations={ variations }
+				clientId={ clientId }
+				allowSkip
+				onSelect={ ( nextVariation = defaultVariation ) => {
+					if ( nextVariation.attributes ) {
+						setAttributes( nextVariation.attributes );
+					}
+					if ( nextVariation.innerBlocks ) {
+						replaceInnerBlocks(
+							props.clientId,
+							createBlocksFromInnerBlocksTemplate(
+								nextVariation.innerBlocks
+							),
+							true
+						);
+					}
+				} }
+			/>
+		</div>
 	);
 }
 

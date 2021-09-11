@@ -5,7 +5,8 @@ import {
 	BlockControls,
 	AlignmentToolbar,
 	RichText,
-	InnerBlocks
+	InnerBlocks,
+	useBlockProps
 } from '@wordpress/block-editor';
 
 import {
@@ -19,6 +20,8 @@ import {
 	SelectControl,
 	__experimentalInputControl as InputControl
 } from '@wordpress/components';
+
+//import './editor.scss';
 
 import { useEffect, Fragment } from '@wordpress/element';
 
@@ -73,7 +76,7 @@ export default function Edit( props ) {
 	);
 	const className = classnames( {
 		'formello': true,
-		'formello-group': attributes.withButton,
+		'formello-group': attributes.withButton || 'range' === attributes.type,
 		'formello-group grouped': attributes.grouped,
 		'formello-row formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 	} )
@@ -87,9 +90,12 @@ export default function Edit( props ) {
 		}
 		setAttributes( { label: txt } )
 	}
+	const blockProps = useBlockProps( {
+		className: className,
+	} );
 
 	return (
-		<div className={ className }>
+		<div { ...blockProps }>
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
@@ -386,7 +392,6 @@ export default function Edit( props ) {
 					value={ attributes.value }
 					className={ attributes.fieldClass }
 					placeholder={ attributes.placeholder }
-					disabled={ true }
 				></textarea>
 			) : (
 				<input
@@ -394,7 +399,6 @@ export default function Edit( props ) {
 					type={ attributes.type }
 					value={ attributes.value }
 					readOnly
-					disabled={ true }
 					checked={ attributes.checked }
 					placeholder={ attributes.placeholder }
 				/>

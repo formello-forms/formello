@@ -11,13 +11,14 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+//import './editor.scss';
 
 import {
 	InspectorControls,
 	InnerBlocks,
 	BlockControls,
 	RichText,
+	useBlockProps
 } from '@wordpress/block-editor';
 import {
 	TextControl,
@@ -132,8 +133,12 @@ export default function Edit( props ) {
 		return options
 	};
 
+	const blockProps = useBlockProps({
+		className: 'formello'
+	});
+
 	return (
-		<div className="formello">
+		<div {...blockProps}>
 			<InspectorControls>
 				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<TextControl
@@ -263,7 +268,6 @@ export default function Edit( props ) {
 			<Fragment>
 				<label
 					className={ labelClassName }
-					htmlFor={ attributes.id }
 				>
 					{ attributes.label }
 					{ attributes.required && <span>*</span> }{ ' ' }
