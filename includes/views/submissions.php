@@ -16,19 +16,21 @@ $all = sprintf(
 );
 
 $news = sprintf(
-	'<a href="?post_type=formello_form&page=%s&form=%s&new=1&_wpnonce=%s">%s <span class="count">(%d)</span></a>',
+	'<a href="?post_type=formello_form&page=%s&form=%s&new=1&_wpnonce=%s" class="%s">%s <span class="count">(%d)</span></a>',
 	'formello-submissions',
 	sanitize_text_field( $_REQUEST['form'] ),
 	$nonce,
+	isset( $_REQUEST['new'] ) ? 'current' : '',
 	__( 'Unread', 'formello' ),
 	$this->submissions_table->get_news()
 );
 
 $starred = sprintf(
-	'<a href="?post_type=formello_form&page=%s&form=%s&starred=1&_wpnonce=%s">%s <span class="count">(%d)</span></a>',
+	'<a href="?post_type=formello_form&page=%s&form=%s&starred=1&_wpnonce=%s" class="%s">%s <span class="count">(%d)</span></a>',
 	'formello-submissions',
 	sanitize_text_field( $_REQUEST['form'] ),
 	$nonce,
+	isset( $_REQUEST['starred'] ) ? 'current' : '',
 	__( 'Starred', 'formello' ),
 	$this->submissions_table->get_favorites()
 );
@@ -40,7 +42,7 @@ $form_page = add_query_arg( array( 'page' => 'formello' ) );
 
 <h1 class="wp-heading-inline">
 <?php
-	esc_html_e( wp_sprintf( 'Submissions for %s', $form->post_title ), 'formello' );
+	esc_html_e( wp_sprintf( 'Submissions for %s', $title ), 'formello' );
 ?>
 </h1>
 <a href="<?php echo esc_attr( $form_page ); ?>" class="page-title">&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?></a>

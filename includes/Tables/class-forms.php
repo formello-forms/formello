@@ -75,7 +75,7 @@ class Forms extends \WP_List_Table {
 		);
 		if ( ! empty( $item['news'] ) ) {
 			$badge = sprintf(
-				'<span class="badge">%s</span>',
+				'<span class="formello-badge">%s</span>',
 				$item['news']
 			);
 		}
@@ -117,9 +117,8 @@ class Forms extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'id'         => 'ID',
 			'name'       => 'Name',
-			'created_at' => 'Created',
+			'formello_date' => 'Created',
 		);
 		return $columns;
 	}
@@ -142,6 +141,10 @@ class Forms extends \WP_List_Table {
 		return array(
 			'name' => array(
 				'name',
+				false,
+			),
+			'formello_date' => array(
+				'created_at',
 				false,
 			),
 		);
@@ -204,10 +207,9 @@ class Forms extends \WP_List_Table {
 	 */
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
-			case 'id':
 			case 'name':
-			case 'created_at':
-				return $item[ $column_name ];
+			case 'formello_date':
+				return $item[ 'created_at' ];
 			default:
 				return esc_html( $item );
 		}

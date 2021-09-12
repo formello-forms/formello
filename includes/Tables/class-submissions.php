@@ -244,11 +244,11 @@ class Submissions extends \WP_List_Table {
 		if ( 'delete' === $this->current_action() ) {
 
 			if ( ! wp_verify_nonce( esc_attr( $_REQUEST['_wpnonce'] ), 'sp_delete_submission' ) ) {
-				echo '<div class="notice notice-error is-dismissible"><p>Go get a life script kiddies.</p></div>';
+				echo '<div class="notice notice-error is-dismissible"><p>' . __( 'Go get a life script kiddies.', 'formello' ) . '</p></div>';
 				wp_die();
 			} else {
 				self::delete_submission( absint( $_GET['submission'] ) );
-				echo '<div class="notice notice-success is-dismissible"><p>Entry successfully deleted.</p></div>';
+				echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Entry successfully deleted.', 'formello' ) . '</p></div>';
 			}
 			// reset data.
 			$this->data = array();
@@ -360,7 +360,7 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array();
+		return array( 'id' );
 	}
 
 	/**
@@ -370,16 +370,12 @@ class Submissions extends \WP_List_Table {
 	 */
 	public function get_sortable_columns() {
 		return array(
-			'submitted_at' => array(
+			'formello_date' => array(
 				'submitted_at',
 				false,
 			),
 			'id' => array(
 				'id',
-				false,
-			),
-			'is_new' => array(
-				'is_new',
 				false,
 			),
 		);
@@ -451,11 +447,10 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	private function get_submission_columns() {
-		$columns                 = array();
-		$columns['cb']           = '<input type="checkbox" />';
-		$columns['id']           = 'ID';
-		$columns['starred']      = '';
-		$columns['is_new']       = 'New';
+		$columns					= array();
+		$columns['cb']				= '<input type="checkbox" />';
+		$columns['id']				= 'ID';
+		$columns['formello_icons']	= '';
 
 		$settings = get_post_meta( $this->form_id,'formello_settings', true );;
 
@@ -467,8 +462,8 @@ class Submissions extends \WP_List_Table {
 			}
 		}
 
-		$columns['submitted_at'] = __( 'Submitted At' );
-		$columns['actions']      = __( 'Actions' );
+		$columns['formello_date'] = __( 'Submitted At' );
+		$columns['actions']       = __( 'Actions' );
 		$this->columns = array_keys( $columns );
 		return $columns;
 	}
@@ -484,12 +479,12 @@ class Submissions extends \WP_List_Table {
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'id':
-			case 'submitted_at':
-				return $item[ $column_name ];
-			case 'is_new':
-				return $item[ $column_name ] ? '<span class="dashicons dashicons-marker badge"> </span>' : '';
-			case 'starred':
-				return $item[ $column_name ] ? '<span class="dashicons dashicons-star-filled star"> </span>' : '';
+			case 'formello_date':
+				return $item[ 'submitted_at' ];
+			case 'formello_icons':
+				$is_new = $item[ 'is_new' ] ? '<span class="dashicons dashicons-marker formello-new" title="new"> </span>' : '';
+				$starred = $item[ 'starred' ] ? '<span class="dashicons dashicons-star-filled formello-star" title="starred"> </span>' : '';
+				return $starred .$is_new;
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
 				if ( 'on' === $item ) {

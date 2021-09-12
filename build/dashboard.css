@@ -195,11 +195,11 @@
 
 .column-id {
   text-align: left;
-  width: 100px !important;
+  width: 5%;
   overflow: hidden;
 }
 
-.badge {
+.formello-badge {
   background-color: #337ab7;
   padding: 0 5px;
   margin-left: 10px;
@@ -213,27 +213,26 @@
   overflow: hidden;
 }
 
-.column-is_new {
+.column-formello_date {
   text-align: left;
-  width: 70px !important;
+  width: 150px !important;
   overflow: hidden;
 }
 
-.column-starred {
+.column-formello_icons {
   text-align: left;
-  width: 10px !important;
+  width: 50px !important;
   overflow: hidden;
 }
 
-.badge {
-  color: #337ab7;
-  font-size: 12px;
-  margin-top: 3px;
-}
-
-.star {
+.formello-star {
   color: #e27730;
-  font-size: 12px;
+  font-size: 1rem;
+}
+
+.formello-new {
+  color: #337ab7;
+  font-size: 1rem;
 }
 
 /* TABLE SUBMISSION STYLE */

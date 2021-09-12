@@ -224,6 +224,8 @@ class Admin {
 	 * Add settings container.
 	 */
 	public function submission_page_detail() {
+		// Enqueue styling for admin tables.
+		wp_enqueue_style( 'formello-settings' );
 		if ( isset( $_GET['submission'] ) ) {
 			$id = (int) sanitize_text_field( wp_unslash( $_GET['submission'] ) );
 		}
@@ -250,6 +252,8 @@ class Admin {
 	 * Output forms table.
 	 */
 	public function forms_page() {
+		// Enqueue styling for admin tables.
+		wp_enqueue_style( 'formello-settings' );
 		require dirname( __FILE__ ) . '/views/forms.php';
 	}
 
@@ -257,6 +261,9 @@ class Admin {
 	 * Output our Dashboard HTML.
 	 */
 	public function submissions_page() {
+		// Enqueue styling for admin tables.
+		wp_enqueue_style( 'formello-settings' );
+
 		if ( isset( $_GET['form'] ) ) {
 			$id = sanitize_text_field( wp_unslash( $_GET['form'] ) );
 		}
@@ -264,6 +271,10 @@ class Admin {
 		if ( empty( $form ) ) {
 			$message = __( 'No submissions found for this form.', 'formello' );
 			return $this->error_notice( $message );
+		}
+		$title = $form->post_title;
+		if ( empty( $title ) ) {
+			$title = __( '(No title)', 'formello' );
 		}
 		require dirname( __FILE__ ) . '/views/submissions.php';
 	}
