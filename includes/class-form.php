@@ -99,11 +99,12 @@ class Form {
 	 * @return array
 	 */
 	public function get_settings() {
-		$defaults = [
+		$defaults = array(
+			'storeSubmissions' => true,
 			'recaptchaEnabled' => false,
 			'hide' => false,
 			'debug' => false,
-		];
+		);
 		return wp_parse_args( $this->settings, $defaults );
 	}
 

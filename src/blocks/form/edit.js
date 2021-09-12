@@ -156,6 +156,7 @@ function Edit( props ) {
 		[ postTitle ]
 	);
 
+	/* We store settings in metadata until this is resolved: https://github.com/WordPress/gutenberg/pull/34750 */
 	useEffect( () => {
 		setAttributes( {
 			fields: getFieldsName( clientId ),

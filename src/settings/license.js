@@ -30,7 +30,6 @@ export default function license( props ) {
 	const [licenseStatus, setLicenseStatus] = useState( getSetting('license_status') );
 
 	const updateLicense = ( endpoint ) => {
-		console.log(getSetting('license_status'))
 		setLoading( true );
 		apiFetch( {
 			path: '/formello/v1/license/' + endpoint,

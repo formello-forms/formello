@@ -64,7 +64,7 @@ export default function save( { attributes, className } ) {
 			className
 		);
 	};
-console.log(attributes.alignment)
+
 	const blockProps = useBlockProps.save({
 		className: getBlockClassNames()
 	});

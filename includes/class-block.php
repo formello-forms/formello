@@ -69,7 +69,7 @@ class Block {
 				'attributes'      => array(
 					'recaptchaEnabled' => array(
 						'type'    => 'boolean',
-						'default' => false,
+						'default' => true,
 					),
 					'storeSubmissions' => array(
 						'type'    => 'boolean',

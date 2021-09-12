@@ -1,6 +1,6 @@
 <?php
 /**
- * Manage Data submitted.
+ * Manage Data submitted performing also validation.
  *
  * @package Formello
  */

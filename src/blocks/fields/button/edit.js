@@ -107,7 +107,7 @@ export default function Edit( {
 	const borderRadius = style?.border?.radius;
 	const borderColor = style?.border?.color;
 	const borderProps = useBorderProps( attributes );
-	const spacingProps = useSpacingProps( attributes );
+	//const spacingProps = useSpacingProps( attributes );
 
 	// Check for old deprecated numerical border radius. Done as a separate
 	// check so that a borderRadius style won't overwrite the longhand
@@ -130,7 +130,7 @@ export default function Edit( {
 	const buttonStyles = {
 		...colorProps.style,
 		...borderProps.style,
-		...spacingProps.style
+		//...spacingProps.style
 	};
 
 	const getBlockClassNames = () => {
