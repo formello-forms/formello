@@ -107,6 +107,7 @@ export default function Edit( {
 	const borderRadius = style?.border?.radius;
 	const borderColor = style?.border?.color;
 	const borderProps = useBorderProps( attributes );
+	// not already merged in Gutenberg
 	//const spacingProps = useSpacingProps( attributes );
 
 	// Check for old deprecated numerical border radius. Done as a separate
@@ -162,33 +163,6 @@ export default function Edit( {
 						value={ attributes.text }
 						onChange={ ( val ) => setAttributes( { text: val } ) }
 					/>
-				</PanelBody>
-				<PanelBody title={ __( 'Border Options', 'formello' ) } initialOpen={ false }>
-					<RangeControl
-						value={ attributes.borderWidth }
-						label={ __( 'Border Width', 'formello' ) }
-						onChange={ ( val ) => {
-							setAttributes( { borderWidth: val } );
-						} }
-						min={ 0 }
-						max={ 50 }
-						allowReset
-					/>
-					<RangeControl
-						value={ attributes.borderRadius }
-						label={ __( 'Border Radius', 'formello' ) }
-						onChange={ ( val ) => {
-							setAttributes( { borderRadius: val } );
-						} }
-						min={ 0 }
-						max={ 50 }
-						allowReset
-					/>
-			        <ColorPalette
-			            colors={ colors }
-			            onChange={ ( value ) => setAttributes( { borderColor: value } ) }
-			            //onChange={ ( value ) => console.log(value) }
-			        />
 				</PanelBody>
 			</InspectorControls>
 			<InspectorAdvancedControls>

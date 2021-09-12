@@ -212,7 +212,7 @@ function Edit( props ) {
 		actions.map( (a) => {
 			if( a.type === type ){
 				setAttributes( { actions: [ ...attributes.actions, a ] } )
-				//setShowActionsModal(a)
+				setShowActionsModal(a)
 			}
 		} )
 	};

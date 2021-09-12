@@ -87,7 +87,7 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 == Changelog ==
 
 = 1.3.4 =
-* Fix small bug
+* Fix small bugs
 
 = 1.3.3 =
 * Fix bug preventing storing submisison
