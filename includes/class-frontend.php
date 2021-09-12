@@ -71,8 +71,7 @@ class Frontend {
 
 		$form_id = (int) $_POST['_formello_id'];
 		$form    = new Form( $form_id );
-var_dump( $form->get_settings() );
-exit;
+
 		if ( ! $this->is_spam( $form_id, $form->get_settings() ) ) {
 			$this->process_form( $form );
 		}
