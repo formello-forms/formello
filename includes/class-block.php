@@ -87,15 +87,6 @@ class Block {
 			)
 		);
 
-		$fieldset = FORMELLO_PATH . '/src/blocks/fieldset';
-
-	    register_block_type( 
-	    	$fieldset,
-	        array(
-	            //'editor_script' => 'create-block-gutenpride',
-	        )
-	    );
-
 	}
 
 	/**

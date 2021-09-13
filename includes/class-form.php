@@ -26,11 +26,18 @@ class Form {
 	public $ID = 0;
 
 	/**
-	 * The form name
+	 * The form data
 	 *
-	 * @var string
+	 * @var array
 	 */
-	public $name = '';
+	public $data = array();
+
+	/**
+	 * The form details
+	 *
+	 * @var array
+	 */
+	public $details = array();
 
 	/**
 	 * The form settings
@@ -47,23 +54,35 @@ class Form {
 	public $messages = array();
 
 	/**
+	 * The form errors
+	 *
+	 * @var array
+	 */
+	public $errors = array();
+
+	/**
+	 * The form debug
+	 *
+	 * @var array
+	 */
+	public $debug = array();
+
+	/**
 	 * Form constructor.
 	 *
 	 * @param int $id The form id.
 	 */
 	public function __construct( $id ) {
 
-		$this->ID = $id;
 		if ( ! empty( $id ) ) {
-			//$form = $this->populate( $id );
+			$this->ID = $id;
+			$this->settings = get_post_meta( $id, 'formello_settings', true );
 		}
-		$this->ID   = $id;
-		$this->name = '$form->name';
 
-		$this->settings = get_post_meta( $id,'formello_settings', true );
 		$this->messages = array(
 			'success' => isset( $this->settings['successMessage'] ) ? $this->settings['successMessage'] : __( 'Thanks for submitting this form.', 'formello' ),
 			'error'   => isset( $this->settings['errorMessage'] ) ? $this->settings['errorMessage'] : __( 'Ops. An error occurred.', 'formello' ),
+			'spam'   => __( 'Go away spammer.', 'formello' ),
 		);
 	}
 
@@ -82,6 +101,20 @@ class Form {
 		);
 
 		return $form;
+	}
+
+	/**
+	 * Insert form in DB
+	 *
+	 * @param int $id The form ID.
+	 * @return Form
+	 */
+	public function populate_with_data( $data ) {
+
+		$this->data = $data['data'];
+		$this->details = $data['details'];
+		$this->errors = $data['errors'];
+
 	}
 
 	/**
@@ -129,7 +162,7 @@ class Form {
 	/**
 	 * Get debug
 	 *
-	 * @return array
+	 * @return boolean
 	 */
 	public function is_debug() {
 		return isset( $this->settings['debug'] ) ?: false;
@@ -149,6 +182,51 @@ class Form {
 	}
 
 	/**
+	 * Save form submission in DB.
+	 */
+	public function save() {
+
+		global $wpdb;
+
+		$values = array();
+		$submissions_table = $wpdb->prefix . 'formello_submissions';
+		$submissions_meta_table = $wpdb->prefix . 'formello_submissions_meta';
+		$form_id = $this->get_id();
+		$data  = array(
+			'data'    => wp_json_encode( $this->data ),
+			'form_id' => $form_id,
+		);
+
+		// add details to record.
+		$data = array_merge( $data, $this->details );
+
+		if ( ! empty( $this->id ) ) {
+			$wpdb->update( $submissions_table, $data, array( 'id' => $this->id ) );
+			return null;
+		}
+
+		// insert new row.
+		$num_rows = $wpdb->insert( $submissions_table, $data );
+		if ( $num_rows > 0 ) {
+			$this->id = $wpdb->insert_id;
+		}
+
+		// insert also in submissions meta.
+		foreach ( $this->data as $key => $value ) {
+			$values[] = '(' . $form_id . ',' . $this->id . ', "' . $key . '" , "' . $value . '")';
+		}
+		$sql = implode( ',', $values );
+
+		$wpdb->query(
+			"INSERT INTO $submissions_meta_table
+		    (form_id, submission_id, field_name, field_value)
+			VALUES
+			$sql"
+		);
+
+	}
+
+	/**
 	 * Get form as array
 	 *
 	 * @return array
@@ -158,8 +236,10 @@ class Form {
 		$form = array();
 
 		$form['id']       = $this->ID;
-		$form['name']     = $this->name;
+		$form['errors']   = $this->errors;
+		$form['messages'] = $this->messages;
 		$form['settings'] = $this->settings;
+		$form['debug']    = $this->debug;
 
 		return $form;
 	}

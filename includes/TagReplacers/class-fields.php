@@ -37,13 +37,13 @@ class Fields {
 
 			if ( ! isset( $field['type'] ) ) continue;
 
-			$field['value'] = apply_filters( 'ninja_forms_merge_tag_value_' . $field['type'], $field['value'], $field );
+			$field['value'] = apply_filters( 'formello_merge_tag_value_' . $field['type'], $field['value'], $field );
 
 			if ( is_array( $field['value'] ) ) $field['value'] = implode( ', ', $field['value'] );
 
 			$field = $this->maybe_sanitize( $field );
 
-			$return .= '<tr><td>' . apply_filters( 'ninja_forms_merge_label', $field['label'], $field, $this->form_id ) . ':</td><td>' . $field['value'] . '</td></tr>';
+			$return .= '<tr><td>' . apply_filters( 'formello_merge_label', $field['label'], $field, $this->form_id ) . ':</td><td>' . $field['value'] . '</td></tr>';
 		}
 		$return .= '</table>';
 		return $return;

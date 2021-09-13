@@ -22,6 +22,7 @@ return array(
     'Formello\\Encryption' => $baseDir . '/includes/class-encryption.php',
     'Formello\\Form' => $baseDir . '/includes/class-form.php',
     'Formello\\Frontend' => $baseDir . '/includes/class-frontend.php',
+    'Formello\\Processor' => $baseDir . '/includes/class-processor.php',
     'Formello\\Tables\\Forms' => $baseDir . '/includes/Tables/class-forms.php',
     'Formello\\Tables\\Submissions' => $baseDir . '/includes/Tables/class-submissions.php',
     'Formello\\TagReplacers\\Fields' => $baseDir . '/includes/TagReplacers/class-fields.php',

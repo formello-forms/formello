@@ -81,7 +81,9 @@ export default function Edit( props ) {
 		'formello-row formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 	} )
 
-	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign );
+	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
+		'hide': attributes.hideLabel
+	} );
 
 	const label = ( val ) => {
 		let txt = attributes.label
@@ -100,7 +102,8 @@ export default function Edit( props ) {
 				<BlockControls>
 					<ToolbarGroup>
 					{
-						supported.includes('placeholder') && 
+						supported.includes('placeholder') &&
+						<>
 						<ToolbarButton
 							label={ __( 'Required' ) }
 							icon={ getIcon( 'asterisk' ) }
@@ -109,6 +112,15 @@ export default function Edit( props ) {
 								setAttributes( { required: !attributes.required } )
 							} }
 						/>
+						<ToolbarButton
+							label={ __( 'Hide label' ) }
+							icon={ 'hidden' }
+							isPressed={ attributes.hideLabel }
+							onClick={ () => {
+								setAttributes( { hideLabel: !attributes.hideLabel } )
+							} }
+						/>
+						</>
 					}
 					</ToolbarGroup>
 				</BlockControls>

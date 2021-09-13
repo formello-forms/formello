@@ -181,8 +181,6 @@ class Data {
 	 * Save form submission in DB.
 	 */
 	public function save() {
-		// remove useless data.
-		//$this->clean();
 
 		global $wpdb;
 
@@ -212,6 +210,7 @@ class Data {
 			$this->id = $wpdb->insert_id;
 		}
 
+		// insert also in submissions meta.
 		foreach ( $this->data as $key => $value ) {
 			$values[] = '(' . $form_id . ',' . $this->id . ', "' . $key . '" , "' . $value . '")';
 		}
@@ -223,6 +222,45 @@ class Data {
 			VALUES
 			$sql"
 		);
+
+	}
+
+	/**
+	 * Form validation
+	 *
+	 * @param Int   $id The form ID.
+	 * @param array $settings Form data.
+	 * @return string
+	 */
+	public function is_spam() {
+
+		// validate honeypot field.
+		$honeypot_key = sprintf( '_formello_h%d', $this->form->get_id() );
+		if ( ! isset( $_POST[ $honeypot_key ] ) || '' !== $_POST[ $honeypot_key ] ) {
+			return true;
+		}
+
+		// validate recaptcha.
+		if ( $this->form->get_settings['recaptchaEnabled'] && isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
+			return true;
+		}
+
+		// validate recaptcha.
+		if ( isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
+			return true;
+		}
+
+		// validate recaptcha.
+		if ( $this->form->get_settings['recaptchaEnabled'] ) {
+			$captcha_validate = $this->validate_recaptcha();
+		}
+
+		if ( isset( $captcha_validate ) && false === $captcha_validate ) {
+			return true;
+		}
+
+		// all good: no errors!
+		return false;
 	}
 
 	/**

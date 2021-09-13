@@ -79,19 +79,13 @@ registerBlockType( 'formello/button', {
 		},
 		backgroundColor: {
 			type: 'string',
-			default: 'black'
-		},
-		customBackgroundColor: {
-			type: 'string',
+			//default: 'black'
 		},
 		textColor: {
 			type: 'string',
-			default: 'white'
+			//default: 'white'
 		},
-		customTextColor: {
-			type: 'string'
-		},
-		borderColor: {
+		/*borderColor: {
 			type: 'string',
 		},
 		customBorderColor: {
@@ -120,7 +114,7 @@ registerBlockType( 'formello/button', {
 		},
 		style: {
 			type: 'object'
-		},
+		},*/
 	},
 
 	/**
@@ -133,7 +127,6 @@ registerBlockType( 'formello/button', {
 	 * Optional block extended support features.
 	 */
 	supports: {
-		className: true,
 		html: false,
 		reusable: false,
 		color: {
@@ -141,11 +134,11 @@ registerBlockType( 'formello/button', {
 			__experimentalSkipSerialization: true
 		},
 		__experimentalBorder: {
-			color: true,
 			radius: true,
 			__experimentalSkipSerialization: true
 		},
 		multiple: false,
+		//spacing: true,
 		spacing: {
 			__experimentalSkipSerialization: true,
 			padding: [ 'horizontal', 'vertical' ],
@@ -153,7 +146,8 @@ registerBlockType( 'formello/button', {
 				padding: true
 			}
 		},
-		inserter: 'formello_form' === pagenow ? true : false,
+		//__experimentalSelector: "button",
+		//inserter: 'formello_form' === pagenow ? true : false,
 	},
 
 	/**

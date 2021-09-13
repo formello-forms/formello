@@ -34,11 +34,11 @@ export default function save( { attributes, className } ) {
 		'hide': 'hidden' == attributes.type
 	} )
 
-	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
-		'hide': attributes.label.length < 1,
+	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
+		'hide': attributes.label.length < 1 || attributes.hideLabel,
 	} )
 
-	let fieldClass = classnames( attributes.fieldClass, {
+	const fieldClass = classnames( attributes.fieldClass, {
 		'formello-date': attributes.type == 'date',
 		'formello-time': attributes.type == 'time'
 	} )

@@ -69,14 +69,17 @@ class Frontend {
 			return;
 		}
 
-		$form_id = (int) $_POST['_formello_id'];
-		$form    = new Form( $form_id );
+		$form = new Form( absint( $_POST['_formello_id'] ) );
+		$submission = new Processor( $form );
 
-		if ( ! $this->is_spam( $form_id, $form->get_settings() ) ) {
-			$this->process_form( $form );
+		$result = $submission->process();
+
+		$form->populate_with_data( $result );
+		if ( empty( $result['errors'] ) ) {
+			$form->save();
 		}
 
-		$response = $this->get_response_for_error_code( 'spam', $form );
+		$response = $this->get_response( $form );
 
 		wp_send_json( $response, 200 );
 		wp_die();
@@ -90,214 +93,49 @@ class Frontend {
 	 */
 	public function process_form( Form $form ) {
 
+		$form_settings = $form->get_settings();
+
+		// save submission object so that other form processor have an insert ID to work with (eg file upload).
+		if ( $form_settings['storeSubmissions'] ) {
+			$form->save();
+		}
+
 		/**
-		* Filters the field names that should be ignored on the Submission object.
-		* Fields starting with an underscore (_) are ignored by default.
-		*
-		* @param array $names
+		* General purpose hook that runs before all form actions, so we can still modify the submission object that is passed to actions.
 		*/
-		$ignored_field_names = apply_filters( 'formello_ignored_field_names', array( 'action', 'g-recaptcha-response' ) );
+		do_action( 'formello_process_form', $form );
 
-		// sanitize data: strip tags etc.
-		$store = new Data( $form, $ignored_field_names );
-		$data  = $store->get_data();
+		// process form actions.
+		if ( isset( $form_settings['actions'] ) ) {
 
-		// perform validation on sanitized data.
-		$error_code = $this->validate_form( $form, $data );
-
-		if ( empty( $error_code ) ) {
-
-			$form_settings = $form->get_settings();
-
-			// save submission object so that other form processor have an insert ID to work with (eg file upload).
-			if ( $form_settings['storeSubmissions'] ) {
-				$store->save();
+			foreach ( $form_settings['actions'] as $action_settings ) {
+				/**
+				 * Processes the specified form action and passes related data.
+				 *
+				 * @param array $action_settings
+				 * @param Data $store
+				 * @param Form $form
+				 */
+				do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings, $form );
 			}
-
-			/**
-			* General purpose hook that runs before all form actions, so we can still modify the submission object that is passed to actions.
-			*/
-			do_action( 'formello_process_form', $form, $store );
-
-			// process form actions.
-			if ( isset( $form_settings['actions'] ) ) {
-
-				foreach ( $form_settings['actions'] as $action_settings ) {
-					/**
-					 * Processes the specified form action and passes related data.
-					 *
-					 * @param array $action_settings
-					 * @param Data $store
-					 * @param Form $form
-					 */
-					do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings, $store, $form );
-				}
-			}
-
-			/**
-			 * General purpose hook after all form actions have been processed for this specific form. The dynamic portion of the hook refers to the form slug.
-			 *
-			 * @param Data $store
-			 * @param Form $form
-			 */
-			do_action( "formello_form_{$form->ID}_success", $store, $form );
-
-			/**
-			 * General purpose hook after all form actions have been processed.
-			 *
-			 * @param Data $store
-			 * @param Form $form
-			 */
-			do_action( 'formello_form_success', $store, $form );
-		} else {
-			/**
-			 * General purpose hook for when a form error occurred
-			 *
-			 * @param string $error_code
-			 * @param Form $form
-			 * @param Data $store
-			 */
-			do_action( 'formello_form_error', $error_code, $form, $store );
 		}
-
-		if( !empty( $store->get_log() ) ){
-			$store->save();
-		}
-
-		$response = $this->get_response_for_error_code( $error_code, $form, $store );
-
-		wp_send_json( $response, 200 );
-		wp_die();
-
-	}
-
-	/**
-	 * Form validation
-	 *
-	 * @param Int   $id The form ID.
-	 * @param array $settings Form data.
-	 * @return string
-	 */
-	public function is_spam( $form_id, $settings ) {
-
-		// validate honeypot field.
-		$honeypot_key = sprintf( '_formello_h%d', $form_id );
-		if ( ! isset( $_POST[ $honeypot_key ] ) || '' !== $_POST[ $honeypot_key ] ) {
-			return true;
-		}
-
-		// validate recaptcha.
-		if ( $settings['recaptchaEnabled'] && isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
-			return true;
-		}
-
-		// validate recaptcha.
-		if ( isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
-			return true;
-		}
-
-		// validate recaptcha.
-		if ( $settings['recaptchaEnabled'] ) {
-			$captcha_validate = $this->validate_recaptcha();
-		}
-
-		if ( isset( $captcha_validate ) && false === $captcha_validate ) {
-			return true;
-		}
-
-		// all good: no errors!
-		return false;
-	}
-
-	/**
-	 * Form validation
-	 *
-	 * @param Form  $form The form.
-	 * @param array $data Form data.
-	 * @return string
-	 */
-	public function validate_form( Form $form, array $data ) {
-
-		// perform validation.
-		$validation = $this->validator->make( $data, $form->get_constraints() );
-
-		// then validate.
-		$validation->validate();
-
-		if ( $validation->fails() ) {
-			// handling errors.
-			$errors = $validation->errors();
-
-			return $errors->firstOfAll();
-
-		}
-
-		$error_code = '';
 
 		/**
-		 * This filter allows you to perform your own form validation. The dynamic portion of the hook refers to the form slug.
+		 * General purpose hook after all form actions have been processed for this specific form. The dynamic portion of the hook refers to the form slug.
 		 *
-		 * Return a non-empty string if you want to raise an error.
-		 * Error codes with a specific error message are: "required_field_missing", "invalid_email", and "error"
-		 *
-		 * @param string $error_code
+		 * @param Data $store
 		 * @param Form $form
-		 * @param array $data
 		 */
-		$error_code = apply_filters( 'formello_validate_form_' . $form->get_id(), $error_code, $form, $data );
+		do_action( "formello_form_{$form->ID}_success", $form );
 
 		/**
-		 * This filter allows you to perform your own form validation.
+		 * General purpose hook after all form actions have been processed.
 		 *
-		 * Return a non-empty string if you want to raise an error.
-		 * Error codes with a specific error message are: "required_field_missing", "invalid_email", and "error"
-		 *
-		 * @param string $error_code
+		 * @param Data $store
 		 * @param Form $form
-		 * @param array $data
 		 */
-		$error_code = apply_filters( 'formello_validate_form', $error_code, $form, $data );
+		do_action( 'formello_form_success', $form );
 
-		if ( ! empty( $error_code ) ) {
-			return $error_code;
-		}
-
-		// all good: no errors!
-		return '';
-	}
-
-
-	/**
-	 * ReCaptcha validation
-	 *
-	 * @param Form  $form The form.
-	 * @param array $data Form data.
-	 * @return string
-	 */
-	private function validate_recaptcha() {
-
-		$settings = get_option( 'formello', formello_get_option_defaults() );
-
-		$captcha_postdata = http_build_query(
-			array(
-				'secret'   => $settings['recaptcha']['secret_key'],
-				'response' => $_POST['g-recaptcha-response'],
-				'remoteip' => isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '',
-			)
-		);
-
-		$captcha_opts = array(
-			'http' => array(
-				'method'  => 'POST',
-				'header'  => 'Content-type: application/x-www-form-urlencoded',
-				'content' => $captcha_postdata,
-			),
-		);
-
-		$captcha_context  = stream_context_create( $captcha_opts );
-		$captcha_response = json_decode( wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify', false, $captcha_context ), true );
-
-		return $captcha_response['success'];
 	}
 
 	/**
@@ -308,46 +146,37 @@ class Frontend {
 	 * @param Data $data The input data.
 	 * @return array
 	 */
-	private function get_response_for_error_code( $error_code, Form $form, Data $store ) {
-		$settings = $form->get_settings();
-		$data = $store->get_data();
+	private function get_response( Form $form ) {
+
+		$data = $form->to_array();
 
 		// return success response for empty error code string or spam (to trick bots).
-		if ( '' === $error_code ) {
+		if ( empty( $data['errors'] ) ) {
 			$response = array(
 				'message'   => array(
 					'type' => 'success',
 					'text' => $form->get_message( 'success' ),
 				),
-				'hide_form' => (bool) $settings['hide'],
+				'hide_form' => (bool) $data['settings']['hide'],
 			);
 
-			if ( ! empty( $settings['redirect_url'] ) ) {
-				$response['redirect_url'] = $form->settings['redirectUrl'];
+			if ( ! empty( $data['redirect_url'] ) ) {
+				$response['redirect_url'] = $data['settings']['redirectUrl'];
 			}
 
 			if( current_user_can('manage_options') && $form->is_debug() ){
 				$response['debug'] = $data['debug'];
 			}
 
-			return apply_filters( 'formello_form_response', $response, $form, $data );
-		}
-
-		// get error message.
-		if ( empty( $message ) ) {
-			$message = $form->get_message( 'error' );
-		}
-
-		if ( 'spam' === $error_code ) {
-			$error_code = array( 'Are you human or bot?' );
+			return apply_filters( 'formello_form_response', $response );
 		}
 
 		// return error response.
 		return array(
 			'message' => array(
 				'type'   => 'error',
-				'text'   => $message,
-				'errors' => $error_code,
+				'text'   => $form->get_message( 'error' ),
+				'errors' => $data['errors'],
 				'debug'  => current_user_can('manage_options') ? $data['debug'] : ''
 			),
 		);

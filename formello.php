@@ -108,22 +108,6 @@ final class Formello {
 
 		update_option( 'formello_installed', time() );
 
-		if( $version ){
-
-			$starred = $wpdb->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'starred'" );
-			$log = $wpdb->get_results( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}formello_submissions' AND column_name = 'log'" );
-
-			if(empty($starred)){
-			   $wpdb->query( "ALTER TABLE {$wpdb->prefix}formello_submissions ADD `starred` BOOLEAN DEFAULT false AFTER `is_new`" );
-			}
-			if(empty($log)){
-				$wpdb->query( "ALTER TABLE {$wpdb->prefix}formello_submissions ADD `log` TEXT NULL" );
-			}
-
-			$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}formello_submissions_meta" );
-
-		}
-
 		// create table for storing forms.
 		$wpdb->query(
 			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
@@ -167,7 +151,7 @@ final class Formello {
 
 		$upload_dir = wp_upload_dir();
 		$formello_dir = $upload_dir['basedir'] . '/formello';
-		if( !is_dir( $formello_dir ) ){
+		if ( ! is_dir( $formello_dir ) ) {
 			wp_mkdir_p( $formello_dir );
 		}
 		file_put_contents( trailingslashit( $formello_dir ) . 'index.html', '' );
@@ -245,7 +229,7 @@ final class Formello {
 		$key = get_option( 'formello_license' );
 
 		if ( ! $key ) {
-			//return;
+			return;
 		}
 
 		// Fire a hook for Addons to register their updater since we know the key is present.

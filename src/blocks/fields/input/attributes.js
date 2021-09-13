@@ -33,6 +33,10 @@ export default {
 		type: 'string',
 		default: ''
 	},
+	hideLabel: {
+		type: 'boolean',
+		default: false
+	},
 	labelVAlign: {
 		type: 'string',
 		default: ''

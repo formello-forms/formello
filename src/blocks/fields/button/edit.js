@@ -108,7 +108,7 @@ export default function Edit( {
 	const borderColor = style?.border?.color;
 	const borderProps = useBorderProps( attributes );
 	// not already merged in Gutenberg
-	//const spacingProps = useSpacingProps( attributes );
+	// const spacingProps = useSpacingProps( attributes );
 
 	// Check for old deprecated numerical border radius. Done as a separate
 	// check so that a borderRadius style won't overwrite the longhand
@@ -123,6 +123,7 @@ export default function Edit( {
 
 	const buttonClasses = classnames(
 		'button-span',
+		borderProps.className,
 		colorProps.className,
 		attributes.iconPosition, {
 			'running': showIcon,			

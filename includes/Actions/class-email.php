@@ -66,12 +66,11 @@ class Email extends Action {
 	/**
 	 * Processes this action
 	 *
-	 * @param array $settings Array of settings.
-	 * @param Data  $submission Submission object.
 	 * @param Form  $form Form settings.
 	 */
-	public function process( array $settings, Data $submission, Form $form ) {
+	public function process( Form $form ) {
 
+		$settings = $form->get_settings();
 		$replacer = new \Formello\TagReplacers\Replacer();
 
 		if ( empty( $settings['to'] ) || empty( $settings['message'] ) ) {

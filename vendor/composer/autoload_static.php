@@ -41,6 +41,7 @@ class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
         'Formello\\Encryption' => __DIR__ . '/../..' . '/includes/class-encryption.php',
         'Formello\\Form' => __DIR__ . '/../..' . '/includes/class-form.php',
         'Formello\\Frontend' => __DIR__ . '/../..' . '/includes/class-frontend.php',
+        'Formello\\Processor' => __DIR__ . '/../..' . '/includes/class-processor.php',
         'Formello\\Tables\\Forms' => __DIR__ . '/../..' . '/includes/Tables/class-forms.php',
         'Formello\\Tables\\Submissions' => __DIR__ . '/../..' . '/includes/Tables/class-submissions.php',
         'Formello\\TagReplacers\\Fields' => __DIR__ . '/../..' . '/includes/TagReplacers/class-fields.php',
