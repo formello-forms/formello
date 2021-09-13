@@ -69,11 +69,11 @@ class Block {
 				'attributes'      => array(
 					'recaptchaEnabled' => array(
 						'type'    => 'boolean',
-						'default' => true,
+						'default' => false,
 					),
 					'storeSubmissions' => array(
 						'type'    => 'boolean',
-						'default' => false,
+						'default' => true,
 					),
 					'hide'             => array(
 						'type'    => 'boolean',
