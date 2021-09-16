@@ -218,20 +218,20 @@ class Processor {
 	 */
 	public function is_valid() {
 
+		$errors = array();
+
 		// perform validation.
 		$validator = new Validator();
-		$validation = $validator->make( $this->form->data, $this->form->get_constraints() );
+		$validation = $validator->make( $_POST, $this->form->get_constraints() );
 
 		// then validate.
 		$validation->validate();
 
 		if ( $validation->fails() ) {
 			// handling errors.
-			$this->errors[] = $validation->errors();
+			$errors = $validation->errors()->all(':message');
 
 		}
-
-		$errors = array();
 
 		/**
 		 * This filter allows you to perform your own form validation. The dynamic portion of the hook refers to the form slug.
@@ -258,7 +258,7 @@ class Processor {
 		$errors = apply_filters( 'formello_validate_form', $errors, $this->form );
 
 		if ( ! empty( $errors ) ) {
-			array_push( $this->errors, $errors );
+			$this->errors = array_merge( $this->errors, $errors );
 			return false;
 		}
 

@@ -62,7 +62,7 @@ registerBlockType('formello/form-reusable', {
 
 		return (
 			<div {...blockProps}>
-				{	attributes.id &&
+				{	attributes.id > 0 &&
 					<BlockControls>
 						<ToolbarGroup>
 							<ToolbarButton
@@ -88,7 +88,7 @@ registerBlockType('formello/form-reusable', {
 				</InspectorControls>
 	            <Fragment>
 	            	{ 
-	            		attributes.id ? 
+	            		attributes.id > 0 ?
 	            		<Disabled>
 	            			{blockContent}
 	            		</Disabled>
@@ -103,7 +103,6 @@ registerBlockType('formello/form-reusable', {
 							>
 								{ __( 'Open Library', 'formello' ) }
 							</Button> 
-							<p>or </p>
 							<Button isSecondary href={ formello.templatesURL }>{ __( 'Create new form', 'formello' ) }</Button>
 						</Placeholder>
 	            	}

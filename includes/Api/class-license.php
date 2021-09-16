@@ -96,7 +96,7 @@ class License extends WP_REST_Controller {
 
 		// data to send in our API request
 		$api_params = array(
-			'edd_action'  => 'check_license',
+			'edd_action'  => 'activate_license',
 			'license'     => $license,
 			'item_name'   => urlencode( 'Formello' ), // the name of our product in EDD
 			'url'         => home_url(),
@@ -237,7 +237,7 @@ class License extends WP_REST_Controller {
 		return rest_ensure_response(
 			array(
 				'success'  => true,
-				'response' => __( 'License deactivated.', 'formello' ),
+				'response' => $license_data,
 			)
 		);
 	}

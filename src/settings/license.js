@@ -1,16 +1,17 @@
 import {
-  TextControl,
-  PanelRow,
-  PanelBody,
-  Button,
-  SelectControl,
-  __experimentalInputControl as InputControl
+	TextControl,
+	PanelRow,
+	PanelBody,
+	Button,
+	SelectControl,
+	ExternalLink,
+	__experimentalInputControl as InputControl
 } from '@wordpress/components';
 
 import {
-  RawHTML,
-  useState,
-  Fragment
+	RawHTML,
+	useState,
+	Fragment
 } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
@@ -29,7 +30,8 @@ export default function license( props ) {
 	const [loading, setLoading] = useState(false);
 	const [licenseStatus, setLicenseStatus] = useState( getSetting('license_status') );
 
-	const updateLicense = ( endpoint ) => {
+	const updateLicense = ( endpoint, e ) => {
+		const message = e.target.nextElementSibling;
 		setLoading( true );
 		apiFetch( {
 			path: '/formello/v1/license/' + endpoint,
@@ -39,18 +41,19 @@ export default function license( props ) {
 			},
 		} ).then( ( result ) => {
 			setLoading( false );
-			setLicenseStatus( result.response.success );
+			if( result.response.success ){
+				setLicenseStatus( result.response.license )
+			};
 			message.classList.add( 'formello-action-message--show' );
-			message.textContent = result.response;
+			message.textContent = 'License ' + result.response.license;
 
 			if ( ! result.success || ! result.response ) {
+				message.textContent = 'License: ' + result.response;
 				message.classList.add( 'formello-action-message--error' );
-			} else {
-				setTimeout( function() {
-					message.classList.remove( 'formello-action-message--show' );
-				}, 3000 );
 			}
-		} );
+			setTimeout( function() {
+				message.classList.remove( 'formello-action-message--show' );
+			}, 3000 );		} );
 	};
 
 	return (
@@ -61,6 +64,9 @@ export default function license( props ) {
 		>
 			<div className="formello-dashboard-panel-row-wrapper">
 				<PanelRow>
+					<ExternalLink href="https://formello.net">
+						{ __( 'Get a FREE API Key' ) }
+					</ExternalLink>						
 					<RawHTML>
 						{ sprintf(
 							__( '<p>Your %s key provides access to addons. You can still using Formello without a license key.</p>', 'formello' ),
@@ -68,15 +74,16 @@ export default function license( props ) {
 						}
 					</RawHTML>
 					<InputControl
-						type='password'
+						type='text'
 						label={ __( 'License Key', 'formello' ) }
 						value={ getSetting( 'license' ) }
 						onChange={ (val) => {
 							saveLicense( val )
 						} }
 					/>
+					<p>
 					{
-						licenseStatus ?
+						'valid' === licenseStatus ?
 							<Fragment>
 								<RawHTML>
 									{ sprintf(
@@ -85,20 +92,23 @@ export default function license( props ) {
 									}
 								</RawHTML>
 								<Button 
-									onClick={ () => updateLicense('deactivate') }
+									onClick={ (e) => updateLicense('deactivate', e) }
 									isSecondary
 									isBusy={ loading }
 								>Deactivate</Button>
 							</Fragment>
 						:
-						<p>
-							<Button 
-								onClick={ () => updateLicense('activate') }
-								variant={ 'primary' }
-								isBusy={ loading }
-							>Activate</Button>
-						</p>
+							<Fragment>
+								<Button 
+									onClick={ (e) => updateLicense('activate', e) }
+									aria-disabled={ loading }
+									isPrimary
+									isBusy={ loading }
+								>Activate</Button>
+							</Fragment>
 					}
+						<span className="formello-action-message"></span>
+					</p>
 				</PanelRow>
 				<PanelRow>
 					<hr/>

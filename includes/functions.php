@@ -69,3 +69,14 @@ function formello_decrypt_option( $settings ) {
 	$settings = $crypto->decrypt( $settings );
 	return maybe_unserialize( $settings );
 }
+
+/**
+ * Function to retrieve unencrypted settings
+ *
+ * @param mixed $settings The general settings.
+ */
+function formello_encrypt_option( $settings ) {
+	$crypto = new Formello\Encryption();
+
+	$settings = $crypto->encrypt( maybe_serialize( $settings ) );
+}

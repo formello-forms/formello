@@ -130,7 +130,7 @@ class Template extends WP_REST_Controller {
 	 *
 	 * @return mixed
 	 */
-	public function sync_template_library( \WP_REST_Request $request ) {
+	public function sync_template_library( WP_REST_Request $request ) {
 		delete_transient( 'formello_templates' );
 
 		return $this->success( true );

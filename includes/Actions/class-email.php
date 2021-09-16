@@ -66,7 +66,7 @@ class Email extends Action {
 	/**
 	 * Processes this action
 	 *
-	 * @param Form  $form Form settings.
+	 * @param Form $form Form settings.
 	 */
 	public function process( Form $form ) {
 

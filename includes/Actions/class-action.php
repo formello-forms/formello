@@ -59,7 +59,7 @@ abstract class Action {
 	/**
 	 * Process action.
 	 *
-	 * @param Form  $form The form.
+	 * @param Form $form The form.
 	 */
 	abstract public function process( Form $form );
 
@@ -82,7 +82,7 @@ abstract class Action {
 	 * Register the actions.
 	 *
 	 * @param string $type Type of log.
-	 * @param mixed $message Message of log.
+	 * @param mixed  $message Message of log.
 	 * @return array
 	 */
 	public function log( $type, $message ) {

@@ -148,8 +148,8 @@ class Form extends WP_REST_Controller {
 	 */
 	public function update_item( $request ) {
 		$id = $request->get_param( 'id' );
-        $name = $request['name'];
-        $settings = $request['settings'];
+		$name = $request['name'];
+		$settings = $request['settings'];
 
 		global $wpdb;
 
@@ -157,7 +157,7 @@ class Form extends WP_REST_Controller {
 		$result = $wpdb->update(
 			$table,
 			array(
-				'settings' => serialize($settings),
+				'settings' => maybe_serialize( $settings ),
 				'name'     => $name,
 			),
 			array(
