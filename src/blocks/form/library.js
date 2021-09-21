@@ -154,46 +154,46 @@ export function TemplatesModal ( props ) {
 					</div>
 				}
 
-			{ allTemplates && 
-				<ul className="formello-plugin-templates-list">
-					{ allTemplates.map( ( template ) => {
-						const withPreview = !! template.content;
-						const templateTitle = decodeEntities( template.title );
+				{ allTemplates && 
+					<ul className="formello-plugin-templates-list">
+						{ allTemplates.map( ( template ) => {
+							const withPreview = !! template.content;
+							const templateTitle = decodeEntities( template.title );
 
-						return (
-							<li
-								className={ classnames( 'formello-plugin-templates-list-item', 'formello-plugin-templates-list-item-no-thumb' ) }
-								key={ template.id }
-							>
-								<a
-									onClick={ () => {
-										setLoading( true );
-										if ( 'remote' === type && template.content ) {
-											insertTemplate( template.content, clientId, ( errorResponse ) => {
-												if ( errorResponse ) {
-													setError( errorResponse );
-												} else {
-													onRequestClose();
-												}
-											} );
-										}else{
-											onRequestClose( template.id );
-										}
-										setLoading( false );
-									} }
+							return (
+								<li
+									className={ classnames( 'formello-plugin-templates-list-item', 'formello-plugin-templates-list-item-no-thumb' ) }
+									key={ template.id }
 								>
-									{ withPreview &&
-										<BlockPreview
-											blocks={ parse( template.content ) }
-										/>
-									}
-									<div className="formello-plugin-templates-list-item-title">{ templateTitle }</div>
-								</a>
-							</li>
-						);
-					} ) }
-				</ul>
-			}
+									<a
+										onClick={ () => {
+											setLoading( true );
+											if ( 'remote' === type && template.content ) {
+												insertTemplate( template.content, clientId, ( errorResponse ) => {
+													if ( errorResponse ) {
+														setError( errorResponse );
+													} else {
+														onRequestClose();
+													}
+												} );
+											}else{
+												onRequestClose( template.id );
+											}
+											setLoading( false );
+										} }
+									>
+										{ withPreview &&
+											<BlockPreview
+												blocks={ parse( template.content ) }
+											/>
+										}
+										<div className="formello-plugin-templates-list-item-title">{ templateTitle }</div>
+									</a>
+								</li>
+							);
+						} ) }
+					</ul>
+				}
 			</Fragment>
 		</Modal>
 	);

@@ -91,7 +91,7 @@ const ALLOWED_BLOCKS = [
 ];
 import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
 import { store as blocksStore } from '@wordpress/block-editor';
-
+import usePostSaved from './savedHook';
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -114,6 +114,8 @@ function Edit( props ) {
 		innerBlocks
 	} = props;
 
+	const saved = usePostSaved();
+
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
 		[]
@@ -127,25 +129,29 @@ function Edit( props ) {
         select("core/editor").getCurrentPostId()
     );
 
-	const [ active, setActive ] = useState(false);
-	const [ showActionsModal, setShowActionsModal ] = useState(false);
+	if( saved ){
+		console.log('saved', 1111111)
 
-	const [ meta, setMeta ] = useEntityProp(
-		'postType',
-		postType,
-		'meta'
-	);
-	const metaFieldValue = meta['formello_settings'];
-
-	const updateMetaValue = ( name, value ) => {
-		setMeta( { 
-			...meta,
-			formello_settings: {
-				...meta['formello_settings'],
-				[name]: value
-			}
+		apiFetch( {
+			path: '/formello/v1/form/' + post_id,
+			method: 'POST',
+			data: {
+				settings: {
+					storeSubmissions: attributes.storeSubmissions,
+					recaptchaEnabled: attributes.recaptchaEnabled,
+					hide: attributes.hide,
+					fields: getFieldsName( clientId ),
+					constraints: getConstraints( clientId ),
+					actions: attributes.actions,
+				},
+			},
+		} ).then( ( result ) => {
+			// DO NOTHING
 		} );
 	}
+
+	const [ active, setActive ] = useState(false);
+	const [ showActionsModal, setShowActionsModal ] = useState(false);
 
 	useEffect(
 		() => {
@@ -155,22 +161,6 @@ function Edit( props ) {
 		},
 		[ postTitle ]
 	);
-
-	/* We store settings in metadata until this is resolved: https://github.com/WordPress/gutenberg/pull/34750 */
-	useEffect( () => {
-		setAttributes( {
-			fields: getFieldsName( clientId ),
-			constraints: getConstraints( clientId )
-		} )
-		setMeta( { 
-			...meta,
-			formello_settings: {
-				...meta['formello_settings'],
-				fields: getFieldsName( clientId ),
-				constraints: getConstraints( clientId ),
-			}
-		} );
-	}, [innerBlocks,attributes.actions] )
 
 	useEffect(
 		() => {
@@ -212,7 +202,7 @@ function Edit( props ) {
 		actions.map( (a) => {
 			if( a.type === type ){
 				setAttributes( { actions: [ ...attributes.actions, a ] } )
-				setShowActionsModal(a)
+				//setShowActionsModal(a)
 			}
 		} )
 	};
@@ -270,7 +260,6 @@ function Edit( props ) {
 						label={ __( 'Store submissions', 'formello' ) }
 						checked={ attributes.storeSubmissions }
 						onChange={ ( val ) => {
-							updateMetaValue( 'storeSubmissions', val )
 							setAttributes( { 'storeSubmissions': val } )
 						} }
 					/>
@@ -278,7 +267,6 @@ function Edit( props ) {
 						label={ __( 'Enable ReCaptcha', 'formello' ) }
 						checked={ attributes.recaptchaEnabled }
 						onChange={ ( val ) => {
-							updateMetaValue( 'recaptchaEnabled', val )
 							setAttributes( { 'recaptchaEnabled': val } ) 
 						} }
 					/>
@@ -289,7 +277,6 @@ function Edit( props ) {
 						) }
 						checked={ attributes.hide }
 						onChange={ ( val ) => {
-							updateMetaValue( 'hide', val )
 							setAttributes( { 'hide': val } )
 						} }
 					/>
@@ -344,7 +331,6 @@ function Edit( props ) {
 					) }
 					checked={ attributes.debug }
 					onChange={ ( val ) => {
-						updateMetaValue( 'debug', val )
 						setAttributes( { 'debug': val } )
 					} }
 				/>
@@ -355,7 +341,6 @@ function Edit( props ) {
 					{...props}
 					action={ showActionsModal }
 					actionId={ active }
-					updateMetaValue={ updateMetaValue }
 					onRequestClose={ () => { 
 						setShowActionsModal( false )
 					} }
@@ -409,7 +394,6 @@ function Placeholder ( props ) {
 
 const applyWithSelect = withSelect( ( select, props ) => {
 	const { getBlocks } = select( 'core/block-editor' );
-	const { getBlocksByClientId } = select( 'core/editor' );
 	const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
 	const innerBlocks = getBlocks( props.clientId );
 
@@ -417,7 +401,6 @@ const applyWithSelect = withSelect( ( select, props ) => {
 		// Subscribe to changes of the innerBlocks to control the display of the layout selection placeholder.
 		blockType: getBlockType( props.name ),
 		defaultVariation: typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name ),
-		getBlocksByClientId,
 		hasInnerBlocks: select( 'core/block-editor' ).getBlocks( props.clientId ).length > 0,
 		innerBlocks,
 		variations: typeof getBlockVariations === 'undefined' ? null : getBlockVariations( props.name ),

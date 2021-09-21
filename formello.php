@@ -108,14 +108,14 @@ final class Formello {
 
 		update_option( 'formello_installed', time() );
 
-		// create table for storing forms.
+		// create table for storing form settings.
 		$wpdb->query(
 			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
-			`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        	`post_id` BIGINT(20) UNSIGNED PRIMARY KEY,
 			`name` VARCHAR(255),
 			`settings` TEXT NOT NULL,
-			`is_trashed` BOOLEAN DEFAULT false,
-			`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+			`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			FOREIGN KEY (post_id) REFERENCES {$wpdb->prefix}posts(ID) ON DELETE CASCADE
 			) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
 		);
 

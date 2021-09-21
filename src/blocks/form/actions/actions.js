@@ -10,30 +10,13 @@ export function getActions(){
 			title: 'Email',
 			to: '',
 			from: '',
+			cc: '',
+			bcc: '',
 			replyTo: '',
 			subject: '',
 			message: '',
 			active: true
-		},
-		/*{
-			type: 'mailchimp',
-			title: 'Mailchimp',
-			key: '',
-			list: '',
-			email_address: '',
-			merge_fields: {},
-			active: false
-		},
-		{
-			type: 'webhooks',
-			title: 'Web Hooks',
-			url: '',
-			method: 'POST',
-			fields: [],
-			headers: [],
-			additionalHeaders: false,
-			active: false
-		}*/
+		}
 	]
 
 	applyFilters( 'formello.actions.list', '', actions )
