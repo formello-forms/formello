@@ -75,7 +75,7 @@ class Form extends WP_REST_Controller {
 			'/' . $this->rest_base . '/(?P<id>[\d]+)',
 			array(
 				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
+					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'update_item' ),
 					'permission_callback' => array( $this, 'get_item_permissions_check' ),
 					'args'                => array( $this->get_collection_params() ),
@@ -151,24 +151,15 @@ class Form extends WP_REST_Controller {
 
 		$settings = $request['settings'];
 
-		global $wpdb;
+		/*global $wpdb;
 
-		$sql = "INSERT INTO {$wpdb->prefix}formello_forms (post_id,settings) VALUES (%d,%s) ON DUPLICATE KEY UPDATE post_id = %d";
-		// var_dump($sql); // debug
-		$sql = $wpdb->prepare( $sql, $id, maybe_serialize( $settings ), $id );
-		// var_dump($sql); // debug
-		$result = $wpdb->query( $sql );
+		$sql = "INSERT INTO {$wpdb->prefix}formello_forms (post_id,settings) VALUES (%d,%s) ON DUPLICATE KEY UPDATE settings = %s";
 
-		/*$table = $wpdb->prefix . 'formello_forms';
-		$result = $wpdb->update(
-			$table,
-			array(
-				'settings' => maybe_serialize( $settings ),
-			),
-			array(
-				'id' => $id,
-			)
-		);*/
+		$sql = $wpdb->prepare( $sql, $id, maybe_serialize( $settings ), maybe_serialize( $settings ) );
+
+		$result = $wpdb->query( $sql );*/
+
+		$result = update_post_meta( $id, 'formello_settings', $settings );
 
 		if ( empty( $result ) ) {
 			$item = new \WP_Error( 'no_posts', __( 'No form found' ), array( 'status' => 404 ) ); // status can be changed to any number.
