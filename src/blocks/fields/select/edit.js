@@ -165,7 +165,7 @@ export default function Edit( props ) {
 						/>
 						<ToolbarButton
 							label={ __( 'Add options', 'formello' ) }
-							icon={ 'list-view' }
+							icon={ 'editor-ul' }
 							onClick={ () => {
 								setModalOpen( true )
 							} }

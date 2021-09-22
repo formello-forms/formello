@@ -33,12 +33,19 @@ class Forms extends \WP_List_Table {
 	public static function record_count() {
 		global $wpdb;
 
-		$table_forms  = "{$wpdb->prefix}formello_forms";
+		$table_forms  = "{$wpdb->prefix}posts";
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
-		$sql = "SELECT COUNT(*) FROM {$table_forms} f WHERE EXISTS (SELECT * FROM {$table_submissions} s WHERE f.post_id = s.form_id)";
+		$sql_old = "SELECT COUNT(*) FROM {$table_forms} f WHERE EXISTS (SELECT * FROM {$table_submissions} s WHERE f.post_id = s.form_id)";
 
-		$result = $wpdb->get_var( $sql );
+		$sql = "SELECT COUNT(*) FROM {$table_forms} f WHERE f.post_type = %s AND f.post_status = %s";
+
+		$params['post_type'] = 'formello_form';
+		$params['post_status'] = 'publish';
+
+		$result = $wpdb->get_var(
+			$wpdb->prepare( $sql, $params )
+		);
 
 		return $result;
 
