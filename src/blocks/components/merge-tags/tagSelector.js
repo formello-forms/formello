@@ -8,7 +8,7 @@ const { __ } = wp.i18n;
 
 function TagSelector( props ) {
 
-	const { setAttributes } = props;
+	const { clientId, insertTag } = props;
 	const [ search, setSearch ] = useState('');
 
 	const tabs = [
@@ -31,7 +31,7 @@ function TagSelector( props ) {
 	];
 
 	return (
-		<div>
+		<div className="formello-mergetags-container">
 			<div>
 				<TextControl
 					value={ search }
@@ -50,8 +50,8 @@ function TagSelector( props ) {
 							return (
 								<TagList
 									list={ tab.name }
-									clientId={ props.clientId }
-									onSelect={ props.insertTag }
+									clientId={ clientId }
+									onSelect={ insertTag }
 								/>
 							);
 						}}
@@ -59,8 +59,8 @@ function TagSelector( props ) {
 				) : (
 					<SearchTags
 						search={ search }
-						clientId={ props.clientId }
-						onSelect={ props.insertTag }
+						clientId={ clientId }
+						onSelect={ insertTag }
 					/>
 				)}
 			</div>

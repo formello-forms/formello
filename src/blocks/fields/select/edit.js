@@ -45,8 +45,10 @@ import { withDispatch, useDispatch, useSelect } from '@wordpress/data';
 const { createBlock, cloneBlock } = wp.blocks;
 
 import OptionsList from './opts';
+import { OptionsModal } from './modal';
 import classnames from 'classnames';
 import DisplayOpts from '../../components/display-options'
+import getIcon from '../../../utils/get-icon';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -76,9 +78,12 @@ export default function Edit( props ) {
 		[]
 	);
 
-	const [ showRaw, setShowRaw ] = useState( false );
 	const [ options, setOptions ] = useState( attributes.options );
-	let labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign );
+	const [ isModalOpen, setModalOpen ] = useState( false );
+
+	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
+		'hide': attributes.hideLabel
+	} );
 
 	const addNewRow = (e) => {
 		setAttributes( {
@@ -140,6 +145,33 @@ export default function Edit( props ) {
 	return (
 		<div {...blockProps}>
 			<InspectorControls>
+				<BlockControls>
+					<ToolbarGroup>
+						<ToolbarButton
+							label={ __( 'Required' ) }
+							icon={ getIcon( 'asterisk' ) }
+							isPressed={ attributes.required }
+							onClick={ () => {
+								setAttributes( { required: !attributes.required } )
+							} }
+						/>
+						<ToolbarButton
+							label={ __( 'Hide label' ) }
+							icon={ 'hidden' }
+							isPressed={ attributes.hideLabel }
+							onClick={ () => {
+								setAttributes( { hideLabel: !attributes.hideLabel } )
+							} }
+						/>
+						<ToolbarButton
+							label={ __( 'Add options', 'formello' ) }
+							icon={ 'list-view' }
+							onClick={ () => {
+								setModalOpen( true )
+							} }
+						/>
+					</ToolbarGroup>
+				</BlockControls>
 				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<TextControl
 						label={ __( 'Name', 'formello' ) }
@@ -222,42 +254,6 @@ export default function Edit( props ) {
 						/>
 					) }
 				</PanelBody>
-				<PanelBody title={ __( 'Select Options', 'formello' ) } initialOpen={ false }>
-					<ToggleControl
-						label="Bulk add"
-						checked={ showRaw }
-						onChange={ ( newval ) =>
-							setShowRaw( newval )
-						}
-					/>
-					{ showRaw && 
-						( <TextareaControl
-							label="Bulk"
-							help="Enter one option per row"
-							placeholder="Insert value and label separated by comma. Ex.: US, United States Of America"
-							defaultValue={ 
-								attributes.options.map( ( item ) => {
-									return item.value + ',' + item.label;
-								} )
-								.join( '\r\n' )
-							}
-							onChange={ ( val ) =>
-								bulkOpts( val )
-							}
-						/> ) 
-					}
-					{ !showRaw && 
-						<Fragment>
-							<OptionsList 
-								delete={ deleteRow }
-								onChange={ handleChange }
-								options={ attributes.options }
-							/>
-							<Button isPrimary isSmall onClick={ addNewRow }>Add option</Button>
-						</Fragment>
-					}
-				
-				</PanelBody>
 				<PanelBody title={ __( 'CSS Class', 'formello' ) } initialOpen={ false }>
 
 					<DisplayOpts {...props}/>		
@@ -268,10 +264,13 @@ export default function Edit( props ) {
 			<Fragment>
 				<label
 					className={ labelClassName }
+					htmlFor={ attributes.id }
 				>
 					{ attributes.label }
-					{ attributes.required && <span>*</span> }{ ' ' }
-					{ attributes.hasTooltip && <span className='tooltip'>?</span> }
+					{ attributes.required && !attributes.hideRequired && (
+						<span className='required'>*</span>
+					) }
+					{ ( attributes.hasTooltip && attributes.tooltip.length > 0 ) && <span className='tooltip'>?<span className="tooltiptext">{ attributes.tooltip }</span></span> }
 				</label>
 
 				<select
@@ -308,6 +307,14 @@ export default function Edit( props ) {
 					/>
 				) }
 			</Fragment>
+			{ isModalOpen && (
+				<OptionsModal 
+					{...props} 
+					onRequestClose={ () => { 
+						setModalOpen( false )
+					} }
+				/>
+			) }
 		</div>
 	);
 }

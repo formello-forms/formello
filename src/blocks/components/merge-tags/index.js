@@ -57,8 +57,8 @@ export default function mergeTags( props ) {
 				            	aria-expanded={ isOpen }
 				            />
 				        ) }
-				        renderContent={ () => (
-							<TagSelector {...props} insertTag={ onChange } />
+				        renderContent={ ( { isOpen, onToggle } ) => (
+							<TagSelector {...props} insertTag={ onChange } onToggle={ onToggle } />
 				        ) }
 				    />
 				}

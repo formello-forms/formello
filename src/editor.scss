@@ -84,11 +84,18 @@ html :where(.wp-block-formello-form) {
 	}
 }
 
+.formello-fieldset-options {
+	padding: 1em;
+	border: 1px solid #ddd;
+	margin-bottom: 1em;
+}
+
 .formello-group {
 	.block-editor-block-list__block.wp-block-formello-button {
 		margin-top: 0;
 	}
 }
+
 .formello-urlinput input {
     width: 100% !important;
     border-radius: 2px !important;
