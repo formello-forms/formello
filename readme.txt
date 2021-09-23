@@ -15,20 +15,20 @@ The Gutenberg WordPress Form Builder. Build forms directly within Gutenberg edit
 
 Formello is a **Gutenberg form builder** that helps you build beautiful html forms that seamless integrate in almost every theme with minimal effort.
 
-You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form.
+This is the next generation **WordPress form builder plugin**. You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form.
 
 == Features ==
 
-* Form validation
+* Form validation ( both frontend and backend )
 * ReCaptcha protection (v2 and v3 invisible)
-* Store submissions
-* Email notification
+* Store submissions: views all submitted form
+* Email notification: receive a notification on form submissions
 * Form customization: you can arrange field and display stacked field or in a row with label on side. You can change button colors and also choose loading icon and icon position.
-* Form Library
+* Form Library: choose from different ready made forms
 
 == Extensions ==
 
-* Mailchimp action to send subscriber emails to your lists.
+* Mailchimp: action to send subscriber emails to your lists.
 * Inserter: automatically insert form on posts/page.
 * Exporter: export all your submission in an Excel ready format.
 * Web Hooks: send your mail submissions to any external endpoint.
