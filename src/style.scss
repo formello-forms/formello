@@ -49,7 +49,7 @@ html {
 	}
   
 	label {
-		padding: 0 10px 0 0;
+		padding: 0;
 		margin: 0 0 5px 0;
 		flex: 0 1 auto;
 		&.align-top {
@@ -82,7 +82,7 @@ html {
 
 	.error-message {
 		color: red;
-		order: 3;
+		order: 4;
 		width: 100%;
 	}
 
@@ -111,7 +111,7 @@ html {
 	small {
 	  order: 3;
 	  width: auto;
-	  margin: 0;
+	  margin: 0 8px;
 	}
 
 	.error-message {
@@ -181,24 +181,25 @@ html {
 @media screen and (min-width: 600px) {
 
   .as-row .formello {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	label {
-	  flex: 0 1 180px;
-	}
-	small {
-	  margin-left: 180px;
-	}
-	&.formello-checkbox {
-	  margin-left: 180px;
-	}
-	.error-message {
-	  margin-left: 180px;
-	}
-	.wp-block-formello-button {
-	  margin-left: 180px;
-	}
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		label {
+		  flex: 0 1 180px;
+			padding: 0 10px 0 0;
+		}
+		small {
+		  margin-left: 180px;
+		}
+		&.formello-checkbox {
+		  margin-left: 180px;
+		}
+		.error-message {
+		  margin-left: 180px;
+		}
+		.wp-block-formello-button {
+		  margin-left: 180px;
+		}
   }
 
   .as-row .formello-group {

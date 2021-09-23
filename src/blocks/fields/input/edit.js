@@ -102,7 +102,7 @@ export default function Edit( props ) {
 				<BlockControls>
 					<ToolbarGroup>
 					{
-						supported.includes('placeholder') &&
+						supported.includes('required') &&
 						<>
 						<ToolbarButton
 							label={ __( 'Required' ) }

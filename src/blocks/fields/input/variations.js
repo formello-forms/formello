@@ -50,6 +50,22 @@ const variations = [
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
 	{
+		name: 'gdpr',
+		title: __( 'GDPR agreement' ),
+		icon: 'shield',
+		attributes: {
+			name: 'checkbox',
+			type: 'checkbox',
+			label: 'License agreement',
+			hideLabel: true,
+			placeholder: undefined,
+			required: true,
+			showHelp: true,
+			help: __( 'Accept our agreement', 'formello' )
+		},
+		scope: [ 'block', 'inserter', 'transform' ],
+	},
+	{
 		name: 'radio',
 		title: __( 'Radio' ),
 		icon: getIcon('radio'),

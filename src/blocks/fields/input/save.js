@@ -54,7 +54,6 @@ export default function save( { attributes, className } ) {
 	if( attributes.withOutput ){
 		htmlAttrs['oninput'] = "this.nextElementSibling.value = this.value"
 	}
-console.log('htmlAttrs',htmlAttrs)
 
 	if( attributes.noWrapper ){
 		return <input {...htmlAttrs}/>

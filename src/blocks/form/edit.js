@@ -130,7 +130,6 @@ function Edit( props ) {
     );
 
 	if( saved ){
-		console.log('saved', 1111111)
 
 		apiFetch( {
 			path: '/formello/v1/form/' + post_id,
