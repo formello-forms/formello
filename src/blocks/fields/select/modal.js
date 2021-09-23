@@ -44,6 +44,7 @@ export function OptionsModal ( props ) {
 	} = props;
 
 	const [ showRaw, setShowRaw ] = useState( false );
+	const [ showValue, setShowValue ] = useState( false );
 
 	const addNewRow = (e) => {
 		setAttributes( {
@@ -92,12 +93,13 @@ export function OptionsModal ( props ) {
 		>
 			<div>
 				<ToggleControl
-					label="Bulk add"
+					label={ __( 'Bulk add', 'formello' ) }
 					checked={ showRaw }
 					onChange={ ( newval ) =>
 						setShowRaw( newval )
 					}
 				/>
+
 				{ showRaw && 
 					( <TextareaControl
 						label="Bulk"
@@ -117,10 +119,18 @@ export function OptionsModal ( props ) {
 				}
 				{ !showRaw && 
 					<Fragment>
+						<ToggleControl
+							label={ __( 'Show value', 'formello' ) }
+							checked={ showValue }
+							onChange={ ( newval ) =>
+								setShowValue( newval )
+							}
+						/>
 						<OptionsList 
 							delete={ deleteRow }
 							onChange={ handleChange }
 							options={ attributes.options }
+							showValue={ showValue }
 						/>
 						<Button isPrimary onClick={ addNewRow }>Add option</Button>
 					</Fragment>

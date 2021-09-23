@@ -52,7 +52,7 @@ export default function save( { attributes, className } ) {
 			>
 				{ 
 					attributes.options.map( ( obj, index ) => { 
-						return <option value={ obj.value } key={ index } selected={ opts.includes( obj.value ) }>{ obj.label }</option>
+						return <option value={ obj.value || obj.label } key={ index } selected={ opts.includes( obj.value ) }>{ obj.label }</option>
 					} )
 				}
 			</select>
