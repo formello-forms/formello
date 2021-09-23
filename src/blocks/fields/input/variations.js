@@ -183,9 +183,7 @@ const variations = [
 		icon: getIcon('textarea'),
 		attributes: {
 			type: 'textarea',
-			label: 'Textarea',
-			cols: 3,
-			rows: 5,
+			label: 'Textarea'
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},

@@ -4,8 +4,9 @@
 import { __ } from '@wordpress/i18n';
 import { RichText, useBlockProps } from '@wordpress/block-editor';
 import classnames from 'classnames';
-import { pickBy, identity } from 'lodash';
+import { pickBy, identity, pick } from 'lodash';
 import { InnerBlocks } from '@wordpress/block-editor';
+import { SUPPORTED_ATTRIBUTES } from './constants';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -43,7 +44,7 @@ export default function save( { attributes, className } ) {
 		'formello-time': attributes.type == 'time'
 	} )
 
-	const htmlAttrs = pickBy( attributes, identity);
+	const htmlAttrs = pick( attributes, SUPPORTED_ATTRIBUTES[attributes.type] );
 	htmlAttrs.className = fieldClass ? fieldClass : undefined;
 
 	if( attributes.validation ){
@@ -53,6 +54,7 @@ export default function save( { attributes, className } ) {
 	if( attributes.withOutput ){
 		htmlAttrs['oninput'] = "this.nextElementSibling.value = this.value"
 	}
+console.log('htmlAttrs',htmlAttrs)
 
 	if( attributes.noWrapper ){
 		return <input {...htmlAttrs}/>

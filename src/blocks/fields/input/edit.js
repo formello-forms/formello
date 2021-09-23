@@ -314,7 +314,7 @@ export default function Edit( props ) {
 								label={ __( 'Cols', 'formello' ) }
 								value={ attributes.cols }
 								onChange={ ( val ) =>
-									setAttributes( { cols: val } )
+									setAttributes( { cols: Number(val) } )
 								}
 							/>
 						</BaseControl>
@@ -324,7 +324,7 @@ export default function Edit( props ) {
 								label={ __( 'Rows', 'formello' ) }
 								value={ attributes.rows }
 								onChange={ ( val ) =>
-									setAttributes( { rows: val } )
+									setAttributes( { rows: Number(val) } )
 								}
 							/>
 						</BaseControl>
@@ -399,6 +399,7 @@ export default function Edit( props ) {
 			{ 'textarea' == attributes.type ? (
 				<textarea
 					readOnly
+					type={ attributes.type }
 					cols={ attributes.cols }
 					rows={ attributes.rows }
 					value={ attributes.value }

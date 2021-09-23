@@ -87,11 +87,11 @@ export default {
 	},
 	cols: {
 		type: 'number',
-		default: ''
+		default: 3
 	},
 	rows: {
 		type: 'number',
-		default: ''
+		default: 5
 	},
 	minlength: {
 		type: 'number',
