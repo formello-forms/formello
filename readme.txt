@@ -86,6 +86,9 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.4.1 =
+* Fix email action
+
 = 1.4.0 =
 * Fix textarea
 * Better handling of select options
