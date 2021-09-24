@@ -77,6 +77,7 @@ class Frontend {
 		$form->populate_with_data( $result );
 		if ( empty( $result['errors'] ) ) {
 			$form->save();
+			$this->process_form( $form );
 		}
 
 		$response = $this->get_response( $form );
@@ -112,18 +113,16 @@ class Frontend {
 				/**
 				 * Processes the specified form action and passes related data.
 				 *
-				 * @param array $action_settings
-				 * @param Data $store
 				 * @param Form $form
+				 * @param array $action_settings
 				 */
-				do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings, $form );
+				do_action( 'formello_process_form_action_' . $action_settings['type'], $form, $action_settings );
 			}
 		}
 
 		/**
 		 * General purpose hook after all form actions have been processed for this specific form. The dynamic portion of the hook refers to the form slug.
 		 *
-		 * @param Data $store
 		 * @param Form $form
 		 */
 		do_action( "formello_form_{$form->ID}_success", $form );
@@ -131,7 +130,6 @@ class Frontend {
 		/**
 		 * General purpose hook after all form actions have been processed.
 		 *
-		 * @param Data $store
 		 * @param Form $form
 		 */
 		do_action( 'formello_form_success', $form );

@@ -66,17 +66,17 @@ class Email extends Action {
 	/**
 	 * Processes this action
 	 *
-	 * @param Form $form Form settings.
+	 * @param Form  $form Form settings.
+	 * @param array $action_settings Te action settings.
 	 */
-	public function process( Form $form ) {
+	public function process( Form $form, $action_settings ) {
 
-		$settings = $form->get_settings();
+		$settings   = array_merge( $this->get_default_settings(), $action_settings );
 		$replacer = new \Formello\TagReplacers\Replacer();
 
 		if ( empty( $settings['to'] ) || empty( $settings['message'] ) ) {
 			return false;
 		}
-		$settings   = array_merge( $this->get_default_settings(), $settings );
 		$html_email = 'text/html' === $settings['content_type'];
 
 		$to      = apply_filters( 'formello_action_email_to', $replacer->parse( $settings['to'] ) );

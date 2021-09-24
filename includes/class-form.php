@@ -165,7 +165,16 @@ class Form {
 	 * @return boolean
 	 */
 	public function is_debug() {
-		return isset( $this->settings['debug'] ) ?: false;
+		return $this->settings['debug'] && current_user_can( 'manage_options' ) ?: false;
+	}
+
+	/**
+	 * Add debug
+	 */
+	public function log( $type, $message = '' ) {
+		if ( $this->is_debug() ) {
+			$this->debug[][ $type ] = $message;
+		}
 	}
 
 	/**

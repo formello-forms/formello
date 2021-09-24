@@ -139,6 +139,7 @@ function Edit( props ) {
 					storeSubmissions: attributes.storeSubmissions,
 					recaptchaEnabled: attributes.recaptchaEnabled,
 					hide: attributes.hide,
+					debug: attributes.debug,
 					fields: getFieldsName( clientId ),
 					constraints: getConstraints( clientId ),
 					actions: attributes.actions,

@@ -59,9 +59,10 @@ abstract class Action {
 	/**
 	 * Process action.
 	 *
-	 * @param Form $form The form.
+	 * @param Form  $form The form.
+	 * @param array $action_settings Te action settings.
 	 */
-	abstract public function process( Form $form );
+	abstract public function process( Form $form, $action_settings );
 
 	/**
 	 * Register the actions.
