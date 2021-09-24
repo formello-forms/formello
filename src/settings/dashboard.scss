@@ -1,194 +1,93 @@
 $settings-container-width: 750px;
 
-.formello_form_page_formello-settings #wpcontent {
-	padding-left: 0;
+#wpcontent {
+	padding: 0;
 }
 
-.formello-dashboard-wrap {
-    margin: 0;
-    overflow: hidden;
-}
+.formello-settings-header {
+	padding: 20px 10px;
+	background-color: #ffffff;
+	box-shadow: 0 1px 0 rgba(213,213,213,0.5),0 1px 2px #eee;
 
-.formello-dashboard-header {
-    background: #fff;
-	border-bottom: 1px solid #e2e4e7;
-    padding: 40px 0 0;
-	text-align: center;
-
-	h1 {
-		font-size: 25px;
-		font-weight: 600;
-		padding-bottom: 0;
-		margin-bottom: 20px;
-	}
-
-	.formello-dashboard-header-content {
-		max-width: 700px;
+	.formello-container {
 		margin: 0 auto;
-	}
-}
-
-.formello-navigation {
-    background: #fff;
-	display: flex;
-	justify-content: center;
-
-	a {
-		padding: 0.5rem 1rem 1rem;
-		display: inline-flex;
-		color: inherit;
-		text-decoration: none;
-
-		&.active {
-			font-weight: 600;
-			box-shadow: inset 0 -3px #007cba;
-		}
-	}
-}
-
-.formello-settings-area {
-	.components-placeholder.formello-settings-placeholder {
-		margin-top: 20px;
-		margin-left: auto;
-		margin-right: auto;
 		max-width: $settings-container-width;
-		background: #fff;
-		border: 1px solid #e2e4e7;
-		box-shadow: none;
-	}
 
-	.formello-settings-header {
-		background: #fff;
-		padding: 10px;
-		margin-bottom: 15px;
-		h1 {
-			font-size: 17px;
-		    font-weight: 600;			
-			display: flex;
-			align-items: center;
-		}
 		svg {
-			width: 25px;
-			height: 25px;
-			margin: 0 10px;
+			height: 40px;
+			width: auto;
+			margin: 0 1em;
 		}
-	}
 
-	.formello-settings-main {
-		margin-left: auto;
-		margin-right: auto;
-		max-width: $settings-container-width;
-
-		.formello-action-button {
+		h1 {
 			display: flex;
 			align-items: center;
-		}
-
-		.formello-action-message {
-			padding-left: 10px;
-			opacity: 0;
-			transition: opacity 200ms ease-in-out;
-			color: green;
-			pointer-events: none;
-
-			&.formello-action-message--show {
-				opacity: 1;
-				transition: opacity 200ms ease-in-out;
-			}
-
-			&.formello-action-message--error {
-				color: red;
-			}
-		}
-
-		/* Only needed until WP 5.6 */
-		.formello-css-print-method {
-			.components-base-control__label {
-				display: block;
-			}
-		}
-
-		.components-button .components-spinner {
 			margin: 0;
 		}
+	}
+}
 
-		.components-button.is-primary .components-spinner {
-			background: #000;
-		}
+.components-placeholder.formello-settings-placeholder {
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: $settings-container-width;
+	background: #fff;
+	border: 1px solid #e2e4e7;
+	box-shadow: none;
+}
+	
+.formello-settings-main {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: $settings-container-width;
 
-		.components-panel__body {
-			margin: 25px 0;
-			background: #fff;
-			border: 1px solid #e2e4e7;
+	.components-card {
+		margin: 15px 0;
 
-			.components-panel__body-toggle {
-				border-bottom: 1px solid #d6e2ed;
-			}
-
-			.formello-dashboard-panel-row-wrapper {
-				padding-top: 10px;
-
-				& > *:last-child {
-					margin-bottom: 0;
-				}
-				label {
-					font-weight: bold;
-				}
-			}
-
-			.components-panel__row {
-				padding: 0;
-				margin: 0 0 25px;
-				display: block;
-
-				.components-base-control {
-					.components-base-control__help {
-						margin-bottom: 0;
-					}
-
-					.components-base-control__field {
-						margin-bottom: 10px;
-					}
-				}
-			}
-
-			.components-notice {
-				margin: 0 0 10px;
-			}
+		h2 {
+			margin: 0;
 		}
 	}
-}
 
-.formello-dashboard-page {
-	#wpcontent {
-		padding-left: 0;
+	.components-card__body > div {
+		margin-bottom: 15px;
 	}
 
-	.update-nag {
-		margin-bottom: 20px;
-		margin-left: 22px;
+	.components-card__body label {
+		font-weight: bold;
 	}
-}
 
-.formello-tablist .components-tab-panel__tabs {
-	background-color: white;	
-}
+	.components-card__body .components-button {
+		margin-right: 1em;
+	}
 
-.components-radio-control__input[type="radio"]:checked::before {
-	border: 0;
-}
+	.formello-action-message {
+		padding-left: 10px;
+		opacity: 0;
+		transition: opacity 200ms ease-in-out;
+		color: green;
+		pointer-events: none;
 
-.components-radio-control__option {
-	display: inline;
-}
+		&.formello-action-message--show {
+			opacity: 1;
+			transition: opacity 200ms ease-in-out;
+		}
 
-.components-tab-panel__tabs-item:focus:not(:disabled) {
-	box-shadow: inset 0 0 0 1.5px transparent, inset 0 -4px 0 0 var(--wp-admin-theme-color);
-	outline: none;
+		&.formello-action-message--error {
+			color: red;
+		}
+	}
+
+	.formello-ratings {
+		.dashicons:first-child {
+			margin-left: 5px;
+		}
+	}
 }
 
 /* PAGES */
-.formello-addons{
+.formello-addons {
 	display: flex;
 	flex-wrap: wrap;
 }

@@ -35,7 +35,7 @@ class Fields {
 
 		foreach ( $_POST as $field => $value ) {
 
-			if ( '_' === $field[0] ) {
+			if ( '_' === $field[0] || 'action' === $field ) {
 				continue;
 			};
 

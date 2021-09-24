@@ -49,10 +49,6 @@ const tabs = [
 		name: 'messages',
 		title: 'Messages',
 	},
-	{
-		name: 'about',
-		title: 'More',
-	},
 ];
 
 /**
@@ -72,7 +68,6 @@ const components = {
     recaptcha: Recaptcha,
     messages: Messages,
     integrations: Integrations,
-    about: About,
 };
 
 class App extends Component {
@@ -188,7 +183,9 @@ class App extends Component {
 		return (
 			<Fragment>
 				<div className="formello-settings-header">
-					<h1>{ getIcon( 'logo' ) }{ __( 'Settings' ) }</h1>
+					<div className="formello-container">
+						<h1>{ getIcon( 'logo' ) }{ __( 'Settings' ) }</h1>
+					</div>
 				</div>
 				<div className="formello-settings-main">
 

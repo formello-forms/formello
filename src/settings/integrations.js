@@ -1,7 +1,8 @@
 import {
   TextControl,
-  PanelRow,
-  PanelBody,
+  Card,
+  CardHeader,
+  CardBody,
   Button,
   RadioControl,
   SelectControl,
@@ -20,27 +21,22 @@ export default function integrations( props ) {
 		changeSettings
 	} = props;
 
-    return (
+	return (
 
-    	<div>
+		<Card>
 
-		<PanelBody
-			initialOpen={ true }
-			title={ __( 'Integrations', 'formello' ) }
-		>
-			<div className="formello-dashboard-panel-row-wrapper">
+			<CardHeader><h2>{ __( 'Integrations', 'formello' ) }</h2></CardHeader>
 
-				<PanelRow>
-					<p>{ __( 'We are working on other integrations. A lot more will be available soon.', 'formello' ) }</p>
-				</PanelRow>
+			<CardBody>
 
-			</div>
-		</PanelBody>
+				<p>{ __( 'Go to addons page to download your preferred integrations. We are working on other integrations. A lot more will be available soon.', 'formello' ) }</p>
 
-		{ applyFilters( 'formello.dashboard.integrations', '', props ) }
+			</CardBody>
 
-		</div>
+			{ applyFilters( 'formello.dashboard.integrations', '', props ) }
 
-    );
+		</Card>
+
+	);
 
 };
