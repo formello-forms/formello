@@ -1,18 +1,20 @@
 import {
-  TextControl,
-  Card,
-  CardHeader,
-  CardBody,
-  Button,
-  RadioControl,
-  SelectControl,
+	TextControl,
+	Card,
+	CardHeader,
+	CardBody
 } from '@wordpress/components';
+
+import {
+	RawHTML,
+	Fragment
+} from '@wordpress/element';
 
 const {
 	applyFilters,
 } = wp.hooks;
 
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 export default function integrations( props ) {
 
@@ -25,11 +27,18 @@ export default function integrations( props ) {
 
 		<Card>
 
-			<CardHeader><h2>{ __( 'Integrations', 'formello' ) }</h2></CardHeader>
+			<CardHeader>
+				<h2>{ __( 'Integrations', 'formello' ) }</h2>
+			</CardHeader>
 
 			<CardBody>
 
-				<p>{ __( 'Go to addons page to download your preferred integrations. We are working on other integrations. A lot more will be available soon.', 'formello' ) }</p>
+				<RawHTML>
+					{ sprintf(
+						__( '<p>Go to %s to download your preferred integrations. We are working on other integrations. A lot more will be available soon.</p>', 'formello' ),
+						`<a href="https://formello.net/addons/" target="_blank">addons page</a>` )
+					}
+				</RawHTML>
 
 			</CardBody>
 

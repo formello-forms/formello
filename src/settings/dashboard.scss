@@ -36,7 +36,7 @@ $settings-container-width: 750px;
 	border: 1px solid #e2e4e7;
 	box-shadow: none;
 }
-	
+
 .formello-settings-main {
 	margin-left: auto;
 	margin-right: auto;
@@ -87,9 +87,14 @@ $settings-container-width: 750px;
 }
 
 /* PAGES */
+.formello-addons-main {
+	padding: 0 1em;
+}
+
 .formello-addons {
 	display: flex;
 	flex-wrap: wrap;
+	padding: 1em;
 }
 
 .addon {
