@@ -13,7 +13,7 @@ The Gutenberg WordPress Form Builder. Build forms directly within Gutenberg edit
 
 == Description ==
 
-Formello is a **Gutenberg form builder** that helps you build beautiful html forms that seamless integrate in almost every theme with minimal effort.
+Formello is a **Gutenberg forms builder** that helps you build beautiful html forms that seamless integrate in almost every theme with minimal effort.
 
 This is the next generation **WordPress form builder plugin**. You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form.
 
