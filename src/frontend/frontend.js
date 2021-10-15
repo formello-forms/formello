@@ -74,7 +74,7 @@ function submitForm ( formEl, token ) {
 
 function emitEvent (eventName, element) {
   // browser event API: formElement.on('formello-success', ..)
-  element.dispatchEvent(new CustomEvent('formello-' + eventName))
+  window.dispatchEvent(new CustomEvent('formello-' + eventName))
 
   // custom events API: formello.on('success', ..)
   events.trigger(eventName, [element])

@@ -34,6 +34,7 @@ This is the next generation **WordPress form builder plugin**. You can create fo
 * Exporter: export all your submission in an Excel ready format.
 * Web Hooks: send your mail submissions to any external endpoint.
 * Conditional fields: add rules to display fields based on your defined conditions.
+* [Popper](https://wordpress.org/plugins/popper): a popup builder to increase leads with exit intent.
 
 == Supported form input ==
 
