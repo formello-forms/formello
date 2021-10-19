@@ -83,7 +83,7 @@ html {
 	.error-message {
 		color: red;
 		order: 4;
-		width: 100%;
+		flex-basis: 100%;
 	}
 
 	&.hide {

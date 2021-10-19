@@ -4,7 +4,7 @@ Donate link: 	   https://formello.net
 Tags:              contact form, form builder, form block, gutenberg form, forms, wordpress form,  gutenberg form, subscribe form, multi-step form, gutenberg block, contact form plugin, forms, form builder, custom form, contact button, contact me, custom contact form, form manager, form, forms builder, forms creator, captcha, recaptcha, email form, web form, feedback form, email submit form, message form, contact form block, wordpress form plugin
 Requires at least: 5.4.0
 Tested up to:      5.8.1
-Stable tag:        1.4.2
+Stable tag:        1.4.3
 Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -33,8 +33,8 @@ This is the next generation **WordPress form builder plugin**. You can create fo
 * Inserter: automatically insert form on posts/page.
 * Exporter: export all your submission in an Excel ready format.
 * Web Hooks: send your mail submissions to any external endpoint.
-* Conditional fields: add rules to display fields based on your defined conditions.
-* [Popper](https://wordpress.org/plugins/popper): a popup builder to increase leads with exit intent.
+* [Conditional fields](https://formello.net/addons/conditional-fields): add rules to display fields based on your defined conditions.
+* 🔥 [Popper](https://wordpress.org/plugins/popper): a popup builder to increase leads with exit intent.
 
 == Supported form input ==
 
@@ -87,6 +87,10 @@ Yes. Your submissions will be stored in database, so you can keep track of them.
 Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. Also we have support for Google ReCaptcha (v2,v3) to stop spam bot sending form and to help you take things clean. Apart from this, data submitted are always validated and sanitized.
 
 == Changelog ==
+
+= 1.4.3 =
+* Fix margin on forms table
+* Fix settings save submission
 
 = 1.4.2 =
 * Better settings page

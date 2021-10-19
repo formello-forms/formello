@@ -76,7 +76,6 @@ class Frontend {
 
 		$form->populate_with_data( $result );
 		if ( empty( $result['errors'] ) ) {
-			$form->save();
 			$this->process_form( $form );
 		}
 
