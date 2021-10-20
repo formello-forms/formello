@@ -85,56 +85,56 @@ function createRequestHandler (formEl) {
   loader.start()
 
   return function () {
-	// are we done?
-	if (this.readyState === 4) {
-	  let response
-	  loader.stop()
+		// are we done?
+		if (this.readyState === 4) {
+		  let response
+		  loader.stop()
 
-	  if (this.status >= 200 && this.status < 400) {
-		try {
-		  response = JSON.parse(this.responseText)
-		} catch (error) {
-		  console.log('Formello: failed to parse AJAX response.\n\nError: "' + error + '"')
-		  return
+		  if (this.status >= 200 && this.status < 400) {
+				try {
+				  response = JSON.parse(this.responseText)
+				} catch (error) {
+				  console.log('Formello: failed to parse AJAX response.\n\nError: "' + error + '"')
+				  return
+				}
+
+				emitEvent('submitted', formEl)
+
+				if (response.error) {
+				  emitEvent('error', formEl)
+				} else {
+				  emitEvent('success', formEl)
+				}
+
+				// Show form message
+				if (response.message) {
+				  addFormMessage(formEl, response.message)
+				  emitEvent('message', formEl)
+				}
+
+				if( response.debug ){
+				  console.log(response.debug)
+				}
+
+				// Should we hide form?
+				if (response.hide_form) {
+				  formEl.style.display = 'none'
+				}
+
+				// Should we redirect?
+				if (response.redirect_url) {
+				  window.location = response.redirect_url
+				}
+
+				// clear form
+				if (!response.message.errors) {
+				  formEl.reset()
+				}
+		  } else {
+				// Server error :(
+				console.log(this.responseText)
+		  }
 		}
-
-		emitEvent('submitted', formEl)
-
-		if (response.error) {
-		  emitEvent('error', formEl)
-		} else {
-		  emitEvent('success', formEl)
-		}
-
-		// Show form message
-		if (response.message) {
-		  addFormMessage(formEl, response.message)
-		  emitEvent('message', formEl)
-		}
-
-		if( response.debug ){
-		  console.log(response.debug)
-		}
-
-		// Should we hide form?
-		if (response.hide_form) {
-		  formEl.style.display = 'none'
-		}
-
-		// Should we redirect?
-		if (response.redirect_url) {
-		  window.location = response.redirect_url
-		}
-
-		// clear form
-		if (!response.message.errors) {
-		  formEl.reset()
-		}
-	  } else {
-		// Server error :(
-		console.log(this.responseText)
-	  }
-	}
   }
 }
 
@@ -148,10 +148,9 @@ function validate( formEl ){
   var errors = bouncer.validateAll(formEl);
 
   if( errors.length ){
-	loader.stop()
-	//window.scrollTo(0, errors[0].offsetTop);
-	errors[0].scrollIntoView({behaviour: "smooth", block: "end", inline: "nearest"});
-	return
+		loader.stop()
+		errors[0].scrollIntoView({behaviour: "smooth", block: "end", inline: "nearest"});
+		return
   }
 
   var settings = formEl.dataset
@@ -246,5 +245,3 @@ if ( !checkDateInput() ) {
   document.getElementsByTagName( "head" )[0].appendChild( link );
 
 }
-
-console.log("formello loaded")
