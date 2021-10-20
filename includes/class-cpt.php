@@ -56,7 +56,7 @@ class CPT {
 			'labels' => array(
 				'name'                => _x( 'Forms', 'Post Type General Name', 'formello' ),
 				'singular_name'       => _x( 'Form', 'Post Type Singular Name', 'formello' ),
-				'menu_name'           => __( 'Formello', 'formello' ),
+				'menu_name'           => __( 'Formello Forms', 'formello' ),
 				'parent_item_colon'   => __( 'Parent Form', 'formello' ),
 				'all_items'           => __( 'Forms', 'formello' ),
 				'view_item'           => __( 'View Form', 'formello' ),

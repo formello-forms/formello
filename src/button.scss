@@ -1,18 +1,15 @@
-.wp-block-formello-button {
+.formello button {
 	
-	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	align-self: flex-start;
 	&.center {
-		justify-content: center;
+		align-self: center;
 	}
 	&.right {
-		justify-content: flex-end;
+		align-self: flex-end;
 	}
 	&.wide {
-		button {
-			width: 100%;
-		}
+		width: 100%;
 	}
 
 	button {
@@ -23,9 +20,15 @@
 
 }
 
+.formello button:disabled:not(.running),
+.formello button[disabled]:not(.running){
+  opacity: .3;
+  cursor: revert;
+}
+
 @media screen and (min-width: 600px) {
 
-	.as-row .wp-block-formello-button {
+	.as-row button {
 		margin-left: 180px;
 		flex-direction: row;
 	}

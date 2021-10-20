@@ -19,12 +19,6 @@ import classnames from 'classnames';
  * @return {WPElement} Element to render.
  */
 export default function save( { attributes, className, innerBlocks } ) {
-
-
-	/*if ( !attributes.name && attributes.id ) {
-		attributes.name = 'form_' + attributes.id;
-	}*/
-    //const blockProps = useBlockProps.save();
 	
 	className = classnames( 
 		//blockProps.className,

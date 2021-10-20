@@ -51,12 +51,12 @@ const variations = [
 	},
 	{
 		name: 'gdpr',
-		title: __( 'GDPR agreement' ),
+		title: __( 'GDPR' ),
 		icon: 'shield',
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',
-			label: 'License agreement',
+			label: 'GDPR agreement',
 			hideLabel: true,
 			placeholder: undefined,
 			required: true,

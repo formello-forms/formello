@@ -122,9 +122,9 @@ export default function Edit( {
 	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
 
 	const buttonClasses = classnames(
-		'button-span',
 		borderProps.className,
 		colorProps.className,
+		attributes.alignment,
 		attributes.iconPosition, {
 			'running': showIcon,			
 		}
@@ -135,15 +135,8 @@ export default function Edit( {
 		//...spacingProps.style
 	};
 
-	const getBlockClassNames = () => {
-		return classnames(
-			attributes.alignment,
-			className
-		);
-	};
-
 	const blockProps = useBlockProps({
-		className: getBlockClassNames()
+		className: 'formello'
 	});
 
 	return (

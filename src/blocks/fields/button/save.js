@@ -22,7 +22,7 @@ import {
  *
  * @return {WPElement} Element to render.
  */
-export default function save( { attributes, className } ) {
+export default function save( { attributes } ) {
 
 	const {
 		text,
@@ -45,28 +45,20 @@ export default function save( { attributes, className } ) {
 
 	const colorProps = getColorClassesAndStyles( attributes );
 
-	const containerClass = classnames( className, attributes.alignment );
 	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
 
 	const buttonClasses = classnames(
-		'button-span',
 		colorProps.className,
-		attributes.iconPosition
+		attributes.iconPosition,
+		attributes.alignment
 	);
 	const buttonStyles = {
 		...colorProps.style,
 		...borderProps.style
 	};
 
-	const getBlockClassNames = () => {
-		return classnames(
-			attributes.alignment,
-			className
-		);
-	};
-
 	const blockProps = useBlockProps.save({
-		className: getBlockClassNames()
+		className: 'formello'
 	});
 
 	return (
