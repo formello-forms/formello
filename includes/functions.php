@@ -78,5 +78,5 @@ function formello_decrypt_option( $settings ) {
 function formello_encrypt_option( $settings ) {
 	$crypto = new Formello\Encryption();
 
-	$settings = $crypto->encrypt( maybe_serialize( $settings ) );
+	return $crypto->encrypt( maybe_serialize( $settings ) );
 }

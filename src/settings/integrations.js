@@ -2,7 +2,11 @@ import {
 	TextControl,
 	Card,
 	CardHeader,
-	CardBody
+	CardBody,
+	withFilters,
+	SlotFillProvider,
+	Slot,
+	Fill
 } from '@wordpress/components';
 
 import {
@@ -10,13 +14,13 @@ import {
 	Fragment
 } from '@wordpress/element';
 
-const {
-	applyFilters,
-} = wp.hooks;
+import {
+	applyFilters
+} from '@wordpress/hooks';
 
 import { __, sprintf } from '@wordpress/i18n';
 
-export default function integrations( props ) {
+const IntegrationsTab = ( props ) => {
 
 	const {
 		getSetting,
@@ -42,10 +46,11 @@ export default function integrations( props ) {
 
 			</CardBody>
 
-			{ applyFilters( 'formello.dashboard.integrations', '', props ) }
 
 		</Card>
-
+			
 	);
 
 };
+
+export default withFilters( 'formello.settings' )( IntegrationsTab );

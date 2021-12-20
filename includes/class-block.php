@@ -95,7 +95,7 @@ class Block {
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
 	 */
-	public function do_formello_block( $attributes, $content = '', $block ) {
+	public function do_formello_block( $attributes, $content = '' ) {
 
 		$settings = get_option( 'formello', formello_get_option_defaults() );
 		$recaptcha_url = 'https://www.google.com/recaptcha/api.js';

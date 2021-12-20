@@ -90,10 +90,6 @@ export function ActionsModal ( props ) {
 	return (
 		<Modal
 			title={ action.title }
-			className={ classnames(
-				'formello-plugin-templates-modal',
-				'formello-plugin-templates-modal-hide-header',
-			) }
 			position="top"
 			size="lg"
 			onRequestClose={ onRequestClose }

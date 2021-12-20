@@ -76,6 +76,14 @@ import classnames from 'classnames';
 
 import getIcon from '../../utils/get-icon';
 
+import { Mailchimp, GetResponse, Email } from './actions/icons';
+
+const icons = {
+    mailchimp: Mailchimp,
+    getresponse: GetResponse,
+    email: Email,
+};
+
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
 	'core/heading',
@@ -92,6 +100,7 @@ const ALLOWED_BLOCKS = [
 import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
 import { store as blocksStore } from '@wordpress/block-editor';
 import usePostSaved from './savedHook';
+
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -227,7 +236,7 @@ function Edit( props ) {
 					        	.map( (a) => {
 					        		return {
 						        		title: a.title,
-						        		icon: getIcon( a.type ),
+						        		icon: icons[a.type],
 						                onClick: () => {
 											addAction( a.type ) 
 						                },
@@ -243,7 +252,7 @@ function Edit( props ) {
 								return (
 									<ToolbarButton
 										label={ a.title }
-										icon={ getIcon( a.type ) }
+										icon={ icons[a.type] }
 										key={ i }
 										onClick={ () => {
 											setActive(i)

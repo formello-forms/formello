@@ -148,6 +148,12 @@ class Assets {
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),
+			'formello-tools'          => array(
+				'src'       => FORMELLO_ASSETS . '/tools.js',
+				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ),
+				'version'   => $script_asset['version'],
+				'in_footer' => true,
+			),
 			'formello-recaptcha'         => array(
 				'src'       => 'https://www.google.com/recaptcha/api.js#asyncload',
 				'in_footer' => true,

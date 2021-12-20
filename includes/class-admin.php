@@ -46,6 +46,7 @@ class Admin {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_item' ), 500 );
 		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
+		add_action( 'formello_tools_area', array( $this, 'add_tools_container' ) );
 		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
 	}
 
@@ -98,6 +99,14 @@ class Admin {
 			'formello-settings',
 			array( $this, 'settings_page' )
 		);
+		$tools_hook = add_submenu_page(
+			$slug,
+			__( 'Tools', 'formello' ),
+			__( 'Tools', 'formello' ),
+			$capability,
+			'formello-tools',
+			array( $this, 'tools_page' )
+		);
 		$addons_hook = add_submenu_page(
 			$slug,
 			__( 'Addons', 'formello' ),
@@ -110,6 +119,7 @@ class Admin {
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
 		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
 		add_action( "load-$settings_hook", array( $this, 'settings_hooks' ) );
+		add_action( "load-$tools_hook", array( $this, 'tools_hooks' ) );
 		add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
 		add_filter( 'submenu_file', array( $this, 'remove_submenu' ) );
 
@@ -194,7 +204,16 @@ class Admin {
 	 * @return void
 	 */
 	public function settings_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_settings_scripts' ) );
+	}
+
+	/**
+	 * Initialize our hooks for the admin page
+	 *
+	 * @return void
+	 */
+	public function tools_hooks() {
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_tools_scripts' ) );
 	}
 
 	/**
@@ -202,12 +221,22 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_settings_scripts() {
 		wp_enqueue_script( 'formello-settings' );
 		wp_enqueue_style( 'formello-settings' );
 
 		// add settings script from addon
 		do_action( 'formello_settings_scripts' );
+	}
+
+	/**
+	 * Load scripts and styles for the app
+	 *
+	 * @return void
+	 */
+	public function enqueue_tools_scripts() {
+		wp_enqueue_script( 'formello-tools' );
+		wp_enqueue_style( 'formello-settings' );
 
 	}
 
@@ -289,6 +318,21 @@ class Admin {
 			<div class="formello-dashboard-wrap">
 				<div class="formello-settings-area">
 					<?php do_action( 'formello_settings_area' ); ?>
+				</div>
+			</div>
+		<?php
+	}
+
+	/**
+	 * Output tools page.
+	 *
+	 * @since 0.1
+	 */
+	public function tools_page() {
+		?>
+			<div class="formello-dashboard-wrap">
+				<div class="formello-tools-area">
+					<div id="formello-block-tools"></div>
 				</div>
 			</div>
 		<?php

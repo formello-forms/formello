@@ -56,6 +56,9 @@ class Api extends WP_REST_Controller {
 		if ( ! class_exists( __NAMESPACE__ . '\Api\Settings' ) ) {
 			require_once __DIR__ . '/Api/class-settings.php';
 		}
+		if ( ! class_exists( __NAMESPACE__ . '\Api\Integrations' ) ) {
+			require_once __DIR__ . '/Api/class-integrations.php';
+		}
 		if ( ! class_exists( __NAMESPACE__ . '\Api\License' ) ) {
 			require_once __DIR__ . '/Api/class-license.php';
 		}
@@ -74,6 +77,7 @@ class Api extends WP_REST_Controller {
 	 */
 	public function register_routes() {
 		( new Api\Settings() )->register_routes();
+		( new Api\Integrations() )->register_routes();
 		( new Api\License() )->register_routes();
 		( new Api\Form() )->register_routes();
 		( new Api\Template() )->register_routes();

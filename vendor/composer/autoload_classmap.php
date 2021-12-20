@@ -12,6 +12,7 @@ return array(
     'Formello\\Admin' => $baseDir . '/includes/class-admin.php',
     'Formello\\Api' => $baseDir . '/includes/class-api.php',
     'Formello\\Api\\Form' => $baseDir . '/includes/Api/class-form.php',
+    'Formello\\Api\\Integrations' => $baseDir . '/includes/Api/class-integrations.php',
     'Formello\\Api\\License' => $baseDir . '/includes/Api/class-license.php',
     'Formello\\Api\\Settings' => $baseDir . '/includes/Api/class-settings.php',
     'Formello\\Api\\Template' => $baseDir . '/includes/Api/class-template.php',
