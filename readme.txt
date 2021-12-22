@@ -88,6 +88,12 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.4.5 =
+* Code reduction
+* Better handling of hidden input field
+* Added tools page
+* Better notification on settings
+
 = 1.4.4 =
 * Better handling of button
 * Code optimization

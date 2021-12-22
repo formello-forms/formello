@@ -6,7 +6,7 @@ import { RichText, useBlockProps } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { pickBy, identity, pick } from 'lodash';
 import { InnerBlocks } from '@wordpress/block-editor';
-import { SUPPORTED_ATTRIBUTES } from './constants';
+import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -32,11 +32,10 @@ export default function save( { attributes, className } ) {
 		'formello-group': attributes.withButton || attributes.withOutput,
 		'formello-group grouped': attributes.grouped,
 		'formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
-		'hide': 'hidden' == attributes.type
 	} )
 
 	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
-		'hide': attributes.label.length < 1 || attributes.hideLabel,
+		'hide': attributes.hideLabel,
 	} )
 
 	const fieldClass = classnames( attributes.fieldClass, {
@@ -44,7 +43,11 @@ export default function save( { attributes, className } ) {
 		'formello-time': attributes.type == 'time'
 	} )
 
-	const htmlAttrs = pick( attributes, SUPPORTED_ATTRIBUTES[attributes.type] );
+	// include only supported attributes
+	let htmlAttrs = pick( attributes, SUPPORTED_ATTRIBUTES[attributes.type] );
+	// clean empty attributes
+	htmlAttrs = pickBy( htmlAttrs, identity );
+
 	htmlAttrs.className = fieldClass ? fieldClass : undefined;
 
 	if( attributes.validation ){
@@ -55,7 +58,7 @@ export default function save( { attributes, className } ) {
 		htmlAttrs['oninput'] = "this.nextElementSibling.value = this.value"
 	}
 
-	if( attributes.noWrapper ){
+	if( attributes.noWrapper || 'hidden' === attributes.type ){
 		return <input {...htmlAttrs}/>
 	}
 

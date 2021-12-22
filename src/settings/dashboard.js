@@ -1,11 +1,11 @@
 /**
  * WordPress dependencies
  */
-const {
+import {
 	__,
-} = wp.i18n;
+} from '@wordpress/i18n';
 
-const {
+import {
 	BaseControl,
 	Button,
 	PanelBody,
@@ -16,25 +16,27 @@ const {
 	SelectControl,
 	RadioControl,
 	TabPanel
-} = wp.components;
+} from '@wordpress/components';
 
-const {
+import {
 	render,
 	Component,
 	Fragment,
-} = wp.element;
+	useState,
+	useEffect
+} from '@wordpress/element';
 
-const {
+import {
 	apiFetch,
-} = wp;
+} from '@wordpress/api-fetch';
 
-const {
+import {
 	applyFilters,
-} = wp.hooks;
+} from '@wordpress/hooks';
 
 const tabs = [
 	{
-		name: 'license',
+		name: 'general',
 		title: 'General',
 	},
 	{
@@ -42,13 +44,17 @@ const tabs = [
 		title: 'ReCaptcha',
 	},
 	{
-		name: 'integrations',
-		title: 'Integrations',
-	},
-	{
 		name: 'messages',
 		title: 'Messages',
 	},
+	{
+		name: 'integrations',
+		title: 'Integrations',
+	},
+	/*{
+		name: 'licenses',
+		title: 'Licenses',
+	},*/
 ];
 
 /**
@@ -57,87 +63,82 @@ const tabs = [
 import './dashboard.scss';
 import getIcon from '../utils/get-icon';
 
-import License from './license.js';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
+
+import General from './general.js';
 import Recaptcha from './recaptcha.js';
 import Messages from './messages.js';
 import Integrations from './integrations.js';
+import Licenses from './licenses.js';
 import About from './about.js';
+import Notices from '../tools/notices.js';
 
 const components = {
-    license: License,
+    general: General,
+    licenses: Licenses,
     recaptcha: Recaptcha,
     messages: Messages,
     integrations: Integrations,
 };
 
-class App extends Component {
-	constructor() {
-		super( ...arguments );
 
-		this.state = {
-			isAPILoaded: false,
-			isAPISaving: false,
-			settings: {},
-		};
+function App() {
 
-		this.getSetting = this.getSetting.bind( this );
-		this.updateSettings = this.updateSettings.bind( this );
-	}
+	const [ isSaving, setSaving ] = useState(false);
+	const [ apiLoaded, setApiLoaded ] = useState(false);
+	const [ settings, setSettings ] = useState();
+    const { createNotice, removeNotice } = useDispatch( noticesStore );
 
-	componentDidMount() {
+	useEffect( () => {
 		apiFetch( {
 			path: '/formello/v1/settings',
 			method: 'GET'
 		} ).then( ( result ) => {
-			this.state.settings = result.response 
 			
-			this.setState( {
-				isAPILoaded: true,
-			} );
+			setSettings(result.response) 
+			
+			setApiLoaded(true)
 
 		} );
-	}
+	}, [] );
 
-	getSetting( group, name, defaultVal ) {
+    const addNotice = ( status, content, type='snackbar' ) => {
+        removeNotice( 'settings' )
+        createNotice( status, content, {type: type, id: 'settings'} );
+    }
+
+	const getSetting = ( group, name, defaultVal ) => {
 		let result = defaultVal;
 
 		if( 'license' === group || 'license_status' === group ){
-			result = this.state.settings[ group ];
+			result = settings[ group ];
 		}
 
-		if ( 'undefined' !== typeof this.state.settings[ group ][ name ] ) {
-			result = this.state.settings[ group ][ name ];
+		if ( 'undefined' !== typeof settings[ group ][ name ] ) {
+			result = settings[ group ][ name ];
 		}
 
 		return result;
 	}
 
-	updateSettings( e ) {
-		this.setState( { isAPISaving: true } );
+	const updateSettings = ( e ) => {
+		setSaving( true )
 		const message = e.target.nextElementSibling;
 
 		apiFetch( {
 			path: '/formello/v1/settings',
 			method: 'POST',
 			data: {
-				settings: this.state.settings,
+				settings: settings,
 			},
 		} ).then( ( result ) => {
-			this.setState( { isAPISaving: false } );
-			message.classList.add( 'formello-action-message--show' );
-			message.textContent = result.response;
-
-			if ( ! result.success || ! result.response ) {
-				message.classList.add( 'formello-action-message--error' );
-			} else {
-				setTimeout( function() {
-					message.classList.remove( 'formello-action-message--show' );
-				}, 3000 );
-			}
+			setSaving( false )
+			addNotice( 'info', 'Settings saved' )
 		} );
 	}
 
-	showMessage( message ) {
+	const showMessage = ( message ) => {
 		message.classList.add( 'formello-action-message--show' );
 		message.textContent = result.response;
 
@@ -150,29 +151,24 @@ class App extends Component {
 		}
 	}
 
-	changeSettings( group, name, value ) {
-		this.setState( {
-			settings: {
-				...this.state.settings,
-				[group]: {
-					...this.state.settings[group],
-					[name]: value,
-				}
-			},
+	const changeSettings = ( group, name, value ) => {
+		setSettings( {
+			...settings,
+			[group]: {
+				...settings[group],
+				[name]: value,
+			}
 		} );
 	};
 
-	saveLicense( value ) {
-		this.setState( {
-			settings: {
-				...this.state.settings,
+	const saveLicense = ( value ) => {
+		setSettings( {
+				...settings,
 				license: value
-			},
 		} );
 	};
 
-	render() {
-		if ( ! this.state.isAPILoaded ) {
+		if ( ! apiLoaded ) {
 			return (
 				<Placeholder className="formello-settings-placeholder">
 					<Spinner />
@@ -197,30 +193,32 @@ class App extends Component {
 					>
 						{ ( tab ) => {
 						    const SettingsTab = components[tab.name];
-						    return <SettingsTab 
-										saveLicense={ this.saveLicense.bind(this) }
-										changeSettings={ this.changeSettings.bind(this) }
-										getSetting={ this.getSetting.bind(this) }
-						    		/>;
+						    return <Fragment>
+						    		<SettingsTab 
+										saveLicense={ saveLicense.bind(this) }
+										changeSettings={ changeSettings.bind(this) }
+										getSetting={ getSetting.bind(this) }
+						    		/>
+						    		{
+						    			'general' !== tab.name &&
+							    		<Button
+										isPrimary
+										disabled={ isSaving }
+										onClick={ ( e ) => updateSettings( e ) }
+									>
+										{ isSaving && <Spinner /> }
+										{ ! isSaving && __( 'Save', 'formello' ) }
+									</Button>
+						    		}			
+								</Fragment>;
 
 						}}
 
 					</TabPanel>
 
+					<Notices />
+
 					{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-					<div className="formello-action-button">
-						<Button
-							isPrimary
-							disabled={ this.state.isAPISaving }
-							onClick={ ( e ) => this.updateSettings( e ) }
-						>
-							{ this.state.isAPISaving && <Spinner /> }
-							{ ! this.state.isAPISaving && __( 'Save', 'formello' ) }
-						</Button>
-
-						<span className="formello-action-message"></span>
-					</div>
 
 					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
 
@@ -228,7 +226,6 @@ class App extends Component {
 
 			</Fragment>
 		);
-	}
 }
 
 window.addEventListener( 'DOMContentLoaded', () => {

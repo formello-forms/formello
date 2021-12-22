@@ -7,9 +7,9 @@ import {
   SelectControl,
 } from '@wordpress/components';
 
-const {
+import {
 	applyFilters,
-} = wp.hooks;
+} from '@wordpress/hooks';
 
 import {
   RawHTML,

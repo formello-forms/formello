@@ -4,7 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-import { TextControl, SelectControl, PanelRow } from '@wordpress/components';
+import { TextControl, SelectControl, PanelBody } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 /**
@@ -16,16 +16,15 @@ import { Fragment } from '@wordpress/element';
  *
  * @return {WPElement} Element to render.
  */
-export default function displayOpts( props ) {
+export default function DisplayOpts( props ) {
 
 	const {
 		attributes,
 		setAttributes,
-		onChange
 	} = props;
 
 	return (
-		<Fragment>
+		<PanelBody title={ __( 'CSS Options', 'formello' ) } initialOpen={ false }>
 
 			<SelectControl
 		        label={ __( 'Label vertical alignment', 'formello' ) }
@@ -59,6 +58,6 @@ export default function displayOpts( props ) {
 					setAttributes( { descriptionClass: val } )
 				}
 			/>
-		</Fragment>
+		</PanelBody>
 	);
 }

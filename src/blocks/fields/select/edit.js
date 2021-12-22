@@ -28,7 +28,6 @@ import {
 	Tooltip,
 	PanelBody,
 	TextareaControl,
-	Toolbar,
 	ToolbarButton,
 	ToolbarGroup,
 	Flex,
@@ -47,8 +46,11 @@ const { createBlock, cloneBlock } = wp.blocks;
 import OptionsList from './opts';
 import { OptionsModal } from './modal';
 import classnames from 'classnames';
-import DisplayOpts from '../../components/display-options'
+import DisplayOpts from '../../components/css-options'
 import getIcon from '../../../utils/get-icon';
+import Toolbar from '../../components/field-options/toolbar';
+import Options from '../../components/field-options';
+import AdvancedOptions from '../../components/field-options/advanced';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -147,22 +149,7 @@ export default function Edit( props ) {
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
-						<ToolbarButton
-							label={ __( 'Required' ) }
-							icon={ getIcon( 'asterisk' ) }
-							isPressed={ attributes.required }
-							onClick={ () => {
-								setAttributes( { required: !attributes.required } )
-							} }
-						/>
-						<ToolbarButton
-							label={ __( 'Hide label' ) }
-							icon={ 'hidden' }
-							isPressed={ attributes.hideLabel }
-							onClick={ () => {
-								setAttributes( { hideLabel: !attributes.hideLabel } )
-							} }
-						/>
+						<Toolbar {...props} />
 						<ToolbarButton
 							label={ __( 'Add options', 'formello' ) }
 							icon={ 'editor-ul' }
@@ -172,93 +159,9 @@ export default function Edit( props ) {
 						/>
 					</ToolbarGroup>
 				</BlockControls>
-				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
-					<TextControl
-						label={ __( 'Name', 'formello' ) }
-						value={ attributes.name }
-						onChange={ ( val ) =>
-							setAttributes( { name: val.replace(/\W/g, '') } )
-						}
-					/>
-					<TextControl
-						label={ __( 'Label', 'formello' ) }
-						value={ attributes.label }
-						onChange={ ( val ) =>
-							setAttributes( { label: val } )
-						}
-					/>
-					<ToggleControl
-						label={ __(
-							'Allow multiple choices?',
-							'formello'
-						) }
-						checked={ attributes.multiple }
-						onChange={ ( val ) =>
-							setAttributes( { 
-								multiple: val
-							} )
-						}
-					/>
-					<ToggleControl
-						label={ __( 'Required', 'formello' ) }
-						checked={ attributes.required }
-						onChange={ ( val ) =>
-							setAttributes( { required: val } )
-						}
-					/>
-					{ attributes.required && (
-						<ToggleControl
-							label={ __( 'Mark as Required', 'formello' ) }
-							checked={ attributes.markRequired }
-							onChange={ ( newval ) =>
-								setAttributes( { markRequired: newval } )
-							}
-						/>
-					) }
-				    <FormTokenField 
-				    	label={ __( 'Selected option', 'formello' ) }
-						value={
-							attributes.selectedOpt &&
-							attributes.selectedOpt.map( ( item ) => {
-								return item.label
-							} )
-						}
-						onChange={ (opts) => { 
-							let selections = attributes.options.filter( x => opts.includes( x.label ) );
-							setAttributes( { selectedOpt: selections } ) 
-						} }
-						suggestions={ 
-							attributes.options &&
-							attributes.options.map( (item) => {
-								return item.label
-							} )
-						}
-						maxSuggestions={ 3 }
-						maxLength={ () => attributes.multiple ? 20 : 1 }
-					/>
-					<ToggleControl
-						label={ __( 'Show description', 'formello' ) }
-						checked={ attributes.showHelp }
-						onChange={ ( newval ) =>
-							setAttributes( { showHelp: newval } )
-						}
-					/>
-					{ attributes.hasTooltip && (
-						<TextareaControl
-							label="Tooltip"
-							help="Enter some useful text"
-							value={ attributes.tooltip }
-							onChange={ ( val ) =>
-								setAttributes( { tooltip: val } )
-							}
-						/>
-					) }
-				</PanelBody>
-				<PanelBody title={ __( 'CSS Class', 'formello' ) } initialOpen={ false }>
-
-					<DisplayOpts {...props}/>		
-
-				</PanelBody>
+				<Options {...props} />
+				<AdvancedOptions {...props} />
+				<DisplayOpts {...props}/>		
 
 			</InspectorControls>
 			<Fragment>

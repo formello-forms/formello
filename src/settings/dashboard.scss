@@ -2,6 +2,11 @@ $settings-container-width: 750px;
 
 .formello_form_page_formello-settings #wpcontent, .formello_form_page_formello-tools #wpcontent {
 	padding: 0;
+	.formello-notices__snackbar-list{
+		position: fixed;
+		bottom: 100px;
+		left: 180px;
+	}
 }
 
 .formello-settings-header {

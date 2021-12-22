@@ -168,6 +168,7 @@ class Forms extends \WP_List_Table {
 
 		global $wpdb;
 		$params = array();
+		$params['post_type'] = 'formello_form';
 		$table_forms  = "{$wpdb->prefix}posts";
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
@@ -188,7 +189,6 @@ class Forms extends \WP_List_Table {
 			$sql .= ' AND f.name LIKE %s';
 		}
 
-		$params['post_type'] = 'formello_form';
 		$params['per_page'] = $per_page;
 		$params['offset']   = ( $page_number - 1 ) * $per_page;
 

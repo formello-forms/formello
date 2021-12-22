@@ -80,3 +80,22 @@ function formello_encrypt_option( $settings ) {
 
 	return $crypto->encrypt( maybe_serialize( $settings ) );
 }
+
+add_action('wp_ajax_formello_export_forms', function() {
+
+	if ( !function_exists( 'export_wp' ) ) { 
+		require_once( ABSPATH . 'wp-admin/includes/export.php' );
+	} 
+
+	return export_wp(
+		array( 'content' => 'formello_form' )
+	);
+	wp_die();
+});
+
+add_action('wp_ajax_formello_reset_templates', function() {
+
+	delete_transient( 'formello_templates' );
+    wp_send_json_success( array( 'responso' => 'callback eseguita' ) );
+	wp_die();
+});

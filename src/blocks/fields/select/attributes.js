@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 export default {
 	type: {
 		type: 'string',
-		default: 'text',
+		default: 'select',
 	},
 	id: {
 		type: 'string',

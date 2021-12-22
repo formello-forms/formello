@@ -144,13 +144,13 @@ class Assets {
 			),
 			'formello-settings'          => array(
 				'src'       => FORMELLO_ASSETS . '/dashboard.js',
-				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ),
+				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-notices' ),
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),
 			'formello-tools'          => array(
 				'src'       => FORMELLO_ASSETS . '/tools.js',
-				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch' ),
+				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-notices' ),
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),

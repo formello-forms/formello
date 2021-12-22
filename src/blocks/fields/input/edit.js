@@ -29,9 +29,12 @@ import classnames from 'classnames';
 
 import getIcon from '../../../utils/get-icon';
 import MergeTags from '../../components/merge-tags';
-import DisplayOpts from '../../components/display-options'
+import DisplayOpts from '../../components/css-options';
+import Options from '../../components/field-options';
+import AdvancedOptions from '../../components/field-options/advanced';
+import Toolbar from '../../components/field-options/toolbar';
 
-import { SUPPORTED_ATTRIBUTES } from './constants';
+import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 const hiddenIcon = getIcon('hidden');
 /**
@@ -85,301 +88,33 @@ export default function Edit( props ) {
 		'hide': attributes.hideLabel
 	} );
 
-	const label = ( val ) => {
-		let txt = attributes.label
-		if( attributes.hasTooltip ){
-			txt += '<span>?</span>'
-		}
-		setAttributes( { label: txt } )
-	}
 	const blockProps = useBlockProps( {
 		className: className,
 	} );
 
 	return (
 		<div { ...blockProps }>
+			<BlockControls>
+			{
+				supported.includes('required') &&
+				<ToolbarGroup>
+					<Toolbar {...props} />
+				</ToolbarGroup>
+			}
+			</BlockControls>
 			<InspectorControls>
-				<BlockControls>
-					<ToolbarGroup>
-					{
-						supported.includes('required') &&
-						<>
-						<ToolbarButton
-							label={ __( 'Required' ) }
-							icon={ getIcon( 'asterisk' ) }
-							isPressed={ attributes.required }
-							onClick={ () => {
-								setAttributes( { required: !attributes.required } )
-							} }
-						/>
-						<ToolbarButton
-							label={ __( 'Hide label' ) }
-							icon={ 'hidden' }
-							isPressed={ attributes.hideLabel }
-							onClick={ () => {
-								setAttributes( { hideLabel: !attributes.hideLabel } )
-							} }
-						/>
-						</>
-					}
-					</ToolbarGroup>
-				</BlockControls>
-				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
-					<BaseControl>
-					<InputControl
-						label={ __( 'Name', 'formello' ) }
-						value={ attributes.name }
-						onChange={ ( val ) => setAttributes( { name: val.replace(/\W/g, '_').toLowerCase() } ) }
-					/>
-					</BaseControl>
-					{
-						!(attributes.type == 'hidden') &&					
-					<BaseControl>
-					<InputControl
-						label={ __( 'Label', 'formello' ) }
-						value={ attributes.label }
-						onChange={ ( val ) => setAttributes( { label: val } ) }
-					/>
-					</BaseControl>
-					}
-					<MergeTags 
-						className={ 'formello-flex' }
-						clientId={ clientId }
-						label={ __( 'Value', 'formello' ) }
-						value={ attributes.value }
-						onChange={ ( val ) => {
-							setAttributes( { value: val } )
-						} }
-					/>
-					{
-						supported.includes('placeholder') && 
-						<BaseControl>
-							<InputControl
-								label={ __( 'Placeholder', 'formello' ) }
-								value={ attributes.placeholder }
-								onChange={ ( val ) =>
-									setAttributes( { placeholder: val } )
-								}
-							/>
-						</BaseControl>
-					}
-					{
-						supported.includes('required') && 
-						<Fragment>
-						<ToggleControl
-							label={ __( 'Required', 'formello' ) }
-							checked={ attributes.required }
-							onChange={ ( newval ) =>
-								setAttributes( { required: newval } )
-							}
-						/>
-						{ attributes.required && (
-							<ToggleControl
-								label={ __( 'Hide asterisk', 'formello' ) }
-								checked={ attributes.hideRequired }
-								onChange={ ( newval ) =>
-									setAttributes( { hideRequired: newval } )
-								}
-							/>
-						) }
-						</Fragment>
-					}
-					{
-						supported.includes('checked') && 
-						<ToggleControl
-							label={ __( 'Checked', 'formello' ) }
-							checked={ attributes.checked }
-							onChange={ ( newval ) =>
-								setAttributes( { checked: newval } )
-							}
-						/>
-					}
-					{ !( 'hidden' == attributes.type ) && (
-						<Fragment>
-						<ToggleControl
-							label={ __( 'Show Description', 'formello' ) }
-							checked={ attributes.showHelp }
-							onChange={ ( newval ) =>
-								setAttributes( { showHelp: newval } )
-							}
-						/>
-						</Fragment>		
-					) }
-					{ attributes.withButton && 
-						<ToggleControl
-							label={ __(
-								'Group button with input',
-								'formello'
-							) }
-							checked={ attributes.grouped }
-							onChange={ ( val ) =>
-								setAttributes( { 
-									grouped: val
-								} )
-							}
-						/>						
-					}
-				</PanelBody>
+				
+				<Options {...props} />
 
-				<PanelBody title={ __( 'Advanced Options', 'formello' ) } initialOpen={ false }>
-					{
-					supported.includes('step') && 
-							<Fragment>
-								<BaseControl>
-								<InputControl
-									label={ __( 'Min Value', 'formello' ) }
-									value={ attributes.min || '' }
-									min={ '0' }
-									type={ 'range' == attributes.type ? 'number' : attributes.type }
-									onChange={ ( val ) =>
-										setAttributes( { min: val } )
-									}
-								/>
-								</BaseControl>
-								<BaseControl>
-								<InputControl
-									label={ __( 'Max Value', 'formello' ) }
-									value={ attributes.max || '' }
-									type={ 'range' == attributes.type ? 'number' : attributes.type }
-									onChange={ ( val ) =>
-										setAttributes( { max: val } )
-									}
-								/>
-								</BaseControl>
-								<BaseControl>
-								<InputControl
-									type="number"
-									label={ __( 'Step Value', 'formello' ) }
-									value={ attributes.step || '' }
-									onChange={ ( val ) =>
-										setAttributes( { step: val } )
-									}
-								/>
-								</BaseControl>
-							</Fragment>
-					}
-					{
-						supported.includes('minlength') && 
-							<Fragment>
-							<BaseControl>
-								<InputControl
-									type="number"
-									label={ __( 'Min Length', 'formello' ) }
-									value={ attributes.minlength || '' }
-									onChange={ ( val ) =>
-										setAttributes( { minlength: val } )
-									}
-								/>
-							</BaseControl>
-							<BaseControl>
-								<InputControl
-									type="number"
-									label={ __( 'Max Length', 'formello' ) }
-									value={ attributes.maxlength || '' }
-									onChange={ ( val ) =>
-										setAttributes( { maxlength: val } )
-									}
-								/>
-							</BaseControl>
-							</Fragment>
-					}
-					{
-						supported.includes('pattern') && 
-							<Fragment>
-							<BaseControl>
-							<InputControl
-								label={ __( 'Pattern', 'formello' ) }
-								value={ attributes.pattern || '' }
-								onChange={ ( val ) =>
-									setAttributes( { pattern: val } )
-								}
-							/>
-							</BaseControl>
-							</Fragment>
-					}
-					{ 'hidden' !== attributes.type &&
-						<BaseControl>
-							<InputControl
-								label={ __( 'Custom Validation Message', 'formello' ) }
-								value={ attributes.validation }
-								onChange={ ( val ) => setAttributes( { validation: val } ) }
-							/>
-						</BaseControl>
-					}
-					{ 'textarea' == attributes.type && (
-						<Fragment>
-						<BaseControl>
-							<InputControl
-								type="number"
-								label={ __( 'Cols', 'formello' ) }
-								value={ attributes.cols }
-								onChange={ ( val ) =>
-									setAttributes( { cols: Number(val) } )
-								}
-							/>
-						</BaseControl>
-						<BaseControl>
-							<InputControl
-								type="number"
-								label={ __( 'Rows', 'formello' ) }
-								value={ attributes.rows }
-								onChange={ ( val ) =>
-									setAttributes( { rows: Number(val) } )
-								}
-							/>
-						</BaseControl>
-						</Fragment>
-					) }
-					{
-						!(attributes.type == 'hidden') &&					
-						<ToggleControl
-							label={ __( 'Add Tooltip', 'formello' ) }
-							checked={ attributes.hasTooltip }
-							onChange={ ( newval ) =>
-								setAttributes( { hasTooltip: newval } )
-							}
-						/>
-					}
-					{ attributes.hasTooltip && (
-						<TextareaControl
-							label={ __( 'Tooltip message', 'formello' ) }
-							help="Enter some useful text"
-							value={ attributes.tooltip }
-							onChange={ ( newval ) =>
-								setAttributes( { tooltip: newval } )
-							}
-						/>
-					) }
-					{
-						'hidden' != attributes.type &&
-						<Fragment>
-							<ToggleControl
-								label={ __( 'Disabled', 'formello' ) }
-								checked={ attributes.disabled }
-								onChange={ ( newval ) =>
-									setAttributes( { disabled: newval } )
-								}
-							/>
-							<ToggleControl
-								label={ __( 'Read only', 'formello' ) }
-								checked={ attributes.readOnly }
-								onChange={ ( newval ) =>
-									setAttributes( { readOnly: newval } )
-								}
-							/>
-						</Fragment>
-					}
-					{
-						'hidden' == attributes.type &&
-						<p>No advanced options for this field type.</p>						
-					}
-				</PanelBody>
-				<PanelBody title={ __( 'CSS Class', 'formello' ) } initialOpen={ false }>
+				{
+					'hidden' !== attributes.type &&
+					<AdvancedOptions {...props} />
+				}
 
-					<DisplayOpts { ...props } />
+				<DisplayOpts { ...props } />
 
-				</PanelBody>
 			</InspectorControls>
+
 			{ 'hidden' !== attributes.type ? (
 			<label
 				className={ labelClassName }
@@ -394,7 +129,7 @@ export default function Edit( props ) {
 			)
 			:
 			(
-			<div className='formello-hidden'>{ hiddenIcon }<label>Hidden field [{ attributes.name }] </label></div>
+			<div className='formello-hidden'>{ hiddenIcon }<label>[{ attributes.name }] </label></div>
 			) }
 			{ 'textarea' == attributes.type ? (
 				<textarea

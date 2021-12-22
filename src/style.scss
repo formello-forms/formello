@@ -39,10 +39,6 @@ html {
 	align-items: inherit;
 	flex-wrap: wrap;
 	margin-bottom: 2em;
-
-	.hide {
-		display: none; 
-	}
   
 	.error {
 		border-color: red;
@@ -84,10 +80,6 @@ html {
 		color: red;
 		order: 4;
 		flex-basis: 100%;
-	}
-
-	&.hide {
-		display: none;
 	}
 
   /********** checkbox ********/
@@ -203,15 +195,15 @@ html {
   }
 
   .as-row .formello-group {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	label {
-	  flex: 0 1 180px;
-	}
-	small {
-	  margin-left: 180px;
-	}
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		label {
+		  flex: 0 1 180px;
+		}
+		small {
+		  margin-left: 180px;
+		}
 	.wp-block-formello-button {
 	  margin-left: auto;
 	}
@@ -227,7 +219,7 @@ html {
 
 .formello-group.grouped {
   input {
-	border-right: 0px;
+		border-right: 0px;
   }
 }
 
@@ -241,14 +233,14 @@ html {
   margin: 1rem 0;
   border: 1px solid transparent;
   &.success {
-	background-color: #dff0d8;
-	border-color: #d0e9c6;
-	color: #3c763d;
+		background-color: #dff0d8;
+		border-color: #d0e9c6;
+		color: #3c763d;
   }
   &.error {
-	background-color: #fcf8e3;
-	border-color: #faf2cc;
-	color: #8a6d3b;  
+		background-color: #fcf8e3;
+		border-color: #faf2cc;
+		color: #8a6d3b;  
   }
 }
 
@@ -256,6 +248,7 @@ html {
   margin: 1em 0;
 }
 
+/* HONEYPOT position */
 .formello-hp {
   position: absolute !important;
   left: -5000px;
@@ -263,4 +256,10 @@ html {
 
 [hidden] {
   display: none !important;
+}
+
+.formello-icon {
+	background: url( ../assets/integrations/zapier.svg ) center right 20px no-repeat;
+	background-size: 16px 16px;
+	padding-right: 30px;
 }

@@ -24,7 +24,7 @@ const {
 	apiFetch,
 } = wp;
 
-export default function license( props ) {
+export default function General( props ) {
 
 	const {
 		getSetting,
@@ -65,7 +65,7 @@ export default function license( props ) {
 		<Card>
 
 			<CardHeader>
-				<h2>{ __( 'General', 'formello' ) }</h2>
+				<h2>{ __( 'License', 'formello' ) }</h2>
 			</CardHeader>
 
 			<CardBody>

@@ -102,9 +102,17 @@ html :where(.wp-block-formello-form) {
     border: 1px solid #757575 !important;
 }
 
+.formello-hidden {
+	display: flex;
+}
+
 /* MODAL */
 
 .formello-modal-footer {
 	padding: 1em 0;
 	text-align: right;
+}
+
+.hide {
+	display: block !important;
 }
