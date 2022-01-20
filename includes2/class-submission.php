@@ -95,7 +95,7 @@ class Submission extends Form {
 		}
 
 		if ( 'textarea' === $fields[ $key ] ) {
-			return sanitize_text_area( $this->replace_tags( $value ) );
+			return sanitize_textarea_field( $this->replace_tags( $value ) );
 		}
 
 		return sanitize_text_field( $this->replace_tags( $value ) );

@@ -122,7 +122,7 @@ export default function Edit( {
 	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
 
 	const buttonClasses = classnames(
-		//'wp-block-button__link',
+		'wp-block-button__link',
 		borderProps.className,
 		colorProps.className,
 		attributes.alignment,

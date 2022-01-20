@@ -17,12 +17,19 @@ import {
 	BaseControl,
 	FormTokenField,
 	__experimentalInputControl as InputControl,
-	TextareaControl 
+	TextareaControl,
+	SlotFillProvider,
+	Slot,
+	withFilters
 } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
+
+const AdditionalSettings = withFilters(
+        'formello.advancedOptions'
+    )( ( props ) => <></> );
 
 /**
  * The save function defines the way in which the different attributes should
@@ -44,11 +51,15 @@ export default function AdvancedOptions( props ) {
 	const supported = SUPPORTED_ATTRIBUTES[attributes.type]
 
 	return (
-		<Fragment>
+		<SlotFillProvider>
 
 			<PanelBody title={ __( 'Advanced Options', 'formello' ) } initialOpen={ false }>
 
-				{ applyFilters( 'formello.advancedOptions', '', props ) }
+	            <AdditionalSettings
+	                { ...props }
+	            />
+
+				<Slot name="SettingsTop"/>
 
 				{
 				supported.includes('step') && 
@@ -240,6 +251,6 @@ export default function AdvancedOptions( props ) {
 				}
 			</PanelBody>
 
-		</Fragment>
+		</SlotFillProvider>
 	);
 }

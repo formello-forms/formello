@@ -320,13 +320,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/notices */ "@wordpress/notices");
 /* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_notices__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _general_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./general.js */ "./src/settings/general.js");
-/* harmony import */ var _recaptcha_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./recaptcha.js */ "./src/settings/recaptcha.js");
-/* harmony import */ var _messages_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./messages.js */ "./src/settings/messages.js");
-/* harmony import */ var _integrations_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./integrations.js */ "./src/settings/integrations.js");
-/* harmony import */ var _licenses_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./licenses.js */ "./src/settings/licenses.js");
-/* harmony import */ var _about_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./about.js */ "./src/settings/about.js");
-/* harmony import */ var _tools_notices_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../tools/notices.js */ "./src/tools/notices.js");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
+/* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _general_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./general.js */ "./src/settings/general.js");
+/* harmony import */ var _recaptcha_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./recaptcha.js */ "./src/settings/recaptcha.js");
+/* harmony import */ var _messages_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./messages.js */ "./src/settings/messages.js");
+/* harmony import */ var _integrations_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./integrations.js */ "./src/settings/integrations.js");
+/* harmony import */ var _licenses_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./licenses.js */ "./src/settings/licenses.js");
+/* harmony import */ var _about_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./about.js */ "./src/settings/about.js");
+/* harmony import */ var _tools_notices_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../tools/notices.js */ "./src/tools/notices.js");
 
 
 
@@ -343,22 +345,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 
 
-var tabs = [{
-  name: 'general',
-  title: 'General'
-}, {
-  name: 'recaptcha',
-  title: 'ReCaptcha'
-}, {
-  name: 'messages',
-  title: 'Messages'
-}, {
-  name: 'integrations',
-  title: 'Integrations'
-}, {
-  name: 'licenses',
-  title: 'Licenses'
-}];
 /**
  * Internal dependencies
  */
@@ -374,12 +360,13 @@ var tabs = [{
 
 
 
+
 var components = {
-  general: _general_js__WEBPACK_IMPORTED_MODULE_11__["default"],
-  licenses: _licenses_js__WEBPACK_IMPORTED_MODULE_15__["default"],
-  recaptcha: _recaptcha_js__WEBPACK_IMPORTED_MODULE_12__["default"],
-  messages: _messages_js__WEBPACK_IMPORTED_MODULE_13__["default"],
-  integrations: _integrations_js__WEBPACK_IMPORTED_MODULE_14__["default"]
+  general: _general_js__WEBPACK_IMPORTED_MODULE_12__["default"],
+  licenses: _licenses_js__WEBPACK_IMPORTED_MODULE_16__["default"],
+  recaptcha: _recaptcha_js__WEBPACK_IMPORTED_MODULE_13__["default"],
+  messages: _messages_js__WEBPACK_IMPORTED_MODULE_14__["default"],
+  integrations: _integrations_js__WEBPACK_IMPORTED_MODULE_15__["default"]
 };
 
 function App() {
@@ -413,6 +400,22 @@ function App() {
       setApiLoaded(true);
     });
   }, []);
+  var tabs = [{
+    name: 'general',
+    title: 'General'
+  }, {
+    name: 'recaptcha',
+    title: 'ReCaptcha'
+  }, {
+    name: 'messages',
+    title: 'Messages'
+  }, {
+    name: 'integrations',
+    title: 'Integrations'
+  }, {
+    name: 'licenses',
+    title: 'Licenses'
+  }];
 
   var addNotice = function addNotice(status, content) {
     var type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'snackbar';
@@ -475,6 +478,17 @@ function App() {
     }));
   };
 
+  var initialTab = Object(_wordpress_url__WEBPACK_IMPORTED_MODULE_11__["getQueryArg"])(window.location.href, 'tab');
+
+  var updateUrl = function updateUrl(tabName) {
+    var newUrl = Object(_wordpress_url__WEBPACK_IMPORTED_MODULE_11__["addQueryArgs"])(window.location.href, {
+      tab: tabName
+    });
+    window.history.replaceState({
+      path: newUrl
+    }, '', newUrl);
+  };
+
   if (!apiLoaded) {
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["Placeholder"], {
       className: "formello-settings-placeholder"
@@ -489,7 +503,11 @@ function App() {
     className: "formello-settings-main"
   }, Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_6__["applyFilters"])('formello.dashboard.beforeSettings', '', this), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__["TabPanel"], {
     className: "formello-tablist",
-    tabs: tabs
+    tabs: tabs,
+    initialTabName: initialTab,
+    onSelect: function onSelect(tabName) {
+      return updateUrl(tabName);
+    }
   }, function (tab) {
     var SettingsTab = components[tab.name];
     return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(SettingsTab, {
@@ -505,7 +523,7 @@ function App() {
         return updateSettings(e);
       }
     }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__["__"])('Save', 'formello')));
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_tools_notices_js__WEBPACK_IMPORTED_MODULE_17__["default"], null), Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_6__["applyFilters"])('formello.dashboard.settings', '', this), Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_6__["applyFilters"])('formello.dashboard.afterSettings', '', this)));
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__["createElement"])(_tools_notices_js__WEBPACK_IMPORTED_MODULE_18__["default"], null), Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_6__["applyFilters"])('formello.dashboard.settings', '', this), Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_6__["applyFilters"])('formello.dashboard.afterSettings', '', this)));
 }
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -1527,6 +1545,17 @@ function getIcon(icon) {
 /***/ (function(module, exports) {
 
 (function() { module.exports = window["wp"]["notices"]; }());
+
+/***/ }),
+
+/***/ "@wordpress/url":
+/*!*****************************!*\
+  !*** external ["wp","url"] ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = window["wp"]["url"]; }());
 
 /***/ }),
 

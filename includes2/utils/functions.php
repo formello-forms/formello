@@ -11,10 +11,26 @@ namespace Formello\Utils;
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * Function to retrieve integration option
+ */
+function formello_integration_option( $integration ) {
+	$settings = get_option( 'formello2' );
+
+	if ( empty( $settings['integrations'][ $integration ] ) ) {
+		return array();
+	}
+	return $settings['integrations'][ $integration ];
+}
+
+/**
  * Function to retrieve unencrypted settings
  */
 function formello_frontend_option() {
 	$settings = get_option( 'formello2' );
+
+	if ( empty( $settings ) ) {
+		return array();
+	}
 
 	$frontend_settings = array(
 		'messages' => $settings['messages'],

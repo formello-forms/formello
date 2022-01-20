@@ -20934,8 +20934,7 @@ function Edit(_ref) {
 
   var colorProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["__experimentalUseColorProps"])(attributes);
   var iconClass = classnames__WEBPACK_IMPORTED_MODULE_5___default()('ld', 'ld-spin', attributes.iconType);
-  var buttonClasses = classnames__WEBPACK_IMPORTED_MODULE_5___default()( //'wp-block-button__link',
-  borderProps.className, colorProps.className, attributes.alignment, attributes.iconPosition, {
+  var buttonClasses = classnames__WEBPACK_IMPORTED_MODULE_5___default()('wp-block-button__link', borderProps.className, colorProps.className, attributes.alignment, attributes.iconPosition, {
     'running': showIcon
   });
   var blockProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__["useBlockProps"])({
@@ -21222,7 +21221,7 @@ function save(_ref) {
 
   var colorProps = Object(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__["__experimentalGetColorClassesAndStyles"])(attributes);
   var iconClass = classnames__WEBPACK_IMPORTED_MODULE_4___default()('ld', 'ld-spin', attributes.iconType);
-  var buttonClasses = classnames__WEBPACK_IMPORTED_MODULE_4___default()('wp-block-button__link', colorProps.className, attributes.iconPosition, attributes.alignment);
+  var buttonClasses = classnames__WEBPACK_IMPORTED_MODULE_4___default()('wp-block-button', colorProps.className, attributes.iconPosition, attributes.alignment);
 
   var buttonStyles = _objectSpread(_objectSpread({}, colorProps.style), borderProps.style);
 
@@ -23488,7 +23487,7 @@ Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__["registerBlockType"])('for
    */
   category: 'formello',
   // Only allow this block when it is nested in following blocks
-  parent: ['formello/form', 'core/column'],
+  parent: ['formello/form', 'core/column', 'core/group', 'core/row'],
 
   /**
    * Block attributes
@@ -24863,6 +24862,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var AdditionalSettings = Object(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["withFilters"])('formello.advancedOptions')(function (props) {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null);
+});
 /**
  * The save function defines the way in which the different attributes should
  * be combined into the final markup, which is then serialized by the block
@@ -24878,10 +24880,12 @@ function AdvancedOptions(props) {
       setAttributes = props.setAttributes,
       onChange = props.onChange;
   var supported = _constants__WEBPACK_IMPORTED_MODULE_4__["SUPPORTED_ATTRIBUTES"][attributes.type];
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["SlotFillProvider"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["PanelBody"], {
     title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Advanced Options', 'formello'),
     initialOpen: false
-  }, Object(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_2__["applyFilters"])('formello.advancedOptions', '', props), supported.includes('step') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(AdditionalSettings, props), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["Slot"], {
+    name: "SettingsTop"
+  }), supported.includes('step') && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["BaseControl"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__["__experimentalInputControl"], {
     label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__["__"])('Min Value', 'formello'),
     value: attributes.min || '',
     min: '0',

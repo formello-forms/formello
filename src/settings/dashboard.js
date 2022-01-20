@@ -32,29 +32,6 @@ import {
 	applyFilters,
 } from '@wordpress/hooks';
 
-const tabs = [
-	{
-		name: 'general',
-		title: 'General',
-	},
-	{
-		name: 'recaptcha',
-		title: 'ReCaptcha',
-	},
-	{
-		name: 'messages',
-		title: 'Messages',
-	},
-	{
-		name: 'integrations',
-		title: 'Integrations',
-	},
-	{
-		name: 'licenses',
-		title: 'Licenses',
-	},
-];
-
 /**
  * Internal dependencies
  */
@@ -63,6 +40,7 @@ import getIcon from '../utils/get-icon';
 
 import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
+import { getQueryArg, addQueryArgs } from '@wordpress/url';
 
 import General from './general.js';
 import Recaptcha from './recaptcha.js';
@@ -100,6 +78,29 @@ function App() {
 
 		} );
 	}, [] );
+
+	const tabs = [
+		{
+			name: 'general',
+			title: 'General',
+		},
+		{
+			name: 'recaptcha',
+			title: 'ReCaptcha',
+		},
+		{
+			name: 'messages',
+			title: 'Messages',
+		},
+		{
+			name: 'integrations',
+			title: 'Integrations',
+		},
+		{
+			name: 'licenses',
+			title: 'Licenses',
+		},
+	];
 
     const addNotice = ( status, content, type='snackbar' ) => {
         removeNotice( 'settings' )
@@ -166,6 +167,13 @@ function App() {
 		} );
 	};
 
+	const initialTab = getQueryArg( window.location.href, 'tab' );
+
+	const updateUrl = ( tabName ) => {
+		let newUrl = addQueryArgs( window.location.href, { tab: tabName } )
+		window.history.replaceState( { path: newUrl }, '', newUrl );
+	}
+
 		if ( ! apiLoaded ) {
 			return (
 				<Placeholder className="formello-settings-placeholder">
@@ -188,6 +196,8 @@ function App() {
 					<TabPanel
 						className='formello-tablist'
 						tabs={ tabs }
+						initialTabName={ initialTab }
+						onSelect={ ( tabName ) => updateUrl( tabName ) }
 					>
 						{ ( tab ) => {
 						    const SettingsTab = components[tab.name];

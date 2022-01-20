@@ -31,14 +31,15 @@ $formello_fields = json_decode( $submission->data );
 		<table class="formello-bordered">
 			<tbody>
 			<?php
-				foreach ( $formello_fields as $field => $value ) {
+			foreach ( $formello_fields as $formello_field => $formello_value ) {
 					echo '<tr>';
-					echo sprintf( '<th>%s</th>', esc_html( str_replace( '_', ' ', ucfirst( strtolower( $field ) ) ) ) );
+					echo sprintf( '<th>%s</th>', esc_html( str_replace( '_', ' ', ucfirst( strtolower( $formello_field ) ) ) ) );
 					echo '<td>';
-					esc_html_e( $this->formello_field_value( $value ) );
+					// phpcs:ignore
+					echo $this->formello_field_value( $formello_value, 500 );
 					echo '</td>';
 					echo '</tr>';
-				}
+			}
 			?>
 			</tbody>
 		</table>
