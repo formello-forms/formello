@@ -95,7 +95,7 @@ export default function Edit( {
 			<InnerBlocks
 				allowedBlocks={ ALLOWED_BLOCKS }
 				templateLock={ false }
-				renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
+				//renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
 			/>
 		</fieldset>
 	);

@@ -140,6 +140,7 @@ class Settings extends WP_REST_Controller {
 		$license    = get_option( 'formello_license', '' );
 
 		$settings['messages'] = $frontend_settings['messages'];
+		$settings['addon_licenses'] = $frontend_settings['addon_licenses'];
 		$settings['license'] = $license;
 		$settings['license_status'] = get_option( 'formello_license_status' );
 

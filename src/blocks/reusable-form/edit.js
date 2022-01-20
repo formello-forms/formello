@@ -9,6 +9,7 @@ import {
 	BlockControls
 } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
+import { addQueryArgs } from '@wordpress/url';
 import { TemplatesModal } from '../form/library';
 
 export default function Edit ( props ) {
@@ -40,11 +41,20 @@ export default function Edit ( props ) {
 	let blockContent = (<p>{ __( 'Please, select a form to show', 'formello' ) }</p>);
 
     if ( attributes.id ) {
-        blockContent = <ServerSideRender
+        blockContent = (<ServerSideRender
 	            block="formello/form-reusable"
 	            attributes={ attributes }
-	        />
+	        />)
     }
+
+    const editUrl = addQueryArgs( 'post.php', {
+		post: attributes.id,
+		action: 'edit'
+	} )
+
+    const templatesUrl = addQueryArgs( 'edit.php', {
+		post_type: 'formello_form'
+	} )
 
 	return (
 		<div {...blockProps}>
@@ -54,7 +64,7 @@ export default function Edit ( props ) {
 						<ToolbarButton
 							label={ __( 'Edit this form', 'formello' ) }
 							icon="edit"
-							onClick={ () => window.open( formello.formURL + attributes.id + '&action=edit', '_blank' ) }
+							onClick={ () => window.open( editUrl, '_blank' ) }
 						/>
 					</ToolbarGroup>
 				</BlockControls>
@@ -100,7 +110,7 @@ export default function Edit ( props ) {
 							>
 								{ __( 'Open Library', 'formello' ) }
 							</Button> 
-							<Button isSecondary href={ formello.templatesURL }>{ __( 'Create new form', 'formello' ) }</Button>
+							<Button isSecondary href={ templatesUrl } target="_blank">{ __( 'Create new form', 'formello' ) }</Button>
 			    		</>
 
 					}

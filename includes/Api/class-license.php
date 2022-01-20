@@ -98,7 +98,7 @@ class License extends WP_REST_Controller {
 		$api_params = array(
 			'edd_action'  => 'activate_license',
 			'license'     => $license,
-			'item_name'   => urlencode( 'FormelloPro' ), // the name of our product in EDD
+			'item_name'   => urlencode( 'Formello' ), // the name of our product in EDD
 			'url'         => home_url(),
 			'environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
 		);
@@ -201,7 +201,7 @@ class License extends WP_REST_Controller {
 		$api_params = array(
 			'edd_action'  => 'deactivate_license',
 			'license'     => $license,
-			'item_name'   => urlencode( 'FormelloPro' ), // the name of our product in EDD
+			'item_name'   => urlencode( 'Formello' ), // the name of our product in EDD
 			'url'         => home_url(),
 			'environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
 		);
@@ -232,6 +232,7 @@ class License extends WP_REST_Controller {
 		// $license_data->license will be either "deactivated" or "failed"
 		if ( 'deactivated' === $license_data->license ) {
 			update_option( 'formello_license_status', false );
+			update_option( 'formello_license', '' );
 		}
 
 		return rest_ensure_response(

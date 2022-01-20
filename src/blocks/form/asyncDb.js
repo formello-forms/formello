@@ -3,8 +3,6 @@ import { subscribe, select } from '@wordpress/data';
 
 // disable on widgets screen
 if( select('core/editor') != null ){
-	console.log(select('core/editor') == null)
-	console.log(select('core/editor') != null)
 	let wasSavingPost = select( 'core/editor' ).isSavingPost();
 	let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
 	let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();

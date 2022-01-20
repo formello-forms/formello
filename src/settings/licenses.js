@@ -32,15 +32,15 @@ const LicensesTab = ( props ) => {
 		<Card>
 
 			<CardHeader>
-				<h2>{ __( 'Integrations', 'formello' ) }</h2>
+				<h2>{ __( 'Licenses', 'formello' ) }</h2>
 			</CardHeader>
 
 			<CardBody>
 
 				<RawHTML>
 					{ sprintf(
-						__( '<p>Go to %s to download your preferred integrations. We are working on other integrations. A lot more will be available soon.</p>', 'formello' ),
-						`<a href="https://formello.net/addons/" target="_blank">addons page</a>` )
+						__( '<p>Here you can add license for %s.</p>', 'formello' ),
+						`<a href="https://formello.net/addons/" target="_blank">addons</a>` )
 					}
 				</RawHTML>
 

@@ -6,10 +6,6 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
 {
-    public static $files = array (
-        '7e66de7530bca05762126590eec82ec7' => __DIR__ . '/../..' . '/includes/functions.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
@@ -26,30 +22,27 @@ class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'Formello\\Actions\\Action' => __DIR__ . '/../..' . '/includes/Actions/class-action.php',
-        'Formello\\Actions\\Email' => __DIR__ . '/../..' . '/includes/Actions/class-email.php',
-        'Formello\\Admin' => __DIR__ . '/../..' . '/includes/class-admin.php',
-        'Formello\\Api' => __DIR__ . '/../..' . '/includes/class-api.php',
-        'Formello\\Api\\Form' => __DIR__ . '/../..' . '/includes/Api/class-form.php',
-        'Formello\\Api\\Integrations' => __DIR__ . '/../..' . '/includes/Api/class-integrations.php',
-        'Formello\\Api\\License' => __DIR__ . '/../..' . '/includes/Api/class-license.php',
-        'Formello\\Api\\Settings' => __DIR__ . '/../..' . '/includes/Api/class-settings.php',
-        'Formello\\Api\\Template' => __DIR__ . '/../..' . '/includes/Api/class-template.php',
-        'Formello\\Assets' => __DIR__ . '/../..' . '/includes/class-assets.php',
-        'Formello\\Block' => __DIR__ . '/../..' . '/includes/class-block.php',
-        'Formello\\CPT' => __DIR__ . '/../..' . '/includes/class-cpt.php',
-        'Formello\\Data' => __DIR__ . '/../..' . '/includes/class-data.php',
-        'Formello\\Encryption' => __DIR__ . '/../..' . '/includes/class-encryption.php',
-        'Formello\\Form' => __DIR__ . '/../..' . '/includes/class-form.php',
-        'Formello\\Frontend' => __DIR__ . '/../..' . '/includes/class-frontend.php',
-        'Formello\\Processor' => __DIR__ . '/../..' . '/includes/class-processor.php',
-        'Formello\\Tables\\Forms' => __DIR__ . '/../..' . '/includes/Tables/class-forms.php',
-        'Formello\\Tables\\Submissions' => __DIR__ . '/../..' . '/includes/Tables/class-submissions.php',
-        'Formello\\TagReplacers\\Fields' => __DIR__ . '/../..' . '/includes/TagReplacers/class-fields.php',
-        'Formello\\TagReplacers\\Other' => __DIR__ . '/../..' . '/includes/TagReplacers/class-other.php',
-        'Formello\\TagReplacers\\Replacer' => __DIR__ . '/../..' . '/includes/TagReplacers/class-replacer.php',
-        'Formello\\TagReplacers\\Wp' => __DIR__ . '/../..' . '/includes/TagReplacers/class-wp.php',
-        'Formello\\Updater' => __DIR__ . '/../..' . '/includes/class-updater.php',
+        'Formello' => __DIR__ . '/../..' . '/includes2/class-formello.php',
+        'Formello\\Actions\\Action' => __DIR__ . '/../..' . '/includes2/actions/class-action.php',
+        'Formello\\Actions\\Email' => __DIR__ . '/../..' . '/includes2/actions/class-email.php',
+        'Formello\\Admin\\Admin' => __DIR__ . '/../..' . '/includes2/admin/class-admin.php',
+        'Formello\\Admin\\Tables\\Forms' => __DIR__ . '/../..' . '/includes2/admin/tables/class-forms.php',
+        'Formello\\Admin\\Tables\\Submissions' => __DIR__ . '/../..' . '/includes2/admin/tables/class-submissions.php',
+        'Formello\\Assets' => __DIR__ . '/../..' . '/includes2/class-assets.php',
+        'Formello\\Blocks' => __DIR__ . '/../..' . '/includes2/class-blocks.php',
+        'Formello\\Form' => __DIR__ . '/../..' . '/includes2/class-form.php',
+        'Formello\\Frontend' => __DIR__ . '/../..' . '/includes2/class-frontend.php',
+        'Formello\\Rest\\Controllers\\Forms' => __DIR__ . '/../..' . '/includes2/rest/controllers/class-forms.php',
+        'Formello\\Rest\\Controllers\\Integrations' => __DIR__ . '/../..' . '/includes2/rest/controllers/class-integrations.php',
+        'Formello\\Rest\\Controllers\\License' => __DIR__ . '/../..' . '/includes2/rest/controllers/class-license.php',
+        'Formello\\Rest\\Controllers\\Settings' => __DIR__ . '/../..' . '/includes2/rest/controllers/class-settings.php',
+        'Formello\\Rest\\Controllers\\Template' => __DIR__ . '/../..' . '/includes2/rest/controllers/class-template.php',
+        'Formello\\Submission' => __DIR__ . '/../..' . '/includes2/class-submission.php',
+        'Formello\\TagReplacers\\Fields' => __DIR__ . '/../..' . '/includes2/tag-replacers/class-fields.php',
+        'Formello\\TagReplacers\\Other' => __DIR__ . '/../..' . '/includes2/tag-replacers/class-other.php',
+        'Formello\\TagReplacers\\Replacer' => __DIR__ . '/../..' . '/includes2/tag-replacers/class-replacer.php',
+        'Formello\\TagReplacers\\Wp' => __DIR__ . '/../..' . '/includes2/tag-replacers/class-wp.php',
+        'Formello\\Utils\\Encryption' => __DIR__ . '/../..' . '/includes2/utils/class-encryption.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

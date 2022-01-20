@@ -77,11 +77,20 @@ class Assets {
 		}
 		wp_set_script_translations( 'formello-form-block-editor', 'formello', plugin_dir_path( FORMELLO_FILE ) . 'languages' );
 
-		$settings =  array(
+		$settings = array(
 			'settingsURL' => admin_url( 'admin.php?page=formello-settings' ),
 			'templatesURL' => admin_url( 'edit.php?post_type=formello_form' ),
 			'formURL' => admin_url( 'post.php?post=' ),
-			'options' => get_option( 'formello' )
+			'options' => get_option( 'formello' ),
+		);
+
+		wp_localize_script(
+			'formello-form-block',
+			'formello',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'settings' => $settings,
+			)
 		);
 
 		/**
@@ -96,6 +105,7 @@ class Assets {
 			'formello',
 			$settings
 		);
+
 	}
 
 	/**

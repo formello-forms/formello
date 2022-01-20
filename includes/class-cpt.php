@@ -42,7 +42,7 @@ class CPT {
 	public function __construct() {
 		$this->register();
 		if ( is_admin() ) {
-			add_filter( 'allowed_block_types_all', array( $this, 'allowed_block_types' ), 10, 2 );
+			//add_filter( 'allowed_block_types_all', array( $this, 'allowed_block_types' ), 10, 2 );
 		}
 	}
 
@@ -81,6 +81,10 @@ class CPT {
 			'show_in_admin_bar'   => true,
 			'show_in_rest'        => true,
 			'capability_type'     => 'post',
+			'template'            => array(
+				array( 'formello/form' ),
+			),
+			'template_lock'       => 'insert',
 			'supports'            => array(
 				'title',
 				'editor',
@@ -103,9 +107,9 @@ class CPT {
 
 		if ( ! is_null( $context->post ) && 'formello_form' === $context->post->post_type ) {
 			return array(
-				'core/group',
-				'core/columns',
-				'core/paragraph',
+				//'core/group',
+				//'core/columns',
+				//'core/paragraph',
 				'core/heading',
 				'core/spacer',
 				'core/separator',

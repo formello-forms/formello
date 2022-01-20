@@ -49,6 +49,7 @@ export default function General( props ) {
 				setLicenseStatus( result.response.license )
 			};
 			message.classList.add( 'formello-action-message--show' );
+			message.classList.remove( 'formello-action-message--error' );
 			message.textContent = 'License ' + result.response.license;
 
 			if ( ! result.success || ! result.response ) {
@@ -80,7 +81,8 @@ export default function General( props ) {
 					}
 				</RawHTML>
 				<InputControl
-					type='text'
+					type='password'
+					autoComplete='new-password'
 					label={ __( 'License Key', 'formello' ) }
 					value={ getSetting( 'license' ) }
 					onChange={ (val) => {
@@ -100,6 +102,7 @@ export default function General( props ) {
 							<Button 
 								onClick={ (e) => updateLicense('deactivate', e) }
 								isSecondary
+								aria-disabled={ loading }
 								isBusy={ loading }
 							>Deactivate</Button>
 						</Fragment>

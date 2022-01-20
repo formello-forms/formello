@@ -13,7 +13,7 @@ import {
 
 import { __, sprintf } from '@wordpress/i18n';
 
-export default function recaptcha( props ) {
+export default function reCaptcha( props ) {
 
 	const {
 		getSetting,
@@ -31,39 +31,39 @@ export default function recaptcha( props ) {
 			<CardBody>
 
 				<RadioControl
-					selected={ getSetting( 'recaptcha', 'version' ) }
+					selected={ getSetting( 'reCaptcha', 'version' ) }
 					options={ [
 						{ label: 'reCaptcha v2 checkbox', value: '1' },
 						{ label: 'reCaptcha v3 invisible', value: '3' },
 					] }
 					onChange={ (val) => {
-						changeSettings( 'recaptcha', 'version', val )
+						changeSettings( 'reCaptcha', 'version', val )
 					} }
 				/>
 
 				<TextControl
 					label={ __( 'Site Key', 'formello' ) }
-					value={ getSetting( 'recaptcha', 'site_key' ) }
+					value={ getSetting( 'reCaptcha', 'site_key' ) }
 					onChange={ (val) => {
-						changeSettings( 'recaptcha', 'site_key', val )
+						changeSettings( 'reCaptcha', 'site_key', val )
 					} }
 				/>
 
 				<TextControl
 					label={ __( 'Secret Key', 'formello' ) }
-					value={ getSetting( 'recaptcha', 'secret_key' ) }
+					value={ getSetting( 'reCaptcha', 'secret_key' ) }
 					onChange={ (val) => {
-						changeSettings( 'recaptcha', 'secret_key', val )
+						changeSettings( 'reCaptcha', 'secret_key', val )
 					} }
 				/>
 
-				{ ( getSetting( 'recaptcha', 'version' ) == 3 ) && 
+				{ ( getSetting( 'reCaptcha', 'version' ) == 3 ) && 
 
 					<NumberControl
 						label={ __( 'Threshold', 'formello' ) }
-						value={ getSetting( 'recaptcha', 'threshold' ) }
+						value={ getSetting( 'reCaptcha', 'threshold' ) }
 						onChange={ (val) => {
-							changeSettings( 'recaptcha', 'threshold', val )
+							changeSettings( 'reCaptcha', 'threshold', val )
 						} }
 						step={ '0.1' }
 						min={ '0' }

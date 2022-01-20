@@ -324,7 +324,6 @@ class Submissions extends \WP_List_Table {
 			// refresh table.
 			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
 
-
 		}
 
 		// If the delete bulk action is triggered.
@@ -447,15 +446,15 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	private function get_submission_columns() {
-		$columns					= array();
-		$columns['cb']				= '<input type="checkbox" />';
-		$columns['id']				= 'ID';
-		$columns['formello_icons']	= '';
+		$columns                   = array();
+		$columns['cb']             = '<input type="checkbox" />';
+		$columns['id']             = 'ID';
+		$columns['formello_icons'] = '';
 
-		$settings = get_post_meta( $this->form_id,'formello_settings', true );;
+		$settings = get_post_meta( $this->form_id, '_formello_settings', true );
 
 		if ( isset( $settings['fields'] ) ) {
-			foreach ( $settings['fields'] as $col ) {
+			foreach ( array_keys( $settings['fields'] ) as $col ) {
 
 				$columns[ $col ] = esc_html( ucfirst( trim( strtolower( str_replace( '_', ' ', $col ) ) ) ) );
 

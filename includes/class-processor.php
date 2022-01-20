@@ -43,6 +43,13 @@ class Processor {
 	private $data = array();
 
 	/**
+	 * The actions array
+	 *
+	 * @var array
+	 */
+	private $actions = array();
+
+	/**
 	 * Debug
 	 *
 	 * @var Array
@@ -80,11 +87,13 @@ class Processor {
 	 */
 	public function process() {
 
+		// First check if is a spam request.
 		if ( $this->is_spam() ) {
 			$this->add_error( __( 'Probably a spam request.', 'formello' ) );
 			return $this->response();
 		}
 
+		// Not spam, we can validate.
 		if ( ! $this->is_valid() ) {
 			return $this->response();
 		}
@@ -99,6 +108,7 @@ class Processor {
 
 		// filter out ignored field names.
 		foreach ( $_POST as $key => $value ) {
+
 			if ( ! in_array( $key, $this->form->get_fields(), true ) ) {
 				continue;
 			};
@@ -110,6 +120,15 @@ class Processor {
 		$this->details['user_agent']   = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 		$this->details['referer_url']  = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 		$this->details['submitted_at'] = gmdate( 'Y-m-d H:i:s' );
+
+		$form_actions = $this->form->get_actions();
+
+		if ( isset( $form_actions ) ) {
+			foreach ( $form_actions as $action_settings ) {
+				$this->actions[] = $this->recursive_actions( $action_settings );
+			}
+			$this->form->set_actions( $this->actions );
+		}
 
 		return $this->response();
 	}
@@ -283,7 +302,7 @@ class Processor {
 		}
 
 		// validate recaptcha.
-		if ( $this->get_settings('recaptchaEnabled') && isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
+		if ( $this->get_settings( 'recaptchaEnabled' ) && isset( $_POST['g-recaptcha-response'] ) && empty( $_POST['g-recaptcha-response'] ) ) {
 			return true;
 		}
 
@@ -293,7 +312,7 @@ class Processor {
 		}
 
 		// validate recaptcha.
-		if ( $this->get_settings('recaptchaEnabled') ) {
+		if ( $this->get_settings( 'recaptchaEnabled' ) ) {
 			$captcha_validate = $this->validate_recaptcha();
 		}
 
@@ -388,6 +407,25 @@ class Processor {
 			}
 		}
 
+	}
+
+	/**
+	 * Recursive sanitation for an array
+	 * 
+	 * @param $actions
+	 *
+	 * @return mixed
+	 */
+	protected function recursive_actions( $actions ) {
+		foreach ( $actions as $key => &$value ) {
+			if ( is_array( $value ) ) {
+				$value = $this->recursive_actions( $value );
+			} else {
+				$value = $this->replace_tags( $value );
+			}
+		}
+
+		return $actions;
 	}
 
 }

@@ -11,7 +11,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+//import './editor.scss';
 
 import { useState, useEffect, Fragment } from '@wordpress/element';
 import { withSelect, useSelect, select, dispatch, useDispatch } from '@wordpress/data';
@@ -20,7 +20,7 @@ import { compose } from '@wordpress/compose';
 import {
 	getConstraints,
 	getFieldsName
-} from '../components/merge-tags/functions';
+} from '../../components/merge-tags/functions';
 
 import {
 	InspectorControls,
@@ -28,6 +28,7 @@ import {
 	BlockControls,
 	InnerBlocks,
 	useBlockProps,
+	useInnerBlocksProps,
 	URLInput,
 	Inserter
 } from '@wordpress/block-editor';
@@ -88,8 +89,7 @@ const ALLOWED_BLOCKS = [
 	'core/paragraph',
 	'core/heading',
 	'core/columns',
-	'formello/actions',
-	'formello/columns',
+	'core/group',
 	'formello/button',
 	'formello/input',
 	'formello/email',
@@ -219,6 +219,7 @@ function Edit( props ) {
 	const blockProps = useBlockProps( {
 		className: getBlockClassNames(),
 	} );
+    //const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps );
 
 	return (
 		<div {...blockProps}>
@@ -230,9 +231,6 @@ function Edit( props ) {
 							label={ __( 'Add action', 'formello' ) }
 					        controls={ 
 					        	actions
-								.filter( (a) => {
-								  return a.active
-								})
 					        	.map( (a) => {
 					        		return {
 						        		title: a.title,
@@ -246,9 +244,6 @@ function Edit( props ) {
 					    {
 					    	attributes.actions.map( ( a, i ) => {
 					    		var action = _.find(actions, {type:a.type});
-					    		if( !action.active ){
-					    			return
-					    		}
 								return (
 									<ToolbarButton
 										label={ a.title }
@@ -358,9 +353,8 @@ function Edit( props ) {
 			<InnerBlocks
 				allowedBlocks={ ALLOWED_BLOCKS }
 				templateLock={ false }
-				renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
+				template={ [ [ 'formello/button', {} ] ] }
 			/>
-
 		</div>
 	);
 }

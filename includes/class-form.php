@@ -76,7 +76,7 @@ class Form {
 
 		if ( ! empty( $id ) ) {
 			$this->ID = $id;
-			$this->settings = get_post_meta( $id, 'formello_settings', true );
+			$this->settings = get_post_meta( $id, '_formello_settings', true );
 		}
 
 		$this->messages = array(
@@ -156,7 +156,25 @@ class Form {
 	 * @return array
 	 */
 	public function get_fields() {
-		return $this->settings['fields'];
+		return array_keys( $this->settings['fields'] );
+	}
+
+	/**
+	 * Get form actions
+	 *
+	 * @return array
+	 */
+	public function get_actions() {
+		return $this->settings['actions'];
+	}
+
+	/**
+	 * Set form actions
+	 *
+	 * @param array $actions The actions response.
+	 */
+	public function set_actions( $actions ) {
+		$this->settings['actions'] = $actions;
 	}
 
 	/**
@@ -165,7 +183,7 @@ class Form {
 	 * @return boolean
 	 */
 	public function is_debug() {
-		return $this->settings['debug'] && current_user_can( 'manage_options' ) ?: false;
+		return $this->settings['debug'] && current_user_can( 'manage_options' ) ? true : false;
 	}
 
 	/**

@@ -5,48 +5,6 @@
  */
 
 /* RESET */
-html :where(.editor-styles-wrapper) {
-	select,
-	input[type]:not([type=checkbox]),
-	textarea,
-	button {
-		font-family: system-ui;
-		-webkit-appearance: revert;
-		color: revert;
-		border: revert;
-		border-radius: revert;
-		background: revert;
-		box-shadow: revert;
-		text-shadow: revert;
-		outline: revert;
-		cursor: revert;
-		outline: none;
-		transform: revert;
-		font-size: revert;
-		line-height: revert;
-		padding: revert;
-		margin: revert;
-		min-height: revert;
-		max-width: revert;
-		vertical-align: revert;
-		font-weight: revert;
-	}
-
-	input[type]:disabled,
-	input[type]:focus, 
-	select:disabled,
-	select:hover,
-	select:focus,
-	button {
-		color: revert;
-		border-color: revert;
-		//background: revert;
-		box-shadow: revert;
-		text-shadow: revert;
-		cursor: revert;
-		transform: revert;
-	}
-}
 
 .wp-core-ui select {
 	font-size: revert;
@@ -60,15 +18,8 @@ html :where(.wp-block-formello-form) {
 	textarea[readonly] {
 		background-color: #fff;
 		outline: none;
-		box-sizing:content-box;
-	}
-	input[type]:not([type=checkbox]):not([type=radio]):not([type=color]),
-	select[readonly],
-	select:disabled,
-	button {
-		min-height: 1em;
-		padding: 10px;
-        max-width: 100%;
+		box-sizing: content-box;
+		margin: 0;
 	}
 	input[type=date] {
 		padding: 5px;
@@ -90,12 +41,6 @@ html :where(.wp-block-formello-form) {
 	margin-bottom: 1em;
 }
 
-.formello-group {
-	.block-editor-block-list__block.wp-block-formello-button {
-		margin-top: 0;
-	}
-}
-
 .formello-urlinput input {
     width: 100% !important;
     border-radius: 2px !important;
@@ -104,6 +49,36 @@ html :where(.wp-block-formello-form) {
 
 .formello-hidden {
 	display: flex;
+	align-items: center;
+}
+
+.wp-block-formello-form.as-row {
+	.formello-hidden { 
+		margin-left: 160px;
+	}
+}
+
+.wp-block-formello-form {
+	label.required::after {
+		content: " *";
+		color: red;
+	}
+}
+
+.wp-block-formello-button {
+	display: block;
+	&.left {
+		margin-left: 0;
+	}
+	&.right {
+		margin-right: 0;
+	}
+	&.center {
+		margin: auto;
+	}
+	&.wide {
+		width: 100%;
+	}
 }
 
 /* MODAL */
@@ -114,5 +89,5 @@ html :where(.wp-block-formello-form) {
 }
 
 .hide {
-	display: block !important;
+	visibility: hidden;
 }

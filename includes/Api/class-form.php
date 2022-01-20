@@ -159,10 +159,10 @@ class Form extends WP_REST_Controller {
 
 		$result = $wpdb->query( $sql );*/
 
-		$result = update_post_meta( $id, 'formello_settings', $settings );
+		$result = update_post_meta( $id, '_formello_settings', $settings );
 
 		if ( empty( $result ) ) {
-			$item = new \WP_Error( 'no_posts', __( 'No form found' ), array( 'status' => 404 ) ); // status can be changed to any number.
+			$result = new \WP_Error( 'no_posts', __( 'No form found' ), array( 'status' => 404 ) ); // status can be changed to any number.
 		}
 
 		$response = rest_ensure_response( $result );

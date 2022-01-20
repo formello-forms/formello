@@ -14,8 +14,7 @@ export function getActions(){
 			bcc: '',
 			replyTo: '',
 			subject: '',
-			message: '',
-			active: true
+			message: ''
 		}
 	]
 

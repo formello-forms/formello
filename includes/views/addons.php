@@ -1,7 +1,11 @@
 <?php
+
+namespace Formello/Views;
+
 defined( 'ABSPATH' ) || exit;
 
-$url	= 'https://formello.net/edd-api/products?nocache=' . time();
+
+$url    = 'https://formello.net/edd-api/products?nocache=' . time();
 $addons = get_transient( 'formello_addons', false );
 
 /*
@@ -46,7 +50,7 @@ if ( ! $addons ) {
 				<p><?php echo esc_html( $item['info']['excerpt'] ); ?></p>
 				<footer>
 					<a  target="_blank" class="button" href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" title="More about <?php echo esc_attr( $item['info']['slug'] ); ?>">Get this Extension</a>
-					<span class="type"><?php echo '0.00' === $item['pricing']['amount'] ? 'FREE' : esc_attr( $item['pricing']['amount'] ); ?></span>
+					<!-- <span class="type"><?php echo '0.00' === $item['pricing']['amount'] ? 'FREE' : esc_attr( $item['pricing']['amount'] ); ?></span>-->
 				</footer>
 			</div>
 		<?php endforeach; ?>

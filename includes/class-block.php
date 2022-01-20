@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use Formello\TagReplacers\Replacer;
+
 /**
  * Block Handler
  *
@@ -64,6 +66,20 @@ class Block {
 		);
 
 		register_block_type(
+			'formello/input',
+			array(
+				'render_callback' => array( $this, 'do_input_block' ),
+			)
+		);
+
+		register_block_type(
+			'formello/button',
+			array(
+				'render_callback' => array( $this, 'do_button_block' ),
+			)
+		);
+
+		register_block_type(
 			'formello/form',
 			array(
 				'attributes'      => array(
@@ -108,17 +124,9 @@ class Block {
 			}
 		}
 
-		wp_enqueue_script( 'formello-form-block' );
-		wp_enqueue_style( 'formello-form-block' );
+		do_action( 'formello_block_render' );
 
-		wp_localize_script(
-			'formello-form-block',
-			'formello',
-			array(
-				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => $settings,
-			)
-		);
+		wp_enqueue_script( 'formello-form-block' );
 
 		return $content;
 
@@ -147,6 +155,43 @@ class Block {
 		}
 
 		return do_blocks( $form->post_content );
+
+	}
+
+	/**
+	 * Render input block
+	 *
+	 * @param  array  $attributes The attributes of block.
+	 * @param  string $content The bock content.
+	 */
+	public function do_input_block( $attributes, $content = '' ) {
+
+		$replacer = new \Formello\TagReplacers\Replacer();
+
+		$replacement = $replacer->parse( $content );
+		$pattern = '/\{\{.*\}\}/';
+
+		$content = preg_replace( $pattern, $replacement, $content );
+
+		do_action( 'formello_input_block_render', $attributes, $content );
+
+		return $content;
+
+	}
+
+	/**
+	 * Render input block
+	 *
+	 * @param  array  $attributes The attributes of block.
+	 * @param  string $content The bock content.
+	 */
+	public function do_button_block( $attributes, $content = '' ) {
+
+		if ( ! is_admin() && ! defined( 'REST_REQUEST' ) ) {
+			$content .= wp_nonce_field();
+		}
+
+		return $content;
 
 	}
 

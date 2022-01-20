@@ -1,5 +1,5 @@
-.formello button {
-	
+.wp-block-formello-button {
+	border: none;
 	flex-direction: row;
 	align-self: flex-start;
 	&.center {
@@ -9,27 +9,26 @@
 		align-self: flex-end;
 	}
 	&.wide {
-		width: 100%;
+		align-self: auto;
 	}
 
 	button {
 		span{
-			transition: all .3s, background 1ms, border 1ms;
+			transition: width .3s;
 		}
 	}
 
 }
 
-.formello button:disabled:not(.running),
-.formello button[disabled]:not(.running){
-  opacity: .3;
-  cursor: revert;
+.wp-block-formello-form button:disabled:not(.running),
+.wp-block-formello-form button[disabled]:not(.running){
+	cursor: revert;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 768px) {
 
 	.as-row .wp-block-formello-button {
-		margin-left: 180px;
+		margin-left: 160px;
 		flex-direction: row;
 	}
 	

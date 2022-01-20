@@ -56,7 +56,7 @@ const {
 	applyFilters,
 } = wp.hooks;
 
-import MergeTags from '../../components/merge-tags';
+import MergeTags from '../../../components/merge-tags';
 
 export function ActionsModal ( props ) {
 

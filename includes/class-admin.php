@@ -225,7 +225,7 @@ class Admin {
 		wp_enqueue_script( 'formello-settings' );
 		wp_enqueue_style( 'formello-settings' );
 
-		// add settings script from addon
+		// add settings script from addon.
 		do_action( 'formello_settings_scripts' );
 	}
 
@@ -359,8 +359,9 @@ class Admin {
 		}
 		global $wpdb;
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
+		$table_posts  = "{$wpdb->prefix}posts";
 
-		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1;";
+		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM {$table_posts} f WHERE f.id = s.form_id );";
 
 		$badge = '';
 		$result = $wpdb->get_row( $sql );

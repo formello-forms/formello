@@ -26,9 +26,7 @@ import {
 	useEffect
 } from '@wordpress/element';
 
-import {
-	apiFetch,
-} from '@wordpress/api-fetch';
+import apiFetch from '@wordpress/api-fetch';
 
 import {
 	applyFilters,
@@ -51,10 +49,10 @@ const tabs = [
 		name: 'integrations',
 		title: 'Integrations',
 	},
-	/*{
+	{
 		name: 'licenses',
 		title: 'Licenses',
-	},*/
+	},
 ];
 
 /**
@@ -203,11 +201,12 @@ function App() {
 						    			'general' !== tab.name &&
 							    		<Button
 										isPrimary
+										aria-disabled={ isSaving }
+										isBusy={ isSaving }
 										disabled={ isSaving }
 										onClick={ ( e ) => updateSettings( e ) }
 									>
-										{ isSaving && <Spinner /> }
-										{ ! isSaving && __( 'Save', 'formello' ) }
+										{ __( 'Save', 'formello' ) }
 									</Button>
 						    		}			
 								</Fragment>;

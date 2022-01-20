@@ -93,6 +93,7 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 * Better handling of hidden input field
 * Added tools page
 * Better notification on settings
+* Added dynamic value to fields
 
 = 1.4.4 =
 * Better handling of button

@@ -18,7 +18,7 @@ use Formello\Rakit\Validation\Validator;
  *
  * @since 1.0.0
  */
-class Frontend {
+class Frontend_OLD {
 
 	/**
 	 * Validator
