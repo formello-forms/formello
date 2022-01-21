@@ -127,6 +127,9 @@ final class Formello {
 		$this->define( 'FORMELLO_PLUGIN_BASENAME', plugin_basename( FORMELLO_PLUGIN_FILE ) );
 		$this->define( 'FORMELLO_SUPPORT_URL', 'https://wordpress.org/support/plugin/formllo/' );
 		$this->define( 'FORMELLO_SETTINGS_URL', admin_url( 'options-general.php?page=formllo-settings' ) );
+		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed.
+		$this->define( 'FORMELLO_STORE_URL', 'https://formello.net' );
+
 	}
 
 	/**

@@ -46,7 +46,7 @@ export default function save( { attributes } ) {
 
 	const colorProps = getColorClassesAndStyles( attributes );
 
-	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
+	//const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
 
 	const buttonClasses = classnames(
 		'wp-block-button',
