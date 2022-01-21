@@ -26,14 +26,21 @@ class Form {
 	public $ID = 0;
 
 	/**
-	 * The form data
+	 * The form ID
+	 *
+	 * @var Int
+	 */
+	public $submission_id = 0;
+
+	/**
+	 * The data submitted
 	 *
 	 * @var array
 	 */
 	public $data = array();
 
 	/**
-	 * The form details
+	 * The submission details
 	 *
 	 * @var array
 	 */
@@ -75,19 +82,19 @@ class Form {
 	public function __construct( $id ) {
 
 		if ( ! empty( $id ) ) {
-			$this->ID = $id;
-			$this->settings = get_post_meta( $id, '_formello_settings', true );
+			$this->ID          = $id;
+			$this->settings    = get_post_meta( $id, '_formello_settings', true );
 		}
 
 		$this->messages = array(
 			'success' => isset( $this->settings['successMessage'] ) ? $this->settings['successMessage'] : __( 'Thanks for submitting this form.', 'formello' ),
 			'error'   => isset( $this->settings['errorMessage'] ) ? $this->settings['errorMessage'] : __( 'Ops. An error occurred.', 'formello' ),
-			'spam'   => __( 'Go away spammer.', 'formello' ),
+			'spam'    => __( 'Go away spammer.', 'formello' ),
 		);
 	}
 
 	/**
-	 * Insert form in DB
+	 * Select form from DB
 	 *
 	 * @param int $id The form ID.
 	 * @return Form
@@ -97,7 +104,7 @@ class Form {
 		global $wpdb;
 		$table = $wpdb->prefix . 'formello_forms';
 		$form  = $wpdb->get_row(
-			$wpdb->prepare( 'SELECT * from `%1s` WHERE id=%d;', array( $table, $id ) )
+			$wpdb->prepare( 'SELECT * from {$table} WHERE id=%d;', array( $id ) )
 		);
 
 		return $form;
@@ -106,14 +113,13 @@ class Form {
 	/**
 	 * Insert form in DB
 	 *
-	 * @param int $id The form ID.
-	 * @return Form
+	 * @param array $data The form sanitized data.
 	 */
 	public function populate_with_data( $data ) {
 
-		$this->data = $data['data'];
+		$this->data    = $data['fields'];
 		$this->details = $data['details'];
-		$this->errors = $data['errors'];
+		$this->actions = $data['actions'];
 
 	}
 
@@ -156,7 +162,7 @@ class Form {
 	 * @return array
 	 */
 	public function get_fields() {
-		return array_keys( $this->settings['fields'] );
+		return $this->settings['fields'];
 	}
 
 	/**
@@ -227,20 +233,15 @@ class Form {
 		// add details to record.
 		$data = array_merge( $data, $this->details );
 
-		if ( ! empty( $this->id ) ) {
-			$wpdb->update( $submissions_table, $data, array( 'id' => $this->id ) );
-			return null;
-		}
-
 		// insert new row.
 		$num_rows = $wpdb->insert( $submissions_table, $data );
 		if ( $num_rows > 0 ) {
-			$this->id = $wpdb->insert_id;
+			$this->submission_id = $wpdb->insert_id;
 		}
 
 		// insert also in submissions meta.
 		foreach ( $this->data as $key => $value ) {
-			$values[] = '(' . $form_id . ',' . $this->id . ', "' . $key . '" , "' . $value . '")';
+			$values[] = '(' . $form_id . ',' . $this->submission_id . ', "' . $key . '" , "' . $value . '")';
 		}
 		$sql = implode( ',', $values );
 
@@ -250,6 +251,13 @@ class Form {
 			VALUES
 			$sql"
 		);
+
+		/*$wpdb->query(
+			$wpdb->prepare(
+				"INSERT INTO {$submissions_meta_table} (form_id, submission_id, field_name, field_value) VALUES %s",
+				$sql
+			)
+		);*/
 
 	}
 

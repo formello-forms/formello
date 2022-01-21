@@ -89,27 +89,27 @@ final class Formello {
 		}
 
 		// Needs to be included at all times due to show_in_rest.
-		include_once FORMELLO_ABSPATH . 'includes2/utils/functions.php';
-		include_once FORMELLO_ABSPATH . 'includes2/utils/class-encryption.php';
-		include_once FORMELLO_ABSPATH . 'includes2/register-settings.php';
-		include_once FORMELLO_ABSPATH . 'includes2/register-cpt.php';
-		include_once FORMELLO_ABSPATH . 'includes2/rest/register-routes.php';
-		include_once FORMELLO_ABSPATH . 'includes2/class-assets.php';
-		include_once FORMELLO_ABSPATH . 'includes2/class-blocks.php';
-		include_once FORMELLO_ABSPATH . 'includes2/class-frontend.php';
-		include_once FORMELLO_ABSPATH . 'includes2/class-submission.php';
-		include_once FORMELLO_ABSPATH . 'includes2/class-form.php';
-		include_once FORMELLO_ABSPATH . 'includes2/actions/class-action.php';
-		include_once FORMELLO_ABSPATH . 'includes2/actions/class-email.php';
+		include_once FORMELLO_ABSPATH . 'includes/utils/functions.php';
+		include_once FORMELLO_ABSPATH . 'includes/utils/class-encryption.php';
+		include_once FORMELLO_ABSPATH . 'includes/register-settings.php';
+		include_once FORMELLO_ABSPATH . 'includes/register-cpt.php';
+		include_once FORMELLO_ABSPATH . 'includes/rest/register-routes.php';
+		include_once FORMELLO_ABSPATH . 'includes/class-assets.php';
+		include_once FORMELLO_ABSPATH . 'includes/class-blocks.php';
+		include_once FORMELLO_ABSPATH . 'includes/class-frontend.php';
+		include_once FORMELLO_ABSPATH . 'includes/class-submission.php';
+		include_once FORMELLO_ABSPATH . 'includes/class-form.php';
+		include_once FORMELLO_ABSPATH . 'includes/actions/class-action.php';
+		include_once FORMELLO_ABSPATH . 'includes/actions/class-email.php';
 
 		// Utility functions that are also used by register-routes.php so
 		// needs to be included at all times.
 
 		// Only include in the admin.
 		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			include_once FORMELLO_ABSPATH . 'includes2/admin/class-admin.php';
-			include_once FORMELLO_ABSPATH . 'includes2/admin/tables/class-forms.php';
-			include_once FORMELLO_ABSPATH . 'includes2/admin/tables/class-submissions.php';
+			include_once FORMELLO_ABSPATH . 'includes/admin/class-admin.php';
+			include_once FORMELLO_ABSPATH . 'includes/admin/tables/class-forms.php';
+			include_once FORMELLO_ABSPATH . 'includes/admin/tables/class-submissions.php';
 		}
 
 	}

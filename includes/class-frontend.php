@@ -11,7 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Formello\Rakit\Validation\Validator;
+use Formello\Form;
+use Formello\Submission;
 
 /**
  * Frontend Pages Handler
@@ -19,13 +20,6 @@ use Formello\Rakit\Validation\Validator;
  * @since 1.0.0
  */
 class Frontend {
-
-	/**
-	 * Validator
-	 *
-	 * @var $validator
-	 */
-	private $validator;
 
 	/**
 	 * Class instance.
@@ -49,8 +43,6 @@ class Frontend {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->validator = new Validator();
-
 		add_action( 'wp_post_formello', array( $this, 'listen_for_submit' ) );
 		add_action( 'wp_post_nopriv_formello', array( $this, 'listen_for_submit' ) );
 		add_action( 'wp_ajax_formello', array( $this, 'listen_for_submit' ) );
@@ -63,20 +55,25 @@ class Frontend {
 	public function listen_for_submit() {
 
 		// only respond to AJAX requests with _formello_id set.
+		// phpcs:ignore
 		if ( empty( $_POST['_formello_id'] )
 			|| empty( $_SERVER['HTTP_X_REQUESTED_WITH'] )
 			|| strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) !== strtolower( 'XMLHttpRequest' ) ) {
 			return;
 		}
 
-		$form = new Form( absint( $_POST['_formello_id'] ) );
-		$submission = new Processor( $form );
+		// phpcs:ignore
+		$form_id = absint( $_POST['_formello_id'] );
+		$form = new Form( $form_id );
+		$submission = new Submission( $form_id );
 
-		$result = $submission->process();
-		$form->populate_with_data( $result );
-		if ( empty( $result['errors'] ) ) {
-			$this->process_form( $form );
-		}
+		if ( ! $submission->validate() ) {
+			wp_send_json( $submission->response() );
+			wp_die();
+		};
+
+		$form->populate_with_data( $submission->get_data() );
+		$this->process_form( $form );
 
 		$response = $this->get_response( $form );
 
@@ -105,17 +102,17 @@ class Frontend {
 		do_action( 'formello_process_form', $form );
 
 		// process form actions.
-		if ( isset( $form_settings['actions'] ) ) {
+		if ( isset( $form->actions ) ) {
 
-			foreach ( $form_settings['actions'] as $action_settings ) {
+			foreach ( $form->actions as $action_settings ) {
 				/**
 				 * Processes the specified form action and passes related data.
 				 *
 				 * @param Form $form
 				 * @param array $action_settings
 				 */
-				//do_action( 'formello_process_form_action_' . $action_settings['type'], $form, $action_settings );
-				wp_schedule_single_event( time() + 60, 'formello_process_form_action_' . $action_settings['type'], array( 'form' => $form, 'action_settings' => $action_settings ), true );
+				//do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings );
+				wp_schedule_single_event( time() + 60, 'formello_process_form_action_' . $action_settings['type'], array( 'action_settings' => $action_settings ), true );
 			}
 		}
 
@@ -228,3 +225,4 @@ class Frontend {
 	}
 	*/
 }
+Frontend::get_instance();

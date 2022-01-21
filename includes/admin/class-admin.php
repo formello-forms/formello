@@ -371,6 +371,7 @@ class Admin {
 		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM {$table_posts} f WHERE f.id = s.form_id );";
 
 		$badge = '';
+		// phpcs:ignore
 		$result = $wpdb->get_row( $sql );
 		if ( $result->total ) {
 			$badge = sprintf(

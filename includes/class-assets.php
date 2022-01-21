@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use function Formello\Utils\formello_frontend_option;
+
 /**
  * Scripts and Styles Class
  *
@@ -75,13 +77,10 @@ class Assets {
 
 			wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
 		}
-		wp_set_script_translations( 'formello-form-block-editor', 'formello', plugin_dir_path( FORMELLO_FILE ) . 'languages' );
+		wp_set_script_translations( 'formello-form-block-editor', 'formello', FORMELLO_ABSPATH . 'languages' );
 
 		$settings = array(
-			'settingsURL' => admin_url( 'admin.php?page=formello-settings' ),
-			'templatesURL' => admin_url( 'edit.php?post_type=formello_form' ),
-			'formURL' => admin_url( 'post.php?post=' ),
-			'options' => get_option( 'formello' ),
+			'settings' => get_option( 'formello2' ),
 		);
 
 		wp_localize_script(
@@ -89,7 +88,7 @@ class Assets {
 			'formello',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => $settings,
+				'settings' => formello_frontend_option(),
 			)
 		);
 
@@ -131,7 +130,7 @@ class Assets {
 	 */
 	public function get_scripts() {
 
-		$script_asset_path = FORMELLO_PATH . '/build/index.asset.php';
+		$script_asset_path = FORMELLO_ABSPATH . '/build/index.asset.php';
 		if ( ! file_exists( $script_asset_path ) ) {
 			throw new \Error(
 				'You need to run `npm start` or `npm run build` for the "create-block/formello" block first.'
@@ -225,3 +224,4 @@ class Assets {
 	}
 
 }
+Assets::get_instance();

@@ -54,13 +54,13 @@ registerBlockType( 'formello/button', {
 	 * Block attributes
 	 */
 	attributes: {
-	    lock: {
+	    /*lock: {
 	        type: 'object',
 	        default: {
 	            move: true,
 	            remove: true
 	        }
-	    },
+	    },*/
 		form_id: {
 			type: 'number'
 		},
