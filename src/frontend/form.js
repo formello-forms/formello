@@ -7,7 +7,7 @@ class Formello {
 
 		//this.element.addEventListener( 'submit', this.handleSubmit.bind(this), true )
 
-		document.addEventListener( 'bouncerFormValid', this.handleSubmit.bind(this), true );
+		this.element.addEventListener( 'bouncerFormValid', this.handleSubmit.bind(this), true );
 
 		this.init();
 	}

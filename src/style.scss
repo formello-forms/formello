@@ -62,6 +62,9 @@ html {
 	}
 
 	label {
+		&.hide {
+			display: none;
+		}
 		span.required {
 			color: red;
 			margin: 0 5px;
