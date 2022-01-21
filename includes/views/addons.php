@@ -1,6 +1,6 @@
 <?php
 
-namespace Formello/Views;
+namespace Formello\Views;
 
 defined( 'ABSPATH' ) || exit;
 
