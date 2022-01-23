@@ -7,7 +7,7 @@ import edit from './edit';
 import save from './save';
 import getIcon from '../../utils/get-icon';
 import blockAttributes from './attributes';
-import './formatType';
+
 import './editor.scss'
 //import asyncDb from './asyncDb';
 
@@ -35,8 +35,9 @@ registerBlockType( 'formello/form', {
 	supports: {
 		reusable: false,
 		className: true,
+		multiple: false,
 		html: false,
-		inserter: ( 'formello_form' === pagenow || 'popper' === pagenow ) ? true : false,
+		inserter: ( 'formello_form' === pagenow ) ? true : false,
 		spacing: {
 			padding: true,
 		}

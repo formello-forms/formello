@@ -52,7 +52,10 @@ const variations = [
 	{
 		name: 'gdpr',
 		title: __( 'GDPR' ),
-		icon: 'shield',
+		icon: {
+			src: 'shield',
+			foreground: '#1e72bd',
+		},
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',

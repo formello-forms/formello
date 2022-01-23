@@ -193,13 +193,13 @@ class Blocks {
 	 */
 	public function register_block_category( $categories ) {
 		return array_merge(
-			$categories,
 			array(
 				array(
 					'slug'  => 'formello',
 					'title' => __( 'Formello' ),
 				),
-			)
+			),
+			$categories
 		);
 	}
 

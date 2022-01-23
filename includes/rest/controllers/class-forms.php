@@ -95,7 +95,7 @@ class Forms extends WP_REST_Controller {
 	public function get_items( $request ) {
 		$args = array(
 			'numberposts'    => -1, // -1 is for all
-			'post_type'      => 'formello-form', // or post, page.
+			'post_type'      => 'formello_form', // or post, page.
 			'orderby'        => 'date', // or date, rand.
 			'order'          => 'ASC', // or DESC.
 			'page'           => 1,
@@ -150,14 +150,6 @@ class Forms extends WP_REST_Controller {
 		$id = $request->get_param( 'id' );
 
 		$settings = $request['settings'];
-
-		/*global $wpdb;
-
-		$sql = "INSERT INTO {$wpdb->prefix}formello_forms (post_id,settings) VALUES (%d,%s) ON DUPLICATE KEY UPDATE settings = %s";
-
-		$sql = $wpdb->prepare( $sql, $id, maybe_serialize( $settings ), maybe_serialize( $settings ) );
-
-		$result = $wpdb->query( $sql );*/
 
 		$result = update_post_meta( $id, '_formello_settings', $settings );
 

@@ -100,6 +100,7 @@ const ALLOWED_BLOCKS = [
 import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
 import { store as blocksStore } from '@wordpress/block-editor';
 import usePostSaved from './savedHook';
+import { TemplatesModal } from './library';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -161,6 +162,7 @@ function Edit( props ) {
 
 	const [ active, setActive ] = useState(false);
 	const [ showActionsModal, setShowActionsModal ] = useState(false);
+	const [ isModalOpen, setModalOpen ] = useState( false );
 
 	useEffect(
 		() => {
@@ -225,6 +227,15 @@ function Edit( props ) {
 		<div {...blockProps}>
 			<InspectorControls>
 				<BlockControls>
+					<ToolbarGroup>
+						<ToolbarButton
+							label={ __( 'Template', 'popper' ) }
+							icon={ 'layout' }
+							onClick={ () => {
+								setModalOpen( 'templates' );
+							}}
+						/>
+					</ToolbarGroup>
 					<ToolbarGroup>
 					    <DropdownMenu
 					        icon={ 'admin-generic' }
@@ -339,6 +350,13 @@ function Edit( props ) {
 					} }
 				/>
 			</InspectorAdvancedControls>
+			{ 'templates' === isModalOpen &&
+				<TemplatesModal
+					type={ 'remote' }
+					onRequestClose={ () => setModalOpen( false ) }
+					clientId={ clientId }
+				/>
+			}
 			{
 				showActionsModal &&
 				<ActionsModal

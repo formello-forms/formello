@@ -16,7 +16,7 @@
 			"type": "string",
 			"default": "ld-ext-right",
 		},
-		"Type": {
+		"type": {
 			"type": "string",
 			"default": "ld-ring",
 		},

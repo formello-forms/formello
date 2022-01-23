@@ -49,7 +49,6 @@ export default function save( { attributes } ) {
 	//const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
 
 	const buttonClasses = classnames(
-		'wp-block-button',
 		colorProps.className,
 		attributes.iconPosition,
 		attributes.alignment

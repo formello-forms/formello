@@ -131,6 +131,7 @@ class Template extends WP_REST_Controller {
 	 */
 	public function sync_template_library( \WP_REST_Request $request ) {
 		delete_transient( 'formello_templates' );
+		delete_transient( 'popper_templates' );
 
 		return $this->success( true );
 	}
