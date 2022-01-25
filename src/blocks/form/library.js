@@ -74,7 +74,7 @@ export function TemplatesModal ( props ) {
 		const parsedBlocks = parse( content );
 
 		if ( parsedBlocks.length ) {
-			replaceBlocks( clientId, parsedBlocks );
+			replaceBlocks( clientId, parsedBlocks[0].innerBlocks );
 
 			cb( false );
 		}

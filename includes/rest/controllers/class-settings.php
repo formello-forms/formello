@@ -94,32 +94,9 @@ class Settings extends WP_REST_Controller {
 		//$current_settings = get_option( 'formello', formello_get_option_defaults() );
 		$new_settings     = $request->get_param( 'settings' );
 
-		update_option( 'formello2', $new_settings );
+		update_option( 'formello', $new_settings );
 
-		/*$sanitized = $this->recursive_sanitize_text_field( $new_settings );
-
-		if ( empty( $new_settings ) ) {
-			return $this->success( __( 'No changes found.', 'formello' ) );
-		}
-
-		if ( is_array( $sanitized ) ) {
-
-			$crypto    = new \Formello\Encryption();
-			$recaptcha = $crypto->encrypt( maybe_serialize( $sanitized['recaptcha'] ) );
-
-			// remove the secret from frontend options.
-			unset( $sanitized['recaptcha']['secret_key'] );
-
-			// remove the secret from frontend options.
-			unset( $sanitized['license'] );
-
-			update_option( 'formello', array_merge( $current_settings, $sanitized ) );
-
-			// update other oprtions.
-			update_option( 'formello_recaptcha', $recaptcha );
-
-			do_action( 'formello_settings_update', $sanitized );
-		}*/
+		do_action( 'formello_settings_update', $sanitized );
 
 		return rest_ensure_response(
 			array(
@@ -137,36 +114,14 @@ class Settings extends WP_REST_Controller {
 	 * @return mixed
 	 */
 	public function get_settings( \WP_REST_Request $request ) {
-		$settings             = array();
-		$frontend_settings    = get_option( 'formello2' );
-//var_dump($frontend_settings);
-//exit;
-		/*$license    = get_option( 'formello_license', '' );
 
-		$settings['messages'] = $frontend_settings['messages'];
-		$settings['addon_licenses'] = $frontend_settings['addon_licenses'];
-		$settings['license'] = $license;
-		$settings['license_status'] = get_option( 'formello_license_status' );
-
-		$settings['recaptcha'] = get_option(
-			'formello_recaptcha',
-			array(
-				'version'    => 3,
-				'site_key'   => '',
-				'secret_key' => '',
-				'threshold'  => 0.4,
-			)
-		);
-
-		$settings['integrations'] = array();*/
-
-		// filter to add integrations options.
-		//$settings = apply_filters( 'formello_settings', $settings );
+		$settings = array();
+		$settings = get_option( 'formello' );
 
 		return rest_ensure_response(
 			array(
 				'success'  => true,
-				'response' => $frontend_settings,
+				'response' => $settings,
 			)
 		);
 	}

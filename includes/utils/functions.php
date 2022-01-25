@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * @param string $integration The integration name to retrieve.
  */
 function formello_integration_option( $integration ) {
-	$settings = get_option( 'formello2' );
+	$settings = get_option( 'formello' );
 
 	if ( empty( $settings['integrations'][ $integration ] ) ) {
 		return array();
@@ -28,7 +28,7 @@ function formello_integration_option( $integration ) {
  * Function to retrieve unencrypted settings
  */
 function formello_frontend_option() {
-	$settings = get_option( 'formello2' );
+	$settings = get_option( 'formello' );
 
 	if ( empty( $settings ) ) {
 		return array();
@@ -89,31 +89,6 @@ function recursive_sanitize_text_field( $array ) {
 }
 
 /**
- * Hook before trash a form
- *
- * @param int $id The id of the form trashed.
- */
-function formello_trash_form( $id ) {
-	$post = get_post( $id );
-	if ( 'formello_form' !== $post->post_type ) {
-		return true;
-	}
-	global $wpdb;
-	$submissions_table = $wpdb->prefix . 'formello_submissions';
-	$hasSubmissions = $wpdb->query(
-		$wpdb->prepare(
-			"SELECT COUNT(*) as t FROM {$submissions_table} WHERE form_id = %d;",
-			array( $id )
-		)
-	);
-	if ( $hasSubmissions ) {
-		wp_safe_redirect( get_home_url() . '/wp-admin/edit.php?post_type=formello_form' );
-		die();
-	}
-
-}
-
-/**
  * Limit the blocks allowed in Gutenberg.
  * 
  * @param mixed $allowed_blocks Array of allowable blocks for Gutenberg Editor.
@@ -148,11 +123,34 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context )
 	    );
 	    return $allowed_blocks;
     }
-    return true;
+    return $allowed_blocks;
  
 }
 
-add_action( 'wp_trash_post', __NAMESPACE__ . '\formello_trash_form' );
-add_filter( 'option_formello2', __NAMESPACE__ . '\formello_decrypt_option' );
-add_filter( 'pre_update_option_formello2', __NAMESPACE__ . '\formello_encrypt_option' );
+add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option' );
+add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option' );
 add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
+
+
+function formello_action_row($actions, $post){
+add_thickbox();
+    //check for your post type
+    if ( 'formello_form' === $post->post_type ){
+		$view_link = sprintf(
+			'<a href="?post_type=formello_form&page=%s&form=%s">%s</a>',
+			'formello-submissions',
+			absint( $post->ID ),
+			__( 'View Entries', 'formello' )
+		);
+
+		array_splice( $actions, 2, 0, $view_link ); // splice in at position 3
+
+        /*do you stuff here
+        you can unset to remove actions
+        and to add actions ex:
+        */
+    }
+    return $actions;
+}
+
+add_filter( 'post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2);

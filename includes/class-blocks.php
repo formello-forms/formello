@@ -53,6 +53,7 @@ class Blocks {
 		register_block_type(
 			'formello/form-reusable',
 			array(
+				'title' => esc_html__( 'Form library', 'formello' ),
 				'attributes' => array(
 					'id' => array(
 						'type'    => 'number',
@@ -66,6 +67,7 @@ class Blocks {
 		register_block_type(
 			'formello/input',
 			array(
+				'title' => esc_html__( 'Form input', 'formello' ),
 				'render_callback' => array( $this, 'do_input_block' ),
 			)
 		);
@@ -73,6 +75,7 @@ class Blocks {
 		register_block_type(
 			'formello/button',
 			array(
+				'title' => esc_html__( 'Button', 'formello' ),
 				'render_callback' => array( $this, 'do_button_block' ),
 			)
 		);
@@ -80,6 +83,7 @@ class Blocks {
 		register_block_type(
 			'formello/form',
 			array(
+				'title' => esc_html__( 'Form', 'formello' ),
 				'attributes'      => array(
 					'recaptchaEnabled' => array(
 						'type'    => 'boolean',

@@ -41,7 +41,7 @@ html {
 
 	.formello-group {
 		flex-direction: row;
-		flex-wrap: wrap;
+		flex-wrap: nowrap;
 		align-items: center;
 		label {
 			width: 100%;

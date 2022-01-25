@@ -42,6 +42,8 @@ function formello_activate() {
 
 	global $wpdb;
 
+	delete_option( 'formello' );
+
 	// create table for storing form settings.
 	$wpdb->query(
 		"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (

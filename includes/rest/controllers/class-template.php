@@ -90,7 +90,7 @@ class Template extends WP_REST_Controller {
 			'post_type'     => 'formello_form',
 			'fields'        => '',
 			'no_found_rows' => true,
-			'post_status'   => 'any',
+			'post_status'   => 'publish',
 			'numberposts'   => 500, // phpcs:ignore
 		);
 

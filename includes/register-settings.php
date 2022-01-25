@@ -179,8 +179,8 @@ function register_settings() {
 	$defaults = apply_filters( 'formello_settings_defaults', $defaults );
 
 	register_setting(
-		'formello2',
-		'formello2',
+		'formello',
+		'formello',
 		array(
 			'description'  => __(
 				'Settings for the Block Visibility plugin.',

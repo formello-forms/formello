@@ -122,7 +122,7 @@ class Submission extends Form {
 	 */
 	private function validate_recaptcha() {
 
-		$settings = get_option( 'formello2' );
+		$settings = get_option( 'formello' );
 		$captcha_postdata = http_build_query(
 			array(
 				'secret'   => $settings['reCaptcha']['secret_key'],
