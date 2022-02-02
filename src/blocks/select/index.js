@@ -50,7 +50,7 @@ registerBlockType( 'formello/select', {
 	category: 'formello',
 
 	// Only allow this block when it is nested in a Formello/Form block
-	parent: [ 'formello/form' ],
+	parent: [ 'formello/form', 'core/column', 'core/group', 'core/row' ],
 
 	/**
 	 * Block attributes
@@ -71,7 +71,6 @@ registerBlockType( 'formello/select', {
 		html: true,
 		className: false,
 		reusable: false,
-		inserter: 'formello_form' === pagenow ? true : false,
 	},
 
 	/**

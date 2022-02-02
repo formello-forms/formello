@@ -172,12 +172,13 @@ class Forms extends \WP_List_Table {
 		global $wpdb;
 		$params = array();
 		$params['post_type'] = 'formello_form';
+		$params['post_type2'] = 'popper';
 		$table_forms  = "{$wpdb->prefix}posts";
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
 		$sql_old = "SELECT id, name as form_name, created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE EXISTS (SELECT * FROM {$table_submissions} s WHERE f.id = s.form_id)";
 
-		$sql = "SELECT id, post_title as form_name, post_date as created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE f.post_type = %s AND f.post_status ='publish'";
+		$sql = "SELECT id, post_title as form_name, post_date as created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE ( f.post_type = %s OR f.post_type = %s ) AND f.post_status ='publish'";
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$order              = sanitize_text_field( $_REQUEST['order'] );

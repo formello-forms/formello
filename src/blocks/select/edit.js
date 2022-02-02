@@ -85,7 +85,8 @@ export default function Edit( props ) {
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
 	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
-		'hide': attributes.hideLabel
+		'hide': attributes.hideLabel,
+		'required': attributes.required
 	} );
 
 	const addNewRow = (e) => {
@@ -185,7 +186,6 @@ export default function Edit( props ) {
 					name={ attributes.name }
 					className={ attributes.fieldClass }
 					multiple={ attributes.multiple }
-					readOnly
 					value={ defaultOpts( attributes.selectedOpt ) }
 				>
 					{ 

@@ -162,3 +162,10 @@ div.formello p {
         margin-left: 10px;
     }
 }
+
+.formello-urlinput {
+    input {
+        border: 1px solid rgb( 117, 117, 117 ) !important;
+        max-width: 100%;     
+    }
+}

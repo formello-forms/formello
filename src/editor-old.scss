@@ -1,0 +1,92 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+/* RESET */
+
+.wp-core-ui select {
+	font-size: revert;
+	line-height: revert;
+}
+
+/* STYLE */
+html :where(.wp-block-formello-form) {
+	input[type],
+	select,
+	textarea[readonly] {
+		background-color: #fff;
+		outline: none;
+		box-sizing: content-box;
+		margin: 0;
+	}
+	input[type=date] {
+		padding: 5px;
+	}
+	select[readonly]:hover {
+		color: #000;
+	}
+	button {
+		color: #000;
+		border: none;
+		font-size: 1rem;	
+	}
+}
+
+.formello-fieldset-options {
+	padding: 1em;
+	border: 1px solid #ddd;
+	margin-bottom: 1em;
+}
+
+.formello-urlinput input {
+    width: 100% !important;
+    border-radius: 2px !important;
+    border: 1px solid #757575 !important;
+}
+
+.formello-hidden {
+	display: flex;
+	align-items: center;
+}
+
+.wp-block-formello-form.as-row {
+	.formello-hidden { 
+		margin-left: 160px;
+	}
+}
+
+.wp-block-formello-form {
+	label.required::after {
+		content: " *";
+		color: red;
+	}
+}
+
+.wp-block-formello-button {
+	display: block;
+	&.left {
+		margin-left: 0;
+	}
+	&.right {
+		margin-right: 0;
+	}
+	&.center {
+		margin: auto;
+	}
+	&.wide {
+		width: 100%;
+	}
+}
+
+/* MODAL */
+
+.formello-modal-footer {
+	padding: 1em 0;
+	text-align: right;
+}
+
+.hide {
+	visibility: hidden;
+}

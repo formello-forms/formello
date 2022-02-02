@@ -133,7 +133,7 @@ add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks
 
 
 function formello_action_row($actions, $post){
-add_thickbox();
+	add_thickbox();
     //check for your post type
     if ( 'formello_form' === $post->post_type ){
 		$view_link = sprintf(
@@ -144,11 +144,6 @@ add_thickbox();
 		);
 
 		array_splice( $actions, 2, 0, $view_link ); // splice in at position 3
-
-        /*do you stuff here
-        you can unset to remove actions
-        and to add actions ex:
-        */
     }
     return $actions;
 }

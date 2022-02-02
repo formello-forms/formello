@@ -50,13 +50,8 @@ export default function save( { attributes } ) {
 
 	const buttonClasses = classnames(
 		colorProps.className,
-		attributes.iconPosition,
 		attributes.alignment
 	);
-	const buttonStyles = {
-		...colorProps.style,
-		...borderProps.style
-	};
 
 	const blockProps = useBlockProps.save({
 		className: buttonClasses
@@ -65,7 +60,6 @@ export default function save( { attributes } ) {
 	return (
 		<button 
 			className={ buttonClasses } 
-			//style={ buttonStyles }
 			type="submit"
 			{...blockProps}
 		>

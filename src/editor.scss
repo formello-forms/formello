@@ -1,66 +1,36 @@
-/**
- * The following styles get applied inside the editor only.
- *
- * Replace them with your own styles or remove the file completely.
- */
-
-/* RESET */
-
-.wp-core-ui select {
-	font-size: revert;
-	line-height: revert;
-}
-
-/* STYLE */
-html :where(.wp-block-formello-form) {
-	input[type],
-	select,
-	textarea[readonly] {
-		background-color: #fff;
-		outline: none;
-		box-sizing: content-box;
-		margin: 0;
-	}
-	input[type=date] {
-		padding: 5px;
-	}
-	select[readonly]:hover {
-		color: #000;
-	}
-	button {
-		color: #000;
-		border: none;
-		font-size: 1rem;	
-	}
-}
-
-.formello-fieldset-options {
-	padding: 1em;
-	border: 1px solid #ddd;
-	margin-bottom: 1em;
-}
-
-.formello-urlinput input {
-    width: 100% !important;
-    border-radius: 2px !important;
-    border: 1px solid #757575 !important;
-}
-
-.formello-hidden {
-	display: flex;
-	align-items: center;
-}
-
-.wp-block-formello-form.as-row {
-	.formello-hidden { 
-		margin-left: 160px;
-	}
-}
-
 .wp-block-formello-form {
+	select {
+		max-width: 100%;
+	}
+	.formello-group {
+		.wp-block {
+			margin: 0 0 0 10px;
+		}
+	}
 	label.required::after {
 		content: " *";
 		color: red;
+	}
+}
+
+.formello-templates-list {
+  display: flex;
+  flex-wrap: wrap;
+  li {
+    padding: 10px;
+	flex: 0 0 33.333%;
+	width: 33.333%;
+    a {
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}
+
+.formello-urlinput {
+	input {
+		width: 100% !important;
+		border: 1px solid #8c8f94 !important;
 	}
 }
 
@@ -80,13 +50,12 @@ html :where(.wp-block-formello-form) {
 	}
 }
 
-/* MODAL */
-
-.formello-modal-footer {
-	padding: 1em 0;
-	text-align: right;
+.formello-modal {
+	min-width: 500px;
 }
 
-.hide {
-	visibility: hidden;
+.formello-modal-buttons {
+	button {
+		margin-right: 10px;
+	}
 }

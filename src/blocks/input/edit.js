@@ -7,7 +7,8 @@ import {
 	AlignmentToolbar,
 	RichText,
 	InnerBlocks,
-	useBlockProps
+	useBlockProps,
+	useInnerBlocksProps
 } from '@wordpress/block-editor';
 
 import {
@@ -95,8 +96,10 @@ export default function Edit( props ) {
 		className: className,
 	} );
 
+    const innerBlocksProps = useInnerBlocksProps( blockProps );
+
 	return (
-		<div { ...blockProps }>
+		<div { ...innerBlocksProps }>
 			<BlockControls>
 			{
 				supported.includes('required') &&
@@ -140,7 +143,6 @@ export default function Edit( props ) {
 			) }
 			{ 'textarea' == attributes.type ? (
 				<textarea
-					readOnly
 					type={ attributes.type }
 					cols={ attributes.cols }
 					rows={ attributes.rows }
@@ -153,7 +155,6 @@ export default function Edit( props ) {
 					className={ attributes.fieldClass }
 					type={ attributes.type }
 					value={ attributes.value }
-					readOnly
 					checked={ attributes.checked }
 					placeholder={ attributes.placeholder }
 				/>
@@ -162,6 +163,7 @@ export default function Edit( props ) {
 				<InnerBlocks
 					allowedBlocks={ [ 'formello/button' ] }
 					templateLock={ 'all' }
+					orientation="horizontal"
 					template={ MY_TEMPLATE }
 				/>
 			}

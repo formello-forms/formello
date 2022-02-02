@@ -295,15 +295,14 @@ function Edit( props ) {
 							setAttributes( { 'hide': val } )
 						} }
 					/>
-					<BaseControl
-						label={ __( 'Redirect Url', 'formello' ) }
-					>
+					<div>
 						<URLInput
+							label={ __( 'Redirect Url', 'formello' ) }
 							value={ attributes.redirectUrl }
 							onChange={ newURL => setAttributes( { redirectUrl: newURL } ) }
 							className={ 'formello-urlinput' }
 						/>
-					</BaseControl>
+					</div>
 					<TextareaControl
 						label={ __( 'Success Message', 'formello' ) }
 						value={ attributes.successMessage }

@@ -119,10 +119,7 @@ export default function Edit( {
 
 	const colorProps = useColorProps( attributes );
 
-	const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
-
 	const buttonClasses = classnames(
-		'wp-block-button__link',
 		borderProps.className,
 		colorProps.className,
 		attributes.alignment,
@@ -181,8 +178,6 @@ export default function Edit( {
 					placeholder={ __( 'Enter button text...', 'formello' ) }
 					allowedFormats={ [ 'core/bold' ] }
 				/>
-				<div className={ iconClass }></div>
-
 		</button>
 	);
 }

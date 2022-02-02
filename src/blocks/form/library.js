@@ -6,9 +6,7 @@
 /**
  * External dependencies
  */
-import Masonry from 'react-masonry-component';
 import classnames from 'classnames';
-import LazyLoad from 'react-lazyload';
 
 /**
  * WordPress dependencies
@@ -68,13 +66,13 @@ export function TemplatesModal ( props ) {
         []
     );
 
-	const { replaceBlocks } = useDispatch( 'core/block-editor' );
+	const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 	
 	const insertTemplate = ( content, clientId, cb ) => {
 		const parsedBlocks = parse( content );
 
 		if ( parsedBlocks.length ) {
-			replaceBlocks( clientId, parsedBlocks[0].innerBlocks );
+			replaceInnerBlocks( clientId, parsedBlocks[0].innerBlocks );
 
 			cb( false );
 		}
@@ -115,22 +113,22 @@ export function TemplatesModal ( props ) {
 		<Modal
 			title={ __( 'Forms', 'formello' ) }
 			className={ classnames(
-				'formello-plugin-templates-modal',
-				'formello-plugin-templates-modal-hide-header',
-				showLoadingSpinner ? 'formello-plugin-templates-modal-loading' : ''
+				'formello-templates-modal',
+				'formello-templates-modal-hide-header',
+				showLoadingSpinner ? 'formello-templates-modal-loading' : ''
 			) }
 			position="top"
-			size="lg"
+			isFullScreen
 			onRequestClose={ onRequestClose }
 		>
 
 			{ showLoadingSpinner &&
-				<div className="formello-plugin-templates-modal-loading-spinner"><Spinner /></div>
+				<div className="formello-templates-modal-loading-spinner"><Spinner /></div>
 			}
 			<Fragment>
 
-				<div className="formello-plugin-templates-categories-row">
-					<div className="formello-plugin-templates-count">
+				<div className="formello-templates-categories-row">
+					<div className="formello-templates-count">
 						<RawHTML>
 							{ sprintf(
 								/* translators: Number of templates. */
@@ -155,14 +153,14 @@ export function TemplatesModal ( props ) {
 				}
 
 				{ allTemplates && 
-					<ul className="formello-plugin-templates-list">
+					<ul className="formello-templates-list">
 						{ allTemplates.map( ( template ) => {
 							const withPreview = !! template.content;
 							const templateTitle = decodeEntities( template.title );
 
 							return (
 								<li
-									className={ classnames( 'formello-plugin-templates-list-item', 'formello-plugin-templates-list-item-no-thumb' ) }
+									className={ classnames( 'formello-templates-list-item', 'formello-templates-list-item-no-thumb' ) }
 									key={ template.id }
 								>
 									<a
@@ -187,7 +185,7 @@ export function TemplatesModal ( props ) {
 												blocks={ parse( template.content ) }
 											/>
 										}
-										<div className="formello-plugin-templates-list-item-title">{ templateTitle }</div>
+										<div className="formello-templates-list-item-title">{ templateTitle }</div>
 									</a>
 								</li>
 							);
