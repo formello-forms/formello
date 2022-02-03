@@ -73,11 +73,14 @@ function formello_encrypt_option( $settings ) {
 /**
  * Recursive sanitation for an array
  *
- * @param array $array the array of data.
+ * @param mixed $array the array of data.
  *
  * @return mixed
  */
 function recursive_sanitize_text_field( $array ) {
+	if ( ! is_array( $array ) ) {
+		return sanitize_text_field( $array );
+	}
 	foreach ( $array as $key => &$value ) {
 		if ( is_array( $value ) ) {
 			$value = recursive_sanitize_text_field( $value );

@@ -91,12 +91,12 @@ class Settings extends WP_REST_Controller {
 	 * @return mixed
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
-		//$current_settings = get_option( 'formello', formello_get_option_defaults() );
-		$new_settings     = $request->get_param( 'settings' );
+
+		$new_settings = $request->get_param( 'settings' );
 
 		update_option( 'formello', $new_settings );
 
-		do_action( 'formello_settings_update', $sanitized );
+		do_action( 'formello_settings_update', $new_settings );
 
 		return rest_ensure_response(
 			array(
