@@ -4,7 +4,7 @@
 
 import './blocks/form';
 import './blocks/form/actions/email';
-import './blocks/reusable-form';
+import './blocks/library';
 import './blocks/fieldset';
 import './blocks/select';
 import './blocks/input';

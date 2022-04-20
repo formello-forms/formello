@@ -51,58 +51,36 @@ class Blocks {
 	 */
 	public function register_blocks() {
 		register_block_type(
-			'formello/form-reusable',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/library',
 			array(
-				'title' => esc_html__( 'Form library', 'formello' ),
-				'attributes' => array(
-					'id' => array(
-						'type'    => 'number',
-						'default' => 0,
-					),
-				),
 				'render_callback' => array( $this, 'do_reusable_block' ),
 			)
 		);
 
 		register_block_type(
-			'formello/input',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/input',
 			array(
-				'title' => esc_html__( 'Form input', 'formello' ),
 				'render_callback' => array( $this, 'do_input_block' ),
 			)
 		);
 
 		register_block_type(
-			'formello/button',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/select'
+		);
+
+		register_block_type(
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/fieldset'
+		);
+
+		register_block_type(
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/button',
 			array(
-				'title' => esc_html__( 'Button', 'formello' ),
 				'render_callback' => array( $this, 'do_button_block' ),
 			)
 		);
 
-		register_block_type(
-			'formello/form',
-			array(
-				'title' => esc_html__( 'Form', 'formello' ),
-				'attributes'      => array(
-					'recaptchaEnabled' => array(
-						'type'    => 'boolean',
-						'default' => false,
-					),
-					'storeSubmissions' => array(
-						'type'    => 'boolean',
-						'default' => true,
-					),
-					'hide'             => array(
-						'type'    => 'boolean',
-						'default' => false,
-					),
-				),
-				'editor_script'   => 'formello-form-block-editor',
-				'editor_style'    => 'formello-form-block-editor',
-				'style'           => 'formello-form-block',
-				'render_callback' => array( $this, 'do_formello_block' ),
-			)
+		register_block_type_from_metadata(
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/form',
 		);
 
 	}
@@ -115,20 +93,7 @@ class Blocks {
 	 */
 	public function do_formello_block( $attributes, $content = '' ) {
 
-		$settings = get_option( 'formello' );
-		$recaptcha_url = 'https://www.google.com/recaptcha/api.js';
-
-		if ( ! is_admin() && $attributes['recaptchaEnabled'] && ! empty( $settings['recaptcha']['site_key'] ) ) {
-			if ( 1 === (int) $settings['recaptcha']['version'] ) {
-				wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?onload=formelloCallback&render=explicit', array(), FORMELLO_VERSION, true );
-			} else {
-				wp_enqueue_script( 'google-recaptcha', $recaptcha_url . '?render=' . $settings['recaptcha']['site_key'], array(), FORMELLO_VERSION, true );
-			}
-		}
-
 		do_action( 'formello_block_render' );
-
-		wp_enqueue_script( 'formello-form-block' );
 
 		return $content;
 
@@ -167,6 +132,9 @@ class Blocks {
 	 * @param  string $content The bock content.
 	 */
 	public function do_input_block( $attributes, $content = '' ) {
+
+		$replacer = new TagReplacers\Replacer();
+		$content   = $replacer->parse( $content );
 
 		do_action( 'formello_input_block_render', $attributes, $content );
 

@@ -12,7 +12,7 @@ import {
 	toString,
 } from "lodash";
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 const {
 	getBlock,
@@ -81,7 +81,7 @@ export function getFieldsName( clientId ) {
 	const fieldsBlock = getFieldsBlock( clientId )
 
 	fieldsBlock.forEach( ( b ) => {
-		fields.[b.attributes.name] = b.attributes.type
+		fields[b.attributes.name] = b.attributes.type
 	});
 
 	return fields;
@@ -162,7 +162,7 @@ export function getFieldConstraint( field ) {
 	let constraints = [];
 
 	if( field.attributes.type == 'url' ){
-		constraint.push( 'url' );
+		constraints.push( 'url' );
 	}
     if( field.attributes.required ){
 		constraints.push('required')

@@ -1,0 +1,85 @@
+{
+	"$schema": "https://json.schemastore.org/block.json",
+	"apiVersion": "2",
+	"name": "formello/form",
+	"title": "Form",
+	"description": "A block collection to build forms.",
+	"category": "formello",
+	"icon": "block-default",
+	"textdomain": "formello",
+	"keywords": ["form", "forms", "formello"],
+	"attributes": {
+		"id": {
+			"type": "number"
+		},
+		"name": {
+			"type": "string",
+			"default": ""
+		},
+		"successMessage": {
+			"type": "string",
+			"default": ""
+		},
+		"errorMessage": {
+			"type": "string",
+			"default": ""
+		},
+		"redirectUrl": {
+			"type": "string",
+			"default": ""
+		},
+		"debug": {
+			"type": "boolean",
+			"default": false
+		},
+		"recaptchaEnabled": {
+			"type": "boolean",
+			"default": false
+		},
+		"recaptchaVersion": {
+			"type": "number",
+			"default": 3
+		},
+		"labelIsBold": {
+			"type": "boolean",
+			"default": false
+		},
+		"labelAlign": {
+			"type": "string",
+			"default": ""
+		},
+		"requiredText": {
+			"type": "string",
+			"default": "*"
+		},
+		"storeSubmissions": {
+			"type": "boolean",
+			"default": true
+		},
+		"hide": {
+			"type": "boolean",
+			"default": false
+		},
+		"constraints": {
+			"type": "array"
+		},
+		"fields": {
+			"type": "array"
+		},
+		"formSettings": {
+			"type": "object"
+		},
+		"asRow": {
+			"type": "boolean",
+			"default": false
+		},
+		"actions": {
+			"type": "array",
+			"default": []
+		}		
+	},
+	"editorScript": "file:../../../build/index.js",
+	"editorStyle": "file:../../../build/index.css",
+	"style": "file:../../../build/style-index.css",
+	"viewScript": "file:../../../build/frontend.js"
+}

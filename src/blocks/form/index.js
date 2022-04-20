@@ -6,12 +6,12 @@ import variations from './variations';
 import edit from './edit';
 import save from './save';
 import getIcon from '../../utils/get-icon';
-import blockAttributes from './attributes';
+import metadata from './block.json';
 
-//import './editor.scss' 
-//import asyncDb from './asyncDb';
+import './editor.scss' 
+import asyncDb from './asyncDb';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 
 /**
@@ -22,15 +22,8 @@ import { registerBlockType } from '@wordpress/blocks';
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( 'formello/form', {
-    apiVersion: 2,
-	title: __( 'Form', 'formello' ),
-	description: __( 'Drive conversions with beautiful forms.', 'formello' ),
+registerBlockType( metadata, {
 	icon: getIcon( 'form' ),
-	category: 'formello',
-	example: {},
-	keywords: [ __( 'form' ), __( 'forms' ), __( 'formello' ) ],
-	attributes: blockAttributes,	
 	variations: variations,
 	supports: {
 		reusable: false,
@@ -42,11 +35,6 @@ registerBlockType( 'formello/form', {
 			padding: true,
 		}
 	},
-	styles: [
-		//{ name: 'normal', label: __( 'Normal' ), isDefault: true },
-		//{ name: 'medium', label: __( 'Medium' ) },
-		//{ name: 'big', label: __( 'Big' ) },
-	],
 	example: {
 		innerBlocks: [
 			{

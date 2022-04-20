@@ -22,10 +22,6 @@ import getIcon from '../utils/get-icon';
 import General from './general.js';
 import Notices from './notices.js'
 
-const components = {
-    general: General,
-};
-
 function App() {
 	
 	const [ isAPISaving, setAPISaving ] = useState('');
@@ -54,7 +50,12 @@ function App() {
 		},
 	];
 
-	applyFilters( 'formello.ToolsTabs', toolsTabs );
+	const components = {
+	    general: General,
+	};
+
+	applyFilters( 'formello.ToolsTabs', '', toolsTabs );
+	applyFilters( 'formello.ToolsComponents', '', components );
 
 	const initialTab = getQueryArg( window.location.href, 'tab' );
 
@@ -75,7 +76,6 @@ function App() {
 				{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
 
 				<TabPanel
-					className='formello-tablist'
 					tabs={ toolsTabs }
 					onSelect={ ( tabName ) => updateUrl( tabName ) }
 					initialTabName={ initialTab }

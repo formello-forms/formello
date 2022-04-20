@@ -23,7 +23,7 @@ $formello_fields = json_decode( $submission->data );
 	esc_html_e( wp_sprintf( 'Submission %d', $submission->id ), 'formello' );
 ?>
 </h1>
-<a href="<?php echo esc_attr( $submissions_page ); ?>" class="page-title">&lsaquo; <?php esc_html_e( 'Back to submissions list', 'formello' ); ?></a>
+<a href="<?php echo esc_attr( $submissions_page ); ?>" class="page-title-action">&lsaquo; <?php esc_html_e( 'Back to submissions list', 'formello' ); ?></a>
 <hr class="wp-header-end">
 <div class="wrap">
 	<div>
@@ -36,7 +36,7 @@ $formello_fields = json_decode( $submission->data );
 					echo sprintf( '<th>%s</th>', esc_html( str_replace( '_', ' ', ucfirst( strtolower( $formello_field ) ) ) ) );
 					echo '<td>';
 					// phpcs:ignore
-					echo $this->formello_field_value( $formello_value, 500 );
+					echo formello_field_value( $formello_value, 500 );
 					echo '</td>';
 					echo '</tr>';
 			}

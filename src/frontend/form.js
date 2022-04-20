@@ -87,7 +87,7 @@ class Formello {
 
 					parent.emitEvent( 'submitted', this.element )
 
-					if ( response.error ) {
+					if ( response.errors.length ) {
 					  parent.emitEvent( 'error', this.element )
 					} else {
 					  parent.emitEvent( 'success', this.element )
@@ -130,14 +130,14 @@ class Formello {
 		if( ! JSON.parse( recaptcha ) ){
 			return
 		}
-		this.enableRecaptcha = true
 
 		var recaptchaUrl = 'https://www.google.com/recaptcha/api.js';
 
-		var sitekey = formello.settings.reCaptcha.site_key;
+		var sitekey = formello.settings.reCaptcha?.site_key;
+		var version = formello.settings.reCaptcha?.version;
 		var buttons = this.element.getElementsByTagName( 'button' )
 
-		if( '1' === formello.settings.reCaptcha.version ){
+		if( '1' === version ){
 			var recaptchaDiv = document.createElement( 'div' );
 			recaptchaDiv.classList.add( 'g-recaptcha' );
 			recaptchaDiv.setAttribute( 'data-sitekey', sitekey );
@@ -152,7 +152,8 @@ class Formello {
 			recaptchaInput.classList.add( 'formello-g-recaptcha' );
 			this.element.appendChild( recaptchaInput )
 		}
-		if( sitekey ){
+		if( sitekey && version ){
+			this.enableRecaptcha = true
 			var script = document.createElement('script');
 			script.src = recaptchaUrl;
 
@@ -169,7 +170,7 @@ class Formello {
 			.then( (token) => {
 				this.element.querySelector( '.formello-g-recaptcha' ).value = token
 				this.submitForm()
-			});
+			})
         });
 
 	}
@@ -179,7 +180,7 @@ class Formello {
 		msg.classList.add( message.type )
 		msg.innerHTML = '<p>' + message.text + '</p>'
 
-		if( errors ){
+		if( errors.length ){
 			var ul = document.createElement('ul');
 
 			msg.appendChild(ul);

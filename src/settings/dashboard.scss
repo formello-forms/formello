@@ -1,4 +1,4 @@
-$settings-container-width: 750px;
+$settings-container-width: 1024px;
 
 .formello_form_page_formello-settings #wpcontent, .formello_form_page_formello-tools #wpcontent {
 	padding: 0;
@@ -35,6 +35,28 @@ $settings-container-width: 750px;
 	}
 }
 
+.formello-tablist {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.formello-help {
+	flex: 0 0 25%;
+	max-width: 250px;
+}
+
+@media screen and (max-width: 782px) {
+	.formello-help {
+		flex-basis: 100%;
+		max-width: 100%;
+	}
+}
+
+.formello-settings-tab {
+	flex: 1 0 auto;
+}
+
 .components-placeholder.formello-settings-placeholder {
 	margin-top: 20px;
 	margin-left: auto;
@@ -64,10 +86,6 @@ $settings-container-width: 750px;
 
 	.components-card__body label {
 		font-weight: bold;
-	}
-
-	.components-card__body .components-button {
-		margin-right: 1em;
 	}
 
 	.formello-action-message {

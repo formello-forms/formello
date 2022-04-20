@@ -9,6 +9,7 @@ import {
 	Icon,
 	SelectControl,
 	ExternalLink,
+	Flex,
 	__experimentalInputControl as InputControl
 } from '@wordpress/components';
 
@@ -28,7 +29,7 @@ export default function General( props ) {
 
 	const {
 		getSetting,
-		saveLicense
+		saveSetting
 	} = props;
 
 	const [loading, setLoading] = useState(false);
@@ -46,7 +47,7 @@ export default function General( props ) {
 		} ).then( ( result ) => {
 			setLoading( false );
 			if( result.response.success ){
-				setLicenseStatus( result.response.license )
+				saveSetting( 'license_status', result.response.license )
 			};
 			message.classList.add( 'formello-action-message--show' );
 			message.classList.remove( 'formello-action-message--error' );
@@ -62,7 +63,7 @@ export default function General( props ) {
 	};
 
 	return (
-		<Fragment>
+
 		<Card>
 
 			<CardHeader>
@@ -86,7 +87,7 @@ export default function General( props ) {
 					label={ __( 'License Key', 'formello' ) }
 					value={ getSetting( 'license' ) }
 					onChange={ (val) => {
-						saveLicense( val )
+						saveSetting( 'license', val )
 					} }
 				/>
 				<p>
@@ -123,50 +124,6 @@ export default function General( props ) {
 
 		</Card>
 
-		<Card>
-
-			<CardHeader>
-				<h2>{ __( 'Need help?', 'formello' ) }</h2>
-			</CardHeader>
-
-			<CardBody>
-
-				<p>{ __( 'We would love to help you out if you need any help.', 'formello' ) }</p>
-
-				<Button 
-					isSecondary 
-					target="_blank"
-					href="https://docs.formello.net">
-						{ __( 'Documentation', 'formello' ) }
-				</Button>
-				<Button 
-					isSecondary 
-					target="_blank"
-					href="https://wordpress.org/support/plugin/formello/">
-						{ __( 'Ask a question', 'formello' ) }
-				</Button>
-
-				<h3>{ __( 'Do you like the plugin?', 'formello' ) }</h3>
-
-				<p>{ __( 'If you like the plugin you can share a review to help us and spread some love!', 'formello' ) }</p>
-
-				<Button 
-					isPrimary 
-					target="_blank"
-					className="formello-ratings"
-					href="https://wordpress.org/support/plugin/formello/reviews/#new-post">
-						{ __( 'Leave a review', 'formello' ) }
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-				</Button>
-
-			</CardBody>
-
-		</Card>
-		</Fragment>
 	);
 
 };

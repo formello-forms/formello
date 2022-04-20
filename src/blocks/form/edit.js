@@ -13,14 +13,11 @@ import { __ } from '@wordpress/i18n';
  */
 //import './editor.scss';
 
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, useEffect, Fragment, RawHTML } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 import { withSelect, useSelect, select, dispatch, useDispatch } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 import { compose } from '@wordpress/compose';
-import {
-	getConstraints,
-	getFieldsName
-} from '../../components/merge-tags/functions';
 
 import {
 	InspectorControls,
@@ -70,7 +67,8 @@ import {
 	ToolbarGroup,
 	Icon,
 	Dropdown,
-	DropdownMenu
+	DropdownMenu,
+	Notice
 } from '@wordpress/components';
 
 import classnames from 'classnames';
@@ -80,9 +78,9 @@ import getIcon from '../../utils/get-icon';
 import { Mailchimp, GetResponse, Email } from './actions/icons';
 
 const icons = {
-    mailchimp: Mailchimp,
-    getresponse: GetResponse,
-    email: Email,
+	mailchimp: Mailchimp,
+	getresponse: GetResponse,
+	email: Email,
 };
 
 const ALLOWED_BLOCKS = [
@@ -91,6 +89,7 @@ const ALLOWED_BLOCKS = [
 	'core/columns',
 	'core/group',
 	'formello/button',
+	'formello/fieldset',
 	'formello/input',
 	'formello/email',
 	'formello/checkboxes',
@@ -124,8 +123,6 @@ function Edit( props ) {
 		innerBlocks
 	} = props;
 
-	const saved = usePostSaved();
-
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
 		[]
@@ -135,30 +132,9 @@ function Edit( props ) {
 		[]
 	);
 
-    const post_id = useSelect(select =>
-        select("core/editor").getCurrentPostId()
-    );
-
-	if( saved ){
-
-		apiFetch( {
-			path: '/formello/v1/form/' + post_id,
-			method: 'POST',
-			data: {
-				settings: {
-					storeSubmissions: attributes.storeSubmissions,
-					recaptchaEnabled: attributes.recaptchaEnabled,
-					hide: attributes.hide,
-					debug: attributes.debug,
-					fields: getFieldsName( clientId ),
-					constraints: getConstraints( clientId ),
-					actions: attributes.actions,
-				},
-			},
-		} ).then( ( result ) => {
-			// DO NOTHING
-		} );
-	}
+	const post_id = useSelect(select =>
+		select("core/editor").getCurrentPostId()
+	);
 
 	const [ active, setActive ] = useState(false);
 	const [ showActionsModal, setShowActionsModal ] = useState(false);
@@ -221,10 +197,31 @@ function Edit( props ) {
 	const blockProps = useBlockProps( {
 		className: getBlockClassNames(),
 	} );
-    //const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps );
+
+	const changeRequiredText = ( value ) => {
+		setAttributes({ requiredText: value });
+
+		// Update the child block's attributes
+		var children = select('core/block-editor').getBlocksByClientId( clientId )[0].innerBlocks;
+		children.forEach( (child) => {
+			dispatch('core/block-editor').updateBlockAttributes( child.clientId, { requiredText: value } )
+		});
+	}
+
+	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+		allowedBlocks: ALLOWED_BLOCKS,
+		templateLock: false,
+		template: [ [ 'formello/button' ] ]		
+	} );
+
+	const settingsUrl = addQueryArgs( 'edit.php', {
+		post_type: 'formello_form',
+		page: 'formello-settings',
+		tab: 'recaptcha'
+	} )
 
 	return (
-		<div {...blockProps}>
+		<div {...innerBlocksProps}>
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
@@ -237,24 +234,24 @@ function Edit( props ) {
 						/>
 					</ToolbarGroup>
 					<ToolbarGroup>
-					    <DropdownMenu
-					        icon={ 'admin-generic' }
+						<DropdownMenu
+							icon={ 'admin-generic' }
 							label={ __( 'Add action', 'formello' ) }
-					        controls={ 
-					        	actions
-					        	.map( (a) => {
-					        		return {
-						        		title: a.title,
-						        		icon: icons[a.type],
-						                onClick: () => {
+							controls={ 
+								actions
+								.map( (a) => {
+									return {
+										title: a.title,
+										icon: icons[a.type],
+										onClick: () => {
 											addAction( a.type ) 
-						                },
-						        	}
-					        } ) }
-					    />
-					    {
-					    	attributes.actions.map( ( a, i ) => {
-					    		var action = _.find(actions, {type:a.type});
+										},
+									}
+							} ) }
+						/>
+						{
+							attributes.actions.map( ( a, i ) => {
+								var action = _.find(actions, {type:a.type});
 								return (
 									<ToolbarButton
 										label={ a.title }
@@ -266,8 +263,8 @@ function Edit( props ) {
 										} }
 									/>
 								)
-					    	} )
-					    }
+							} )
+						}
 					</ToolbarGroup>
 				</BlockControls>
 				<PanelBody title={ __( 'Settings', 'formello' ) } initialOpen={ true }>
@@ -285,6 +282,19 @@ function Edit( props ) {
 							setAttributes( { 'recaptchaEnabled': val } ) 
 						} }
 					/>
+					{ '' === formello.settings.reCaptcha.site_key || '' === formello.settings.reCaptcha.secret_key && attributes.recaptchaEnabled && 
+						<div className="block-editor-contrast-checker">
+							<Notice status="warning" isDismissible={false}>
+								<RawHTML>
+									{ sprintf(
+										/* translators: Number of templates. */
+										__( 'Please be sure to add a ReCaptcha API key on %s', 'formello' ),
+										`<a href="${ settingsUrl }">settings page</a>` )
+									}
+								</RawHTML>
+							</Notice>
+						</div>
+					}
 					<ToggleControl
 						label={ __(
 							'Hide form after submission',
@@ -324,13 +334,13 @@ function Edit( props ) {
 				{
 					attributes.asRow && 
 					<SelectControl
-				        label={ __( 'Label horizontal position', 'formello' ) }
-				        value={ attributes.labelAlign }
-				        options={ [
-				            { label: 'left', value: 'label-left' },
-				            { label: 'right', value: 'label-right' }
-				        ] }
-				        onChange={ ( val ) => { setAttributes( { labelAlign: val } ) } }
+						label={ __( 'Label horizontal position', 'formello' ) }
+						value={ attributes.labelAlign }
+						options={ [
+							{ label: 'left', value: 'label-left' },
+							{ label: 'right', value: 'label-right' }
+						] }
+						onChange={ ( val ) => { setAttributes( { labelAlign: val } ) } }
 					/>
 				}
 				<ToggleControl
@@ -347,6 +357,14 @@ function Edit( props ) {
 					onChange={ ( val ) => {
 						setAttributes( { 'debug': val } )
 					} }
+				/>
+				<TextControl
+					label={ __(
+						'Required Field Indicator',
+						'formello'
+					) }
+					value={ attributes.requiredText }
+					onChange={ changeRequiredText }
 				/>
 			</InspectorAdvancedControls>
 			{ 'templates' === isModalOpen &&
@@ -367,11 +385,9 @@ function Edit( props ) {
 					} }
 				/>
 			}
-			<InnerBlocks
-				allowedBlocks={ ALLOWED_BLOCKS }
-				templateLock={ false }
-				template={ [ [ 'formello/button', {} ] ] }
-			/>
+
+			{children}
+		
 		</div>
 	);
 }

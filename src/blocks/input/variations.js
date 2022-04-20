@@ -4,6 +4,11 @@
 import { __ } from '@wordpress/i18n';
 import getIcon from '../../utils/get-icon';
 
+const shield = {
+			src: 'shield',
+			foreground: '#1e72bd',
+		}
+
 /** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
 
 /**
@@ -14,7 +19,7 @@ import getIcon from '../../utils/get-icon';
 const variations = [
 	{
 		name: 'text',
-		title: __( 'Text field' ),
+		title: __( 'Text' ),
 		icon: getIcon('text'),
 		attributes: {
 			name: 'text',
@@ -44,7 +49,7 @@ const variations = [
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',
-			label: 'Input Checkbox',
+			label: 'Checkbox',
 			placeholder: undefined
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
@@ -52,19 +57,12 @@ const variations = [
 	{
 		name: 'gdpr',
 		title: __( 'GDPR' ),
-		icon: {
-			src: 'shield',
-			foreground: '#1e72bd',
-		},
+		icon: 'shield',
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',
-			label: 'GDPR agreement',
-			hideLabel: true,
-			placeholder: undefined,
-			required: true,
-			showHelp: true,
-			help: __( 'Accept our agreement', 'formello' )
+			label: __( 'Accept our agreement', 'formello' ),
+			required: true
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -75,7 +73,7 @@ const variations = [
 		attributes: {
 			name: 'radio',
 			type: 'radio',
-			label: 'Input Radio',
+			label: 'Radio',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -86,7 +84,7 @@ const variations = [
 		attributes: {
 			name: 'range',
 			type: 'range',
-			label: 'Input Range',
+			label: 'Range',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -97,7 +95,7 @@ const variations = [
 		attributes: {
 			name: 'email',
 			type: 'email',
-			label: 'Input Email',
+			label: 'Email',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -108,7 +106,7 @@ const variations = [
 		attributes: {
 			name: 'number',
 			type: 'number',
-			label: 'Input Number',
+			label: 'Number',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -119,7 +117,7 @@ const variations = [
 		attributes: {
 			name: 'color',
 			type: 'color',
-			label: 'Input Color',
+			label: 'Color',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -130,7 +128,7 @@ const variations = [
 		attributes: {
 			name: 'date',
 			type: 'date',
-			label: 'Input Date',
+			label: 'Date',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -141,7 +139,7 @@ const variations = [
 		attributes: {
 			name: 'time',
 			type: 'time',
-			label: 'Input Time',
+			label: 'Time',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -152,7 +150,7 @@ const variations = [
 		attributes: {
 			name: 'tel',
 			type: 'tel',
-			label: 'Input Tel',
+			label: 'Tel',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -163,14 +161,14 @@ const variations = [
 		attributes: {
 			name: 'url',
 			type: 'url',
-			label: 'Input URL',
+			label: 'URL',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
 	{
 		name: 'inputbutton',
-		title: __( 'Input with button' ),
-		description: __( 'Display an input with a button on same row.' ),
+		title: __( 'with button' ),
+		description: __( 'Display an with a button on same row.' ),
 		icon: getIcon( 'input-button' ),
 		attributes: {
 			name: 'email',
@@ -180,20 +178,6 @@ const variations = [
 			withButton: true
 		},
 		innerBlocks: [ [ 'formello/button' ] ],
-		scope: [ 'block', 'inserter', 'transform' ],
-	},
-	{
-		name: 'rangeoutput',
-		title: __( 'Input range with value' ),
-		description: __( 'Display an output field with the value of the range selected.' ),
-		icon: getIcon( 'range' ),
-		attributes: {
-			name: 'range',
-			type: 'range',
-			label: 'Range',
-			checked: undefined,
-			withOutput: true
-		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
 	{

@@ -23,15 +23,14 @@ import {
 	__experimentalInputControl as InputControl
 } from '@wordpress/components';
 
-//import './editor.scss';
-
 import { useEffect, Fragment } from '@wordpress/element';
+import { select } from "@wordpress/data";
 
 import classnames from 'classnames';
 
 import getIcon from '../../utils/get-icon';
-import MergeTags from '../../components/merge-tags';
 import DisplayOpts from '../../components/css-options';
+import Label from '../../components/label';
 import Options from '../../components/field-options';
 import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
@@ -55,7 +54,8 @@ export default function Edit( props ) {
 	const {
 		attributes,
 		setAttributes,
-		clientId
+		clientId,
+		context
 	} = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[attributes.type]
@@ -79,24 +79,32 @@ export default function Edit( props ) {
 		},
 		[]
 	);
+
 	const className = classnames( {
 		'formello': true,
 		'formello-group': attributes.withButton || 'range' === attributes.type,
 		'formello-group grouped': attributes.grouped,
-		'formello-row formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
+		'formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 		'formello-textarea': ( 'textarea' == attributes.type ),
 	} )
-
-	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
-		'hide': attributes.hideLabel,
-		'required': attributes.required
-	} );
 
 	const blockProps = useBlockProps( {
 		className: className,
 	} );
 
-    const innerBlocksProps = useInnerBlocksProps( blockProps );
+    const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+		allowedBlocks: [ 'formello/button' ],
+		template: MY_TEMPLATE,
+		templateLock: 'all',
+		orientation: 'horizontal'
+	}); 
+
+    const onChange = (e) => {
+    	if( 'checkbox' === attributes.type || 'radio' === attributes.type ){
+			setAttributes({ checked: !attributes.checked })
+    	}
+    	setAttributes({ value: e.target.value })
+    }
 
 	return (
 		<div { ...innerBlocksProps }>
@@ -109,33 +117,15 @@ export default function Edit( props ) {
 			}
 			</BlockControls>
 			<InspectorControls>
-				
 				<Options {...props} />
-
-				{
-					'hidden' !== attributes.type &&
-					<AdvancedOptions {...props} />
-				}
-
 			</InspectorControls>
 			<InspectorAdvancedControls>
-				<DisplayOpts { ...props } />
+				<AdvancedOptions {...props} />
 			</InspectorAdvancedControls>
 
+
 			{ 'hidden' !== attributes.type ? (
-				<RichText
-					tagName="label"
-					className={ labelClassName }
-					value={ attributes.label }
-					onChange={ ( val ) =>
-						setAttributes( { label: val } )
-					}
-					placeholder={ __(
-						'Enter label...',
-						'formello'
-					) }
-					allowedFormats={ [] }
-				/>
+				<Label {...props} />
 			)
 			:
 			(
@@ -147,6 +137,7 @@ export default function Edit( props ) {
 					cols={ attributes.cols }
 					rows={ attributes.rows }
 					value={ attributes.value }
+					onChange={ onChange }
 					className={ attributes.fieldClass }
 					placeholder={ attributes.placeholder }
 				></textarea>
@@ -154,18 +145,14 @@ export default function Edit( props ) {
 				<input
 					className={ attributes.fieldClass }
 					type={ attributes.type }
-					value={ attributes.value }
+					defaultValue={ attributes.value }
 					checked={ attributes.checked }
+					onChange={ onChange }
 					placeholder={ attributes.placeholder }
 				/>
 			) }
 			{ attributes.withButton && 
-				<InnerBlocks
-					allowedBlocks={ [ 'formello/button' ] }
-					templateLock={ 'all' }
-					orientation="horizontal"
-					template={ MY_TEMPLATE }
-				/>
+				(children)
 			}
 			{ attributes.withOutput && 
 				<output></output>

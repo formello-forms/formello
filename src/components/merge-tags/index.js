@@ -30,7 +30,8 @@ export default function mergeTags( props ) {
 		attributes,
 		setAttributes,
 		onChange,
-		className
+		className,
+		noFields
 	} = props;
 
 	const icon = 'list-view';
@@ -46,8 +47,6 @@ export default function mergeTags( props ) {
 				placeholder={ placeholder }
 				suffix={ 
 				    <Dropdown
-				        className="my-container-class-name"
-				        contentClassName="my-popover-content-classname"
 				        position="bottom right"
 				        renderToggle={ ( { isOpen, onToggle } ) => (
 				            <Button 

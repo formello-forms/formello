@@ -34,21 +34,15 @@ export default function save( { attributes, className } ) {
 		'formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
 	} )
 
-	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
+	const labelClassName = classnames( {
 		'hide': attributes.hideLabel,
-	} )
-
-	const fieldClass = classnames( attributes.fieldClass, {
-		'formello-date': attributes.type == 'date' || attributes.datepicker,
-		'formello-time': attributes.type == 'time'
+		'textarea-label': 'textarea' === attributes.type,
 	} )
 
 	// include only supported attributes
 	let htmlAttrs = pick( attributes, SUPPORTED_ATTRIBUTES[attributes.type] );
 	// clean empty attributes
 	htmlAttrs = pickBy( htmlAttrs, identity );
-
-	htmlAttrs.className = fieldClass ? fieldClass : undefined;
 
 	if( attributes.validation ){
 		htmlAttrs['data-bouncer-message'] = attributes.validation
@@ -71,9 +65,8 @@ export default function save( { attributes, className } ) {
 			>
 				{ attributes.label }
 				{ attributes.required && !attributes.hideRequired && (
-					<span className='required'>*</span>
+					<span className='required'>{ attributes.requiredText }</span>
 				) }
-				{ ( attributes.hasTooltip && attributes.tooltip.length > 0 ) && <span className='tooltip'>?<span className="tooltiptext">{ attributes.tooltip }</span></span> }
 			</label>
 			) }
 			{ attributes.type == 'textarea' ? (

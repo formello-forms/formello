@@ -1,6 +1,9 @@
 @use 'button';
 @use 'spinner';
 
+$label-width: 190px;
+$small-margin: 0 8px;
+
 html {
 	scroll-behavior: smooth;
 }
@@ -23,7 +26,7 @@ html {
 		flex-wrap: wrap;
 		label {
 			order: 2;
-			margin: 0 5px;
+			padding: 0 10px;
 		}
 		input {
 			order: 1;
@@ -31,7 +34,7 @@ html {
 		small {
 			order: 3;
 			width: auto;
-			margin: 0 8px;
+			margin: $small-margin;
 		}
 		.error-message {
 			order: 4;
@@ -48,10 +51,19 @@ html {
 		}
 		input {
 			flex: auto;
-			width: auto;
+			width: 1%;
 		}
 		button {
 			align-self: stretch;
+			margin-left: 10px;
+		}
+		&.grouped {
+			input {
+				border-right: 0;				
+			}
+			button {
+				margin: 0;
+			}
 		}
 		.error-message {
 			order: 4;
@@ -60,12 +72,15 @@ html {
 	}
 
 	label {
+		padding: 0 10px 0 0;
+		box-sizing: border-box;
 		&.hide {
 			display: none;
 		}
 		span.required {
 			color: red;
 			margin: 0 5px;
+			font-weight: normal;
 		}
 	}
 
@@ -73,12 +88,7 @@ html {
 		font-size: inherit;
 		font-family: inherit;
 		line-height: inherit;
-		padding: 8px;
 		margin: 0;
-	}
-
-	input[type=date], input[type=time] {
-		padding: 5px;
 	}
 
 	fieldset {
@@ -94,7 +104,6 @@ html {
 
 	legend {
 		margin: .5em 0;
-		font-weight: bold;
 	}
 
 	output {
@@ -105,19 +114,52 @@ html {
 		border-radius: 3px;
 		min-width: 2.4em;
 		min-height: 2.6em;
+		text-align: center;
 	}
 
 	button {
 		cursor: pointer;
 		position: relative;
+		background-color: #dddddd;
+	}
+
+	&.is-bold {
+		label {
+			font-weight: 500;
+		}
+		.formello-checkbox {
+			label {
+				font-weight: normal;
+			}
+		}
 	}
 
 	.wp-block-formello-button {
 		font-size: inherit;
 		font-family: inherit;
 		line-height: inherit;
-		padding: 8px;
 		border: 1px solid transparent;
+	}
+
+	.wp-block-formello-button {
+		border: none;
+		flex-direction: row;
+		align-self: flex-start;
+		&.center {
+			align-self: center;
+		}
+		&.right {
+			align-self: flex-end;
+		}
+		&.wide {
+			align-self: auto;
+		}
+
+	}
+
+	.wp-block-formello-form button:disabled:not(.running),
+	.wp-block-formello-form button[disabled]:not(.running){
+		cursor: revert;
 	}
 
 	/* HONEYPOT position */
@@ -165,34 +207,37 @@ html {
 				flex-direction: row;
 				flex-wrap: wrap;
 				label {
-					min-width: 160px;
-					width: 160px;
+					min-width: $label-width;
+					width: $label-width;
 					align-self: center;
+					&.textarea-label {
+						align-self: auto;
+					}
 				}
-
 				input, textarea, select {
 					flex: 1;
 				}
 				small {
 					width: 100%;
-					margin-left: 160px;
+					margin-left: $label-width;
 				}
 				.error-message {
 					width: 100%;
-					margin-left: 160px;
+					margin-left: $label-width;
 				}
 			}
 
 			.formello-checkbox {
-				margin-left: 160px;
+				margin-left: $label-width;
 				label {
 					min-width: auto;
+					width: auto;
 				}
 				input {
 					flex: 0;
 				}
 				small {
-					margin: 0;
+					margin: $small-margin;
 					width: auto;
 				}
 				.error-message {
@@ -208,18 +253,25 @@ html {
 			}
 
 			.formello-group {
-				margin-left: 160px;
 				.error-message {
 					width: 100%;
+					margin-left: 0;
+				}
+				button {
 					margin-left: 0;
 				}
 			}
 
 			fieldset {
-				margin-left: 160px;
+				margin-left: $label-width;
 				.formello-checkbox {
 					margin-left: 0;
 				}
+			}
+
+			.wp-block-formello-button {
+				margin-left: $label-width;
+				flex-direction: row;
 			}
 		}
 

@@ -29,18 +29,12 @@ class Replacer {
 	 * @param string $template The template variable.
 	 */
 	public function parse( $template ) {
-		preg_match( '/\{\{ *(\w+)(?:\.([\w\.]+))? *(?:\|\| *(\w+))? *\}\}/', $template, $matches );
 
-		if ( $matches ) {
-			$tag     = $matches[1];
-			$param   = ! isset( $matches[2] ) ? '' : $matches[2];
-			$default = ! isset( $matches[3] ) ? $template : $matches[3];
+		$pattern = '/\{\{ *(\w+)(?:\.([\w\.]+))? *(?:\|\| *(\w+))? *\}\}/i';
 
-			$template = $this->get_data( $tag, $param, $default );
+		$result = preg_replace_callback( $pattern, array( $this, 'get_data2' ), $template );
 
-		};
-
-		return $template;
+		return $result;
 	}
 
 	/**
@@ -64,8 +58,48 @@ class Replacer {
 		if ( 'meta' === $tag ) {
 			$value = $this->replacers['wp']->post_meta( $param );
 		}
+		return ! empty( $value ) ? $value : $default;
+
+	}
+
+	/**
+	 * Parse the template variables
+	 *
+	 * @param string $tag The tag variable.
+	 * @param string $param The param variable.
+	 * @param string $default Default value.
+	 */
+	protected function replace( $tag, $param, $default ) {
+		$replacement = $this->replacers[ $tag ];
+
+		if ( array_key_exists( $tag, $this->replacers ) ) {
+			$value = method_exists( $replacement, $param ) ? $replacement->$param() : $default;
+		}
+
+		if ( 'fields' === $tag ) {
+			$value = $replacement->get_data( $param );
+		}
+
+		if ( 'meta' === $tag ) {
+			$value = $this->replacers['wp']->post_meta( $param );
+		}
 
 		return ! empty( $value ) ? $value : $default;
+
+	}
+
+	protected function get_data2( $matches ) {
+
+		if ( $matches ) {
+			$tag     = $matches[1];
+			$param   = ! isset( $matches[2] ) ? '' : $matches[2];
+			$default = ! isset( $matches[3] ) ? $matches[0] : $matches[3];
+
+			$result = $this->replace( $tag, $param, $default );
+
+		};
+
+		return $result;
 
 	}
 

@@ -573,7 +573,7 @@ msgstr "Messaggio Tooltip"
 #: build/index.js:9 src/blocks/fields/input/edit.js:294
 #: src/blocks/fields/input/inspector-controls.js:242
 msgid "Disabled"
-msgstr "Disablitato"
+msgstr "Disabilitato"
 
 #: build/index.js:9 src/blocks/fields/input/edit.js:301
 #: src/blocks/fields/input/inspector-controls.js:249

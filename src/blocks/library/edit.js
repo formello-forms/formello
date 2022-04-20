@@ -1,4 +1,4 @@
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 import { SelectControl, PanelBody, Disabled, Toolbar, ToolbarButton, ToolbarGroup, Placeholder, Button } from '@wordpress/components';
 import { useEffect, useState, Fragment } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
@@ -42,7 +42,7 @@ export default function Edit ( props ) {
 
     if ( attributes.id ) {
         blockContent = (<ServerSideRender
-	            block="formello/form-reusable"
+	            block="formello/library"
 	            attributes={ attributes }
 	        />)
     }

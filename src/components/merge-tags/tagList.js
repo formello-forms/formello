@@ -11,7 +11,7 @@ import {
 import { get, isEmpty, has } from 'lodash';
 
 function TagList( props ) {
-	const { onSelect, data } = props;
+	const { onSelect, data, noFields } = props;
 
 	const mapList = ( list ) => {
 		return !isEmpty(list)

@@ -42,6 +42,7 @@ import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
 
+import Help from './help.js';
 import General from './general.js';
 import Recaptcha from './recaptcha.js';
 import Messages from './messages.js';
@@ -104,7 +105,7 @@ function App() {
 
     const addNotice = ( status, content, type='snackbar' ) => {
         removeNotice( 'settings' )
-        createNotice( status, content, {type: type, id: 'settings'} );
+        createNotice( status, content, { type: type, id: 'settings' } );
     }
 
 	const getSetting = ( group, name, defaultVal ) => {
@@ -123,7 +124,6 @@ function App() {
 
 	const updateSettings = ( e ) => {
 		setSaving( true )
-		const message = e.target.nextElementSibling;
 
 		apiFetch( {
 			path: '/formello/v1/settings',
@@ -160,10 +160,10 @@ function App() {
 		} );
 	};
 
-	const saveLicense = ( value ) => {
+	const saveSetting = ( key, value ) => {
 		setSettings( {
 				...settings,
-				license: value
+				[key]: value
 		} );
 	};
 
@@ -194,44 +194,50 @@ function App() {
 					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
 
 					<TabPanel
-						className='formello-tablist'
 						tabs={ tabs }
 						initialTabName={ initialTab }
 						onSelect={ ( tabName ) => updateUrl( tabName ) }
 					>
 						{ ( tab ) => {
 						    const SettingsTab = components[tab.name];
-						    return <Fragment>
-						    		<SettingsTab 
-										saveLicense={ saveLicense.bind(this) }
-										changeSettings={ changeSettings.bind(this) }
-										getSetting={ getSetting.bind(this) }
-						    		/>
-						    		{
-						    			'general' !== tab.name &&
+						    return <div className='formello-tablist'>
+						    		<div className='formello-settings-tab'>
+
+							    		<SettingsTab 
+											saveSetting={ saveSetting.bind(this) }
+											changeSettings={ changeSettings.bind(this) }
+											getSetting={ getSetting.bind(this) }
+											addNotice={ addNotice }
+							    		/>
+
 							    		<Button
-										isPrimary
-										aria-disabled={ isSaving }
-										isBusy={ isSaving }
-										disabled={ isSaving }
-										onClick={ ( e ) => updateSettings( e ) }
-									>
-										{ __( 'Save', 'formello' ) }
-									</Button>
-						    		}			
-								</Fragment>;
+											isPrimary
+											aria-disabled={ isSaving }
+											isBusy={ isSaving }
+											disabled={ isSaving }
+											onClick={ ( e ) => updateSettings( e ) }
+										>
+											{ __( 'Save', 'formello' ) }
+										</Button>
+
+						    		</div>
+
+									<Help />
+									<Notices />
+
+								</div>;
 
 						}}
 
 					</TabPanel>
-
-					<Notices />
 
 					{ applyFilters( 'formello.dashboard.settings', '', this ) }
 
 					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
 
 				</div>
+
+
 
 			</Fragment>
 		);

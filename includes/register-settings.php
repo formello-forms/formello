@@ -20,6 +20,9 @@ defined( 'ABSPATH' ) || exit;
 function register_settings() {
 
 	$settings = array(
+		'log' => array(
+			'type' => 'boolean',
+		),
 		'license' => array(
 			'type' => 'string',
 		),
@@ -137,6 +140,7 @@ function register_settings() {
 	$settings = apply_filters( 'formello_settings', $settings );
 
 	$defaults = array(
+		'log' => false,
 		'license' => '',
 		'license_status' => false,
 		'addon_licenses' => array(),

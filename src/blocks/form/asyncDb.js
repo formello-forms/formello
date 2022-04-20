@@ -1,12 +1,15 @@
 import apiFetch from '@wordpress/api-fetch';
 import { subscribe, select } from '@wordpress/data';
+import {
+	getConstraints,
+	getFieldsName
+} from '../../components/merge-tags/functions';
 
 // disable on widgets screen
-if( select('core/editor') != null ){
-	let wasSavingPost = select( 'core/editor' ).isSavingPost();
-	let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
-	let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();
-}
+let wasSavingPost = select( 'core/editor' ).isSavingPost();
+let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
+let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();
+
 
 const updateTransient = ( innerBlocks ) => {
 	apiFetch( {
@@ -26,7 +29,6 @@ subscribe( () => {
 	const isSavingPost = select( 'core/editor' ).isSavingPost();
 	const isAutosavingPost = select( 'core/editor' ).isAutosavingPost();
 	const isPreviewingPost = select( 'core/editor' ).isPreviewingPost();
-	const hasActiveMetaBoxes = select( 'core/edit-post' ).hasMetaBoxes();
 	
 	// Save metaboxes on save completion, except for autosaves that are not a post preview.
 	const shouldTriggerAjax = (
@@ -55,16 +57,21 @@ subscribe( () => {
 					path: '/formello/v1/form/' + block.attributes.id,
 					method: 'PUT',
 					data: {
-						name: block.attributes.name,
 						settings: {
 							storeSubmissions: block.attributes.storeSubmissions,
 							recaptchaEnabled: block.attributes.recaptchaEnabled,
 							hide: block.attributes.hide,
-							constraints: block.attributes.constraints,
-							fields: block.attributes.fields,
+							debug: block.attributes.debug,
+							fields: getFieldsName( block.clientId ),
+							constraints: getConstraints( block.clientId ),
 							actions: block.attributes.actions,
-						},
-					},
+							messages: {
+								success: block.attributes.successMessage,
+								error: block.attributes.errorMessage
+							}
+						}					
+					}
+
 				} ).then( ( result ) => {
 					updateTransient();
 				} );

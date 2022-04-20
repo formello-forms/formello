@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Formello\Form;
-use Formello\Submission;
 
 /**
  * Frontend Pages Handler
@@ -65,17 +64,15 @@ class Frontend {
 		// phpcs:ignore
 		$form_id = absint( $_POST['_formello_id'] );
 		$form = new Form( $form_id );
-		$submission = new Submission( $form_id );
 
-		if ( ! $submission->validate() ) {
-			wp_send_json( $submission->response() );
+		if ( ! $form->validate() ) {
+			wp_send_json( $form->get_response() );
 			wp_die();
 		};
 
-		$form->populate_with_data( $submission->get_data() );
 		$this->process_form( $form );
 
-		$response = $this->get_response( $form );
+		$response = $form->get_response();
 
 		wp_send_json( $response, 200 );
 		wp_die();
@@ -101,7 +98,7 @@ class Frontend {
 		*/
 		do_action( 'formello_process_form', $form );
 
-		// process form actions.
+		// process form actions asynchronously.
 		if ( isset( $form->actions ) ) {
 
 			foreach ( $form->actions as $action_settings ) {
@@ -121,7 +118,7 @@ class Frontend {
 		 *
 		 * @param Form $form
 		 */
-		do_action( "formello_form_{$form->ID}_success", $form );
+		do_action( "formello_form_{$form->get_id()}_success", $form );
 
 		/**
 		 * General purpose hook after all form actions have been processed.
@@ -130,50 +127,6 @@ class Frontend {
 		 */
 		do_action( 'formello_form_success', $form );
 
-	}
-
-	/**
-	 * Get the response
-	 *
-	 * @param int   $error_code The error code number.
-	 * @param Form  $form The form.
-	 * @param Data $data The input data.
-	 * @return array
-	 */
-	private function get_response( Form $form ) {
-
-		$data = $form->to_array();
-
-		// return success response for empty error code string or spam (to trick bots).
-		if ( empty( $data['errors'] ) ) {
-			$response = array(
-				'message'   => array(
-					'type' => 'success',
-					'text' => $form->get_message( 'success' ),
-				),
-				'hide_form' => (bool) $data['settings']['hide'],
-			);
-
-			if ( ! empty( $data['redirect_url'] ) ) {
-				$response['redirect_url'] = $data['settings']['redirectUrl'];
-			}
-
-			if( current_user_can('manage_options') && $form->is_debug() ){
-				$response['debug'] = $data['debug'];
-			}
-
-			return apply_filters( 'formello_form_response', $response );
-		}
-
-		// return error response.
-		return array(
-			'message' => array(
-				'type'   => 'error',
-				'text'   => $form->get_message( 'error' ),
-				'errors' => $data['errors'],
-				'debug'  => current_user_can('manage_options') ? $data['debug'] : ''
-			),
-		);
 	}
 
 	/*

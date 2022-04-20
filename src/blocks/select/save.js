@@ -24,27 +24,31 @@ export default function save( { attributes, className } ) {
 		attributes.name = attributes.id
 	}
 
-	let labelClasses = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign )
+	const labelClassName = classnames( {
+		'hide': attributes.hideLabel,
+		'textarea-label': attributes.multiple,
+	} )
 
 	const blockProps = useBlockProps.save({
 		className: 'formello'
 	});
 
+	const name = attributes.name + (attributes.multiple ? '[]' : '');
+
 	return (
 		<div className="formello">
 			<label
-				className={ labelClasses }
+				className={ labelClassName }
 				htmlFor={ attributes.id }
 			>
 				{ attributes.label }
-				{ attributes.required && attributes.markRequired && (
-					<span className='required'>*</span>
+				{ attributes.required && !attributes.hideRequired && (
+					<span className='required'>{ attributes.requiredText }</span>
 				) }
-				{ attributes.hasTooltip && <span className='tooltip'>?</span> }
 			</label>
 			<select
 				id={ attributes.id }
-				name={ attributes.name }
+				name={ name }
 				className={ attributes.fieldClass }
 				multiple={ attributes.multiple }
 				defaultValue={ attributes.selectedOpt }

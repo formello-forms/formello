@@ -39,7 +39,7 @@ const IntegrationsTab = ( props ) => {
 
 				<RawHTML>
 					{ sprintf(
-						__( '<p>Go to %s to download your preferred integrations. We are working on other integrations. A lot more will be available soon.</p>', 'formello' ),
+						__( '<p>Go to %s to download your preferred integrations. We are working on other integrations.</p>', 'formello' ),
 						`<a href="https://formello.net/addons/" target="_blank">addons page</a>` )
 					}
 				</RawHTML>

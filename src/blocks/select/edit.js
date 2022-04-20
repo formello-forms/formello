@@ -47,7 +47,7 @@ const { createBlock, cloneBlock } = wp.blocks;
 import OptionsList from './opts';
 import { OptionsModal } from './modal';
 import classnames from 'classnames';
-import DisplayOpts from '../../components/css-options'
+import Label from '../../components/label'
 import getIcon from '../../utils/get-icon';
 import Toolbar from '../../components/field-options/toolbar';
 import Options from '../../components/field-options';
@@ -83,11 +83,6 @@ export default function Edit( props ) {
 
 	const [ options, setOptions ] = useState( attributes.options );
 	const [ isModalOpen, setModalOpen ] = useState( false );
-
-	const labelClassName = classnames( attributes.labelClass, attributes.labelAlign, attributes.labelVAlign, {
-		'hide': attributes.hideLabel,
-		'required': attributes.required
-	} );
 
 	const addNewRow = (e) => {
 		setAttributes( {
@@ -162,31 +157,19 @@ export default function Edit( props ) {
 					</ToolbarGroup>
 				</BlockControls>
 				<Options {...props} />
-				<AdvancedOptions {...props} />
 			</InspectorControls>
 			<InspectorAdvancedControls>
-				<DisplayOpts {...props}/>		
+				<AdvancedOptions {...props} />
 			</InspectorAdvancedControls>
 			<Fragment>
-				<RichText
-					tagName="label"
-					className={ labelClassName }
-					value={ attributes.label }
-					onChange={ ( val ) =>
-						setAttributes( { label: val } )
-					}
-					placeholder={ __(
-						'Enter label...',
-						'formello'
-					) }
-					allowedFormats={ [] }
-				/>
+				<Label {...props} />
+
 				<select
 					id={ attributes.id }
 					name={ attributes.name }
 					className={ attributes.fieldClass }
 					multiple={ attributes.multiple }
-					value={ defaultOpts( attributes.selectedOpt ) }
+					defaultValue={ defaultOpts( attributes.selectedOpt ) }
 				>
 					{ 
 						attributes.options.map( ( obj, index ) => { 

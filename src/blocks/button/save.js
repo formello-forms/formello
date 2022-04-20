@@ -46,8 +46,6 @@ export default function save( { attributes } ) {
 
 	const colorProps = getColorClassesAndStyles( attributes );
 
-	//const iconClass = classnames( 'ld', 'ld-spin', attributes.iconType );
-
 	const buttonClasses = classnames(
 		colorProps.className,
 		attributes.alignment
@@ -59,11 +57,10 @@ export default function save( { attributes } ) {
 
 	return (
 		<button 
-			className={ buttonClasses } 
 			type="submit"
 			{...blockProps}
 		>
-        	{ text }
+        	{ attributes.text }
 		</button>
 	);
 }

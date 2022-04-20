@@ -107,6 +107,7 @@ export default function Edit( {
 	const borderRadius = style?.border?.radius;
 	const borderColor = style?.border?.color;
 	const borderProps = useBorderProps( attributes );
+
 	// not already merged in Gutenberg
 	// const spacingProps = useSpacingProps( attributes );
 
@@ -174,7 +175,7 @@ export default function Edit( {
 				<RichText
 					tagName="span"
 					value={ attributes.text }
-					onChange={ ( text ) => setAttributes( { text } ) }
+					onChange={ ( val ) => setAttributes( { text: val } ) }
 					placeholder={ __( 'Enter button text...', 'formello' ) }
 					allowedFormats={ [ 'core/bold' ] }
 				/>

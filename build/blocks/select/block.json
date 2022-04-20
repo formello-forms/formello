@@ -1,0 +1,83 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "formello/select",
+	"title": "Select",
+	"description": "Dropdown select.",
+	"category": "formello",
+	"icon": "button",
+	"ancestor": ["formello/form"],
+	"parent": ["formello/form"],
+	"textdomain": "formello",
+	"attributes": {
+		"type": {
+			"type": "string",
+			"default": "select"
+		},
+		"id": {
+			"type": "string",
+			"default": "field"
+		},
+		"name": {
+			"type": "string",
+			"default": "select"
+		},
+		"label": {
+			"type": "string",
+			"default": "Select"
+		},
+		"options": {
+			"type": "array",
+			"default": [
+				{
+		    		"value": "",
+		    		"label": "Select an option",
+		    		"default": true
+		    	},
+				{
+		    		"value": "1",
+		    		"label": "One"
+		    	},
+		    	{
+		    		"value": "2",
+		    		"label": "Two"
+		    	},
+		    	{
+		    		"value": "3",
+		    		"label": "Three"
+		    	}
+			]
+		},
+		"multiple": {
+			"type": "boolean",
+			"default": false
+		},
+		"hasDefault": {
+			"type": "boolean",
+			"default": true
+		},
+		"selectedOpt": {
+			"type": "array",
+			"default": []
+		},
+		"required": {
+			"type": "boolean",
+			"default": false
+		},
+		"requiredText": {
+			"type": "string"
+		},
+		"hideRequired": {
+			"type": "boolean",
+			"default": false
+		},
+		"showHelp": {
+			"type": "boolean",
+			"default": false
+		},
+		"help": {
+			"type": "string",
+			"default": ""
+		}
+	}
+}

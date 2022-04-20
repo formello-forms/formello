@@ -16,6 +16,7 @@ import {
 	InspectorControls,
 	RichText,
 	InnerBlocks,
+	useInnerBlocksProps,
 	useBlockProps
 } from '@wordpress/block-editor';
 
@@ -25,10 +26,7 @@ const ALLOWED_BLOCKS = [
 	'core/columns',
 	'formello/input',
 	'formello/email',
-	'formello/checkboxes',
 	'formello/select',
-	'generateblocks/container',
-	'generateblocks/headline',
 ];
 
 /**
@@ -58,12 +56,15 @@ export default function Edit( {
 	);
 
 	///const className = attributes.hideBorder ? 'no-border' : undefined;
-	const blockProps = useBlockProps({
-		className: attributes.hideBorder ? 'no-border' : undefined
-	})
+	const blockProps = useBlockProps()
+
+	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+		allowedBlocks: ALLOWED_BLOCKS,
+		templateLock: false,
+	} );
 
 	return (
-		<fieldset {...blockProps}>
+		<fieldset {...innerBlocksProps}>
 			<InspectorControls>
 				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<ToggleControl
@@ -71,13 +72,6 @@ export default function Edit( {
 						checked={ attributes.showLegend }
 						onChange={ ( newval ) =>
 							setAttributes( { showLegend: newval } )
-						}
-					/>
-					<ToggleControl
-						label={ __( 'Hide Border', 'formello' ) }
-						checked={ attributes.hideBorder }
-						onChange={ ( newval ) =>
-							setAttributes( { hideBorder: newval } )
 						}
 					/>
 				</PanelBody>
@@ -92,11 +86,9 @@ export default function Edit( {
 					allowedFormats={ [] }
 				/>
 			) }
-			<InnerBlocks
-				allowedBlocks={ ALLOWED_BLOCKS }
-				templateLock={ false }
-				//renderAppender={ () => <InnerBlocks.ButtonBlockAppender /> }
-			/>
+
+			{ children }
+		
 		</fieldset>
 	);
 }

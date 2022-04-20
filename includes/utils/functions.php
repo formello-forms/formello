@@ -1,6 +1,6 @@
 <?php
 /**
- * Register the form CPT
+ * Utility functions
  *
  * @package formello
  * @since   1.0.0
@@ -102,11 +102,9 @@ function recursive_sanitize_text_field( $array ) {
 function formello_allowed_blocks( $allowed_blocks, $editor_context )
 {
 
-    /**
-     * 'page' is the stype being filtered. To add additional types:
-     * if($editor_context->editor_context_type === 'page' || $editor_context->editor_context_type === 'projects') :
-     * where 'projects' is the custom editor_context type or editor_context type.
-     */
+	if( !$editor_context->post ){
+		return $allowed_blocks;
+	}
 
     if( $editor_context->post->post_type === 'formello_form' ) {
 	    $allowed_blocks = array(
@@ -130,12 +128,13 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context )
  
 }
 
-add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option' );
-add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option' );
-add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
-
-
-function formello_action_row($actions, $post){
+/**
+ * [formello_action_row description]
+ * @param  array $actions [description]
+ * @param  WP_POST $post    [description]
+ * @return string          [description]
+ */
+function formello_action_row( $actions, $post ){
 	add_thickbox();
     //check for your post type
     if ( 'formello_form' === $post->post_type ){
@@ -151,4 +150,7 @@ function formello_action_row($actions, $post){
     return $actions;
 }
 
+add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option' );
+add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option' );
+add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
 add_filter( 'post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2);

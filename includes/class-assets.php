@@ -80,11 +80,11 @@ class Assets {
 		wp_set_script_translations( 'formello-form-block-editor', 'formello', FORMELLO_ABSPATH . 'languages' );
 
 		$settings = array(
-			'settings' => get_option( 'formello2' ),
+			'settings' => get_option( 'formello' ),
 		);
 
 		wp_localize_script(
-			'formello-form-block',
+			'formello-form-view-script',
 			'formello',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
@@ -100,7 +100,7 @@ class Assets {
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
 		wp_localize_script(
-			'formello-form-block-editor',
+			'formello-form-editor-script',
 			'formello',
 			$settings
 		);
@@ -140,17 +140,6 @@ class Assets {
 		$script_asset = require $script_asset_path;
 
 		$scripts = array(
-			'formello-form-block-editor' => array(
-				'src'       => FORMELLO_ASSETS . '/index.js',
-				'version'   => $script_asset['version'],
-				'deps'      => $script_asset['dependencies'],
-				'in_footer' => true,
-			),
-			'formello-form-block'        => array(
-				'src'       => FORMELLO_ASSETS . '/frontend.js',
-				'version'   => $script_asset['version'],
-				'in_footer' => true,
-			),
 			'formello-settings'          => array(
 				'src'       => FORMELLO_ASSETS . '/dashboard.js',
 				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-notices' ),

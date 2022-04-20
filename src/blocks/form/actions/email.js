@@ -4,7 +4,7 @@ import {
   TextControl,
   TextareaControl,
   Button,
-  SelectControl,
+  ToggleControl,
   Icon,
 } from '@wordpress/components';
 import {
@@ -26,6 +26,7 @@ export default function email( content, props, MergeTags, handleUpdate ) {
 	} = props;
 
 	const [ settings, setSettings ] = useState( Object.assign( {}, action ) );
+	const [ advanced, setAdvanced ] = useState( false );
 
 	const updateSettings = ( prop, val ) => {
 		setSettings( { ...settings, [prop]: val } )
@@ -53,19 +54,29 @@ export default function email( content, props, MergeTags, handleUpdate ) {
 				onChange={ ( val ) => { updateSettings( 'to', val ) } }
 			/>
 
-			<MergeTags
-				clientId={ clientId }			
-				label="CC"
-				value={ settings.cc }
-				onChange={ ( val ) => { updateSettings( 'cc', val ) } }
+			<ToggleControl
+				label={ __( 'More', 'formello' ) }
+				onChange={ ( val ) => { setAdvanced( val ) } }
+				checked={ advanced }
 			/>
 
-			<MergeTags
-				clientId={ clientId }			
-				label="BCC"
-				value={ settings.bcc }
-				onChange={ ( val ) => { updateSettings( 'bcc', val ) } }
-			/>
+			{ advanced &&
+				<>
+					<MergeTags
+						clientId={ clientId }			
+						label="CC"
+						value={ settings.cc }
+						onChange={ ( val ) => { updateSettings( 'cc', val ) } }
+					/>
+
+					<MergeTags
+						clientId={ clientId }			
+						label="BCC"
+						value={ settings.bcc }
+						onChange={ ( val ) => { updateSettings( 'bcc', val ) } }
+					/>
+				</>
+			}
 
 			<MergeTags
 				clientId={ clientId }			

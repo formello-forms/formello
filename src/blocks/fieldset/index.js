@@ -18,48 +18,6 @@ import metadata from './block.json';
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType( metadata, {
-    apiVersion: 2,
-	/**
-	 * This is the display title for your block, which can be translated with `i18n` functions.
-	 * The block inserter will show this name.
-	 */
-	title: __( 'Fieldset', 'formello' ),
-
-	/**
-	 * This is a short description for your block, can be translated with `i18n` functions.
-	 * It will be shown in the Block Tab in the Settings Sidebar.
-	 */
-	description: __(
-		'Fieldset to group input.',
-		'formello'
-	),
-
-	/**
-	 * Blocks are grouped into categories to help users browse and discover them.
-	 * The categories provided by core are `common`, `embed`, `formatting`, `layout` and `widgets`.
-	 */
-	category: 'formello',
-
-	// Only allow this block when it is nested in a Columns block
-	parent: [ 'formello/form' ],
-
-	/**
-	 * Block attributes
-	 */
-	attributes: {
-		showLegend: {
-			type: 'boolean',
-			default: true,
-		},
-		hideBorder: {
-			type: 'boolean',
-			default: false,
-		},
-		legend: {
-			type: 'string',
-			default: '',
-		},
-	},
 
 	variations: variations,
 

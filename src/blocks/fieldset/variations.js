@@ -24,8 +24,8 @@ const variations = [
 		),
 		innerBlocks: [ 
 			[ 'formello/input', { type: 'checkbox', name:'Option_1', label: 'Option 1' } ], 
-			[ 'formello/input', { type: 'checkbox', name:'Option_1', label: 'Option 1' } ], 
-			[ 'formello/input', { type: 'checkbox', name:'Option_1', label: 'Option 1' } ] 
+			[ 'formello/input', { type: 'checkbox', name:'Option_2', label: 'Option 2' } ], 
+			[ 'formello/input', { type: 'checkbox', name:'Option_3', label: 'Option 3' } ] 
 		],
 		scope: [ 'inserter', 'block' ],
 	},
@@ -36,8 +36,8 @@ const variations = [
 		icon: getIcon('radios'),
 		innerBlocks: [
 			[ 'formello/input', { type: 'radio', name:'Option_1', label: 'Option 1' } ], 
-			[ 'formello/input', { type: 'radio', name:'Option_1', label: 'Option 1' } ], 
-			[ 'formello/input', { type: 'radio', name:'Option_1', label: 'Option 1' } ] 
+			[ 'formello/input', { type: 'radio', name:'Option_2', label: 'Option 2' } ], 
+			[ 'formello/input', { type: 'radio', name:'Option_3', label: 'Option 3' } ] 
 		],
 		scope: [ 'inserter', 'block' ],
 	}

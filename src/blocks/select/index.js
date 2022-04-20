@@ -19,43 +19,15 @@ import { InnerBlocks } from '@wordpress/block-editor';
 import Edit from './edit';
 import save from './save';
 import getIcon from '../../utils/get-icon';
-import blockAttributes from './attributes';
+import metadata from './block.json';
+import { Select } from '../../utils/icons';
 
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( 'formello/select', {
-    apiVersion: 2,
-	/**
-	 * This is the display title for your block, which can be translated with `i18n` functions.
-	 * The block inserter will show this name.
-	 */
-	title: __( 'Select', 'formaster' ),
-
-	/**
-	 * This is a short description for your block, can be translated with `i18n` functions.
-	 * It will be shown in the Block Tab in the Settings Sidebar.
-	 */
-	description: __(
-		'A dropdown select.',
-		'formaster'
-	),
-
-	/**
-	 * Blocks are grouped into categories to help users browse and discover them.
-	 * The categories provided by core are `common`, `embed`, `formatting`, `layout` and `widgets`.
-	 */
-	category: 'formello',
-
-	// Only allow this block when it is nested in a Formello/Form block
-	parent: [ 'formello/form', 'core/column', 'core/group', 'core/row' ],
-
-	/**
-	 * Block attributes
-	 */
-	attributes: blockAttributes,
+registerBlockType( metadata, {
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
@@ -63,14 +35,11 @@ registerBlockType( 'formello/select', {
 	 */
 	icon: getIcon( 'select' ),
 
-	/**
-	 * Optional block extended support features.
-	 */
 	supports: {
-		// Removes support for an HTML mode.
-		html: true,
+		inserter: ( 'formello_form' === pagenow || 'popper' === pagenow ) ? true : false,
+		html: false,
 		className: false,
-		reusable: false,
+		reusable: false
 	},
 
 	/**

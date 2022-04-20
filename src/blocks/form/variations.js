@@ -31,7 +31,7 @@ const variations = [
 			</SVG>
 		),
 		isDefault: true,
-		innerBlocks: [ [ 'formello/input', { type: 'text', label: 'Name', name: 'name' } ], [ 'formello/button' ] ],
+		innerBlocks: [ [ 'formello/input', { type: 'text', label: 'Name', name: 'name' } ], [ 'formello/button', { txt: 'Book appointment' } ] ],
 		scope: [ 'block' ],
 	},
 	{

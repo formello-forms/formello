@@ -49,7 +49,7 @@ function SearchTags( props ) {
 			return title.toLowerCase().search(search.toLowerCase()) !== -1;
 		});
 
-		return [
+		const tabs = [
 			{
 				list: 'fields',
 				label: 'Fields',
@@ -76,6 +76,13 @@ function SearchTags( props ) {
 				data: filteredMetaTags,
 			},
 		];
+
+		if( noFields ){
+			tabs = tabs.shift();
+		}
+
+		return tabs;
+
 	};
 
 	const noTagsFound = () => {

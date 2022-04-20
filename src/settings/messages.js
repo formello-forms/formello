@@ -67,7 +67,7 @@ export default function messages( props ) {
 				/>
 				<TextControl
 					label={ __( 'Select Multiple' ) }
-					value={ getSetting( 'messages', 'missingValue' ).['select-multiple'] }
+					value={ getSetting( 'messages', 'missingValue' )['select-multiple'] }
 					onChange={ ( val ) => {
 						updateSetting( 'missingValue', ['select-multiple'], val )
 					} }

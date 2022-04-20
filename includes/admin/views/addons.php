@@ -5,26 +5,26 @@ namespace Formello\Views;
 defined( 'ABSPATH' ) || exit;
 
 
-$url    = 'https://formello.net/edd-api/products?nocache=' . time();
-$addons = get_transient( 'formello_addons', false );
+$formello_url    = 'https://formello.net/edd-api/products?nocache=' . time();
+$formello_addons = get_transient( 'formello_addons', false );
 
 /*
  * Get remote addons.
  */
-if ( ! $addons ) {
-	$requested_addons = wp_remote_get( $url );
+if ( ! $formello_addons ) {
+	$formello_requested_addons = wp_remote_get( $formello_url );
 
-	if ( ! is_wp_error( $requested_addons ) ) {
-		$new_addons = wp_remote_retrieve_body( $requested_addons );
-		$new_addons = json_decode( $new_addons, true );
+	if ( ! is_wp_error( $formello_requested_addons ) ) {
+		$formello_new_addons = wp_remote_retrieve_body( $formello_requested_addons );
+		$formello_new_addons = json_decode( $formello_new_addons, true );
 
-		if ( $new_addons && is_array( $new_addons ) ) {
-			$addons = $new_addons;
+		if ( $formello_new_addons && is_array( $formello_new_addons ) ) {
+			$formello_addons = $formello_new_addons;
 
-			set_transient( 'formello_addons', $addons, DAY_IN_SECONDS );
+			set_transient( 'formello_addons', $formello_addons, DAY_IN_SECONDS );
 		}
 	} else {
-		$addons = array();
+		$formello_addons = array();
 	}
 }
 
@@ -37,20 +37,19 @@ if ( ! $addons ) {
 
 	<div class="formello-addons">
 
-		<?php foreach ( $addons['products'] as $item ) : ?>
+		<?php foreach ( $formello_addons['products'] as $formello_item ) : ?>
 			<div class="addon">
 				<div class="logo">
-				<a href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" target="_blank" rel="noopener noreferrer">
-					<img src="<?php echo esc_url( FORMELLO_PLUGIN_URL . '/assets/addon_images/' . $item['info']['slug'] . '-772x250.png' ); ?>" alt="<?php echo esc_attr( $item['info']['slug'] ); ?>">
+				<a href="<?php echo esc_url( 'https://formello.net/downloads/' . $formello_item['info']['slug'] ); ?>" target="_blank" rel="noopener noreferrer">
+					<img src="<?php echo esc_url( FORMELLO_PLUGIN_URL . '/assets/addon_images/' . $formello_item['info']['slug'] . '-772x250.png' ); ?>" alt="<?php echo esc_attr( $formello_item['info']['slug'] ); ?>">
 				</a>
 				</div>
 				<h3>
-					<a target="_blank" href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" class="unstyled"><?php echo esc_html( $item['info']['title'] ); ?></a>
+					<a target="_blank" href="<?php echo esc_url( 'https://formello.net/downloads/' . $formello_item['info']['slug'] ); ?>" class="unstyled"><?php echo esc_html( $formello_item['info']['title'] ); ?></a>
 				</h3>
-				<p><?php echo esc_html( $item['info']['excerpt'] ); ?></p>
+				<p><?php echo esc_html( $formello_item['info']['excerpt'] ); ?></p>
 				<footer>
-					<a  target="_blank" class="button" href="<?php echo esc_url( 'https://formello.net/downloads/' . $item['info']['slug'] ); ?>" title="More about <?php echo esc_attr( $item['info']['slug'] ); ?>">Get this Extension</a>
-					<!-- <span class="type"><?php echo '0.00' === $item['pricing']['amount'] ? 'FREE' : esc_attr( $item['pricing']['amount'] ); ?></span>-->
+					<a  target="_blank" class="button" href="<?php echo esc_url( 'https://formello.net/downloads/' . $formello_item['info']['slug'] ); ?>" title="More about <?php echo esc_attr( $formello_item['info']['slug'] ); ?>">Get this Extension</a>
 				</footer>
 			</div>
 		<?php endforeach; ?>

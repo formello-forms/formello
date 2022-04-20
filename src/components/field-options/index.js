@@ -9,6 +9,7 @@ import {
 	SelectControl, 
 	PanelRow, 
 	PanelBody, 
+	FormTokenField,
 	ToggleControl,
 	BaseControl,
 	__experimentalInputControl as InputControl,
@@ -46,13 +47,14 @@ export default function Options( props ) {
 				<InputControl
 					label={ __( 'Name', 'formello' ) }
 					value={ attributes.name }
-					onChange={ ( val ) => setAttributes( { name: val.replace(/\W/g, '_').toLowerCase() } ) }
+					onChange={ ( val ) => setAttributes( { name: val.toLowerCase() } ) }
 				/>
 				</BaseControl>
 				{
 					supported.includes('value') && 
 					<MergeTags 
 						className={ 'formello-flex' }
+						noFields={ true }
 						clientId={ clientId }
 						label={ __( 'Value', 'formello' ) }
 						value={ attributes.value }
@@ -83,17 +85,45 @@ export default function Options( props ) {
 							setAttributes( { required: newval } )
 						}
 					/>
-					{ attributes.required && (
-						<ToggleControl
-							label={ __( 'Hide asterisk', 'formello' ) }
-							checked={ attributes.hideRequired }
-							onChange={ ( newval ) =>
-								setAttributes( { hideRequired: newval } )
-							}
-						/>
-					) }
 					</Fragment>
 				}
+				{ 'select' === attributes.type && (
+					<Fragment>
+					<ToggleControl
+						label={ __(
+							'Allow multiple choices?',
+							'formello'
+						) }
+						checked={ attributes.multiple }
+						onChange={ ( val ) =>
+							setAttributes( { 
+								multiple: val
+							} )
+						}
+					/>
+				    <FormTokenField 
+				    	label={ __( 'Selected option', 'formello' ) }
+						value={
+							attributes.selectedOpt &&
+							attributes.selectedOpt.map( ( item ) => {
+								return item.label
+							} )
+						}
+						onChange={ (opts) => { 
+							let selections = attributes.options.filter( x => opts.includes( x.label ) );
+							setAttributes( { selectedOpt: selections } ) 
+						} }
+						suggestions={ 
+							attributes.options &&
+							attributes.options.map( (item) => {
+								return item.label
+							} )
+						}
+						maxSuggestions={ 3 }
+						maxLength={ () => attributes.multiple ? 20 : 1 }
+					/>
+					</Fragment>
+				) }
 				{
 					supported.includes('checked') && 
 					<ToggleControl
@@ -115,20 +145,6 @@ export default function Options( props ) {
 					/>
 					</Fragment>		
 				) }
-				{ attributes.withButton && 
-					<ToggleControl
-						label={ __(
-							'Group button with input',
-							'formello'
-						) }
-						checked={ attributes.grouped }
-						onChange={ ( val ) =>
-							setAttributes( { 
-								grouped: val
-							} )
-						}
-					/>						
-				}
 			</PanelBody>
 		</Fragment>
 	);

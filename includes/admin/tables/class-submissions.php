@@ -456,7 +456,7 @@ class Submissions extends \WP_List_Table {
 		if ( isset( $settings['fields'] ) ) {
 			foreach ( array_keys( $settings['fields'] ) as $col ) {
 
-				$columns[ $col ] = esc_html( ucfirst( trim( strtolower( str_replace( '_', ' ', $col ) ) ) ) );
+				$columns[ sanitize_key( $col ) ] = esc_html( ucfirst( trim( sanitize_key( $col ) ) ) );
 
 			}
 		}
@@ -486,13 +486,14 @@ class Submissions extends \WP_List_Table {
 				return $starred . $is_new;
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
-				if ( 'on' === $item ) {
+				/*if ( 'on' === $item ) {
 					return __( 'Yes' );
 				}
 				if ( is_array( $item ) ) {
 					$item = implode( ',', $item );
-				}
-				return esc_html( $item );
+				}*/
+				return formello_field_value( $item );
+				//return esc_html( $item );
 		}
 	}
 

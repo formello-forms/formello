@@ -1,15 +1,9 @@
 .wp-block-formello-form {
+	input, select, textarea {
+		padding: 8px;
+	}
 	select {
 		max-width: 100%;
-	}
-	.formello-group {
-		.wp-block {
-			margin: 0 0 0 10px;
-		}
-	}
-	label.required::after {
-		content: " *";
-		color: red;
 	}
 }
 
@@ -18,8 +12,8 @@
   flex-wrap: wrap;
   li {
     padding: 10px;
-	flex: 0 0 33.333%;
-	width: 33.333%;
+		flex: 0 0 33.333%;
+		width: 33.333%;
     a {
       text-align: center;
       cursor: pointer;
@@ -34,19 +28,21 @@
 	}
 }
 
+.formello-hidden {
+	display: flex;
+}
+
 .wp-block-formello-button {
 	display: block;
+	font-weight: normal;
 	&.left {
 		margin-left: 0;
 	}
 	&.right {
 		margin-right: 0;
 	}
-	&.center {
-		margin: auto;
-	}
 	&.wide {
-		width: 100%;
+		width: auto;
 	}
 }
 

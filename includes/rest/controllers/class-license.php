@@ -175,13 +175,6 @@ class License extends WP_REST_Controller {
 			);
 		}
 
-		// $license_data->license will be either "valid" or "invalid"
-		$crypto    = new Formello\Utils\Encryption();
-		$license = $crypto->encrypt( serialize( $license ) );
-
-		update_option( 'formello_license', $license );
-		update_option( 'formello_license_status', $license_data->license );
-
 		return rest_ensure_response(
 			array(
 				'success'  => true,
@@ -199,22 +192,29 @@ class License extends WP_REST_Controller {
 	 */
 	public function deactivate_license( \WP_REST_Request $request ) {
 
-		// retrieve the license from the database
-		$license = trim( get_option( 'formello_license' ) );
+		// retrieve the license from the database.
+		$settings = get_option( 'formello' );
 
 		// data to send in our API request
 		$api_params = array(
 			'edd_action'  => 'deactivate_license',
-			'license'     => $license,
-			'item_name'   => urlencode( 'Formello' ), // the name of our product in EDD
+			'license'     => $settings['license'],
+			'item_name'   => urlencode( 'Formello' ), // the name of our product in EDD.
 			'url'         => home_url(),
 			'environment' => function_exists( 'wp_get_environment_type' ) ? wp_get_environment_type() : 'production',
 		);
 
 		// Call the custom API.
-		$response = wp_remote_post( FORMELLO_STORE_URL, array( 'timeout' => 15, 'sslverify' => false, 'body' => $api_params ) );
+		$response = wp_remote_post(
+			FORMELLO_STORE_URL,
+			array(
+				'timeout' => 15,
+				'sslverify' => false,
+				'body' => $api_params,
+			)
+		);
 
-		// make sure the response came back okay
+		// make sure the response came back okay.
 		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
 
 			if ( is_wp_error( $response ) ) {
@@ -231,13 +231,14 @@ class License extends WP_REST_Controller {
 			);
 		}
 
-		// decode the license data
+		// decode the license data.
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
-		// $license_data->license will be either "deactivated" or "failed"
-		if ( 'deactivated' === $license_data->license ) {
-			update_option( 'formello_license_status', false );
-			update_option( 'formello_license', '' );
+		// $license_data->license will be either "deactivated" or "failed".
+		if ( 'deactivated' === $license_data->license || 'failed' === $license_data->license ) {
+			$settings['license'] = '';
+			$settings['license_status'] = false;
+			update_option( 'formello', $settings );
 		}
 
 		return rest_ensure_response(

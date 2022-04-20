@@ -4,11 +4,11 @@ import { isEmpty } from 'lodash';
 import TagList from './tagList';
 import SearchTags from './searchTags';
 
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 function TagSelector( props ) {
 
-	const { clientId, insertTag } = props;
+	const { clientId, insertTag, noFields } = props;
 	const [ search, setSearch ] = useState('');
 
 	const tabs = [
@@ -29,6 +29,10 @@ function TagSelector( props ) {
 			title: 'Other',
 		},
 	];
+
+	if( noFields ){
+		tabs.shift()
+	}
 
 	return (
 		<div className="formello-mergetags-container">
@@ -52,6 +56,7 @@ function TagSelector( props ) {
 									list={ tab.name }
 									clientId={ clientId }
 									onSelect={ insertTag }
+									noFields={ noFields }
 								/>
 							);
 						}}
@@ -61,6 +66,7 @@ function TagSelector( props ) {
 						search={ search }
 						clientId={ clientId }
 						onSelect={ insertTag }
+						noFields={ noFields }
 					/>
 				)}
 			</div>

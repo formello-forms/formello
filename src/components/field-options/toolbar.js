@@ -18,6 +18,7 @@ import {
 
 import { Fragment } from '@wordpress/element';
 import getIcon from '../../utils/get-icon';
+import { select } from "@wordpress/data";
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
@@ -35,9 +36,16 @@ export default function Toolbar( props ) {
 	const {
 		attributes,
 		setAttributes,
+		clientId
 	} = props;
 	
 	const supported = SUPPORTED_ATTRIBUTES[attributes.type]
+
+	const setRequiredTxt = () => {
+	    var parent = select('core/block-editor').getBlockParents(clientId);
+	    const parentAtts = select('core/block-editor').getBlockAttributes(parent[0]);
+	    setAttributes( { requiredText: parentAtts.requiredText } )
+	}
 
 	return (
 		<Fragment>
@@ -46,6 +54,7 @@ export default function Toolbar( props ) {
 				icon={ getIcon( 'asterisk' ) }
 				isPressed={ attributes.required }
 				onClick={ () => {
+					setRequiredTxt()
 					setAttributes( { required: !attributes.required } )
 				} }
 			/>
