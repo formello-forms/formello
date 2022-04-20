@@ -51,36 +51,36 @@ class Blocks {
 	 */
 	public function register_blocks() {
 		register_block_type(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/library',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/library',
 			array(
 				'render_callback' => array( $this, 'do_reusable_block' ),
 			)
 		);
 
 		register_block_type(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/input',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/input',
 			array(
 				'render_callback' => array( $this, 'do_input_block' ),
 			)
 		);
 
 		register_block_type(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/select'
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/select'
 		);
 
 		register_block_type(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/fieldset'
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/fieldset'
 		);
 
 		register_block_type(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/button',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/button',
 			array(
 				'render_callback' => array( $this, 'do_button_block' ),
 			)
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'src/blocks/form',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form',
 		);
 
 	}
