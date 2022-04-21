@@ -169,18 +169,17 @@ html {
 	}
 
 	.formello-message {
+		margin: 1em 0;
 		p {
 			margin: 0;
 		}
 		&.success {
-			margin-top: 1em;
 			padding: 1em;
 			background-color: #dff0d8;
 			border: 1px solid #d0e9c6;
 			color: #3c763d;
 		}
 		&.error {
-			margin-top: 1em;
 			padding: 1em;
 			background-color: #fcf8e3;
 			border: 1px solid #faf2cc;

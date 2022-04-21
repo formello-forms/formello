@@ -39,6 +39,15 @@ class Email extends Action {
 	public function __construct() {
 		$this->label    = __( 'Send Email', 'formello' );
 		$this->settings = $this->get_default_settings();
+
+		add_action( 'wp_mail_failed', array( $this, 'onMailError' ), 10, 1 );
+
+	}
+
+	public function onMailError( $wp_error ) {
+
+		error_log( print_r( $wp_error ) );
+
 	}
 
 	/**
@@ -93,6 +102,8 @@ class Email extends Action {
 			$headers[] = sprintf( 'From: %s', $from );
 		}
 
-		return wp_mail( $to, $subject, $message, $headers );
+		$result = wp_mail( $to, $subject, $message, $headers );
+
+		return true;
 	}
 }

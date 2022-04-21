@@ -98,10 +98,12 @@ class Frontend {
 		*/
 		do_action( 'formello_process_form', $form );
 
-		// process form actions asynchronously.
-		if ( isset( $form->actions ) ) {
+		$actions = $form->get_actions();
 
-			foreach ( $form->actions as $action_settings ) {
+		// process form actions asynchronously.
+		if ( isset( $actions ) ) {
+
+			foreach ( $actions as $action_settings ) {
 				/**
 				 * Processes the specified form action and passes related data.
 				 *

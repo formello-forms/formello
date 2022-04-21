@@ -88,34 +88,35 @@ class Formello {
 					parent.emitEvent( 'submitted', this.element )
 
 					if ( response.errors.length ) {
-					  parent.emitEvent( 'error', this.element )
+						parent.emitEvent( 'error', this.element )
 					} else {
-					  parent.emitEvent( 'success', this.element )
+						parent.emitEvent( 'success', this.element )
 					}
 
 					// Show form message
 					if ( response.message ) {
-					  parent.addMessage( response.message, response.errors )
-					  parent.emitEvent( 'message', this.element )
+						parent.addMessage( response.message, response.errors )
+						parent.emitEvent( 'message', this.element )
 					}
 
 					if( response.debug ){
-					  console.log(response.debug)
+						parent.addDebug(response.debug)
+						console.log(response.debug)
 					}
 
 					// Should we hide form?
 					if (response.hide_form) {
-					  parent.element.style.display = 'none'
+						parent.element.style.display = 'none'
 					}
 
 					// Should we redirect?
 					if (response.redirect_url) {
-					  window.location = response.redirect_url
+						window.location = response.redirect_url
 					}
 
 					// clear form
 					if (!response.message.errors) {
-					  parent.element.reset()
+						parent.element.reset()
 					}
 				} else {
 					// Server error :(
@@ -191,6 +192,18 @@ class Formello {
 			    li.innerHTML += item;
 			});
 		}
+
+	}
+
+	addDebug( debug ) {
+		let msg = this.element.querySelector( '.formello-message' )
+
+		var debugDiv = document.createElement('div');
+		debugDiv.classList.add( 'warning' )
+		debugDiv.innerHTML = '<pre>' + JSON.stringify( debug, undefined, 2 ) + '</pre>'
+
+    	msg.insertAdjacentElement('afterend', debugDiv);
+
 
 	}
 

@@ -95,7 +95,7 @@ class Form {
 	 *
 	 * @var array
 	 */
-	private $actions = array();
+	protected $actions = array();
 
 	/**
 	 * Form constructor.
@@ -211,7 +211,7 @@ class Form {
 	 * @return array
 	 */
 	public function get_actions() {
-		return $this->settings['actions'];
+		return $this->data['actions'];
 	}
 
 	/**
@@ -220,7 +220,7 @@ class Form {
 	 * @param array $actions The actions response.
 	 */
 	public function set_actions( $actions ) {
-		$this->settings['actions'] = $actions;
+		$this->data['actions'] = $actions;
 	}
 
 	/**
@@ -261,6 +261,10 @@ class Form {
 	 * Save form submission in DB.
 	 */
 	public function save() {
+
+		if ( empty( $this->data['fields'] ) ) {
+			return true;
+		}
 
 		global $wpdb;
 
@@ -307,6 +311,9 @@ class Form {
 		$form = array();
 
 		$form['id']       = $this->ID;
+		$form['details']  = $this->data['details'];
+		$form['actions']  = $this->data['actions'];
+		$form['fields']  = $this->data['fields'];
 		$form['errors']   = $this->errors;
 		$form['messages'] = $this->messages;
 		$form['settings'] = $this->settings;
@@ -347,7 +354,7 @@ class Form {
 		$this->data['details']['referer_url']  = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 		$this->data['details']['submitted_at'] = gmdate( 'Y-m-d H:i:s' );
 
-		$form_actions = $this->get_actions();
+		$form_actions = $this->get_setting( 'actions' );
 
 		if ( isset( $form_actions ) ) {
 			foreach ( $form_actions as $action_settings ) {
@@ -565,7 +572,7 @@ class Form {
 		}
 
 		if ( current_user_can( 'manage_options' ) && $this->is_debug() ) {
-			$response['debug'] = $data['debug'];
+			$response['debug'] = $this->to_array();
 		}
 
 		return apply_filters( 'formello_form_response', $response );

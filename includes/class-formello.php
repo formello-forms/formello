@@ -65,7 +65,6 @@ final class Formello {
 
 		// Needs to be included at all times due to show_in_rest.
 		include_once FORMELLO_ABSPATH . 'includes/utils/functions.php';
-		include_once FORMELLO_ABSPATH . 'includes/utils/format-utils.php';
 		include_once FORMELLO_ABSPATH . 'includes/utils/class-encryption.php';
 		include_once FORMELLO_ABSPATH . 'includes/register-settings.php';
 		include_once FORMELLO_ABSPATH . 'includes/register-cpt.php';
@@ -83,6 +82,7 @@ final class Formello {
 
 		// Only include in the admin.
 		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			include_once FORMELLO_ABSPATH . 'includes/utils/format-utils.php';
 			include_once FORMELLO_ABSPATH . 'includes/admin/class-admin.php';
 			include_once FORMELLO_ABSPATH . 'includes/admin/tables/class-forms.php';
 			include_once FORMELLO_ABSPATH . 'includes/admin/tables/class-submissions.php';

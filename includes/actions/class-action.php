@@ -31,6 +31,7 @@ abstract class Action {
 	 * @var string $label Action label.
 	 */
 	protected $label = '';
+
 	/**
 	 * The action label.
 	 *
@@ -89,4 +90,5 @@ abstract class Action {
 		);
 		return $actions;
 	}
+
 }
