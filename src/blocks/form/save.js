@@ -28,6 +28,7 @@ export default function save( { attributes, className, innerBlocks } ) {
 		{
 			'as-row': attributes.asRow,
 			'is-bold': attributes.labelIsBold,
+			'formello-label-right': 'right' === attributes.labelAlign,
 		} 
 	)
 

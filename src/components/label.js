@@ -47,9 +47,6 @@ export default function Label( props ) {
 					'Enter label...',
 					'formello'
 				) }
-				allowedFormats={ [
-					'core/link'
-				] }
 			/>
 
 			{ attributes.required && !attributes.hideRequired && (

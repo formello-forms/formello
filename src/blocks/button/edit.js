@@ -122,11 +122,7 @@ export default function Edit( {
 
 	const buttonClasses = classnames(
 		borderProps.className,
-		colorProps.className,
-		attributes.alignment,
-		attributes.iconPosition, {
-			'running': showIcon,			
-		}
+		colorProps.className
 	);
 
 	const blockProps = useBlockProps({
@@ -145,40 +141,26 @@ export default function Edit( {
 				/>
 			</BlockControls>
 			<InspectorAdvancedControls>
-				<ToggleControl
-					label={ __( 'Show loading icon', 'formello' ) }
-					checked={ showIcon}
-					onChange={ ( val ) => setShowIcon( val ) }
-				/>
-				<SelectControl
-			        label={ __( 'Icon position', 'formello' ) }
-			        value={ attributes.iconPosition }
-			        options={ [
-			            { label: 'over', value: 'ld-over' },
-			            { label: 'left', value: 'ld-ext-left' },
-			            { label: 'right', value: 'ld-ext-right' }
-			        ] }
-			        onChange={ ( val ) => { setAttributes( { iconPosition: val } ) } }
-				/>
 				<SelectControl
 			        label={ __( 'Icon type', 'formello' ) }
-			        value={ attributes.iconType }
+			        value={ attributes.type }
 			        options={ [
-			            { label: 'ring', value: 'ld-ring' },
-			            { label: 'hourglass', value: 'ld-hourglass' },
-			            { label: 'spinner', value: 'ld-spinner' }
+			            { label: 'Version 1', value: 'Loading' },
+			            { label: 'Version 2', value: 'Loading2' },
+			            { label: 'Version 3', value: 'Loading3' },
+			            { label: 'Version 4', value: 'Loading4' },
+			            { label: 'Version 5', value: 'Loading5' }
 			        ] }
-			        onChange={ ( val ) => { setAttributes( { iconType: val } ) } }
+			        onChange={ ( val ) => { setAttributes( { type: val } ) } }
 				/>
 			</InspectorAdvancedControls>
-
-				<RichText
-					tagName="span"
-					value={ attributes.text }
-					onChange={ ( val ) => setAttributes( { text: val } ) }
-					placeholder={ __( 'Enter button text...', 'formello' ) }
-					allowedFormats={ [ 'core/bold' ] }
-				/>
+			<RichText
+				tagName="span"
+				value={ attributes.text }
+				onChange={ ( val ) => setAttributes( { text: val } ) }
+				placeholder={ __( 'Enter button text...', 'formello' ) }
+				allowedFormats={ [ 'core/bold' ] }
+			/>
 		</button>
 	);
 }

@@ -13,6 +13,7 @@ import {
 	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
 	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles
 } from '@wordpress/block-editor';
+import { Loading, Loading2, Loading3, Loading4, Loading5 } from '../../utils/icons';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -33,6 +34,14 @@ export default function save( { attributes } ) {
 		style
 	} = attributes;
 
+	const icons = {
+		Loading: Loading,
+		Loading2: Loading2,
+		Loading3: Loading3,
+		Loading4: Loading4,
+		Loading5: Loading5,
+	}
+
 	const borderRadius = style?.border?.radius;
 	const borderColor = style?.border?.color;
 	const borderProps = getBorderClassesAndStyles( attributes );
@@ -47,6 +56,7 @@ export default function save( { attributes } ) {
 	const colorProps = getColorClassesAndStyles( attributes );
 
 	const buttonClasses = classnames(
+		'load-button',
 		colorProps.className,
 		attributes.alignment
 	);
@@ -55,12 +65,15 @@ export default function save( { attributes } ) {
 		className: buttonClasses
 	});
 
+	const Component = icons[attributes.type];
+
 	return (
 		<button 
 			type="submit"
-			{...blockProps}
+			{...blockProps} style={{ fill: colorProps.style?.color }}
 		>
-        	{ attributes.text }
+			<RichText.Content tagName="span" value={ attributes.text } />
+        	<Component />
 		</button>
 	);
 }

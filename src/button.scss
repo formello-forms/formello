@@ -1,29 +1,29 @@
-.wp-block-formello-button {
-	border: none;
-	flex-direction: row;
-	align-self: flex-start;
-	&.center {
-		align-self: center;
-	}
-	&.right {
-		align-self: flex-end;
-	}
-	&.wide {
-		align-self: auto;
-	}
+$btn-bg-color: #004B97;
+$btn-txt-color: #fff;
 
+button.wp-block-formello-button {
+  span {
+    transition: all 1s;
+    opacity:1;
+  }
+  svg {
+    display:none; 
+    margin:0 auto;
+    transition: all 1s;
+    path,rect{
+      fill: $btn-txt-color;
+    }
+  }
 }
 
-.wp-block-formello-form button:disabled:not(.running),
-.wp-block-formello-form button[disabled]:not(.running){
+button.wp-block-formello-button--loading {
 	cursor: revert;
-}
-
-@media screen and (min-width: 768px) {
-
-	.as-row .wp-block-formello-button {
-		margin-left: 160px;
-		flex-direction: row;
-	}
-	
+  span {
+    display: none;  
+    opacity: 0;
+  }
+  svg {
+    display: block; 
+    opacity: 1;
+  }
 }

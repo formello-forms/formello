@@ -90,6 +90,7 @@ export function OptionsModal ( props ) {
 		<Modal
 			title={ __( 'Options', 'formello' ) }
 			onRequestClose={ onRequestClose }
+			className={ 'formello-modal' }
 		>
 			<div>
 				<ToggleControl
@@ -102,7 +103,7 @@ export function OptionsModal ( props ) {
 
 				{ showRaw && 
 					( <TextareaControl
-						label="Bulk"
+						label={ __( 'Options', 'formello' ) }
 						help={ __( 'Enter one option per row separated by comma. Ex.: [US, United States Of America]', 'formello' ) }
 						placeholder={ __( 'Insert value and label separated by comma. Ex.: US, United States Of America', 'formello' ) }
 						defaultValue={ 
@@ -132,11 +133,11 @@ export function OptionsModal ( props ) {
 							options={ attributes.options }
 							showValue={ showValue }
 						/>
-						<Button isPrimary onClick={ addNewRow }>Add option</Button>
+						<Button isPrimary isSmall onClick={ addNewRow }>Add option</Button>
 					</Fragment>
 				}
 			</div>
-			<div className="formello-modal-footer">
+			<div className="formello-modal-buttons">
 				<Button 
 					isPrimary
 					onClick={ onRequestClose }

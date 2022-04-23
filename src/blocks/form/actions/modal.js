@@ -92,6 +92,7 @@ export function ActionsModal ( props ) {
 			title={ action.title }
 			position="top"
 			size="lg"
+			className={ 'formello-modal' }
 			onRequestClose={ onRequestClose }
 		>
 			<Fragment>
@@ -100,18 +101,17 @@ export function ActionsModal ( props ) {
 
 				<div className="formello-modal-buttons">
 					<Button
-						isDestructive={ true }
-						onClick={ () => {
-							deleteAction()
-						} }
-					>Delete</Button>
-
-					<Button
 						isPrimary={ true }
 						onClick={ () => {
 							onRequestClose()
 						} }
 					>Save</Button>
+					<Button
+						isDestructive={ true }
+						onClick={ () => {
+							deleteAction()
+						} }
+					>Delete</Button>
 				</div>
 			</Fragment>
 		</Modal>

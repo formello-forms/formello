@@ -317,7 +317,6 @@ class Form {
 		$form['errors']   = $this->errors;
 		$form['messages'] = $this->messages;
 		$form['settings'] = $this->settings;
-		$form['debug']    = $this->debug;
 
 		return $form;
 	}

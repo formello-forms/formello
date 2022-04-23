@@ -178,7 +178,8 @@ function Edit( props ) {
 				: undefined,
 			{
 				'as-row': attributes.asRow,
-				'is-bold': attributes.labelIsBold
+				'is-bold': attributes.labelIsBold,
+				'formello-label-right': 'right' === attributes.labelAlign,
 			}
 		);
 	};
@@ -337,8 +338,8 @@ function Edit( props ) {
 						label={ __( 'Label horizontal position', 'formello' ) }
 						value={ attributes.labelAlign }
 						options={ [
-							{ label: 'left', value: 'label-left' },
-							{ label: 'right', value: 'label-right' }
+							{ label: 'left', value: 'left' },
+							{ label: 'right', value: 'right' }
 						] }
 						onChange={ ( val ) => { setAttributes( { labelAlign: val } ) } }
 					/>

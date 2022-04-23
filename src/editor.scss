@@ -46,12 +46,20 @@
 	}
 }
 
+/* ------------------ ACTION MODAL ------------------ */
+
 .formello-modal {
 	min-width: 500px;
+	select {
+		min-width: 100%;
+	}
 }
 
 .formello-modal-buttons {
-	button {
-		margin-right: 10px;
-	}
+    display: flex;
+    margin: 20px 0;
+    justify-content: space-between;
+	flex-flow: row-reverse;
 }
+
+/* ------------------ END ACTION MODAL ------------------ */

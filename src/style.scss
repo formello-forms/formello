@@ -1,11 +1,27 @@
-@use 'button';
-@use 'spinner';
-
 $label-width: 190px;
 $small-margin: 0 8px;
 
 html {
 	scroll-behavior: smooth;
+}
+
+.formello-message {
+	margin: 1em 0;
+	p {
+		margin: 0;
+	}
+	&.success {
+		padding: 1em;
+		background-color: #dff0d8;
+		border: 1px solid #d0e9c6;
+		color: #3c763d;
+	}
+	&.error {
+		padding: 1em;
+		background-color: #fcf8e3;
+		border: 1px solid #faf2cc;
+		color: #8a6d3b;  
+	}
 }
 
 .wp-block-formello-form {
@@ -125,7 +141,7 @@ html {
 
 	&.is-bold {
 		label {
-			font-weight: 500;
+			font-weight: bold;
 		}
 		.formello-checkbox {
 			label {
@@ -134,12 +150,12 @@ html {
 		}
 	}
 
-	.wp-block-formello-button {
+	/*.wp-block-formello-button {
 		font-size: inherit;
 		font-family: inherit;
 		line-height: inherit;
 		border: 1px solid transparent;
-	}
+	}*/
 
 	.wp-block-formello-button {
 		border: none;
@@ -168,25 +184,6 @@ html {
 		left: -5000px;
 	}
 
-	.formello-message {
-		margin: 1em 0;
-		p {
-			margin: 0;
-		}
-		&.success {
-			padding: 1em;
-			background-color: #dff0d8;
-			border: 1px solid #d0e9c6;
-			color: #3c763d;
-		}
-		&.error {
-			padding: 1em;
-			background-color: #fcf8e3;
-			border: 1px solid #faf2cc;
-			color: #8a6d3b;  
-		}
-	}
-
 	.error {
 		border-color: red;
 	}
@@ -202,6 +199,9 @@ html {
 	@media (min-width: 768px) {
 
 		&.as-row {
+			&.formello-label-right {
+				text-align: right;
+			}
 			.formello {
 				flex-direction: row;
 				flex-wrap: wrap;
@@ -276,24 +276,32 @@ html {
 
 	}
 
-	.wp-block-formello-button--loading {
-	  color: transparent !important;
+	button.wp-block-formello-button {
+		span {
+			transition: all 1s;
+			opacity:1;
+		}
+		svg {
+			display:none; 
+			margin:0 auto;
+			transition: all 1s;
+			path,rect{
+				fill: currentColor;
+			}
+		}
 	}
 
-	.wp-block-formello-button--loading::after {
-	  content: "";
-	  position: absolute;
-	  width: 1.5em;
-	  height: 1.5em;
-	  top: 0;
-	  left: 0;
-	  right: 0;
-	  bottom: 0;
-	  margin: auto;
-	  border: 4px solid transparent;
-	  border-top-color: #ffffff;
-	  border-radius: 50%;
-	  animation: button-loading-spinner .5s linear infinite;
+	button.wp-block-formello-button--loading {
+		cursor: revert;
+		span {
+			display: none;  
+			opacity: 0;
+		}
+		svg {
+			display: block; 
+			opacity: 1;
+			width: auto;
+		}
 	}
 
 	@keyframes button-loading-spinner {

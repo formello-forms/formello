@@ -95,18 +95,18 @@ class Formello {
 
 					// Show form message
 					if ( response.message ) {
-						parent.addMessage( response.message, response.errors )
+						parent.addMessage( response.message, response.errors, response.hide_form  )
 						parent.emitEvent( 'message', this.element )
-					}
-
-					if( response.debug ){
-						parent.addDebug(response.debug)
-						console.log(response.debug)
 					}
 
 					// Should we hide form?
 					if (response.hide_form) {
 						parent.element.style.display = 'none'
+					}
+
+					if( response.debug ){
+						parent.addDebug(response.debug)
+						console.log(response.debug)
 					}
 
 					// Should we redirect?
@@ -120,7 +120,7 @@ class Formello {
 					}
 				} else {
 					// Server error :(
-					console.log( this.responseText )
+					console.log( response )
 				}
 			}
 		}
@@ -176,7 +176,7 @@ class Formello {
 
 	}
 
-	addMessage( message, errors ) {
+	addMessage( message, errors, hide ) {
 		let msg = this.element.querySelector( '.formello-message' )
 		msg.classList.add( message.type )
 		msg.innerHTML = '<p>' + message.text + '</p>'
@@ -193,16 +193,20 @@ class Formello {
 			});
 		}
 
+		if( hide ){
+    		this.element.insertAdjacentElement('afterend', msg);
+		}
+
 	}
 
 	addDebug( debug ) {
-		let msg = this.element.querySelector( '.formello-message' )
+		let msg = document.querySelector( '.formello-message' )
 
 		var debugDiv = document.createElement('div');
 		debugDiv.classList.add( 'warning' )
 		debugDiv.innerHTML = '<pre>' + JSON.stringify( debug, undefined, 2 ) + '</pre>'
 
-    	msg.insertAdjacentElement('afterend', debugDiv);
+		msg.insertAdjacentElement('afterend', debugDiv);
 
 
 	}
@@ -215,6 +219,9 @@ class Formello {
 
 	showLoading() {
 		const btn = this.element.querySelector('.wp-block-formello-button')
+		btn.style.width = window.getComputedStyle(btn).width
+		btn.style.height = window.getComputedStyle(btn).height
+		btn.style.padding = 0;
 		btn.classList.toggle( 'wp-block-formello-button--loading' )
 		btn.toggleAttribute( 'disabled' )
 	}
