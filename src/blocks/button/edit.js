@@ -122,7 +122,8 @@ export default function Edit( {
 
 	const buttonClasses = classnames(
 		borderProps.className,
-		colorProps.className
+		colorProps.className,
+		attributes.alignment
 	);
 
 	const blockProps = useBlockProps({

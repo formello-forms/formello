@@ -56,7 +56,6 @@ export default function save( { attributes } ) {
 	const colorProps = getColorClassesAndStyles( attributes );
 
 	const buttonClasses = classnames(
-		'load-button',
 		colorProps.className,
 		attributes.alignment
 	);
@@ -70,7 +69,7 @@ export default function save( { attributes } ) {
 	return (
 		<button 
 			type="submit"
-			{...blockProps} style={{ fill: colorProps.style?.color }}
+			{...blockProps}
 		>
 			<RichText.Content tagName="span" value={ attributes.text } />
         	<Component />
