@@ -3,7 +3,7 @@
 namespace Formello\Rakit\Validation\Rules;
 
 use Formello\Rakit\Validation\Rule;
-class RequiredUnless extends \Formello\Rakit\Validation\Rules\Required
+class RequiredUnless extends Required
 {
     /** @var bool */
     protected $implicit = \true;
@@ -15,7 +15,7 @@ class RequiredUnless extends \Formello\Rakit\Validation\Rules\Required
      * @param array $params
      * @return self
      */
-    public function fillParameters(array $params) : \Formello\Rakit\Validation\Rule
+    public function fillParameters(array $params) : Rule
     {
         $this->params['field'] = \array_shift($params);
         $this->params['values'] = $params;

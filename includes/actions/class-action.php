@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
+use Formello\Log;
+
 /**
  * Action Handler
  *
@@ -40,11 +42,30 @@ abstract class Action {
 	protected $settings = array();
 
 	/**
-	 * The action label.
+	 * The logger.
 	 *
-	 * @var array $settings Array of settings.
+	 * @var boolean $log_active.
 	 */
-	protected $log = array();
+	protected $log_active = false;
+
+	/**
+	 * The logger.
+	 *
+	 * @var Formello\Log $logger.
+	 */
+	protected $logger;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		$this->logger = new Log();
+		$settings = get_option( 'formello' );
+		if ( $settings['log'] ) {
+			$this->log_active = true;
+		}
+
+	}
 
 	/**
 	 * Hooks
@@ -79,16 +100,14 @@ abstract class Action {
 	/**
 	 * Register the actions.
 	 *
-	 * @param string $type Type of log.
-	 * @param mixed  $message Message of log.
-	 * @return array
+	 * @param string $level Level of log.
+	 * @param string $message Message of log.
+	 * @param array  $context Message of log.
 	 */
-	public function log( $type, $message ) {
-		$this->log[ $this->type ] = array(
-			'type'     => $type,
-			'message'  => $message,
-		);
-		return $actions;
+	public function log( $level, $message, $context = array() ) {
+		if ( $this->log_active ) {
+			$this->logger->log( $level, $message, $context );
+		}
 	}
 
 }

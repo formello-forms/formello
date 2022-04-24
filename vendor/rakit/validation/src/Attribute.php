@@ -29,7 +29,7 @@ class Attribute
      * @param array       $rules
      * @return void
      */
-    public function __construct(\Formello\Rakit\Validation\Validation $validation, string $key, $alias = null, array $rules = [])
+    public function __construct(Validation $validation, string $key, $alias = null, array $rules = [])
     {
         $this->validation = $validation;
         $this->alias = $alias;
@@ -44,7 +44,7 @@ class Attribute
      * @param \Rakit\Validation\Attribute $primaryAttribute
      * @return void
      */
-    public function setPrimaryAttribute(\Formello\Rakit\Validation\Attribute $primaryAttribute)
+    public function setPrimaryAttribute(Attribute $primaryAttribute)
     {
         $this->primaryAttribute = $primaryAttribute;
     }
@@ -86,7 +86,7 @@ class Attribute
      * @param \Rakit\Validation\Attribute $otherAttribute
      * @return void
      */
-    public function addOtherAttribute(\Formello\Rakit\Validation\Attribute $otherAttribute)
+    public function addOtherAttribute(Attribute $otherAttribute)
     {
         $this->otherAttributes[] = $otherAttribute;
     }
@@ -105,7 +105,7 @@ class Attribute
      * @param \Rakit\Validation\Rule $rule
      * @return void
      */
-    public function addRule(\Formello\Rakit\Validation\Rule $rule)
+    public function addRule(Rule $rule)
     {
         $rule->setAttribute($this);
         $rule->setValidation($this->validation);
@@ -244,7 +244,7 @@ class Attribute
                 if (\is_numeric($word)) {
                     $word = $word + 1;
                 }
-                return \Formello\Rakit\Validation\Helper::snakeCase($word, ' ');
+                return Helper::snakeCase($word, ' ');
             }, $split));
         }
         return \ucfirst($key);

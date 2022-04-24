@@ -7,4 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Formello\\Rakit\\Validation\\' => array($vendorDir . '/rakit/validation/src'),
+    'Formello\\Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
+    'Formello\\Katzgrau\\KLogger\\' => array($vendorDir . '/katzgrau/klogger/src'),
 );

@@ -4,12 +4,14 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
+class ComposerStaticInit4dac0927b5f2711631fdb589fc64ae22
 {
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
             'Formello\\Rakit\\Validation\\' => 26,
+            'Formello\\Psr\\Log\\' => 17,
+            'Formello\\Katzgrau\\KLogger\\' => 26,
         ),
     );
 
@@ -17,6 +19,14 @@ class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
         'Formello\\Rakit\\Validation\\' => 
         array (
             0 => __DIR__ . '/..' . '/rakit/validation/src',
+        ),
+        'Formello\\Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
+        ),
+        'Formello\\Katzgrau\\KLogger\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/katzgrau/klogger/src',
         ),
     );
 
@@ -32,25 +42,27 @@ class ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5
         'Formello\\Blocks' => __DIR__ . '/../..' . '/includes/class-blocks.php',
         'Formello\\Form' => __DIR__ . '/../..' . '/includes/class-form.php',
         'Formello\\Frontend' => __DIR__ . '/../..' . '/includes/class-frontend.php',
+        'Formello\\Katzgrau\\KLogger\\Logger' => __DIR__ . '/..' . '/katzgrau/klogger/src/Logger.php',
+        'Formello\\Log' => __DIR__ . '/../..' . '/includes/class-logger.php',
         'Formello\\Rest\\Controllers\\Forms' => __DIR__ . '/../..' . '/includes/rest/controllers/class-forms.php',
         'Formello\\Rest\\Controllers\\Integrations' => __DIR__ . '/../..' . '/includes/rest/controllers/class-integrations.php',
         'Formello\\Rest\\Controllers\\License' => __DIR__ . '/../..' . '/includes/rest/controllers/class-license.php',
         'Formello\\Rest\\Controllers\\Settings' => __DIR__ . '/../..' . '/includes/rest/controllers/class-settings.php',
         'Formello\\Rest\\Controllers\\Template' => __DIR__ . '/../..' . '/includes/rest/controllers/class-template.php',
-        'Formello\\Submission' => __DIR__ . '/../..' . '/includes/class-submission.php',
         'Formello\\TagReplacers\\Fields' => __DIR__ . '/../..' . '/includes/tag-replacers/class-fields.php',
         'Formello\\TagReplacers\\Other' => __DIR__ . '/../..' . '/includes/tag-replacers/class-other.php',
         'Formello\\TagReplacers\\Replacer' => __DIR__ . '/../..' . '/includes/tag-replacers/class-replacer.php',
         'Formello\\TagReplacers\\Wp' => __DIR__ . '/../..' . '/includes/tag-replacers/class-wp.php',
+        'Formello\\Updater' => __DIR__ . '/../..' . '/includes/class-updater.php',
         'Formello\\Utils\\Encryption' => __DIR__ . '/../..' . '/includes/utils/class-encryption.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9af07d53b2fafecc68915c7fb1be9ce5::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4dac0927b5f2711631fdb589fc64ae22::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4dac0927b5f2711631fdb589fc64ae22::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4dac0927b5f2711631fdb589fc64ae22::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -75,6 +75,7 @@ final class Formello {
 		include_once FORMELLO_ABSPATH . 'includes/class-form.php';
 		include_once FORMELLO_ABSPATH . 'includes/actions/class-action.php';
 		include_once FORMELLO_ABSPATH . 'includes/actions/class-email.php';
+		include_once FORMELLO_ABSPATH . 'includes/class-logger.php';
 		include_once FORMELLO_ABSPATH . 'includes/class-updater.php';
 
 		// Utility functions that are also used by register-routes.php so

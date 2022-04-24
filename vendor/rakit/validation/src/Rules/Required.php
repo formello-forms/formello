@@ -3,7 +3,7 @@
 namespace Formello\Rakit\Validation\Rules;
 
 use Formello\Rakit\Validation\Rule;
-class Required extends \Formello\Rakit\Validation\Rule
+class Required extends Rule
 {
     use Traits\FileTrait;
     /** @var bool */

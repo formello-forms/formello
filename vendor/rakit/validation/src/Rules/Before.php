@@ -3,7 +3,7 @@
 namespace Formello\Rakit\Validation\Rules;
 
 use Formello\Rakit\Validation\Rule;
-class Before extends \Formello\Rakit\Validation\Rule
+class Before extends Rule
 {
     use Traits\DateUtilsTrait;
     /** @var string */

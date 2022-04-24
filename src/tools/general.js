@@ -2,7 +2,7 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	TextControl,
+	ToggleControl,
 	PanelRow,
 	PanelBody,
 	Button,
@@ -41,29 +41,50 @@ export default function General( { addNotice } ) {
 
 	return (
 		<Fragment>
+			<Card>
 
-		<Card>
+				<CardHeader>
+					<h2>{ __( 'Template library', 'formello' ) }</h2>
+				</CardHeader>
 
-			<CardHeader>
-				<h2>{ __( 'Template library', 'formello' ) }</h2>
-			</CardHeader>
+				<CardBody>
 
-			<CardBody>
+					<p>{ __( 'If you need to reset template library.', 'formello' ) }</p>
 
-				<p>{ __( 'If you need to reset template library.', 'formello' ) }</p>
+					<Button 
+						isPrimary 
+						aria-disabled={ loading }
+						isBusy={ loading } 
+						target="_blank"
+						onClick={ () => reSync() }
+					>{ __( 'Re-Sync template', 'formello' ) }
+					</Button>
 
-				<Button 
-					isPrimary 
-					aria-disabled={ loading }
-					isBusy={ loading } 
-					target="_blank"
-					onClick={ () => reSync() }
-				>{ __( 'Re-Sync template', 'formello' ) }
-				</Button>
+				</CardBody>
 
-			</CardBody>
+			</Card>
+			<Card>
 
-		</Card>
+				<CardHeader>
+					<h2>{ __( 'Logging', 'formello' ) }</h2>
+				</CardHeader>
+
+				<CardBody>
+
+					<p>{ __( 'If you need to reset template library.', 'formello' ) }</p>
+
+					<Button 
+						isPrimary 
+						aria-disabled={ loading }
+						isBusy={ loading } 
+						target="_blank"
+						onClick={ () => reSync() }
+					>{ __( 'Re-Sync template', 'formello' ) }
+					</Button>
+
+				</CardBody>
+
+			</Card>
 		</Fragment>
 	);
 

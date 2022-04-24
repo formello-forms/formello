@@ -2,7 +2,7 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	TextControl,
+	ToggleControl,
 	PanelRow,
 	PanelBody,
 	Button,
@@ -63,7 +63,7 @@ export default function General( props ) {
 	};
 
 	return (
-
+		<>
 		<Card>
 
 			<CardHeader>
@@ -124,6 +124,28 @@ export default function General( props ) {
 
 		</Card>
 
+		<Card>
+
+			<CardHeader>
+				<h2>{ __( 'Logging', 'formello' ) }</h2>
+			</CardHeader>
+
+			<CardBody>
+
+				<p>{ __( 'To enable logging, please set this as checked.', 'formello' ) }</p>
+
+				<ToggleControl
+					label={ __( 'Enable log', 'formello' ) }
+					checked={ getSetting( 'log', '' ) }
+					onChange={ ( val ) =>
+						saveSetting( 'log', val )
+					}
+				/>
+
+			</CardBody>
+
+		</Card>
+		</>
 	);
 
 };

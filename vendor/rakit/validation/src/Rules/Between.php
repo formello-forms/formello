@@ -3,7 +3,7 @@
 namespace Formello\Rakit\Validation\Rules;
 
 use Formello\Rakit\Validation\Rule;
-class Between extends \Formello\Rakit\Validation\Rule
+class Between extends Rule
 {
     use Traits\SizeTrait;
     /** @var string */

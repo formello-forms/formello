@@ -20,23 +20,10 @@ class Email extends Action {
 	protected $type = 'email';
 
 	/**
-	 * The action label.
-	 *
-	 * @var string $label Action label.
-	 */
-	protected $label = 'Send Email';
-
-	/**
-	 * The action label.
-	 *
-	 * @var array $settings Array of settings.
-	 */
-	protected $settings = array();
-
-	/**
 	 * Constructor
 	 */
 	public function __construct() {
+		parent::__construct();
 		$this->label    = __( 'Send Email', 'formello' );
 		$this->settings = $this->get_default_settings();
 
@@ -44,10 +31,13 @@ class Email extends Action {
 
 	}
 
+	/**
+	 * Mail error
+	 *
+	 * @param array $wp_error The mail error.
+	 */
 	public function onMailError( $wp_error ) {
-
-		error_log( print_r( $wp_error ) );
-
+		$this->log( 'debug', 'Mail Error ($wp_Error)', array( $wp_error ) );
 	}
 
 	/**
@@ -76,8 +66,10 @@ class Email extends Action {
 	public function process( $action_settings ) {
 
 		$settings = array_merge( $this->settings, $action_settings );
+		$this->log( 'debug', 'Mail Settings:', $settings );
 
 		if ( empty( $settings['to'] ) || empty( $settings['message'] ) ) {
+			$this->log( 'debug', 'Mail Not Sent:' );
 			return false;
 		}
 		$html_email = 'text/html' === $settings['content_type'];
@@ -103,6 +95,8 @@ class Email extends Action {
 		}
 
 		$result = wp_mail( $to, $subject, $message, $headers );
+
+		$this->log( 'debug', __METHOD__ . '(). Mail details:', array( $to, $subject, $message, $headers ) );
 
 		return true;
 	}

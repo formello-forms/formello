@@ -4,7 +4,7 @@ namespace Formello\Rakit\Validation\Rules;
 
 use Formello\Rakit\Validation\Rule;
 use Formello\Rakit\Validation\Rules\Interfaces\ModifyValue;
-class Defaults extends \Formello\Rakit\Validation\Rule implements \Formello\Rakit\Validation\Rules\Interfaces\ModifyValue
+class Defaults extends Rule implements ModifyValue
 {
     /** @var string */
     protected $message = "The :attribute default is :default";
@@ -37,7 +37,7 @@ class Defaults extends \Formello\Rakit\Validation\Rule implements \Formello\Raki
      */
     protected function isEmptyValue($value) : bool
     {
-        $requiredValidator = new \Formello\Rakit\Validation\Rules\Required();
+        $requiredValidator = new Required();
         return \false === $requiredValidator->check($value, []);
     }
 }

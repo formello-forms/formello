@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 use Formello\Rakit\Validation\Validator;
+use Formello\Log;
 
 /**
  * Get defaults for our general options.
@@ -49,7 +50,7 @@ class Form {
 	protected $details = array();
 
 	/**
-	 * The form settings
+	 * The global Formello settings
 	 *
 	 * @var array
 	 */
@@ -84,11 +85,11 @@ class Form {
 	protected $debug = array();
 
 	/**
-	 * The form debug
+	 * The form log
 	 *
 	 * @var boolean
 	 */
-	protected $log = false;
+	protected $logger;
 
 	/**
 	 * The actions array
@@ -110,6 +111,7 @@ class Form {
 			$this->ID       = $id;
 			$this->settings = get_post_meta( $id, '_formello_settings', true );
 			$this->log      = $this->formello_settings['log'];
+			$this->logger   = new Log();
 		}
 
 		$this->messages = array(
@@ -235,12 +237,13 @@ class Form {
 	/**
 	 * Add debug
 	 *
-	 * @param string $type The actions response.
+	 * @param string $level The actions response.
 	 * @param string $message The actions response.
+	 * @param array  $context The actions response.
 	 */
-	public function log( $type, $message = '' ) {
-		if ( $this->is_debug() ) {
-			$this->debug[][ $type ] = $message;
+	public function log( $level, $message, $context = array() ) {
+		if ( ! empty( $this->log ) ) {
+			$this->logger->log( $level, $message, $context );
 		}
 	}
 
@@ -313,7 +316,7 @@ class Form {
 		$form['id']       = $this->ID;
 		$form['details']  = $this->data['details'];
 		$form['actions']  = $this->data['actions'];
-		$form['fields']  = $this->data['fields'];
+		$form['fields']   = $this->data['fields'];
 		$form['errors']   = $this->errors;
 		$form['messages'] = $this->messages;
 		$form['settings'] = $this->settings;
@@ -355,6 +358,7 @@ class Form {
 
 		$form_actions = $this->get_setting( 'actions' );
 
+		$this->data['actions'] = array();
 		if ( isset( $form_actions ) ) {
 			foreach ( $form_actions as $action_settings ) {
 				$this->data['actions'][] = $this->recursive_actions( $action_settings );
@@ -525,16 +529,6 @@ class Form {
 
 		// all good: no errors!
 		return false;
-	}
-
-	/**
-	 * Get a Data array.
-	 *
-	 * @param string $type The action name.
-	 * @param array  $data The array of data.
-	 */
-	private function set_debug( $type, $data = array() ) {
-		$this->debug[ $type ][] = $data;
 	}
 
 	/**

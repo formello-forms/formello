@@ -66,11 +66,13 @@ class Frontend {
 		$form = new Form( $form_id );
 
 		if ( ! $form->validate() ) {
+			$form->log( 'debug', 'Not validated:', $form->to_array() );
 			wp_send_json( $form->get_response() );
 			wp_die();
 		};
 
 		$this->process_form( $form );
+		$form->log( 'debug', 'Form sent:', $form->to_array() );
 
 		$response = $form->get_response();
 
@@ -99,6 +101,7 @@ class Frontend {
 		do_action( 'formello_process_form', $form );
 
 		$actions = $form->get_actions();
+		$form->log( 'debug', 'Actions to run:', $actions );
 
 		// process form actions asynchronously.
 		if ( isset( $actions ) ) {
@@ -110,8 +113,8 @@ class Frontend {
 				 * @param Form $form
 				 * @param array $action_settings
 				 */
-				//do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings );
-				wp_schedule_single_event( time() + 60, 'formello_process_form_action_' . $action_settings['type'], array( 'action_settings' => $action_settings ), true );
+				do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings );
+				//wp_schedule_single_event( time() + 60, 'formello_process_form_action_' . $action_settings['type'], array( 'action_settings' => $action_settings ), true );
 			}
 		}
 

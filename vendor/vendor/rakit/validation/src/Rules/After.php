@@ -1,0 +1,32 @@
+<?php
+
+namespace Formello\Rakit\Validation\Rules;
+
+use Formello\Rakit\Validation\Rule;
+class After extends Rule
+{
+    use \Formello\Rakit\Validation\Rules\Traits\DateUtilsTrait;
+    /** @var string */
+    protected $message = "The :attribute must be a date after :time.";
+    /** @var array */
+    protected $fillableParams = ['time'];
+    /**
+     * Check the value is valid
+     *
+     * @param mixed $value
+     * @return bool
+     * @throws \Exception
+     */
+    public function check($value) : bool
+    {
+        $this->requireParameters($this->fillableParams);
+        $time = $this->parameter('time');
+        if (!$this->isValidDate($value)) {
+            throw $this->throwException($value);
+        }
+        if (!$this->isValidDate($time)) {
+            throw $this->throwException($time);
+        }
+        return $this->getTimeStamp($time) < $this->getTimeStamp($value);
+    }
+}

@@ -111,7 +111,7 @@ function App() {
 	const getSetting = ( group, name, defaultVal ) => {
 		let result = defaultVal;
 
-		if( 'license' === group || 'license_status' === group ){
+		if( 'license' === group || 'license_status' === group || 'log' === group ){
 			result = settings[ group ];
 		}
 

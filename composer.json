@@ -12,7 +12,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.6",
-        "rakit/validation": "dev-master"
+        "rakit/validation": "dev-master",
+        "katzgrau/klogger": "dev-master"
     },
     "scripts": {
         "php": [

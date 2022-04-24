@@ -5,7 +5,7 @@ namespace Formello\Rakit\Validation\Rules;
 use Formello\Rakit\Validation\Helper;
 use Formello\Rakit\Validation\MimeTypeGuesser;
 use Formello\Rakit\Validation\Rule;
-class Mimes extends \Formello\Rakit\Validation\Rule
+class Mimes extends Rule
 {
     use Traits\FileTrait;
     /** @var string */
@@ -22,7 +22,7 @@ class Mimes extends \Formello\Rakit\Validation\Rule
      * @param array $params
      * @return self
      */
-    public function fillParameters(array $params) : \Formello\Rakit\Validation\Rule
+    public function fillParameters(array $params) : Rule
     {
         $this->allowTypes($params);
         return $this;
@@ -33,7 +33,7 @@ class Mimes extends \Formello\Rakit\Validation\Rule
      * @param mixed $types
      * @return self
      */
-    public function allowTypes($types) : \Formello\Rakit\Validation\Rule
+    public function allowTypes($types) : Rule
     {
         if (\is_string($types)) {
             $types = \explode('|', $types);
@@ -52,7 +52,7 @@ class Mimes extends \Formello\Rakit\Validation\Rule
         $allowedTypes = $this->parameter('allowed_types');
         if ($allowedTypes) {
             $or = $this->validation ? $this->validation->getTranslation('or') : 'or';
-            $this->setParameterText('allowed_types', \Formello\Rakit\Validation\Helper::join(\Formello\Rakit\Validation\Helper::wraps($allowedTypes, "'"), ', ', ", {$or} "));
+            $this->setParameterText('allowed_types', Helper::join(Helper::wraps($allowedTypes, "'"), ', ', ", {$or} "));
         }
         // below is Required rule job
         if (!$this->isValueFromUploadedFiles($value) or $value['error'] == \UPLOAD_ERR_NO_FILE) {
@@ -66,7 +66,7 @@ class Mimes extends \Formello\Rakit\Validation\Rule
             return \false;
         }
         if (!empty($allowedTypes)) {
-            $guesser = new \Formello\Rakit\Validation\MimeTypeGuesser();
+            $guesser = new MimeTypeGuesser();
             $ext = $guesser->getExtension($value['type']);
             unset($guesser);
             if (!\in_array($ext, $allowedTypes)) {

@@ -3,7 +3,7 @@
 namespace Formello\Rakit\Validation\Rules;
 
 use Formello\Rakit\Validation\Rule;
-class Min extends \Formello\Rakit\Validation\Rule
+class Min extends Rule
 {
     use Traits\SizeTrait;
     /** @var string */
