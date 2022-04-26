@@ -1,21 +1,24 @@
 /*!****************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/settings/dashboard.scss ***!
   \****************************************************************************************************************************************************************************************************************************************************/
-.formello_form_page_formello-settings #wpcontent, .formello_form_page_formello-tools #wpcontent {
+.formello_form_page_formello-settings #wpcontent,
+.formello_form_page_formello-tools #wpcontent {
   padding: 0;
 }
-.formello_form_page_formello-settings #wpcontent .formello-notices__snackbar-list, .formello_form_page_formello-tools #wpcontent .formello-notices__snackbar-list {
+.formello_form_page_formello-settings #wpcontent .formello-notices__snackbar-list,
+.formello_form_page_formello-tools #wpcontent .formello-notices__snackbar-list {
   position: fixed;
   bottom: 100px;
   left: 180px;
 }
-.formello_form_page_formello-settings #wpcontent .dashicons-star-filled, .formello_form_page_formello-tools #wpcontent .dashicons-star-filled {
+.formello_form_page_formello-settings #wpcontent .dashicons-star-filled,
+.formello_form_page_formello-tools #wpcontent .dashicons-star-filled {
   color: #ffb900;
 }
 
 .formello-settings-header {
   padding: 20px 10px;
-  background-color: #ffffff;
+  background-color: #fff;
   box-shadow: 0 1px 0 rgba(213, 213, 213, 0.5), 0 1px 2px #eee;
 }
 .formello-settings-header .formello-container {
@@ -194,7 +197,8 @@ table.formello-bordered {
   table-layout: fixed;
 }
 
-table.formello-bordered th, table.formello-bordered td {
+table.formello-bordered th,
+table.formello-bordered td {
   border: 1px solid #ddd;
   padding: 12px;
 }

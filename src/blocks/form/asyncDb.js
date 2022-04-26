@@ -10,7 +10,7 @@ let wasSavingPost = select('core/editor').isSavingPost();
 let wasAutosavingPost = select('core/editor').isAutosavingPost();
 let wasPreviewingPost = select('core/editor').isPreviewingPost();
 
-const updateTransient = (innerBlocks) => {
+const updateTransient = () => {
 	apiFetch({
 		path: '/formello/v1/sync_template_library/',
 		method: 'POST',
@@ -39,14 +39,13 @@ subscribe(() => {
 	wasPreviewingPost = isPreviewingPost;
 
 	if (shouldTriggerAjax) {
-		let blocks = [];
-		let root = select('core/block-editor').getBlocks();
-		let descendants = select(
+		const root = select('core/block-editor').getBlocks();
+		const descendants = select(
 			'core/block-editor'
 		).getClientIdsWithDescendants(root[0]);
 
 		descendants.forEach((b) => {
-			let block = select('core/block-editor').getBlock(b);
+			const block = select('core/block-editor').getBlock(b);
 			if ('formello/form' === block.name) {
 				if (undefined === block.attributes.id) {
 					return;
@@ -70,7 +69,7 @@ subscribe(() => {
 							},
 						},
 					},
-				}).then((result) => {
+				}).then(() => {
 					updateTransient();
 				});
 			}

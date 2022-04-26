@@ -2,9 +2,9 @@
 .tooltip {
 	width: 0.8rem;
 	height: 0.8rem;
-	line-height: .8rem;
+	line-height: 0.8rem;
 	border-radius: 50%;
-	font-size: .8rem;
+	font-size: 0.8rem;
 	color: #fff;
 	text-align: center;
 	background: #333;
@@ -27,7 +27,7 @@
 	left: 50%;
 	margin-left: -60px;
 	background-color: #333;
-	box-shadow:0 1px 8px rgba(0,0,0,0.5);
+	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
 }
 
 .tooltip .tooltiptext::after {

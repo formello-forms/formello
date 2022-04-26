@@ -16,39 +16,16 @@ import { __ } from '@wordpress/i18n';
 import {
 	InspectorControls,
 	InspectorAdvancedControls,
-	InnerBlocks,
 	BlockControls,
 	RichText,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import {
-	TextControl,
-	ToggleControl,
-	SelectControl,
-	Panel,
-	Tooltip,
-	PanelBody,
-	TextareaControl,
-	ToolbarButton,
-	ToolbarGroup,
-	Flex,
-	FlexItem,
-	FlexBlock,
-	Button,
-	FormTokenField,
-	Draggable,
-} from '@wordpress/components';
+import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 
 import { useState, useEffect, Fragment } from '@wordpress/element';
-import { withDispatch, useDispatch, useSelect } from '@wordpress/data';
 
-const { createBlock, cloneBlock } = wp.blocks;
-
-import OptionsList from './opts';
 import { OptionsModal } from './modal';
-import classnames from 'classnames';
 import Label from '../../components/label';
-import getIcon from '../../utils/get-icon';
 import Toolbar from '../../components/field-options/toolbar';
 import Options from '../../components/field-options';
 import AdvancedOptions from '../../components/field-options/advanced';
@@ -78,23 +55,23 @@ export default function Edit(props) {
 	const [options, setOptions] = useState(attributes.options);
 	const [isModalOpen, setModalOpen] = useState(false);
 
-	const addNewRow = (e) => {
+	const addNewRow = () => {
 		setAttributes({
 			options: [...attributes.options, { label: '', value: '' }],
 		});
 	};
 
 	const deleteRow = (record, index) => {
-		let items = [...attributes.options]; // make a separate copy of the array
+		const items = [...attributes.options]; // make a separate copy of the array
 		items.splice(index, 1);
 		setAttributes({ options: items });
 	};
 
 	const handleChange = (value, index, prop) => {
 		// 1. Make a shallow copy of the items
-		let items = [...attributes.options];
+		const items = [...attributes.options];
 		// 2. Make a shallow copy of the item you want to mutate
-		let item = { ...attributes.options[index] };
+		const item = { ...attributes.options[index] };
 		// 3. Replace the property you're intested in
 		item[prop] = value;
 		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
@@ -104,10 +81,10 @@ export default function Edit(props) {
 	};
 
 	const bulkOpts = (val) => {
-		let opts = val.match(/[^\r\n]+/g);
-		let newSettings = [];
-		for (let i in opts) {
-			let tmp = opts[i].split(',');
+		const opts = val.match(/[^\r\n]+/g);
+		const newSettings = [];
+		for (const i in opts) {
+			const tmp = opts[i].split(',');
 			newSettings.push({ value: tmp[0], label: tmp[1] });
 		}
 		setAttributes({ options: newSettings });
@@ -174,7 +151,7 @@ export default function Edit(props) {
 						className={className}
 						value={attributes.help}
 						onChange={(help) => setAttributes({ help })}
-						placeholder={__('Enter help message...', 'formello')}
+						placeholder={__('Enter help message…', 'formello')}
 						allowedFormats={[
 							'core/bold',
 							'core/italic',

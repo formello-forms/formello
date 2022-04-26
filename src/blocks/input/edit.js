@@ -4,27 +4,14 @@ import {
 	InspectorControls,
 	InspectorAdvancedControls,
 	BlockControls,
-	AlignmentToolbar,
 	RichText,
-	InnerBlocks,
 	useBlockProps,
 	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 
-import {
-	ToolbarGroup,
-	ToolbarButton,
-	PanelRow,
-	PanelBody,
-	TextareaControl,
-	ToggleControl,
-	BaseControl,
-	SelectControl,
-	__experimentalInputControl as InputControl,
-} from '@wordpress/components';
+import { ToolbarGroup } from '@wordpress/components';
 
-import { useEffect, Fragment } from '@wordpress/element';
-import { select } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 
 import classnames from 'classnames';
 
@@ -49,13 +36,13 @@ const hiddenIcon = getIcon('hidden');
  * @return {WPElement} Element to render.
  */
 export default function Edit(props) {
-	const { attributes, setAttributes, clientId, context } = props;
+	const { attributes, setAttributes, clientId } = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[attributes.type];
 	const MY_TEMPLATE = [['formello/button', {}]];
 
 	useEffect(() => {
-		let idx = clientId.substr(2, 6).replace('-', '').replace(/-/g, '');
+		const idx = clientId.substr(2, 6).replace('-', '').replace(/-/g, '');
 		if (!attributes.id) {
 			setAttributes({
 				id: 'field_' + idx,
@@ -73,12 +60,12 @@ export default function Edit(props) {
 		'formello-group': attributes.withButton || 'range' === attributes.type,
 		'formello-group grouped': attributes.grouped,
 		'formello-checkbox':
-			'checkbox' == attributes.type || 'radio' == attributes.type,
-		'formello-textarea': 'textarea' == attributes.type,
+			'checkbox' === attributes.type || 'radio' === attributes.type,
+		'formello-textarea': 'textarea' === attributes.type,
 	});
 
 	const blockProps = useBlockProps({
-		className: className,
+		className,
 	});
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
@@ -119,12 +106,12 @@ export default function Edit(props) {
 					<label>[{attributes.name}] </label>
 				</div>
 			)}
-			{'textarea' == attributes.type ? (
+			{'textarea' === attributes.type ? (
 				<textarea
 					type={attributes.type}
 					cols={attributes.cols}
 					rows={attributes.rows}
-					value={attributes.value}
+					value={attributes.value || ''}
 					onChange={onChange}
 					className={attributes.fieldClass}
 					placeholder={attributes.placeholder}
@@ -133,7 +120,7 @@ export default function Edit(props) {
 				<input
 					className={attributes.fieldClass}
 					type={attributes.type}
-					defaultValue={attributes.value || ''}
+					value={attributes.value || ''}
 					checked={attributes.checked}
 					onChange={onChange}
 					placeholder={attributes.placeholder}
@@ -146,7 +133,7 @@ export default function Edit(props) {
 					tagName="small"
 					value={attributes.help}
 					onChange={(val) => setAttributes({ help: val })}
-					placeholder={__('Enter help message...', 'formello')}
+					placeholder={__('Enter help message…', 'formello')}
 					allowedFormats={['core/bold', 'core/italic', 'core/link']}
 					multiline={false}
 				/>

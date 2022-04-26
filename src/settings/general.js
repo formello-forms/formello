@@ -3,13 +3,8 @@ import {
 	CardHeader,
 	CardBody,
 	ToggleControl,
-	PanelRow,
-	PanelBody,
 	Button,
-	Icon,
-	SelectControl,
 	ExternalLink,
-	Flex,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 

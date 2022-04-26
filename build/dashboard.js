@@ -2,45 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/settings/about.js":
-/*!*******************************!*\
-  !*** ./src/settings/about.js ***!
-  \*******************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": function() { return /* binding */ other; }
-/* harmony export */ });
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
-
-
-function other(props) {
-  const {
-    getSetting,
-    changeSettings
-  } = props;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
-    initialOpen: true,
-    title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('About', 'formello')
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "formello-dashboard-panel-row-wrapper"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.RawHTML, null, sprintf((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('<p>Here you can find %s.</p>', 'formello'), `<a href="https://wordpress.org/support/plugin/formello/">support</a>`)), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.RawHTML, null, sprintf((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('<p>If you like the plugin, you can share a review %s.</p>', 'formello'), `<a href="https://wordpress.org/support/plugin/formello/reviews/#new-post">here</a>`))))));
-}
-;
-
-/***/ }),
-
 /***/ "./src/settings/general.js":
 /*!*********************************!*\
   !*** ./src/settings/general.js ***!
@@ -88,7 +49,6 @@ function General(props) {
         saveSetting('license_status', result.response.license);
       }
 
-      ;
       message.classList.add('formello-action-message--show');
       message.classList.remove('formello-action-message--error');
       message.textContent = 'License ' + result.response.license;
@@ -132,7 +92,6 @@ function General(props) {
     onChange: val => saveSetting('log', val)
   }))));
 }
-;
 
 /***/ }),
 
@@ -155,11 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-const {
-  apiFetch
-} = wp;
-function Help(props) {
+function Help() {
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "formello-help"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Need help?', 'formello'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Detailed documentation is available on the plugin website.', 'formello')), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
@@ -187,7 +142,6 @@ function Help(props) {
     icon: "star-filled"
   })))));
 }
-;
 
 /***/ }),
 
@@ -202,22 +156,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
 
 
-
-const IntegrationsTab = props => {
-  const {
-    getSetting,
-    changeSettings
-  } = props;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Integrations', 'formello'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.RawHTML, null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('<p>Go to %s to download your preferred integrations. We are working on other integrations.</p>', 'formello'), `<a href="https://formello.net/addons/" target="_blank">addons page</a>`))));
+const IntegrationsTab = () => {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Integrations', 'formello'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.RawHTML, null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('<p>Go to %s to download your preferred integrations. We are working on other integrations.</p>', 'formello'), `<a href="https://formello.net/addons/" target="_blank">addons page</a>`))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ((0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.withFilters)('formello.settings')(IntegrationsTab));
@@ -235,22 +182,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/hooks */ "@wordpress/hooks");
-/* harmony import */ var _wordpress_hooks__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_hooks__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 
 
 
 
 
-
-const LicensesTab = props => {
-  const {
-    getSetting,
-    changeSettings
-  } = props;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Licenses', 'formello'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.RawHTML, null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('<p>Here you can add license for %s.</p>', 'formello'), `<a href="https://formello.net/addons/" target="_blank">addons</a>`))));
+const LicensesTab = () => {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardHeader, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Licenses', 'formello'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardBody, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.RawHTML, null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.sprintf)((0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('<p>Here you can add license for %s.</p>', 'formello'), `<a href="https://formello.net/addons/" target="_blank">addons</a>`))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ((0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.withFilters)('formello.licenses')(LicensesTab));
@@ -284,7 +224,7 @@ function messages(props) {
   } = props;
 
   const updateSetting = (group, field, value) => {
-    var newSettings = Object.assign({}, getSetting('messages', group));
+    const newSettings = Object.assign({}, getSetting('messages', group));
     newSettings[field] = value;
     changeSettings('messages', group, newSettings);
   };
@@ -393,7 +333,6 @@ function messages(props) {
     }
   }))));
 }
-;
 
 /***/ }),
 
@@ -445,7 +384,7 @@ function reCaptcha(props) {
     onChange: val => {
       changeSettings('reCaptcha', 'secret_key', val);
     }
-  }), getSetting('reCaptcha', 'version') == 3 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalNumberControl, {
+  }), getSetting('reCaptcha', 'version') === 3 && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.__experimentalNumberControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Threshold', 'formello'),
     value: getSetting('reCaptcha', 'threshold'),
     onChange: val => {
@@ -456,7 +395,6 @@ function reCaptcha(props) {
     max: '1'
   })));
 }
-;
 
 /***/ }),
 
@@ -988,7 +926,7 @@ function getIcon(icon) {
       fill: "#9b51e0",
       stroke: "none"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-      d: "M0 1280 l0 -1280 1280 0 1280 0 0 1280 0 1280 -1280 0 -1280 0 0\r -1280z m1456 666 c29 -7 78 -28 111 -45 67 -36 183 -146 168 -160 -26 -23\r -319 -231 -326 -231 -5 0 -9 5 -9 10 0 6 -11 22 -25 35 -30 31 -83 33 -116 6\r -22 -18 -24 -27 -27 -140 l-4 -121 66 0 66 0 0 -185 0 -185 -65 0 -65 0 0\r -170 0 -170 -205 0 -205 0 0 448 c0 355 3 461 15 517 39 186 182 342 356 389\r 69 19 199 20 265 2z"
+      d: "M0 1280 l0 -1280 1280 0 1280 0 0 1280 0 1280 -1280 0 -1280 0 0 -1280z m1456 666 c29 -7 78 -28 111 -45 67 -36 183 -146 168 -160 -26 -23 -319 -231 -326 -231 -5 0 -9 5 -9 10 0 6 -11 22 -25 35 -30 31 -83 33 -116 6 -22 -18 -24 -27 -27 -140 l-4 -121 66 0 66 0 0 -185 0 -185 -65 0 -65 0 0 -170 0 -170 -205 0 -205 0 0 448 c0 355 3 461 15 517 39 186 182 342 356 389 69 19 199 20 265 2z"
     })));
   }
 }
@@ -1196,8 +1134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _messages_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./messages.js */ "./src/settings/messages.js");
 /* harmony import */ var _integrations_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./integrations.js */ "./src/settings/integrations.js");
 /* harmony import */ var _licenses_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./licenses.js */ "./src/settings/licenses.js");
-/* harmony import */ var _about_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./about.js */ "./src/settings/about.js");
-/* harmony import */ var _tools_notices_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../tools/notices.js */ "./src/tools/notices.js");
+/* harmony import */ var _tools_notices_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../tools/notices.js */ "./src/tools/notices.js");
 
 
 /**
@@ -1211,7 +1148,6 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Internal dependencies
  */
-
 
 
 
@@ -1271,7 +1207,7 @@ function App() {
     let type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'snackbar';
     removeNotice('settings');
     createNotice(status, content, {
-      type: type,
+      type,
       id: 'settings'
     });
   };
@@ -1290,15 +1226,15 @@ function App() {
     return result;
   };
 
-  const updateSettings = e => {
+  const updateSettings = () => {
     setSaving(true);
     _wordpress_api_fetch__WEBPACK_IMPORTED_MODULE_3___default()({
       path: '/formello/v1/settings',
       method: 'POST',
       data: {
-        settings: settings
+        settings
       }
-    }).then(result => {
+    }).then(() => {
       setSaving(false);
       addNotice('info', 'Settings saved');
     });
@@ -1311,7 +1247,7 @@ function App() {
     if (!result.success || !result.response) {
       message.classList.add('formello-action-message--error');
     } else {
-      setTimeout(function () {
+      setTimeout(() => {
         message.classList.remove('formello-action-message--show');
       }, 3000);
     }
@@ -1334,7 +1270,7 @@ function App() {
   const initialTab = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.getQueryArg)(window.location.href, 'tab');
 
   const updateUrl = tabName => {
-    let newUrl = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(window.location.href, {
+    const newUrl = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_9__.addQueryArgs)(window.location.href, {
       tab: tabName
     });
     window.history.replaceState({
@@ -1375,7 +1311,7 @@ function App() {
       isBusy: isSaving,
       disabled: isSaving,
       onClick: e => updateSettings(e)
-    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save', 'formello'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_js__WEBPACK_IMPORTED_MODULE_10__["default"], null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tools_notices_js__WEBPACK_IMPORTED_MODULE_17__["default"], null));
+    }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Save', 'formello'))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_help_js__WEBPACK_IMPORTED_MODULE_10__["default"], null), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_tools_notices_js__WEBPACK_IMPORTED_MODULE_16__["default"], null));
   }), (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__.applyFilters)('formello.dashboard.settings', '', this), (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_4__.applyFilters)('formello.dashboard.afterSettings', '', this)));
 }
 

@@ -15,21 +15,17 @@ import { Fragment, RawHTML, useState } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
 
-import apiFetch from '@wordpress/api-fetch';
-
-import { compose } from '@wordpress/compose';
-
 import { decodeEntities } from '@wordpress/html-entities';
 
-import { withSelect, useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 import { parse } from '@wordpress/blocks';
 
-import { TabPanel, Spinner, SelectControl, Modal } from '@wordpress/components';
+import { Spinner, Modal } from '@wordpress/components';
 import { BlockPreview } from '@wordpress/block-editor';
 
-export function TemplatesModal(props) {
-	const { onRequestClose, type, clientId } = props;
+export function TemplatesModal() {
+	const { onRequestClose, type } = props;
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);

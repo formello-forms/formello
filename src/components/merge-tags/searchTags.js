@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import { Fragment } from '@wordpress/element';
 import {
 	getFieldsTags,
 	getWordpressTags,
@@ -10,10 +10,11 @@ import TagList from './tagList';
 import { get, isEmpty } from 'lodash';
 
 function SearchTags(props) {
-	const search = props.search;
+
+	const { search, noFields, clientId } = props;
 
 	const getFilteredTags = () => {
-		const fields = getFieldsTags(props.clientId, false);
+		const fields = getFieldsTags( clientId, false );
 
 		const filteredFields = fields.filter((field) => {
 			const title = get(field, 'title');
@@ -49,7 +50,7 @@ function SearchTags(props) {
 			return title.toLowerCase().search(search.toLowerCase()) !== -1;
 		});
 
-		const tabs = [
+		let tabs = [
 			{
 				list: 'fields',
 				label: 'Fields',
@@ -77,16 +78,12 @@ function SearchTags(props) {
 			},
 		];
 
-		if (noFields) {
-			tabs = tabs.shift();
-		}
-
 		return tabs;
 	};
 
 	const noTagsFound = () => {
 		const tags = getFilteredTags();
-		let emptyGroups = [];
+		const emptyGroups = [];
 
 		tags.forEach((tag) => {
 			if (isEmpty(tag.data)) {

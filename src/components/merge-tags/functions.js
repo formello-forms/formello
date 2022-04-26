@@ -1,29 +1,7 @@
-import {
-	each,
-	has,
-	omit,
-	isEqual,
-	clone,
-	assign,
-	isEmpty,
-	get,
-	map,
-	isArray,
-	toString,
-} from 'lodash';
+import { each } from 'lodash';
 
-import { __ } from '@wordpress/i18n';
-
-const {
-	getBlock,
-	getBlocks,
-	getClientIdsOfDescendants,
-	getBlockRootClientId,
-	getBlocksByClientId,
-	getBlockHierarchyRootClientId,
-	getPreviousBlockClientId,
-	getBlockParents,
-} = wp.data.select('core/block-editor');
+const { getBlock, getClientIdsOfDescendants, getBlockParents } =
+	wp.data.select('core/block-editor');
 
 const allowed = ['formello/input', 'formello/select'];
 
@@ -33,14 +11,14 @@ const allowed = ['formello/input', 'formello/select'];
  * @param {string} clientId The id of the block of which we are finding the form block
  */
 export function getFormBlock(clientId) {
-	if ('formello/form' == getBlock(clientId).name) {
+	if ('formello/form' === getBlock(clientId).name) {
 		return getBlock(clientId);
 	}
 	// if it's not an form block, get parent form.
 	const parents = getBlockParents(clientId);
 
 	for (const block of parents) {
-		if (getBlock(block).name == 'formello/form') {
+		if (getBlock(block).name === 'formello/form') {
 			return getBlock(block);
 		}
 	}
@@ -52,11 +30,11 @@ export function getFormBlock(clientId) {
  * @param {string} clientId The id of the form block of which we are finding the children fields
  */
 export function getFieldsBlock(clientId) {
-	let fields = [];
+	const fields = [];
 	const fieldsId = getClientIdsOfDescendants([clientId]);
 
 	fieldsId.forEach((b) => {
-		let block = getBlock(b);
+		const block = getBlock(b);
 		if (allowed.includes(block.name)) {
 			fields.push(block);
 		}
@@ -71,7 +49,7 @@ export function getFieldsBlock(clientId) {
  * @param {string} clientId The id of the form block of which we are finding the children fields
  */
 export function getFieldsName(clientId) {
-	let fields = {};
+	const fields = {};
 	const fieldsBlock = getFieldsBlock(clientId);
 
 	fieldsBlock.forEach((b) => {
@@ -84,13 +62,8 @@ export function getFieldsName(clientId) {
 	return fields;
 }
 
-/**
- * Find the root form block.
- *
- * @param {string} clientId The id of the form block of which we are finding the children fields
- */
 export function serializeFields(clientId) {
-	let fields = [];
+	const fields = [];
 	const fieldsBlock = getFieldsBlock(clientId);
 
 	fieldsBlock.forEach((b) => {
@@ -103,13 +76,6 @@ export function serializeFields(clientId) {
 	return fields;
 }
 
-/**
- * Will return available field tags
- *
- * @param {string} clientId client-id of the current child block in gutenberg-forms
- * @param {boolean} root if the current block is the gutenberg forms (root)
- * @return {array} list of tags available
- */
 export function getFieldsTags(clientId) {
 	let fields = [];
 	const formBlock = getFormBlock(clientId);
@@ -126,18 +92,13 @@ export function getFieldsTags(clientId) {
 	];
 }
 
-/**
- * Generate form constraints.
- *
- * @param {string} clientId The id of the form block of which we are finding the children fields
- */
 export function getConstraints(clientId) {
-	let constraints = {};
+	const constraints = {};
 	const fields = getFieldsBlock(clientId);
 
 	if (fields) {
 		fields.forEach((b) => {
-			let constraint = getFieldConstraint(b);
+			const constraint = getFieldConstraint(b);
 			if (constraint) {
 				constraints[b.attributes.name] = constraint;
 			}
@@ -147,15 +108,10 @@ export function getConstraints(clientId) {
 	return constraints;
 }
 
-/**
- * Generate field constraints.
- *
- * @param {string} clientId The id of the form block of which we are finding the children fields
- */
 export function getFieldConstraint(field) {
 	let constraints = [];
 
-	if (field.attributes.type == 'url') {
+	if (field.attributes.type === 'url') {
 		constraints.push('url');
 	}
 	if (field.attributes.required) {
@@ -178,11 +134,14 @@ export function getFieldConstraint(field) {
 		constraints.push('max:' + field.attributes.max);
 	}
 
-	if (field.attributes.type == 'email') {
+	if (field.attributes.type === 'email') {
 		constraints.push('email');
 	}
 
-	if (field.attributes.type == 'number' || field.attributes.type == 'range') {
+	if (
+		field.attributes.type === 'number' ||
+		field.attributes.type === 'range'
+	) {
 		constraints.push('numeric');
 	}
 
@@ -207,8 +166,8 @@ export function getFieldConstraint(field) {
 
 export function getMetaTags() {
 	const { getEditedPostAttribute } = wp.data.select('core/editor');
-	let meta = getEditedPostAttribute('meta');
-	let metaTags = [];
+	const meta = getEditedPostAttribute('meta');
+	const metaTags = [];
 
 	each(meta, (_, key) => {
 		const tag = {

@@ -1,12 +1,15 @@
 $settings-container-width: 1024px;
 
-.formello_form_page_formello-settings #wpcontent, .formello_form_page_formello-tools #wpcontent {
+.formello_form_page_formello-settings #wpcontent,
+.formello_form_page_formello-tools #wpcontent {
 	padding: 0;
-	.formello-notices__snackbar-list{
+
+	.formello-notices__snackbar-list {
 		position: fixed;
 		bottom: 100px;
 		left: 180px;
 	}
+
 	.dashicons-star-filled {
 		color: #ffb900;
 	}
@@ -14,8 +17,8 @@ $settings-container-width: 1024px;
 
 .formello-settings-header {
 	padding: 20px 10px;
-	background-color: #ffffff;
-	box-shadow: 0 1px 0 rgba(213,213,213,0.5),0 1px 2px #eee;
+	background-color: #fff;
+	box-shadow: 0 1px 0 rgba(213, 213, 213, 0.5), 0 1px 2px #eee;
 
 	.formello-container {
 		margin: 0 auto;
@@ -47,6 +50,7 @@ $settings-container-width: 1024px;
 }
 
 @media screen and (max-width: 782px) {
+
 	.formello-help {
 		flex-basis: 100%;
 		max-width: 100%;
@@ -106,6 +110,7 @@ $settings-container-width: 1024px;
 	}
 
 	.formello-ratings {
+
 		.dashicons:first-child {
 			margin-left: 5px;
 		}
@@ -135,14 +140,14 @@ $settings-container-width: 1024px;
 
 .addon img {
 	max-width: 100%;
-	height: auto;	
+	height: auto;
 }
 
 .addon footer {
-	margin-top: auto;	
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .addon a {
@@ -155,25 +160,47 @@ $settings-container-width: 1024px;
 	font-weight: bold;
 }
 
-.column-id { 
-	text-align: left; 
-	width: 5%; 
-	overflow:hidden 
+.column-id {
+	text-align: left;
+	width: 5%;
+	overflow: hidden;
 }
 
-.formello-badge { 
-	background-color: #337ab7; 
-	padding: 0 5px; 
-	margin-left: 10px; 
-	color: white; 
-	border-radius: 20%; 
+.formello-badge {
+	background-color: #337ab7;
+	padding: 0 5px;
+	margin-left: 10px;
+	color: white;
+	border-radius: 20%;
 }
 
-.column-actions { text-align: left; width: 150px !important; overflow:hidden }
-.column-formello_date { text-align: left; width: 150px !important; overflow:hidden }
-.column-formello_icons { text-align: left; width: 50px !important; overflow:hidden }
-.formello-star { color: #e27730; font-size: 1rem; }
-.formello-new { color: #337ab7; font-size: 1rem; }
+.column-actions {
+	text-align: left;
+	width: 150px !important;
+	overflow: hidden;
+}
+
+.column-formello_date {
+	text-align: left;
+	width: 150px !important;
+	overflow: hidden;
+}
+
+.column-formello_icons {
+	text-align: left;
+	width: 50px !important;
+	overflow: hidden;
+}
+
+.formello-star {
+	color: #e27730;
+	font-size: 1rem;
+}
+
+.formello-new {
+	color: #337ab7;
+	font-size: 1rem;
+}
 
 /* TABLE SUBMISSION STYLE */
 table.formello-bordered {
@@ -185,7 +212,8 @@ table.formello-bordered {
 	table-layout: fixed;
 }
 
-table.formello-bordered th, table.formello-bordered td {
+table.formello-bordered th,
+table.formello-bordered td {
 	border: 1px solid #ddd;
 	padding: 12px;
 }

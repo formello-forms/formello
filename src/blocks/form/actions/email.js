@@ -3,17 +3,13 @@ const { addFilter } = wp.hooks;
 import {
 	TextControl,
 	TextareaControl,
-	Button,
 	ToggleControl,
-	Icon,
 } from '@wordpress/components';
-import { Fragment, RawHTML, useState, useEffect } from '@wordpress/element';
-
-import apiFetch from '@wordpress/api-fetch';
+import { Fragment, useState } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 
-export default function email(content, props, MergeTags, handleUpdate) {
+export default function Email(content, props, MergeTags, handleUpdate) {
 	const { action, clientId } = props;
 
 	const [settings, setSettings] = useState(Object.assign({}, action));
@@ -105,10 +101,10 @@ export default function email(content, props, MergeTags, handleUpdate) {
 				onChange={(val) => {
 					updateSettings('message', val);
 				}}
-				placeholder={__('Enter message...', 'formello')}
+				placeholder={__('Enter message…', 'formello')}
 			/>
 		</Fragment>
 	);
 }
 
-addFilter('formello.modal.email', 'formello/actions-email', email);
+addFilter('formello.modal.email', 'formello/actions-email', Email);

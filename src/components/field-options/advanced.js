@@ -4,17 +4,11 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-import { applyFilters } from '@wordpress/hooks';
 
 import {
-	TextControl,
-	SelectControl,
-	PanelRow,
-	PanelBody,
 	ToggleControl,
 	BaseControl,
 	__experimentalInputControl as InputControl,
-	TextareaControl,
 	withFilters,
 } from '@wordpress/components';
 
@@ -28,6 +22,7 @@ import DatepickerSettings from './date';
  * be combined into the final markup, which is then serialized by the block
  * editor into `post_content`.
  *
+ * @param  props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
  *
  * @return {WPElement} Element to render.
@@ -52,9 +47,9 @@ function AdvancedOptions(props) {
 			cols,
 			rows,
 			enableRtf,
+			pattern,
 		},
 		setAttributes,
-		onChange,
 	} = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[type];
@@ -88,7 +83,7 @@ function AdvancedOptions(props) {
 								setAttributes({
 									flatpickr: {
 										...flatpickr,
-										['min-date']: val,
+										'min-date': val,
 									},
 								});
 							}}
@@ -104,7 +99,7 @@ function AdvancedOptions(props) {
 								setAttributes({
 									flatpickr: {
 										...flatpickr,
-										['max-date']: val,
+										'max-date': val,
 									},
 								});
 							}}
@@ -248,7 +243,7 @@ function AdvancedOptions(props) {
 					}
 				/>
 			)}
-			{'hidden' == type && (
+			{'hidden' === type && (
 				<p>No advanced options for this field type.</p>
 			)}
 		</Fragment>

@@ -1,8 +1,7 @@
 const { applyFilters } = wp.hooks;
-import getIcon from '../../../utils/get-icon';
 
 export function getActions() {
-	let actions = [
+	const actions = [
 		{
 			type: 'email',
 			title: 'Email',

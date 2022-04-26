@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from '@wordpress/element';
 import { TextControl, TabPanel } from '@wordpress/components';
 import { isEmpty } from 'lodash';
 import TagList from './tagList';

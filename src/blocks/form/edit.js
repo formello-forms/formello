@@ -1,78 +1,33 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-//import './editor.scss';
-
-import { useState, useEffect, Fragment, RawHTML } from '@wordpress/element';
+import { useState, useEffect, RawHTML } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import {
-	withSelect,
-	useSelect,
-	select,
-	dispatch,
-	useDispatch,
-} from '@wordpress/data';
-import { useEntityProp } from '@wordpress/core-data';
+import { withSelect, useSelect, select, dispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 
 import {
 	InspectorControls,
 	InspectorAdvancedControls,
 	BlockControls,
-	InnerBlocks,
 	useBlockProps,
 	useInnerBlocksProps,
 	URLInput,
-	Inserter,
 } from '@wordpress/block-editor';
 
-import {
-	isReusableBlock,
-	createBlocksFromInnerBlocksTemplate,
-	createBlock,
-} from '@wordpress/blocks';
-const {
-	getBlock,
-	getBlocks,
-	getClientIdsOfDescendants,
-	getBlockRootClientId,
-	getBlocksByClientId,
-	getBlockHierarchyRootClientId,
-	getPreviousBlockClientId,
-	getBlockParents,
-	getBlockCount,
-} = wp.data.select('core/block-editor');
+import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 
-import apiFetch from '@wordpress/api-fetch';
 import BlockVariationPicker from './variation-picker';
 import { ActionsModal } from './actions/modal';
 import { getActions } from './actions/actions';
 
 import {
-	BaseControl,
 	TextControl,
 	TextareaControl,
 	ToggleControl,
-	PanelRow,
 	PanelBody,
-	Button,
-	Popover,
 	SelectControl,
-	Toolbar,
 	ToolbarButton,
 	ToolbarGroup,
-	Icon,
-	Dropdown,
 	DropdownMenu,
 	Notice,
 } from '@wordpress/components';
@@ -102,9 +57,8 @@ const ALLOWED_BLOCKS = [
 	'formello/select',
 	'formello/fileupload',
 ];
-import { store as reusableBlocksStore } from '@wordpress/reusable-blocks';
 import { store as blocksStore } from '@wordpress/block-editor';
-import usePostSaved from './savedHook';
+
 import { TemplatesModal } from './library';
 
 /**
@@ -119,14 +73,7 @@ import { TemplatesModal } from './library';
  * @return {WPElement} Element to render.
  */
 function Edit(props) {
-	const {
-		attributes,
-		className,
-		setAttributes,
-		clientId,
-		hasChildBlocks,
-		innerBlocks,
-	} = props;
+	const { attributes, className, setAttributes, clientId } = props;
 
 	const postType = useSelect(
 		(select) => select('core/editor').getCurrentPostType(),
@@ -146,13 +93,13 @@ function Edit(props) {
 	const [isModalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
-		if ('formello_form' == postType && undefined !== postTitle) {
+		if ('formello_form' === postType && undefined !== postTitle) {
 			setAttributes({ name: postTitle });
 		}
 	}, [postTitle]);
 
 	useEffect(() => {
-		let idx = clientId.substr(2, 9).replace('-', '').replace(/-/g, '');
+		const idx = clientId.substr(2, 9).replace('-', '').replace(/-/g, '');
 		if (attributes.name.length < 1) {
 			setAttributes({
 				name: 'form-' + idx,
@@ -203,7 +150,7 @@ function Edit(props) {
 		setAttributes({ requiredText: value });
 
 		// Update the child block's attributes
-		var children =
+		const children =
 			select('core/block-editor').getBlocksByClientId(clientId)[0]
 				.innerBlocks;
 		children.forEach((child) => {
@@ -254,7 +201,7 @@ function Edit(props) {
 							})}
 						/>
 						{attributes.actions.map((a, i) => {
-							var action = _.find(actions, { type: a.type });
+							const action = _.find(actions, { type: a.type });
 							return (
 								<ToolbarButton
 									label={a.title}

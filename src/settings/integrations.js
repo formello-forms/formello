@@ -1,23 +1,10 @@
-import {
-	TextControl,
-	Card,
-	CardHeader,
-	CardBody,
-	withFilters,
-	SlotFillProvider,
-	Slot,
-	Fill,
-} from '@wordpress/components';
+import { Card, CardHeader, CardBody, withFilters } from '@wordpress/components';
 
-import { RawHTML, Fragment } from '@wordpress/element';
-
-import { applyFilters } from '@wordpress/hooks';
+import { RawHTML } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
 
-const IntegrationsTab = (props) => {
-	const { getSetting, changeSettings } = props;
-
+const IntegrationsTab = () => {
 	return (
 		<Card>
 			<CardHeader>

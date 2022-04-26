@@ -1,14 +1,4 @@
-import {
-	Card,
-	CardHeader,
-	CardBody,
-	TextControl,
-	PanelRow,
-	PanelBody,
-	Button,
-	RadioControl,
-	SelectControl,
-} from '@wordpress/components';
+import { Card, CardHeader, CardBody, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
@@ -17,7 +7,7 @@ export default function messages(props) {
 	const { getSetting, changeSettings } = props;
 
 	const updateSetting = (group, field, value) => {
-		var newSettings = Object.assign({}, getSetting('messages', group));
+		const newSettings = Object.assign({}, getSetting('messages', group));
 		newSettings[field] = value;
 		changeSettings('messages', group, newSettings);
 	};

@@ -1,21 +1,10 @@
-import {
-	TextControl,
-	PanelRow,
-	PanelBody,
-	Button,
-	RadioControl,
-	SelectControl,
-} from '@wordpress/components';
+import { PanelRow, PanelBody } from '@wordpress/components';
 
-import { applyFilters } from '@wordpress/hooks';
+import { RawHTML } from '@wordpress/element';
 
-import { RawHTML, Fragment } from '@wordpress/element';
+import { __, sprintf } from '@wordpress/i18n';
 
-import { __ } from '@wordpress/i18n';
-
-export default function other(props) {
-	const { getSetting, changeSettings } = props;
-
+export default function other() {
 	return (
 		<div>
 			<PanelBody initialOpen={true} title={__('About', 'formello')}>

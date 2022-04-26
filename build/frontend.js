@@ -45,10 +45,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "Formello": function() { return /* binding */ Formello; }
 /* harmony export */ });
-/* harmony import */ var formbouncerjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! formbouncerjs */ "./node_modules/formbouncerjs/dist/bouncer.polyfills.min.js");
-/* harmony import */ var formbouncerjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(formbouncerjs__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _events_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./events.js */ "./src/frontend/events.js");
-
+/* harmony import */ var _events_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./events.js */ "./src/frontend/events.js");
 
 
 class Formello {
@@ -72,7 +69,7 @@ class Formello {
 
     /*var bouncer = new Bouncer();
     var errors = bouncer.validateAll( this.element );
-    		if( errors.length ){
+    	if( errors.length ){
     	errors[0].scrollIntoView({behaviour: "smooth", block: "end", inline: "nearest"});
     	return
     }*/
@@ -107,11 +104,11 @@ class Formello {
     // browser event API: formElement.on('formello-success', ..)
     window.dispatchEvent(new CustomEvent('formello-' + eventName)); // custom events API: formello.on('success', ..)
 
-    _events_js__WEBPACK_IMPORTED_MODULE_1__["default"].trigger(eventName, [this.element]);
+    _events_js__WEBPACK_IMPORTED_MODULE_0__["default"].trigger(eventName, [this.element]);
   }
 
   createRequestHandler(formEl) {
-    let parent = this;
+    const parent = this;
     return function () {
       // are we done?
       if (this.readyState === 4) {
@@ -178,28 +175,28 @@ class Formello {
       return;
     }
 
-    var recaptchaUrl = 'https://www.google.com/recaptcha/api.js';
-    var sitekey = (_formello$settings$re = formello.settings.reCaptcha) === null || _formello$settings$re === void 0 ? void 0 : _formello$settings$re.site_key;
-    var version = (_formello$settings$re2 = formello.settings.reCaptcha) === null || _formello$settings$re2 === void 0 ? void 0 : _formello$settings$re2.version;
-    var buttons = this.element.getElementsByTagName('button');
+    let recaptchaUrl = 'https://www.google.com/recaptcha/api.js';
+    const sitekey = (_formello$settings$re = formello.settings.reCaptcha) === null || _formello$settings$re === void 0 ? void 0 : _formello$settings$re.site_key;
+    const version = (_formello$settings$re2 = formello.settings.reCaptcha) === null || _formello$settings$re2 === void 0 ? void 0 : _formello$settings$re2.version;
+    const buttons = this.element.getElementsByTagName('button');
 
     if ('1' === version) {
-      var recaptchaDiv = document.createElement('div');
+      const recaptchaDiv = document.createElement('div');
       recaptchaDiv.classList.add('g-recaptcha');
       recaptchaDiv.setAttribute('data-sitekey', sitekey);
       this.element.insertBefore(recaptchaDiv, buttons[0]);
     } else {
       recaptchaUrl += '?render=' + sitekey;
-      var recaptchaInput = document.createElement("input");
-      recaptchaInput.type = "hidden";
-      recaptchaInput.name = "g-recaptcha-response";
+      const recaptchaInput = document.createElement('input');
+      recaptchaInput.type = 'hidden';
+      recaptchaInput.name = 'g-recaptcha-response';
       recaptchaInput.classList.add('formello-g-recaptcha');
       this.element.appendChild(recaptchaInput);
     }
 
     if (sitekey && version) {
       this.enableRecaptcha = true;
-      var script = document.createElement('script');
+      const script = document.createElement('script');
       script.src = recaptchaUrl;
       document.head.appendChild(script);
     }
@@ -217,15 +214,15 @@ class Formello {
   }
 
   addMessage(message, errors, hide) {
-    let msg = this.element.querySelector('.formello-message');
+    const msg = this.element.querySelector('.formello-message');
     msg.classList.add(message.type);
     msg.innerHTML = '<p>' + message.text + '</p>';
 
     if (errors.length) {
-      var ul = document.createElement('ul');
+      const ul = document.createElement('ul');
       msg.appendChild(ul);
       errors.forEach(function (item) {
-        let li = document.createElement('li');
+        const li = document.createElement('li');
         ul.appendChild(li);
         li.innerHTML += item;
       });
@@ -237,8 +234,8 @@ class Formello {
   }
 
   addDebug(debug) {
-    let msg = this.element.querySelector('.formello-message');
-    var debugDiv = document.createElement('div');
+    const msg = this.element.querySelector('.formello-message');
+    const debugDiv = document.createElement('div');
     debugDiv.classList.add('warning');
     debugDiv.innerHTML = '<pre>' + JSON.stringify(debug, undefined, 2) + '</pre>';
     msg.insertAdjacentElement('afterend', debugDiv);
@@ -246,7 +243,7 @@ class Formello {
 
   cleanMessage() {
     const msg = this.element.querySelector('.formello-message');
-    msg.innerHTML = "";
+    msg.innerHTML = '';
     msg.setAttribute('class', 'formello-message');
   }
 
@@ -260,10 +257,10 @@ class Formello {
   }
 
   isRtfEnabled() {
-    let richtext = this.element.querySelectorAll('.formello-rtf');
+    const richtext = this.element.querySelectorAll('.formello-rtf');
 
     if (richtext.length) {
-      var script = document.createElement('script');
+      const script = document.createElement('script');
 
       script.onload = function () {
         tinymce.init({
@@ -281,18 +278,18 @@ class Formello {
   }
 
   addFlatpickr() {
-    let advancedDate = this.element.querySelectorAll('.flatpickr');
+    const advancedDate = this.element.querySelectorAll('.flatpickr');
 
     if (advancedDate.length) {
-      var script = document.createElement('script');
-      var css = document.createElement('link');
+      const script = document.createElement('script');
+      const css = document.createElement('link');
       css.setAttribute('type', 'text/css');
       css.setAttribute('href', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css');
       css.setAttribute('rel', 'stylesheet');
 
       script.onload = function () {
         //do stuff with the script
-        flatpickr(".flatpickr");
+        flatpickr('.flatpickr');
       };
 
       script.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
@@ -413,7 +410,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var formbouncerjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(formbouncerjs__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var validate = new (formbouncerjs__WEBPACK_IMPORTED_MODULE_1___default())('.wp-block-formello-form', {
+const validate = new (formbouncerjs__WEBPACK_IMPORTED_MODULE_1___default())('.wp-block-formello-form', {
   disableSubmit: true
 });
 document.addEventListener('DOMContentLoaded', function () {

@@ -7,30 +7,33 @@ html {
 
 .formello-message {
 	margin: 1em 0;
+
 	p {
 		margin: 0;
 	}
+
 	&.success {
 		padding: 1em;
 		background-color: #dff0d8;
 		border: 1px solid #d0e9c6;
 		color: #3c763d;
 	}
+
 	&.error {
 		padding: 1em;
 		background-color: #fcf8e3;
 		border: 1px solid #faf2cc;
-		color: #8a6d3b;  
+		color: #8a6d3b;
 	}
 }
 
 .wp-block-formello-form {
-	
+
 	margin-bottom: 1em;
 	display: flex;
 	flex-direction: column;
 
-	div[hidden=true] {
+	div[hidden="true"] {
 		display: none;
 	}
 
@@ -44,18 +47,22 @@ html {
 		flex-direction: row;
 		align-items: center;
 		flex-wrap: wrap;
+
 		label {
 			order: 2;
 			padding: 0 10px;
 		}
+
 		input {
 			order: 1;
 		}
+
 		small {
 			order: 3;
 			width: auto;
 			margin: $small-margin;
 		}
+
 		.error-message {
 			order: 4;
 			width: 100%;
@@ -66,25 +73,32 @@ html {
 		flex-direction: row;
 		flex-wrap: wrap;
 		align-items: center;
+
 		label {
 			width: 100%;
 		}
+
 		input {
 			flex: auto;
 			width: 1%;
 		}
+
 		button {
 			align-self: stretch;
 			margin-left: 10px;
 		}
+
 		&.grouped {
+
 			input {
-				border-right: 0;				
+				border-right: 0;
 			}
+
 			button {
 				margin: 0;
 			}
 		}
+
 		.error-message {
 			order: 4;
 			width: 100%;
@@ -94,9 +108,11 @@ html {
 	label {
 		padding: 0 10px 0 0;
 		box-sizing: border-box;
+
 		&.hide {
 			display: none;
 		}
+
 		span.required {
 			color: red;
 			margin: 0 5px;
@@ -104,7 +120,9 @@ html {
 		}
 	}
 
-	input[type], select, textarea {
+	input[type],
+	select,
+	textarea {
 		font-size: inherit;
 		font-family: inherit;
 		line-height: inherit;
@@ -123,14 +141,14 @@ html {
 	}
 
 	legend {
-		margin: .5em 0;
+		margin: 0.5em 0;
 	}
 
 	output {
 		margin: 0 0 0 1em;
 		border: 1px solid #d7dbdd;
 		font-size: 1em;
-		padding: .4em .4em;
+		padding: 0.4em 0.4em;
 		border-radius: 3px;
 		min-width: 2.4em;
 		min-height: 2.6em;
@@ -140,14 +158,17 @@ html {
 	button {
 		cursor: pointer;
 		position: relative;
-		background-color: #dddddd;
+		background-color: #ddd;
 	}
 
 	&.is-bold {
+
 		label {
 			font-weight: bold;
 		}
+
 		.formello-checkbox {
+
 			label {
 				font-weight: normal;
 			}
@@ -165,12 +186,15 @@ html {
 		border: none;
 		flex-direction: row;
 		align-self: flex-start;
+
 		&.center {
 			align-self: center;
 		}
+
 		&.right {
 			align-self: flex-end;
 		}
+
 		&.wide {
 			align-self: auto;
 		}
@@ -178,7 +202,7 @@ html {
 	}
 
 	.wp-block-formello-form button:disabled:not(.running),
-	.wp-block-formello-form button[disabled]:not(.running){
+	.wp-block-formello-form button[disabled]:not(.running) {
 		cursor: revert;
 	}
 
@@ -203,27 +227,36 @@ html {
 	@media (min-width: 768px) {
 
 		&.as-row {
+
 			&.formello-label-right {
 				text-align: right;
 			}
+
 			.formello {
 				flex-direction: row;
 				flex-wrap: wrap;
+
 				label {
 					min-width: $label-width;
 					width: $label-width;
 					align-self: center;
+
 					&.textarea-label {
 						align-self: auto;
 					}
 				}
-				input, textarea, select {
+
+				input,
+				textarea,
+				select {
 					flex: 1;
 				}
+
 				small {
 					width: 100%;
 					margin-left: $label-width;
 				}
+
 				.error-message {
 					width: 100%;
 					margin-left: $label-width;
@@ -232,17 +265,21 @@ html {
 
 			.formello-checkbox {
 				margin-left: $label-width;
+
 				label {
 					min-width: auto;
 					width: auto;
 				}
+
 				input {
 					flex: 0;
 				}
+
 				small {
 					margin: $small-margin;
 					width: auto;
 				}
+
 				.error-message {
 					width: 100%;
 					margin-left: 0;
@@ -250,16 +287,19 @@ html {
 			}
 
 			.formello-textarea {
+
 				label {
 					align-self: baseline;
 				}
 			}
 
 			.formello-group {
+
 				.error-message {
 					width: 100%;
 					margin-left: 0;
 				}
+
 				button {
 					margin-left: 0;
 				}
@@ -267,6 +307,7 @@ html {
 
 			fieldset {
 				margin-left: $label-width;
+
 				.formello-checkbox {
 					margin-left: 0;
 				}
@@ -281,41 +322,48 @@ html {
 	}
 
 	button.wp-block-formello-button {
+
 		span {
 			transition: all 1s;
-			opacity:1;
+			opacity: 1;
 		}
+
 		svg {
-			display:none; 
-			margin:0 auto;
+			display: none;
+			margin: 0 auto;
 			transition: all 1s;
-			path,rect{
-				fill: currentColor;
+
+			path,
+			rect {
+				fill: currentcolor;
 			}
 		}
 	}
 
 	button.wp-block-formello-button--loading {
 		cursor: revert;
+
 		span {
-			display: none;  
+			display: none;
 			opacity: 0;
 		}
+
 		svg {
-			display: block; 
+			display: block;
 			opacity: 1;
 			width: auto;
 		}
 	}
 
 	@keyframes button-loading-spinner {
-	  from {
-	    transform: rotate(0deg);
-	  }
 
-	  to {
-	    transform: rotate(360deg);
-	  }
+		from {
+			transform: rotate(0deg);
+		}
+
+		to {
+			transform: rotate(360deg);
+		}
 	}
 
 }

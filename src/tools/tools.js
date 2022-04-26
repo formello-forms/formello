@@ -1,20 +1,9 @@
-import {
-	BaseControl,
-	Button,
-	PanelBody,
-	PanelRow,
-	Placeholder,
-	Spinner,
-	TextControl,
-	SelectControl,
-	SlotFillProvider,
-	TabPanel,
-} from '@wordpress/components';
+import { SlotFillProvider, Slot, TabPanel } from '@wordpress/components';
 
-import { Fragment, render, useState, useEffect } from '@wordpress/element';
+import { Fragment, render } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
-import { getQueryArg, addQueryArgs, hasQueryArg } from '@wordpress/url';
+import { getQueryArg, addQueryArgs } from '@wordpress/url';
 
 import { __ } from '@wordpress/i18n';
 import { applyFilters } from '@wordpress/hooks';
@@ -23,19 +12,11 @@ import General from './general.js';
 import Notices from './notices.js';
 
 function App() {
-	const [isAPISaving, setAPISaving] = useState('');
-	const [search, setSearch] = useState('');
 	const { createNotice, removeNotice } = useDispatch(noticesStore);
-
-	useEffect(() => {
-		if (!hasQueryArg(window.location.href, 'tab')) {
-			console.log(window.location.href);
-		}
-	}, []);
 
 	const addNotice = (status, content, type = 'snackbar') => {
 		removeNotice('tools');
-		createNotice(status, content, { type: type, id: 'tools' });
+		createNotice(status, content, { type, id: 'tools' });
 	};
 
 	const toolsTabs = [
@@ -56,7 +37,7 @@ function App() {
 	const initialTab = getQueryArg(window.location.href, 'tab');
 
 	const updateUrl = (tabName) => {
-		let newUrl = addQueryArgs(window.location.href, { tab: tabName });
+		const newUrl = addQueryArgs(window.location.href, { tab: tabName });
 		window.history.replaceState({ path: newUrl }, '', newUrl);
 	};
 

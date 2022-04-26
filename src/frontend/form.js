@@ -1,4 +1,3 @@
-import Bouncer from 'formbouncerjs';
 import events from './events.js';
 
 class Formello {
@@ -72,7 +71,7 @@ class Formello {
 	}
 
 	createRequestHandler(formEl) {
-		let parent = this;
+		const parent = this;
 
 		return function () {
 			// are we done?
@@ -142,21 +141,21 @@ class Formello {
 			return;
 		}
 
-		var recaptchaUrl = 'https://www.google.com/recaptcha/api.js';
+		let recaptchaUrl = 'https://www.google.com/recaptcha/api.js';
 
-		var sitekey = formello.settings.reCaptcha?.site_key;
-		var version = formello.settings.reCaptcha?.version;
-		var buttons = this.element.getElementsByTagName('button');
+		const sitekey = formello.settings.reCaptcha?.site_key;
+		const version = formello.settings.reCaptcha?.version;
+		const buttons = this.element.getElementsByTagName('button');
 
 		if ('1' === version) {
-			var recaptchaDiv = document.createElement('div');
+			const recaptchaDiv = document.createElement('div');
 			recaptchaDiv.classList.add('g-recaptcha');
 			recaptchaDiv.setAttribute('data-sitekey', sitekey);
 
 			this.element.insertBefore(recaptchaDiv, buttons[0]);
 		} else {
 			recaptchaUrl += '?render=' + sitekey;
-			var recaptchaInput = document.createElement('input');
+			const recaptchaInput = document.createElement('input');
 			recaptchaInput.type = 'hidden';
 			recaptchaInput.name = 'g-recaptcha-response';
 			recaptchaInput.classList.add('formello-g-recaptcha');
@@ -164,7 +163,7 @@ class Formello {
 		}
 		if (sitekey && version) {
 			this.enableRecaptcha = true;
-			var script = document.createElement('script');
+			const script = document.createElement('script');
 			script.src = recaptchaUrl;
 
 			document.head.appendChild(script);
@@ -186,17 +185,17 @@ class Formello {
 	}
 
 	addMessage(message, errors, hide) {
-		let msg = this.element.querySelector('.formello-message');
+		const msg = this.element.querySelector('.formello-message');
 		msg.classList.add(message.type);
 		msg.innerHTML = '<p>' + message.text + '</p>';
 
 		if (errors.length) {
-			var ul = document.createElement('ul');
+			const ul = document.createElement('ul');
 
 			msg.appendChild(ul);
 
 			errors.forEach(function (item) {
-				let li = document.createElement('li');
+				const li = document.createElement('li');
 				ul.appendChild(li);
 				li.innerHTML += item;
 			});
@@ -208,9 +207,9 @@ class Formello {
 	}
 
 	addDebug(debug) {
-		let msg = this.element.querySelector('.formello-message');
+		const msg = this.element.querySelector('.formello-message');
 
-		var debugDiv = document.createElement('div');
+		const debugDiv = document.createElement('div');
 		debugDiv.classList.add('warning');
 		debugDiv.innerHTML =
 			'<pre>' + JSON.stringify(debug, undefined, 2) + '</pre>';
@@ -234,9 +233,9 @@ class Formello {
 	}
 
 	isRtfEnabled() {
-		let richtext = this.element.querySelectorAll('.formello-rtf');
+		const richtext = this.element.querySelectorAll('.formello-rtf');
 		if (richtext.length) {
-			var script = document.createElement('script');
+			const script = document.createElement('script');
 
 			script.onload = function () {
 				tinymce.init({
@@ -263,10 +262,10 @@ class Formello {
 	}
 
 	addFlatpickr() {
-		let advancedDate = this.element.querySelectorAll('.flatpickr');
+		const advancedDate = this.element.querySelectorAll('.flatpickr');
 		if (advancedDate.length) {
-			var script = document.createElement('script');
-			var css = document.createElement('link');
+			const script = document.createElement('script');
+			const css = document.createElement('link');
 			css.setAttribute('type', 'text/css');
 			css.setAttribute(
 				'href',

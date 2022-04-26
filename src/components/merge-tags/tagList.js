@@ -8,7 +8,7 @@ import {
 	getMetaTags,
 } from './functions';
 
-import { get, isEmpty, has } from 'lodash';
+import { get, isEmpty } from 'lodash';
 
 function TagList(props) {
 	const { onSelect, data, noFields } = props;

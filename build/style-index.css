@@ -104,7 +104,9 @@ html {
   margin: 0 5px;
   font-weight: normal;
 }
-.wp-block-formello-form input[type], .wp-block-formello-form select, .wp-block-formello-form textarea {
+.wp-block-formello-form input[type],
+.wp-block-formello-form select,
+.wp-block-formello-form textarea {
   font-size: inherit;
   font-family: inherit;
   line-height: inherit;
@@ -135,7 +137,7 @@ html {
 .wp-block-formello-form button {
   cursor: pointer;
   position: relative;
-  background-color: #dddddd;
+  background-color: #ddd;
 }
 .wp-block-formello-form.is-bold label {
   font-weight: bold;
@@ -194,7 +196,9 @@ html {
     -ms-grid-row-align: auto;
         align-self: auto;
   }
-  .wp-block-formello-form.as-row .formello input, .wp-block-formello-form.as-row .formello textarea, .wp-block-formello-form.as-row .formello select {
+  .wp-block-formello-form.as-row .formello input,
+.wp-block-formello-form.as-row .formello textarea,
+.wp-block-formello-form.as-row .formello select {
     flex: 1;
   }
   .wp-block-formello-form.as-row .formello small {
@@ -253,8 +257,9 @@ html {
   margin: 0 auto;
   transition: all 1s;
 }
-.wp-block-formello-form button.wp-block-formello-button svg path, .wp-block-formello-form button.wp-block-formello-button svg rect {
-  fill: currentColor;
+.wp-block-formello-form button.wp-block-formello-button svg path,
+.wp-block-formello-form button.wp-block-formello-button svg rect {
+  fill: currentcolor;
 }
 .wp-block-formello-form button.wp-block-formello-button--loading {
   cursor: revert;

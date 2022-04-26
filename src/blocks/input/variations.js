@@ -1,21 +1,6 @@
-/**
- * WordPress dependencies
- */
 import { __ } from '@wordpress/i18n';
 import getIcon from '../../utils/get-icon';
 
-const shield = {
-	src: 'shield',
-	foreground: '#1e72bd',
-};
-
-/** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
-
-/**
- * Template option choices for predefined columns layouts.
- *
- * @type {WPBlockVariation[]}
- */
 const variations = [
 	{
 		name: 'text input',
@@ -202,8 +187,10 @@ variations.forEach((variation) => {
 		variation.attributes.withOutput = false;
 	if ('inputbutton' !== variation.name)
 		variation.attributes.withButton = false;
-	if ('radio' !== variation.name) variation.attributes.checked = undefined;
+	if ('radio' !== variation.name || 'checkbox' !== variation.name)
+		variation.attributes.checked = undefined;
 	if ('textarea' !== variation.name) variation.attributes.enableRtf = false;
+	if ('date' !== variation.name) variation.attributes.advancedDate = false;
 	if (variation.isActive) return;
 	variation.isActive = (blockAttributes, variationAttributes) =>
 		blockAttributes.type === variationAttributes.type;

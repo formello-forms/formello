@@ -1,19 +1,7 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
- */
 import {
 	useBlockProps,
-	InspectorControls,
 	AlignmentToolbar,
 	BlockControls,
 	InspectorAdvancedControls,
@@ -25,57 +13,13 @@ import {
 	__experimentalGetSpacingClassesAndStyles as useSpacingProps,
 } from '@wordpress/block-editor';
 
-import {
-	TextControl,
-	ToggleControl,
-	PanelRow,
-	PanelBody,
-	RangeControl,
-	__experimentalBoxControl as BoxControl,
-	FontSizePicker,
-	ColorPicker,
-	ColorIndicator,
-	ColorPalette,
-	SelectControl,
-} from '@wordpress/components';
-import { useCallback, useEffect, useState, useRef } from '@wordpress/element';
+import { SelectControl } from '@wordpress/components';
+import { useState } from '@wordpress/element';
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-//import './editor.scss';
 import classnames from 'classnames';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @return {WPElement} Element to render.
- */
-export default function Edit({
-	className,
-	attributes,
-	setAttributes,
-	toggleSelection,
-	isSelected,
-}) {
-	const {
-		label,
-		showLabel,
-		placeholder,
-		width,
-		widthUnit,
-		align,
-		buttonText,
-		buttonPosition,
-		buttonUseIcon,
-		style,
-	} = attributes;
+export default function Edit({ attributes, setAttributes }) {
+	const { style } = attributes;
 
 	const ALIGNMENT_CONTROLS = [
 		{
@@ -161,7 +105,7 @@ export default function Edit({
 				tagName="span"
 				value={attributes.text}
 				onChange={(val) => setAttributes({ text: val })}
-				placeholder={__('Enter button text...', 'formello')}
+				placeholder={__('Enter button text…', 'formello')}
 				allowedFormats={['core/bold']}
 			/>
 		</button>

@@ -1,7 +1,7 @@
 import { Formello } from './form';
 import Bouncer from 'formbouncerjs';
 
-var validate = new Bouncer('.wp-block-formello-form', {
+const validate = new Bouncer('.wp-block-formello-form', {
 	disableSubmit: true,
 });
 

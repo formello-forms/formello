@@ -3,14 +3,12 @@ import {
 	SelectControl,
 	PanelBody,
 	Disabled,
-	Toolbar,
 	ToolbarButton,
 	ToolbarGroup,
 	Placeholder,
 	Button,
 } from '@wordpress/components';
 import { useEffect, useState, Fragment } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 import {
 	useBlockProps,
@@ -132,7 +130,7 @@ export default function Edit(props) {
 					onRequestClose={(id) => {
 						setModalOpen(false);
 						if ('number' === typeof id) {
-							setAttributes({ id: id });
+							setAttributes({ id });
 						}
 					}}
 					clientId={clientId}

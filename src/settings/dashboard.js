@@ -3,26 +3,9 @@
  */
 import { __ } from '@wordpress/i18n';
 
-import {
-	BaseControl,
-	Button,
-	PanelBody,
-	PanelRow,
-	Placeholder,
-	Spinner,
-	TextControl,
-	SelectControl,
-	RadioControl,
-	TabPanel,
-} from '@wordpress/components';
+import { Button, Placeholder, Spinner, TabPanel } from '@wordpress/components';
 
-import {
-	render,
-	Component,
-	Fragment,
-	useState,
-	useEffect,
-} from '@wordpress/element';
+import { render, Fragment, useState, useEffect } from '@wordpress/element';
 
 import apiFetch from '@wordpress/api-fetch';
 
@@ -44,7 +27,6 @@ import Recaptcha from './recaptcha.js';
 import Messages from './messages.js';
 import Integrations from './integrations.js';
 import Licenses from './licenses.js';
-import About from './about.js';
 import Notices from '../tools/notices.js';
 
 const components = {
@@ -97,7 +79,7 @@ function App() {
 
 	const addNotice = (status, content, type = 'snackbar') => {
 		removeNotice('settings');
-		createNotice(status, content, { type: type, id: 'settings' });
+		createNotice(status, content, { type, id: 'settings' });
 	};
 
 	const getSetting = (group, name, defaultVal) => {
@@ -118,16 +100,16 @@ function App() {
 		return result;
 	};
 
-	const updateSettings = (e) => {
+	const updateSettings = () => {
 		setSaving(true);
 
 		apiFetch({
 			path: '/formello/v1/settings',
 			method: 'POST',
 			data: {
-				settings: settings,
+				settings,
 			},
-		}).then((result) => {
+		}).then(() => {
 			setSaving(false);
 			addNotice('info', 'Settings saved');
 		});
@@ -140,7 +122,7 @@ function App() {
 		if (!result.success || !result.response) {
 			message.classList.add('formello-action-message--error');
 		} else {
-			setTimeout(function () {
+			setTimeout(() => {
 				message.classList.remove('formello-action-message--show');
 			}, 3000);
 		}
@@ -166,7 +148,7 @@ function App() {
 	const initialTab = getQueryArg(window.location.href, 'tab');
 
 	const updateUrl = (tabName) => {
-		let newUrl = addQueryArgs(window.location.href, { tab: tabName });
+		const newUrl = addQueryArgs(window.location.href, { tab: tabName });
 		window.history.replaceState({ path: newUrl }, '', newUrl);
 	};
 

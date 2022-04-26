@@ -5,15 +5,11 @@
  */
 import { __ } from '@wordpress/i18n';
 import {
-	TextControl,
-	SelectControl,
-	PanelRow,
 	PanelBody,
 	FormTokenField,
 	ToggleControl,
 	BaseControl,
 	__experimentalInputControl as InputControl,
-	TextareaControl,
 } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
@@ -21,15 +17,6 @@ import MergeTags from '../merge-tags';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
 export default function Options(props) {
 	const { attributes, setAttributes, clientId } = props;
 
@@ -101,7 +88,7 @@ export default function Options(props) {
 								})
 							}
 							onChange={(opts) => {
-								let selections = attributes.options.filter(
+								const selections = attributes.options.filter(
 									(x) => opts.includes(x.label)
 								);
 								setAttributes({ selectedOpt: selections });
@@ -126,7 +113,7 @@ export default function Options(props) {
 						}
 					/>
 				)}
-				{!('hidden' == attributes.type) && (
+				{!('hidden' === attributes.type) && (
 					<Fragment>
 						<ToggleControl
 							label={__('Show Description', 'formello')}

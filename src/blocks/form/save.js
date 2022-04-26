@@ -1,24 +1,8 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
-import { useState } from '@wordpress/element';
 import classnames from 'classnames';
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
-export default function save({ attributes, className, innerBlocks }) {
+export default function save({ attributes, className }) {
 	className = classnames(
 		//blockProps.className,
 		attributes.asRow ? attributes.labelAlign : undefined,
@@ -29,11 +13,11 @@ export default function save({ attributes, className, innerBlocks }) {
 		}
 	);
 
-	let honeypot = '_formello_h' + attributes.id;
+	const honeypot = '_formello_h' + attributes.id;
 	return (
 		<form
 			{...useBlockProps.save({
-				className: className,
+				className,
 			})}
 			method="post"
 			id={'formello-' + attributes.id}
@@ -41,7 +25,7 @@ export default function save({ attributes, className, innerBlocks }) {
 			data-hide={attributes.hide}
 			data-recaptcha={attributes.recaptchaEnabled}
 			data-redirect={attributes.redirectUrl}
-			novalidate
+			noValidate
 		>
 			<input type="hidden" name="_formello_id" value={attributes.id} />
 			<input

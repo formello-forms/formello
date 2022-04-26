@@ -36,7 +36,7 @@ function General(_ref) {
     apiFetch({
       path: '/formello/v1/sync_template_library',
       method: 'POST'
-    }).then(result => {
+    }).then(() => {
       setLoading(false);
       addNotice('info', 'Template synced');
     });
@@ -56,7 +56,6 @@ function General(_ref) {
     onClick: () => reSync()
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Re-Sync template', 'formello')))));
 }
-;
 
 /***/ }),
 
@@ -588,7 +587,7 @@ function getIcon(icon) {
       fill: "#9b51e0",
       stroke: "none"
     }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("path", {
-      d: "M0 1280 l0 -1280 1280 0 1280 0 0 1280 0 1280 -1280 0 -1280 0 0\r -1280z m1456 666 c29 -7 78 -28 111 -45 67 -36 183 -146 168 -160 -26 -23\r -319 -231 -326 -231 -5 0 -9 5 -9 10 0 6 -11 22 -25 35 -30 31 -83 33 -116 6\r -22 -18 -24 -27 -27 -140 l-4 -121 66 0 66 0 0 -185 0 -185 -65 0 -65 0 0\r -170 0 -170 -205 0 -205 0 0 448 c0 355 3 461 15 517 39 186 182 342 356 389\r 69 19 199 20 265 2z"
+      d: "M0 1280 l0 -1280 1280 0 1280 0 0 1280 0 1280 -1280 0 -1280 0 0 -1280z m1456 666 c29 -7 78 -28 111 -45 67 -36 183 -146 168 -160 -26 -23 -319 -231 -326 -231 -5 0 -9 5 -9 10 0 6 -11 22 -25 35 -30 31 -83 33 -116 6 -22 -18 -24 -27 -27 -140 l-4 -121 66 0 66 0 0 -185 0 -185 -65 0 -65 0 0 -170 0 -170 -205 0 -205 0 0 448 c0 355 3 461 15 517 39 186 182 342 356 389 69 19 199 20 265 2z"
     })));
   }
 }
@@ -780,23 +779,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function App() {
-  const [isAPISaving, setAPISaving] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [search, setSearch] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const {
     createNotice,
     removeNotice
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_2__.useDispatch)(_wordpress_notices__WEBPACK_IMPORTED_MODULE_3__.store);
-  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (!(0,_wordpress_url__WEBPACK_IMPORTED_MODULE_4__.hasQueryArg)(window.location.href, 'tab')) {
-      console.log(window.location.href);
-    }
-  }, []);
 
   const addNotice = function (status, content) {
     let type = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'snackbar';
     removeNotice('tools');
     createNotice(status, content, {
-      type: type,
+      type,
       id: 'tools'
     });
   };
@@ -814,7 +806,7 @@ function App() {
   const initialTab = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_4__.getQueryArg)(window.location.href, 'tab');
 
   const updateUrl = tabName => {
-    let newUrl = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_4__.addQueryArgs)(window.location.href, {
+    const newUrl = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_4__.addQueryArgs)(window.location.href, {
       tab: tabName
     });
     window.history.replaceState({
@@ -840,7 +832,7 @@ function App() {
         }));
 
       default:
-        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(Slot, {
+        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Slot, {
           name: "ToolsTabs"
         });
     }

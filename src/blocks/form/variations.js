@@ -1,16 +1,6 @@
-/**
- * WordPress dependencies
- */
 import { Path, SVG } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-/** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
-
-/**
- * Template option choices for predefined columns layouts.
- *
- * @type {WPBlockVariation[]}
- */
 const variations = [
 	{
 		name: 'basic',

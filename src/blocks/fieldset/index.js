@@ -1,8 +1,5 @@
 import { registerBlockType } from '@wordpress/blocks';
 
-import { __ } from '@wordpress/i18n';
-import { InnerBlocks } from '@wordpress/block-editor';
-
 /**
  * Internal dependencies
  */
@@ -18,7 +15,7 @@ import metadata from './block.json';
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType(metadata, {
-	variations: variations,
+	variations,
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.

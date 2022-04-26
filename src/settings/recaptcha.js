@@ -3,15 +3,11 @@ import {
 	CardHeader,
 	CardBody,
 	TextControl,
-	PanelRow,
-	PanelBody,
-	Button,
 	RadioControl,
-	SelectControl,
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
 
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 export default function reCaptcha(props) {
 	const { getSetting, changeSettings } = props;
@@ -50,7 +46,7 @@ export default function reCaptcha(props) {
 					}}
 				/>
 
-				{getSetting('reCaptcha', 'version') == 3 && (
+				{getSetting('reCaptcha', 'version') === 3 && (
 					<NumberControl
 						label={__('Threshold', 'formello')}
 						value={getSetting('reCaptcha', 'threshold')}

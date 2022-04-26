@@ -2,23 +2,13 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	TextControl,
-	PanelRow,
-	PanelBody,
 	Button,
 	Icon,
-	SelectControl,
-	ExternalLink,
-	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
-import { RawHTML, useState, Fragment } from '@wordpress/element';
+import { __ } from '@wordpress/i18n';
 
-import { __, sprintf } from '@wordpress/i18n';
-
-const { apiFetch } = wp;
-
-export default function Help(props) {
+export default function Help() {
 	return (
 		<div className="formello-help">
 			<Card>

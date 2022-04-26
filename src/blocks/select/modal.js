@@ -1,18 +1,6 @@
-/**
- * External dependencies
- */
-import classnames from 'classnames';
+import { Fragment, useState } from '@wordpress/element';
 
-/**
- * WordPress dependencies
- */
-import { Fragment, RawHTML, useState, useEffect } from '@wordpress/element';
-
-import { __, sprintf } from '@wordpress/i18n';
-
-import { compose } from '@wordpress/compose';
-
-import { useSelect } from '@wordpress/data';
+import { __ } from '@wordpress/i18n';
 
 import {
 	ToggleControl,
@@ -29,23 +17,23 @@ export function OptionsModal(props) {
 	const [showRaw, setShowRaw] = useState(false);
 	const [showValue, setShowValue] = useState(false);
 
-	const addNewRow = (e) => {
+	const addNewRow = () => {
 		setAttributes({
 			options: [...attributes.options, { label: '', value: '' }],
 		});
 	};
 
 	const deleteRow = (record, index) => {
-		let items = [...attributes.options]; // make a separate copy of the array
+		const items = [...attributes.options]; // make a separate copy of the array
 		items.splice(index, 1);
 		setAttributes({ options: items });
 	};
 
 	const handleChange = (value, index, prop) => {
 		// 1. Make a shallow copy of the items
-		let items = [...attributes.options];
+		const items = [...attributes.options];
 		// 2. Make a shallow copy of the item you want to mutate
-		let item = { ...attributes.options[index] };
+		const item = { ...attributes.options[index] };
 		// 3. Replace the property you're intested in
 		item[prop] = value;
 		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
@@ -55,10 +43,10 @@ export function OptionsModal(props) {
 	};
 
 	const bulkOpts = (val) => {
-		let opts = val.match(/[^\r\n]+/g);
-		let newSettings = [];
-		for (let i in opts) {
-			let tmp = opts[i].split(',');
+		const opts = val.match(/[^\r\n]+/g);
+		const newSettings = [];
+		for (const i in opts) {
+			const tmp = opts[i].split(',');
 			newSettings.push({ value: tmp[0], label: tmp[1] });
 		}
 		setAttributes({ options: newSettings });

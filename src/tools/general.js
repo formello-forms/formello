@@ -1,20 +1,8 @@
-import {
-	Card,
-	CardHeader,
-	CardBody,
-	ToggleControl,
-	PanelRow,
-	PanelBody,
-	Button,
-	Icon,
-	SelectControl,
-	ExternalLink,
-	__experimentalInputControl as InputControl,
-} from '@wordpress/components';
+import { Card, CardHeader, CardBody, Button } from '@wordpress/components';
 
-import { RawHTML, useState, Fragment } from '@wordpress/element';
+import { useState, Fragment } from '@wordpress/element';
 
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 const { apiFetch } = wp;
 
@@ -26,7 +14,7 @@ export default function General({ addNotice }) {
 		apiFetch({
 			path: '/formello/v1/sync_template_library',
 			method: 'POST',
-		}).then((result) => {
+		}).then(() => {
 			setLoading(false);
 			addNotice('info', 'Template synced');
 		});

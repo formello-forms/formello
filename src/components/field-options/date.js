@@ -3,11 +3,7 @@ import { Fragment, useState, useEffect } from '@wordpress/element';
 import {
 	TextControl,
 	SelectControl,
-	PanelRow,
-	PanelBody,
 	ToggleControl,
-	BaseControl,
-	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
 export default function DatepickerSettings(props) {
@@ -100,7 +96,7 @@ export default function DatepickerSettings(props) {
 					)}
 					<SelectControl
 						label={__('Mode', 'formello')}
-						value={flatpickr['mode']}
+						value={flatpickr.mode}
 						options={[
 							{ label: 'Single', value: 'single' },
 							{ label: 'Multiple', value: 'multiple' },

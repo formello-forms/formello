@@ -3,17 +3,13 @@
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
 import {
 	BaseControl,
 	Button,
 	Dropdown,
-	Dashicon,
-	PanelRow,
+	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
-import { __experimentalInputControl as InputControl } from '@wordpress/components';
 
-import { useState } from '@wordpress/element';
 import TagSelector from './tagSelector';
 
 import './editor.scss';
@@ -23,23 +19,19 @@ import './editor.scss';
  * be combined into the final markup, which is then serialized by the block
  * editor into `post_content`.
  *
+ * @param  props
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
  *
  * @return {WPElement} Element to render.
  */
 export default function mergeTags(props) {
-	const {
-		label,
-		value,
-		placeholder,
-		attributes,
-		setAttributes,
-		onChange,
-		className,
-		noFields,
-	} = props;
+	const { label, value, placeholder, onChange, className } = props;
 
 	const icon = 'list-view';
+
+	const change = (val) => {
+		onChange( value + val )
+	}
 
 	return (
 		<BaseControl>
@@ -64,7 +56,10 @@ export default function mergeTags(props) {
 						renderContent={({ isOpen, onToggle }) => (
 							<TagSelector
 								{...props}
-								insertTag={onChange}
+								insertTag={ (val)=>{
+									onToggle()
+									change(val)
+								} }
 								onToggle={onToggle}
 							/>
 						)}
