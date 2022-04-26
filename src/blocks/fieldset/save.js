@@ -16,17 +16,14 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save( { attributes } ) {
-
+export default function save({ attributes }) {
 	let className = attributes.hideBorder ? 'no-border' : undefined;
 	const blockProps = useBlockProps.save({
-		className: className
+		className: className,
 	});
 	return (
-		<fieldset { ...blockProps }>
-			{ attributes.showLegend && (
-				<legend>{ attributes.legend }</legend>
-			) }
+		<fieldset {...blockProps}>
+			{attributes.showLegend && <legend>{attributes.legend}</legend>}
 			<InnerBlocks.Content />
 		</fieldset>
 	);

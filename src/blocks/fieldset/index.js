@@ -17,15 +17,14 @@ import metadata from './block.json';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( metadata, {
-
+registerBlockType(metadata, {
 	variations: variations,
 
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: getIcon( 'fieldset' ),
+	icon: getIcon('fieldset'),
 
 	/**
 	 * Optional block extended support features.
@@ -40,7 +39,7 @@ registerBlockType( metadata, {
 			color: true,
 			radius: true,
 			style: true,
-			width: true
+			width: true,
 		},
 	},
 
@@ -52,5 +51,5 @@ registerBlockType( metadata, {
 	/**
 	 * @see ./save.js
 	 */
-	save
-} );
+	save,
+});

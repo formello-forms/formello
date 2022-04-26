@@ -16,36 +16,25 @@ import { Fragment } from '@wordpress/element';
  *
  * @return {WPElement} Element to render.
  */
-export default function DisplayOpts( props ) {
-
-	const {
-		attributes,
-		setAttributes,
-	} = props;
+export default function DisplayOpts(props) {
+	const { attributes, setAttributes } = props;
 
 	return (
 		<Fragment>
-
 			<TextControl
-				label={ __( 'Label Class', 'formello' ) }
-				value={ attributes.labelClass }
-				onChange={ ( val ) =>
-					setAttributes( { labelClass: val } )
-				}
+				label={__('Label Class', 'formello')}
+				value={attributes.labelClass}
+				onChange={(val) => setAttributes({ labelClass: val })}
 			/>
 			<TextControl
-				label={ __( 'Field Class', 'formello' ) }
-				value={ attributes.fieldClass }
-				onChange={ ( val ) =>
-					setAttributes( { fieldClass: val } )
-				}
+				label={__('Field Class', 'formello')}
+				value={attributes.fieldClass}
+				onChange={(val) => setAttributes({ fieldClass: val })}
 			/>
 			<TextControl
-				label={ __( 'Description Class', 'formello' ) }
-				value={ attributes.descriptionClass }
-				onChange={ ( val ) =>
-					setAttributes( { descriptionClass: val } )
-				}
+				label={__('Description Class', 'formello')}
+				value={attributes.descriptionClass}
+				onChange={(val) => setAttributes({ descriptionClass: val })}
 			/>
 		</Fragment>
 	);

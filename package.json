@@ -12,9 +12,7 @@
     "lint:js": "wp-scripts lint-js",
     "start": "wp-scripts start",
     "start:custom": "wp-scripts start src/index.js src/settings/dashboard.js src/frontend/frontend.js src/tools/tools.js",
-    "packages-update": "wp-scripts packages-update",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "packages-update": "wp-scripts packages-update"
   },
   "devDependencies": {
     "@wordpress/scripts": "^22.3.0"

@@ -110,7 +110,6 @@ class Form {
 		if ( ! empty( $id ) ) {
 			$this->ID       = $id;
 			$this->settings = get_post_meta( $id, '_formello_settings', true );
-			$this->log      = $this->formello_settings['log'];
 			$this->logger   = new Log();
 		}
 
@@ -242,9 +241,7 @@ class Form {
 	 * @param array  $context The actions response.
 	 */
 	public function log( $level, $message, $context = array() ) {
-		if ( ! empty( $this->log ) ) {
-			$this->logger->log( $level, $message, $context );
-		}
+		$this->logger->log( $level, $message, $context );
 	}
 
 	/**
@@ -390,6 +387,11 @@ class Form {
 		if ( is_array( $value ) ) {
 			$t = array_map( array( $this, 'replace_tags' ), $value );
 			return array_map( 'sanitize_text_field', $t );
+		}
+
+		if ( 'richtext' === $fields[ $key ] ) {
+			$allowed_tags = wp_kses_allowed_html( 'post' );
+			return wp_kses( stripslashes_deep( $this->replace_tags( $value ) ), $allowed_tags );
 		}
 
 		if ( 'textarea' === $fields[ $key ] ) {

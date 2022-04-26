@@ -5,9 +5,9 @@ import { __ } from '@wordpress/i18n';
 import getIcon from '../../utils/get-icon';
 
 const shield = {
-			src: 'shield',
-			foreground: '#1e72bd',
-		}
+	src: 'shield',
+	foreground: '#1e72bd',
+};
 
 /** @typedef {import('@wordpress/blocks').WPBlockVariation} WPBlockVariation */
 
@@ -18,20 +18,20 @@ const shield = {
  */
 const variations = [
 	{
-		name: 'text',
-		title: __( 'Text' ),
+		name: 'text input',
+		title: __('Text'),
 		icon: getIcon('text'),
 		attributes: {
 			name: 'text',
 			type: 'text',
 			label: 'Text Input',
-			checked: undefined
+			checked: undefined,
 		},
-		scope: [ 'block', 'transform' ],
+		scope: ['block', 'transform'],
 	},
 	{
 		name: 'hidden',
-		title: __( 'Hidden' ),
+		title: __('Hidden'),
 		icon: getIcon('hidden'),
 		attributes: {
 			name: 'hidden',
@@ -40,155 +40,155 @@ const variations = [
 			hasTooltip: false,
 			required: false,
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'checkbox',
-		title: __( 'Checkbox' ),
+		title: __('Checkbox'),
 		icon: getIcon('checkbox'),
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',
 			label: 'Checkbox',
-			placeholder: undefined
+			placeholder: undefined,
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'gdpr',
-		title: __( 'GDPR' ),
+		title: __('GDPR'),
 		icon: 'shield',
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',
-			label: __( 'Accept our agreement', 'formello' ),
-			required: true
+			label: __('Accept our agreement', 'formello'),
+			required: true,
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'radio',
-		title: __( 'Radio' ),
+		title: __('Radio'),
 		icon: getIcon('radio'),
 		attributes: {
 			name: 'radio',
 			type: 'radio',
 			label: 'Radio',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'range',
-		title: __( 'Range' ),
+		title: __('Range'),
 		icon: getIcon('range'),
 		attributes: {
 			name: 'range',
 			type: 'range',
 			label: 'Range',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'email',
-		title: __( 'Email' ),
+		title: __('Email'),
 		icon: getIcon('email'),
 		attributes: {
 			name: 'email',
 			type: 'email',
 			label: 'Email',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'number',
-		title: __( 'Number' ),
+		title: __('Number'),
 		icon: getIcon('number'),
 		attributes: {
 			name: 'number',
 			type: 'number',
 			label: 'Number',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'color',
-		title: __( 'Color' ),
+		title: __('Color'),
 		icon: getIcon('color'),
 		attributes: {
 			name: 'color',
 			type: 'color',
 			label: 'Color',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'date',
-		title: __( 'Date' ),
+		title: __('Date'),
 		icon: getIcon('date'),
 		attributes: {
 			name: 'date',
 			type: 'date',
 			label: 'Date',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'time',
-		title: __( 'Time' ),
+		title: __('Time'),
 		icon: getIcon('time'),
 		attributes: {
 			name: 'time',
 			type: 'time',
 			label: 'Time',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'tel',
-		title: __( 'Tel' ),
+		title: __('Tel'),
 		icon: getIcon('tel'),
 		attributes: {
 			name: 'tel',
 			type: 'tel',
 			label: 'Tel',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'url',
-		title: __( 'Url' ),
+		title: __('Url'),
 		icon: getIcon('url'),
 		attributes: {
 			name: 'url',
 			type: 'url',
 			label: 'URL',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'inputbutton',
-		title: __( 'with button' ),
-		description: __( 'Display an with a button on same row.' ),
-		icon: getIcon( 'input-button' ),
+		title: __('with button'),
+		description: __('Display an with a button on same row.'),
+		icon: getIcon('input-button'),
 		attributes: {
 			name: 'email',
 			type: 'email',
 			label: 'Email',
 			checked: undefined,
-			withButton: true
+			withButton: true,
 		},
-		innerBlocks: [ [ 'formello/button' ] ],
-		scope: [ 'block', 'inserter', 'transform' ],
+		innerBlocks: [['formello/button']],
+		scope: ['block', 'inserter', 'transform'],
 	},
 	{
 		name: 'textarea',
-		title: __( 'Textarea' ),
+		title: __('Textarea'),
 		icon: getIcon('textarea'),
 		attributes: {
 			type: 'textarea',
-			label: 'Textarea'
+			label: 'Textarea',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: ['block', 'inserter', 'transform'],
 	},
 ];
 
@@ -197,13 +197,16 @@ const variations = [
  * `isActive` function is used to find a variation match from a created
  *  Block by providing its attributes.
  */
-variations.forEach( ( variation ) => {
-	if ( 'rangeoutput' !== variation.name ) variation.attributes.withOutput = false;
-	if ( 'inputbutton' !== variation.name ) variation.attributes.withButton = false;
-	if ( variation.isActive ) return;
-	variation.isActive = ( blockAttributes, variationAttributes ) =>
-		blockAttributes.type ===
-		variationAttributes.type;
-} );
+variations.forEach((variation) => {
+	if ('rangeoutput' !== variation.name)
+		variation.attributes.withOutput = false;
+	if ('inputbutton' !== variation.name)
+		variation.attributes.withButton = false;
+	if ('radio' !== variation.name) variation.attributes.checked = undefined;
+	if ('textarea' !== variation.name) variation.attributes.enableRtf = false;
+	if (variation.isActive) return;
+	variation.isActive = (blockAttributes, variationAttributes) =>
+		blockAttributes.type === variationAttributes.type;
+});
 
 export default variations;

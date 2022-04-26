@@ -8,7 +8,7 @@ import save from './save';
 import getIcon from '../../utils/get-icon';
 import metadata from './block.json';
 
-import './editor.scss' 
+import './editor.scss';
 import asyncDb from './asyncDb';
 
 import { __ } from '@wordpress/i18n';
@@ -22,18 +22,19 @@ import { registerBlockType } from '@wordpress/blocks';
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType( metadata, {
-	icon: getIcon( 'form' ),
+registerBlockType(metadata, {
+	icon: getIcon('form'),
 	variations: variations,
 	supports: {
 		reusable: false,
 		className: true,
 		multiple: false,
 		html: false,
-		inserter: ( 'formello_form' === pagenow || 'popper' === pagenow ) ? true : false,
+		inserter:
+			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
 		spacing: {
 			padding: true,
-		}
+		},
 	},
 	example: {
 		innerBlocks: [
@@ -41,9 +42,7 @@ registerBlockType( metadata, {
 				name: 'formello/input',
 				attributes: {
 					/* translators: example text. */
-					label: __(
-						'Name'
-					),
+					label: __('Name'),
 				},
 			},
 			{
@@ -56,24 +55,19 @@ registerBlockType( metadata, {
 				name: 'formello/input',
 				attributes: {
 					/* translators: example text. */
-					label: __(
-						'Message'
-					),
-					type: 'textarea'
+					label: __('Message'),
+					type: 'textarea',
 				},
 			},
 			{
 				name: 'formello/button',
 				attributes: {
 					/* translators: example text. */
-					text: __(
-						'Submit'
-					),
+					text: __('Submit'),
 				},
 			},
 		],
 	},
 	edit: edit,
 	save: save,
-} );
-	
+});

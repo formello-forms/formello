@@ -18,34 +18,38 @@ import classnames from 'classnames';
  *
  * @return {WPElement} Element to render.
  */
-export default function save( { attributes, className, innerBlocks } ) {
-	
-	className = classnames( 
+export default function save({ attributes, className, innerBlocks }) {
+	className = classnames(
 		//blockProps.className,
-		attributes.asRow
-			? attributes.labelAlign
-			: undefined,
+		attributes.asRow ? attributes.labelAlign : undefined,
 		{
 			'as-row': attributes.asRow,
 			'is-bold': attributes.labelIsBold,
 			'formello-label-right': 'right' === attributes.labelAlign,
-		} 
-	)
+		}
+	);
 
 	let honeypot = '_formello_h' + attributes.id;
 	return (
-		<form {...useBlockProps.save({
-				className: className
+		<form
+			{...useBlockProps.save({
+				className: className,
 			})}
-			method="post" 
-			id={ 'formello-' + attributes.id }
-			data-id={ 'formello-' + attributes.id }
-			data-hide={ attributes.hide } 
-			data-recaptcha={ attributes.recaptchaEnabled } 
-			data-redirect={ attributes.redirectUrl }
-			novalidate>
-			<input type="hidden" name="_formello_id" value={ attributes.id } />
-			<input type="text" name={ honeypot } className="formello-hp" autoComplete="nope" />
+			method="post"
+			id={'formello-' + attributes.id}
+			data-id={'formello-' + attributes.id}
+			data-hide={attributes.hide}
+			data-recaptcha={attributes.recaptchaEnabled}
+			data-redirect={attributes.redirectUrl}
+			novalidate
+		>
+			<input type="hidden" name="_formello_id" value={attributes.id} />
+			<input
+				type="text"
+				name={honeypot}
+				className="formello-hp"
+				autoComplete="nope"
+			/>
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
 			<div className="formello-message"></div>

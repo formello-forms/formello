@@ -8,7 +8,7 @@ import {
 	RichText,
 	InnerBlocks,
 	useBlockProps,
-	useInnerBlocksProps
+	useInnerBlocksProps,
 } from '@wordpress/block-editor';
 
 import {
@@ -20,16 +20,15 @@ import {
 	ToggleControl,
 	BaseControl,
 	SelectControl,
-	__experimentalInputControl as InputControl
+	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
 import { useEffect, Fragment } from '@wordpress/element';
-import { select } from "@wordpress/data";
+import { select } from '@wordpress/data';
 
 import classnames from 'classnames';
 
 import getIcon from '../../utils/get-icon';
-import DisplayOpts from '../../components/css-options';
 import Label from '../../components/label';
 import Options from '../../components/field-options';
 import AdvancedOptions from '../../components/field-options/advanced';
@@ -49,72 +48,61 @@ const hiddenIcon = getIcon('hidden');
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( props ) {
+export default function Edit(props) {
+	const { attributes, setAttributes, clientId, context } = props;
 
-	const {
-		attributes,
-		setAttributes,
-		clientId,
-		context
-	} = props;
+	const supported = SUPPORTED_ATTRIBUTES[attributes.type];
+	const MY_TEMPLATE = [['formello/button', {}]];
 
-	const supported = SUPPORTED_ATTRIBUTES[attributes.type]
-	const MY_TEMPLATE = [
-	    [ 'formello/button', {} ],
-	];
+	useEffect(() => {
+		let idx = clientId.substr(2, 6).replace('-', '').replace(/-/g, '');
+		if (!attributes.id) {
+			setAttributes({
+				id: 'field_' + idx,
+			});
+		}
+		if (!attributes.name) {
+			setAttributes({
+				name: 'field_' + idx,
+			});
+		}
+	}, []);
 
-	useEffect(
-		() => {
-			let idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace(/-/g, '')	
-			if( !attributes.id ){
-				setAttributes( {
-					id: 'field_' + idx,
-				} )	
-			}			
-			if( !attributes.name ){
-				setAttributes( {
-					name: 'field_' + idx,
-				} )	
-			}			
-		},
-		[]
-	);
-
-	const className = classnames( {
-		'formello': true,
+	const className = classnames({
+		formello: true,
 		'formello-group': attributes.withButton || 'range' === attributes.type,
 		'formello-group grouped': attributes.grouped,
-		'formello-checkbox': ( 'checkbox' == attributes.type || 'radio' == attributes.type ),
-		'formello-textarea': ( 'textarea' == attributes.type ),
-	} )
+		'formello-checkbox':
+			'checkbox' == attributes.type || 'radio' == attributes.type,
+		'formello-textarea': 'textarea' == attributes.type,
+	});
 
-	const blockProps = useBlockProps( {
+	const blockProps = useBlockProps({
 		className: className,
-	} );
+	});
 
-    const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
-		allowedBlocks: [ 'formello/button' ],
+	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
+		allowedBlocks: ['formello/button'],
 		template: MY_TEMPLATE,
 		templateLock: 'all',
-		orientation: 'horizontal'
-	}); 
+		orientation: 'horizontal',
+	});
 
-    const onChange = (e) => {
-    	if( 'checkbox' === attributes.type || 'radio' === attributes.type ){
-			setAttributes({ checked: !attributes.checked })
-    	}
-    	setAttributes({ value: e.target.value })
-    }
+	const onChange = (e) => {
+		if ('checkbox' === attributes.type || 'radio' === attributes.type) {
+			setAttributes({ checked: !attributes.checked });
+		}
+		setAttributes({ value: e.target.value });
+	};
 
 	return (
-		<div { ...innerBlocksProps }>
+		<div {...innerBlocksProps}>
 			<BlockControls>
-			{
-				supported.includes('required') &&
-				<ToolbarGroup>
-					<Toolbar {...props} />
-				</ToolbarGroup>
-			}
+				{supported.includes('required') && (
+					<ToolbarGroup>
+						<Toolbar {...props} />
+					</ToolbarGroup>
+				)}
 			</BlockControls>
 			<InspectorControls>
 				<Options {...props} />
@@ -123,54 +111,46 @@ export default function Edit( props ) {
 				<AdvancedOptions {...props} />
 			</InspectorAdvancedControls>
 
-
-			{ 'hidden' !== attributes.type ? (
+			{'hidden' !== attributes.type ? (
 				<Label {...props} />
-			)
-			:
-			(
-			<div className='formello-hidden'>{ hiddenIcon }<label>[{ attributes.name }] </label></div>
-			) }
-			{ 'textarea' == attributes.type ? (
+			) : (
+				<div className="formello-hidden">
+					{hiddenIcon}
+					<label>[{attributes.name}] </label>
+				</div>
+			)}
+			{'textarea' == attributes.type ? (
 				<textarea
-					type={ attributes.type }
-					cols={ attributes.cols }
-					rows={ attributes.rows }
-					value={ attributes.value }
-					onChange={ onChange }
-					className={ attributes.fieldClass }
-					placeholder={ attributes.placeholder }
+					type={attributes.type}
+					cols={attributes.cols}
+					rows={attributes.rows}
+					value={attributes.value}
+					onChange={onChange}
+					className={attributes.fieldClass}
+					placeholder={attributes.placeholder}
 				></textarea>
 			) : (
 				<input
-					className={ attributes.fieldClass }
-					type={ attributes.type }
-					defaultValue={ attributes.value }
-					checked={ attributes.checked }
-					onChange={ onChange }
-					placeholder={ attributes.placeholder }
+					className={attributes.fieldClass}
+					type={attributes.type}
+					defaultValue={attributes.value || ''}
+					checked={attributes.checked}
+					onChange={onChange}
+					placeholder={attributes.placeholder}
 				/>
-			) }
-			{ attributes.withButton && 
-				(children)
-			}
-			{ attributes.withOutput && 
-				<output></output>
-			}
-			{ ('hidden' !== attributes.type && attributes.showHelp ) && 
+			)}
+			{attributes.withButton && children}
+			{attributes.withOutput && <output></output>}
+			{'hidden' !== attributes.type && attributes.showHelp && (
 				<RichText
 					tagName="small"
-					value={ attributes.help }
-					onChange={ ( val ) => setAttributes( { help: val } ) }
-					placeholder={ __( 'Enter help message...', 'formello' ) }
-					allowedFormats={ [
-						'core/bold',
-						'core/italic',
-						'core/link',
-					] }
-					multiline={ false }
+					value={attributes.help}
+					onChange={(val) => setAttributes({ help: val })}
+					placeholder={__('Enter help message...', 'formello')}
+					allowedFormats={['core/bold', 'core/italic', 'core/link']}
+					multiline={false}
 				/>
-			}
+			)}
 		</div>
 	);
 }

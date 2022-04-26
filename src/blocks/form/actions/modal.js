@@ -13,53 +13,33 @@ import LazyLoad from 'react-lazyload';
 /**
  * WordPress dependencies
  */
-import {
-	Fragment,
-	RawHTML,
-	useState,
-} from '@wordpress/element';
+import { Fragment, RawHTML, useState } from '@wordpress/element';
 
-import {
-	__,
-	sprintf,
-} from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 import apiFetch from '@wordpress/api-fetch';
 
-import {
-	compose,
-} from '@wordpress/compose';
+import { compose } from '@wordpress/compose';
 
-import {
-	decodeEntities,
-} from '@wordpress/html-entities';
+import { decodeEntities } from '@wordpress/html-entities';
 
-import {
-	withSelect,
-	useDispatch,
-	useSelect
-} from '@wordpress/data';
+import { withSelect, useDispatch, useSelect } from '@wordpress/data';
 
-import {
-	parse,
-} from '@wordpress/blocks';
+import { parse } from '@wordpress/blocks';
 
 import {
 	TabPanel,
 	Spinner,
 	SelectControl,
 	Modal,
-	Button
+	Button,
 } from '@wordpress/components';
 import { BlockPreview } from '@wordpress/block-editor';
-const {
-	applyFilters,
-} = wp.hooks;
+const { applyFilters } = wp.hooks;
 
 import MergeTags from '../../../components/merge-tags';
 
-export function ActionsModal ( props ) {
-
+export function ActionsModal(props) {
 	const {
 		onRequestClose,
 		action,
@@ -69,49 +49,56 @@ export function ActionsModal ( props ) {
 		setAttributes,
 	} = props;
 
-	const handleUpdate = ( settings ) => {
+	const handleUpdate = (settings) => {
 		// 1. Make a shallow copy of the items
 		let items = [...attributes.actions];
 		// 2. Make a shallow copy of the item you want to mutate
 		items[actionId] = settings;
 
-		setAttributes( { actions: items } );
-	}
+		setAttributes({ actions: items });
+	};
 
 	const deleteAction = () => {
-
 		let items = [...attributes.actions]; // make a separate copy of the array
 		items.splice(actionId, 1);
-		setAttributes( { actions: items } );
-		onRequestClose()
-
-	}
+		setAttributes({ actions: items });
+		onRequestClose();
+	};
 
 	return (
 		<Modal
-			title={ action.title }
+			title={action.title}
 			position="top"
 			size="lg"
-			className={ 'formello-modal' }
-			onRequestClose={ onRequestClose }
+			className={'formello-modal'}
+			onRequestClose={onRequestClose}
 		>
 			<Fragment>
-
-				{ applyFilters( 'formello.modal.' + action.type, '', props, MergeTags, handleUpdate ) }
+				{applyFilters(
+					'formello.modal.' + action.type,
+					'',
+					props,
+					MergeTags,
+					handleUpdate
+				)}
 
 				<div className="formello-modal-buttons">
 					<Button
-						isPrimary={ true }
-						onClick={ () => {
-							onRequestClose()
-						} }
-					>Save</Button>
+						isPrimary={true}
+						onClick={() => {
+							onRequestClose();
+						}}
+					>
+						Save
+					</Button>
 					<Button
-						isDestructive={ true }
-						onClick={ () => {
-							deleteAction()
-						} }
-					>Delete</Button>
+						isDestructive={true}
+						onClick={() => {
+							deleteAction();
+						}}
+					>
+						Delete
+					</Button>
 				</div>
 			</Fragment>
 		</Modal>

@@ -1,46 +1,46 @@
 /******** tooltip ***********/
 .tooltip {
-  width: .8rem;
-  height: .8rem;
-  line-height: .8rem;
-  border-radius: 50%;
-  font-size: .8rem;
-  color: #fff;
-  text-align: center;
-  background: #333;
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  margin: 0 5px;
+	width: 0.8rem;
+	height: 0.8rem;
+	line-height: .8rem;
+	border-radius: 50%;
+	font-size: .8rem;
+	color: #fff;
+	text-align: center;
+	background: #333;
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	margin: 0 5px;
 }
 
 .tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  color: #fff;
-  text-align: center;
-  border-radius: 4px;
-  padding: 12px;
-  position: absolute;
-  z-index: 1;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -60px;
-  background-color: #333;
-  box-shadow:0 1px 8px rgba(0,0,0,0.5);
+	visibility: hidden;
+	width: 120px;
+	color: #fff;
+	text-align: center;
+	border-radius: 4px;
+	padding: 12px;
+	position: absolute;
+	z-index: 1;
+	bottom: 150%;
+	left: 50%;
+	margin-left: -60px;
+	background-color: #333;
+	box-shadow:0 1px 8px rgba(0,0,0,0.5);
 }
 
 .tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #333 transparent transparent transparent;
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #333 transparent transparent transparent;
 }
 
 .tooltip:hover .tooltiptext {
-  visibility: visible;
+	visibility: visible;
 }

@@ -5,20 +5,20 @@
  */
 import { __ } from '@wordpress/i18n';
 
-import { 
-	TextControl, 
-	SelectControl, 
-	PanelRow, 
-	PanelBody, 
+import {
+	TextControl,
+	SelectControl,
+	PanelRow,
+	PanelBody,
 	ToolbarButton,
 	BaseControl,
 	__experimentalInputControl as InputControl,
-	TextareaControl 
+	TextareaControl,
 } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
 import getIcon from '../../utils/get-icon';
-import { select } from "@wordpress/data";
+import { select } from '@wordpress/data';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
@@ -31,40 +31,37 @@ import { SUPPORTED_ATTRIBUTES } from './constants';
  *
  * @return {WPElement} Element to render.
  */
-export default function Toolbar( props ) {
+export default function Toolbar(props) {
+	const { attributes, setAttributes, clientId } = props;
 
-	const {
-		attributes,
-		setAttributes,
-		clientId
-	} = props;
-	
-	const supported = SUPPORTED_ATTRIBUTES[attributes.type]
+	const supported = SUPPORTED_ATTRIBUTES[attributes.type];
 
 	const setRequiredTxt = () => {
-	    var parent = select('core/block-editor').getBlockParents(clientId);
-	    const parentAtts = select('core/block-editor').getBlockAttributes(parent[0]);
-	    setAttributes( { requiredText: parentAtts.requiredText } )
-	}
+		var parent = select('core/block-editor').getBlockParents(clientId);
+		const parentAtts = select('core/block-editor').getBlockAttributes(
+			parent[0]
+		);
+		setAttributes({ requiredText: parentAtts.requiredText });
+	};
 
 	return (
 		<Fragment>
 			<ToolbarButton
-				label={ __( 'Required' ) }
-				icon={ getIcon( 'asterisk' ) }
-				isPressed={ attributes.required }
-				onClick={ () => {
-					setRequiredTxt()
-					setAttributes( { required: !attributes.required } )
-				} }
+				label={__('Required')}
+				icon={getIcon('asterisk')}
+				isPressed={attributes.required}
+				onClick={() => {
+					setRequiredTxt();
+					setAttributes({ required: !attributes.required });
+				}}
 			/>
 			<ToolbarButton
-				label={ __( 'Hide label' ) }
-				icon={ 'hidden' }
-				isPressed={ attributes.hideLabel }
-				onClick={ () => {
-					setAttributes( { hideLabel: !attributes.hideLabel } )
-				} }
+				label={__('Hide label')}
+				icon={'hidden'}
+				isPressed={attributes.hideLabel}
+				onClick={() => {
+					setAttributes({ hideLabel: !attributes.hideLabel });
+				}}
 			/>
 		</Fragment>
 	);

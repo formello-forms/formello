@@ -1,9 +1,7 @@
-const {
-	applyFilters,
-} = wp.hooks;
+const { applyFilters } = wp.hooks;
 import getIcon from '../../../utils/get-icon';
 
-export function getActions(){
+export function getActions() {
 	let actions = [
 		{
 			type: 'email',
@@ -14,12 +12,11 @@ export function getActions(){
 			bcc: '',
 			replyTo: '',
 			subject: '',
-			message: ''
-		}
-	]
+			message: '',
+		},
+	];
 
-	applyFilters( 'formello.actions.list', '', actions )
+	applyFilters('formello.actions.list', '', actions);
 
-	return actions
-
+	return actions;
 }

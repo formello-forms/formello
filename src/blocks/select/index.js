@@ -27,19 +27,19 @@ import { Select } from '../../utils/icons';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-registerBlockType( metadata, {
-
+registerBlockType(metadata, {
 	/**
 	 * An icon property should be specified to make it easier to identify a block.
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
-	icon: getIcon( 'select' ),
+	icon: getIcon('select'),
 
 	supports: {
-		inserter: ( 'formello_form' === pagenow || 'popper' === pagenow ) ? true : false,
+		inserter:
+			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
 		html: false,
 		className: false,
-		reusable: false
+		reusable: false,
 	},
 
 	/**
@@ -50,5 +50,5 @@ registerBlockType( metadata, {
 	/**
 	 * @see ./save.js
 	 */
-	save: save
-} );
+	save: save,
+});

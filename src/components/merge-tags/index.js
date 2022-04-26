@@ -4,7 +4,13 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-import { BaseControl, Button, Dropdown, Dashicon, PanelRow } from '@wordpress/components';
+import {
+	BaseControl,
+	Button,
+	Dropdown,
+	Dashicon,
+	PanelRow,
+} from '@wordpress/components';
 import { __experimentalInputControl as InputControl } from '@wordpress/components';
 
 import { useState } from '@wordpress/element';
@@ -21,8 +27,7 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function mergeTags( props ) {
-
+export default function mergeTags(props) {
 	const {
 		label,
 		value,
@@ -31,37 +36,41 @@ export default function mergeTags( props ) {
 		setAttributes,
 		onChange,
 		className,
-		noFields
+		noFields,
 	} = props;
 
 	const icon = 'list-view';
 
 	return (
 		<BaseControl>
-			<InputControl 
-				className={ className }
-				value={ value }
-				label={ label }
-				onChange={ (val) => onChange(val) }
+			<InputControl
+				className={className}
+				value={value}
+				label={label}
+				onChange={(val) => onChange(val)}
 				labelPosition="top"
-				placeholder={ placeholder }
-				suffix={ 
-				    <Dropdown
-				        position="bottom right"
-				        renderToggle={ ( { isOpen, onToggle } ) => (
-				            <Button 
-				            	isSmall
-				            	icon={ icon } 
-								onClick={ onToggle }
-				            	aria-expanded={ isOpen }
-				            />
-				        ) }
-				        renderContent={ ( { isOpen, onToggle } ) => (
-							<TagSelector {...props} insertTag={ onChange } onToggle={ onToggle } />
-				        ) }
-				    />
+				placeholder={placeholder}
+				suffix={
+					<Dropdown
+						position="bottom right"
+						renderToggle={({ isOpen, onToggle }) => (
+							<Button
+								isSmall
+								icon={icon}
+								onClick={onToggle}
+								aria-expanded={isOpen}
+							/>
+						)}
+						renderContent={({ isOpen, onToggle }) => (
+							<TagSelector
+								{...props}
+								insertTag={onChange}
+								onToggle={onToggle}
+							/>
+						)}
+					/>
 				}
-			 />
+			/>
 		</BaseControl>
 	);
 }

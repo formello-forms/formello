@@ -17,7 +17,7 @@ import {
 	RichText,
 	InnerBlocks,
 	useInnerBlocksProps,
-	useBlockProps
+	useBlockProps,
 } from '@wordpress/block-editor';
 
 const ALLOWED_BLOCKS = [
@@ -40,55 +40,54 @@ const ALLOWED_BLOCKS = [
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( {
+export default function Edit({
 	attributes,
 	className,
 	setAttributes,
 	clientId,
-} ) {
+}) {
 	const hasInnerBlocks = useSelect(
-		( select ) => {
-			const { getBlock } = select( 'core/block-editor' );
-			const block = getBlock( clientId );
-			return !! ( block && block.innerBlocks.length );
+		(select) => {
+			const { getBlock } = select('core/block-editor');
+			const block = getBlock(clientId);
+			return !!(block && block.innerBlocks.length);
 		},
-		[ clientId ]
+		[clientId]
 	);
 
 	///const className = attributes.hideBorder ? 'no-border' : undefined;
-	const blockProps = useBlockProps()
+	const blockProps = useBlockProps();
 
-	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
-	} );
+	});
 
 	return (
 		<fieldset {...innerBlocksProps}>
 			<InspectorControls>
-				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
+				<PanelBody title={__('Options', 'formello')} initialOpen={true}>
 					<ToggleControl
-						label={ __( 'Show Legend', 'formello' ) }
-						checked={ attributes.showLegend }
-						onChange={ ( newval ) =>
-							setAttributes( { showLegend: newval } )
+						label={__('Show Legend', 'formello')}
+						checked={attributes.showLegend}
+						onChange={(newval) =>
+							setAttributes({ showLegend: newval })
 						}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			{ attributes.showLegend && (
+			{attributes.showLegend && (
 				<RichText
 					tagName="legend"
-					className={ className }
-					value={ attributes.legend }
-					onChange={ ( legend ) => setAttributes( { legend } ) }
-					placeholder={ __( 'Enter legend...', 'formello' ) }
-					allowedFormats={ [] }
+					className={className}
+					value={attributes.legend}
+					onChange={(legend) => setAttributes({ legend })}
+					placeholder={__('Enter legend...', 'formello')}
+					allowedFormats={[]}
 				/>
-			) }
+			)}
 
-			{ children }
-		
+			{children}
 		</fieldset>
 	);
 }

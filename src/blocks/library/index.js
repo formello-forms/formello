@@ -5,12 +5,12 @@ import { registerBlockType } from '@wordpress/blocks';
 import edit from './edit';
 import metadata from './block.json';
 
-registerBlockType( metadata, {
-  	icon: getIcon('form'),
+registerBlockType(metadata, {
+	icon: getIcon('form'),
 
-  	edit: edit,
+	edit: edit,
 
-	save: ( props ) => {
-		return null
-	}
-})
+	save: (props) => {
+		return null;
+	},
+});

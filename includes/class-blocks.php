@@ -151,7 +151,7 @@ class Blocks {
 	public function do_button_block( $attributes, $content = '' ) {
 
 		if ( ! is_admin() && ! defined( 'REST_REQUEST' ) ) {
-			$content .= wp_nonce_field();
+			//$content .= wp_nonce_field();
 		}
 
 		return $content;

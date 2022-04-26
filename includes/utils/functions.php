@@ -85,7 +85,9 @@ function recursive_sanitize_text_field( $array ) {
 		if ( is_array( $value ) ) {
 			$value = recursive_sanitize_text_field( $value );
 		} else {
-			$value = sanitize_text_field( $value );
+			if( ! is_bool( $value ) ) {
+				$value = sanitize_text_field( $value );
+			};
 		}
 	}
 	return $array;

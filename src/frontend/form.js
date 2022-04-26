@@ -1,5 +1,5 @@
-import Bouncer from 'formbouncerjs'
-import events from './events.js'
+import Bouncer from 'formbouncerjs';
+import events from './events.js';
 
 class Formello {
 	constructor(element) {
@@ -7,19 +7,25 @@ class Formello {
 
 		//this.element.addEventListener( 'submit', this.handleSubmit.bind(this), true )
 
-		this.element.addEventListener( 'bouncerFormValid', this.handleSubmit.bind(this), true );
+		this.element.addEventListener(
+			'bouncerFormValid',
+			this.handleSubmit.bind(this),
+			true
+		);
 
 		this.init();
 	}
 
 	init() {
-		this.reCaptcha()
+		this.reCaptcha();
+		this.isRtfEnabled();
+		this.addFlatpickr();
 	}
 
-	handleSubmit(e){
+	handleSubmit(e) {
 		// always prevent default (because regular submit doesn't work for Formello)
-		e.preventDefault()
-		e.stopPropagation()
+		e.preventDefault();
+		e.stopPropagation();
 
 		// Validate the field
 		/*var bouncer = new Bouncer();
@@ -30,202 +36,254 @@ class Formello {
 			return
 		}*/
 
-		if( this.enableRecaptcha ){
-			this.reCaptchaToken()
-			return
+		if (this.enableRecaptcha) {
+			this.reCaptchaToken();
+			return;
 		}
 
-		this.submitForm()
+		this.submitForm();
 	}
 
 	submitForm(token) {
+		this.showLoading();
+		this.cleanMessage();
+		this.emitEvent('submit');
 
-		this.showLoading()
-		this.cleanMessage()
-		this.emitEvent( 'submit' )
+		const formData = new FormData(this.element);
 
-		const formData = new FormData( this.element );
-
-		if( token ){
-			formData.append( 'g-recaptcha-response', token )
+		if (token) {
+			formData.append('g-recaptcha-response', token);
 		}
 
-		let request = new XMLHttpRequest()
-		request.onreadystatechange = this.createRequestHandler( this.element )
-		request.open( 'POST', formello.ajax_url, true )
-		request.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' )
-		request.send( formData )
-		request = null
-
+		let request = new XMLHttpRequest();
+		request.onreadystatechange = this.createRequestHandler(this.element);
+		request.open('POST', formello.ajax_url, true);
+		request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		request.send(formData);
+		request = null;
 	}
 
-	emitEvent ( eventName ) {
+	emitEvent(eventName) {
 		// browser event API: formElement.on('formello-success', ..)
-		window.dispatchEvent( new CustomEvent( 'formello-' + eventName ) )
+		window.dispatchEvent(new CustomEvent('formello-' + eventName));
 
 		// custom events API: formello.on('success', ..)
-		events.trigger( eventName, [this.element] )
+		events.trigger(eventName, [this.element]);
 	}
 
-	createRequestHandler (formEl) {
-
-		let parent = this
+	createRequestHandler(formEl) {
+		let parent = this;
 
 		return function () {
-
 			// are we done?
-			if ( this.readyState === 4 ) {
-				parent.showLoading()
-				let response
+			if (this.readyState === 4) {
+				parent.showLoading();
+				let response;
 				if (this.status >= 200 && this.status < 400) {
 					try {
-					  response = JSON.parse( this.responseText )
+						response = JSON.parse(this.responseText);
 					} catch (error) {
-					  console.log('Formello: failed to parse AJAX response.\n\nError: "' + error + '"')
-					  return
+						console.log(
+							'Formello: failed to parse AJAX response.\n\nError: "' +
+								error +
+								'"'
+						);
+						return;
 					}
 
-					parent.emitEvent( 'submitted', this.element )
+					parent.emitEvent('submitted', this.element);
 
-					if ( response.errors.length ) {
-						parent.emitEvent( 'error', this.element )
+					if (response.errors.length) {
+						parent.emitEvent('error', this.element);
 					} else {
-						parent.emitEvent( 'success', this.element )
+						parent.emitEvent('success', this.element);
 					}
 
 					// Show form message
-					if ( response.message ) {
-						parent.addMessage( response.message, response.errors, response.hide_form  )
-						parent.emitEvent( 'message', this.element )
+					if (response.message) {
+						parent.addMessage(
+							response.message,
+							response.errors,
+							response.hide_form
+						);
+						parent.emitEvent('message', this.element);
 					}
 
 					// Should we hide form?
 					if (response.hide_form) {
-						parent.element.style.display = 'none'
+						parent.element.style.display = 'none';
 					}
 
-					if( response.debug ){
-						parent.addDebug(response.debug)
-						console.log(response.debug)
+					if (response.debug) {
+						parent.addDebug(response.debug);
+						console.log(response.debug);
 					}
 
 					// Should we redirect?
 					if (response.redirect_url) {
-						window.location = response.redirect_url
+						window.location = response.redirect_url;
 					}
 
 					// clear form
 					if (!response.message.errors) {
-						parent.element.reset()
+						parent.element.reset();
 					}
 				} else {
 					// Server error :(
-					console.log( response )
+					console.log(response);
 				}
 			}
-		}
+		};
 	}
 
 	reCaptcha() {
 		const { recaptcha } = this.element.dataset;
-		if( ! JSON.parse( recaptcha ) ){
-			return
+		if (!JSON.parse(recaptcha)) {
+			return;
 		}
 
 		var recaptchaUrl = 'https://www.google.com/recaptcha/api.js';
 
 		var sitekey = formello.settings.reCaptcha?.site_key;
 		var version = formello.settings.reCaptcha?.version;
-		var buttons = this.element.getElementsByTagName( 'button' )
+		var buttons = this.element.getElementsByTagName('button');
 
-		if( '1' === version ){
-			var recaptchaDiv = document.createElement( 'div' );
-			recaptchaDiv.classList.add( 'g-recaptcha' );
-			recaptchaDiv.setAttribute( 'data-sitekey', sitekey );
+		if ('1' === version) {
+			var recaptchaDiv = document.createElement('div');
+			recaptchaDiv.classList.add('g-recaptcha');
+			recaptchaDiv.setAttribute('data-sitekey', sitekey);
 
-			this.element.insertBefore( recaptchaDiv, buttons[0] )
+			this.element.insertBefore(recaptchaDiv, buttons[0]);
+		} else {
+			recaptchaUrl += '?render=' + sitekey;
+			var recaptchaInput = document.createElement('input');
+			recaptchaInput.type = 'hidden';
+			recaptchaInput.name = 'g-recaptcha-response';
+			recaptchaInput.classList.add('formello-g-recaptcha');
+			this.element.appendChild(recaptchaInput);
 		}
-		else{
-			recaptchaUrl += '?render=' + sitekey
-			var recaptchaInput = document.createElement("input");
-			recaptchaInput.type = "hidden";
-			recaptchaInput.name = "g-recaptcha-response";
-			recaptchaInput.classList.add( 'formello-g-recaptcha' );
-			this.element.appendChild( recaptchaInput )
-		}
-		if( sitekey && version ){
-			this.enableRecaptcha = true
+		if (sitekey && version) {
+			this.enableRecaptcha = true;
 			var script = document.createElement('script');
 			script.src = recaptchaUrl;
 
 			document.head.appendChild(script);
-
 		}
-
 	}
 
 	reCaptchaToken() {
-
-        grecaptcha.ready( () => {
-			grecaptcha.execute( formello.settings.reCaptcha.site_key, {action: 'submit'} )
-			.then( (token) => {
-				this.element.querySelector( '.formello-g-recaptcha' ).value = token
-				this.submitForm()
-			})
-        });
-
+		grecaptcha.ready(() => {
+			grecaptcha
+				.execute(formello.settings.reCaptcha.site_key, {
+					action: 'submit',
+				})
+				.then((token) => {
+					this.element.querySelector('.formello-g-recaptcha').value =
+						token;
+					this.submitForm();
+				});
+		});
 	}
 
-	addMessage( message, errors, hide ) {
-		let msg = this.element.querySelector( '.formello-message' )
-		msg.classList.add( message.type )
-		msg.innerHTML = '<p>' + message.text + '</p>'
+	addMessage(message, errors, hide) {
+		let msg = this.element.querySelector('.formello-message');
+		msg.classList.add(message.type);
+		msg.innerHTML = '<p>' + message.text + '</p>';
 
-		if( errors.length ){
+		if (errors.length) {
 			var ul = document.createElement('ul');
 
 			msg.appendChild(ul);
 
 			errors.forEach(function (item) {
-			    let li = document.createElement('li');
-			    ul.appendChild(li);
-			    li.innerHTML += item;
+				let li = document.createElement('li');
+				ul.appendChild(li);
+				li.innerHTML += item;
 			});
 		}
 
-		if( hide ){
-    		this.element.insertAdjacentElement('afterend', msg);
+		if (hide) {
+			this.element.insertAdjacentElement('afterend', msg);
 		}
-
 	}
 
-	addDebug( debug ) {
-		let msg = document.querySelector( '.formello-message' )
+	addDebug(debug) {
+		let msg = this.element.querySelector('.formello-message');
 
 		var debugDiv = document.createElement('div');
-		debugDiv.classList.add( 'warning' )
-		debugDiv.innerHTML = '<pre>' + JSON.stringify( debug, undefined, 2 ) + '</pre>'
+		debugDiv.classList.add('warning');
+		debugDiv.innerHTML =
+			'<pre>' + JSON.stringify(debug, undefined, 2) + '</pre>';
 
 		msg.insertAdjacentElement('afterend', debugDiv);
-
-
 	}
 
 	cleanMessage() {
-		const msg = this.element.querySelector('.formello-message')
-		msg.innerHTML = ""
-		msg.setAttribute( 'class', 'formello-message' );
+		const msg = this.element.querySelector('.formello-message');
+		msg.innerHTML = '';
+		msg.setAttribute('class', 'formello-message');
 	}
 
 	showLoading() {
-		const btn = this.element.querySelector('.wp-block-formello-button')
-		btn.style.width = window.getComputedStyle(btn).width
-		btn.style.height = window.getComputedStyle(btn).height
+		const btn = this.element.querySelector('.wp-block-formello-button');
+		btn.style.width = window.getComputedStyle(btn).width;
+		btn.style.height = window.getComputedStyle(btn).height;
 		btn.style.padding = 0;
-		btn.classList.toggle( 'wp-block-formello-button--loading' )
-		btn.toggleAttribute( 'disabled' )
+		btn.classList.toggle('wp-block-formello-button--loading');
+		btn.toggleAttribute('disabled');
 	}
 
+	isRtfEnabled() {
+		let richtext = this.element.querySelectorAll('.formello-rtf');
+		if (richtext.length) {
+			var script = document.createElement('script');
+
+			script.onload = function () {
+				tinymce.init({
+					selector: '.formello-rtf',
+					menubar: false,
+					plugins: [
+						'advlist autolink lists link image charmap print preview anchor',
+						'searchreplace visualblocks code fullscreen',
+						'insertdatetime media table paste code help wordcount',
+					],
+					toolbar:
+						'formatselect | ' +
+						'bold italic underline | alignleft aligncenter ' +
+						'alignright alignjustify | bullist numlist | link unlink | undo redo',
+					content_style:
+						'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+				});
+			};
+			script.src =
+				'https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.3/tinymce.min.js';
+
+			document.head.appendChild(script); //or something of the likes
+		}
+	}
+
+	addFlatpickr() {
+		let advancedDate = this.element.querySelectorAll('.flatpickr');
+		if (advancedDate.length) {
+			var script = document.createElement('script');
+			var css = document.createElement('link');
+			css.setAttribute('type', 'text/css');
+			css.setAttribute(
+				'href',
+				'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css'
+			);
+			css.setAttribute('rel', 'stylesheet');
+
+			script.onload = function () {
+				//do stuff with the script
+				flatpickr('.flatpickr');
+			};
+			script.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
+
+			document.head.appendChild(script); //or something of the likes
+			document.head.appendChild(css); //or something of the likes
+		}
+	}
 }
 
-export { Formello }
+export { Formello };

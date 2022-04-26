@@ -5,15 +5,21 @@
  */
 import { __ } from '@wordpress/i18n';
 import classnames from 'classnames';
-import { 
+import {
 	getColorClassName,
 	useBlockProps,
 	RichText,
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
 	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
-	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles
+	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
-import { Loading, Loading2, Loading3, Loading4, Loading5 } from '../../utils/icons';
+import {
+	Loading,
+	Loading2,
+	Loading3,
+	Loading4,
+	Loading5,
+} from '../../utils/icons';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -24,15 +30,8 @@ import { Loading, Loading2, Loading3, Loading4, Loading5 } from '../../utils/ico
  *
  * @return {WPElement} Element to render.
  */
-export default function save( { attributes } ) {
-
-	const {
-		text,
-		alignment,
-		iconType,
-		iconPosition,
-		style
-	} = attributes;
+export default function save({ attributes }) {
+	const { text, alignment, iconType, iconPosition, style } = attributes;
 
 	const icons = {
 		Loading: Loading,
@@ -40,20 +39,20 @@ export default function save( { attributes } ) {
 		Loading3: Loading3,
 		Loading4: Loading4,
 		Loading5: Loading5,
-	}
+	};
 
 	const borderRadius = style?.border?.radius;
 	const borderColor = style?.border?.color;
-	const borderProps = getBorderClassesAndStyles( attributes );
+	const borderProps = getBorderClassesAndStyles(attributes);
 
 	// Check for old deprecated numerical border radius. Done as a separate
 	// check so that a borderRadius style won't overwrite the longhand
 	// per-corner styles.
-	if ( typeof borderRadius === 'number' ) {
-		borderProps.style.borderRadius = `${ borderRadius }px`;
+	if (typeof borderRadius === 'number') {
+		borderProps.style.borderRadius = `${borderRadius}px`;
 	}
 
-	const colorProps = getColorClassesAndStyles( attributes );
+	const colorProps = getColorClassesAndStyles(attributes);
 
 	const buttonClasses = classnames(
 		colorProps.className,
@@ -61,18 +60,15 @@ export default function save( { attributes } ) {
 	);
 
 	const blockProps = useBlockProps.save({
-		className: buttonClasses
+		className: buttonClasses,
 	});
 
 	const Component = icons[attributes.type];
 
 	return (
-		<button 
-			type="submit"
-			{...blockProps}
-		>
-			<RichText.Content tagName="span" value={ attributes.text } />
-        	<Component />
+		<button type="submit" {...blockProps}>
+			<RichText.Content tagName="span" value={attributes.text} />
+			<Component />
 		</button>
 	);
 }

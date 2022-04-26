@@ -149,8 +149,8 @@ final class Formello {
 		}
 
 		$settings = get_option( 'formello' );
-		
-		if( ! $settings ){
+
+		if ( ! $settings ) {
 			return;
 		};
 

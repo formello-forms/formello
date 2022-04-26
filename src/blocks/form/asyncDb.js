@@ -2,58 +2,57 @@ import apiFetch from '@wordpress/api-fetch';
 import { subscribe, select } from '@wordpress/data';
 import {
 	getConstraints,
-	getFieldsName
+	getFieldsName,
 } from '../../components/merge-tags/functions';
 
 // disable on widgets screen
-let wasSavingPost = select( 'core/editor' ).isSavingPost();
-let wasAutosavingPost = select( 'core/editor' ).isAutosavingPost();
-let wasPreviewingPost = select( 'core/editor' ).isPreviewingPost();
+let wasSavingPost = select('core/editor').isSavingPost();
+let wasAutosavingPost = select('core/editor').isAutosavingPost();
+let wasPreviewingPost = select('core/editor').isPreviewingPost();
 
-
-const updateTransient = ( innerBlocks ) => {
-	apiFetch( {
+const updateTransient = (innerBlocks) => {
+	apiFetch({
 		path: '/formello/v1/sync_template_library/',
 		method: 'POST',
 		data: {},
-	} )
-}
+	});
+};
 
 // determine whether to show notice
-subscribe( () => {
-
+subscribe(() => {
 	// disable on widgets screen
-	if( !select('core/editor') ){
-		return
+	if (!select('core/editor')) {
+		return;
 	}
-	const isSavingPost = select( 'core/editor' ).isSavingPost();
-	const isAutosavingPost = select( 'core/editor' ).isAutosavingPost();
-	const isPreviewingPost = select( 'core/editor' ).isPreviewingPost();
-	
+	const isSavingPost = select('core/editor').isSavingPost();
+	const isAutosavingPost = select('core/editor').isAutosavingPost();
+	const isPreviewingPost = select('core/editor').isPreviewingPost();
+
 	// Save metaboxes on save completion, except for autosaves that are not a post preview.
-	const shouldTriggerAjax = (
-			( wasSavingPost && ! isSavingPost && ! wasAutosavingPost ) ||
-			( wasAutosavingPost && wasPreviewingPost && ! isPreviewingPost )
-		);
+	const shouldTriggerAjax =
+		(wasSavingPost && !isSavingPost && !wasAutosavingPost) ||
+		(wasAutosavingPost && wasPreviewingPost && !isPreviewingPost);
 
 	// Save current state for next inspection.
 	wasSavingPost = isSavingPost;
 	wasAutosavingPost = isAutosavingPost;
 	wasPreviewingPost = isPreviewingPost;
 
-	if ( shouldTriggerAjax ) {
-		let blocks = []
-		let root = select( 'core/block-editor' ).getBlocks()
-		let descendants = select( 'core/block-editor' ).getClientIdsWithDescendants( root[0] )
+	if (shouldTriggerAjax) {
+		let blocks = [];
+		let root = select('core/block-editor').getBlocks();
+		let descendants = select(
+			'core/block-editor'
+		).getClientIdsWithDescendants(root[0]);
 
-		descendants.forEach( (b) => {
-			let block = select( 'core/block-editor' ).getBlock( b )
-			if( 'formello/form' === block.name ){
-				if( undefined === block.attributes.id ){
-					return
+		descendants.forEach((b) => {
+			let block = select('core/block-editor').getBlock(b);
+			if ('formello/form' === block.name) {
+				if (undefined === block.attributes.id) {
+					return;
 				}
 
-				apiFetch( {
+				apiFetch({
 					path: '/formello/v1/form/' + block.attributes.id,
 					method: 'PUT',
 					data: {
@@ -62,21 +61,19 @@ subscribe( () => {
 							recaptchaEnabled: block.attributes.recaptchaEnabled,
 							hide: block.attributes.hide,
 							debug: block.attributes.debug,
-							fields: getFieldsName( block.clientId ),
-							constraints: getConstraints( block.clientId ),
+							fields: getFieldsName(block.clientId),
+							constraints: getConstraints(block.clientId),
 							actions: block.attributes.actions,
 							messages: {
 								success: block.attributes.successMessage,
-								error: block.attributes.errorMessage
-							}
-						}					
-					}
-
-				} ).then( ( result ) => {
+								error: block.attributes.errorMessage,
+							},
+						},
+					},
+				}).then((result) => {
 					updateTransient();
-				} );
+				});
 			}
-		} )
+		});
 	}
-
-} );
+});

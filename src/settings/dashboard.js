@@ -1,9 +1,7 @@
 /**
  * WordPress dependencies
  */
-import {
-	__,
-} from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 import {
 	BaseControl,
@@ -15,7 +13,7 @@ import {
 	TextControl,
 	SelectControl,
 	RadioControl,
-	TabPanel
+	TabPanel,
 } from '@wordpress/components';
 
 import {
@@ -23,14 +21,12 @@ import {
 	Component,
 	Fragment,
 	useState,
-	useEffect
+	useEffect,
 } from '@wordpress/element';
 
 import apiFetch from '@wordpress/api-fetch';
 
-import {
-	applyFilters,
-} from '@wordpress/hooks';
+import { applyFilters } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
@@ -52,33 +48,29 @@ import About from './about.js';
 import Notices from '../tools/notices.js';
 
 const components = {
-    general: General,
-    licenses: Licenses,
-    recaptcha: Recaptcha,
-    messages: Messages,
-    integrations: Integrations,
+	general: General,
+	licenses: Licenses,
+	recaptcha: Recaptcha,
+	messages: Messages,
+	integrations: Integrations,
 };
 
-
 function App() {
+	const [isSaving, setSaving] = useState(false);
+	const [apiLoaded, setApiLoaded] = useState(false);
+	const [settings, setSettings] = useState();
+	const { createNotice, removeNotice } = useDispatch(noticesStore);
 
-	const [ isSaving, setSaving ] = useState(false);
-	const [ apiLoaded, setApiLoaded ] = useState(false);
-	const [ settings, setSettings ] = useState();
-    const { createNotice, removeNotice } = useDispatch( noticesStore );
-
-	useEffect( () => {
-		apiFetch( {
+	useEffect(() => {
+		apiFetch({
 			path: '/formello/v1/settings',
-			method: 'GET'
-		} ).then( ( result ) => {
-			
-			setSettings(result.response) 
-			
-			setApiLoaded(true)
+			method: 'GET',
+		}).then((result) => {
+			setSettings(result.response);
 
-		} );
-	}, [] );
+			setApiLoaded(true);
+		});
+	}, []);
 
 	const tabs = [
 		{
@@ -103,149 +95,147 @@ function App() {
 		},
 	];
 
-    const addNotice = ( status, content, type='snackbar' ) => {
-        removeNotice( 'settings' )
-        createNotice( status, content, { type: type, id: 'settings' } );
-    }
+	const addNotice = (status, content, type = 'snackbar') => {
+		removeNotice('settings');
+		createNotice(status, content, { type: type, id: 'settings' });
+	};
 
-	const getSetting = ( group, name, defaultVal ) => {
+	const getSetting = (group, name, defaultVal) => {
 		let result = defaultVal;
 
-		if( 'license' === group || 'license_status' === group || 'log' === group ){
-			result = settings[ group ];
+		if (
+			'license' === group ||
+			'license_status' === group ||
+			'log' === group
+		) {
+			result = settings[group];
 		}
 
-		if ( 'undefined' !== typeof settings[ group ][ name ] ) {
-			result = settings[ group ][ name ];
+		if ('undefined' !== typeof settings[group][name]) {
+			result = settings[group][name];
 		}
 
 		return result;
-	}
+	};
 
-	const updateSettings = ( e ) => {
-		setSaving( true )
+	const updateSettings = (e) => {
+		setSaving(true);
 
-		apiFetch( {
+		apiFetch({
 			path: '/formello/v1/settings',
 			method: 'POST',
 			data: {
 				settings: settings,
 			},
-		} ).then( ( result ) => {
-			setSaving( false )
-			addNotice( 'info', 'Settings saved' )
-		} );
-	}
+		}).then((result) => {
+			setSaving(false);
+			addNotice('info', 'Settings saved');
+		});
+	};
 
-	const showMessage = ( message ) => {
-		message.classList.add( 'formello-action-message--show' );
+	const showMessage = (message) => {
+		message.classList.add('formello-action-message--show');
 		message.textContent = result.response;
 
-		if ( ! result.success || ! result.response ) {
-			message.classList.add( 'formello-action-message--error' );
+		if (!result.success || !result.response) {
+			message.classList.add('formello-action-message--error');
 		} else {
-			setTimeout( function() {
-				message.classList.remove( 'formello-action-message--show' );
-			}, 3000 );
+			setTimeout(function () {
+				message.classList.remove('formello-action-message--show');
+			}, 3000);
 		}
-	}
+	};
 
-	const changeSettings = ( group, name, value ) => {
-		setSettings( {
+	const changeSettings = (group, name, value) => {
+		setSettings({
 			...settings,
 			[group]: {
 				...settings[group],
 				[name]: value,
-			}
-		} );
+			},
+		});
 	};
 
-	const saveSetting = ( key, value ) => {
-		setSettings( {
-				...settings,
-				[key]: value
-		} );
+	const saveSetting = (key, value) => {
+		setSettings({
+			...settings,
+			[key]: value,
+		});
 	};
 
-	const initialTab = getQueryArg( window.location.href, 'tab' );
+	const initialTab = getQueryArg(window.location.href, 'tab');
 
-	const updateUrl = ( tabName ) => {
-		let newUrl = addQueryArgs( window.location.href, { tab: tabName } )
-		window.history.replaceState( { path: newUrl }, '', newUrl );
+	const updateUrl = (tabName) => {
+		let newUrl = addQueryArgs(window.location.href, { tab: tabName });
+		window.history.replaceState({ path: newUrl }, '', newUrl);
+	};
+
+	if (!apiLoaded) {
+		return (
+			<Placeholder className="formello-settings-placeholder">
+				<Spinner />
+			</Placeholder>
+		);
 	}
 
-		if ( ! apiLoaded ) {
-			return (
-				<Placeholder className="formello-settings-placeholder">
-					<Spinner />
-				</Placeholder>
-			);
-		}
-
-		return (
-			<Fragment>
-				<div className="formello-settings-header">
-					<div className="formello-container">
-						<h1>{ getIcon( 'logo' ) }{ __( 'Settings' ) }</h1>
-					</div>
+	return (
+		<Fragment>
+			<div className="formello-settings-header">
+				<div className="formello-container">
+					<h1>
+						{getIcon('logo')}
+						{__('Settings')}
+					</h1>
 				</div>
-				<div className="formello-settings-main">
+			</div>
+			<div className="formello-settings-main">
+				{applyFilters('formello.dashboard.beforeSettings', '', this)}
 
-					{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
+				<TabPanel
+					tabs={tabs}
+					initialTabName={initialTab}
+					onSelect={(tabName) => updateUrl(tabName)}
+				>
+					{(tab) => {
+						const SettingsTab = components[tab.name];
+						return (
+							<div className="formello-tablist">
+								<div className="formello-settings-tab">
+									<SettingsTab
+										saveSetting={saveSetting.bind(this)}
+										changeSettings={changeSettings.bind(
+											this
+										)}
+										getSetting={getSetting.bind(this)}
+										addNotice={addNotice}
+									/>
 
-					<TabPanel
-						tabs={ tabs }
-						initialTabName={ initialTab }
-						onSelect={ ( tabName ) => updateUrl( tabName ) }
-					>
-						{ ( tab ) => {
-						    const SettingsTab = components[tab.name];
-						    return <div className='formello-tablist'>
-						    		<div className='formello-settings-tab'>
+									<Button
+										isPrimary
+										aria-disabled={isSaving}
+										isBusy={isSaving}
+										disabled={isSaving}
+										onClick={(e) => updateSettings(e)}
+									>
+										{__('Save', 'formello')}
+									</Button>
+								</div>
 
-							    		<SettingsTab 
-											saveSetting={ saveSetting.bind(this) }
-											changeSettings={ changeSettings.bind(this) }
-											getSetting={ getSetting.bind(this) }
-											addNotice={ addNotice }
-							    		/>
+								<Help />
+								<Notices />
+							</div>
+						);
+					}}
+				</TabPanel>
 
-							    		<Button
-											isPrimary
-											aria-disabled={ isSaving }
-											isBusy={ isSaving }
-											disabled={ isSaving }
-											onClick={ ( e ) => updateSettings( e ) }
-										>
-											{ __( 'Save', 'formello' ) }
-										</Button>
+				{applyFilters('formello.dashboard.settings', '', this)}
 
-						    		</div>
-
-									<Help />
-									<Notices />
-
-								</div>;
-
-						}}
-
-					</TabPanel>
-
-					{ applyFilters( 'formello.dashboard.settings', '', this ) }
-
-					{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
-
-				</div>
-
-
-
-			</Fragment>
-		);
+				{applyFilters('formello.dashboard.afterSettings', '', this)}
+			</div>
+		</Fragment>
+	);
 }
 
-window.addEventListener( 'DOMContentLoaded', () => {
-	render(
-		<App />,
-		document.getElementById( 'formello-block-default-settings' )
-	);
-} );
+window.addEventListener('DOMContentLoaded', () => {
+	render(<App />, document.getElementById('formello-block-default-settings'));
+});

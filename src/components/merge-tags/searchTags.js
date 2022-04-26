@@ -9,7 +9,7 @@ import {
 import TagList from './tagList';
 import { get, isEmpty } from 'lodash';
 
-function SearchTags( props ) {
+function SearchTags(props) {
 	const search = props.search;
 
 	const getFilteredTags = () => {
@@ -77,12 +77,11 @@ function SearchTags( props ) {
 			},
 		];
 
-		if( noFields ){
+		if (noFields) {
 			tabs = tabs.shift();
 		}
 
 		return tabs;
-
 	};
 
 	const noTagsFound = () => {

@@ -15,7 +15,13 @@ import { __ } from '@wordpress/i18n';
 
 import { useState, useEffect, Fragment, RawHTML } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { withSelect, useSelect, select, dispatch, useDispatch } from '@wordpress/data';
+import {
+	withSelect,
+	useSelect,
+	select,
+	dispatch,
+	useDispatch,
+} from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 import { compose } from '@wordpress/compose';
 
@@ -27,13 +33,13 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	URLInput,
-	Inserter
+	Inserter,
 } from '@wordpress/block-editor';
 
 import {
 	isReusableBlock,
 	createBlocksFromInnerBlocksTemplate,
-	createBlock
+	createBlock,
 } from '@wordpress/blocks';
 const {
 	getBlock,
@@ -44,8 +50,8 @@ const {
 	getBlockHierarchyRootClientId,
 	getPreviousBlockClientId,
 	getBlockParents,
-	getBlockCount
-} = wp.data.select("core/block-editor");
+	getBlockCount,
+} = wp.data.select('core/block-editor');
 
 import apiFetch from '@wordpress/api-fetch';
 import BlockVariationPicker from './variation-picker';
@@ -68,7 +74,7 @@ import {
 	Icon,
 	Dropdown,
 	DropdownMenu,
-	Notice
+	Notice,
 } from '@wordpress/components';
 
 import classnames from 'classnames';
@@ -112,70 +118,64 @@ import { TemplatesModal } from './library';
  *
  * @return {WPElement} Element to render.
  */
-function Edit( props ) {
-
+function Edit(props) {
 	const {
 		attributes,
 		className,
 		setAttributes,
 		clientId,
 		hasChildBlocks,
-		innerBlocks
+		innerBlocks,
 	} = props;
 
 	const postType = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostType(),
+		(select) => select('core/editor').getCurrentPostType(),
 		[]
 	);
 	const postTitle = useSelect(
-		( select ) => select( 'core/editor' ).getPostEdits().title,
+		(select) => select('core/editor').getPostEdits().title,
 		[]
 	);
 
-	const post_id = useSelect(select =>
-		select("core/editor").getCurrentPostId()
+	const post_id = useSelect((select) =>
+		select('core/editor').getCurrentPostId()
 	);
 
-	const [ active, setActive ] = useState(false);
-	const [ showActionsModal, setShowActionsModal ] = useState(false);
-	const [ isModalOpen, setModalOpen ] = useState( false );
+	const [active, setActive] = useState(false);
+	const [showActionsModal, setShowActionsModal] = useState(false);
+	const [isModalOpen, setModalOpen] = useState(false);
 
-	useEffect(
-		() => {
-			if( 'formello_form' == postType && undefined !== postTitle ){
-				setAttributes( { name: postTitle } )
-			}
-		},
-		[ postTitle ]
-	);
+	useEffect(() => {
+		if ('formello_form' == postType && undefined !== postTitle) {
+			setAttributes({ name: postTitle });
+		}
+	}, [postTitle]);
 
-	useEffect(
-		() => {
-			let idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace(/-/g, '')
-			if( attributes.name.length < 1 ){
-				setAttributes( {
-					name: 'form-' + idx
-				} )
-			}
-			if( 'formello_form' === postType && undefined !== postTitle ){
-				setAttributes( { name: postTitle } )
-			}
-			if( undefined === attributes.id || 0 === attributes.id || attributes.id !== post_id ){
-				setAttributes({
-					id: post_id
-				});
-			}
-		},
-		[]
-	);
+	useEffect(() => {
+		let idx = clientId.substr(2, 9).replace('-', '').replace(/-/g, '');
+		if (attributes.name.length < 1) {
+			setAttributes({
+				name: 'form-' + idx,
+			});
+		}
+		if ('formello_form' === postType && undefined !== postTitle) {
+			setAttributes({ name: postTitle });
+		}
+		if (
+			undefined === attributes.id ||
+			0 === attributes.id ||
+			attributes.id !== post_id
+		) {
+			setAttributes({
+				id: post_id,
+			});
+		}
+	}, []);
 
 	const getBlockClassNames = () => {
-
 		return classnames(
-			className, 
-			attributes.asRow
-				? attributes.labelAlign
-				: undefined,
+			className,
+			attributes.asRow ? attributes.labelAlign : undefined,
 			{
 				'as-row': attributes.asRow,
 				'is-bold': attributes.labelIsBold,
@@ -184,42 +184,47 @@ function Edit( props ) {
 		);
 	};
 
-	const actions = getActions()
+	const actions = getActions();
 
 	const addAction = (type) => {
-		actions.map( (a) => {
-			if( a.type === type ){
-				setAttributes( { actions: [ ...attributes.actions, a ] } )
+		actions.map((a) => {
+			if (a.type === type) {
+				setAttributes({ actions: [...attributes.actions, a] });
 				//setShowActionsModal(a)
 			}
-		} )
+		});
 	};
 
-	const blockProps = useBlockProps( {
+	const blockProps = useBlockProps({
 		className: getBlockClassNames(),
-	} );
+	});
 
-	const changeRequiredText = ( value ) => {
+	const changeRequiredText = (value) => {
 		setAttributes({ requiredText: value });
 
 		// Update the child block's attributes
-		var children = select('core/block-editor').getBlocksByClientId( clientId )[0].innerBlocks;
-		children.forEach( (child) => {
-			dispatch('core/block-editor').updateBlockAttributes( child.clientId, { requiredText: value } )
+		var children =
+			select('core/block-editor').getBlocksByClientId(clientId)[0]
+				.innerBlocks;
+		children.forEach((child) => {
+			dispatch('core/block-editor').updateBlockAttributes(
+				child.clientId,
+				{ requiredText: value }
+			);
 		});
-	}
+	};
 
-	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
+	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
-		template: [ [ 'formello/button' ] ]		
-	} );
+		template: [['formello/button']],
+	});
 
-	const settingsUrl = addQueryArgs( 'edit.php', {
+	const settingsUrl = addQueryArgs('edit.php', {
 		post_type: 'formello_form',
 		page: 'formello-settings',
-		tab: 'recaptcha'
-	} )
+		tab: 'recaptcha',
+	});
 
 	return (
 		<div {...innerBlocksProps}>
@@ -227,194 +232,198 @@ function Edit( props ) {
 				<BlockControls>
 					<ToolbarGroup>
 						<ToolbarButton
-							label={ __( 'Template', 'popper' ) }
-							icon={ 'layout' }
-							onClick={ () => {
-								setModalOpen( 'templates' );
+							label={__('Template', 'popper')}
+							icon={'layout'}
+							onClick={() => {
+								setModalOpen('templates');
 							}}
 						/>
 					</ToolbarGroup>
 					<ToolbarGroup>
 						<DropdownMenu
-							icon={ 'admin-generic' }
-							label={ __( 'Add action', 'formello' ) }
-							controls={ 
-								actions
-								.map( (a) => {
-									return {
-										title: a.title,
-										icon: icons[a.type],
-										onClick: () => {
-											addAction( a.type ) 
-										},
-									}
-							} ) }
+							icon={'admin-generic'}
+							label={__('Add action', 'formello')}
+							controls={actions.map((a) => {
+								return {
+									title: a.title,
+									icon: icons[a.type],
+									onClick: () => {
+										addAction(a.type);
+									},
+								};
+							})}
 						/>
-						{
-							attributes.actions.map( ( a, i ) => {
-								var action = _.find(actions, {type:a.type});
-								return (
-									<ToolbarButton
-										label={ a.title }
-										icon={ icons[a.type] }
-										key={ i }
-										onClick={ () => {
-											setActive(i)
-											setShowActionsModal( a )
-										} }
-									/>
-								)
-							} )
-						}
+						{attributes.actions.map((a, i) => {
+							var action = _.find(actions, { type: a.type });
+							return (
+								<ToolbarButton
+									label={a.title}
+									icon={icons[a.type]}
+									key={i}
+									onClick={() => {
+										setActive(i);
+										setShowActionsModal(a);
+									}}
+								/>
+							);
+						})}
 					</ToolbarGroup>
 				</BlockControls>
-				<PanelBody title={ __( 'Settings', 'formello' ) } initialOpen={ true }>
+				<PanelBody
+					title={__('Settings', 'formello')}
+					initialOpen={true}
+				>
 					<ToggleControl
-						label={ __( 'Store submissions', 'formello' ) }
-						checked={ attributes.storeSubmissions }
-						onChange={ ( val ) => {
-							setAttributes( { 'storeSubmissions': val } )
-						} }
+						label={__('Store submissions', 'formello')}
+						checked={attributes.storeSubmissions}
+						onChange={(val) => {
+							setAttributes({ storeSubmissions: val });
+						}}
 					/>
 					<ToggleControl
-						label={ __( 'Enable ReCaptcha', 'formello' ) }
-						checked={ attributes.recaptchaEnabled }
-						onChange={ ( val ) => {
-							setAttributes( { 'recaptchaEnabled': val } ) 
-						} }
+						label={__('Enable ReCaptcha', 'formello')}
+						checked={attributes.recaptchaEnabled}
+						onChange={(val) => {
+							setAttributes({ recaptchaEnabled: val });
+						}}
 					/>
-					{ '' === formello.settings.reCaptcha.site_key || '' === formello.settings.reCaptcha.secret_key && attributes.recaptchaEnabled && 
-						<div className="block-editor-contrast-checker">
-							<Notice status="warning" isDismissible={false}>
-								<RawHTML>
-									{ sprintf(
-										/* translators: Number of templates. */
-										__( 'Please be sure to add a ReCaptcha API key on %s', 'formello' ),
-										`<a href="${ settingsUrl }">settings page</a>` )
-									}
-								</RawHTML>
-							</Notice>
-						</div>
-					}
+					{'' === formello.settings.reCaptcha.site_key ||
+						('' === formello.settings.reCaptcha.secret_key &&
+							attributes.recaptchaEnabled && (
+								<div className="block-editor-contrast-checker">
+									<Notice
+										status="warning"
+										isDismissible={false}
+									>
+										<RawHTML>
+											{sprintf(
+												/* translators: Number of templates. */
+												__(
+													'Please be sure to add a ReCaptcha API key on %s',
+													'formello'
+												),
+												`<a href="${settingsUrl}">settings page</a>`
+											)}
+										</RawHTML>
+									</Notice>
+								</div>
+							))}
 					<ToggleControl
-						label={ __(
-							'Hide form after submission',
-							'formello'
-						) }
-						checked={ attributes.hide }
-						onChange={ ( val ) => {
-							setAttributes( { 'hide': val } )
-						} }
+						label={__('Hide form after submission', 'formello')}
+						checked={attributes.hide}
+						onChange={(val) => {
+							setAttributes({ hide: val });
+						}}
 					/>
 					<div>
 						<URLInput
-							label={ __( 'Redirect Url', 'formello' ) }
-							value={ attributes.redirectUrl }
-							onChange={ newURL => setAttributes( { redirectUrl: newURL } ) }
-							className={ 'formello-urlinput' }
+							label={__('Redirect Url', 'formello')}
+							value={attributes.redirectUrl}
+							onChange={(newURL) =>
+								setAttributes({ redirectUrl: newURL })
+							}
+							className={'formello-urlinput'}
 						/>
 					</div>
 					<TextareaControl
-						label={ __( 'Success Message', 'formello' ) }
-						value={ attributes.successMessage }
-						onChange={ ( val ) => setAttributes( { 'successMessage': val } ) }
+						label={__('Success Message', 'formello')}
+						value={attributes.successMessage}
+						onChange={(val) =>
+							setAttributes({ successMessage: val })
+						}
 					/>
 					<TextareaControl
-						label={ __( 'Error Message', 'formello' ) }
-						value={ attributes.errorMessage }
-						onChange={ ( val ) => setAttributes( { 'errorMessage': val } ) }
+						label={__('Error Message', 'formello')}
+						value={attributes.errorMessage}
+						onChange={(val) => setAttributes({ errorMessage: val })}
 					/>
 				</PanelBody>
 			</InspectorControls>
 			<InspectorAdvancedControls>
 				<ToggleControl
-					label={ __( 'Label on side', 'formello' ) }
-					checked={ attributes.asRow }
-					onChange={ ( val ) => setAttributes( { 'asRow': val } ) }
+					label={__('Label on side', 'formello')}
+					checked={attributes.asRow}
+					onChange={(val) => setAttributes({ asRow: val })}
 				/>
-				{
-					attributes.asRow && 
+				{attributes.asRow && (
 					<SelectControl
-						label={ __( 'Label horizontal position', 'formello' ) }
-						value={ attributes.labelAlign }
-						options={ [
+						label={__('Label horizontal position', 'formello')}
+						value={attributes.labelAlign}
+						options={[
 							{ label: 'left', value: 'left' },
-							{ label: 'right', value: 'right' }
-						] }
-						onChange={ ( val ) => { setAttributes( { labelAlign: val } ) } }
+							{ label: 'right', value: 'right' },
+						]}
+						onChange={(val) => {
+							setAttributes({ labelAlign: val });
+						}}
 					/>
-				}
+				)}
 				<ToggleControl
-					label={ __( 'Bolded label', 'formello' ) }
-					checked={ attributes.labelIsBold }
-					onChange={ ( val ) => setAttributes( { 'labelIsBold': val } ) }
+					label={__('Bolded label', 'formello')}
+					checked={attributes.labelIsBold}
+					onChange={(val) => setAttributes({ labelIsBold: val })}
 				/>
 				<ToggleControl
-					label={ __(
-						'Enable debug',
-						'formello'
-					) }
-					checked={ attributes.debug }
-					onChange={ ( val ) => {
-						setAttributes( { 'debug': val } )
-					} }
+					label={__('Enable debug', 'formello')}
+					checked={attributes.debug}
+					onChange={(val) => {
+						setAttributes({ debug: val });
+					}}
 				/>
 				<TextControl
-					label={ __(
-						'Required Field Indicator',
-						'formello'
-					) }
-					value={ attributes.requiredText }
-					onChange={ changeRequiredText }
+					label={__('Required Field Indicator', 'formello')}
+					value={attributes.requiredText}
+					onChange={changeRequiredText}
 				/>
 			</InspectorAdvancedControls>
-			{ 'templates' === isModalOpen &&
+			{'templates' === isModalOpen && (
 				<TemplatesModal
-					type={ 'remote' }
-					onRequestClose={ () => setModalOpen( false ) }
-					clientId={ clientId }
+					type={'remote'}
+					onRequestClose={() => setModalOpen(false)}
+					clientId={clientId}
 				/>
-			}
-			{
-				showActionsModal &&
+			)}
+			{showActionsModal && (
 				<ActionsModal
 					{...props}
-					action={ showActionsModal }
-					actionId={ active }
-					onRequestClose={ () => { 
-						setShowActionsModal( false )
-					} }
+					action={showActionsModal}
+					actionId={active}
+					onRequestClose={() => {
+						setShowActionsModal(false);
+					}}
 				/>
-			}
+			)}
 
 			{children}
-		
 		</div>
 	);
 }
 
-function Placeholder ( props ) {
-
-	const { className, blockType, defaultVariation, hasInnerBlocks, variations, clientId } = props;
+function Placeholder(props) {
 	const {
-		insertBlock,
-		replaceInnerBlocks,
-	} = dispatch( 'core/block-editor' );
+		className,
+		blockType,
+		defaultVariation,
+		hasInnerBlocks,
+		variations,
+		clientId,
+	} = props;
+	const { insertBlock, replaceInnerBlocks } = dispatch('core/block-editor');
 
 	return (
 		<div {...useBlockProps()}>
 			<BlockVariationPicker
-				icon={ getIcon( 'form' ) }
-				label={ 'Form' }
-				instructions={ __( 'Select a form to start with.', 'formello' ) }
-				variations={ variations }
-				clientId={ clientId }
+				icon={getIcon('form')}
+				label={'Form'}
+				instructions={__('Select a form to start with.', 'formello')}
+				variations={variations}
+				clientId={clientId}
 				allowSkip
-				onSelect={ ( nextVariation = defaultVariation ) => {
-					if ( nextVariation.attributes ) {
-						setAttributes( nextVariation.attributes );
+				onSelect={(nextVariation = defaultVariation) => {
+					if (nextVariation.attributes) {
+						setAttributes(nextVariation.attributes);
 					}
-					if ( nextVariation.innerBlocks ) {
+					if (nextVariation.innerBlocks) {
 						replaceInnerBlocks(
 							props.clientId,
 							createBlocksFromInnerBlocksTemplate(
@@ -423,42 +432,48 @@ function Placeholder ( props ) {
 							true
 						);
 					}
-				} }
+				}}
 			/>
 		</div>
 	);
 }
 
-const applyWithSelect = withSelect( ( select, props ) => {
-	const { getBlocks } = select( 'core/block-editor' );
-	const { getBlockType, getBlockVariations, getDefaultBlockVariation } = select( 'core/blocks' );
-	const innerBlocks = getBlocks( props.clientId );
+const applyWithSelect = withSelect((select, props) => {
+	const { getBlocks } = select('core/block-editor');
+	const { getBlockType, getBlockVariations, getDefaultBlockVariation } =
+		select('core/blocks');
+	const innerBlocks = getBlocks(props.clientId);
 
 	return {
 		// Subscribe to changes of the innerBlocks to control the display of the layout selection placeholder.
-		blockType: getBlockType( props.name ),
-		defaultVariation: typeof getDefaultBlockVariation === 'undefined' ? null : getDefaultBlockVariation( props.name ),
-		hasInnerBlocks: select( 'core/block-editor' ).getBlocks( props.clientId ).length > 0,
+		blockType: getBlockType(props.name),
+		defaultVariation:
+			typeof getDefaultBlockVariation === 'undefined'
+				? null
+				: getDefaultBlockVariation(props.name),
+		hasInnerBlocks:
+			select('core/block-editor').getBlocks(props.clientId).length > 0,
 		innerBlocks,
-		variations: typeof getBlockVariations === 'undefined' ? null : getBlockVariations( props.name ),
+		variations:
+			typeof getBlockVariations === 'undefined'
+				? null
+				: getBlockVariations(props.name),
 	};
-} );
+});
 
-const FormEdit = ( props ) => {
+const FormEdit = (props) => {
 	const { clientId } = props;
 	const hasInnerBlocks = useSelect(
-		( select ) => {
-			const { getBlock } = select( 'core/block-editor' );
-			const block = getBlock( clientId );
-			return !! ( block && block.innerBlocks.length );
+		(select) => {
+			const { getBlock } = select('core/block-editor');
+			const block = getBlock(clientId);
+			return !!(block && block.innerBlocks.length);
 		},
-		[ clientId ]
+		[clientId]
 	);
-	const Component = hasInnerBlocks
-		? Edit
-		: Placeholder;
+	const Component = hasInnerBlocks ? Edit : Placeholder;
 
-	return <Component { ...props } />;
+	return <Component {...props} />;
 };
 
-export default compose( [ applyWithSelect ] )( FormEdit );
+export default compose([applyWithSelect])(FormEdit);

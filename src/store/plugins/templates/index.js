@@ -1,9 +1,7 @@
 /**
  * WordPress dependencies
  */
-import {
-	registerStore,
-} from '@wordpress/data';
+import { registerStore } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -14,4 +12,10 @@ import * as actions from './actions';
 import * as controls from './controls';
 import * as resolvers from './resolvers';
 
-registerStore( 'formello/templates', { reducer, selectors, actions, controls, resolvers } );
+registerStore('formello/templates', {
+	reducer,
+	selectors,
+	actions,
+	controls,
+	resolvers,
+});

@@ -36,6 +36,14 @@ class Log {
 	 */
 	private $logger;
 
+
+	/**
+	 * The logger.
+	 *
+	 * @var boolean $log_active.
+	 */
+	protected $log_active = false;
+
 	/**
 	 * Initiator
 	 */
@@ -51,6 +59,10 @@ class Log {
 	 */
 	public function __construct() {
 		$this->logger = new Katzgrau\KLogger\Logger( __DIR__ . '/logs' );
+		$settings = get_option( 'formello' );
+		if ( $settings && $settings['log'] ) {
+			$this->log_active = true;
+		}
 	}
 
 	/**
@@ -63,7 +75,9 @@ class Log {
 	 * @since 1.2.0
 	 */
 	public function log( $level, $message, $context = array() ) {
-		$this->logger->log( $level, $message, $context );
+		if ( $this->log_active ) {
+			$this->logger->log( $level, $message, $context );
+		}
 	}
 
 }

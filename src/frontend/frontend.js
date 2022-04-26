@@ -1,8 +1,8 @@
 import { Formello } from './form';
-import Bouncer from 'formbouncerjs'
+import Bouncer from 'formbouncerjs';
 
 var validate = new Bouncer('.wp-block-formello-form', {
-	disableSubmit: true
+	disableSubmit: true,
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -16,5 +16,3 @@ document.addEventListener('DOMContentLoaded', function () {
 		new Formello(block);
 	});
 });
-
-

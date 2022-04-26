@@ -44,13 +44,6 @@ abstract class Action {
 	/**
 	 * The logger.
 	 *
-	 * @var boolean $log_active.
-	 */
-	protected $log_active = false;
-
-	/**
-	 * The logger.
-	 *
 	 * @var Formello\Log $logger.
 	 */
 	protected $logger;
@@ -60,11 +53,6 @@ abstract class Action {
 	 */
 	public function __construct() {
 		$this->logger = new Log();
-		$settings = get_option( 'formello' );
-		if ( $settings['log'] ) {
-			$this->log_active = true;
-		}
-
 	}
 
 	/**
@@ -105,9 +93,7 @@ abstract class Action {
 	 * @param array  $context Message of log.
 	 */
 	public function log( $level, $message, $context = array() ) {
-		if ( $this->log_active ) {
-			$this->logger->log( $level, $message, $context );
-		}
+		$this->logger->log( $level, $message, $context );
 	}
 
 }
