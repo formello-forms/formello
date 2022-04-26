@@ -11,101 +11,101 @@ import {
 
 import OptionsList from './opts';
 
-export function OptionsModal(props) {
+export function OptionsModal( props ) {
 	const { onRequestClose, attributes, setAttributes } = props;
 
-	const [showRaw, setShowRaw] = useState(false);
-	const [showValue, setShowValue] = useState(false);
+	const [ showRaw, setShowRaw ] = useState( false );
+	const [ showValue, setShowValue ] = useState( false );
 
 	const addNewRow = () => {
-		setAttributes({
-			options: [...attributes.options, { label: '', value: '' }],
-		});
+		setAttributes( {
+			options: [ ...attributes.options, { label: '', value: '' } ],
+		} );
 	};
 
-	const deleteRow = (record, index) => {
-		const items = [...attributes.options]; // make a separate copy of the array
-		items.splice(index, 1);
-		setAttributes({ options: items });
+	const deleteRow = ( record, index ) => {
+		const items = [ ...attributes.options ]; // make a separate copy of the array
+		items.splice( index, 1 );
+		setAttributes( { options: items } );
 	};
 
-	const handleChange = (value, index, prop) => {
+	const handleChange = ( value, index, prop ) => {
 		// 1. Make a shallow copy of the items
-		const items = [...attributes.options];
+		const items = [ ...attributes.options ];
 		// 2. Make a shallow copy of the item you want to mutate
-		const item = { ...attributes.options[index] };
+		const item = { ...attributes.options[ index ] };
 		// 3. Replace the property you're intested in
-		item[prop] = value;
+		item[ prop ] = value;
 		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
-		items[index] = item;
+		items[ index ] = item;
 		// 5. Set the state to our new copy
-		setAttributes({ options: items });
+		setAttributes( { options: items } );
 	};
 
-	const bulkOpts = (val) => {
-		const opts = val.match(/[^\r\n]+/g);
+	const bulkOpts = ( val ) => {
+		const opts = val.match( /[^\r\n]+/g );
 		const newSettings = [];
-		for (const i in opts) {
-			const tmp = opts[i].split(',');
-			newSettings.push({ value: tmp[0], label: tmp[1] });
+		for ( const i in opts ) {
+			const tmp = opts[ i ].split( ',' );
+			newSettings.push( { value: tmp[ 0 ], label: tmp[ 1 ] } );
 		}
-		setAttributes({ options: newSettings });
+		setAttributes( { options: newSettings } );
 	};
 
 	return (
 		<Modal
-			title={__('Options', 'formello')}
-			onRequestClose={onRequestClose}
-			className={'formello-modal'}
+			title={ __( 'Options', 'formello' ) }
+			onRequestClose={ onRequestClose }
+			className={ 'formello-modal' }
 		>
 			<div>
 				<ToggleControl
-					label={__('Bulk add', 'formello')}
-					checked={showRaw}
-					onChange={(newval) => setShowRaw(newval)}
+					label={ __( 'Bulk add', 'formello' ) }
+					checked={ showRaw }
+					onChange={ ( newval ) => setShowRaw( newval ) }
 				/>
 
-				{showRaw && (
+				{ showRaw && (
 					<TextareaControl
-						label={__('Options', 'formello')}
-						help={__(
+						label={ __( 'Options', 'formello' ) }
+						help={ __(
 							'Enter one option per row separated by comma. Ex.: [US, United States Of America]',
 							'formello'
-						)}
-						placeholder={__(
+						) }
+						placeholder={ __(
 							'Insert value and label separated by comma. Ex.: US, United States Of America',
 							'formello'
-						)}
-						defaultValue={attributes.options
-							.map((item) => {
+						) }
+						defaultValue={ attributes.options
+							.map( ( item ) => {
 								return item.value + ',' + item.label;
-							})
-							.join('\r\n')}
-						onChange={(val) => bulkOpts(val)}
+							} )
+							.join( '\r\n' ) }
+						onChange={ ( val ) => bulkOpts( val ) }
 						rows="6"
 					/>
-				)}
-				{!showRaw && (
+				) }
+				{ ! showRaw && (
 					<Fragment>
 						<ToggleControl
-							label={__('Show value', 'formello')}
-							checked={showValue}
-							onChange={(newval) => setShowValue(newval)}
+							label={ __( 'Show value', 'formello' ) }
+							checked={ showValue }
+							onChange={ ( newval ) => setShowValue( newval ) }
 						/>
 						<OptionsList
-							delete={deleteRow}
-							onChange={handleChange}
-							options={attributes.options}
-							showValue={showValue}
+							delete={ deleteRow }
+							onChange={ handleChange }
+							options={ attributes.options }
+							showValue={ showValue }
 						/>
-						<Button isPrimary isSmall onClick={addNewRow}>
+						<Button isPrimary isSmall onClick={ addNewRow }>
 							Add option
 						</Button>
 					</Fragment>
-				)}
+				) }
 			</div>
 			<div className="formello-modal-buttons">
-				<Button isPrimary onClick={onRequestClose}>
+				<Button isPrimary onClick={ onRequestClose }>
 					Save
 				</Button>
 			</div>

@@ -43,6 +43,7 @@ function formello_activate() {
 	global $wpdb;
 
 	delete_option( 'formello' );
+	update_option( 'formello_installed', time() );
 
 	// create table for storing form settings.
 	$wpdb->query(
@@ -88,9 +89,16 @@ function formello_activate() {
 	if ( ! is_dir( $formello_dir ) ) {
 		wp_mkdir_p( $formello_dir );
 	}
-	define( 'FORMELLO_UPLOAD', $formello_dir );
 
-	file_put_contents( trailingslashit( $formello_dir ) . 'index.html', '' );
+	global $wp_filesystem;
+	// Initialize the WP filesystem, no more using 'file-put-contents' function.
+	if ( empty( $wp_filesystem ) ) {
+		require_once ABSPATH . '/wp-admin/includes/file.php';
+		WP_Filesystem();
+	}
+
+	$wp_filesystem->put_contents( trailingslashit( $formello_dir ) . 'index.html', '', 0644 );
+
 }
 
 register_activation_hook( __FILE__, 'formello_activate' );

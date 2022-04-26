@@ -11,35 +11,35 @@ import { Fragment } from '@wordpress/element';
 import getIcon from '../../utils/get-icon';
 import { select } from '@wordpress/data';
 
-export default function Toolbar(props) {
+export default function Toolbar( props ) {
 	const { attributes, setAttributes, clientId } = props;
 
 	const setRequiredTxt = () => {
-		const parent = select('core/block-editor').getBlockParents(clientId);
-		const parentAtts = select('core/block-editor').getBlockAttributes(
-			parent[0]
+		const parent = select( 'core/block-editor' ).getBlockParents( clientId );
+		const parentAtts = select( 'core/block-editor' ).getBlockAttributes(
+			parent[ 0 ]
 		);
-		setAttributes({ requiredText: parentAtts.requiredText });
+		setAttributes( { requiredText: parentAtts.requiredText } );
 	};
 
 	return (
 		<Fragment>
 			<ToolbarButton
-				label={__('Required')}
-				icon={getIcon('asterisk')}
-				isPressed={attributes.required}
-				onClick={() => {
+				label={ __( 'Required' ) }
+				icon={ getIcon( 'asterisk' ) }
+				isPressed={ attributes.required }
+				onClick={ () => {
 					setRequiredTxt();
-					setAttributes({ required: !attributes.required });
-				}}
+					setAttributes( { required: ! attributes.required } );
+				} }
 			/>
 			<ToolbarButton
-				label={__('Hide label')}
-				icon={'hidden'}
-				isPressed={attributes.hideLabel}
-				onClick={() => {
-					setAttributes({ hideLabel: !attributes.hideLabel });
-				}}
+				label={ __( 'Hide label' ) }
+				icon={ 'hidden' }
+				isPressed={ attributes.hideLabel }
+				onClick={ () => {
+					setAttributes( { hideLabel: ! attributes.hideLabel } );
+				} }
 			/>
 		</Fragment>
 	);

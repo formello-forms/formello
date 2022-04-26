@@ -14,19 +14,8 @@ import {
 	Loading5,
 } from '../../utils/icons';
 
-/**
- * The save function defines the way in which the different attributes should
- * be combined into the final markup, which is then serialized by the block
- * editor into `post_content`.
- *
- * @param  root0
- * @param  root0.attributes
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
- *
- * @return {WPElement} Element to render.
- */
-export default function save({ attributes }) {
-	const { text, alignment, iconType, iconPosition, style } = attributes;
+export default function save( { attributes } ) {
+	const { text, alignment, type, style } = attributes;
 
 	const icons = {
 		Loading,
@@ -36,34 +25,29 @@ export default function save({ attributes }) {
 		Loading5,
 	};
 
+	const ButtonIcon = icons[ type ];
 	const borderRadius = style?.border?.radius;
-	const borderColor = style?.border?.color;
-	const borderProps = getBorderClassesAndStyles(attributes);
+	const borderProps = getBorderClassesAndStyles( attributes );
 
 	// Check for old deprecated numerical border radius. Done as a separate
 	// check so that a borderRadius style won't overwrite the longhand
 	// per-corner styles.
-	if (typeof borderRadius === 'number') {
-		borderProps.style.borderRadius = `${borderRadius}px`;
+	if ( typeof borderRadius === 'number' ) {
+		borderProps.style.borderRadius = `${ borderRadius }px`;
 	}
 
-	const colorProps = getColorClassesAndStyles(attributes);
+	const colorProps = getColorClassesAndStyles( attributes );
 
-	const buttonClasses = classnames(
-		colorProps.className,
-		attributes.alignment
-	);
+	const buttonClasses = classnames( colorProps.className, alignment );
 
-	const blockProps = useBlockProps.save({
+	const blockProps = useBlockProps.save( {
 		className: buttonClasses,
-	});
-
-	const Component = icons[attributes.type];
+	} );
 
 	return (
-		<button type="submit" {...blockProps}>
-			<RichText.Content tagName="span" value={attributes.text} />
-			<Component />
+		<button type="submit" { ...blockProps }>
+			<RichText.Content tagName="span" value={ text } />
+			<ButtonIcon />
 		</button>
 	);
 }

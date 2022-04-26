@@ -152,6 +152,30 @@ function formello_action_row( $actions, $post ){
     return $actions;
 }
 
+/**
+ * Retrieve the formello dir.
+ *
+ * @since 1.4.0
+ */
+function formello_dir() {
+	$upload_dir = wp_upload_dir();
+	$formello_dir = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'formello';
+	if ( ! is_dir( $formello_dir ) ) {
+		wp_mkdir_p( $formello_dir );
+	}
+	return trailingslashit( $formello_dir );
+}
+
+/**
+ * Retrieve the formello dir.
+ *
+ * @since 1.4.0
+ */
+function formello_dir_url() {
+	$upload_dir = wp_upload_dir();
+	return $upload_dir['baseurl'] . DIRECTORY_SEPARATOR . 'formello';
+}
+
 add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option' );
 add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option' );
 add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );

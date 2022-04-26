@@ -41,133 +41,133 @@ import AdvancedOptions from '../../components/field-options/advanced';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit(props) {
+export default function Edit( props ) {
 	const { attributes, setAttributes, className, clientId } = props;
 
 	useEffect(
 		() =>
-			setAttributes({
-				id: 'field_' + clientId.substr(2, 9).replace('-', ''),
-			}),
+			setAttributes( {
+				id: 'field_' + clientId.substr( 2, 9 ).replace( '-', '' ),
+			} ),
 		[]
 	);
 
-	const [options, setOptions] = useState(attributes.options);
-	const [isModalOpen, setModalOpen] = useState(false);
+	const [ options, setOptions ] = useState( attributes.options );
+	const [ isModalOpen, setModalOpen ] = useState( false );
 
 	const addNewRow = () => {
-		setAttributes({
-			options: [...attributes.options, { label: '', value: '' }],
-		});
+		setAttributes( {
+			options: [ ...attributes.options, { label: '', value: '' } ],
+		} );
 	};
 
-	const deleteRow = (record, index) => {
-		const items = [...attributes.options]; // make a separate copy of the array
-		items.splice(index, 1);
-		setAttributes({ options: items });
+	const deleteRow = ( record, index ) => {
+		const items = [ ...attributes.options ]; // make a separate copy of the array
+		items.splice( index, 1 );
+		setAttributes( { options: items } );
 	};
 
-	const handleChange = (value, index, prop) => {
+	const handleChange = ( value, index, prop ) => {
 		// 1. Make a shallow copy of the items
-		const items = [...attributes.options];
+		const items = [ ...attributes.options ];
 		// 2. Make a shallow copy of the item you want to mutate
-		const item = { ...attributes.options[index] };
+		const item = { ...attributes.options[ index ] };
 		// 3. Replace the property you're intested in
-		item[prop] = value;
+		item[ prop ] = value;
 		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
-		items[index] = item;
+		items[ index ] = item;
 		// 5. Set the state to our new copy
-		setAttributes({ options: items });
+		setAttributes( { options: items } );
 	};
 
-	const bulkOpts = (val) => {
-		const opts = val.match(/[^\r\n]+/g);
+	const bulkOpts = ( val ) => {
+		const opts = val.match( /[^\r\n]+/g );
 		const newSettings = [];
-		for (const i in opts) {
-			const tmp = opts[i].split(',');
-			newSettings.push({ value: tmp[0], label: tmp[1] });
+		for ( const i in opts ) {
+			const tmp = opts[ i ].split( ',' );
+			newSettings.push( { value: tmp[ 0 ], label: tmp[ 1 ] } );
 		}
-		setAttributes({ options: newSettings });
+		setAttributes( { options: newSettings } );
 	};
 
-	const defaultOpts = (options) => {
-		if (!options.length) {
+	const defaultOpts = ( options ) => {
+		if ( ! options.length ) {
 			return attributes.multiple ? [] : '';
 		}
-		options = options.map((opt) => {
+		options = options.map( ( opt ) => {
 			return opt.value;
-		});
-		if (!attributes.multiple && options.length) {
-			options = options[0];
+		} );
+		if ( ! attributes.multiple && options.length ) {
+			options = options[ 0 ];
 		}
 		return options;
 	};
 
-	const blockProps = useBlockProps({
+	const blockProps = useBlockProps( {
 		className: 'formello',
-	});
+	} );
 
 	return (
-		<div {...blockProps}>
+		<div { ...blockProps }>
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
-						<Toolbar {...props} />
+						<Toolbar { ...props } />
 						<ToolbarButton
-							label={__('Add options', 'formello')}
-							icon={'editor-ul'}
-							onClick={() => {
-								setModalOpen(true);
-							}}
+							label={ __( 'Add options', 'formello' ) }
+							icon={ 'editor-ul' }
+							onClick={ () => {
+								setModalOpen( true );
+							} }
 						/>
 					</ToolbarGroup>
 				</BlockControls>
-				<Options {...props} />
+				<Options { ...props } />
 			</InspectorControls>
 			<InspectorAdvancedControls>
-				<AdvancedOptions {...props} />
+				<AdvancedOptions { ...props } />
 			</InspectorAdvancedControls>
 			<Fragment>
-				<Label {...props} />
+				<Label { ...props } />
 
 				<select
-					id={attributes.id}
-					name={attributes.name}
-					className={attributes.fieldClass}
-					multiple={attributes.multiple}
-					defaultValue={defaultOpts(attributes.selectedOpt)}
+					id={ attributes.id }
+					name={ attributes.name }
+					className={ attributes.fieldClass }
+					multiple={ attributes.multiple }
+					defaultValue={ defaultOpts( attributes.selectedOpt ) }
 				>
-					{attributes.options.map((obj, index) => {
+					{ attributes.options.map( ( obj, index ) => {
 						return (
-							<option value={obj.value} key={index}>
-								{obj.label}
+							<option value={ obj.value } key={ index }>
+								{ obj.label }
 							</option>
 						);
-					})}
+					} ) }
 				</select>
-				{attributes.showHelp && (
+				{ attributes.showHelp && (
 					<RichText
 						tagName="small"
-						className={className}
-						value={attributes.help}
-						onChange={(help) => setAttributes({ help })}
-						placeholder={__('Enter help message…', 'formello')}
-						allowedFormats={[
+						className={ className }
+						value={ attributes.help }
+						onChange={ ( help ) => setAttributes( { help } ) }
+						placeholder={ __( 'Enter help message…', 'formello' ) }
+						allowedFormats={ [
 							'core/bold',
 							'core/italic',
 							'core/link',
-						]}
+						] }
 					/>
-				)}
+				) }
 			</Fragment>
-			{isModalOpen && (
+			{ isModalOpen && (
 				<OptionsModal
-					{...props}
-					onRequestClose={() => {
-						setModalOpen(false);
-					}}
+					{ ...props }
+					onRequestClose={ () => {
+						setModalOpen( false );
+					} }
 				/>
-			)}
+			) }
 		</div>
 	);
 }

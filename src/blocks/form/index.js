@@ -22,16 +22,16 @@ import { registerBlockType } from '@wordpress/blocks';
  * @return {?WPBlock}          The block, if it has been successfully
  *                             registered; otherwise `undefined`.
  */
-registerBlockType(metadata, {
-	icon: getIcon('form'),
+registerBlockType( metadata, {
+	icon: getIcon( 'form' ),
 	variations,
 	supports: {
 		reusable: false,
 		className: true,
 		multiple: false,
 		html: false,
-		inserter:
-			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
+		// eslint-disable-next-line
+		inserter: 'formello_form' === pagenow || 'popper' === pagenow ? true : false,
 		spacing: {
 			padding: true,
 		},
@@ -42,7 +42,7 @@ registerBlockType(metadata, {
 				name: 'formello/input',
 				attributes: {
 					/* translators: example text. */
-					label: __('Name'),
+					label: __( 'Name' ),
 				},
 			},
 			{
@@ -55,7 +55,7 @@ registerBlockType(metadata, {
 				name: 'formello/input',
 				attributes: {
 					/* translators: example text. */
-					label: __('Message'),
+					label: __( 'Message' ),
 					type: 'textarea',
 				},
 			},
@@ -63,11 +63,11 @@ registerBlockType(metadata, {
 				name: 'formello/button',
 				attributes: {
 					/* translators: example text. */
-					text: __('Submit'),
+					text: __( 'Submit' ),
 				},
 			},
 		],
 	},
 	edit,
 	save,
-});
+} );

@@ -3,7 +3,7 @@ import { RichText } from '@wordpress/block-editor';
 
 import classnames from 'classnames';
 
-export default function Label(props) {
+export default function Label( props ) {
 	const { attributes, setAttributes } = props;
 
 	const labelClassName = classnames(
@@ -19,17 +19,17 @@ export default function Label(props) {
 	);
 
 	return (
-		<label className={labelClassName}>
+		<label className={ labelClassName } htmlFor="input">
 			<RichText
 				tagName="span"
-				value={attributes.label}
-				onChange={(val) => setAttributes({ label: val })}
-				placeholder={__('Enter label…', 'formello')}
+				value={ attributes.label }
+				onChange={ ( val ) => setAttributes( { label: val } ) }
+				placeholder={ __( 'Enter label…', 'formello' ) }
 			/>
 
-			{attributes.required && !attributes.hideRequired && (
-				<span className="required">{attributes.requiredText}</span>
-			)}
+			{ attributes.required && ! attributes.hideRequired && (
+				<span className="required">{ attributes.requiredText }</span>
+			) }
 		</label>
 	);
 }

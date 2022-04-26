@@ -4,8 +4,8 @@ import { __ } from '@wordpress/i18n';
 const variations = [
 	{
 		name: 'basic',
-		title: __('Basic'),
-		description: __('Basic form'),
+		title: __( 'Basic' ),
+		description: __( 'Basic form' ),
 		icon: (
 			<SVG
 				width="48"
@@ -22,15 +22,15 @@ const variations = [
 		),
 		isDefault: true,
 		innerBlocks: [
-			['formello/input', { type: 'text', label: 'Name', name: 'name' }],
-			['formello/button', { txt: 'Book appointment' }],
+			[ 'formello/input', { type: 'text', label: 'Name', name: 'name' } ],
+			[ 'formello/button', { txt: 'Book appointment' } ],
 		],
-		scope: ['block'],
+		scope: [ 'block' ],
 	},
 	{
 		name: 'contact',
-		title: __('Contact'),
-		description: __('A simple contact form'),
+		title: __( 'Contact' ),
+		description: __( 'A simple contact form' ),
 		icon: (
 			<SVG
 				xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +42,7 @@ const variations = [
 			</SVG>
 		),
 		innerBlocks: [
-			['formello/input', { type: 'text', label: 'Name', name: 'name' }],
+			[ 'formello/input', { type: 'text', label: 'Name', name: 'name' } ],
 			[
 				'formello/input',
 				{
@@ -65,14 +65,14 @@ const variations = [
 					rows: 5,
 				},
 			],
-			['formello/button', { txt: 'Send' }],
+			[ 'formello/button', { txt: 'Send' } ],
 		],
-		scope: ['block'],
+		scope: [ 'block' ],
 	},
 	{
 		name: 'event',
-		title: __('Event'),
-		description: __('Book event form'),
+		title: __( 'Event' ),
+		description: __( 'Book event form' ),
 		icon: (
 			<SVG
 				xmlns="http://www.w3.org/2000/svg"
@@ -171,9 +171,9 @@ const variations = [
 					rows: 5,
 				},
 			],
-			['formello/button', { txt: 'Book appointment' }],
+			[ 'formello/button', { txt: 'Book appointment' } ],
 		],
-		scope: ['block'],
+		scope: [ 'block' ],
 	},
 ];
 

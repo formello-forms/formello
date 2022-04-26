@@ -2,7 +2,7 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
 import classnames from 'classnames';
 
-export default function save({ attributes, className }) {
+export default function save( { attributes, className } ) {
 	className = classnames(
 		//blockProps.className,
 		attributes.asRow ? attributes.labelAlign : undefined,
@@ -16,21 +16,21 @@ export default function save({ attributes, className }) {
 	const honeypot = '_formello_h' + attributes.id;
 	return (
 		<form
-			{...useBlockProps.save({
+			{ ...useBlockProps.save( {
 				className,
-			})}
+			} ) }
 			method="post"
-			id={'formello-' + attributes.id}
-			data-id={'formello-' + attributes.id}
-			data-hide={attributes.hide}
-			data-recaptcha={attributes.recaptchaEnabled}
-			data-redirect={attributes.redirectUrl}
+			id={ 'formello-' + attributes.id }
+			data-id={ 'formello-' + attributes.id }
+			data-hide={ attributes.hide }
+			data-recaptcha={ attributes.recaptchaEnabled }
+			data-redirect={ attributes.redirectUrl }
 			noValidate
 		>
-			<input type="hidden" name="_formello_id" value={attributes.id} />
+			<input type="hidden" name="_formello_id" value={ attributes.id } />
 			<input
 				type="text"
-				name={honeypot}
+				name={ honeypot }
 				className="formello-hp"
 				autoComplete="nope"
 			/>

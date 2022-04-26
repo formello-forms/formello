@@ -14,90 +14,92 @@ import { __, sprintf } from '@wordpress/i18n';
 
 const { apiFetch } = wp;
 
-export default function General(props) {
+export default function General( props ) {
 	const { getSetting, saveSetting } = props;
 
-	const [loading, setLoading] = useState(false);
-	const [licenseStatus, setLicenseStatus] = useState(
-		getSetting('license_status')
+	const [ loading, setLoading ] = useState( false );
+	const [ licenseStatus, setLicenseStatus ] = useState(
+		getSetting( 'license_status' )
 	);
 
-	const updateLicense = (endpoint, e) => {
+	const updateLicense = ( endpoint, e ) => {
 		const message = e.target.nextElementSibling;
-		setLoading(true);
-		apiFetch({
+		setLoading( true );
+		apiFetch( {
 			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
-				license: getSetting('license'),
+				license: getSetting( 'license' ),
 			},
-		}).then((result) => {
-			setLoading(false);
-			if (result.response.success) {
-				saveSetting('license_status', result.response.license);
+		} ).then( ( result ) => {
+			setLoading( false );
+			if ( result.response.success ) {
+				saveSetting( 'license_status', result.response.license );
 			}
-			message.classList.add('formello-action-message--show');
-			message.classList.remove('formello-action-message--error');
+			message.classList.add( 'formello-action-message--show' );
+			message.classList.remove( 'formello-action-message--error' );
 			message.textContent = 'License ' + result.response.license;
 
-			if (!result.success || !result.response) {
+			if ( ! result.success || ! result.response ) {
 				message.textContent = 'License: ' + result.response;
-				message.classList.add('formello-action-message--error');
+				message.classList.add( 'formello-action-message--error' );
 			}
-			setTimeout(function () {
-				message.classList.remove('formello-action-message--show');
-			}, 3000);
-		});
+			setTimeout( function() {
+				message.classList.remove( 'formello-action-message--show' );
+			}, 3000 );
+		} );
 	};
 
 	return (
 		<>
 			<Card>
 				<CardHeader>
-					<h2>{__('License', 'formello')}</h2>
+					<h2>{ __( 'License', 'formello' ) }</h2>
 				</CardHeader>
 
 				<CardBody>
 					<ExternalLink href="https://formello.net">
-						{__('Get a FREE API Key')}
+						{ __( 'Get a FREE API Key' ) }
 					</ExternalLink>
 					<RawHTML>
-						{sprintf(
+						{ sprintf(
+							/* translators: Addon license. */
 							__(
 								'<p>Your %s key provides access to addons. You can still using Formello without a license key.</p>',
 								'formello'
 							),
 							`<strong>free license</strong>`
-						)}
+						) }
 					</RawHTML>
 					<InputControl
 						type="password"
 						autoComplete="new-password"
-						label={__('License Key', 'formello')}
-						value={getSetting('license')}
-						onChange={(val) => {
-							saveSetting('license', val);
-						}}
+						label={ __( 'License Key', 'formello' ) }
+						value={ getSetting( 'license' ) }
+						onChange={ ( val ) => {
+							saveSetting( 'license', val );
+						} }
 					/>
 					<p>
-						{'valid' === licenseStatus ? (
+						{ 'valid' === licenseStatus ? (
 							<Fragment>
 								<RawHTML>
-									{sprintf(
+									{ sprintf(
+										/* translators: License status. */
 										__(
 											'<p class="success">License status: %s.</p>',
 											'formello'
 										),
 										`<strong>active</strong>`
-									)}
+									) }
 								</RawHTML>
 								<Button
-									onClick={(e) =>
-										updateLicense('deactivate', e)
+									onClick={ ( e ) =>
+										updateLicense( 'deactivate', e )
 									}
 									isSecondary
-									aria-disabled={loading}
-									isBusy={loading}
+									aria-disabled={ loading }
+									isBusy={ loading }
 								>
 									Deactivate
 								</Button>
@@ -105,17 +107,17 @@ export default function General(props) {
 						) : (
 							<Fragment>
 								<Button
-									onClick={(e) =>
-										updateLicense('activate', e)
+									onClick={ ( e ) =>
+										updateLicense( 'activate', e )
 									}
-									aria-disabled={loading}
+									aria-disabled={ loading }
 									isPrimary
-									isBusy={loading}
+									isBusy={ loading }
 								>
 									Activate
 								</Button>
 							</Fragment>
-						)}
+						) }
 						<span className="formello-action-message"></span>
 					</p>
 				</CardBody>
@@ -123,22 +125,27 @@ export default function General(props) {
 
 			<Card>
 				<CardHeader>
-					<h2>{__('Logging', 'formello')}</h2>
+					<h2>{ __( 'Logging', 'formello' ) }</h2>
 				</CardHeader>
 
 				<CardBody>
 					<p>
-						{__(
+						{ __(
 							'To enable logging, please set this as checked.',
 							'formello'
-						)}
+						) }
 					</p>
 
 					<ToggleControl
-						label={__('Enable log', 'formello')}
-						checked={getSetting('log', '')}
-						onChange={(val) => saveSetting('log', val)}
+						label={ __( 'Enable log', 'formello' ) }
+						checked={ getSetting( 'log', '' ) }
+						onChange={ ( val ) => saveSetting( 'log', val ) }
 					/>
+					{ getSetting( 'log', '' ) && (
+						<ExternalLink href={ getSetting( 'log_file', '' ) }>
+							{ __( 'View log', 'formello' ) }
+						</ExternalLink>
+					) }
 				</CardBody>
 			</Card>
 		</>

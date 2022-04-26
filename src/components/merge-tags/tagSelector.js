@@ -6,9 +6,9 @@ import SearchTags from './searchTags';
 
 import { __ } from '@wordpress/i18n';
 
-function TagSelector(props) {
+function TagSelector( props ) {
 	const { clientId, insertTag, noFields } = props;
-	const [search, setSearch] = useState('');
+	const [ search, setSearch ] = useState( '' );
 
 	const tabs = [
 		{
@@ -29,7 +29,7 @@ function TagSelector(props) {
 		},
 	];
 
-	if (noFields) {
+	if ( noFields ) {
 		tabs.shift();
 	}
 
@@ -37,33 +37,33 @@ function TagSelector(props) {
 		<div className="formello-mergetags-container">
 			<div>
 				<TextControl
-					value={search}
-					onChange={setSearch}
-					placeholder={__('Search Tags', 'formello')}
+					value={ search }
+					onChange={ setSearch }
+					placeholder={ __( 'Search Tags', 'formello' ) }
 				/>
 			</div>
 			<div>
-				{isEmpty(search) ? (
-					<TabPanel className="" activeClass="" tabs={tabs}>
-						{(tab) => {
+				{ isEmpty( search ) ? (
+					<TabPanel className="" activeClass="" tabs={ tabs }>
+						{ ( tab ) => {
 							return (
 								<TagList
-									list={tab.name}
-									clientId={clientId}
-									onSelect={insertTag}
-									noFields={noFields}
+									list={ tab.name }
+									clientId={ clientId }
+									onSelect={ insertTag }
+									noFields={ noFields }
 								/>
 							);
-						}}
+						} }
 					</TabPanel>
 				) : (
 					<SearchTags
-						search={search}
-						clientId={clientId}
-						onSelect={insertTag}
-						noFields={noFields}
+						search={ search }
+						clientId={ clientId }
+						onSelect={ insertTag }
+						noFields={ noFields }
 					/>
-				)}
+				) }
 			</div>
 		</div>
 	);

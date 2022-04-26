@@ -9,8 +9,8 @@ import getIcon from '../../utils/get-icon';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType(metadata, {
-	icon: getIcon('button'),
+registerBlockType( metadata, {
+	icon: getIcon( 'button' ),
 
 	/**
 	 * @see ./edit.js
@@ -21,4 +21,4 @@ registerBlockType(metadata, {
 	 * @see ./save.js
 	 */
 	save,
-});
+} );

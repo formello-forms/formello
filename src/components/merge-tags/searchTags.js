@@ -9,48 +9,47 @@ import {
 import TagList from './tagList';
 import { get, isEmpty } from 'lodash';
 
-function SearchTags(props) {
-
-	const { search, noFields, clientId } = props;
+function SearchTags( props ) {
+	const { search, clientId } = props;
 
 	const getFilteredTags = () => {
 		const fields = getFieldsTags( clientId, false );
 
-		const filteredFields = fields.filter((field) => {
-			const title = get(field, 'title');
+		const filteredFields = fields.filter( ( field ) => {
+			const title = get( field, 'title' );
 
-			return title.toLowerCase().search(search.toLowerCase()) !== -1;
-		});
+			return title.toLowerCase().search( search.toLowerCase() ) !== -1;
+		} );
 
 		const wpTags = getWordpressTags();
-		const filteredWordpressTags = wpTags.filter((field) => {
-			const title = get(field, 'title');
+		const filteredWordpressTags = wpTags.filter( ( field ) => {
+			const title = get( field, 'title' );
 
-			return title.toLowerCase().search(search.toLowerCase()) !== -1;
-		});
+			return title.toLowerCase().search( search.toLowerCase() ) !== -1;
+		} );
 
 		const formTags = getFormTags();
-		const filteredFormTags = formTags.filter((field) => {
-			const title = get(field, 'title');
+		const filteredFormTags = formTags.filter( ( field ) => {
+			const title = get( field, 'title' );
 
-			return title.toLowerCase().search(search.toLowerCase()) !== -1;
-		});
+			return title.toLowerCase().search( search.toLowerCase() ) !== -1;
+		} );
 
 		const otherTags = getOtherTags();
-		const filteredOtherTags = otherTags.filter((field) => {
-			const title = get(field, 'title');
+		const filteredOtherTags = otherTags.filter( ( field ) => {
+			const title = get( field, 'title' );
 
-			return title.toLowerCase().search(search.toLowerCase()) !== -1;
-		});
+			return title.toLowerCase().search( search.toLowerCase() ) !== -1;
+		} );
 
 		const metaTags = getMetaTags();
-		const filteredMetaTags = metaTags.filter((field) => {
-			const title = get(field, 'title');
+		const filteredMetaTags = metaTags.filter( ( field ) => {
+			const title = get( field, 'title' );
 
-			return title.toLowerCase().search(search.toLowerCase()) !== -1;
-		});
+			return title.toLowerCase().search( search.toLowerCase() ) !== -1;
+		} );
 
-		let tabs = [
+		const tabs = [
 			{
 				list: 'fields',
 				label: 'Fields',
@@ -85,11 +84,11 @@ function SearchTags(props) {
 		const tags = getFilteredTags();
 		const emptyGroups = [];
 
-		tags.forEach((tag) => {
-			if (isEmpty(tag.data)) {
-				emptyGroups.push(tag.list);
+		tags.forEach( ( tag ) => {
+			if ( isEmpty( tag.data ) ) {
+				emptyGroups.push( tag.list );
 			}
-		});
+		} );
 
 		const notFound = emptyGroups.length === 5;
 
@@ -98,28 +97,28 @@ function SearchTags(props) {
 
 	return (
 		<div>
-			{getFilteredTags().map((result, index) => {
+			{ getFilteredTags().map( ( result, index ) => {
 				const { list, label, data } = result;
 
 				return (
-					!isEmpty(data) && (
-						<Fragment key={index}>
-							<h4>{label}</h4>
+					! isEmpty( data ) && (
+						<Fragment key={ index }>
+							<h4>{ label }</h4>
 							<TagList
-								list={list}
-								data={data}
+								list={ list }
+								data={ data }
 								noStyling
-								onSelect={props.onSelect}
+								onSelect={ props.onSelect }
 							/>
 						</Fragment>
 					)
 				);
-			})}
-			{noTagsFound() && (
+			} ) }
+			{ noTagsFound() && (
 				<div>
 					<h3>No Tags Found</h3>
 				</div>
-			)}
+			) }
 		</div>
 	);
 }

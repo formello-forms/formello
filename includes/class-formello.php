@@ -35,6 +35,7 @@ final class Formello {
 	 */
 	private function __construct() {
 		$this->define_constants();
+		$this->formello_dir();
 		$this->includes();
 		$this->actions();
 		$this->updater();
@@ -110,6 +111,21 @@ final class Formello {
 	}
 
 	/**
+	 * Define the formello dir.
+	 *
+	 * @since 1.4.0
+	 */
+	private function formello_dir() {
+		$upload_dir = wp_upload_dir();
+		$formello_dir = $upload_dir['basedir'] . '/formello';
+		if ( ! is_dir( $formello_dir ) ) {
+			wp_mkdir_p( $formello_dir );
+		}
+		$this->define( 'FORMELLO_UPLOAD', $formello_dir );
+
+	}
+
+	/**
 	 * Define constant if not already set.
 	 *
 	 * @since 1.4.0
@@ -156,7 +172,7 @@ final class Formello {
 
 		$key = $settings['license'];
 
-		if ( ! $key ) {
+		if ( ! $key || ! $settings['license_status'] ) {
 			$key = $settings['addon_licenses'];
 		}
 

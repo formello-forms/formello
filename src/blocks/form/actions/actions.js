@@ -15,7 +15,7 @@ export function getActions() {
 		},
 	];
 
-	applyFilters('formello.actions.list', '', actions);
+	applyFilters( 'formello.actions.list', '', actions );
 
 	return actions;
 }

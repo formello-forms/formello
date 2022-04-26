@@ -12,17 +12,17 @@ import General from './general.js';
 import Notices from './notices.js';
 
 function App() {
-	const { createNotice, removeNotice } = useDispatch(noticesStore);
+	const { createNotice, removeNotice } = useDispatch( noticesStore );
 
-	const addNotice = (status, content, type = 'snackbar') => {
-		removeNotice('tools');
-		createNotice(status, content, { type, id: 'tools' });
+	const addNotice = ( status, content, type = 'snackbar' ) => {
+		removeNotice( 'tools' );
+		createNotice( status, content, { type, id: 'tools' } );
 	};
 
 	const toolsTabs = [
 		{
 			name: 'general',
-			title: __('General', 'formello'),
+			title: __( 'General', 'formello' ),
 			className: 'setting-tabs__plugin-settings',
 		},
 	];
@@ -31,14 +31,14 @@ function App() {
 		general: General,
 	};
 
-	applyFilters('formello.ToolsTabs', '', toolsTabs);
-	applyFilters('formello.ToolsComponents', '', components);
+	applyFilters( 'formello.ToolsTabs', '', toolsTabs );
+	applyFilters( 'formello.ToolsComponents', '', components );
 
-	const initialTab = getQueryArg(window.location.href, 'tab');
+	const initialTab = getQueryArg( window.location.href, 'tab' );
 
-	const updateUrl = (tabName) => {
-		const newUrl = addQueryArgs(window.location.href, { tab: tabName });
-		window.history.replaceState({ path: newUrl }, '', newUrl);
+	const updateUrl = ( tabName ) => {
+		const newUrl = addQueryArgs( window.location.href, { tab: tabName } );
+		window.history.replaceState( { path: newUrl }, '', newUrl );
 	};
 
 	return (
@@ -46,43 +46,43 @@ function App() {
 			<div className="formello-settings-header">
 				<div className="formello-container">
 					<h1>
-						{getIcon('logo')}
-						{__('Tools')}
+						{ getIcon( 'logo' ) }
+						{ __( 'Tools' ) }
 					</h1>
 				</div>
 			</div>
 			<div className="formello-settings-main">
-				{applyFilters('formello.dashboard.beforeSettings', '', this)}
+				{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
 
 				<TabPanel
-					tabs={toolsTabs}
-					onSelect={(tabName) => updateUrl(tabName)}
-					initialTabName={initialTab}
+					tabs={ toolsTabs }
+					onSelect={ ( tabName ) => updateUrl( tabName ) }
+					initialTabName={ initialTab }
 				>
-					{(tab) => {
-						switch (tab.name) {
+					{ ( tab ) => {
+						switch ( tab.name ) {
 							case 'general':
 								return (
 									<Fragment>
-										<General addNotice={addNotice} />
+										<General addNotice={ addNotice } />
 									</Fragment>
 								);
 							default:
 								return <Slot name="ToolsTabs" />;
 						}
-					}}
+					} }
 				</TabPanel>
 
 				<Notices />
 
-				{applyFilters('formello.dashboard.settings', '', this)}
+				{ applyFilters( 'formello.dashboard.settings', '', this ) }
 
-				{applyFilters('formello.dashboard.afterSettings', '', this)}
+				{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
 			</div>
 		</SlotFillProvider>
 	);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-	render(<App />, document.getElementById('formello-block-tools'));
-});
+window.addEventListener( 'DOMContentLoaded', () => {
+	render( <App />, document.getElementById( 'formello-block-tools' ) );
+} );

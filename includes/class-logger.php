@@ -58,7 +58,14 @@ class Log {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->logger = new Katzgrau\KLogger\Logger( __DIR__ . '/logs' );
+		$this->logger = new Katzgrau\KLogger\Logger(
+			FORMELLO_UPLOAD . '/logs',
+			'debug',
+			array(
+				'filename' => 'formello_' . get_option( 'formello_installed' ),
+				'flushFrequency' => 3000,
+			)
+		);
 		$settings = get_option( 'formello' );
 		if ( $settings && $settings['log'] ) {
 			$this->log_active = true;

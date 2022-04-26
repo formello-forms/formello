@@ -8,8 +8,8 @@ import getIcon from '../../utils/get-icon';
 const variations = [
 	{
 		name: 'checkboxes',
-		title: __('Checkboxes'),
-		description: __('Multiple choices'),
+		title: __( 'Checkboxes' ),
+		description: __( 'Multiple choices' ),
 		icon: (
 			<SVG
 				xmlns="http://www.w3.org/2000/svg"
@@ -65,13 +65,13 @@ const variations = [
 				{ type: 'checkbox', name: 'Option_3', label: 'Option 3' },
 			],
 		],
-		scope: ['inserter', 'block'],
+		scope: [ 'inserter', 'block' ],
 	},
 	{
 		name: 'radios',
-		title: __('Single choice'),
-		description: __('Single choices'),
-		icon: getIcon('radios'),
+		title: __( 'Single choice' ),
+		description: __( 'Single choices' ),
+		icon: getIcon( 'radios' ),
 		innerBlocks: [
 			[
 				'formello/input',
@@ -86,7 +86,7 @@ const variations = [
 				{ type: 'radio', name: 'Option_3', label: 'Option 3' },
 			],
 		],
-		scope: ['inserter', 'block'],
+		scope: [ 'inserter', 'block' ],
 	},
 ];
 

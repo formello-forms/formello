@@ -1,6 +1,6 @@
 export const SUPPORTED_ATTRIBUTES = {
-	select: ['name', 'id', 'type', 'required', 'readonly', 'disabled'],
-	hidden: ['name', 'id', 'type', 'value'],
+	select: [ 'name', 'id', 'type', 'required', 'readonly', 'disabled' ],
+	hidden: [ 'name', 'id', 'type', 'value' ],
 	text: [
 		'name',
 		'id',
@@ -119,7 +119,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'disabled',
 		'checked',
 	],
-	color: ['name', 'id', 'type', 'value', 'required', 'readonly', 'disabled'],
+	color: [ 'name', 'id', 'type', 'value', 'required', 'readonly', 'disabled' ],
 	textarea: [
 		'name',
 		'id',

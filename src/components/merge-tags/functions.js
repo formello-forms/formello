@@ -1,25 +1,25 @@
 import { each } from 'lodash';
 
 const { getBlock, getClientIdsOfDescendants, getBlockParents } =
-	wp.data.select('core/block-editor');
+	wp.data.select( 'core/block-editor' );
 
-const allowed = ['formello/input', 'formello/select'];
+const allowed = [ 'formello/input', 'formello/select' ];
 
 /**
  * Find the root form block.
  *
  * @param {string} clientId The id of the block of which we are finding the form block
  */
-export function getFormBlock(clientId) {
-	if ('formello/form' === getBlock(clientId).name) {
-		return getBlock(clientId);
+export function getFormBlock( clientId ) {
+	if ( 'formello/form' === getBlock( clientId ).name ) {
+		return getBlock( clientId );
 	}
 	// if it's not an form block, get parent form.
-	const parents = getBlockParents(clientId);
+	const parents = getBlockParents( clientId );
 
-	for (const block of parents) {
-		if (getBlock(block).name === 'formello/form') {
-			return getBlock(block);
+	for ( const block of parents ) {
+		if ( getBlock( block ).name === 'formello/form' ) {
+			return getBlock( block );
 		}
 	}
 }
@@ -29,16 +29,16 @@ export function getFormBlock(clientId) {
  *
  * @param {string} clientId The id of the form block of which we are finding the children fields
  */
-export function getFieldsBlock(clientId) {
+export function getFieldsBlock( clientId ) {
 	const fields = [];
-	const fieldsId = getClientIdsOfDescendants([clientId]);
+	const fieldsId = getClientIdsOfDescendants( [ clientId ] );
 
-	fieldsId.forEach((b) => {
-		const block = getBlock(b);
-		if (allowed.includes(block.name)) {
-			fields.push(block);
+	fieldsId.forEach( ( b ) => {
+		const block = getBlock( b );
+		if ( allowed.includes( block.name ) ) {
+			fields.push( block );
 		}
-	});
+	} );
 
 	return fields;
 }
@@ -48,39 +48,39 @@ export function getFieldsBlock(clientId) {
  *
  * @param {string} clientId The id of the form block of which we are finding the children fields
  */
-export function getFieldsName(clientId) {
+export function getFieldsName( clientId ) {
 	const fields = {};
-	const fieldsBlock = getFieldsBlock(clientId);
+	const fieldsBlock = getFieldsBlock( clientId );
 
-	fieldsBlock.forEach((b) => {
-		fields[b.attributes.name] = b.attributes.type;
-		if (b.attributes.enableRtf) {
-			fields[b.attributes.name] = 'richtext';
+	fieldsBlock.forEach( ( b ) => {
+		fields[ b.attributes.name ] = b.attributes.type;
+		if ( b.attributes.enableRtf ) {
+			fields[ b.attributes.name ] = 'richtext';
 		}
-	});
+	} );
 
 	return fields;
 }
 
-export function serializeFields(clientId) {
+export function serializeFields( clientId ) {
 	const fields = [];
-	const fieldsBlock = getFieldsBlock(clientId);
+	const fieldsBlock = getFieldsBlock( clientId );
 
-	fieldsBlock.forEach((b) => {
-		fields.push({
+	fieldsBlock.forEach( ( b ) => {
+		fields.push( {
 			title: b.attributes.name,
 			tag: '{{fields.' + b.attributes.name + '}}',
-		});
-	});
+		} );
+	} );
 
 	return fields;
 }
 
-export function getFieldsTags(clientId) {
+export function getFieldsTags( clientId ) {
 	let fields = [];
-	const formBlock = getFormBlock(clientId);
-	if (formBlock) {
-		fields = serializeFields(formBlock.clientId);
+	const formBlock = getFormBlock( clientId );
+	if ( formBlock ) {
+		fields = serializeFields( formBlock.clientId );
 	}
 
 	return [
@@ -92,61 +92,61 @@ export function getFieldsTags(clientId) {
 	];
 }
 
-export function getConstraints(clientId) {
+export function getConstraints( clientId ) {
 	const constraints = {};
-	const fields = getFieldsBlock(clientId);
+	const fields = getFieldsBlock( clientId );
 
-	if (fields) {
-		fields.forEach((b) => {
-			const constraint = getFieldConstraint(b);
-			if (constraint) {
-				constraints[b.attributes.name] = constraint;
+	if ( fields ) {
+		fields.forEach( ( b ) => {
+			const constraint = getFieldConstraint( b );
+			if ( constraint ) {
+				constraints[ b.attributes.name ] = constraint;
 			}
-		});
+		} );
 	}
 
 	return constraints;
 }
 
-export function getFieldConstraint(field) {
+export function getFieldConstraint( field ) {
 	let constraints = [];
 
-	if (field.attributes.type === 'url') {
-		constraints.push('url');
+	if ( field.attributes.type === 'url' ) {
+		constraints.push( 'url' );
 	}
-	if (field.attributes.required) {
-		constraints.push('required');
-	}
-
-	if (field.attributes.minlength) {
-		constraints.push('min:' + field.attributes.minlength);
+	if ( field.attributes.required ) {
+		constraints.push( 'required' );
 	}
 
-	if (field.attributes.maxlength) {
-		constraints.push('max:' + field.attributes.maxlength);
+	if ( field.attributes.minlength ) {
+		constraints.push( 'min:' + field.attributes.minlength );
 	}
 
-	if (field.attributes.min && 'date' !== field.attributes.type) {
-		constraints.push('min:' + field.attributes.min);
+	if ( field.attributes.maxlength ) {
+		constraints.push( 'max:' + field.attributes.maxlength );
 	}
 
-	if (field.attributes.max && 'date' !== field.attributes.type) {
-		constraints.push('max:' + field.attributes.max);
+	if ( field.attributes.min && 'date' !== field.attributes.type ) {
+		constraints.push( 'min:' + field.attributes.min );
 	}
 
-	if (field.attributes.type === 'email') {
-		constraints.push('email');
+	if ( field.attributes.max && 'date' !== field.attributes.type ) {
+		constraints.push( 'max:' + field.attributes.max );
+	}
+
+	if ( field.attributes.type === 'email' ) {
+		constraints.push( 'email' );
 	}
 
 	if (
 		field.attributes.type === 'number' ||
 		field.attributes.type === 'range'
 	) {
-		constraints.push('numeric');
+		constraints.push( 'numeric' );
 	}
 
-	if ('date' === field.attributes.type && !field.attributes.advancedDate) {
-		constraints.push('date');
+	if ( 'date' === field.attributes.type && ! field.attributes.advancedDate ) {
+		constraints.push( 'date' );
 	}
 
 	if (
@@ -154,29 +154,29 @@ export function getFieldConstraint(field) {
 		'range' !== field.attributes.flatpickr.mode &&
 		'multiple' !== field.attributes.flatpickr.mode
 	) {
-		constraints.push('date:' + field.attributes.flatpickr['date-format']);
+		constraints.push( 'date:' + field.attributes.flatpickr[ 'date-format' ] );
 	}
 
-	if (constraints.length) {
-		constraints = constraints.join('|');
+	if ( constraints.length ) {
+		constraints = constraints.join( '|' );
 	}
 
 	return constraints.length ? constraints : undefined;
 }
 
 export function getMetaTags() {
-	const { getEditedPostAttribute } = wp.data.select('core/editor');
-	const meta = getEditedPostAttribute('meta');
+	const { getEditedPostAttribute } = wp.data.select( 'core/editor' );
+	const meta = getEditedPostAttribute( 'meta' );
 	const metaTags = [];
 
-	each(meta, (_, key) => {
+	each( meta, ( _, key ) => {
 		const tag = {
 			title: key,
-			tag: `{{post_meta.${key}}}`,
+			tag: `{{post_meta.${ key }}}`,
 		};
 
-		metaTags.push(tag);
-	});
+		metaTags.push( tag );
+	} );
 
 	return metaTags;
 }

@@ -9,6 +9,7 @@ namespace Formello\Rest\Controllers;
 
 use WP_REST_Controller;
 use Formello\Encryption;
+use function Formello\Utils\formello_dir_url;
 
 /**
  * REST_API Handler
@@ -117,6 +118,7 @@ class Settings extends WP_REST_Controller {
 
 		$settings = array();
 		$settings = get_option( 'formello' );
+		$settings['log_file'] = formello_dir_url() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . 'formello_' . get_option( 'formello_installed' ) . '.txt';
 
 		return rest_ensure_response(
 			array(

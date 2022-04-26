@@ -17,39 +17,39 @@ const ALLOWED_BLOCKS = [
 	'formello/select',
 ];
 
-export default function Edit({ attributes, className, setAttributes }) {
+export default function Edit( { attributes, className, setAttributes } ) {
 	const blockProps = useBlockProps();
 
-	const { children, ...innerBlocksProps } = useInnerBlocksProps(blockProps, {
+	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
-	});
+	} );
 
 	return (
-		<fieldset {...innerBlocksProps}>
+		<fieldset { ...innerBlocksProps }>
 			<InspectorControls>
-				<PanelBody title={__('Options', 'formello')} initialOpen={true}>
+				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 					<ToggleControl
-						label={__('Show Legend', 'formello')}
-						checked={attributes.showLegend}
-						onChange={(newval) =>
-							setAttributes({ showLegend: newval })
+						label={ __( 'Show Legend', 'formello' ) }
+						checked={ attributes.showLegend }
+						onChange={ ( newval ) =>
+							setAttributes( { showLegend: newval } )
 						}
 					/>
 				</PanelBody>
 			</InspectorControls>
-			{attributes.showLegend && (
+			{ attributes.showLegend && (
 				<RichText
 					tagName="legend"
-					className={className}
-					value={attributes.legend}
-					onChange={(legend) => setAttributes({ legend })}
-					placeholder={__('Enter legend…', 'formello')}
-					allowedFormats={[]}
+					className={ className }
+					value={ attributes.legend }
+					onChange={ ( legend ) => setAttributes( { legend } ) }
+					placeholder={ __( 'Enter legend…', 'formello' ) }
+					allowedFormats={ [] }
 				/>
-			)}
+			) }
 
-			{children}
+			{ children }
 		</fieldset>
 	);
 }
