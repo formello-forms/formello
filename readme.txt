@@ -88,6 +88,10 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 
 == Changelog ==
 
+= 1.5.9 =
+* Fix button icons
+* Added logging
+
 = 1.5.8 =
 * Fix button display
 

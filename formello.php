@@ -14,12 +14,12 @@
  * @package Formello
  */
 
-if ( ! defined( 'FORMELLO_PLUGIN_FILE' ) ) {
-	define( 'FORMELLO_PLUGIN_FILE', __FILE__ );
+if (! defined('FORMELLO_PLUGIN_FILE')) {
+    define('FORMELLO_PLUGIN_FILE', __FILE__);
 }
 
-if ( ! class_exists( 'Formello' ) ) {
-	include_once dirname( FORMELLO_PLUGIN_FILE ) . '/includes/class-formello.php';
+if (! class_exists('Formello')) {
+    include_once dirname(FORMELLO_PLUGIN_FILE) . '/includes/class-formello.php';
 }
 
 /**
@@ -28,37 +28,38 @@ if ( ! class_exists( 'Formello' ) ) {
  * @since 1.0.0
  * @return object|Formello
  */
-function formello_load_plugin() {
-	return Formello::instance();
+function formello_load_plugin()
+{
+    return Formello::instance();
 }
 
 // Get the plugin running.
-add_action( 'plugins_loaded', 'formello_load_plugin' );
+add_action('plugins_loaded', 'formello_load_plugin');
 
 /**
  * Activation hook
  */
-function formello_activate() {
+function formello_activate()
+{
+    global $wpdb;
 
-	global $wpdb;
+    delete_option('formello');
+    update_option('formello_installed', time());
 
-	delete_option( 'formello' );
-	update_option( 'formello_installed', time() );
-
-	// create table for storing form settings.
-	$wpdb->query(
-		"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
+    // create table for storing form settings.
+    $wpdb->query(
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
 		`post_id` BIGINT(20) UNSIGNED PRIMARY KEY,
 		`name` VARCHAR(255),
 		`settings` TEXT NOT NULL,
 		`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (post_id) REFERENCES {$wpdb->prefix}posts(ID) ON DELETE CASCADE
 		) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
-	);
+    );
 
-	// create table for storing submissions.
-	$wpdb->query(
-		"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions (
+    // create table for storing submissions.
+    $wpdb->query(
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions (
 		`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		`form_id` INT UNSIGNED NOT NULL,
 		`data` TEXT NOT NULL,
@@ -70,11 +71,11 @@ function formello_activate() {
 		`submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		`log` TEXT NULL
 		) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
-	);
+    );
 
-	// create table for storing submissions meta.
-	$wpdb->query(
-		"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions_meta (
+    // create table for storing submissions meta.
+    $wpdb->query(
+        "CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions_meta (
 		`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 		`form_id` INT UNSIGNED NOT NULL,
 		`submission_id` INT UNSIGNED NOT NULL,
@@ -82,23 +83,22 @@ function formello_activate() {
 		`field_value` TEXT NULL,
 		FOREIGN KEY (submission_id) REFERENCES {$wpdb->prefix}formello_submissions(id) ON DELETE CASCADE
 		) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
-	);
+    );
 
-	$upload_dir = wp_upload_dir();
-	$formello_dir = $upload_dir['basedir'] . '/formello';
-	if ( ! is_dir( $formello_dir ) ) {
-		wp_mkdir_p( $formello_dir );
-	}
+    $upload_dir = wp_upload_dir();
+    $formello_dir = $upload_dir['basedir'] . '/formello';
+    if (! is_dir($formello_dir)) {
+        wp_mkdir_p($formello_dir);
+    }
 
-	global $wp_filesystem;
-	// Initialize the WP filesystem, no more using 'file-put-contents' function.
-	if ( empty( $wp_filesystem ) ) {
-		require_once ABSPATH . '/wp-admin/includes/file.php';
-		WP_Filesystem();
-	}
+    global $wp_filesystem;
+    // Initialize the WP filesystem, no more using 'file-put-contents' function.
+    if (empty($wp_filesystem)) {
+        require_once ABSPATH . '/wp-admin/includes/file.php';
+        WP_Filesystem();
+    }
 
-	$wp_filesystem->put_contents( trailingslashit( $formello_dir ) . 'index.html', '', 0644 );
-
+    $wp_filesystem->put_contents(trailingslashit($formello_dir) . 'index.html', '', 0644);
 }
 
-register_activation_hook( __FILE__, 'formello_activate' );
+register_activation_hook(__FILE__, 'formello_activate');

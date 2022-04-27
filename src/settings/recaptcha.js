@@ -10,7 +10,7 @@ import {
 import { __ } from '@wordpress/i18n';
 
 export default function reCaptcha( props ) {
-	const { getSetting, changeSettings } = props;
+	const { getSetting, saveSettingGroup } = props;
 
 	return (
 		<Card>
@@ -26,7 +26,7 @@ export default function reCaptcha( props ) {
 						{ label: 'reCaptcha v3 invisible', value: '3' },
 					] }
 					onChange={ ( val ) => {
-						changeSettings( 'reCaptcha', 'version', val );
+						saveSettingGroup( 'reCaptcha', 'version', val );
 					} }
 				/>
 
@@ -34,7 +34,7 @@ export default function reCaptcha( props ) {
 					label={ __( 'Site Key', 'formello' ) }
 					value={ getSetting( 'reCaptcha', 'site_key' ) }
 					onChange={ ( val ) => {
-						changeSettings( 'reCaptcha', 'site_key', val );
+						saveSettingGroup( 'reCaptcha', 'site_key', val );
 					} }
 				/>
 
@@ -42,7 +42,7 @@ export default function reCaptcha( props ) {
 					label={ __( 'Secret Key', 'formello' ) }
 					value={ getSetting( 'reCaptcha', 'secret_key' ) }
 					onChange={ ( val ) => {
-						changeSettings( 'reCaptcha', 'secret_key', val );
+						saveSettingGroup( 'reCaptcha', 'secret_key', val );
 					} }
 				/>
 
@@ -51,7 +51,7 @@ export default function reCaptcha( props ) {
 						label={ __( 'Threshold', 'formello' ) }
 						value={ getSetting( 'reCaptcha', 'threshold' ) }
 						onChange={ ( val ) => {
-							changeSettings( 'reCaptcha', 'threshold', val );
+							saveSettingGroup( 'reCaptcha', 'threshold', val );
 						} }
 						step={ '0.1' }
 						min={ '0' }

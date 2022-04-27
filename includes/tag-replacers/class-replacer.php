@@ -5,102 +5,100 @@ namespace Formello\TagReplacers;
 /**
  * Class Replacer
  */
-class Replacer {
+class Replacer
+{
+    /**
+     * Array containing the replacers.
+     *
+     * @var replacers
+     */
+    protected $replacers = array();
 
-	/**
-	 * Array containing the replacers.
-	 *
-	 * @var replacers
-	 */
-	protected $replacers = array();
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->replacers['fields'] = new Fields();
+        $this->replacers['other']  = new Other();
+        $this->replacers['wp']     = new Wp();
+    }
 
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		$this->replacers['fields'] = new Fields();
-		$this->replacers['other']  = new Other();
-		$this->replacers['wp']     = new Wp();
-	}
+    /**
+     * Parse the template variables
+     *
+     * @param string $template The template variable.
+     */
+    public function parse($template)
+    {
+        $pattern = '/\{\{ *(\w+)(?:\.([\w\.]+))? *(?:\|\| *(\w+))? *\}\}/i';
 
-	/**
-	 * Parse the template variables
-	 *
-	 * @param string $template The template variable.
-	 */
-	public function parse( $template ) {
+        $result = preg_replace_callback($pattern, array( $this, 'get_data2' ), $template);
 
-		$pattern = '/\{\{ *(\w+)(?:\.([\w\.]+))? *(?:\|\| *(\w+))? *\}\}/i';
+        return $result;
+    }
 
-		$result = preg_replace_callback( $pattern, array( $this, 'get_data2' ), $template );
+    /**
+     * Parse the template variables
+     *
+     * @param string $tag The tag variable.
+     * @param string $param The param variable.
+     * @param string $default Default value.
+     */
+    protected function get_data($tag, $param, $default)
+    {
+        $replacement = $this->replacers[ $tag ];
 
-		return $result;
-	}
+        if (array_key_exists($tag, $this->replacers)) {
+            $value = method_exists($replacement, $param) ? $replacement->$param() : $default;
+        }
 
-	/**
-	 * Parse the template variables
-	 *
-	 * @param string $tag The tag variable.
-	 * @param string $param The param variable.
-	 * @param string $default Default value.
-	 */
-	protected function get_data( $tag, $param, $default ) {
-		$replacement = $this->replacers[ $tag ];
+        if ('fields' === $tag) {
+            $value = $replacement->get_data($param);
+        }
 
-		if ( array_key_exists( $tag, $this->replacers ) ) {
-			$value = method_exists( $replacement, $param ) ? $replacement->$param() : $default;
-		}
+        if ('meta' === $tag) {
+            $value = $this->replacers['wp']->post_meta($param);
+        }
+        return ! empty($value) ? $value : $default;
+    }
 
-		if ( 'fields' === $tag ) {
-			$value = $replacement->get_data( $param );
-		}
+    /**
+     * Parse the template variables
+     *
+     * @param string $tag The tag variable.
+     * @param string $param The param variable.
+     * @param string $default Default value.
+     */
+    protected function replace($tag, $param, $default)
+    {
+        $replacement = $this->replacers[ $tag ];
 
-		if ( 'meta' === $tag ) {
-			$value = $this->replacers['wp']->post_meta( $param );
-		}
-		return ! empty( $value ) ? $value : $default;
+        if (array_key_exists($tag, $this->replacers)) {
+            $value = method_exists($replacement, $param) ? $replacement->$param() : $default;
+        }
 
-	}
+        if ('fields' === $tag) {
+            $value = $replacement->get_data($param);
+        }
 
-	/**
-	 * Parse the template variables
-	 *
-	 * @param string $tag The tag variable.
-	 * @param string $param The param variable.
-	 * @param string $default Default value.
-	 */
-	protected function replace( $tag, $param, $default ) {
-		$replacement = $this->replacers[ $tag ];
+        if ('meta' === $tag) {
+            $value = $this->replacers['wp']->post_meta($param);
+        }
 
-		if ( array_key_exists( $tag, $this->replacers ) ) {
-			$value = method_exists( $replacement, $param ) ? $replacement->$param() : $default;
-		}
+        return ! empty($value) ? $value : $default;
+    }
 
-		if ( 'fields' === $tag ) {
-			$value = $replacement->get_data( $param );
-		}
+    protected function get_data2($matches)
+    {
+        if ($matches) {
+            $tag     = $matches[1];
+            $param   = ! isset($matches[2]) ? '' : $matches[2];
+            $default = ! isset($matches[3]) ? $matches[0] : $matches[3];
 
-		if ( 'meta' === $tag ) {
-			$value = $this->replacers['wp']->post_meta( $param );
-		}
+            $result = $this->replace($tag, $param, $default);
+        };
 
-		return ! empty( $value ) ? $value : $default;
-
-	}
-
-	protected function get_data2( $matches ) {
-
-		if ( $matches ) {
-			$tag     = $matches[1];
-			$param   = ! isset( $matches[2] ) ? '' : $matches[2];
-			$default = ! isset( $matches[3] ) ? $matches[0] : $matches[3];
-
-			$result = $this->replace( $tag, $param, $default );
-
-		};
-
-		return $result;
-
-	}
-
+        return $result;
+    }
 }

@@ -1,11 +1,24 @@
 import { Card, CardHeader, CardBody, withFilters } from '@wordpress/components';
 
-import { RawHTML } from '@wordpress/element';
+import { RawHTML, Fragment } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
+import AddonLicense from './addonLicense.js';
 
-const LicensesTab = () => {
+const LicensesTab = (props) => {
+
+	const { getSetting } = props;
+
+	const addons = getSetting( 'addon_licenses' );
+
+	const items = []
+
+	for (const addon in addons) {
+		items.push( <AddonLicense {...props} key={ addon } title={ addon } license={ addons[addon] } /> )
+	}
+
 	return (
+		<Fragment>
 		<Card>
 			<CardHeader>
 				<h2>{ __( 'Licenses', 'formello' ) }</h2>
@@ -16,14 +29,17 @@ const LicensesTab = () => {
 					{ sprintf(
 						/* translators: Addon licenses link. */
 						__(
-							'<p>Here you can add license for %s.</p>',
+							'<p>Here you can add license for %s.</p><p>To get your licenses key go to your %s.</p>',
 							'formello'
 						),
-						`<a href="https://formello.net/addons/" target="_blank">addons</a>`
+						`<a href="https://formello.net/addons/" target="_blank">addons</a>`,
+						`<a href="https://formello.net/account/" target="_blank">account</a>` 
 					) }
 				</RawHTML>
 			</CardBody>
 		</Card>
+		{items}
+		</Fragment>
 	);
 };
 

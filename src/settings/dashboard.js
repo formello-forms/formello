@@ -28,6 +28,7 @@ import Messages from './messages.js';
 import Integrations from './integrations.js';
 import Licenses from './licenses.js';
 import Notices from '../tools/notices.js';
+import api from '@wordpress/api';
 
 const components = {
 	general: General,
@@ -43,7 +44,7 @@ function App() {
 	const [ settings, setSettings ] = useState();
 	const { createNotice, removeNotice } = useDispatch( noticesStore );
 
-	useEffect( () => {
+	/*useEffect( () => {
 		apiFetch( {
 			path: '/formello/v1/settings',
 			method: 'GET',
@@ -52,7 +53,37 @@ function App() {
 
 			setApiLoaded( true );
 		} );
-	}, [] );
+	}, [] );*/
+
+	const onChange = ( key, value ) => {
+		setSaving( true );
+		let newSettings = {
+			...settings,
+			[key]: value
+		}
+		setSettings( newSettings )
+	    let update = new api.models.Settings( { formello: newSettings} );
+	    update.save()
+	    .done( () => {
+			addNotice( 'info', 'Settings saved' );
+	    } )
+	    .always( () => setSaving( false ) )
+	}
+
+	useEffect( () => {
+
+	    api.loadPromise.then( () => {
+	        let settings = new api.models.Settings();
+
+	        if ( apiLoaded === false ) {
+	            settings.fetch().then( ( response ) => {
+	            	setSettings( response.formello )
+	            	setApiLoaded( true )
+	            } );
+	        }
+	    } );
+
+	}, [] )
 
 	const tabs = [
 		{
@@ -71,10 +102,10 @@ function App() {
 			name: 'integrations',
 			title: 'Integrations',
 		},
-		{
+		/*{
 			name: 'licenses',
 			title: 'Licenses',
-		},
+		},*/
 	];
 
 	const addNotice = ( status, content, type = 'snackbar' ) => {
@@ -85,12 +116,7 @@ function App() {
 	const getSetting = ( group, name, defaultVal ) => {
 		let result = defaultVal;
 
-		if (
-			'license' === group ||
-			'license_status' === group ||
-			'log' === group ||
-			'log_file' === group
-		) {
+		if ( ! name ) {
 			result = settings[ group ];
 		}
 
@@ -101,7 +127,7 @@ function App() {
 		return result;
 	};
 
-	const updateSettings = () => {
+	const storeSettings = () => {
 		setSaving( true );
 
 		apiFetch( {
@@ -112,11 +138,11 @@ function App() {
 			},
 		} ).then( () => {
 			setSaving( false );
-			addNotice( 'info', 'Settings saved' );
+			addNotice( 'error', 'Settings saved' );
 		} );
 	};
 
-	const changeSettings = ( group, name, value ) => {
+	const saveSettingGroup = ( group, name, value ) => {
 		setSettings( {
 			...settings,
 			[ group ]: {
@@ -171,9 +197,10 @@ function App() {
 						return (
 							<div className="formello-tablist">
 								<div className="formello-settings-tab">
+									<Notices />
 									<SettingsTab
-										saveSetting={ saveSetting.bind( this ) }
-										changeSettings={ changeSettings.bind(
+										saveSetting={ onChange.bind( this ) }
+										saveSettingGroup={ saveSettingGroup.bind(
 											this
 										) }
 										getSetting={ getSetting.bind( this ) }
@@ -185,14 +212,14 @@ function App() {
 										aria-disabled={ isSaving }
 										isBusy={ isSaving }
 										disabled={ isSaving }
-										onClick={ ( e ) => updateSettings( e ) }
+										onClick={ ( e ) => storeSettings( e ) }
 									>
 										{ __( 'Save', 'formello' ) }
 									</Button>
 								</div>
 
 								<Help />
-								<Notices />
+
 							</div>
 						);
 					} }

@@ -4,12 +4,12 @@ import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export default function messages( props ) {
-	const { getSetting, changeSettings } = props;
+	const { getSetting, saveSettingGroup } = props;
 
 	const updateSetting = ( group, field, value ) => {
 		const newSettings = Object.assign( {}, getSetting( 'messages', group ) );
 		newSettings[ field ] = value;
-		changeSettings( 'messages', group, newSettings );
+		saveSettingGroup( 'messages', group, newSettings );
 	};
 
 	return (

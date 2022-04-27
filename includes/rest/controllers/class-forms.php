@@ -12,272 +12,282 @@ use WP_REST_Controller;
 /**
  * REST_API Handler
  */
-class Forms extends WP_REST_Controller {
+class Forms extends WP_REST_Controller
+{
+    /**
+     * [__construct description]
+     */
+    public function __construct()
+    {
+        $this->namespace = 'formello/v1';
+        $this->rest_base = 'form';
+    }
 
-	/**
-	 * [__construct description]
-	 */
-	public function __construct() {
-		$this->namespace = 'formello/v1';
-		$this->rest_base = 'form';
-	}
+    /**
+     * Register the routes
+     *
+     * @return void
+     */
+    public function register_routes()
+    {
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base,
+            array(
+                'methods'             => \WP_REST_Server::READABLE,
+                'callback'            => array( $this, 'get_items' ),
+                'permission_callback' => array( $this, 'get_items_permissions_check' ),
+                'args'                => array( $this->get_collection_params() ),
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/create',
+            array(
+                'methods'             => \WP_REST_Server::CREATABLE,
+                'callback'            => array( $this, 'create_item' ),
+                'permission_callback' => array( $this, 'create_item_permissions_check' ),
+                'args'                => array( $this->get_collection_params() ),
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/delete',
+            array(
+                'methods'             => \WP_REST_Server::DELETABLE,
+                'callback'            => array( $this, 'delete_item' ),
+                'permission_callback' => array( $this, 'delete_item_permissions_check' ),
+                'args'                => array( $this->get_collection_params() ),
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/(?P<id>[\d]+)',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::READABLE,
+                    'callback'            => array( $this, 'get_item' ),
+                    'permission_callback' => array( $this, 'get_item_permissions_check' ),
+                    'args'                => array( $this->get_collection_params() ),
+                ),
+            )
+        );
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/(?P<id>[\d]+)',
+            array(
+                array(
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => array( $this, 'update_item' ),
+                    'permission_callback' => array( $this, 'get_item_permissions_check' ),
+                    'args'                => array( $this->get_collection_params() ),
+                ),
+            )
+        );
+    }
 
-	/**
-	 * Register the routes
-	 *
-	 * @return void
-	 */
-	public function register_routes() {
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base,
-			array(
-				'methods'             => \WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_items' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'                => array( $this->get_collection_params() ),
-			)
-		);
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base . '/create',
-			array(
-				'methods'             => \WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'create_item' ),
-				'permission_callback' => array( $this, 'create_item_permissions_check' ),
-				'args'                => array( $this->get_collection_params() ),
-			)
-		);
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base . '/delete',
-			array(
-				'methods'             => \WP_REST_Server::DELETABLE,
-				'callback'            => array( $this, 'delete_item' ),
-				'permission_callback' => array( $this, 'delete_item_permissions_check' ),
-				'args'                => array( $this->get_collection_params() ),
-			)
-		);
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base . '/(?P<id>[\d]+)',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_item' ),
-					'permission_callback' => array( $this, 'get_item_permissions_check' ),
-					'args'                => array( $this->get_collection_params() ),
-				),
-			)
-		);
-		register_rest_route(
-			$this->namespace,
-			'/' . $this->rest_base . '/(?P<id>[\d]+)',
-			array(
-				array(
-					'methods'             => \WP_REST_Server::EDITABLE,
-					'callback'            => array( $this, 'update_item' ),
-					'permission_callback' => array( $this, 'get_item_permissions_check' ),
-					'args'                => array( $this->get_collection_params() ),
-				),
-			)
-		);
+    /**
+     * Retrieves a collection of items.
+     *
+     * @param WP_REST_Request $request Full details about the request.
+     *
+     * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+     */
+    public function get_items($request)
+    {
+        $args = array(
+            'numberposts'    => -1, // -1 is for all
+            'post_type'      => 'formello_form', // or post, page.
+            'orderby'        => 'date', // or date, rand.
+            'order'          => 'ASC', // or DESC.
+            'page'           => 1,
+            'posts_per_page' => 2,
+        );
 
-	}
+        $query = new \WP_Query($args);
 
-	/**
-	 * Retrieves a collection of items.
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
-	 */
-	public function get_items( $request ) {
-		$args = array(
-			'numberposts'    => -1, // -1 is for all
-			'post_type'      => 'formello_form', // or post, page.
-			'orderby'        => 'date', // or date, rand.
-			'order'          => 'ASC', // or DESC.
-			'page'           => 1,
-			'posts_per_page' => 2,
-		);
+        // set max number of pages and total num of posts.
+        $posts = $query->posts;
 
-		$query = new \WP_Query( $args );
+        $max_pages = $query->max_num_pages;
+        $total     = $query->found_posts;
 
-		// set max number of pages and total num of posts.
-		$posts = $query->posts;
+        // set headers and return response.
+        $response = new \WP_REST_Response($posts, 200);
+        $response->header('X-WP-Total', $total);
+        $response->header('X-WP-TotalPages', $max_pages);
 
-		$max_pages = $query->max_num_pages;
-		$total     = $query->found_posts;
+        $result = rest_ensure_response($response);
 
-		// set headers and return response.
-		$response = new \WP_REST_Response( $posts, 200 );
-		$response->header( 'X-WP-Total', $total );
-		$response->header( 'X-WP-TotalPages', $max_pages );
+        return $result;
+    }
 
-		$result = rest_ensure_response( $response );
+    /**
+     * Get one item from the collection
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Response
+     */
+    public function get_item($request)
+    {
+        $id = $request->get_param('id');
 
-		return $result;
-	}
+        $item = get_post($id);
 
-	/**
-	 * Get one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function get_item( $request ) {
-		$id = $request->get_param( 'id' );
+        if (empty($item) || 'formello-form' !== $item->post_type) {
+            $item = new \WP_Error('no_posts', __('No form found'), array( 'status' => 404 )); // status can be changed to any number.
+        }
 
-		$item = get_post( $id );
+        $response = rest_ensure_response($item);
 
-		if ( empty( $item ) || 'formello-form' !== $item->post_type ) {
-			$item = new \WP_Error( 'no_posts', __( 'No form found' ), array( 'status' => 404 ) ); // status can be changed to any number.
-		}
+        return $response;
+    }
 
-		$response = rest_ensure_response( $item );
+    /**
+     * Get one item from the collection
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Response
+     */
+    public function update_item($request)
+    {
+        $id = $request->get_param('id');
 
-		return $response;
-	}
+        $settings = $request['settings'];
 
-	/**
-	 * Get one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function update_item( $request ) {
-		$id = $request->get_param( 'id' );
+        $result = update_post_meta($id, '_formello_settings', $settings);
 
-		$settings = $request['settings'];
+        if (empty($result)) {
+            $result = new \WP_Error('no_posts', __('No form found'), array( 'status' => 404 )); // status can be changed to any number.
+        }
 
-		$result = update_post_meta( $id, '_formello_settings', $settings );
+        $response = rest_ensure_response($result);
 
-		if ( empty( $result ) ) {
-			$result = new \WP_Error( 'no_posts', __( 'No form found' ), array( 'status' => 404 ) ); // status can be changed to any number.
-		}
+        return $response;
+    }
 
-		$response = rest_ensure_response( $result );
+    /**
+     * Create one item from the collection
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Response
+     */
+    public function create_item($request)
+    {
+        $form_name = $request->get_param('name');
 
-		return $response;
-	}
+        global $wpdb;
+        $table = $wpdb->prefix . 'formello_forms';
 
-	/**
-	 * Create one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Response
-	 */
-	public function create_item( $request ) {
-		$form_name = $request->get_param( 'name' );
+        $data = array(
+            'name' => $form_name,
+        );
 
-		global $wpdb;
-		$table = $wpdb->prefix . 'formello_forms';
+        $wpdb->insert(
+            $table,
+            $data
+        );
 
-		$data = array(
-			'name' => $form_name,
-		);
+        $response = rest_ensure_response(array( 'id' => $wpdb->insert_id ));
 
-		$wpdb->insert(
-			$table,
-			$data
-		);
+        return $response;
+    }
 
-		$response = rest_ensure_response( array( 'id' => $wpdb->insert_id ) );
+    /**
+     * Delete one item from the collection
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|WP_REST_Request
+     */
+    public function delete_item($request)
+    {
+        $id = $request->get_param('id');
 
-		return $response;
+        global $wpdb;
+        $table = $wpdb->prefix . 'formello_forms';
 
-	}
+        $data = array(
+            'is_trashed' => 1,
+        );
 
-	/**
-	 * Delete one item from the collection
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|WP_REST_Request
-	 */
-	public function delete_item( $request ) {
-		$id = $request->get_param( 'id' );
+        $where = array(
+            'id' => $id,
+        );
 
-		global $wpdb;
-		$table = $wpdb->prefix . 'formello_forms';
+        $wpdb->update(
+            $table,
+            $data,
+            $where
+        );
 
-		$data = array(
-			'is_trashed' => 1,
-		);
+        $response = rest_ensure_response('form trashed - ' . $id);
 
-		$where = array(
-			'id' => $id,
-		);
+        return $response;
+    }
 
-		$wpdb->update(
-			$table,
-			$data,
-			$where
-		);
+    /**
+     * Checks if a given request has access to read the items.
+     *
+     * @param  WP_REST_Request $request Full details about the request.
+     *
+     * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+     */
+    public function get_items_permissions_check($request)
+    {
+        return true;
+    }
 
-		$response = rest_ensure_response( 'form trashed - ' . $id );
+    /**
+     * Check if a given request has access to get a specific item
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|bool
+     */
+    public function get_item_permissions_check($request)
+    {
+        return $this->get_items_permissions_check($request);
+    }
 
-		return $response;
+    /**
+     * Check if a given request has access to create items
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|bool
+     */
+    public function create_item_permissions_check($request)
+    {
+        return current_user_can('manage_options');
+    }
 
-	}
+    /**
+     * Check if a given request has access to update a specific item
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|bool
+     */
+    public function update_item_permissions_check($request)
+    {
+        return $this->create_item_permissions_check($request);
+    }
 
-	/**
-	 * Checks if a given request has access to read the items.
-	 *
-	 * @param  WP_REST_Request $request Full details about the request.
-	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
-	 */
-	public function get_items_permissions_check( $request ) {
-		return true;
-	}
+    /**
+     * Check if a given request has access to delete a specific item
+     *
+     * @param WP_REST_Request $request Full data about the request.
+     * @return WP_Error|bool
+     */
+    public function delete_item_permissions_check($request)
+    {
+        return $this->create_item_permissions_check($request);
+    }
 
-	/**
-	 * Check if a given request has access to get a specific item
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function get_item_permissions_check( $request ) {
-		return $this->get_items_permissions_check( $request );
-	}
-
-	/**
-	 * Check if a given request has access to create items
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function create_item_permissions_check( $request ) {
-		return current_user_can( 'manage_options' );
-	}
-
-	/**
-	 * Check if a given request has access to update a specific item
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function update_item_permissions_check( $request ) {
-		return $this->create_item_permissions_check( $request );
-	}
-
-	/**
-	 * Check if a given request has access to delete a specific item
-	 *
-	 * @param WP_REST_Request $request Full data about the request.
-	 * @return WP_Error|bool
-	 */
-	public function delete_item_permissions_check( $request ) {
-		return $this->create_item_permissions_check( $request );
-	}
-
-	/**
-	 * Retrieves the query params for the items collection.
-	 *
-	 * @return array Collection parameters.
-	 */
-	public function get_collection_params() {
-		return array();
-	}
+    /**
+     * Retrieves the query params for the items collection.
+     *
+     * @return array Collection parameters.
+     */
+    public function get_collection_params()
+    {
+        return array();
+    }
 }

@@ -8,55 +8,42 @@
 
 namespace Formello\Utils;
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 /**
  * Function to retrieve integration option
  *
  * @param string $integration The integration name to retrieve.
  */
-function formello_integration_option( $integration ) {
-	$settings = get_option( 'formello' );
+function formello_integration_option($integration)
+{
+    $settings = get_option('formello');
 
-	if ( empty( $settings['integrations'][ $integration ] ) ) {
-		return array();
-	}
-	return $settings['integrations'][ $integration ];
+    if (empty($settings['integrations'][ $integration ])) {
+        return array();
+    }
+    return $settings['integrations'][ $integration ];
 }
 
 /**
  * Function to retrieve unencrypted settings
  */
-function formello_frontend_option() {
-	$settings = get_option( 'formello' );
+function formello_frontend_option()
+{
+    $settings = get_option('formello');
 
-	if ( empty( $settings ) ) {
-		return array();
-	}
+    if (empty($settings)) {
+        return array();
+    }
 
-	$frontend_settings = array(
-		'messages' => $settings['messages'],
-		'reCaptcha' => $settings['reCaptcha'],
-	);
-	// remove the secret from frontend options.
-	unset( $frontend_settings['reCaptcha']['secret_key'] );
+    $frontend_settings = array(
+        'messages' => $settings['messages'],
+        'reCaptcha' => $settings['reCaptcha'],
+    );
+    // remove the secret from frontend options.
+    unset($frontend_settings['reCaptcha']['secret_key']);
 
-	return maybe_unserialize( $frontend_settings );
-}
-
-/**
- * Function to retrieve unencrypted settings
- *
- * @param mixed $settings The general settings.
- */
-function formello_decrypt_option( $settings ) {
-	if ( is_array( $settings ) ) {
-		return $settings;
-	}
-	$crypto = new Encryption();
-
-	$settings = $crypto->decrypt( $settings );
-	return maybe_unserialize( $settings );
+    return maybe_unserialize($frontend_settings);
 }
 
 /**
@@ -64,10 +51,27 @@ function formello_decrypt_option( $settings ) {
  *
  * @param mixed $settings The general settings.
  */
-function formello_encrypt_option( $settings ) {
-	$crypto = new Encryption();
+function formello_decrypt_option($settings)
+{
+    if (is_array($settings)) {
+        return $settings;
+    }
+    $crypto = new Encryption();
 
-	return $crypto->encrypt( maybe_serialize( $settings ) );
+    $settings = $crypto->decrypt($settings);
+    return maybe_unserialize($settings);
+}
+
+/**
+ * Function to retrieve unencrypted settings
+ *
+ * @param mixed $settings The general settings.
+ */
+function formello_encrypt_option($settings)
+{
+    $crypto = new Encryption();
+
+    return $crypto->encrypt(maybe_serialize($settings));
 }
 
 /**
@@ -77,57 +81,56 @@ function formello_encrypt_option( $settings ) {
  *
  * @return mixed
  */
-function recursive_sanitize_text_field( $array ) {
-	if ( ! is_array( $array ) ) {
-		return sanitize_text_field( $array );
-	}
-	foreach ( $array as $key => &$value ) {
-		if ( is_array( $value ) ) {
-			$value = recursive_sanitize_text_field( $value );
-		} else {
-			if( ! is_bool( $value ) ) {
-				$value = sanitize_text_field( $value );
-			};
-		}
-	}
-	return $array;
+function recursive_sanitize_text_field($array)
+{
+    if (! is_array($array)) {
+        return sanitize_text_field($array);
+    }
+    foreach ($array as $key => &$value) {
+        if (is_array($value)) {
+            $value = recursive_sanitize_text_field($value);
+        } else {
+            if (! is_bool($value)) {
+                $value = sanitize_text_field($value);
+            };
+        }
+    }
+    return $array;
 }
 
 /**
  * Limit the blocks allowed in Gutenberg.
- * 
+ *
  * @param mixed $allowed_blocks Array of allowable blocks for Gutenberg Editor.
  * @param mixed $post Gets current post type.
- * 
+ *
  * @return mixed $allowed_blocks Returns the allowed blocks.
- * */ 
-function formello_allowed_blocks( $allowed_blocks, $editor_context )
+ * */
+function formello_allowed_blocks($allowed_blocks, $editor_context)
 {
+    if (!$editor_context->post) {
+        return $allowed_blocks;
+    }
 
-	if( !$editor_context->post ){
-		return $allowed_blocks;
-	}
-
-    if( $editor_context->post->post_type === 'formello_form' ) {
-	    $allowed_blocks = array(
-	      'formello/form',
-	      'formello/button',
-	      'formello/input',
-	      'formello/select',
-	      'formello/fieldset',
-	      'core/image',
-	      'core/image',
-	      'core/paragraph',
-	      'core/heading',
-	      'core/group',
-	      'core/columns',
-	      'core/column',
-	      'core/list',
-	    );
-	    return $allowed_blocks;
+    if ($editor_context->post->post_type === 'formello_form') {
+        $allowed_blocks = array(
+          'formello/form',
+          'formello/button',
+          'formello/input',
+          'formello/select',
+          'formello/fieldset',
+          'core/image',
+          'core/image',
+          'core/paragraph',
+          'core/heading',
+          'core/group',
+          'core/columns',
+          'core/column',
+          'core/list',
+        );
+        return $allowed_blocks;
     }
     return $allowed_blocks;
- 
 }
 
 /**
@@ -136,18 +139,19 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context )
  * @param  WP_POST $post    [description]
  * @return string          [description]
  */
-function formello_action_row( $actions, $post ){
-	add_thickbox();
+function formello_action_row($actions, $post)
+{
+    add_thickbox();
     //check for your post type
-    if ( 'formello_form' === $post->post_type ){
-		$view_link = sprintf(
-			'<a href="?post_type=formello_form&page=%s&form=%s">%s</a>',
-			'formello-submissions',
-			absint( $post->ID ),
-			__( 'View Entries', 'formello' )
-		);
+    if ('formello_form' === $post->post_type) {
+        $view_link = sprintf(
+            '<a href="?post_type=formello_form&page=%s&form=%s">%s</a>',
+            'formello-submissions',
+            absint($post->ID),
+            __('View Entries', 'formello')
+        );
 
-		array_splice( $actions, 2, 0, $view_link ); // splice in at position 3
+        array_splice($actions, 2, 0, $view_link); // splice in at position 3
     }
     return $actions;
 }
@@ -157,13 +161,14 @@ function formello_action_row( $actions, $post ){
  *
  * @since 1.4.0
  */
-function formello_dir() {
-	$upload_dir = wp_upload_dir();
-	$formello_dir = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'formello';
-	if ( ! is_dir( $formello_dir ) ) {
-		wp_mkdir_p( $formello_dir );
-	}
-	return trailingslashit( $formello_dir );
+function formello_dir()
+{
+    $upload_dir = wp_upload_dir();
+    $formello_dir = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'formello';
+    if (! is_dir($formello_dir)) {
+        wp_mkdir_p($formello_dir);
+    }
+    return trailingslashit($formello_dir);
 }
 
 /**
@@ -171,12 +176,13 @@ function formello_dir() {
  *
  * @since 1.4.0
  */
-function formello_dir_url() {
-	$upload_dir = wp_upload_dir();
-	return $upload_dir['baseurl'] . DIRECTORY_SEPARATOR . 'formello';
+function formello_dir_url()
+{
+    $upload_dir = wp_upload_dir();
+    return $upload_dir['baseurl'] . DIRECTORY_SEPARATOR . 'formello';
 }
 
-add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option' );
-add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option' );
-add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
-add_filter( 'post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2);
+add_filter('option_formello', __NAMESPACE__ . '\formello_decrypt_option');
+add_filter('pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option');
+add_filter('allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2);
+add_filter('post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2);

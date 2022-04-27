@@ -11,8 +11,7 @@ import {
 import { RawHTML, useState, Fragment } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
-
-const { apiFetch } = wp;
+import apiFetch from '@wordpress/api-fetch';
 
 export default function General( props ) {
 	const { getSetting, saveSetting } = props;
@@ -35,12 +34,13 @@ export default function General( props ) {
 			setLoading( false );
 			if ( result.response.success ) {
 				saveSetting( 'license_status', result.response.license );
+				setLicenseStatus( result.response.license )
 			}
 			message.classList.add( 'formello-action-message--show' );
 			message.classList.remove( 'formello-action-message--error' );
 			message.textContent = 'License ' + result.response.license;
 
-			if ( ! result.success || ! result.response ) {
+			if ( ! result.success || ! result.response || !result.response.success ) {
 				message.textContent = 'License: ' + result.response;
 				message.classList.add( 'formello-action-message--error' );
 			}
@@ -79,8 +79,9 @@ export default function General( props ) {
 						onChange={ ( val ) => {
 							saveSetting( 'license', val );
 						} }
+						readOnly={ 'valid' === getSetting( 'license_status' ) }
 					/>
-					<p>
+					<div>
 						{ 'valid' === licenseStatus ? (
 							<Fragment>
 								<RawHTML>
@@ -119,33 +120,7 @@ export default function General( props ) {
 							</Fragment>
 						) }
 						<span className="formello-action-message"></span>
-					</p>
-				</CardBody>
-			</Card>
-
-			<Card>
-				<CardHeader>
-					<h2>{ __( 'Logging', 'formello' ) }</h2>
-				</CardHeader>
-
-				<CardBody>
-					<p>
-						{ __(
-							'To enable logging, please set this as checked.',
-							'formello'
-						) }
-					</p>
-
-					<ToggleControl
-						label={ __( 'Enable log', 'formello' ) }
-						checked={ getSetting( 'log', '' ) }
-						onChange={ ( val ) => saveSetting( 'log', val ) }
-					/>
-					{ getSetting( 'log', '' ) && (
-						<ExternalLink href={ getSetting( 'log_file', '' ) }>
-							{ __( 'View log', 'formello' ) }
-						</ExternalLink>
-					) }
+					</div>
 				</CardBody>
 			</Card>
 		</>
