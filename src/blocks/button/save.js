@@ -45,9 +45,11 @@ export default function save( { attributes } ) {
 	} );
 
 	return (
+		<div className="formello">
 		<button type="submit" { ...blockProps }>
 			<RichText.Content tagName="span" value={ text } />
 			<ButtonIcon />
 		</button>
+		</div>
 	);
 }

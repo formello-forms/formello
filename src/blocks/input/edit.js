@@ -121,7 +121,7 @@ export default function Edit( props ) {
 					className={ attributes.fieldClass }
 					type={ attributes.type }
 					value={ attributes.value || '' }
-					checked={ attributes.checked }
+					checked={ attributes.checked || false }
 					onChange={ onChange }
 					placeholder={ attributes.placeholder }
 				/>

@@ -14,12 +14,10 @@ import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
 export default function General( props ) {
-	const { getSetting, saveSetting } = props;
+	const { settings, saveSetting, storeSettings } = props;
 
 	const [ loading, setLoading ] = useState( false );
-	const [ licenseStatus, setLicenseStatus ] = useState(
-		getSetting( 'license_status' )
-	);
+	const [ licenseStatus, setLicenseStatus ] = useState( settings.license_status );
 
 	const updateLicense = ( endpoint, e ) => {
 		const message = e.target.nextElementSibling;
@@ -28,7 +26,7 @@ export default function General( props ) {
 			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
-				license: getSetting( 'license' ),
+				license: settings.license,
 			},
 		} ).then( ( result ) => {
 			setLoading( false );
@@ -75,11 +73,11 @@ export default function General( props ) {
 						type="password"
 						autoComplete="new-password"
 						label={ __( 'License Key', 'formello' ) }
-						value={ getSetting( 'license' ) }
+						value={ settings.license }
 						onChange={ ( val ) => {
 							saveSetting( 'license', val );
 						} }
-						readOnly={ 'valid' === getSetting( 'license_status' ) }
+						readOnly={ 'valid' === settings.license_status }
 					/>
 					<div>
 						{ 'valid' === licenseStatus ? (

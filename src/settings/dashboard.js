@@ -26,49 +26,17 @@ import General from './general.js';
 import Recaptcha from './recaptcha.js';
 import Messages from './messages.js';
 import Integrations from './integrations.js';
+import Logging from './logging.js';
 import Licenses from './licenses.js';
 import Notices from '../tools/notices.js';
 import api from '@wordpress/api';
-
-const components = {
-	general: General,
-	licenses: Licenses,
-	recaptcha: Recaptcha,
-	messages: Messages,
-	integrations: Integrations,
-};
 
 function App() {
 	const [ isSaving, setSaving ] = useState( false );
 	const [ apiLoaded, setApiLoaded ] = useState( false );
 	const [ settings, setSettings ] = useState();
+	const [ globalSettings, setGlobalSettings ] = useState();
 	const { createNotice, removeNotice } = useDispatch( noticesStore );
-
-	/*useEffect( () => {
-		apiFetch( {
-			path: '/formello/v1/settings',
-			method: 'GET',
-		} ).then( ( result ) => {
-			setSettings( result.response );
-
-			setApiLoaded( true );
-		} );
-	}, [] );*/
-
-	const onChange = ( key, value ) => {
-		setSaving( true );
-		let newSettings = {
-			...settings,
-			[key]: value
-		}
-		setSettings( newSettings )
-	    let update = new api.models.Settings( { formello: newSettings} );
-	    update.save()
-	    .done( () => {
-			addNotice( 'info', 'Settings saved' );
-	    } )
-	    .always( () => setSaving( false ) )
-	}
 
 	useEffect( () => {
 
@@ -78,6 +46,7 @@ function App() {
 	        if ( apiLoaded === false ) {
 	            settings.fetch().then( ( response ) => {
 	            	setSettings( response.formello )
+	            	setGlobalSettings( response )
 	            	setApiLoaded( true )
 	            } );
 	        }
@@ -89,23 +58,33 @@ function App() {
 		{
 			name: 'general',
 			title: 'General',
+			component: General,
 		},
 		{
 			name: 'recaptcha',
 			title: 'ReCaptcha',
+			component: Recaptcha,
 		},
 		{
 			name: 'messages',
 			title: 'Messages',
+			component: Messages,
 		},
 		{
 			name: 'integrations',
 			title: 'Integrations',
+			component: Integrations,
 		},
-		/*{
+		{
 			name: 'licenses',
 			title: 'Licenses',
-		},*/
+			component: Licenses,
+		},
+		{
+			name: 'logging',
+			title: 'Logging',
+			component: Logging,
+		},
 	];
 
 	const addNotice = ( status, content, type = 'snackbar' ) => {
@@ -130,17 +109,14 @@ function App() {
 	const storeSettings = () => {
 		setSaving( true );
 
-		apiFetch( {
-			path: '/formello/v1/settings',
-			method: 'POST',
-			data: {
-				settings,
-			},
-		} ).then( () => {
-			setSaving( false );
-			addNotice( 'error', 'Settings saved' );
-		} );
-	};
+	    let update = new api.models.Settings( { formello: settings } );
+	    update.save()
+	    .done( () => {
+			addNotice( 'info', 'Settings saved' );
+	    } )
+	    .always( () => setSaving( false ) )
+	    .catch( (e) => addNotice( 'error', e.message, 'default' ) )
+	}
 
 	const saveSettingGroup = ( group, name, value ) => {
 		setSettings( {
@@ -193,17 +169,18 @@ function App() {
 					onSelect={ ( tabName ) => updateUrl( tabName ) }
 				>
 					{ ( tab ) => {
-						const SettingsTab = components[ tab.name ];
+						const SettingsTab = tab.component;
 						return (
 							<div className="formello-tablist">
 								<div className="formello-settings-tab">
 									<Notices />
 									<SettingsTab
-										saveSetting={ onChange.bind( this ) }
+										saveSetting={ saveSetting.bind( this ) }
 										saveSettingGroup={ saveSettingGroup.bind(
 											this
 										) }
-										getSetting={ getSetting.bind( this ) }
+										settings={ settings }
+										globalSettings={ globalSettings }
 										addNotice={ addNotice }
 									/>
 

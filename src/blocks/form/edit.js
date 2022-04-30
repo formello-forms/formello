@@ -33,10 +33,12 @@ import {
 } from '@wordpress/components';
 
 import classnames from 'classnames';
+import useFormSaved from './useFormSaved';
 
 import getIcon from '../../utils/get-icon';
 
 import { Mailchimp, GetResponse, Email } from './actions/icons';
+import apiFetch from '@wordpress/api-fetch';
 
 const icons = {
 	mailchimp: Mailchimp,
@@ -59,6 +61,10 @@ const ALLOWED_BLOCKS = [
 ];
 
 import { TemplatesModal } from './library';
+import {
+	getConstraints,
+	getFieldsName,
+} from '../../components/merge-tags/functions';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -73,6 +79,41 @@ import { TemplatesModal } from './library';
  */
 function Edit( props ) {
 	const { attributes, className, setAttributes, clientId } = props;
+
+	const saved = useFormSaved();
+
+	const updateTransient = () => {
+		apiFetch( {
+			path: '/formello/v1/sync_template_library/',
+			method: 'POST',
+			data: {},
+		} );
+	};
+
+	if( saved ){
+		apiFetch( {
+			path: '/formello/v1/form/' + attributes.id,
+			method: 'PUT',
+			data: {
+				settings: {
+					storeSubmissions: attributes.storeSubmissions,
+					recaptchaEnabled: attributes.recaptchaEnabled,
+					hide: attributes.hide,
+					debug: attributes.debug,
+					fields: getFieldsName( clientId ),
+					constraints: getConstraints( clientId ),
+					actions: attributes.actions,
+					messages: {
+						success: attributes.successMessage,
+						error: attributes.errorMessage,
+					},
+				},
+			},
+		} ).then( () => {
+			updateTransient();
+		} );
+	}
+
 
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),

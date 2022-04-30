@@ -88,6 +88,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	} );
 
 	return (
+		<div className="formello">
 		<button { ...blockProps }>
 			<BlockControls>
 				<AlignmentToolbar
@@ -130,5 +131,6 @@ export default function Edit( { attributes, setAttributes } ) {
 			/>
 			<ButtonIcon />
 		</button>
+		</div>
 	);
 }

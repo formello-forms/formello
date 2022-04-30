@@ -26,8 +26,8 @@ export default function Help() {
 
 					<Button
 						isSecondary
-						target="_blank"
 						href="https://docs.formello.net"
+						target="_blank"
 					>
 						{ __( 'Documentation', 'formello' ) }
 					</Button>

@@ -1,16 +1,21 @@
 import { Card, CardHeader, CardBody, TextControl } from '@wordpress/components';
-import { Fragment } from '@wordpress/element';
+import { useState, useEffect, Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 
-export default function messages( props ) {
-	const { getSetting, saveSettingGroup } = props;
+export default function Messages( props ) {
+	const { saveSettingGroup, settings, saveSetting } = props;
 
 	const updateSetting = ( group, field, value ) => {
-		const newSettings = Object.assign( {}, getSetting( 'messages', group ) );
+		const newSettings = Object.assign( {}, settings.messages[group] );
 		newSettings[ field ] = value;
 		saveSettingGroup( 'messages', group, newSettings );
 	};
+
+	const missingValue = Object.keys( settings.messages.missingValue )
+	const patternMismatch = Object.keys( settings.messages.patternMismatch )
+	const outOfRange = Object.keys( settings.messages.outOfRange )
+	const wrongLength = Object.keys( settings.messages.wrongLength )
 
 	return (
 		<Fragment>
@@ -20,49 +25,22 @@ export default function messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					<TextControl
-						label={ __( 'Default' ) }
-						value={ getSetting( 'messages', 'missingValue' ).default }
-						onChange={ ( val ) => {
-							updateSetting( 'missingValue', 'default', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Checkbox' ) }
-						value={ getSetting( 'messages', 'missingValue' ).checkbox }
-						onChange={ ( val ) => {
-							updateSetting( 'missingValue', 'checkbox', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Radio' ) }
-						value={ getSetting( 'messages', 'missingValue' ).radio }
-						onChange={ ( val ) => {
-							updateSetting( 'missingValue', 'radio', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Select' ) }
-						value={ getSetting( 'messages', 'missingValue' ).select }
-						onChange={ ( val ) => {
-							updateSetting( 'missingValue', 'select', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Select Multiple' ) }
-						value={
-							getSetting( 'messages', 'missingValue' )[
-								'select-multiple'
-							]
-						}
-						onChange={ ( val ) => {
-							updateSetting(
-								'missingValue',
-								[ 'select-multiple' ],
-								val
-							);
-						} }
-					/>
+					{
+					 	missingValue.map( ( oneKey,i ) => {
+							return (
+								<Fragment key={ i }>
+								<TextControl
+									
+									label={ __( oneKey ) }
+									value={ settings.messages.missingValue[oneKey] }
+									onChange={ ( val ) => {
+										updateSetting( 'missingValue', oneKey, val );
+									} }
+								/>
+								</Fragment >
+							)
+						})
+					}
 				</CardBody>
 			</Card>
 
@@ -72,65 +50,22 @@ export default function messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					<TextControl
-						label={ __( 'Email' ) }
-						value={ getSetting( 'messages', 'patternMismatch' ).email }
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'email', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Url' ) }
-						value={ getSetting( 'messages', 'patternMismatch' ).url }
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'url', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Number', 'formello' ) }
-						value={ getSetting( 'messages', 'patternMismatch' ).number }
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'number', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Color', 'formello' ) }
-						value={ getSetting( 'messages', 'patternMismatch' ).color }
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'color', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Date', 'formello' ) }
-						value={ getSetting( 'messages', 'patternMismatch' ).date }
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'date', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Time', 'formello' ) }
-						value={ getSetting( 'messages', 'patternMismatch' ).time }
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'time', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Month', 'formello' ) }
-						value={ getSetting( 'messages', 'patternMismatch' ).month }
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'month', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Default', 'formello' ) }
-						value={
-							getSetting( 'messages', 'patternMismatch' ).default
-						}
-						onChange={ ( val ) => {
-							updateSetting( 'patternMismatch', 'default', val );
-						} }
-					/>
+					{
+					 	patternMismatch.map( ( oneKey,i ) => {
+							return (
+								<TextControl
+									key={ i }
+									label={ __( oneKey ) }
+									value={ settings.messages.patternMismatch[oneKey] }
+									onChange={ ( val ) => {
+										updateSetting( 'patternMismatch', oneKey, val );
+									} }
+								/>
+							)
+						})
+					}
 				</CardBody>
+
 			</Card>
 
 			<Card>
@@ -139,20 +74,20 @@ export default function messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					<TextControl
-						label={ __( 'Over Range', 'formello' ) }
-						value={ getSetting( 'messages', 'outOfRange' ).over }
-						onChange={ ( val ) => {
-							updateSetting( 'outOfRange', 'over', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Under Range', 'formello' ) }
-						value={ getSetting( 'messages', 'outOfRange' ).under }
-						onChange={ ( val ) => {
-							updateSetting( 'outOfRange', 'under', val );
-						} }
-					/>
+					{
+					 	outOfRange.map( ( oneKey,i ) => {
+							return (
+								<TextControl
+									key={ i }
+									label={ __( oneKey ) }
+									value={ settings.messages.outOfRange[oneKey] }
+									onChange={ ( val ) => {
+										updateSetting( 'outOfRange', oneKey, val );
+									} }
+								/>
+							)
+						})
+					}
 				</CardBody>
 			</Card>
 
@@ -162,20 +97,20 @@ export default function messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					<TextControl
-						label={ __( 'Over Length', 'formello' ) }
-						value={ getSetting( 'messages', 'wrongLength' ).over }
-						onChange={ ( val ) => {
-							updateSetting( 'wrongLength', 'over', val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Under Length', 'formello' ) }
-						value={ getSetting( 'messages', 'wrongLength' ).under }
-						onChange={ ( val ) => {
-							updateSetting( 'wrongLength', 'under', val );
-						} }
-					/>
+					{
+					 	wrongLength.map( ( oneKey,i ) => {
+							return (
+								<TextControl
+									key={ i }
+									label={ __( oneKey ) }
+									value={ settings.messages.wrongLength[oneKey] }
+									onChange={ ( val ) => {
+										updateSetting( 'wrongLength', oneKey, val );
+									} }
+								/>
+							)
+						})
+					}
 				</CardBody>
 			</Card>
 		</Fragment>

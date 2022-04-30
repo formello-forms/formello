@@ -23,16 +23,11 @@ function App() {
 		{
 			name: 'general',
 			title: __( 'General', 'formello' ),
-			className: 'setting-tabs__plugin-settings',
+			component: General,
 		},
 	];
 
-	const components = {
-		general: General,
-	};
-
 	applyFilters( 'formello.ToolsTabs', '', toolsTabs );
-	applyFilters( 'formello.ToolsComponents', '', components );
 
 	const initialTab = getQueryArg( window.location.href, 'tab' );
 
@@ -51,9 +46,11 @@ function App() {
 					</h1>
 				</div>
 			</div>
+			{applyFilters( 'formello.Test', '', this )}
+
 			<div className="formello-settings-main">
 				{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
-
+				<Slot name="ToolsTab" />
 				<TabPanel
 					tabs={ toolsTabs }
 					onSelect={ ( tabName ) => updateUrl( tabName ) }
@@ -68,7 +65,8 @@ function App() {
 									</Fragment>
 								);
 							default:
-								return <Slot name="ToolsTabs" />;
+								const Tab = tab.component;
+								return <Tab />;
 						}
 					} }
 				</TabPanel>

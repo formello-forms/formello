@@ -20,7 +20,8 @@ export default function mergeTags( props ) {
 	const icon = 'list-view';
 
 	const change = ( val ) => {
-		onChange( value + val );
+		onChange( val );
+		//onChange( value + val );
 	};
 
 	return (

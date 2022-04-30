@@ -7,28 +7,86 @@ import {
   CardHeader
 } from '@wordpress/components';
 
-import { RawHTML } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
+import api from '@wordpress/api';
 
 export default function AddonLicense(props) {
 
-	const { title, license, saveSettingGroup } = props
+	const { title, addonSettings, optionName } = props
+	const [ loading, setLoading ] = useState( false );
+	const [ settings, setSettings ] = useState( addonSettings );
 
-	const validateLicense = ( group, field, value ) => {
+	const validateLicense = ( endpoint, e ) => {
+
+		setLoading( true );
 		apiFetch( {
-			path: '/formello/v1/license/activate',
+			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
-				license: license,
+				license: settings.license,
+				item_name: title,
 			},
 		} ).then( ( result ) => {
-        	addNotice( 'info', __( 'Api Key valid', 'formello' ) );
+
+			setLoading( false );
+			saveSettings( 'license_status', result.response.license )
+
+			if ( result.response.success ) {
+				showMessage( result.response.license, 'success', e )
+			}
+
+			if ( ! result.success || ! result.response || !result.response.success ) {
+				showMessage( result.response, 'error', e )
+			}
+
 		}, (result) => {
-        	addNotice( 'error', result.message );
+        	showMessage( result.message, 'error', e );
 		})
 	};
+
+	const showMessage = ( message, type, e ) => {
+		const msg = e.target.nextElementSibling;
+		setLoading( false );
+
+		msg.classList.add( 'formello-action-message--show' );
+		msg.classList.remove( 'formello-action-message--error' );
+		
+		if( 'error' === type ){
+			msg.classList.add( 'formello-action-message--error' );
+		}
+		msg.textContent = 'License status: ' + message;
+
+		setTimeout( function() {
+			msg.classList.remove( 'formello-action-message--show' );
+		}, 3000 )
+	};
+
+	const saveSettings = ( key, value ) => {
+		setSettings( {
+			...settings,
+			[ key ]: value,
+		} );
+	};
+
+	useEffect( () => {
+		if( 'valid' === settings.license_status ){
+			storeSettings()
+		}
+	}, [settings] )
+
+	const storeSettings = () => {
+
+	    let update = new api.models.Settings( { [optionName]: settings } );
+	    update.save()
+	    .done( () => {
+
+	    } )
+	    .always( () => setSaving( false ) )
+	    .catch( (e) => console.log( 'error', e.message, 'default' ) )
+	}
 
 	return (
 		<Card>
@@ -41,19 +99,37 @@ export default function AddonLicense(props) {
 				<BaseControl>
 					<InputControl
 						label={ __( 'License Key', 'formello-mailchimp' ) }
-						value={ license }
+						value={ settings.license }
 						onChange={ ( val ) => {
-							saveSettingGroup( 'addon_licenses', title, val )
+							saveSettings( 'license', val )
 						} }
-						suffix={
-							<Button
-								isSmall
-								onClick={ validateLicense }
-								icon={ 'admin-generic' }
-							/>
-						}
+						readOnly={ 'valid' === settings.license_status }
 					/>
 				</BaseControl>					
+				{ 'valid' === settings.license_status ?
+					<Button
+						onClick={ ( e ) =>
+							validateLicense( 'deactivate', e )
+						}
+						isSecondary
+						aria-disabled={ loading }
+						isBusy={ loading }
+					>
+						Deactivate
+					</Button>
+					:
+					<Button
+						onClick={ ( e ) =>
+							validateLicense( 'activate', e )
+						}
+						isPrimary
+						aria-disabled={ loading }
+						isBusy={ loading }
+					>
+						Activate
+					</Button>
+				}
+				<span className="formello-action-message"></span>
 			</CardBody>
 		</Card>
 	);

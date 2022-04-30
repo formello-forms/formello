@@ -83,9 +83,13 @@ html {
 			width: 1%;
 		}
 
-		button {
+		div, button {
+			margin-bottom: 0;
 			align-self: stretch;
 			margin-left: 10px;
+			button {
+				height: 100%;
+			}
 		}
 
 		&.grouped {
@@ -183,7 +187,6 @@ html {
 	}*/
 
 	.wp-block-formello-button {
-		border: none;
 		flex-direction: row;
 		align-self: flex-start;
 

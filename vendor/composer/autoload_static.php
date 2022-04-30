@@ -6,6 +6,12 @@ namespace Composer\Autoload;
 
 class ComposerStaticInit89fc8527d43a83151b23dbe63359ada2
 {
+    public static $files = array (
+        'dbe920d25ef8abb2ed635ba56cd8a6d6' => __DIR__ . '/../..' . '/includes/utils/functions.php',
+        '154a9dd6be49f608c90f9b4bab3f6132' => __DIR__ . '/../..' . '/includes/register-cpt.php',
+        'bd19d6a91140de072ebbaaece830094f' => __DIR__ . '/../..' . '/includes/register-settings.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
@@ -40,6 +46,7 @@ class ComposerStaticInit89fc8527d43a83151b23dbe63359ada2
         'Formello\\Admin\\Tables\\Submissions' => __DIR__ . '/../..' . '/includes/admin/tables/class-submissions.php',
         'Formello\\Assets' => __DIR__ . '/../..' . '/includes/class-assets.php',
         'Formello\\Blocks' => __DIR__ . '/../..' . '/includes/class-blocks.php',
+        'Formello\\Cron' => __DIR__ . '/../..' . '/includes/class-cron.php',
         'Formello\\Form' => __DIR__ . '/../..' . '/includes/class-form.php',
         'Formello\\Frontend' => __DIR__ . '/../..' . '/includes/class-frontend.php',
         'Formello\\Katzgrau\\KLogger\\Logger' => __DIR__ . '/..' . '/katzgrau/klogger/src/Logger.php',
@@ -49,11 +56,11 @@ class ComposerStaticInit89fc8527d43a83151b23dbe63359ada2
         'Formello\\Rest\\Controllers\\License' => __DIR__ . '/../..' . '/includes/rest/controllers/class-license.php',
         'Formello\\Rest\\Controllers\\Settings' => __DIR__ . '/../..' . '/includes/rest/controllers/class-settings.php',
         'Formello\\Rest\\Controllers\\Template' => __DIR__ . '/../..' . '/includes/rest/controllers/class-template.php',
+        'Formello\\Submission' => __DIR__ . '/../..' . '/includes/class-submission.php',
         'Formello\\TagReplacers\\Fields' => __DIR__ . '/../..' . '/includes/tag-replacers/class-fields.php',
         'Formello\\TagReplacers\\Other' => __DIR__ . '/../..' . '/includes/tag-replacers/class-other.php',
         'Formello\\TagReplacers\\Replacer' => __DIR__ . '/../..' . '/includes/tag-replacers/class-replacer.php',
         'Formello\\TagReplacers\\Wp' => __DIR__ . '/../..' . '/includes/tag-replacers/class-wp.php',
-        'Formello\\Updater' => __DIR__ . '/../..' . '/includes/class-updater.php',
         'Formello\\Utils\\Encryption' => __DIR__ . '/../..' . '/includes/utils/class-encryption.php',
     );
 

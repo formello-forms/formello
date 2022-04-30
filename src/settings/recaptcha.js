@@ -6,11 +6,12 @@ import {
 	RadioControl,
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
+import { useState, useEffect } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 
-export default function reCaptcha( props ) {
-	const { getSetting, saveSettingGroup } = props;
+export default function ReCaptcha( props ) {
+	const { saveSetting, saveSettingGroup, settings } = props;
 
 	return (
 		<Card>
@@ -20,7 +21,7 @@ export default function reCaptcha( props ) {
 
 			<CardBody>
 				<RadioControl
-					selected={ getSetting( 'reCaptcha', 'version' ) }
+					selected={ settings.reCaptcha.version }
 					options={ [
 						{ label: 'reCaptcha v2 checkbox', value: '1' },
 						{ label: 'reCaptcha v3 invisible', value: '3' },
@@ -32,7 +33,7 @@ export default function reCaptcha( props ) {
 
 				<TextControl
 					label={ __( 'Site Key', 'formello' ) }
-					value={ getSetting( 'reCaptcha', 'site_key' ) }
+					value={ settings.reCaptcha.site_key }
 					onChange={ ( val ) => {
 						saveSettingGroup( 'reCaptcha', 'site_key', val );
 					} }
@@ -40,16 +41,16 @@ export default function reCaptcha( props ) {
 
 				<TextControl
 					label={ __( 'Secret Key', 'formello' ) }
-					value={ getSetting( 'reCaptcha', 'secret_key' ) }
+					value={ settings.reCaptcha.secret_key }
 					onChange={ ( val ) => {
 						saveSettingGroup( 'reCaptcha', 'secret_key', val );
 					} }
 				/>
 
-				{ getSetting( 'reCaptcha', 'version' ) === 3 && (
+				{ 3 === Number(settings.reCaptcha.version) && (
 					<NumberControl
 						label={ __( 'Threshold', 'formello' ) }
-						value={ getSetting( 'reCaptcha', 'threshold' ) }
+						value={ settings.reCaptcha.threshold }
 						onChange={ ( val ) => {
 							saveSettingGroup( 'reCaptcha', 'threshold', val );
 						} }

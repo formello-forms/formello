@@ -8,8 +8,8 @@ import save from './save';
 import getIcon from '../../utils/get-icon';
 import metadata from './block.json';
 
-import './editor.scss';
-import asyncDb from './asyncDb';
+//import './editor.scss';
+//import asyncDb from './asyncDb';
 
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
