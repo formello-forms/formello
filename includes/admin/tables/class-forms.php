@@ -181,7 +181,6 @@ class Forms extends \WP_List_Table {
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$order              = sanitize_text_field( $_REQUEST['order'] );
-			$order              = esc_sql( $order );
 			$params['order_by'] = sanitize_text_field( $_REQUEST['orderby'] );
 			$params['order']    = ! empty( $order ) ? strtoupper( $order ) : 'ASC';
 			$sql               .= ' ORDER BY %1s %1s';
@@ -189,7 +188,7 @@ class Forms extends \WP_List_Table {
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
 			$params['search'] = '%' . sanitize_text_field( $_REQUEST['s'] ) . '%';
-			$sql .= ' AND f.name LIKE %s';
+			$sql .= ' AND f.post_title LIKE %s';
 		}
 
 		$params['per_page'] = $per_page;

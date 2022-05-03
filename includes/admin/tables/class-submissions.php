@@ -382,17 +382,17 @@ class Submissions extends \WP_List_Table {
 			'page_number' => ( $page_number - 1 ) * $per_page,
 		);
 
-		if ( ! empty( $_REQUEST['s'] ) ) {
-			$params['search'] = '%' . sanitize_text_field( $_REQUEST['s'] ) . '%';
-			$sql .= ' AND f.name LIKE %s';
-		}
-
 		if ( 'new' === $filter ) {
 			$sql .= ' AND is_new = 1';
 		}
 
 		if ( 'starred' === $filter ) {
 			$sql .= ' AND starred = 1';
+		}
+
+		if ( ! empty( $_REQUEST['s'] ) ) {
+			array_unshift( $params, '%' . sanitize_text_field( $_REQUEST['s'] ) . '%' );
+			$sql .= ' AND data LIKE %s';
 		}
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {

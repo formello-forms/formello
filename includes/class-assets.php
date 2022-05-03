@@ -175,7 +175,7 @@ class Assets {
 			),
 			'formello-settings'          => array(
 				'src'  => FORMELLO_ASSETS . '/dashboard.css',
-				'deps' => array( 'wp-components' ),
+				'deps' => array( 'wp-components', 'wp-reset-editor-styles' ),
 			),
 		);
 

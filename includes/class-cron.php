@@ -78,7 +78,7 @@ class Cron {
 
 		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM {$table_posts} f WHERE f.id = s.form_id );";
 		// phpcs:ignore
-		$result = $wpdb->get_row($sql);
+		$result = $wpdb->get_row( $sql );
 
 		if ( $result->total ) {
 			set_transient( 'formello_news', $result->total, DAY_IN_SECONDS );
