@@ -128,33 +128,11 @@ class Submissions extends \WP_List_Table {
 	/**
 	 * Mark a submission as starred/new.
 	 *
-	 * @param int     $id customer ID.
-	 * @param string  $column column name.
-	 * @param boolean $value Yes or no.
-	 */
-	public static function mark_submission( $id, $column, $value = 0 ) {
-		global $wpdb;
-
-		$table = $wpdb->prefix . 'formello_submissions';
-
-		$wpdb->query(
-			$wpdb->prepare(
-				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET `%s` = %d WHERE id = %d;',
-				$column,
-				$value,
-				$id
-			)
-		);
-	}
-
-	/**
-	 * Mark a submission as starred/new.
-	 *
 	 * @param string $column column name.
 	 * @param string $value column value.
 	 * @param array  $ids Yes or no.
 	 */
-	public static function mark_submissions( $column, $value, $ids = array() ) {
+	protected function mark_submissions( $column, $value, $ids = array() ) {
 		global $wpdb;
 
 		$table = $wpdb->prefix . 'formello_submissions';
@@ -163,12 +141,13 @@ class Submissions extends \WP_List_Table {
 
 		$wpdb->query(
 			$wpdb->prepare(
-				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET `%1s` = %d WHERE id in ( %1s );',
+				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET %1s = %d WHERE id in ( %1s );',
 				$column,
 				$value,
 				$ids,
 			)
 		);
+		$this->refresh_table( __( 'Submission(s) updated.', 'formello' ) );
 	}
 
 	/**
@@ -206,11 +185,11 @@ class Submissions extends \WP_List_Table {
 	 */
 	public function get_bulk_actions() {
 		$actions = array(
-			'mark-as-read' => 'Mark as Read',
-			'mark-as-unread' => 'Mark as Unread',
-			'mark-as-starred' => 'Star',
-			'mark-as-unstarred' => 'Unstar',
-			'bulk-delete' => 'Delete',
+			'mark-as-read' => __( 'Mark as Read', 'formello' ),
+			'mark-as-unread' => __( 'Mark as Unread', 'formello' ),
+			'mark-as-starred' => __( 'Star', 'formello' ),
+			'mark-as-unstarred' => __( 'Unstar', 'formello' ),
+			'bulk-delete' => __( 'Delete' ),
 		);
 
 		return $actions;
@@ -250,7 +229,7 @@ class Submissions extends \WP_List_Table {
 					array(
 						'action'     => 'delete',
 						'submission_id' => $item['id'],
-						'_wpnonce'   => wp_create_nonce( 'sp_delete_submission' ),
+						'_wpnonce'   => wp_create_nonce( 'formello' ),
 					)
 				)
 			),
@@ -267,11 +246,11 @@ class Submissions extends \WP_List_Table {
 
 		$filter = ( isset( $_REQUEST['formello'] ) ? $_REQUEST['formello'] : 'total' );
 
-		/** Process bulk action */
-		$this->process_bulk_action();
-
 		$hidden   = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
+
+		/** Process bulk action */
+		$this->process_bulk_action();
 
 		$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
 		$current_page = $this->get_pagenum();
@@ -297,86 +276,49 @@ class Submissions extends \WP_List_Table {
 	 */
 	public function process_bulk_action() {
 
-		// Detect when a bulk action is being triggered...
-		if ( 'delete' === $this->current_action() ) {
-			if ( ! wp_verify_nonce( esc_attr( $_REQUEST['_wpnonce'] ), 'sp_delete_submission' ) ) {
-				$message_box = sprintf(
-					'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
-					__( 'Go get a life script kiddies.', 'formello' )
-				);
-				echo wp_kses_post( $message_box );
-				wp_die();
-			} else {
-				self::delete_submission( absint( $_GET['submission_id'] ) );
-				$this->refresh_table( __( 'Entry successfully deleted.', 'formello' ) );
-			}
-			// reset data.
-			$this->data = array();
+		$action     = $this->current_action();
+		$marked_ids = isset( $_REQUEST['bulk-delete'] ) ? wp_parse_id_list( wp_unslash( $_REQUEST['bulk-delete'] ) ) : array();
+
+		switch ( $action ) {
+			case 'delete':
+				if ( ! wp_verify_nonce( esc_attr( $_REQUEST['_wpnonce'] ), 'formello' ) ) {
+					$message_box = sprintf(
+						'<div class="notice notice-warning is-dismissible"><p>%s</p></div>',
+						__( 'Entry not deleted. Probably you clicked on expired link', 'formello' )
+					);
+					echo wp_kses_post( $message_box );
+				} else {
+					self::delete_submission( absint( $_REQUEST['submission_id'] ) );
+					$this->refresh_table( __( 'Entry successfully deleted.', 'formello' ) );
+				}
+				break;
+			case 'bulk-delete':
+				if ( ! wp_verify_nonce( esc_attr( $_REQUEST['_wpnonce'] ), 'bulk-' . $this->_args['plural'] ) ) {
+					$message_box = sprintf(
+						'<div class="notice notice-success is-dismissible"><p>%s</p></div>',
+						__( 'Go get a life script kiddies.', 'formello' )
+					);
+					echo wp_kses_post( $message_box );
+					wp_die();
+				} else {
+					self::delete_submissions( $marked_ids );
+					$this->refresh_table( __( 'Entry successfully deleted.', 'formello' ) );
+				}
+				break;
+			case 'mark-as-read':
+				self::mark_submissions( 'is_new', 0, $marked_ids );
+				break;
+			case 'mark-as-unread':
+				self::mark_submissions( 'is_new', 1, $marked_ids );
+				break;
+			case 'mark-as-starred':
+				self::mark_submissions( 'starred', 1, $marked_ids );
+				break;
+			case 'mark-as-unstarred':
+				self::mark_submissions( 'starred', 0, $marked_ids );
+				break;
 		}
 
-		// If the delete bulk action is triggered.
-		if ( ( isset( $_POST['action'] ) && 'mark-as-read' === $_POST['action'] )
-			|| ( isset( $_POST['action2'] ) && 'mark-as-read' === $_POST['action2'] )
-		) {
-			$marked_ids = esc_sql( $_POST['bulk-delete'] );
-
-			// loop over the array of record IDs and delete them.
-			self::mark_submissions( 'is_new', 0, $marked_ids );
-
-			// refresh table.
-			$this->refresh_table( __( 'Submission(s) marked as read.', 'formello' ) );
-		}
-
-		// If the delete bulk action is triggered.
-		if ( ( isset( $_POST['action'] ) && 'mark-as-starred' === $_POST['action'] )
-			|| ( isset( $_POST['action2'] ) && 'mark-as-starred' === $_POST['action2'] )
-		) {
-			$marked_ids = esc_sql( $_POST['bulk-delete'] );
-
-			// loop over the array of record IDs and delete them.
-			self::mark_submissions( 'starred', 1, $marked_ids );
-
-			// refresh table.
-			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
-		}
-
-		// If the delete bulk action is triggered.
-		if ( ( isset( $_POST['action'] ) && 'mark-as-unread' === $_POST['action'] )
-			|| ( isset( $_POST['action2'] ) && 'mark-as-unread' === $_POST['action2'] )
-		) {
-			$marked_ids = esc_sql( $_POST['bulk-delete'] );
-
-			// loop over the array of record IDs and delete them.
-			self::mark_submissions( 'is_new', 1, $marked_ids );
-
-			// refresh table.
-			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
-		}
-
-		// If the delete bulk action is triggered.
-		if ( ( isset( $_POST['action'] ) && 'mark-as-unstarred' === $_POST['action'] )
-			|| ( isset( $_POST['action2'] ) && 'mark-as-unstarred' === $_POST['action2'] )
-		) {
-			$marked_ids = esc_sql( $_POST['bulk-delete'] );
-
-			// loop over the array of record IDs and delete them.
-			self::mark_submissions( 'starred', 0, $marked_ids );
-
-			// refresh table.
-			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
-		}
-
-		// If the delete bulk action is triggered.
-		if ( ( isset( $_POST['action'] ) && 'bulk-delete' === $_POST['action'] )
-			|| ( isset( $_POST['action2'] ) && 'bulk-delete' === $_POST['action2'] )
-		) {
-			$delete_ids = esc_sql( $_POST['bulk-delete'] );
-
-			// loop over the array of record IDs and delete them.
-			self::delete_submissions( $delete_ids );
-			// refresh table.
-			$this->refresh_table( __( 'Submission(s) deleted.', 'formello' ) );
-		}
 	}
 
 	/**
@@ -394,7 +336,7 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array( 'id' );
+		return array();
 	}
 
 	/**
@@ -433,8 +375,16 @@ class Submissions extends \WP_List_Table {
 				FROM {$wpdb->prefix}formello_submissions 
 				WHERE form_id = {$this->form_id}";
 
+		$params = array(
+			'order_by' => 'id',
+			'order' => 'DESC',
+			'per_page' => $per_page,
+			'page_number' => ( $page_number - 1 ) * $per_page,
+		);
+
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			$sql .= ' AND data LIKE "%' . esc_sql( sanitize_text_field( $_REQUEST['s'] ) ) . '%"';
+			$params['search'] = '%' . sanitize_text_field( $_REQUEST['s'] ) . '%';
+			$sql .= ' AND f.name LIKE %s';
 		}
 
 		if ( 'new' === $filter ) {
@@ -445,15 +395,20 @@ class Submissions extends \WP_List_Table {
 			$sql .= ' AND starred = 1';
 		}
 
-		$order_by = ' ORDER BY ' . empty( $_REQUEST['orderby'] ) ? 'id' : esc_sql( sanitize_text_field( $_REQUEST['orderby'] ) );
-		$order = empty( $_REQUEST['order'] ) ? 'DESC' : esc_sql( sanitize_text_field( $_REQUEST['order'] ) );
+		if ( ! empty( $_REQUEST['orderby'] ) ) {
+			$order              = sanitize_text_field( $_REQUEST['order'] );
+			$params['order_by'] = sanitize_text_field( $_REQUEST['orderby'] );
+			$params['order']    = ! empty( $order ) ? strtoupper( $order ) : 'ASC';
+		}
 
-		$sql .= ' ORDER BY ' . $order_by . ' ' . $order;
+		$sql .= ' ORDER BY %1s %1s';
+		$sql .= ' LIMIT %d';
+		$sql .= ' OFFSET %d';
 
-		$sql .= ' LIMIT ' . $per_page;
-		$sql .= ' OFFSET ' . ( $page_number - 1 ) * $per_page;
-
-		$results = $wpdb->get_results( $sql, ARRAY_A );
+		$results = $wpdb->get_results(
+			$wpdb->prepare( $sql, $params ),
+			ARRAY_A
+		);
 
 		$submissions = array();
 
@@ -478,7 +433,6 @@ class Submissions extends \WP_List_Table {
 		$columns                   = array();
 		$columns['cb']             = '<input type="checkbox" />';
 		$columns['id']             = 'ID';
-		$columns['formello_icons'] = '';
 
 		$settings = get_post_meta( $this->form_id, '_formello_settings', true );
 
@@ -489,7 +443,6 @@ class Submissions extends \WP_List_Table {
 		}
 
 		$columns['formello_date'] = __( 'Submitted At' );
-		$columns['actions']       = __( 'Actions' );
 		$this->columns = array_keys( $columns );
 		return $columns;
 	}
@@ -504,23 +457,8 @@ class Submissions extends \WP_List_Table {
 	 */
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
-			case 'id':
 			case 'formello_date':
 				return $item['submitted_at'];
-			case 'formello_icons':
-				$is_new = $item['is_new'] ? 'dashicons dashicons-marker' : '';
-				$starred = $item['starred'] ? 'dashicons dashicons-star-filled' : '';
-
-				$icons = sprintf(
-					'<div class="formello-icons-group"><span class="%s formello-new" title="new"> </span><span class="%s formello-star" title="starred"> </span></div>',
-					esc_attr(
-						$is_new
-					),
-					esc_attr(
-						$starred
-					),
-				);
-				return $icons;
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
 				return Formatter::format( $item, $this->settings['fields'][ $column_name ] );
@@ -548,7 +486,52 @@ class Submissions extends \WP_List_Table {
 			$item['id']
 		);
 
-		return $title;
+		$view_url = add_query_arg(
+			array(
+				'post_type' => 'formello_form',
+				'page' => 'formello-submission',
+				'form_id' => sanitize_text_field( $_REQUEST['form_id'] ),
+				'submission_id' => $item['id'],
+				'paged' => isset( $_REQUEST['paged'] ) ? sanitize_text_field( $_REQUEST['paged'] ) : '',
+			),
+			admin_url( 'edit.php' )
+		);
+		$view_link = sprintf(
+			'<span class="edit"><a href="%s">%s</a></span>',
+			$view_url,
+			__( 'View' )
+		);
+		$delete_link = sprintf(
+			'<span class="trash"><a href="%s" onclick="return confirm(\'%s\')">%s</a></span>',
+			esc_attr(
+				add_query_arg(
+					array(
+						'action'     => 'delete',
+						'submission_id' => $item['id'],
+						'_wpnonce'   => wp_create_nonce( 'formello' ),
+					)
+				)
+			),
+			__( 'Do you want delete this record?', 'formello' ),
+			__( 'Delete' )
+		);
+
+		$is_new = $item['is_new'] ? 'dashicons dashicons-marker' : '';
+		$starred = $item['starred'] ? 'dashicons dashicons-star-filled' : '';
+
+		$icons = sprintf(
+			'<div><span class="%s formello-new" title="new"> </span><span class="%s formello-star" title="starred"> </span></div>',
+			esc_attr(
+				$is_new
+			),
+			esc_attr(
+				$starred
+			),
+		);
+
+		$output = '<div class="formello-icons-group">' . $title . $icons . '</div><div class="row-actions">' . $view_link . ' | ' . $delete_link . '</div>';
+
+		return $output;
 	}
 
 	/**

@@ -1,2 +1,102 @@
-.formello-mergetags-container{min-width:300px}.formello-tag-option{cursor:pointer;margin-bottom:5px}.formello-tag-option:hover{color:#007cba}
-.wp-block-formello-form input,.wp-block-formello-form select,.wp-block-formello-form textarea{padding:8px}.wp-block-formello-form select{max-width:100%}.formello-templates-list{display:flex;flex-wrap:wrap}.formello-templates-list li{flex:0 0 33.333%;padding:10px;width:33.333%}.formello-templates-list li a{cursor:pointer;text-align:center}.formello-urlinput input{border:1px solid #8c8f94!important;width:100%!important}.formello-hidden{display:flex}.wp-block-formello-button{border:1px solid transparent;display:block;font-weight:400}.wp-block-formello-button.left{margin-left:0}.wp-block-formello-button.right{margin-right:0}.wp-block-formello-button.wide{width:auto}.formello-modal{min-width:500px}.formello-modal select{min-width:100%}.formello-modal fieldset{border:1px solid #dedede;margin-bottom:10px;padding:10px}.formello-modal-buttons{display:flex;flex-flow:row-reverse;justify-content:space-between;margin:20px 0}.formello-fields-row{margin-bottom:10px}.formello-fields-row .components-base-control__field{margin-bottom:0}.formello-fields-rules{margin-bottom:10px}
+/*!**************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/components/merge-tags/editor.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************/
+.formello-mergetags-container {
+  min-width: 300px;
+}
+
+.formello-tag-option {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.formello-tag-option:hover {
+  color: #007cba;
+}
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+.wp-block-formello-form input,
+.wp-block-formello-form select,
+.wp-block-formello-form textarea {
+  padding: 8px;
+}
+.wp-block-formello-form select {
+  max-width: 100%;
+}
+
+.formello-templates-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.formello-templates-list li {
+  padding: 10px;
+  flex: 0 0 33.333%;
+  width: 33.333%;
+}
+.formello-templates-list li a {
+  text-align: center;
+  cursor: pointer;
+}
+
+.formello-urlinput input {
+  width: 100% !important;
+  border: 1px solid #8c8f94 !important;
+}
+
+.formello-hidden {
+  display: flex;
+}
+
+.wp-block-formello-button {
+  border: 1px solid transparent;
+  display: block;
+  font-weight: normal;
+}
+.wp-block-formello-button.left {
+  margin-left: 0;
+}
+.wp-block-formello-button.right {
+  margin-right: 0;
+}
+.wp-block-formello-button.wide {
+  width: auto;
+}
+
+/* ------------------ ACTION MODAL ------------------ */
+.formello-modal {
+  min-width: 500px;
+}
+.formello-modal select {
+  min-width: 100%;
+}
+.formello-modal fieldset {
+  border: 1px solid #dedede;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.formello-modal-buttons {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-between;
+  flex-flow: row-reverse;
+}
+
+/* ------------------ END ACTION MODAL ------------------ */
+/* ------------------ FIELDS -------------------------- */
+.formello-fields-row {
+  margin-bottom: 10px;
+}
+.formello-fields-row .components-base-control__field {
+  margin-bottom: 0;
+}
+
+.formello-fields-rules {
+  margin-bottom: 10px;
+}
+/* ------------------ END FIELDS -------------------------- */
+/* ------------------ ICONS ------------------------------- */
+/* ------------------ END ICONS ------------------------------- */
+
+/*# sourceMappingURL=index.css.map*/

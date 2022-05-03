@@ -177,12 +177,6 @@ $settings-container-width: 1024px;
 	font-weight: bold;
 }
 
-.column-id {
-	text-align: left;
-	width: 5%;
-	overflow: hidden;
-}
-
 .formello-badge {
 	background-color: #337ab7;
 	padding: 0 5px;
@@ -197,22 +191,16 @@ $settings-container-width: 1024px;
 	overflow: hidden;
 }
 
-.column-formello_date {
-	text-align: left;
-	width: 150px !important;
-	overflow: hidden;
-}
-
-.column-formello_icons {
-	text-align: left;
-	width: 50px !important;
-	overflow: hidden;
-}
-
 .formello-icons-group {
 	display: flex;
+    align-items: center;
+    justify-content: space-between;
+    div {
+    	display: flex;
+    }
 	span {
-		min-width: 20px;
+		width: 1em;
+		height: 1em;
 		font-size: 1em;
 	}
 }
