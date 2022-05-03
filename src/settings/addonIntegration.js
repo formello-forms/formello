@@ -20,7 +20,7 @@ export default function AddonLicense(props) {
 	const [ settings, setSettings ] = useState( addonSettings );
 	const elementRef = useRef();
 
-	const validateLicense = () => {
+	const validateKey = () => {
 		const endpoint = 'valid' !== settings.license_status ? 'activate' : 'deactivate'
 		setLoading( true );
 		apiFetch( {
@@ -94,23 +94,21 @@ export default function AddonLicense(props) {
 			<CardBody>
 				<BaseControl>
 					<InputControl
-						label={ __( 'License Key', 'formello-mailchimp' ) }
-						value={ settings.license }
+						label={ __( 'Api Key', 'formello-mailchimp' ) }
+						value={ settings.api_key }
 						onChange={ ( val ) => {
-							saveSettings( 'license', val )
+							saveSettings( 'api_key', val )
 						} }
-						readOnly={ 'valid' === settings.license_status }
 						suffix={
 							<Button
 								onClick={ () =>
-									validateLicense()
+									validateKey()
 								}
-								isPrimary={ 'valid' !== settings.license_status }
-								isSecondary={ 'valid' === settings.license_status }
+								isSecondary
 								aria-disabled={ loading }
 								isBusy={ loading }
 							>
-								{'valid' !== settings.license_status ? 'Activate' : 'Deactivate'}
+								{ __( 'Check', 'formello' ) }
 							</Button>
 						}
 					/>

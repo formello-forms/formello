@@ -37,13 +37,14 @@ import useFormSaved from './useFormSaved';
 
 import getIcon from '../../utils/get-icon';
 
-import { Mailchimp, GetResponse, Email } from './actions/icons';
+import { Mailchimp, GetResponse, Email, WebHooks } from './actions/icons';
 import apiFetch from '@wordpress/api-fetch';
 
 const icons = {
 	mailchimp: Mailchimp,
 	getresponse: GetResponse,
 	email: Email,
+	webhooks: WebHooks
 };
 
 const ALLOWED_BLOCKS = [
@@ -374,6 +375,7 @@ function Edit( props ) {
 					{ ...props }
 					action={ showActionsModal }
 					actionId={ active }
+					className={ 'formello-modal' }
 					onRequestClose={ () => {
 						setShowActionsModal( false );
 					} }

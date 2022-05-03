@@ -57,6 +57,9 @@ export function getFieldsName( clientId ) {
 		if ( b.attributes.enableRtf ) {
 			fields[ b.attributes.name ] = 'richtext';
 		}
+		if ( b.attributes.multiple ) {
+			fields[ b.attributes.name ] = 'select-multiple';
+		}
 	} );
 
 	return fields;

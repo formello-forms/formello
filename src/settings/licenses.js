@@ -19,7 +19,7 @@ const LicensesTab = (props) => {
 		let title = addons[addon].title
 		let name = addons[addon].name
 		let optionName = 'formello_' + name
-		items.push( <AddonLicense {...props} key={ title } title={ title } optionName={ optionName } addonSettings={ globalSettings[ optionName ] } /> )
+		items.push( <AddonLicense {...props} key={ title } title={ title } name={ name } optionName={ optionName } addonSettings={ globalSettings[ optionName ] } /> )
 	}
 
 	return (

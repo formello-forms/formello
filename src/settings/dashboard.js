@@ -183,16 +183,19 @@ function App() {
 										globalSettings={ globalSettings }
 										addNotice={ addNotice }
 									/>
+									{
+										( 'general' === tab.name || 'recaptcha' === tab.name || 'logging' === tab.name ) &&
+										<Button
+											isPrimary
+											aria-disabled={ isSaving }
+											isBusy={ isSaving }
+											disabled={ isSaving }
+											onClick={ ( e ) => storeSettings( e ) }
+										>
+											{ __( 'Save', 'formello' ) }
+										</Button>						
+									}
 
-									<Button
-										isPrimary
-										aria-disabled={ isSaving }
-										isBusy={ isSaving }
-										disabled={ isSaving }
-										onClick={ ( e ) => storeSettings( e ) }
-									>
-										{ __( 'Save', 'formello' ) }
-									</Button>
 								</div>
 
 								<Help />

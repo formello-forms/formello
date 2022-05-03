@@ -61,6 +61,14 @@ $settings-container-width: 1024px;
 	flex: 1 0 auto;
 }
 
+.components-tab-panel__tabs-item, .components-tab-panel__tabs-item:focus:not(:disabled) {
+	box-shadow: none;
+}
+
+.components-tab-panel__tabs-item.is-active:focus {
+	box-shadow: inset 0 -4px 0 0 var( --wp-admin-theme-color );
+}
+
 .components-placeholder.formello-settings-placeholder {
 	margin-top: 20px;
 	margin-left: auto;
@@ -89,7 +97,8 @@ $settings-container-width: 1024px;
 	}
 
 	.components-card__body label {
-		font-weight: bold;
+		font-weight: 500;
+		font-size: 14px;
 	}
 
 	.formello-action-message {
@@ -115,6 +124,14 @@ $settings-container-width: 1024px;
 			margin-left: 5px;
 		}
 	}
+
+	.components-input-control__container {
+		select[multiple] {
+			width: 100%;
+			min-height: 150px !important;
+		}		
+	}
+
 }
 
 /* PAGES */
@@ -192,14 +209,20 @@ $settings-container-width: 1024px;
 	overflow: hidden;
 }
 
+.formello-icons-group {
+	display: flex;
+	span {
+		min-width: 20px;
+		font-size: 1em;
+	}
+}
+
 .formello-star {
 	color: #e27730;
-	font-size: 1rem;
 }
 
 .formello-new {
 	color: #337ab7;
-	font-size: 1rem;
 }
 
 /* TABLE SUBMISSION STYLE */
@@ -223,3 +246,34 @@ table.formello-bordered th {
 	font-size: 14px;
 	text-align: left;
 }
+
+/* ------------------ ICONS ------------------------------- */
+
+
+i {
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	margin-right: 10px;
+
+	&.mailchimp {
+		background: url( ../../assets/integrations/mailchimp.svg ) center no-repeat;
+	}
+	&.getresponse {
+		background: url( ../../assets/integrations/getresponse.svg ) center no-repeat;
+	}
+	&.zapier {
+		background: url( ../../assets/integrations/zapier.svg ) center no-repeat;
+	}
+	&.webhooks {
+		background: url( ../../assets/integrations/webhooks.svg ) center no-repeat;
+	}
+	&.exporter {
+		background: url( ../../assets/integrations/exporter.svg ) center no-repeat;
+	}
+	&.conditional_fields {
+		background: url( ../../assets/integrations/conditional_fields.svg ) center no-repeat;
+	}
+}
+
+/* ------------------ END ICONS ------------------------------- */

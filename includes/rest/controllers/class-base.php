@@ -8,20 +8,19 @@
 namespace Formello\Rest\Controllers;
 
 use WP_REST_Controller;
-use Formello\Encryption;
 use function Formello\Utils\formello_dir_url;
 
 /**
  * REST_API Handler
  */
-class Settings extends WP_REST_Controller {
+class Base extends WP_REST_Controller {
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		$this->namespace = 'formello/v1';
-		$this->rest_base = 'settings';
+		$this->rest_base = '';
 	}
 
 	/**
@@ -107,26 +106,6 @@ class Settings extends WP_REST_Controller {
 	}
 
 	/**
-	 * Get Settings.
-	 *
-	 * @param \WP_REST_Request $request  request object.
-	 *
-	 * @return mixed
-	 */
-	public function get_settings( \WP_REST_Request $request ) {
-		$settings = array();
-		$settings = get_option( 'formello' );
-		// $settings['log_file'] = formello_dir_url() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . 'formello_' . get_option( 'formello_installed' ) . '.txt';
-
-		return rest_ensure_response(
-			array(
-				'success'  => true,
-				'response' => $settings,
-			)
-		);
-	}
-
-	/**
 	 * Recursive sanitation for an array
 	 *
 	 * @param array $array the array of data.
@@ -145,6 +124,73 @@ class Settings extends WP_REST_Controller {
 	}
 
 	/**
+	 * Get Settings.
+	 *
+	 * @param string $message The message.
+	 *
+	 * @return mixed
+	 */
+	public function response( $message ) {
+		return rest_ensure_response(
+			array(
+				'success'  => true,
+				'response' => $message,
+			)
+		);
+	}
+
+	/**
+	 * Success rest.
+	 *
+	 * @param mixed $response response data.
+	 * @return mixed
+	 */
+	public function success( $response ) {
+		return new \WP_REST_Response(
+			array(
+				'success'  => true,
+				'response' => $response,
+			),
+			200
+		);
+	}
+
+	/**
+	 * Failed rest.
+	 *
+	 * @param mixed $response response data.
+	 * @return mixed
+	 */
+	public function failed( $response ) {
+		return new \WP_REST_Response(
+			array(
+				'success'  => false,
+				'response' => $response,
+			),
+			200
+		);
+	}
+
+	/**
+	 * Error rest.
+	 *
+	 * @param mixed $code     error code.
+	 * @param mixed $response response data.
+	 * @return mixed
+	 */
+	public function error( $code, $response ) {
+		return new \WP_REST_Response(
+			array(
+				'error'      => true,
+				'success'    => false,
+				'error_code' => $code,
+				'response'   => $response,
+			),
+			401
+		);
+	}
+
+	/**
 	 * Checks if a given request has access to read the items.
 	 *
 	 * @param  WP_REST_Request $request Full details about the request.
@@ -152,7 +198,7 @@ class Settings extends WP_REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function update_settings_permissions( $request ) {
-		return current_user_can( 'manage_options' );
+		return current_user_can( 'edit_posts' );
 	}
 
 	/**

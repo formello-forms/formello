@@ -7,6 +7,8 @@
 
 namespace Formello\Admin\Tables;
 
+use Formello\Utils\Formatter as Formatter;
+
 /**
  * The submissions Table
  */
@@ -43,16 +45,30 @@ class Submissions extends \WP_List_Table {
 	/**
 	 * Columns.
 	 *
-	 * @var $columns
+	 * @var array
 	 */
-	protected $columns;
+	protected $settings;
 
 	/**
 	 * Columns.
 	 *
-	 * @var $news
+	 * @var array
+	 */
+	protected $columns;
+
+	/**
+	 * News.
+	 *
+	 * @var int
 	 */
 	protected $news = 0;
+
+	/**
+	 * Starred.
+	 *
+	 * @var int
+	 */
+	protected $starred = 0;
 
 	/**
 	 * Columns.
@@ -73,7 +89,8 @@ class Submissions extends \WP_List_Table {
 
 		$this->date_format     = get_option( 'date_format' );
 		$this->datetime_format = sprintf( '%s %s', $this->date_format, get_option( 'time_format' ) );
-		$this->form_id         = isset( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : 1;
+		$this->form_id         = isset( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : 0;
+		$this->settings        = get_post_meta( $this->form_id, '_formello_settings', true );
 	}
 
 	/**
@@ -94,6 +111,23 @@ class Submissions extends \WP_List_Table {
 	/**
 	 * Delete a customer record.
 	 *
+	 * @param array $ids Submission ids.
+	 */
+	public static function delete_submissions( $ids = array() ) {
+		global $wpdb;
+
+		$ids = implode( ',', array_map( 'absint', $ids ) );
+		$wpdb->query(
+			$wpdb->prepare(
+				'DELETE FROM ' . $wpdb->prefix . 'formello_submissions WHERE id in ( %1s );',
+				$ids,
+			)
+		);
+	}
+
+	/**
+	 * Mark a submission as starred/new.
+	 *
 	 * @param int     $id customer ID.
 	 * @param string  $column column name.
 	 * @param boolean $value Yes or no.
@@ -105,8 +139,7 @@ class Submissions extends \WP_List_Table {
 
 		$wpdb->query(
 			$wpdb->prepare(
-				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET %s = %d WHERE id = %d;',
-				// "UPDATE `{$table}` SET `{$column}` = %d WHERE id = %d;",
+				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET `%s` = %d WHERE id = %d;',
 				$column,
 				$value,
 				$id
@@ -115,27 +148,50 @@ class Submissions extends \WP_List_Table {
 	}
 
 	/**
+	 * Mark a submission as starred/new.
+	 *
+	 * @param string $column column name.
+	 * @param string $value column value.
+	 * @param array  $ids Yes or no.
+	 */
+	public static function mark_submissions( $column, $value, $ids = array() ) {
+		global $wpdb;
+
+		$table = $wpdb->prefix . 'formello_submissions';
+
+		$ids = implode( ',', array_map( 'absint', $ids ) );
+
+		$wpdb->query(
+			$wpdb->prepare(
+				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET `%1s` = %d WHERE id in ( %1s );',
+				$column,
+				$value,
+				$ids,
+			)
+		);
+	}
+
+	/**
 	 * Returns the count of records in the database.
 	 *
+	 * @param string $filter The filter.
 	 * @return null|string
 	 */
-	public static function record_count() {
+	public function record_count( $filter = 'total' ) {
 		global $wpdb;
 		$form_id = isset( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : 0;
 
-		$sql = "SELECT COUNT(*) FROM {$wpdb->prefix}formello_submissions WHERE form_id = %d";
-
-		if ( ! empty( $_REQUEST['new'] ) ) {
-			$sql .= ' AND is_new = ' . esc_sql( sanitize_text_field( $_REQUEST['new'] ) );
-		}
-
-		if ( ! empty( $_REQUEST['starred'] ) ) {
-			$sql .= ' AND starred = ' . esc_sql( sanitize_text_field( $_REQUEST['starred'] ) );
-		}
-
-		return $wpdb->get_var(
-			$wpdb->prepare( $sql, array( $form_id ) )
+		$results = $wpdb->get_results(
+			$wpdb->prepare(
+				'select COUNT(*) as total, sum(is_new = 1) as new, sum(starred = 1) as starred FROM ' . $wpdb->prefix . 'formello_submissions WHERE form_id = %d',
+				array( $form_id )
+			)
 		);
+
+		$this->news    = $results[0]->new;
+		$this->starred = $results[0]->starred;
+
+		return $results[0]->$filter;
 	}
 
 	/** Text displayed when no customer data is available */
@@ -199,7 +255,7 @@ class Submissions extends \WP_List_Table {
 				)
 			),
 			__( 'Do you want delete this record?', 'formello' ),
-			__( 'Delete' )
+			__( 'Delete', 'formello' )
 		);
 		return $view_link . ' | ' . $delete_link;
 	}
@@ -209,6 +265,8 @@ class Submissions extends \WP_List_Table {
 	 */
 	public function prepare_items() {
 
+		$filter = ( isset( $_REQUEST['formello'] ) ? $_REQUEST['formello'] : 'total' );
+
 		/** Process bulk action */
 		$this->process_bulk_action();
 
@@ -217,9 +275,9 @@ class Submissions extends \WP_List_Table {
 
 		$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
 		$current_page = $this->get_pagenum();
-		$total_items  = self::record_count();
+		$total_items  = $this->record_count( $filter );
 
-		$data = $this->get_data();
+		$data = $this->get_data( $filter );
 
 		$columns = $this->get_columns();
 
@@ -263,9 +321,7 @@ class Submissions extends \WP_List_Table {
 			$marked_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
-			foreach ( $marked_ids as $id ) {
-				self::mark_submission( absint( $id ), 'is_new', 0 );
-			}
+			self::mark_submissions( 'is_new', 0, $marked_ids );
 
 			// refresh table.
 			$this->refresh_table( __( 'Submission(s) marked as read.', 'formello' ) );
@@ -278,9 +334,7 @@ class Submissions extends \WP_List_Table {
 			$marked_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
-			foreach ( $marked_ids as $id ) {
-				self::mark_submission( $id, 'starred', 1 );
-			}
+			self::mark_submissions( 'starred', 1, $marked_ids );
 
 			// refresh table.
 			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
@@ -293,9 +347,7 @@ class Submissions extends \WP_List_Table {
 			$marked_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
-			foreach ( $marked_ids as $id ) {
-				self::mark_submission( $id, 'is_new', 1 );
-			}
+			self::mark_submissions( 'is_new', 1, $marked_ids );
 
 			// refresh table.
 			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
@@ -308,9 +360,7 @@ class Submissions extends \WP_List_Table {
 			$marked_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
-			foreach ( $marked_ids as $id ) {
-				self::mark_submission( $id, 'starred', 0 );
-			}
+			self::mark_submissions( 'starred', 0, $marked_ids );
 
 			// refresh table.
 			$this->refresh_table( __( 'Submission(s) marked as starred.', 'formello' ) );
@@ -323,9 +373,7 @@ class Submissions extends \WP_List_Table {
 			$delete_ids = esc_sql( $_POST['bulk-delete'] );
 
 			// loop over the array of record IDs and delete them.
-			foreach ( $delete_ids as $id ) {
-				self::delete_submission( $id );
-			}
+			self::delete_submissions( $delete_ids );
 			// refresh table.
 			$this->refresh_table( __( 'Submission(s) deleted.', 'formello' ) );
 		}
@@ -370,12 +418,13 @@ class Submissions extends \WP_List_Table {
 	/**
 	 * Get the table data
 	 *
-	 * @param int $per_page per page number.
-	 * @param int $page_number page number.
+	 * @param int    $per_page per page number.
+	 * @param int    $page_number page number.
+	 * @param string $filter The filter.
 	 *
 	 * @return Array
 	 */
-	private function table_data( $per_page = 5, $page_number = 1 ) {
+	private function table_data( $per_page = 5, $page_number = 1, $filter = 'total' ) {
 		global $wpdb;
 
 		$sql = "SELECT id, is_new, starred, data, submitted_at, 
@@ -385,19 +434,19 @@ class Submissions extends \WP_List_Table {
 				WHERE form_id = {$this->form_id}";
 
 		if ( ! empty( $_REQUEST['s'] ) ) {
-			$sql .= ' AND data LIKE "%' . esc_sql( $_REQUEST['s'] ) . '%"';
+			$sql .= ' AND data LIKE "%' . esc_sql( sanitize_text_field( $_REQUEST['s'] ) ) . '%"';
 		}
 
-		if ( ! empty( $_REQUEST['new'] ) ) {
-			$sql .= ' AND is_new = ' . esc_sql( $_REQUEST['new'] );
+		if ( 'new' === $filter ) {
+			$sql .= ' AND is_new = 1';
 		}
 
-		if ( ! empty( $_REQUEST['starred'] ) ) {
-			$sql .= ' AND starred = ' . esc_sql( $_REQUEST['starred'] );
+		if ( 'starred' === $filter ) {
+			$sql .= ' AND starred = 1';
 		}
 
-		$order_by = ' ORDER BY ' . empty( $_REQUEST['orderby'] ) ? 'id' : esc_sql( $_REQUEST['orderby'] );
-		$order = empty( $_REQUEST['order'] ) ? 'DESC' : esc_sql( $_REQUEST['order'] );
+		$order_by = ' ORDER BY ' . empty( $_REQUEST['orderby'] ) ? 'id' : esc_sql( sanitize_text_field( $_REQUEST['orderby'] ) );
+		$order = empty( $_REQUEST['order'] ) ? 'DESC' : esc_sql( sanitize_text_field( $_REQUEST['order'] ) );
 
 		$sql .= ' ORDER BY ' . $order_by . ' ' . $order;
 
@@ -407,11 +456,6 @@ class Submissions extends \WP_List_Table {
 		$results = $wpdb->get_results( $sql, ARRAY_A );
 
 		$submissions = array();
-
-		if ( count( $results ) ) {
-			$this->news = $results[0]['news'];
-			$this->favorites = $results[0]['favorites'];
-		}
 
 		foreach ( $results as $key => $s ) {
 			$data                 = empty( $s['data'] ) ? array() : (array) json_decode( $s['data'], true );
@@ -438,7 +482,7 @@ class Submissions extends \WP_List_Table {
 
 		$settings = get_post_meta( $this->form_id, '_formello_settings', true );
 
-		if ( isset( $settings['fields'] ) ) {
+		if ( isset( $this->settings['fields'] ) ) {
 			foreach ( array_keys( $settings['fields'] ) as $col ) {
 				$columns[ sanitize_key( $col ) ] = esc_html( ucfirst( trim( sanitize_key( $col ) ) ) );
 			}
@@ -464,14 +508,22 @@ class Submissions extends \WP_List_Table {
 			case 'formello_date':
 				return $item['submitted_at'];
 			case 'formello_icons':
-				$is_new = $item['is_new'] ? '<span class="dashicons dashicons-marker formello-new" title="new"> </span>' : '';
-				$starred = $item['starred'] ? '<span class="dashicons dashicons-star-filled formello-star" title="starred"> </span>' : '';
-				return $starred . $is_new;
+				$is_new = $item['is_new'] ? 'dashicons dashicons-marker' : '';
+				$starred = $item['starred'] ? 'dashicons dashicons-star-filled' : '';
+
+				$icons = sprintf(
+					'<div class="formello-icons-group"><span class="%s formello-new" title="new"> </span><span class="%s formello-star" title="starred"> </span></div>',
+					esc_attr(
+						$is_new
+					),
+					esc_attr(
+						$starred
+					),
+				);
+				return $icons;
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
-
-				return formello_field_value( $item );
-
+				return Formatter::format( $item, $this->settings['fields'][ $column_name ] );
 		}
 	}
 
@@ -516,13 +568,14 @@ class Submissions extends \WP_List_Table {
 	/**
 	 * Render the table
 	 *
+	 * @param string $filter The filter.
 	 * @return mixed
 	 */
-	private function get_data() {
+	private function get_data( $filter ) {
 		if ( empty( $this->data ) ) {
 			$per_page     = $this->get_items_per_page( 'submissions_per_page', 10 );
 			$current_page = $this->get_pagenum();
-			$this->data   = $this->table_data( $per_page, $current_page );
+			$this->data   = $this->table_data( $per_page, $current_page, $filter );
 		}
 
 		return $this->data;
@@ -562,5 +615,34 @@ class Submissions extends \WP_List_Table {
 			$message
 		);
 		echo wp_kses_post( $message_box );
+	}
+
+	/**
+	 * Refresh table after changes
+	 */
+	protected function get_views() {
+
+		$views = array();
+
+		$current = ( ! empty( $_REQUEST['formello'] ) ? $_REQUEST['formello'] : 'total' );
+		$news = $this->get_news();
+		$starred = $this->starred;
+
+		$class = ( 'total' === $current ? ' class="current"' : '' );
+		$all_url = remove_query_arg( 'formello' );
+		$views['all'] = "<a href='{$all_url }' {$class} >" . __( 'All' ) . '</a>';
+
+		$new_url = add_query_arg( 'formello', 'new' );
+		$class = ( 'new' === $current ? ' class="current"' : '' );
+		$views['new'] = "<a href='{$new_url}' {$class} >" . __( 'Unread', 'formello' ) . " <span class='count'>({$news})</span></a>";
+
+		$starred_url = add_query_arg( 'formello', 'starred' );
+		$class = ( 'starred' === $current ? ' class="current"' : '' );
+		$views['starred'] = "<a href='{$starred_url}' {$class} >" . __( 'Starred', 'formello' ) . " <span class='count'>({$starred})</span></a>";
+
+		$views = apply_filters( 'formello_submissions_table_link', $views );
+
+		return $views;
+
 	}
 }

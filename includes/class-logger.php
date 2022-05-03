@@ -34,7 +34,7 @@ class Log {
 	 * @access private
 	 * @var $instance Class instance.
 	 */
-	private $logger;
+	protected $logger;
 
 
 	/**
@@ -42,7 +42,7 @@ class Log {
 	 *
 	 * @var boolean $log_active.
 	 */
-	protected $log_active = false;
+	private $log_active = false;
 
 	/**
 	 * Initiator
@@ -70,6 +70,7 @@ class Log {
 		if ( $settings && $settings['log'] ) {
 			$this->log_active = true;
 		}
+		add_action( 'wp_error_added', array( $this, 'log_wp_error' ), 10, 4 );
 	}
 
 	/**
@@ -84,6 +85,22 @@ class Log {
 	public function log( $level, $message, $context = array() ) {
 		if ( $this->log_active ) {
 			$this->logger->log( $level, $message, $context );
+		}
+	}
+
+	/**
+	 * Register our dynamic blocks.
+	 *
+	 * @param string $code The level.
+	 * @param string $message The message.
+	 * @param array  $data The context.
+	 * @param array  $wp_error The context.
+	 *
+	 * @since 1.2.0
+	 */
+	public function log_wp_error( $code, $message, $data, $wp_error ) {
+		if ( $this->log_active ) {
+			$this->logger->log( 'info', $wp_error->get_error_message(), $wp_error->get_all_error_data() );
 		}
 	}
 }

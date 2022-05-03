@@ -65,6 +65,11 @@
 	select {
 		min-width: 100%;
 	}
+	fieldset {
+		border: 1px solid #dedede;
+		padding: 10px;
+		margin-bottom: 10px;
+	}
 }
 
 .formello-modal-buttons {
@@ -75,3 +80,28 @@
 }
 
 /* ------------------ END ACTION MODAL ------------------ */
+
+/* ------------------ FIELDS -------------------------- */
+
+
+.formello-fields-row {
+    margin-bottom: 10px;
+    .components-base-control__field {
+    	margin-bottom: 0;
+    }
+}
+
+.formello-fields-rules {
+    margin-bottom: 10px;
+    .components-base-control__field {
+        //margin: 0;
+    }
+}
+
+/* ------------------ END FIELDS -------------------------- */
+
+/* ------------------ ICONS ------------------------------- */
+
+
+
+/* ------------------ END ICONS ------------------------------- */

@@ -177,6 +177,8 @@ class Admin {
 			'formello-submission'  => true,
 		);
 
+		$hidden_submenus = apply_filters( 'formello_hidden_submenus', $hidden_submenus );
+
 		// Select another submenu item to highlight (optional).
 		if ( $plugin_page && isset( $hidden_submenus[ $plugin_page ] ) ) {
 			$submenu_file = 'formello';
@@ -218,6 +220,8 @@ class Admin {
 		);
 
 		add_screen_option( $option, $args );
+
+		do_action( 'formello_submissions_table_script' );
 
 		$this->submissions_table = new Tables\Submissions();
 	}

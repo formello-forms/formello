@@ -32,7 +32,7 @@ function register_cpt() {
 			'not_found'           => __( 'Not Found', 'formello' ),
 			'not_found_in_trash'  => __( 'Not found in Trash', 'formello' ),
 		),
-		'public'              => false,
+		'public'              => true,
 		'publicly_queryable'  => false,
 		'has_archive'         => false,
 		'show_ui'             => true,
@@ -56,5 +56,16 @@ function register_cpt() {
 		),
 	);
 	register_post_type( 'formello_form', $args );
+
+	register_rest_field(
+		'formello_form',
+		'metadata',
+		array(
+			'get_callback' => function ( $data ) {
+				return get_post_meta( $data['id'], '_formello_settings', true );
+			},
+		)
+	);
+
 }
 add_action( 'init', __NAMESPACE__ . '\register_cpt' );
