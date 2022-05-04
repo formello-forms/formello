@@ -119,6 +119,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'disabled',
 		'checked',
 	],
+	file: [ 'name', 'id', 'type', 'required', 'disabled', 'accept', 'capture', 'multiple' ],
 	color: [ 'name', 'id', 'type', 'value', 'required', 'readonly', 'disabled' ],
 	textarea: [
 		'name',

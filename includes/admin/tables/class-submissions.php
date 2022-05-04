@@ -607,7 +607,7 @@ class Submissions extends \WP_List_Table {
 
 		$views = array();
 
-		$current = ( ! empty( $_REQUEST['formello'] ) ? $_REQUEST['formello'] : 'total' );
+		$current = ( ! empty( $_REQUEST['formello'] ) ? sanitize_text_field( $_REQUEST['formello'] ) : 'total' );
 		$news = $this->get_news();
 		$starred = $this->starred;
 

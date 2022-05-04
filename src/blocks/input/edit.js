@@ -124,6 +124,7 @@ export default function Edit( props ) {
 					checked={ attributes.checked || false }
 					onChange={ onChange }
 					placeholder={ attributes.placeholder }
+					disabled={ 'file' === attributes.type }
 				/>
 			) }
 			{ attributes.withButton && children }

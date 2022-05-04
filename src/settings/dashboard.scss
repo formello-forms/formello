@@ -126,14 +126,43 @@ $settings-container-width: 1024px;
 	}
 
 	.components-input-control__container {
+		select {
+			max-width: 100%;			
+		}
+		select[multiple] {
+			border: 1px solid;
+			max-width: 100%;
+			min-height: 150px !important;
+		}
+		select[multiple] + .components-input-control__suffix {
+			display: none;
+		}
+	}
+
+}
+
+.formello-modal {
+	.components-base-control {
+		label {
+			font-weight: 500;
+		}
+		margin-bottom: 1em;
+	}
+	.components-notice{
+		margin: 10px 0 0 0;
+	}
+	.components-input-control__container {
+		select {
+			max-width: 100%;			
+		}
 		select[multiple] {
 			border: 1px solid;
 			max-width: 100%;
 			min-height: 150px !important;
 		}		
-	}
-
+	}	
 }
+
 
 /* PAGES */
 .formello-addons-main {

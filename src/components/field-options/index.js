@@ -68,17 +68,19 @@ export default function Options( props ) {
 						/>
 					</Fragment>
 				) }
+				{ supported.includes( 'multiple' ) && (
+					<ToggleControl
+						label={ __( 'Allow multiple choices?', 'formello' ) }
+						checked={ attributes.multiple }
+						onChange={ ( val ) =>
+							setAttributes( {
+								multiple: val,
+							} )
+						}
+					/>
+				) }
 				{ 'select' === attributes.type && (
 					<Fragment>
-						<ToggleControl
-							label={ __( 'Allow multiple choices?', 'formello' ) }
-							checked={ attributes.multiple }
-							onChange={ ( val ) =>
-								setAttributes( {
-									multiple: val,
-								} )
-							}
-						/>
 						<FormTokenField
 							label={ __( 'Selected option', 'formello' ) }
 							value={
