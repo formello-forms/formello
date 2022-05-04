@@ -37,11 +37,12 @@ import useFormSaved from './useFormSaved';
 
 import getIcon from '../../utils/get-icon';
 
-import { Mailchimp, GetResponse, Email, WebHooks } from './actions/icons';
+import { Mailchimp, GetResponse, Email, WebHooks, Mailpoet } from './actions/icons';
 import apiFetch from '@wordpress/api-fetch';
 
 const icons = {
 	mailchimp: Mailchimp,
+	mailpoet: Mailpoet,
 	getresponse: GetResponse,
 	email: Email,
 	webhooks: WebHooks

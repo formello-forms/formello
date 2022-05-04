@@ -110,7 +110,7 @@ class Frontend {
 				 * @param Form $form
 				 * @param array $action_settings
 				 */
-				// do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings );
+				do_action( 'formello_process_form_action_' . $action_settings['type'], $action_settings );
 				wp_schedule_single_event( time() + 60, 'formello_process_form_action_' . $action_settings['type'], array( 'action_settings' => $action_settings ), true );
 			}
 		}
