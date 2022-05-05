@@ -77,6 +77,7 @@ final class Formello {
 		include_once FORMELLO_ABSPATH . 'includes/actions/class-email.php';
 		include_once FORMELLO_ABSPATH . 'includes/tag-replacers/class-replacer.php';
 		include_once FORMELLO_ABSPATH . 'includes/class-logger.php';
+		include_once FORMELLO_ABSPATH . 'includes/class-updater.php';
 		include_once FORMELLO_ABSPATH . 'includes/class-cron.php';
 		include_once FORMELLO_ABSPATH . 'includes/utils/class-encryption.php';
 

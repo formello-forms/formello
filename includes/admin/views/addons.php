@@ -9,7 +9,6 @@ namespace Formello\Views;
 
 defined( 'ABSPATH' ) || exit;
 
-
 $formello_url    = 'https://formello.net/edd-api/products?nocache=' . time();
 $formello_addons = get_transient( 'formello_addons', false );
 

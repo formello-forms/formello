@@ -7,12 +7,12 @@
 
 namespace Formello\Rest\Controllers;
 
-use WP_REST_Controller;
+use Formello\Rest\Controllers\Base;
 
 /**
  * REST_API Handler
  */
-class Forms extends WP_REST_Controller {
+class Forms extends Base {
 
 	/**
 	 * [__construct description]

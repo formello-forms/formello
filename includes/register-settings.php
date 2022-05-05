@@ -35,27 +35,6 @@ function register_settings() {
 		'license_status' => array(
 			'type' => 'string',
 		),
-		'addon_licenses' => array(
-			'type' => 'object',
-			'properties' => array(
-				'exporter' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'mailchimp' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'conditional_fields' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-				'getresponse' => array(
-					'type' => 'string',
-					'default' => '',
-				),
-			),
-		),
 		'messages' => array(
 			'type' => 'object',
 			'properties' => array(
@@ -160,12 +139,6 @@ function register_settings() {
 		'log_file' => formello_dir_url() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . 'formello_' . time() . '.txt',
 		'license' => '',
 		'license_status' => 'invalid',
-		'addon_licenses' => array(
-			'mailchimp' => '',
-			'exporter' => '',
-			'conditional_fields' => '',
-			'getresponse' => '',
-		),
 		'messages' => array(
 			'missingValue' => array(
 				'default'         => __( 'Please fill out this field.', 'formello' ),
