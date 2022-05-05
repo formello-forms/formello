@@ -54,7 +54,10 @@ function AdvancedOptions( props ) {
 					} }
 				/>
 			) }
-			<DatepickerSettings { ...props } />
+			{
+				'select' !== type &&
+				<DatepickerSettings { ...props } />
+			}
 			{ supported.includes( 'step' ) && (
 				<Fragment>
 					<BaseControl>

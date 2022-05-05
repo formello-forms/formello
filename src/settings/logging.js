@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardBody, ExternalLink, ToggleControl } from '@wordpress/components';
-
+import { getFilename } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
 
 const LoggingTab = (props) => {
@@ -24,11 +24,11 @@ const LoggingTab = (props) => {
 					label={ __( 'Enable log', 'formello' ) }
 					checked={ settings.log }
 					onChange={ ( val ) => { 
-						saveSetting( 'log', val );
+						saveSetting( 'log', val )
 					} }
 				/>
 				{ settings.log && (
-					<ExternalLink href={ settings.log_file }>
+					<ExternalLink href={ '/wp-content/uploads/formello/logs/' + settings.log_file }>
 						{ __( 'View log', 'formello' ) }
 					</ExternalLink>
 				) }

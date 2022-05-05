@@ -13,7 +13,7 @@ use Formello\Encryption;
 /**
  * REST_API Handler
  */
-class License extends WP_REST_Controller {
+class License extends Base {
 
 	/**
 	 * Constructor
@@ -53,34 +53,6 @@ class License extends WP_REST_Controller {
 				),
 			)
 		);
-	}
-
-	/**
-	 * Sanitize our options.
-	 *
-	 * @since 1.2.0
-	 * @param string $name The setting name.
-	 * @param mixed  $value The value to save.
-	 */
-	public function sanitize_value( $name, $value ) {
-		$callbacks = apply_filters(
-			'formello_option_sanitize_callbacks',
-			array(
-				'recaptcha' => array(
-					'site_key'   => 'sanitize_text_field',
-					'secret_key' => 'sanitize_text_field',
-					'version'    => 'sanitize_text_field',
-				),
-			)
-		);
-
-		$callback = $callbacks[ $name ];
-
-		if ( ! is_callable( $callback ) ) {
-			return sanitize_text_field( $value );
-		}
-
-		return $callback( $value );
 	}
 
 	/**
@@ -164,20 +136,11 @@ class License extends WP_REST_Controller {
 
 		// Check if anything passed on a message constituting a failure.
 		if ( ! empty( $message ) ) {
-			return rest_ensure_response(
-				array(
-					'success'  => false,
-					'response' => $message,
-				)
-			);
+			return $this->response( $message );
 		}
 
-		return rest_ensure_response(
-			array(
-				'success'  => true,
-				'response' => $license_data,
-			)
-		);
+		return $this->response( $license_data );
+
 	}
 
 	/**
@@ -220,12 +183,8 @@ class License extends WP_REST_Controller {
 				$message = __( 'An error occurred, please try again.' );
 			}
 
-			return rest_ensure_response(
-				array(
-					'success'  => false,
-					'response' => $message,
-				)
-			);
+			return $this->failed( $message );
+
 		}
 
 		// decode the license data.
@@ -236,31 +195,8 @@ class License extends WP_REST_Controller {
 			$license_data->license = 'deactivated';
 		}
 
-		return rest_ensure_response(
-			array(
-				'success'  => true,
-				'response' => $license_data,
-			)
-		);
+		return $this->response( $license_data );
+
 	}
 
-	/**
-	 * Checks if a given request has access to read the items.
-	 *
-	 * @param  WP_REST_Request $request Full details about the request.
-	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
-	 */
-	public function update_settings_permissions( $request ) {
-		return current_user_can( 'manage_options' );
-	}
-
-	/**
-	 * Retrieves the query params for the items collection.
-	 *
-	 * @return array Collection parameters.
-	 */
-	public function get_collection_params() {
-		return array();
-	}
 }

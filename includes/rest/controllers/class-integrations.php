@@ -12,7 +12,7 @@ use WP_REST_Controller;
 /**
  * Integrations API Handler
  */
-class Integrations extends WP_REST_Controller {
+class Integrations extends Base {
 
 	/**
 	 * Constructor.

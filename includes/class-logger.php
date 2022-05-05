@@ -58,15 +58,22 @@ class Log {
 	 * Constructor
 	 */
 	public function __construct() {
+		// get option with default.
+		$settings = get_option(
+			'formello',
+			array(
+				'log_file' => '',
+				'log' => false,
+			)
+		);
 		$this->logger = new Katzgrau\KLogger\Logger(
 			FORMELLO_UPLOAD . '/logs',
 			'debug',
 			array(
-				'filename' => 'formello_' . get_option( 'formello_installed' ),
+				'filename' => $settings['log_file'],
 				'flushFrequency' => 3000,
 			)
 		);
-		$settings = get_option( 'formello' );
 		if ( $settings && $settings['log'] ) {
 			$this->log_active = true;
 		}
@@ -100,7 +107,7 @@ class Log {
 	 */
 	public function log_wp_error( $code, $message, $data, $wp_error ) {
 		if ( $this->log_active ) {
-			$this->logger->log( 'info', $wp_error->get_error_message(), $wp_error->get_all_error_data() );
+			$this->logger->log( 'error', $wp_error->get_error_message(), $wp_error->get_all_error_data() );
 		}
 	}
 }

@@ -20,9 +20,6 @@ defined( 'ABSPATH' ) || exit;
  */
 function register_settings() {
 	$settings = array(
-		'installed' => array(
-			'type' => 'string',
-		),
 		'log' => array(
 			'type' => 'boolean',
 		),
@@ -134,9 +131,8 @@ function register_settings() {
 	$settings = apply_filters( 'formello_settings', $settings );
 
 	$defaults = array(
-		'installed' => get_option( 'formello_installed' ),
 		'log' => false,
-		'log_file' => formello_dir_url() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR . 'formello_' . get_option( 'formello_installed' ) . '.txt',
+		'log_file' => 'formello_' . time() . '.txt',
 		'license' => '',
 		'license_status' => 'invalid',
 		'messages' => array(
