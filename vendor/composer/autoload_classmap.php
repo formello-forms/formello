@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'EDD_SL_Plugin_Updater' => $baseDir . '/includes/EDD_SL_Plugin_Updater.php',
     'Formello' => $baseDir . '/includes/class-formello.php',
     'Formello\\Actions\\Action' => $baseDir . '/includes/actions/class-action.php',
     'Formello\\Actions\\Email' => $baseDir . '/includes/actions/class-email.php',

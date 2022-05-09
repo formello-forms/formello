@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 const OptionsList = ( props ) => {
 	return props.options.map( ( obj, index ) => {
 		return (
-			<Flex key={ index } justify="flex-start">
+			<Flex key={ index } justify="flex-start" className={ 'formello-fields-row' }>
 				{ props.showValue && (
 					<FlexItem>
 						<TextControl

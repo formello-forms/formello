@@ -40,7 +40,7 @@ export default function save( { attributes } ) {
 				{ attributes.options.map( ( obj, index ) => {
 					return (
 						<option
-							value={ obj.value }
+							value={ obj.value || obj.label }
 							key={ index }
 							selected={ opts.includes( obj.value ) }
 						>

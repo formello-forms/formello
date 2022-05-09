@@ -46,7 +46,7 @@ const variations = [
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',
-			label: __( 'Accept our agreement', 'formello' ),
+			label: __( 'I agree with the Terms of service and Privacy policy', 'formello' ),
 			required: true,
 		},
 		scope: [ 'block', 'inserter', 'transform' ],

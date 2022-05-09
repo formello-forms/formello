@@ -138,7 +138,7 @@ function AdvancedOptions( props ) {
 					</BaseControl>
 				</Fragment>
 			) }
-			{ 'hidden' !== type && (
+			{ supported.includes( 'pattern' ) && (
 				<BaseControl>
 					<InputControl
 						label={ __( 'Custom Validation Message', 'formello' ) }

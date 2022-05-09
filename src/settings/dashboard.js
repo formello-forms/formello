@@ -184,7 +184,7 @@ function App() {
 										addNotice={ addNotice }
 									/>
 									{
-										( 'general' === tab.name || 'recaptcha' === tab.name || 'logging' === tab.name ) &&
+										( 'general' === tab.name || 'recaptcha' === tab.name || 'messages' === tab.name || 'logging' === tab.name ) &&
 										<Button
 											isPrimary
 											aria-disabled={ isSaving }

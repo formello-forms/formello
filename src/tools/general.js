@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody, Button, Placeholder, Spinner, ToggleControl, ExternalLink } from '@wordpress/components';
+import { Card, CardHeader, CardBody, Button, Modal } from '@wordpress/components';
 
 import { useState, Fragment, useEffect } from '@wordpress/element';
 
@@ -46,6 +46,7 @@ export default function General( { addNotice } ) {
 					>
 						{ __( 'Re-Sync template', 'formello' ) }
 					</Button>
+
 				</CardBody>
 			</Card>
 		</Fragment>

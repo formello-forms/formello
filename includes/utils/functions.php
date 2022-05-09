@@ -11,20 +11,6 @@ namespace Formello\Utils;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Function to retrieve integration option
- *
- * @param string $integration The integration name to retrieve.
- */
-function formello_integration_option( $integration ) {
-	$settings = get_option( 'formello' );
-
-	if ( empty( $settings['integrations'][ $integration ] ) ) {
-		return array();
-	}
-	return $settings['integrations'][ $integration ];
-}
-
-/**
  * Function to retrieve unencrypted settings
  */
 function formello_frontend_option() {

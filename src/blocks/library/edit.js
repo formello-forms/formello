@@ -17,7 +17,7 @@ import {
 } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 import { addQueryArgs } from '@wordpress/url';
-import { TemplatesModal } from '../form/library';
+import { TemplatesModal } from '../form/settings/library';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;

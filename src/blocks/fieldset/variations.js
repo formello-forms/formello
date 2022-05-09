@@ -75,15 +75,15 @@ const variations = [
 		innerBlocks: [
 			[
 				'formello/input',
-				{ type: 'radio', name: 'Option_1', label: 'Option 1' },
+				{ type: 'radio', name: 'option', label: 'Option 1' },
 			],
 			[
 				'formello/input',
-				{ type: 'radio', name: 'Option_2', label: 'Option 2' },
+				{ type: 'radio', name: 'option', label: 'Option 2' },
 			],
 			[
 				'formello/input',
-				{ type: 'radio', name: 'Option_3', label: 'Option 3' },
+				{ type: 'radio', name: 'option', label: 'Option 3' },
 			],
 		],
 		scope: [ 'inserter', 'block' ],

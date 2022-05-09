@@ -9,6 +9,7 @@
 	select {
 		max-width: 100%;
 	}
+	padding-bottom: 30px;
 }
 
 .formello-templates-list {
@@ -91,17 +92,16 @@
     }
 }
 
-.formello-fields-rules {
+.formello-fields-margin {
     margin-bottom: 10px;
-    .components-base-control__field {
-        //margin: 0;
-    }
 }
 
 /* ------------------ END FIELDS -------------------------- */
 
-/* ------------------ ICONS ------------------------------- */
+/* ------------------ MCE EDITOR ------------------------------- */
 
+.mce-container {
+	z-index: 9000000 !important;
+}
 
-
-/* ------------------ END ICONS ------------------------------- */
+/* ------------------ END MCE EDITOR ------------------------------- */

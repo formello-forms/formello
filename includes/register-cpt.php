@@ -32,7 +32,7 @@ function register_cpt() {
 			'not_found'           => __( 'Not Found', 'formello' ),
 			'not_found_in_trash'  => __( 'Not found in Trash', 'formello' ),
 		),
-		'public'              => true,
+		'public'              => false,
 		'publicly_queryable'  => false,
 		'has_archive'         => false,
 		'show_ui'             => true,

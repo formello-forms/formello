@@ -54,6 +54,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"hideRequired": {
+			"type": "boolean",
+			"default": false
+		},
 		"requiredText": {
 			"type": "string"
 		},

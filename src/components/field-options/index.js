@@ -9,6 +9,7 @@ import {
 	FormTokenField,
 	ToggleControl,
 	BaseControl,
+	Button,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
@@ -18,7 +19,7 @@ import MergeTags from '../merge-tags';
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
 export default function Options( props ) {
-	const { attributes, setAttributes, clientId } = props;
+	const { attributes, setAttributes, clientId, setModalOpen } = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[ attributes.type ];
 
@@ -81,6 +82,14 @@ export default function Options( props ) {
 				) }
 				{ 'select' === attributes.type && (
 					<Fragment>
+						<Button 
+							isPrimary 
+							isSmall 
+							className={ 'formello-fields-margin' }
+							onClick={ () => {
+								setModalOpen( true );
+							} }
+						>{ __( 'Add options', 'formello' ) }</Button>
 						<FormTokenField
 							label={ __( 'Selected option', 'formello' ) }
 							value={

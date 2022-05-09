@@ -5,9 +5,10 @@ import {
 	TextareaControl,
 	ToggleControl,
 } from '@wordpress/components';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
+import { Editor } from '@tinymce/tinymce-react';
 
 export default function Email( content, props, MergeTags, handleUpdate ) {
 	const { action, clientId } = props;
@@ -18,6 +19,20 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 	const updateSettings = ( prop, val ) => {
 		setSettings( { ...settings, [ prop ]: val } );
 		handleUpdate( { ...settings, [ prop ]: val } );
+	};
+
+	const editorRef = useRef(null);
+	const [dirty, setDirty] = useState(false);
+	useEffect(() => setDirty(false), [settings.message]);
+
+	const save = () => {
+		if (editorRef.current) {
+			const content = editorRef.current.getContent();
+			setDirty(false);
+			editorRef.current.setDirty(false);
+			// an application would save the editor content to the server here
+			updateSettings( 'message', content )
+		}
 	};
 
 	return (
@@ -94,15 +109,23 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 					updateSettings( 'subject', val );
 				} }
 			/>
-
-			<TextareaControl
-				label="Message"
-				value={ settings.message }
-				onChange={ ( val ) => {
-					updateSettings( 'message', val );
-				} }
-				placeholder={ __( 'Enter message…', 'formello' ) }
+			<label>{ __( 'Message', 'formello' ) }</label>
+			<Editor 
+				initialValue={ settings.message }
+				onInit={ (evt, editor) => editorRef.current = editor }
+				onDirty={ () => setDirty(true) }
+				init={{
+					height: 200,
+					menubar: false,
+					plugins: [
+						'lists link image charmap'
+					],
+					toolbar: 'bold italic | aligncenter | bullist numlist | link unlink | undo redo ',
+				}}
 			/>
+			<button onClick={ save } disabled={ ! dirty }>{ __( 'Save', 'formello' ) }</button>
+			{dirty && <p>You have unsaved content!</p>}
+
 		</Fragment>
 	);
 }

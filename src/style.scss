@@ -7,12 +7,13 @@ html {
 
 .formello-message {
 	margin: 1em 0;
-
+	display: none;
 	p {
 		margin: 0;
 	}
 
 	&.success {
+		display: block;
 		padding: 1em;
 		background-color: #dff0d8;
 		border: 1px solid #d0e9c6;
@@ -20,6 +21,7 @@ html {
 	}
 
 	&.error {
+		display: block;
 		padding: 1em;
 		background-color: #fcf8e3;
 		border: 1px solid #faf2cc;
@@ -83,13 +85,10 @@ html {
 			width: 1%;
 		}
 
-		div, button {
+		button {
 			margin-bottom: 0;
 			align-self: stretch;
 			margin-left: 10px;
-			button {
-				height: 100%;
-			}
 		}
 
 		&.grouped {
@@ -162,7 +161,15 @@ html {
 	button {
 		cursor: pointer;
 		position: relative;
-		background-color: #ddd;
+		justify-content: center;
+		align-items: center;
+		display: flex;				
+		color: var(--wp--preset--color--primary);
+		padding: 10px;
+	}
+	
+	.wp-block-columns {
+		margin-bottom: 0;
 	}
 
 	&.is-bold {
@@ -178,13 +185,6 @@ html {
 			}
 		}
 	}
-
-	/*.wp-block-formello-button {
-		font-size: inherit;
-		font-family: inherit;
-		line-height: inherit;
-		border: 1px solid transparent;
-	}*/
 
 	.wp-block-formello-button {
 		flex-direction: row;
@@ -304,8 +304,15 @@ html {
 				}
 
 				button {
-					margin-left: 0;
+					margin-left: 10px;
 				}
+
+				&.grouped {
+					button {
+						margin-left: 0;
+					}
+				}
+
 			}
 
 			fieldset {

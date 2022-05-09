@@ -48,7 +48,7 @@ class Formatter {
 		}
 
 		// limit string to certain length.
-		if ( $limit > 0 ) {
+		if ( ! is_array( $value ) && $limit > 0 ) {
 			$limited = strlen( $value ) > $limit;
 			$value   = substr( $value, 0, $limit );
 
@@ -59,6 +59,10 @@ class Formatter {
 
 		if ( 'on' === $value ) {
 			$value = __( 'Yes' );
+		}
+
+		if ( is_array( $value ) ) {
+			$value = self::format_array( $value );
 		}
 
 		return $value;

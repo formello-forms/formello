@@ -210,8 +210,9 @@ class Formello {
 		const msg = this.element.querySelector( '.formello-message' );
 
 		const debugDiv = document.createElement( 'div' );
-		debugDiv.classList.add( 'warning' );
-		debugDiv.innerHTML =
+		debugDiv.classList.add( 'formello-debug' );
+		debugDiv.innerHTML = '<p>Debug output:</p>';
+		debugDiv.innerHTML +=
 			'<pre>' + JSON.stringify( debug, undefined, 2 ) + '</pre>';
 
 		msg.insertAdjacentElement( 'afterend', debugDiv );
@@ -221,13 +222,17 @@ class Formello {
 		const msg = this.element.querySelector( '.formello-message' );
 		msg.innerHTML = '';
 		msg.setAttribute( 'class', 'formello-message' );
+		if( msg.nextSibling ){
+			if( 'formello-debug' === msg.nextSibling.className )
+				msg.nextSibling.remove()
+		}
+
 	}
 
 	showLoading() {
 		const btn = this.element.querySelector( '.wp-block-formello-button' );
 		btn.style.width = window.getComputedStyle( btn ).width;
 		btn.style.height = window.getComputedStyle( btn ).height;
-		btn.style.padding = 0;
 		btn.classList.toggle( 'wp-block-formello-button--loading' );
 		btn.toggleAttribute( 'disabled' );
 	}

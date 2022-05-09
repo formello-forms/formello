@@ -38,6 +38,7 @@ class ComposerStaticInit89fc8527d43a83151b23dbe63359ada2
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'EDD_SL_Plugin_Updater' => __DIR__ . '/../..' . '/includes/EDD_SL_Plugin_Updater.php',
         'Formello' => __DIR__ . '/../..' . '/includes/class-formello.php',
         'Formello\\Actions\\Action' => __DIR__ . '/../..' . '/includes/actions/class-action.php',
         'Formello\\Actions\\Email' => __DIR__ . '/../..' . '/includes/actions/class-email.php',

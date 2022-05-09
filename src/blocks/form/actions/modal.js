@@ -1,14 +1,14 @@
 import { Fragment } from '@wordpress/element';
 
 import { Modal, Button } from '@wordpress/components';
+import { addQueryArgs } from '@wordpress/url';
 
 const { applyFilters } = wp.hooks;
 
 import MergeTags from '../../../components/merge-tags';
 
 export function ActionsModal( props ) {
-	const { onRequestClose, action, actionId, attributes, setAttributes } =
-		props;
+	const { onRequestClose, action, actionId, attributes, setAttributes } = props;
 
 	const handleUpdate = ( settings ) => {
 		// 1. Make a shallow copy of the items
@@ -26,13 +26,18 @@ export function ActionsModal( props ) {
 		onRequestClose();
 	};
 
+    const settingsUrl = addQueryArgs( 'edit.php', {
+        post_type: 'formello_form',
+        page: 'formello-settings',
+        tab: 'integrations'
+    } )
+
 	return (
 		<Modal
 			title={ action.title }
-			position="top"
-			size="lg"
 			className={ 'formello-modal' }
 			onRequestClose={ onRequestClose }
+			shouldCloseOnClickOutside={ false }
 		>
 			<Fragment>
 				{ applyFilters(
@@ -40,7 +45,8 @@ export function ActionsModal( props ) {
 					'',
 					props,
 					MergeTags,
-					handleUpdate
+					handleUpdate,
+					settingsUrl
 				) }
 
 				<div className="formello-modal-buttons">

@@ -461,7 +461,7 @@ class Submissions extends \WP_List_Table {
 				return $item['submitted_at'];
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
-				return Formatter::format( $item, $this->settings['fields'][ $column_name ] );
+				return Formatter::format( $item, $this->settings['fields'][ $column_name ] ? $this->settings['fields'][ $column_name ] : '' );
 		}
 	}
 

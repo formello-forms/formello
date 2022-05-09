@@ -2,6 +2,7 @@ import { Card, CardHeader, CardBody, TextControl } from '@wordpress/components';
 import { useState, useEffect, Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
+import Editor from '../components/editor.js';
 
 export default function Messages( props ) {
 	const { saveSettingGroup, settings, saveSetting } = props;

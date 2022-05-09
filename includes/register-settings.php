@@ -35,6 +35,17 @@ function register_settings() {
 		'messages' => array(
 			'type' => 'object',
 			'properties' => array(
+				'form'         => array(
+					'type'       => 'object',
+					'properties' => array(
+						'success' => array(
+							'type' => 'string',
+						),
+						'error' => array(
+							'type' => 'string',
+						),
+					),
+				),
 				'missingValue'         => array(
 					'type'       => 'object',
 					'properties' => array(
@@ -136,6 +147,10 @@ function register_settings() {
 		'license' => '',
 		'license_status' => 'invalid',
 		'messages' => array(
+			'form' => array(
+				'success' => __( 'Thanks for submitting this form.', 'formello' ),
+				'error' => __( 'Ops. An error occurred.', 'formello' ),
+			),
 			'missingValue' => array(
 				'default'         => __( 'Please fill out this field.', 'formello' ),
 				'checkbox'        => __( 'This field is required.', 'formello' ),

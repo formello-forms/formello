@@ -1,5 +1,5 @@
 export const SUPPORTED_ATTRIBUTES = {
-	select: [ 'name', 'id', 'type', 'required', 'readonly', 'disabled' ],
+	select: [ 'name', 'id', 'type', 'required', 'readonly', 'disabled', 'multiple' ],
 	hidden: [ 'name', 'id', 'type', 'value' ],
 	text: [
 		'name',

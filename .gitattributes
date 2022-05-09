@@ -8,6 +8,5 @@ composer.json export-ignore
 Gruntfile.js export-ignore
 package.json export-ignore
 phpunit.xml export-ignore
-readme.txt export-ignore
 /tests/ export-ignore
 /.github/ export-ignore

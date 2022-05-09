@@ -12,7 +12,7 @@ use WP_REST_Controller;
 /**
  * REST_API Handler
  */
-class Template extends WP_REST_Controller {
+class Template extends Base {
 
 	/**
 	 * Constructor

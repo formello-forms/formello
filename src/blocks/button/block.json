@@ -31,9 +31,6 @@
 				"color": {
 					"background": "#000000",
 					"text": "#ffffff"
-				},
-				"spacing": {
-					"padding": "8px"
 				}
 			}
 		}

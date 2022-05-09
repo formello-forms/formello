@@ -12,11 +12,12 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	URLInput,
+	InnerBlocks
 } from '@wordpress/block-editor';
 
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 
-import BlockVariationPicker from './variation-picker';
+import BlockVariationPicker from './settings/variation-picker';
 import { ActionsModal } from './actions/modal';
 import { getActions } from './actions/actions';
 
@@ -28,6 +29,7 @@ import {
 	SelectControl,
 	ToolbarButton,
 	ToolbarGroup,
+	ToolbarDropdownMenu,
 	DropdownMenu,
 	Notice,
 } from '@wordpress/components';
@@ -62,7 +64,8 @@ const ALLOWED_BLOCKS = [
 	'formello/fileupload',
 ];
 
-import { TemplatesModal } from './library';
+import { TemplatesModal } from './settings/library';
+import { AdvancedSettings } from './settings/advanced';
 import {
 	getConstraints,
 	getFieldsName,
@@ -188,25 +191,11 @@ function Edit( props ) {
 		className: getBlockClassNames(),
 	} );
 
-	const changeRequiredText = ( value ) => {
-		setAttributes( { requiredText: value } );
-
-		// Update the child block's attributes
-		const children =
-			select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ]
-				.innerBlocks;
-		children.forEach( ( child ) => {
-			dispatch( 'core/block-editor' ).updateBlockAttributes(
-				child.clientId,
-				{ requiredText: value }
-			);
-		} );
-	};
-
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 		template: [ [ 'formello/button' ] ],
+		renderAppender: InnerBlocks.ButtonBlockAppender
 	} );
 
 	const settingsUrl = addQueryArgs( 'edit.php', {
@@ -229,7 +218,7 @@ function Edit( props ) {
 						/>
 					</ToolbarGroup>
 					<ToolbarGroup>
-						<DropdownMenu
+						<ToolbarDropdownMenu
 							icon={ 'admin-generic' }
 							label={ __( 'Add action', 'formello' ) }
 							controls={ actions.map( ( a ) => {
@@ -327,43 +316,7 @@ function Edit( props ) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<InspectorAdvancedControls>
-				<ToggleControl
-					label={ __( 'Label on side', 'formello' ) }
-					checked={ attributes.asRow }
-					onChange={ ( val ) => setAttributes( { asRow: val } ) }
-				/>
-				{ attributes.asRow && (
-					<SelectControl
-						label={ __( 'Label horizontal position', 'formello' ) }
-						value={ attributes.labelAlign }
-						options={ [
-							{ label: 'left', value: 'left' },
-							{ label: 'right', value: 'right' },
-						] }
-						onChange={ ( val ) => {
-							setAttributes( { labelAlign: val } );
-						} }
-					/>
-				) }
-				<ToggleControl
-					label={ __( 'Bolded label', 'formello' ) }
-					checked={ attributes.labelIsBold }
-					onChange={ ( val ) => setAttributes( { labelIsBold: val } ) }
-				/>
-				<ToggleControl
-					label={ __( 'Enable debug', 'formello' ) }
-					checked={ attributes.debug }
-					onChange={ ( val ) => {
-						setAttributes( { debug: val } );
-					} }
-				/>
-				<TextControl
-					label={ __( 'Required Field Indicator', 'formello' ) }
-					value={ attributes.requiredText }
-					onChange={ changeRequiredText }
-				/>
-			</InspectorAdvancedControls>
+			<AdvancedSettings {...props} />
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
 					type={ 'remote' }
@@ -389,8 +342,29 @@ function Edit( props ) {
 }
 
 function Placeholder( props ) {
-	const { defaultVariation, variations, clientId, setAttributes } = props;
+
+	const { name, clientId, setAttributes } = props;
+
 	const { replaceInnerBlocks } = dispatch( 'core/block-editor' );
+
+	const { getBlockVariations, getDefaultBlockVariation } =
+		select( 'core/blocks' );
+
+	const defaultVariation = useSelect(
+		() => {
+			return typeof getDefaultBlockVariation === 'undefined'
+				? null
+				: getDefaultBlockVariation( props.name );
+		},
+		[ name ]
+	);
+
+	const variations = useSelect(
+		() => {
+			return getBlockVariations( name, 'block' );
+		},
+		[ name ]
+	);
 
 	return (
 		<div { ...useBlockProps() }>
@@ -420,29 +394,6 @@ function Placeholder( props ) {
 	);
 }
 
-const applyWithSelect = withSelect( ( select, props ) => {
-	const { getBlocks } = select( 'core/block-editor' );
-	const { getBlockType, getBlockVariations, getDefaultBlockVariation } =
-		select( 'core/blocks' );
-	const innerBlocks = getBlocks( props.clientId );
-
-	return {
-		// Subscribe to changes of the innerBlocks to control the display of the layout selection placeholder.
-		blockType: getBlockType( props.name ),
-		defaultVariation:
-			typeof getDefaultBlockVariation === 'undefined'
-				? null
-				: getDefaultBlockVariation( props.name ),
-		hasInnerBlocks:
-			select( 'core/block-editor' ).getBlocks( props.clientId ).length > 0,
-		innerBlocks,
-		variations:
-			typeof getBlockVariations === 'undefined'
-				? null
-				: getBlockVariations( props.name ),
-	};
-} );
-
 const FormEdit = ( props ) => {
 	const { clientId } = props;
 	const hasInnerBlocks = useSelect(
@@ -458,4 +409,4 @@ const FormEdit = ( props ) => {
 	return <Component { ...props } />;
 };
 
-export default compose( [ applyWithSelect ] )( FormEdit );
+export default FormEdit;

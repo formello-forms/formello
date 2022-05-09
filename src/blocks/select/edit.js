@@ -122,7 +122,7 @@ export default function Edit( props ) {
 						/>
 					</ToolbarGroup>
 				</BlockControls>
-				<Options { ...props } />
+				<Options { ...props } setModalOpen={ setModalOpen } />
 			</InspectorControls>
 			<InspectorAdvancedControls>
 				<AdvancedOptions { ...props } />
