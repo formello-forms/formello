@@ -83,7 +83,7 @@ import {
  * @return {WPElement} Element to render.
  */
 function Edit( props ) {
-	const { attributes, className, setAttributes, clientId } = props;
+	const { attributes, className, setAttributes, clientId, hasInnerBlocks } = props;
 
 	const saved = useFormSaved();
 
@@ -195,7 +195,7 @@ function Edit( props ) {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 		template: [ [ 'formello/button' ] ],
-		renderAppender: InnerBlocks.ButtonBlockAppender
+		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null
 	} );
 
 	const settingsUrl = addQueryArgs( 'edit.php', {

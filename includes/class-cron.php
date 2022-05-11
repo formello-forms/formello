@@ -80,9 +80,7 @@ class Cron {
 		// phpcs:ignore
 		$result = $wpdb->get_row( $sql );
 
-		if ( $result->total ) {
-			set_transient( 'formello_news', $result->total, DAY_IN_SECONDS );
-		}
+		set_transient( 'formello_news', $result->total, DAY_IN_SECONDS );
 
 	}
 

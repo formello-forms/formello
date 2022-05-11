@@ -231,8 +231,6 @@ class Formello {
 
 	showLoading() {
 		const btn = this.element.querySelector( '.wp-block-formello-button' );
-		btn.style.width = window.getComputedStyle( btn ).width;
-		btn.style.height = window.getComputedStyle( btn ).height;
 		btn.classList.toggle( 'wp-block-formello-button--loading' );
 		btn.toggleAttribute( 'disabled' );
 	}

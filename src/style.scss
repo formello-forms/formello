@@ -35,7 +35,7 @@ html {
 	display: flex;
 	flex-direction: column;
 
-	div[hidden="true"] {
+	div[hidden="true"], fieldset[hidden="true"] {
 		display: none;
 	}
 
@@ -232,7 +232,9 @@ html {
 		&.as-row {
 
 			&.formello-label-right {
-				text-align: right;
+				label {
+					text-align: right;
+				}
 			}
 
 			.formello {
@@ -332,36 +334,28 @@ html {
 	}
 
 	button.wp-block-formello-button {
-
-		span {
-			transition: all 1s;
-			opacity: 1;
+		span{
+			transition: all .2s;
+			opacity:1;
 		}
-
-		svg {
-			display: none;
-			margin: 0 auto;
-			transition: all 1s;
-
-			path,
-			rect {
-				fill: currentcolor;
+		svg{
+			display:none; 
+			margin:0 .4em;
+			width: 1.5em;
+			transition: all .5s;
+			path,rect{
+				fill: currentColor;
 			}
 		}
 	}
 
 	button.wp-block-formello-button--loading {
 		cursor: revert;
-
 		span {
-			display: none;
-			opacity: 0;
+			margin-right: 5px;
 		}
-
 		svg {
 			display: block;
-			opacity: 1;
-			width: auto;
 		}
 	}
 
