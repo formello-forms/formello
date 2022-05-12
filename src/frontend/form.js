@@ -222,11 +222,11 @@ class Formello {
 		const msg = this.element.querySelector( '.formello-message' );
 		msg.innerHTML = '';
 		msg.setAttribute( 'class', 'formello-message' );
-		if( msg.nextSibling ){
-			if( 'formello-debug' === msg.nextSibling.className )
-				msg.nextSibling.remove()
+		if ( msg.nextSibling ) {
+			if ( 'formello-debug' === msg.nextSibling.className ) {
+				msg.nextSibling.remove();
+			}
 		}
-
 	}
 
 	showLoading() {

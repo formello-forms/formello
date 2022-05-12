@@ -1,4 +1,5 @@
 /**
  * Internal dependencies
  */
-import './plugins/templates';
+import './templates';
+import './settings';

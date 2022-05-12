@@ -1,22 +1,29 @@
 import { Card, CardHeader, CardBody, TextControl } from '@wordpress/components';
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
+import { useSelect, dispatch } from '@wordpress/data';
 
 import { __ } from '@wordpress/i18n';
-import Editor from '../components/editor.js';
 
-export default function Messages( props ) {
-	const { saveSettingGroup, settings, saveSetting } = props;
+export default function Messages() {
+	const settings = useSelect(
+		( select ) => select( 'formello/data' ).getSettings(),
+		[]
+	);
 
 	const updateSetting = ( group, field, value ) => {
-		const newSettings = Object.assign( {}, settings.messages[group] );
+		const newSettings = Object.assign( {}, settings.messages[ group ] );
 		newSettings[ field ] = value;
-		saveSettingGroup( 'messages', group, newSettings );
+		dispatch( 'formello/data' ).setSettingGroup(
+			'messages',
+			group,
+			newSettings
+		);
 	};
 
-	const missingValue = Object.keys( settings.messages.missingValue )
-	const patternMismatch = Object.keys( settings.messages.patternMismatch )
-	const outOfRange = Object.keys( settings.messages.outOfRange )
-	const wrongLength = Object.keys( settings.messages.wrongLength )
+	const missingValue = Object.keys( settings.messages.missingValue );
+	const patternMismatch = Object.keys( settings.messages.patternMismatch );
+	const outOfRange = Object.keys( settings.messages.outOfRange );
+	const wrongLength = Object.keys( settings.messages.wrongLength );
 
 	return (
 		<Fragment>
@@ -26,22 +33,25 @@ export default function Messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					{
-					 	missingValue.map( ( oneKey,i ) => {
-							return (
-								<Fragment key={ i }>
+					{ missingValue.map( ( oneKey, i ) => {
+						return (
+							<Fragment key={ i }>
 								<TextControl
-									
-									label={ __( oneKey ) }
-									value={ settings.messages.missingValue[oneKey] }
+									label={ oneKey }
+									value={
+										settings.messages.missingValue[ oneKey ]
+									}
 									onChange={ ( val ) => {
-										updateSetting( 'missingValue', oneKey, val );
+										updateSetting(
+											'missingValue',
+											oneKey,
+											val
+										);
 									} }
 								/>
-								</Fragment >
-							)
-						})
-					}
+							</Fragment>
+						);
+					} ) }
 				</CardBody>
 			</Card>
 
@@ -51,22 +61,25 @@ export default function Messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					{
-					 	patternMismatch.map( ( oneKey,i ) => {
-							return (
-								<TextControl
-									key={ i }
-									label={ __( oneKey ) }
-									value={ settings.messages.patternMismatch[oneKey] }
-									onChange={ ( val ) => {
-										updateSetting( 'patternMismatch', oneKey, val );
-									} }
-								/>
-							)
-						})
-					}
+					{ patternMismatch.map( ( oneKey, i ) => {
+						return (
+							<TextControl
+								key={ i }
+								label={ oneKey }
+								value={
+									settings.messages.patternMismatch[ oneKey ]
+								}
+								onChange={ ( val ) => {
+									updateSetting(
+										'patternMismatch',
+										oneKey,
+										val
+									);
+								} }
+							/>
+						);
+					} ) }
 				</CardBody>
-
 			</Card>
 
 			<Card>
@@ -75,20 +88,18 @@ export default function Messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					{
-					 	outOfRange.map( ( oneKey,i ) => {
-							return (
-								<TextControl
-									key={ i }
-									label={ __( oneKey ) }
-									value={ settings.messages.outOfRange[oneKey] }
-									onChange={ ( val ) => {
-										updateSetting( 'outOfRange', oneKey, val );
-									} }
-								/>
-							)
-						})
-					}
+					{ outOfRange.map( ( oneKey, i ) => {
+						return (
+							<TextControl
+								key={ i }
+								label={ oneKey }
+								value={ settings.messages.outOfRange[ oneKey ] }
+								onChange={ ( val ) => {
+									updateSetting( 'outOfRange', oneKey, val );
+								} }
+							/>
+						);
+					} ) }
 				</CardBody>
 			</Card>
 
@@ -98,20 +109,18 @@ export default function Messages( props ) {
 				</CardHeader>
 
 				<CardBody>
-					{
-					 	wrongLength.map( ( oneKey,i ) => {
-							return (
-								<TextControl
-									key={ i }
-									label={ __( oneKey ) }
-									value={ settings.messages.wrongLength[oneKey] }
-									onChange={ ( val ) => {
-										updateSetting( 'wrongLength', oneKey, val );
-									} }
-								/>
-							)
-						})
-					}
+					{ wrongLength.map( ( oneKey, i ) => {
+						return (
+							<TextControl
+								key={ i }
+								label={ oneKey }
+								value={ settings.messages.wrongLength[ oneKey ] }
+								onChange={ ( val ) => {
+									updateSetting( 'wrongLength', oneKey, val );
+								} }
+							/>
+						);
+					} ) }
 				</CardBody>
 			</Card>
 		</Fragment>

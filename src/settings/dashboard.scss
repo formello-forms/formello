@@ -224,7 +224,6 @@ $settings-container-width: 1024px;
 .formello-icons-group {
 	display: flex;
     align-items: center;
-    justify-content: space-between;
     div {
     	display: flex;
     }
@@ -232,6 +231,7 @@ $settings-container-width: 1024px;
 		width: 1em;
 		height: 1em;
 		font-size: 1em;
+		margin-left: 4px;
 	}
 }
 

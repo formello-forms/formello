@@ -3,6 +3,7 @@
 /.github
 /.storybook
 /src
+/assets/images
 
 .distignore
 .DS_Store
@@ -22,3 +23,4 @@ config.json
 
 *.zip
 *.psd
+*.env

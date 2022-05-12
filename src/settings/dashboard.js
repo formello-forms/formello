@@ -7,8 +7,6 @@ import { Button, Placeholder, Spinner, TabPanel } from '@wordpress/components';
 
 import { render, Fragment, useState, useEffect } from '@wordpress/element';
 
-import apiFetch from '@wordpress/api-fetch';
-
 import { applyFilters } from '@wordpress/hooks';
 
 /**
@@ -17,7 +15,7 @@ import { applyFilters } from '@wordpress/hooks';
 import './dashboard.scss';
 import getIcon from '../utils/get-icon';
 
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect, dispatch } from '@wordpress/data';
 import { store as noticesStore } from '@wordpress/notices';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
 
@@ -30,29 +28,29 @@ import Logging from './logging.js';
 import Licenses from './licenses.js';
 import Notices from '../tools/notices.js';
 import api from '@wordpress/api';
+import '../store';
 
 function App() {
 	const [ isSaving, setSaving ] = useState( false );
 	const [ apiLoaded, setApiLoaded ] = useState( false );
-	const [ settings, setSettings ] = useState();
-	const [ globalSettings, setGlobalSettings ] = useState();
 	const { createNotice, removeNotice } = useDispatch( noticesStore );
 
+	const settings = useSelect( ( select ) =>
+		select( 'formello/data' ).getSettings()
+	);
+
 	useEffect( () => {
+		api.loadPromise.then( () => {
+			const model = new api.models.Settings();
 
-	    api.loadPromise.then( () => {
-	        let settings = new api.models.Settings();
-
-	        if ( apiLoaded === false ) {
-	            settings.fetch().then( ( response ) => {
-	            	setSettings( response.formello )
-	            	setGlobalSettings( response )
-	            	setApiLoaded( true )
-	            } );
-	        }
-	    } );
-
-	}, [] )
+			if ( apiLoaded === false ) {
+				model.fetch().then( ( response ) => {
+					dispatch( 'formello/data' ).setSettings( response );
+					setApiLoaded( true );
+				} );
+			}
+		} );
+	}, [] );
 
 	const tabs = [
 		{
@@ -92,47 +90,17 @@ function App() {
 		createNotice( status, content, { type, id: 'settings' } );
 	};
 
-	const getSetting = ( group, name, defaultVal ) => {
-		let result = defaultVal;
-
-		if ( ! name ) {
-			result = settings[ group ];
-		}
-
-		if ( 'undefined' !== typeof settings[ group ][ name ] ) {
-			result = settings[ group ][ name ];
-		}
-
-		return result;
-	};
-
 	const storeSettings = () => {
 		setSaving( true );
 
-	    let update = new api.models.Settings( { formello: settings } );
-	    update.save()
-	    .done( () => {
-			addNotice( 'info', 'Settings saved' );
-	    } )
-	    .always( () => setSaving( false ) )
-	    .catch( (e) => addNotice( 'error', e.message, 'default' ) )
-	}
-
-	const saveSettingGroup = ( group, name, value ) => {
-		setSettings( {
-			...settings,
-			[ group ]: {
-				...settings[ group ],
-				[ name ]: value,
-			},
-		} );
-	};
-
-	const saveSetting = ( key, value ) => {
-		setSettings( {
-			...settings,
-			[ key ]: value,
-		} );
+		const update = new api.models.Settings( { formello: settings } );
+		update
+			.save()
+			.done( () => {
+				addNotice( 'info', 'Settings saved' );
+			} )
+			.always( () => setSaving( false ) )
+			.catch( ( e ) => addNotice( 'error', e.message, 'default' ) );
 	};
 
 	const initialTab = getQueryArg( window.location.href, 'tab' );
@@ -140,6 +108,22 @@ function App() {
 	const updateUrl = ( tabName ) => {
 		const newUrl = addQueryArgs( window.location.href, { tab: tabName } );
 		window.history.replaceState( { path: newUrl }, '', newUrl );
+	};
+
+	const showMessage = ( message, type, elementRef ) => {
+		const msg = elementRef.current;
+
+		msg.classList.add( 'formello-action-message--show' );
+		msg.classList.remove( 'formello-action-message--error' );
+
+		if ( 'error' === type ) {
+			msg.classList.add( 'formello-action-message--error' );
+		}
+		msg.textContent = message;
+
+		setTimeout( function() {
+			msg.classList.remove( 'formello-action-message--show' );
+		}, 3000 );
 	};
 
 	if ( ! apiLoaded ) {
@@ -175,31 +159,26 @@ function App() {
 								<div className="formello-settings-tab">
 									<Notices />
 									<SettingsTab
-										saveSetting={ saveSetting.bind( this ) }
-										saveSettingGroup={ saveSettingGroup.bind(
-											this
-										) }
-										settings={ settings }
-										globalSettings={ globalSettings }
 										addNotice={ addNotice }
+										showMessage={ showMessage }
 									/>
-									{
-										( 'general' === tab.name || 'recaptcha' === tab.name || 'messages' === tab.name || 'logging' === tab.name ) &&
+									{ ( 'general' === tab.name ||
+										'recaptcha' === tab.name ||
+										'messages' === tab.name ||
+										'logging' === tab.name ) && (
 										<Button
 											isPrimary
 											aria-disabled={ isSaving }
 											isBusy={ isSaving }
 											disabled={ isSaving }
-											onClick={ ( e ) => storeSettings( e ) }
+											onClick={ () => storeSettings() }
 										>
 											{ __( 'Save', 'formello' ) }
-										</Button>						
-									}
-
+										</Button>
+									) }
 								</div>
 
 								<Help />
-
 							</div>
 						);
 					} }

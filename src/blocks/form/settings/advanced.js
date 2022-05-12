@@ -1,12 +1,9 @@
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 
 import { Fragment } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
-import { select } from '@wordpress/data';
+import { select, dispatch } from '@wordpress/data';
 
-import {
-	InspectorAdvancedControls
-} from '@wordpress/block-editor';
+import { InspectorAdvancedControls } from '@wordpress/block-editor';
 
 import {
 	TextControl,
@@ -26,8 +23,7 @@ import {
  * @return {WPElement} Element to render.
  */
 export function AdvancedSettings( props ) {
-
-	const { attributes, className, setAttributes, clientId } = props;
+	const { attributes, setAttributes, clientId } = props;
 
 	const changeRequiredText = ( value ) => {
 		setAttributes( { requiredText: value } );

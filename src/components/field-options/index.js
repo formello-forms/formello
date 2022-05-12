@@ -82,14 +82,16 @@ export default function Options( props ) {
 				) }
 				{ 'select' === attributes.type && (
 					<Fragment>
-						<Button 
-							isPrimary 
-							isSmall 
+						<Button
+							isPrimary
+							isSmall
 							className={ 'formello-fields-margin' }
 							onClick={ () => {
 								setModalOpen( true );
 							} }
-						>{ __( 'Add options', 'formello' ) }</Button>
+						>
+							{ __( 'Add options', 'formello' ) }
+						</Button>
 						<FormTokenField
 							label={ __( 'Selected option', 'formello' ) }
 							value={

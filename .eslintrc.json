@@ -34,7 +34,7 @@
 			"pragma": "wp"
 		}
 	},
-	"rules": {
-		"no-shadow": "off"
-	}
+    "rules": {
+      "no-shadow": "off"
+    }
 }

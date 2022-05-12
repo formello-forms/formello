@@ -2,25 +2,32 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	ToggleControl,
 	Button,
 	ExternalLink,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
-import { RawHTML, useState, Fragment } from '@wordpress/element';
+import { RawHTML, useState, Fragment, useRef } from '@wordpress/element';
+import { useSelect, dispatch } from '@wordpress/data';
 
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 
 export default function General( props ) {
-	const { settings, saveSetting, storeSettings } = props;
+	const { showMessage } = props;
+
+	const settings = useSelect(
+		( select ) => select( 'formello/data' ).getSettings(),
+		[]
+	);
 
 	const [ loading, setLoading ] = useState( false );
-	const [ licenseStatus, setLicenseStatus ] = useState( settings.license_status );
+	const elementRef = useRef();
 
-	const updateLicense = ( endpoint, e ) => {
-		const message = e.target.nextElementSibling;
+	const updateLicense = () => {
+		const endpoint =
+			'valid' !== settings.license_status ? 'activate' : 'deactivate';
+
 		setLoading( true );
 		apiFetch( {
 			path: '/formello/v1/license/' + endpoint,
@@ -30,21 +37,27 @@ export default function General( props ) {
 			},
 		} ).then( ( result ) => {
 			setLoading( false );
-			if ( result.response.success ) {
-				saveSetting( 'license_status', result.response.license );
-				setLicenseStatus( result.response.license )
-			}
-			message.classList.add( 'formello-action-message--show' );
-			message.classList.remove( 'formello-action-message--error' );
-			message.textContent = 'License ' + result.response.license;
+			dispatch( 'formello/data' ).setSetting(
+				'license_status',
+				result.response.license
+			);
+			showMessage(
+				'License ' + result.response.license,
+				'success',
+				elementRef
+			);
 
-			if ( ! result.success || ! result.response || !result.response.success ) {
-				message.textContent = 'License: ' + result.response;
-				message.classList.add( 'formello-action-message--error' );
+			if (
+				! result.success ||
+				! result.response ||
+				! result.response.success
+			) {
+				showMessage(
+					'License ' + result.response.license,
+					'error',
+					elementRef
+				);
 			}
-			setTimeout( function() {
-				message.classList.remove( 'formello-action-message--show' );
-			}, 3000 );
 		} );
 	};
 
@@ -75,49 +88,43 @@ export default function General( props ) {
 						label={ __( 'License Key', 'formello' ) }
 						value={ settings.license }
 						onChange={ ( val ) => {
-							saveSetting( 'license', val );
+							dispatch( 'formello/data' ).setSetting(
+								'license',
+								val
+							);
 						} }
 						readOnly={ 'valid' === settings.license_status }
+						suffix={
+							<Button
+								onClick={ () => updateLicense() }
+								isPrimary={ 'valid' !== settings.license_status }
+								isSecondary={
+									'valid' === settings.license_status
+								}
+								aria-disabled={ loading }
+								isBusy={ loading }
+							>
+								{ 'valid' !== settings.license_status
+									? 'Activate'
+									: 'Deactivate' }
+							</Button>
+						}
 					/>
 					<div>
-						{ 'valid' === licenseStatus ? (
-							<Fragment>
-								<RawHTML>
-									{ sprintf(
-										/* translators: License status. */
-										__(
-											'<p class="success">License status: %s.</p>',
-											'formello'
-										),
-										`<strong>active</strong>`
-									) }
-								</RawHTML>
-								<Button
-									onClick={ ( e ) =>
-										updateLicense( 'deactivate', e )
-									}
-									isSecondary
-									aria-disabled={ loading }
-									isBusy={ loading }
-								>
-									Deactivate
-								</Button>
-							</Fragment>
-						) : (
-							<Fragment>
-								<Button
-									onClick={ ( e ) =>
-										updateLicense( 'activate', e )
-									}
-									aria-disabled={ loading }
-									isPrimary
-									isBusy={ loading }
-								>
-									Activate
-								</Button>
-							</Fragment>
-						) }
-						<span className="formello-action-message"></span>
+						<RawHTML>
+							{ sprintf(
+								/* translators: License status. */
+								__(
+									'<p class="success">License status: %s.</p>',
+									'formello'
+								),
+								`<strong>${ settings.license_status }</strong>`
+							) }
+						</RawHTML>
+						<span
+							ref={ elementRef }
+							className="formello-action-message"
+						></span>
 					</div>
 				</CardBody>
 			</Card>

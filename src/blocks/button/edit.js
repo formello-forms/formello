@@ -78,7 +78,8 @@ export default function Edit( { attributes, setAttributes } ) {
 	const buttonClasses = classnames(
 		borderProps.className,
 		colorProps.className,
-		attributes.alignment, {
+		attributes.alignment,
+		{
 			'wp-block-formello-button--loading': showIcon,
 		}
 	);

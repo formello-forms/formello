@@ -31,7 +31,8 @@ registerBlockType( metadata, {
 		multiple: false,
 		html: false,
 		// eslint-disable-next-line
-		inserter: 'formello_form' === pagenow || 'popper' === pagenow ? true : false,
+		inserter:
+			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
 		spacing: {
 			padding: true,
 		},

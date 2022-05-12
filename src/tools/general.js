@@ -1,15 +1,12 @@
-import { Card, CardHeader, CardBody, Button, Modal } from '@wordpress/components';
+import { Card, CardHeader, CardBody, Button } from '@wordpress/components';
 
-import { useState, Fragment, useEffect } from '@wordpress/element';
+import { useState, Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
-import api from '@wordpress/api';
 import apiFetch from '@wordpress/api-fetch';
 
 export default function General( { addNotice } ) {
 	const [ loading, setLoading ] = useState( false );
-	const [ apiLoaded, setApiLoaded ] = useState( false );
-	const [ settings, setSettings ] = useState( false );
 
 	const reSync = () => {
 		setLoading( true );
@@ -46,7 +43,6 @@ export default function General( { addNotice } ) {
 					>
 						{ __( 'Re-Sync template', 'formello' ) }
 					</Button>
-
 				</CardBody>
 			</Card>
 		</Fragment>

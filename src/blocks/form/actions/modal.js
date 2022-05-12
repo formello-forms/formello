@@ -8,7 +8,8 @@ const { applyFilters } = wp.hooks;
 import MergeTags from '../../../components/merge-tags';
 
 export function ActionsModal( props ) {
-	const { onRequestClose, action, actionId, attributes, setAttributes } = props;
+	const { onRequestClose, action, actionId, attributes, setAttributes } =
+		props;
 
 	const handleUpdate = ( settings ) => {
 		// 1. Make a shallow copy of the items
@@ -26,11 +27,11 @@ export function ActionsModal( props ) {
 		onRequestClose();
 	};
 
-    const settingsUrl = addQueryArgs( 'edit.php', {
-        post_type: 'formello_form',
-        page: 'formello-settings',
-        tab: 'integrations'
-    } )
+	const settingsUrl = addQueryArgs( 'edit.php', {
+		post_type: 'formello_form',
+		page: 'formello-settings',
+		tab: 'integrations',
+	} );
 
 	return (
 		<Modal

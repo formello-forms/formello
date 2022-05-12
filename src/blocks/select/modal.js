@@ -47,7 +47,10 @@ export function OptionsModal( props ) {
 		const newSettings = [];
 		for ( const i in opts ) {
 			const tmp = opts[ i ].split( ',' );
-			newSettings.push( { value: tmp[ 0 ], label: tmp[1] ? tmp[1] : tmp[0] } );
+			newSettings.push( {
+				value: tmp[ 0 ],
+				label: tmp[ 1 ] ? tmp[ 1 ] : tmp[ 0 ],
+			} );
 		}
 		setAttributes( { options: newSettings } );
 	};

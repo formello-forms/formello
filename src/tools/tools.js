@@ -46,7 +46,7 @@ function App() {
 					</h1>
 				</div>
 			</div>
-			{applyFilters( 'formello.Test', '', this )}
+			{ applyFilters( 'formello.Test', '', this ) }
 
 			<div className="formello-settings-main">
 				{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }

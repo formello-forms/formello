@@ -2,17 +2,15 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import { useState, useEffect, RawHTML } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
-import { withSelect, useSelect, dispatch, select } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
+import { useSelect, dispatch, select } from '@wordpress/data';
 
 import {
 	InspectorControls,
-	InspectorAdvancedControls,
 	BlockControls,
 	useBlockProps,
 	useInnerBlocksProps,
 	URLInput,
-	InnerBlocks
+	InnerBlocks,
 } from '@wordpress/block-editor';
 
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
@@ -22,15 +20,12 @@ import { ActionsModal } from './actions/modal';
 import { getActions } from './actions/actions';
 
 import {
-	TextControl,
 	TextareaControl,
 	ToggleControl,
 	PanelBody,
-	SelectControl,
 	ToolbarButton,
 	ToolbarGroup,
 	ToolbarDropdownMenu,
-	DropdownMenu,
 	Notice,
 } from '@wordpress/components';
 
@@ -39,7 +34,13 @@ import useFormSaved from './useFormSaved';
 
 import getIcon from '../../utils/get-icon';
 
-import { Mailchimp, GetResponse, Email, WebHooks, Mailpoet } from './actions/icons';
+import {
+	Mailchimp,
+	GetResponse,
+	Email,
+	WebHooks,
+	Mailpoet,
+} from './actions/icons';
 import apiFetch from '@wordpress/api-fetch';
 
 const icons = {
@@ -47,7 +48,7 @@ const icons = {
 	mailpoet: Mailpoet,
 	getresponse: GetResponse,
 	email: Email,
-	webhooks: WebHooks
+	webhooks: WebHooks,
 };
 
 const ALLOWED_BLOCKS = [
@@ -83,7 +84,8 @@ import {
  * @return {WPElement} Element to render.
  */
 function Edit( props ) {
-	const { attributes, className, setAttributes, clientId, hasInnerBlocks } = props;
+	const { attributes, className, setAttributes, clientId, hasInnerBlocks } =
+		props;
 
 	const saved = useFormSaved();
 
@@ -95,7 +97,7 @@ function Edit( props ) {
 		} );
 	};
 
-	if( saved ){
+	if ( saved ) {
 		apiFetch( {
 			path: '/formello/v1/form/' + attributes.id,
 			method: 'PUT',
@@ -118,7 +120,6 @@ function Edit( props ) {
 			updateTransient();
 		} );
 	}
-
 
 	const postType = useSelect(
 		( select ) => select( 'core/editor' ).getCurrentPostType(),
@@ -195,7 +196,7 @@ function Edit( props ) {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 		template: [ [ 'formello/button' ] ],
-		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null
+		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
 	} );
 
 	const settingsUrl = addQueryArgs( 'edit.php', {
@@ -316,7 +317,7 @@ function Edit( props ) {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<AdvancedSettings {...props} />
+			<AdvancedSettings { ...props } />
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
 					type={ 'remote' }
@@ -342,7 +343,6 @@ function Edit( props ) {
 }
 
 function Placeholder( props ) {
-
 	const { name, clientId, setAttributes } = props;
 
 	const { replaceInnerBlocks } = dispatch( 'core/block-editor' );
@@ -350,21 +350,15 @@ function Placeholder( props ) {
 	const { getBlockVariations, getDefaultBlockVariation } =
 		select( 'core/blocks' );
 
-	const defaultVariation = useSelect(
-		() => {
-			return typeof getDefaultBlockVariation === 'undefined'
-				? null
-				: getDefaultBlockVariation( props.name );
-		},
-		[ name ]
-	);
+	const defaultVariation = useSelect( () => {
+		return typeof getDefaultBlockVariation === 'undefined'
+			? null
+			: getDefaultBlockVariation( props.name );
+	}, [ name ] );
 
-	const variations = useSelect(
-		() => {
-			return getBlockVariations( name, 'block' );
-		},
-		[ name ]
-	);
+	const variations = useSelect( () => {
+		return getBlockVariations( name, 'block' );
+	}, [ name ] );
 
 	return (
 		<div { ...useBlockProps() }>

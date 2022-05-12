@@ -1,10 +1,18 @@
-import { Card, CardHeader, CardBody, ExternalLink, ToggleControl } from '@wordpress/components';
-import { getFilename } from '@wordpress/url';
+import {
+	Card,
+	CardHeader,
+	CardBody,
+	ExternalLink,
+	ToggleControl,
+} from '@wordpress/components';
+import { useSelect, dispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
-const LoggingTab = (props) => {
-
-	const { saveSetting, settings } = props;
+const LoggingTab = () => {
+	const settings = useSelect(
+		( select ) => select( 'formello/data' ).getSettings(),
+		[]
+	);
 
 	return (
 		<Card>
@@ -23,12 +31,17 @@ const LoggingTab = (props) => {
 				<ToggleControl
 					label={ __( 'Enable log', 'formello' ) }
 					checked={ settings.log }
-					onChange={ ( val ) => { 
-						saveSetting( 'log', val )
+					onChange={ ( val ) => {
+						dispatch( 'formello/data' ).setSetting( 'log', val );
 					} }
 				/>
 				{ settings.log && (
-					<ExternalLink href={ '/wp-content/uploads/formello/logs/' + settings.log_file }>
+					<ExternalLink
+						href={
+							'/wp-content/uploads/formello/logs/' +
+							settings.log_file
+						}
+					>
 						{ __( 'View log', 'formello' ) }
 					</ExternalLink>
 				) }

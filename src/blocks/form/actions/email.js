@@ -2,8 +2,9 @@ const { addFilter } = wp.hooks;
 
 import {
 	TextControl,
-	TextareaControl,
 	ToggleControl,
+	Notice,
+	Button,
 } from '@wordpress/components';
 import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 
@@ -21,17 +22,17 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 		handleUpdate( { ...settings, [ prop ]: val } );
 	};
 
-	const editorRef = useRef(null);
-	const [dirty, setDirty] = useState(false);
-	useEffect(() => setDirty(false), [settings.message]);
+	const editorRef = useRef( null );
+	const [ dirty, setDirty ] = useState( false );
+	useEffect( () => setDirty( false ), [ settings.message ] );
 
 	const save = () => {
-		if (editorRef.current) {
-			const content = editorRef.current.getContent();
-			setDirty(false);
-			editorRef.current.setDirty(false);
+		if ( editorRef.current ) {
+			const message = editorRef.current.getContent();
+			setDirty( false );
+			editorRef.current.setDirty( false );
 			// an application would save the editor content to the server here
-			updateSettings( 'message', content )
+			updateSettings( 'message', message );
 		}
 	};
 
@@ -110,22 +111,27 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 				} }
 			/>
 			<label>{ __( 'Message', 'formello' ) }</label>
-			<Editor 
+			<Editor
 				initialValue={ settings.message }
-				onInit={ (evt, editor) => editorRef.current = editor }
-				onDirty={ () => setDirty(true) }
-				init={{
+				onInit={ ( evt, editor ) => ( editorRef.current = editor ) }
+				onDirty={ () => setDirty( true ) }
+				init={ {
 					height: 200,
 					menubar: false,
-					plugins: [
-						'lists link image charmap'
-					],
-					toolbar: 'bold italic | aligncenter | bullist numlist | link unlink | undo redo ',
-				}}
+					plugins: [ 'lists link image charmap' ],
+					toolbar:
+						'bold italic | aligncenter | bullist numlist | link unlink | undo redo ',
+				} }
 			/>
-			<button onClick={ save } disabled={ ! dirty }>{ __( 'Save', 'formello' ) }</button>
-			{dirty && <p>You have unsaved content!</p>}
+			{ dirty && (
+				<Notice status="warning" isDismissible={ false }>
+					<span>{ __( 'You have unsaved content! ', 'formello' ) }</span>
 
+					<Button isPrimary isSmall onClick={ save } disabled={ ! dirty }>
+						{ __( 'Save', 'formello' ) }
+					</Button>
+				</Notice>
+			) }
 		</Fragment>
 	);
 }

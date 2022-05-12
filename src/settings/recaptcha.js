@@ -6,12 +6,15 @@ import {
 	RadioControl,
 	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import { useSelect, dispatch } from '@wordpress/data';
 
 import { __ } from '@wordpress/i18n';
 
-export default function ReCaptcha( props ) {
-	const { saveSetting, saveSettingGroup, settings } = props;
+export default function ReCaptcha() {
+	const settings = useSelect(
+		( select ) => select( 'formello/data' ).getSettings(),
+		[]
+	);
 
 	return (
 		<Card>
@@ -27,32 +30,45 @@ export default function ReCaptcha( props ) {
 						{ label: 'reCaptcha v3 invisible', value: '3' },
 					] }
 					onChange={ ( val ) => {
-						saveSettingGroup( 'reCaptcha', 'version', val );
+						dispatch( 'formello/data' ).setSettingGroup(
+							'reCaptcha',
+							'version',
+							val
+						);
 					} }
 				/>
-
 				<TextControl
 					label={ __( 'Site Key', 'formello' ) }
 					value={ settings.reCaptcha.site_key }
 					onChange={ ( val ) => {
-						saveSettingGroup( 'reCaptcha', 'site_key', val );
+						dispatch( 'formello/data' ).setSettingGroup(
+							'reCaptcha',
+							'site_key',
+							val
+						);
 					} }
 				/>
-
 				<TextControl
 					label={ __( 'Secret Key', 'formello' ) }
 					value={ settings.reCaptcha.secret_key }
 					onChange={ ( val ) => {
-						saveSettingGroup( 'reCaptcha', 'secret_key', val );
+						dispatch( 'formello/data' ).setSettingGroup(
+							'reCaptcha',
+							'secret_key',
+							val
+						);
 					} }
 				/>
-
-				{ 3 === Number(settings.reCaptcha.version) && (
+				{ 3 === Number( settings.reCaptcha.version ) && (
 					<NumberControl
 						label={ __( 'Threshold', 'formello' ) }
 						value={ settings.reCaptcha.threshold }
 						onChange={ ( val ) => {
-							saveSettingGroup( 'reCaptcha', 'threshold', val );
+							dispatch( 'formello/data' ).setSettingGroup(
+								'reCaptcha',
+								'threshold',
+								val
+							);
 						} }
 						step={ '0.1' }
 						min={ '0' }
