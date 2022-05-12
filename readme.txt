@@ -65,6 +65,16 @@ For each of this input field you can set all html attribute (required, pattern, 
 5. Form with label on side
 6. Validation
 
+== WHAT’S NEXT ==
+
+If you like this plugin, then consider checking out our other projects:
+
+* [Formello](https://wordpress.org/plugins/formello): a form builder to collect leads, newsletter signup, contact form and more.
+* [Popper](https://wordpress.org/plugins/popper): a popup builder to increase leads with exit intent.
+* [Mortgage Calculator](https://wordpress.org/plugins/mortgage): a mortgage calculator block for Gutenberg.
+* [Search Console](https://wordpress.org/plugins/search-console): view all your search console data inside WordPress admin.
+
+
 == Installation ==
 
 There's two ways to install Formello.
