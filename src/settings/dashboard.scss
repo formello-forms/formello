@@ -59,6 +59,12 @@ $settings-container-width: 1024px;
 
 .formello-settings-tab {
 	flex: 1 0 auto;
+	.components-card-header {
+		svg {
+			width: 24px;
+			margin-right: 10px;
+		}
+	}
 }
 
 .components-tab-panel__tabs-item, .components-tab-panel__tabs-item:focus:not(:disabled) {
@@ -264,37 +270,3 @@ table.formello-bordered th {
 	font-size: 14px;
 	text-align: left;
 }
-
-/* ------------------ ICONS ------------------------------- */
-
-
-i {
-	width: 30px;
-	height: 30px;
-	display: inline-block;
-	margin-right: 10px;
-
-	&.mailchimp {
-		background: url( ../../assets/integrations/mailchimp.svg ) center no-repeat;
-	}
-	&.getresponse {
-		background: url( ../../assets/integrations/getresponse.svg ) center no-repeat;
-	}
-	&.zapier {
-		background: url( ../../assets/integrations/zapier.svg ) center no-repeat;
-	}
-	&.webhooks {
-		background: url( ../../assets/integrations/webhooks.svg ) center no-repeat;
-	}
-	&.exporter {
-		background: url( ../../assets/integrations/exporter.svg ) center no-repeat;
-	}
-	&.conditional_fields {
-		background: url( ../../assets/integrations/conditional_fields.svg ) center no-repeat;
-	}
-	&.mailpoet {
-		background: url( ../../assets/integrations/mailpoet.svg ) center no-repeat;
-	}
-}
-
-/* ------------------ END ICONS ------------------------------- */

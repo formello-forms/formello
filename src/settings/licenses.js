@@ -20,11 +20,13 @@ const LicensesTab = ( props ) => {
 	for ( const addon in addons ) {
 		const title = addons[ addon ].title;
 		const name = addons[ addon ].name;
+		const icon = addons[ addon ].icon;
 		const optionName = 'formello_' + name;
 		items.push(
 			<AddonLicense
 				{ ...props }
 				key={ title }
+				icon={ icon }
 				title={ title }
 				name={ name }
 				optionName={ optionName }

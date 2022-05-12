@@ -30,8 +30,8 @@ export function AdvancedSettings( props ) {
 
 		// Update the child block's attributes
 		const children =
-			select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ]
-				.innerBlocks;
+			select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ].innerBlocks;
+		
 		children.forEach( ( child ) => {
 			dispatch( 'core/block-editor' ).updateBlockAttributes(
 				child.clientId,

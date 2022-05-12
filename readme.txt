@@ -69,10 +69,10 @@ For each of this input field you can set all html attribute (required, pattern, 
 
 If you like this plugin, then consider checking out our other projects:
 
-* [Formello](https://wordpress.org/plugins/formello): a form builder to collect leads, newsletter signup, contact form and more.
 * [Popper](https://wordpress.org/plugins/popper): a popup builder to increase leads with exit intent.
 * [Mortgage Calculator](https://wordpress.org/plugins/mortgage): a mortgage calculator block for Gutenberg.
 * [Search Console](https://wordpress.org/plugins/search-console): view all your search console data inside WordPress admin.
+* [Pdf Embed](https://wordpress.org/plugins/pdf-embed): embed your PDFs using the official Adobe Embed API.
 
 
 == Installation ==
@@ -99,6 +99,9 @@ Yes. Your submissions will be stored in database, so you can keep track of them.
 Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. Also we have support for Google ReCaptcha (v2,v3) to stop spam bot sending form and to help you take things clean. Apart from this, data submitted are always validated and sanitized.
 
 == Changelog ==
+
+= 1.7.0 =
+* Added shotcode render
 
 = 1.6.9 =
 * Code linting

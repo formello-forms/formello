@@ -42,6 +42,7 @@ class Blocks {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
+		add_shortcode( 'formello', array( $this, 'do_reusable_block' ) );
 	}
 
 	/**
@@ -166,5 +167,6 @@ class Blocks {
 			$categories
 		);
 	}
+
 }
 Blocks::get_instance();

@@ -34,23 +34,6 @@ import useFormSaved from './useFormSaved';
 
 import getIcon from '../../utils/get-icon';
 
-import {
-	Mailchimp,
-	GetResponse,
-	Email,
-	WebHooks,
-	Mailpoet,
-} from './actions/icons';
-import apiFetch from '@wordpress/api-fetch';
-
-const icons = {
-	mailchimp: Mailchimp,
-	mailpoet: Mailpoet,
-	getresponse: GetResponse,
-	email: Email,
-	webhooks: WebHooks,
-};
-
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
 	'core/heading',
@@ -64,13 +47,14 @@ const ALLOWED_BLOCKS = [
 	'formello/select',
 	'formello/fileupload',
 ];
-
+import apiFetch from '@wordpress/api-fetch';
 import { TemplatesModal } from './settings/library';
 import { AdvancedSettings } from './settings/advanced';
 import {
 	getConstraints,
 	getFieldsName,
 } from '../../components/merge-tags/functions';
+import { find } from 'lodash';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -225,7 +209,7 @@ function Edit( props ) {
 							controls={ actions.map( ( a ) => {
 								return {
 									title: a.title,
-									icon: icons[ a.type ],
+									icon: a.icon,
 									onClick: () => {
 										addAction( a.type );
 									},
@@ -233,10 +217,11 @@ function Edit( props ) {
 							} ) }
 						/>
 						{ attributes.actions.map( ( a, i ) => {
+							let action = find(actions, {type:a.type});
 							return (
 								<ToolbarButton
 									label={ a.title }
-									icon={ icons[ a.type ] }
+									icon={ action.icon }
 									key={ i }
 									onClick={ () => {
 										setActive( i );

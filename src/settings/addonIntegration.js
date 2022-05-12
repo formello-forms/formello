@@ -14,12 +14,12 @@ import apiFetch from '@wordpress/api-fetch';
 import api from '@wordpress/api';
 
 export default function AddonLicense( props ) {
-	const { showMessage, addNotice } = props;
 
-	const { title, addonSettings, optionName, name } = props;
+	const { title, addonSettings, optionName, name, showMessage, addNotice, icon } = props;
 	const [ loading, setLoading ] = useState( false );
 	const [ settings, setSettings ] = useState( addonSettings );
 	const elementRef = useRef();
+	const Icon = icon;
 
 	const validateKey = () => {
 		setLoading( true );
@@ -72,7 +72,7 @@ export default function AddonLicense( props ) {
 	return (
 		<Card>
 			<CardHeader size={ 'large' } justify={ 'flex-start' }>
-				<i className={ name }></i>
+				<Icon />
 				<h2>{ title }</h2>
 			</CardHeader>
 

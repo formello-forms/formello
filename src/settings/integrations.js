@@ -21,11 +21,13 @@ const IntegrationsTab = ( props ) => {
 	for ( const addon in addons ) {
 		const title = addons[ addon ].title;
 		const name = addons[ addon ].name;
+		const icon = addons[ addon ].icon;
 		const optionName = 'formello_' + name;
 		items.push(
 			<AddonIntegration
 				{ ...props }
 				key={ title }
+				icon={ icon }
 				title={ title }
 				name={ name }
 				optionName={ optionName }
