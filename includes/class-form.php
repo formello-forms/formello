@@ -392,6 +392,10 @@ class Form {
 			return sanitize_textarea_field( $this->replace_tags( $value ) );
 		}
 
+		if ( 'file' === $fields[ $key ] ) {
+			error_log( $key );
+		}
+
 		return sanitize_text_field( $this->replace_tags( $value ) );
 	}
 

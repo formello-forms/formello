@@ -76,7 +76,7 @@ class Cron {
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 		$table_posts  = "{$wpdb->prefix}posts";
 
-		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM {$table_posts} f WHERE f.id = s.form_id );";
+		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM {$table_posts} f WHERE f.id = s.form_id AND f.post_type = 'formello_form' );";
 		// phpcs:ignore
 		$result = $wpdb->get_row( $sql );
 

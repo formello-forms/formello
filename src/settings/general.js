@@ -53,11 +53,18 @@ export default function General( props ) {
 				! result.response.success
 			) {
 				showMessage(
-					'License ' + result.response.license,
+					'License ' + result.response,
 					'error',
 					elementRef
 				);
 			}
+		}, ( error ) => {
+			setLoading( false );
+			showMessage(
+				'License ' + error.response,
+				'error',
+				elementRef
+			);
 		} );
 	};
 

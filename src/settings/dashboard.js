@@ -35,9 +35,11 @@ function App() {
 	const [ apiLoaded, setApiLoaded ] = useState( false );
 	const { createNotice, removeNotice } = useDispatch( noticesStore );
 
-	const settings = useSelect( ( select ) =>
-		select( 'formello/data' ).getSettings()
-	);
+	const { settings } = useSelect( ( select ) => {
+		return {
+			settings: select( 'formello/data' ).getSettings()
+		}
+	} );
 
 	useEffect( () => {
 		api.loadPromise.then( () => {

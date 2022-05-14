@@ -25,8 +25,11 @@ export default function AddonLicense( props ) {
 		setLoading( true );
 
 		apiFetch( {
-			path: '/formello/v1/' + name + '/list',
+			path: '/formello/v1/' + name + '/validate',
 			method: 'POST',
+			data: {
+				key: settings.api_key
+			}
 		} ).then(
 			( result ) => {
 				setLoading( false );

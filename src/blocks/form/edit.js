@@ -218,6 +218,9 @@ function Edit( props ) {
 						/>
 						{ attributes.actions.map( ( a, i ) => {
 							let action = find(actions, {type:a.type});
+							if( ! action ){
+								return
+							}
 							return (
 								<ToolbarButton
 									label={ a.title }
