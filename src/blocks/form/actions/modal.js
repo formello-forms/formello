@@ -3,7 +3,8 @@ import { Fragment } from '@wordpress/element';
 import { Modal, Button } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
 
-const { applyFilters } = wp.hooks;
+import { applyFilters } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 import MergeTags from '../../../components/merge-tags';
 
@@ -62,7 +63,9 @@ export function ActionsModal( props ) {
 					<Button
 						isDestructive={ true }
 						onClick={ () => {
-							deleteAction();
+							if ( window.confirm( __( 'Delete action?', 'formello' ) ) ) {
+								deleteAction();
+							}
 						} }
 					>
 						Delete

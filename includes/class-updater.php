@@ -171,8 +171,7 @@ class Updater {
 		if ( $this->name !== $file ) {
 			return;
 		}
-var_dump('STOCAZZO');
-exit;
+
 		// Do not print any message if update does not exist.
 		$update_cache = get_site_transient( 'update_plugins' );
 
