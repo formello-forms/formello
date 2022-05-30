@@ -95,6 +95,8 @@ html {
 
 			input {
 				border-right: 0;
+				border-top-right-radius: 0;
+				border-bottom-right-radius: 0;
 			}
 
 			button {
@@ -339,11 +341,11 @@ html {
 			opacity:1;
 		}
 		svg{
-			display:none; 
-			margin:0 .4em;
-			width: 1.5em;
+			display: none; 
+			margin: 0 .4em;
+			height: 1rem;
 			transition: all .5s;
-			path,rect{
+			path, rect {
 				fill: currentColor;
 			}
 		}

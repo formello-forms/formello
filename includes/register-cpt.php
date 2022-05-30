@@ -18,8 +18,8 @@ defined( 'ABSPATH' ) || exit;
 function register_cpt() {
 	$args = array(
 		'labels' => array(
-			'name'                => _x( 'Formello Forms', 'Post Type General Name', 'formello' ),
-			'singular_name'       => _x( 'Formello Form', 'Post Type Singular Name', 'formello' ),
+			'name'                => _x( 'Forms', 'formello' ),
+			'singular_name'       => _x( 'Form', 'formello' ),
 			'menu_name'           => __( 'Forms', 'formello' ),
 			'parent_item_colon'   => __( 'Parent Form', 'formello' ),
 			'all_items'           => __( 'Forms', 'formello' ),

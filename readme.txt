@@ -29,10 +29,13 @@ This is the next generation **WordPress form builder plugin**. You can create fo
 
 == Extensions ==
 
-* Mailchimp: action to send subscriber emails to your lists.
+* [Mailchimp](https://formello.net/addons/mailchimp): action to send subscriber emails to your Mailchimp lists.
+* [MailPoet](https://formello.net/addons/mailpoet): action to send subscriber emails to your MailPoet lists.
+* [Sendinblue](https://formello.net/addons/sendinblue): action to send subscriber emails to your SendinBlue lists.
+* [GetResponse](https://formello.net/addons/mailchimp): action to send subscriber emails to your GetResponse lists.
 * Inserter: automatically insert form on posts/page.
-* Exporter: export all your submission in an Excel ready format.
-* Web Hooks: send your mail submissions to any external endpoint.
+* [Exporter](https://formello.net/addons/exporter): export all your submission in an Excel ready format or CSV.
+* [Web Hooks](https://formello.net/addons/web-hooks): send your mail submissions to any external endpoint.
 * [Conditional fields](https://formello.net/addons/conditional-fields): add rules to display fields based on your defined conditions.
 * 🔥 [Popper](https://wordpress.org/plugins/popper): a popup builder to increase leads with exit intent.
 
@@ -46,7 +49,7 @@ This is the next generation **WordPress form builder plugin**. You can create fo
 * Checkbox
 * Radio
 * Date
-* Advanced date(multiple, range)
+* Advanced date ( multiple, range )
 * Time
 * Textarea
 * Richtext editor

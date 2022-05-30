@@ -7,7 +7,6 @@
 	"category": "formello",
 	"icon": "button",
 	"ancestor": ["formello/form"],
-	"parent": ["formello/form"],
 	"textdomain": "formello",
 	"attributes": {
 		"type": {
