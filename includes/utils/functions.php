@@ -181,8 +181,48 @@ function formello_cron_schedules( $schedules ) {
 	return $schedules;
 }
 
+
+/**
+ * Add the custom columns to the book post type.
+ *
+ * @param array $columns The array of columns.
+ *
+ * @return array $columns
+ */
+function formello_columns_table( $columns ) {
+
+	$columns['shortcode'] = __( 'Shortcode', 'formello' );
+
+	unset( $columns['date'] );
+
+	$columns['date'] = __( 'Date' );
+
+	return $columns;
+}
+
+/**
+ * Add the custom columns to the book post type.
+ *
+ * @param string $column The name of columns.
+ * @param number $post_id The post id.
+ */
+function formello_columns_display( $column, $post_id ) {
+	switch ( $column ) {
+		case 'shortcode':
+			echo sprintf(
+				'<code>[formello id=%d]</code>',
+				// phpcs:ignore.
+				esc_attr( $post_id ),
+			);
+			break;
+
+	}
+}
+
 add_filter( 'cron_schedules', __NAMESPACE__ . '\formello_cron_schedules' );
 add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option', 5 );
 add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option' );
 add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
 add_filter( 'post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2 );
+add_filter( 'manage_formello_form_posts_columns', __NAMESPACE__ . '\formello_columns_table' );
+add_action( 'manage_formello_form_posts_custom_column', __NAMESPACE__ . '\formello_columns_display', 10, 2 );

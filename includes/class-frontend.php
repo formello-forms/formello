@@ -88,17 +88,18 @@ class Frontend {
 	public function process_form( Form $form ) {
 		$form_settings = $form->get_settings();
 
-		// save submission object so that other form processor have an insert ID to work with (eg file upload).
-		if ( $form_settings['storeSubmissions'] ) {
-			$form->save();
-		}
-
 		/**
 		* General purpose hook that runs before all form actions, so we can still modify the submission object that is passed to actions.
 		*/
 		do_action( 'formello_process_form', $form );
 
+		// save submission object so that other form processor have an insert ID to work with (eg file upload).
+		if ( $form_settings['storeSubmissions'] ) {
+			$form->save();
+		}
+
 		$actions = $form->get_actions();
+
 		$form->log( 'debug', 'Actions to run:', $actions );
 
 		// process form actions asynchronously.

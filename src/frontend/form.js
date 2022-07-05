@@ -124,7 +124,7 @@ class Formello {
 					}
 
 					// clear form
-					if ( ! response.message.errors ) {
+					if ( ! response.errors.length ) {
 						parent.element.reset();
 					}
 				} else {

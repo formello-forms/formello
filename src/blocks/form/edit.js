@@ -91,6 +91,7 @@ function Edit( props ) {
 					recaptchaEnabled: attributes.recaptchaEnabled,
 					hide: attributes.hide,
 					debug: attributes.debug,
+					redirect_url: attributes.redirectUrl,
 					fields: getFieldsName( clientId ),
 					constraints: getConstraints( clientId ),
 					actions: attributes.actions,
@@ -167,7 +168,7 @@ function Edit( props ) {
 		actions.forEach( ( a ) => {
 			if ( a.type === type ) {
 				setAttributes( { actions: [ ...attributes.actions, a ] } );
-				//setShowActionsModal(a)
+				setShowActionsModal(a)
 			}
 		} );
 	};
@@ -293,14 +294,14 @@ function Edit( props ) {
 					</div>
 					<TextareaControl
 						label={ __( 'Success Message', 'formello' ) }
-						value={ attributes.successMessage }
+						value={ attributes.successMessage || formello.settings.messages.form.success }
 						onChange={ ( val ) =>
 							setAttributes( { successMessage: val } )
 						}
 					/>
 					<TextareaControl
 						label={ __( 'Error Message', 'formello' ) }
-						value={ attributes.errorMessage }
+						value={ attributes.errorMessage || formello.settings.messages.form.error }
 						onChange={ ( val ) => setAttributes( { errorMessage: val } ) }
 					/>
 				</PanelBody>

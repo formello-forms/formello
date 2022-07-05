@@ -22,6 +22,7 @@ const IntegrationsTab = ( props ) => {
 		const title = addons[ addon ].title;
 		const name = addons[ addon ].name;
 		const icon = addons[ addon ].icon;
+		const apiurl = addons[ addon ].apiurl;
 		const optionName = 'formello_' + name;
 		items.push(
 			<AddonIntegration
@@ -30,6 +31,7 @@ const IntegrationsTab = ( props ) => {
 				icon={ icon }
 				title={ title }
 				name={ name }
+				apiurl={ apiurl }
 				optionName={ optionName }
 				addonSettings={ settings[ optionName ] }
 			/>

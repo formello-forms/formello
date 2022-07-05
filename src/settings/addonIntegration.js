@@ -7,7 +7,7 @@ import {
 	CardHeader,
 } from '@wordpress/components';
 
-import { useState, useRef } from '@wordpress/element';
+import { useState, useRef, RawHTML } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
@@ -15,7 +15,7 @@ import api from '@wordpress/api';
 
 export default function AddonLicense( props ) {
 
-	const { title, addonSettings, optionName, name, showMessage, addNotice, icon } = props;
+	const { title, addonSettings, optionName, name, showMessage, addNotice, icon, apiurl } = props;
 	const [ loading, setLoading ] = useState( false );
 	const [ settings, setSettings ] = useState( addonSettings );
 	const elementRef = useRef();
@@ -99,10 +99,17 @@ export default function AddonLicense( props ) {
 							</Button>
 						}
 					/>
-					<span
-						ref={ elementRef }
-						className="formello-action-message"
-					></span>
+					<RawHTML>
+						{ sprintf(
+							/* translators: Number of templates. */
+							__(
+								'Get your %s API key by clicking %s',
+								'formello'
+							),
+							title,
+							`<a href="${ apiurl }">here</a>`
+						) }
+					</RawHTML>
 				</BaseControl>
 				<Button
 					onClick={ () => storeSettings() }
@@ -112,6 +119,10 @@ export default function AddonLicense( props ) {
 				>
 					Save
 				</Button>
+				<span
+					ref={ elementRef }
+					className="formello-action-message"
+				></span>
 			</CardBody>
 		</Card>
 	);

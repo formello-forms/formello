@@ -115,10 +115,6 @@ export default function AddonLicense( props ) {
 							</Button>
 						}
 					/>
-					<span
-						ref={ elementRef }
-						className="formello-action-message"
-					></span>
 				</BaseControl>
 				<Button
 					onClick={ () => storeSettings() }
@@ -128,6 +124,10 @@ export default function AddonLicense( props ) {
 				>
 					Save
 				</Button>
+				<span
+					ref={ elementRef }
+					className="formello-action-message"
+				></span>
 			</CardBody>
 		</Card>
 	);

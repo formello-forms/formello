@@ -43,6 +43,10 @@ export default function save( { attributes, className } ) {
 		htmlAttrs.oninput = 'this.nextElementSibling.value = this.value';
 	}
 
+	if ( 'file' === attributes.type ) {
+		htmlAttrs.name += '[]';
+	}
+
 	if ( attributes.advancedDate ) {
 		htmlAttrs.type = 'text';
 		Object.entries( attributes.flatpickr ).forEach( ( [ key, value ] ) => {

@@ -77,11 +77,11 @@ class Formatter {
 	 * @return string Formatted value.
 	 */
 	private static function format_file( $value ) {
-		if ( false === filter_var( $url, FILTER_VALIDATE_URL ) ) {
+		if ( false === filter_var( $value, FILTER_VALIDATE_URL ) ) {
 			return $value;
 		}
 		return sprintf(
-			'<a href="%s">%s</a>',
+			'<a href="%s" target="_blank">%s</a>',
 			esc_attr( $value ),
 			esc_html( $value )
 		);

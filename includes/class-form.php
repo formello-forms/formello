@@ -140,10 +140,8 @@ class Form {
 	 *
 	 * @param array $data The form sanitized data.
 	 */
-	public function populate_with_data( $data ) {
-		$this->data    = $data['fields'];
-		$this->details = $data['details'];
-		$this->actions = $data['actions'];
+	public function set_data( $data ) {
+		$this->data = $data;
 	}
 
 	/**
@@ -528,11 +526,11 @@ class Form {
 	}
 
 	/**
-	 * Get a Data array.
+	 * Set errors.
 	 *
 	 * @param string $error The action name.
 	 */
-	private function add_error( $error ) {
+	public function add_error( $error ) {
 		$this->errors[] = $error;
 	}
 
@@ -555,8 +553,8 @@ class Form {
 			),
 		);
 
-		if ( ! empty( $data['redirect_url'] ) ) {
-			$response['redirect_url'] = $data['settings']['redirectUrl'];
+		if ( ! empty( $data['settings']['redirect_url'] ) ) {
+			$response['redirect_url'] = $data['settings']['redirect_url'];
 		}
 
 		if ( current_user_can( 'manage_options' ) && $this->is_debug() ) {
