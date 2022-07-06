@@ -154,6 +154,17 @@ const variations = [
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
 	{
+		name: 'password',
+		title: __( 'Password' ),
+		icon: 'admin-network',
+		attributes: {
+			name: 'password',
+			type: 'password',
+			label: 'Password',
+		},
+		scope: [ 'block', 'inserter', 'transform' ],
+	},
+	{
 		name: 'inputbutton',
 		title: __( 'with button' ),
 		description: __( 'Display an with a button on same row.' ),

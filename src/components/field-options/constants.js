@@ -58,6 +58,16 @@ export const SUPPORTED_ATTRIBUTES = {
 		'disabled',
 		'placeholder',
 	],
+	password: [
+		'name',
+		'id',
+		'type',
+		'value',
+		'required',
+		'readonly',
+		'disabled',
+		'placeholder',
+	],
 	number: [
 		'name',
 		'id',

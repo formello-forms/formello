@@ -56,7 +56,7 @@ echo esc_attr(
 			<tbody>
 			<tr>
 				<th><?php esc_html_e( 'Timestamp', 'formello' ); ?></th>
-				<td><?php esc_html( formello_field_value( $this->submission->submitted_at ) ); ?></td>
+				<td><?php echo esc_html( formello_field_value( $this->submission->submitted_at ) ); ?></td>
 			</tr>
 
 			<?php if ( ! empty( $this->submission->user_agent ) ) { ?>

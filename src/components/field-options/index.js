@@ -71,7 +71,7 @@ export default function Options( props ) {
 				) }
 				{ supported.includes( 'multiple' ) && (
 					<ToggleControl
-						label={ __( 'Multiple choices', 'formello' ) }
+						label={ __( 'Multiple', 'formello' ) }
 						checked={ attributes.multiple }
 						onChange={ ( val ) =>
 							setAttributes( {

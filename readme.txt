@@ -107,6 +107,10 @@ Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
 
+= 1.7.5 =
+* Fixed starred count
+* Fixed missing time on submisison page
+
 = 1.7.4 =
 * Added shortcode
 * Fixed redirection

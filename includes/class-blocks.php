@@ -133,6 +133,10 @@ class Blocks {
 
 		do_action( 'formello_input_block_render', $attributes, $content );
 
+		if ( 'password' === $attributes['type'] ) {
+			wp_enqueue_script( 'password-strength-meter' );
+		}
+
 		return $content;
 	}
 

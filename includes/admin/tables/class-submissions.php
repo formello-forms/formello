@@ -167,8 +167,8 @@ class Submissions extends \WP_List_Table {
 			)
 		);
 
-		$this->news    = $results[0]->new;
-		$this->starred = $results[0]->starred;
+		$this->news    = empty( $results[0]->new ) ? '0' : $results[0]->new;
+		$this->starred = empty( $results[0]->starred ) ? '0' : $results[0]->starred;
 
 		return $results[0]->$filter;
 	}
