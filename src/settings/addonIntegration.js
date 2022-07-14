@@ -99,18 +99,18 @@ export default function AddonLicense( props ) {
 							</Button>
 						}
 					/>
-					<RawHTML>
-						{ sprintf(
-							/* translators: Number of templates. */
-							__(
-								'Get your %s API key by clicking %s',
-								'formello'
-							),
-							title,
-							`<a href="${ apiurl }">here</a>`
-						) }
-					</RawHTML>
 				</BaseControl>
+				<RawHTML>
+					{ sprintf(
+						/* translators: Number of templates. */
+						__(
+							'Get your %s API key by clicking %s',
+							'formello'
+						),
+						title,
+						`<a href="${ apiurl }">here</a>`
+					) }
+				</RawHTML>
 				<Button
 					onClick={ () => storeSettings() }
 					isPrimary

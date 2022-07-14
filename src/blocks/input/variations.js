@@ -42,7 +42,7 @@ const variations = [
 	{
 		name: 'gdpr',
 		title: __( 'GDPR' ),
-		icon: 'shield',
+		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path color="#1e72bd" d="M10 2s3 2 7 2c0 11-7 14-7 14S3 15 3 4c4 0 7-2 7-2zm0 8h5s1-1 1-5c0 0-5-1-6-2v7H5c1 4 5 7 5 7v-7z"/></g></svg>,
 		attributes: {
 			name: 'checkbox',
 			type: 'checkbox',
@@ -156,11 +156,13 @@ const variations = [
 	{
 		name: 'password',
 		title: __( 'Password' ),
-		icon: 'admin-network',
+		icon: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><rect x="0" fill="none" width="20" height="20"/><g><path color="#1e72bd" d="M16.95 2.58c1.96 1.95 1.96 5.12 0 7.07-1.51 1.51-3.75 1.84-5.59 1.01l-1.87 3.31-2.99.31L5 18H2l-1-2 7.95-7.69c-.92-1.87-.62-4.18.93-5.73 1.95-1.96 5.12-1.96 7.07 0zm-2.51 3.79c.74 0 1.33-.6 1.33-1.34 0-.73-.59-1.33-1.33-1.33-.73 0-1.33.6-1.33 1.33 0 .74.6 1.34 1.33 1.34z"/></g></svg>,
 		attributes: {
 			name: 'password',
 			type: 'password',
 			label: 'Password',
+			pattern: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*',
+			validation: 'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, and 1 number.'
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -210,7 +212,7 @@ variations.forEach( ( variation ) => {
 		variation.attributes.enableRtf = false;
 	}
 	if ( 'date' !== variation.name ) {
-		variation.attributes.advancedDate = false;
+		variation.attributes.advanced = false;
 	}
 	if ( variation.isActive ) {
 		return;

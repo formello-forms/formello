@@ -31,6 +31,13 @@ class Other {
 	}
 
 	/**
+	 * Get referrer url
+	 */
+	public function referrer() {
+		return $_SERVER['HTTP_REFERER'];
+	}
+
+	/**
 	 * Retrieve user IP
 	 */
 	public function user_ip() {

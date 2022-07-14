@@ -42,6 +42,14 @@
 			"type": "string",
 			"default": ""
 		},
+		"mismatchMessage": {
+			"type": "string",
+			"default": ""
+		},
+		"match": {
+			"type": "string",
+			"default": ""
+		},
 		"hideLabel": {
 			"type": "boolean",
 			"default": false
@@ -53,6 +61,14 @@
 		"required": {
 			"type": "boolean",
 			"default": false
+		},
+		"enableAutoComplete": {
+			"type": "boolean",
+			"default": false
+		},
+		"autocomplete": {
+			"type": "string",
+			"default": ""
 		},
 		"hideRequired": {
 			"type": "boolean",
@@ -144,7 +160,7 @@
 		"enableRtf": {
 			"type": "boolean"
 		},
-		"advancedDate": {
+		"advanced": {
 			"type": "boolean"
 		}
 	}

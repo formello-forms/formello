@@ -101,6 +101,20 @@
     margin-bottom: 10px;
 }
 
+.formello-mergetags-container {
+	min-width: 300px;
+}
+
+.formello-tag-option {
+	cursor: pointer;
+	margin-bottom: 5px;
+}
+
+.formello-tag-option:hover {
+	background-color: #007cba;
+	color: white;
+}
+
 /* ------------------ END FIELDS -------------------------- */
 
 /* ------------------ MCE EDITOR ------------------------------- */
@@ -110,3 +124,9 @@
 }
 
 /* ------------------ END MCE EDITOR ------------------------------- */
+
+/**/
+
+.block-editor-block-variation-picker__skip button {
+	display: inline;
+}

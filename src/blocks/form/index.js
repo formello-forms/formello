@@ -5,6 +5,7 @@
 import variations from './variations';
 import edit from './edit';
 import save from './save';
+import deprecated from './deprecated';
 import getIcon from '../../utils/get-icon';
 import metadata from './block.json';
 
@@ -69,6 +70,7 @@ registerBlockType( metadata, {
 			},
 		],
 	},
+	deprecated,
 	edit,
-	save,
+	save
 } );

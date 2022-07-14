@@ -46,7 +46,12 @@ function register_cpt() {
 		'show_in_rest'        => true,
 		'capability_type'     => 'post',
 		'template'            => array(
-			array( 'formello/form' ),
+			array(
+				'formello/form',
+				array(
+					'cpt' => true,
+				),
+			),
 		),
 		'template_lock'       => 'insert', // This will block template insertion.
 		'supports'            => array(

@@ -8,9 +8,8 @@ import {
 	PanelBody,
 	FormTokenField,
 	ToggleControl,
-	BaseControl,
-	Button,
-	__experimentalInputControl as InputControl,
+	TextControl,
+	Button
 } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
@@ -26,15 +25,13 @@ export default function Options( props ) {
 	return (
 		<Fragment>
 			<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
-				<BaseControl>
-					<InputControl
-						label={ __( 'Name', 'formello' ) }
-						value={ attributes.name }
-						onChange={ ( val ) =>
-							setAttributes( { name: val.toLowerCase() } )
-						}
-					/>
-				</BaseControl>
+				<TextControl
+					label={ __( 'Name', 'formello' ) }
+					value={ attributes.name }
+					onChange={ ( val ) =>
+						setAttributes( { name: val.toLowerCase() } )
+					}
+				/>
 				{ supported.includes( 'value' ) && (
 					<MergeTags
 						className={ 'formello-flex' }
@@ -48,26 +45,22 @@ export default function Options( props ) {
 					/>
 				) }
 				{ supported.includes( 'placeholder' ) && (
-					<BaseControl>
-						<InputControl
-							label={ __( 'Placeholder', 'formello' ) }
-							value={ attributes.placeholder }
-							onChange={ ( val ) =>
-								setAttributes( { placeholder: val } )
-							}
-						/>
-					</BaseControl>
+					<TextControl
+						label={ __( 'Placeholder', 'formello' ) }
+						value={ attributes.placeholder }
+						onChange={ ( val ) =>
+							setAttributes( { placeholder: val } )
+						}
+					/>
 				) }
 				{ supported.includes( 'required' ) && (
-					<Fragment>
-						<ToggleControl
-							label={ __( 'Required', 'formello' ) }
-							checked={ attributes.required }
-							onChange={ ( newval ) =>
-								setAttributes( { required: newval } )
-							}
-						/>
-					</Fragment>
+					<ToggleControl
+						label={ __( 'Required', 'formello' ) }
+						checked={ attributes.required }
+						onChange={ ( newval ) =>
+							setAttributes( { required: newval } )
+						}
+					/>
 				) }
 				{ supported.includes( 'multiple' ) && (
 					<ToggleControl
@@ -127,15 +120,13 @@ export default function Options( props ) {
 					/>
 				) }
 				{ ! ( 'hidden' === attributes.type ) && (
-					<Fragment>
-						<ToggleControl
-							label={ __( 'Show Description', 'formello' ) }
-							checked={ attributes.showHelp }
-							onChange={ ( newval ) =>
-								setAttributes( { showHelp: newval } )
-							}
-						/>
-					</Fragment>
+					<ToggleControl
+						label={ __( 'Show Description', 'formello' ) }
+						checked={ attributes.showHelp }
+						onChange={ ( newval ) =>
+							setAttributes( { showHelp: newval } )
+						}
+					/>
 				) }
 			</PanelBody>
 		</Fragment>

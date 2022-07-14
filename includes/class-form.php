@@ -441,7 +441,7 @@ class Form {
 		// perform validation.
 		$validator = new Validator();
         // phpcs:ignore
-        $validation = $validator->make($_POST, $this->get_constraints());
+        $validation = $validator->make( $_POST + $_FILES, $this->get_constraints() );
 
 		// then validate.
 		$validation->validate();
@@ -497,6 +497,10 @@ class Form {
 		if ( ! wp_verify_nonce( $_POST['_formello'], '_formello' ) ) {
 			return true;
 		}
+
+		/*if ( ! check_ajax_referer( $_POST['_formello'], '_formello', false ) ) {
+			return true;
+		}*/
 
 		if ( ! isset( $_POST[ $honeypot_key ] ) || '' !== $_POST[ $honeypot_key ] ) {
 			return true;

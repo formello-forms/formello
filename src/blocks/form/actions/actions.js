@@ -7,6 +7,7 @@ export function getActions() {
 			icon: Icon,
 			type: 'email',
 			title: 'Email',
+			async: true,
 			to: '',
 			from: '',
 			cc: '',

@@ -12,8 +12,6 @@ import {
 
 import TagSelector from './tagSelector';
 
-import './editor.scss';
-
 export default function mergeTags( props ) {
 	const { label, value, placeholder, onChange, className } = props;
 

@@ -62,7 +62,7 @@ function App() {
 		},
 		{
 			name: 'recaptcha',
-			title: 'ReCaptcha',
+			title: 'reCaptcha',
 			component: Recaptcha,
 		},
 		{

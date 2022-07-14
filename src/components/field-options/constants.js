@@ -21,6 +21,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'maxlength',
 		'minlength',
 		'pattern',
+		'autocomplete'
 	],
 	tel: [
 		'name',
@@ -34,6 +35,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'maxlength',
 		'minlength',
 		'pattern',
+		'autocomplete'
 	],
 	url: [
 		'name',
@@ -47,6 +49,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'maxlength',
 		'minlength',
 		'pattern',
+		'autocomplete'
 	],
 	email: [
 		'name',
@@ -57,16 +60,19 @@ export const SUPPORTED_ATTRIBUTES = {
 		'readonly',
 		'disabled',
 		'placeholder',
+		'autocomplete'
 	],
 	password: [
 		'name',
 		'id',
 		'type',
-		'value',
 		'required',
 		'readonly',
 		'disabled',
-		'placeholder',
+		'pattern',
+		'maxlength',
+		'minlength',
+		'autocomplete'
 	],
 	number: [
 		'name',

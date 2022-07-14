@@ -27,6 +27,8 @@ import {
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 	Notice,
+	Button,
+	Flex
 } from '@wordpress/components';
 
 import classnames from 'classnames';
@@ -99,6 +101,7 @@ function Edit( props ) {
 						success: attributes.successMessage,
 						error: attributes.errorMessage,
 					},
+					others: attributes.formSettings
 				},
 			},
 		} ).then( () => {
@@ -171,6 +174,12 @@ function Edit( props ) {
 				setShowActionsModal(a)
 			}
 		} );
+	};
+
+	const deleteAction = ( actionId ) => {
+		const items = [ ...attributes.actions ]; // make a separate copy of the array
+		items.splice( actionId, 1 );
+		setAttributes( { actions: items } );
 	};
 
 	const blockProps = useBlockProps( {
@@ -254,8 +263,8 @@ function Edit( props ) {
 							setAttributes( { recaptchaEnabled: val } );
 						} }
 					/>
-					{ '' === formello.settings.reCaptcha.site_key ||
-						( '' === formello.settings.reCaptcha.secret_key &&
+					{ ( '' === formello.settings.reCaptcha.site_key ||
+						'' === formello.settings.reCaptcha.secret_key ) &&
 							attributes.recaptchaEnabled && (
 							<div className="block-editor-contrast-checker">
 								<Notice
@@ -274,7 +283,7 @@ function Edit( props ) {
 									</RawHTML>
 								</Notice>
 							</div>
-						) ) }
+						) }
 					<ToggleControl
 						label={ __( 'Hide form after submission', 'formello' ) }
 						checked={ attributes.hide }
@@ -304,6 +313,42 @@ function Edit( props ) {
 						value={ attributes.errorMessage || formello.settings.messages.form.error }
 						onChange={ ( val ) => setAttributes( { errorMessage: val } ) }
 					/>
+				</PanelBody>
+				<PanelBody
+					title={ __( 'Actions', 'formello' ) }
+					initialOpen={ false }
+				>
+					{ attributes.actions.map( ( a, i ) => {
+						let action = find(actions, {type:a.type});
+						if( ! action ){
+							return
+						}
+						return (
+							<Flex
+								className={ 'formello-actions' }
+								key={ i }
+							>
+								<a 
+									href="#"
+									onClick={ () => {
+										setActive( i );
+										setShowActionsModal( a );
+									} }
+								>
+									{ a.title }
+								</a>
+								<Button 
+									onClick={ () => {
+										if ( window.confirm( __( 'Delete action?', 'formello' ) ) ) {
+											deleteAction( i );
+										}
+									} }
+									icon={ 'no' } 
+									isSmall
+								/>
+							</Flex>
+						);
+					} ) }
 				</PanelBody>
 			</InspectorControls>
 			<AdvancedSettings { ...props } />

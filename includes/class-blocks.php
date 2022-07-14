@@ -86,7 +86,7 @@ class Blocks {
 	}
 
 	/**
-	 * Render block on frontend
+	 * Render form block on frontend
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
@@ -98,7 +98,7 @@ class Blocks {
 	}
 
 	/**
-	 * Render block
+	 * Render form block
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
@@ -141,7 +141,7 @@ class Blocks {
 	}
 
 	/**
-	 * Render input block
+	 * Render button block
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.

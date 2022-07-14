@@ -105,6 +105,11 @@ $settings-container-width: 1024px;
 	.components-card__body label {
 		font-weight: 500;
 		font-size: 14px;
+		text-transform: capitalize;
+	}
+
+	.components-radio-control label {
+		text-transform: none;
 	}
 
 	.formello-action-message {

@@ -120,11 +120,12 @@ export default function Edit( props ) {
 				<input
 					className={ attributes.fieldClass }
 					type={ attributes.type }
-					value={ attributes.value || '' }
+					value={ 'password' !== attributes.type ? attributes.value : '' }
 					checked={ attributes.checked || false }
 					onChange={ onChange }
 					placeholder={ attributes.placeholder }
 					disabled={ 'file' === attributes.type }
+					autoComplete="new-password"
 				/>
 			) }
 			{ attributes.withButton && children }

@@ -66,7 +66,7 @@ abstract class Action {
 	/**
 	 * Process action.
 	 *
-	 * @param array $action_settings Te action settings.
+	 * @param array $action_settings The action settings.
 	 */
 	abstract public function process( $action_settings );
 

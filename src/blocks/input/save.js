@@ -27,7 +27,8 @@ export default function save( { attributes, className } ) {
 
 	const fieldClassName = classnames( {
 		'formello-rtf': attributes.enableRtf && 'textarea' === attributes.type,
-		flatpickr: attributes.advancedDate && 'date' === attributes.type,
+		'flatpickr': attributes.advanced && 'date' === attributes.type,
+		'filepond': attributes.advanced && 'file' === attributes.type,
 	} );
 
 	// include only supported attributes
@@ -39,15 +40,28 @@ export default function save( { attributes, className } ) {
 		htmlAttrs[ 'data-bouncer-message' ] = attributes.validation;
 	}
 
+	if ( 'password' === attributes.type && attributes.mismatchMessage ) {
+		htmlAttrs[ 'data-bouncer-mismatch-message' ] = attributes.mismatchMessage;
+	}
+
+	if ( 'password' === attributes.type && attributes.match ) {
+		htmlAttrs[ 'data-bouncer-match' ] = attributes.match;
+	}
+
 	if ( attributes.withOutput ) {
 		htmlAttrs.oninput = 'this.nextElementSibling.value = this.value';
 	}
 
-	if ( 'file' === attributes.type ) {
-		htmlAttrs.name += '[]';
+	if ( ! attributes.enableAutoComplete ) {
+		htmlAttrs.autocomplete = undefined;
 	}
 
-	if ( attributes.advancedDate ) {
+	if ( 'file' === attributes.type ) {
+		htmlAttrs.name += '[]';
+		htmlAttrs.accept = attributes.accept.join(',');
+	}
+
+	if ( attributes.advanced && 'date' === attributes.type ) {
 		htmlAttrs.type = 'text';
 		Object.entries( attributes.flatpickr ).forEach( ( [ key, value ] ) => {
 			htmlAttrs[ 'data-' + key ] = value;

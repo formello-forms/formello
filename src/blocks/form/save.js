@@ -32,7 +32,7 @@ export default function save( { attributes, className } ) {
 				type="text"
 				name={ honeypot }
 				className="formello-hp"
-				autoComplete="nope"
+				autocomplete="nope"
 			/>
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />

@@ -102,8 +102,12 @@ export function getConstraints( clientId ) {
 	if ( fields ) {
 		fields.forEach( ( b ) => {
 			const constraint = getFieldConstraint( b );
+			let name = b.attributes.name;
+			if( 'file' === b.attributes.type ){
+				name += '.*';
+			}
 			if ( constraint ) {
-				constraints[ b.attributes.name ] = constraint;
+				constraints[ name ] = constraint;
 			}
 		} );
 	}
@@ -133,7 +137,7 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'min:' + field.attributes.min );
 	}
 
-	if ( field.attributes.max && 'date' !== field.attributes.type ) {
+	if ( field.attributes.max && 'date' !== field.attributes.type && 'file' !== field.attributes.type ) {
 		constraints.push( 'max:' + field.attributes.max );
 	}
 
@@ -150,6 +154,18 @@ export function getFieldConstraint( field ) {
 
 	if ( 'date' === field.attributes.type && ! field.attributes.advancedDate ) {
 		constraints.push( 'date' );
+	}
+
+	if ( 'file' === field.attributes.type && field.attributes.max ) {
+		constraints.push( 'uploaded_file' );
+	}
+
+	if ( 'file' === field.attributes.type && field.attributes.accept.length ) {
+		constraints.push( 'mimes:' + field.attributes.accept.join(',').replace(/\|/g, ",") );
+	}
+
+	if ( 'file' === field.attributes.type && field.attributes.max ) {
+		constraints.push( 'max:' + field.attributes.max + 'KB' );
 	}
 
 	if (
@@ -275,6 +291,10 @@ export function getOtherTags() {
 		{
 			title: 'Time',
 			tag: `{{other.system_time}}`, // done
+		},
+		{
+			title: 'Referrer URL',
+			tag: `{{other.referrer}}`,
 		},
 		{
 			title: 'User IP',
