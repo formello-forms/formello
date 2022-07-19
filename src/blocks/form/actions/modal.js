@@ -63,7 +63,7 @@ export function ActionsModal( props ) {
 					<Button
 						isDestructive={ true }
 						onClick={ () => {
-							if ( window.confirm( __( 'Delete action?', 'formello' ) ) ) {
+							if ( window.confirm( __( 'Delete action ' + action.title + '?', 'formello' ) ) ) {
 								deleteAction();
 							}
 						} }

@@ -8,7 +8,7 @@ import {
 
 export default function DatepickerSettings( props ) {
 	const {
-		attributes: { flatpickr, advancedDate },
+		attributes: { flatpickr, advanced },
 		setAttributes,
 	} = props;
 
@@ -39,7 +39,7 @@ export default function DatepickerSettings( props ) {
 
 	return (
 		<Fragment>
-			{ advancedDate && (
+			{ advanced && (
 				<Fragment>
 					<ToggleControl
 						label={ __( 'Minimum date from today', 'formello' ) }

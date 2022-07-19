@@ -19,7 +19,7 @@ function AdvancedOptions( props ) {
 			type,
 			min,
 			max,
-			advancedDate,
+			advanced,
 			step,
 			minlength,
 			maxlength,
@@ -49,18 +49,15 @@ function AdvancedOptions( props ) {
 		<Fragment>
 			{ 'date' === type && (
 				<ToggleControl
-					label={ __(
-						'Advanced Date',
-
-						'formello'
-					) }
-					checked={ advancedDate }
+					label={ __( 'Advanced Date', 'formello' ) }
+					checked={ advanced }
 					onChange={ ( val ) => {
-						setAttributes( { advancedDate: val } );
+						setAttributes( { advanced: val } );
 					} }
 				/>
 			) }
 			{ 'select' !== type && <DatepickerSettings { ...props } /> }
+			<DatepickerSettings { ...props } />
 			{ supported.includes( 'step' ) && (
 				<Fragment>
 					<TextControl
@@ -100,7 +97,7 @@ function AdvancedOptions( props ) {
 					/>
 				</Fragment>
 			) }
-			{ supported.includes( 'minlength' ) && true !== advancedDate && (
+			{ supported.includes( 'minlength' ) && true !== advanced && (
 				<Fragment>
 					<TextControl
 						type="number"
@@ -120,7 +117,7 @@ function AdvancedOptions( props ) {
 					/>
 				</Fragment>
 			) }
-			{ supported.includes( 'pattern' ) && true !== advancedDate && (
+			{ supported.includes( 'pattern' ) && true !== advanced && (
 				<TextControl
 					label={ __( 'Pattern', 'formello' ) }
 					value={ pattern || '' }
@@ -140,16 +137,8 @@ function AdvancedOptions( props ) {
 						type="text"
 						label={ __( 'Match', 'formello' ) }
 						value={ match || '' }
+						help={ __( 'Insert the id of the field to match', 'formello' ) }
 						onChange={ ( val ) => setAttributes( { match: val } ) }
-					/>
-					<MergeTags
-						className={ 'formello-flex' }
-						clientId={ clientId }
-						label={ __( 'Match', 'formello' ) }
-						value={ match }
-						onChange={ ( val ) => {
-							setAttributes( { match: val } );
-						} }
 					/>
 					<TextControl
 						type="text"

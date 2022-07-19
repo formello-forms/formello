@@ -50,7 +50,7 @@ class Replacer {
 		if ( $matches ) {
 			$tag     = $matches[1];
 			$param   = ! isset( $matches[2] ) ? '' : $matches[2];
-			$default = ! isset( $matches[3] ) ? $matches[0] : $matches[3];
+			$default = ! isset( $matches[3] ) ? '' : $matches[3];
 
 			$result = $this->replace( $tag, $param, $default );
 		};
@@ -65,7 +65,7 @@ class Replacer {
 	 * @param string $param The param variable.
 	 * @param string $default Default value.
 	 */
-	protected function replace( $tag, $param, $default ) {
+	protected function replace( $tag, $param, $default='' ) {
 		$replacement = $this->replacers[ $tag ];
 
 		if ( array_key_exists( $tag, $this->replacers ) ) {

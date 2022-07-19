@@ -169,6 +169,10 @@ html {
 		padding: 10px;
 	}
 	
+	button[disabled] {
+		opacity: .5;
+	}
+
 	.wp-block-columns {
 		margin-bottom: 0;
 	}

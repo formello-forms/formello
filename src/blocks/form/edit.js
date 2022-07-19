@@ -320,9 +320,6 @@ function Edit( props ) {
 				>
 					{ attributes.actions.map( ( a, i ) => {
 						let action = find(actions, {type:a.type});
-						if( ! action ){
-							return
-						}
 						return (
 							<Flex
 								className={ 'formello-actions' }
@@ -339,7 +336,7 @@ function Edit( props ) {
 								</a>
 								<Button 
 									onClick={ () => {
-										if ( window.confirm( __( 'Delete action?', 'formello' ) ) ) {
+										if ( window.confirm( __( 'Delete action ' + a.title + '?', 'formello' ) ) ) {
 											deleteAction( i );
 										}
 									} }

@@ -16,6 +16,10 @@ if ( ! $this->submission ) {
 }
 if ( $this->submission->is_new ) {
 	$data->viewed();
+	$formello_result = get_transient( 'formello_news', false );
+	if ( $formello_result ) {
+		set_transient( 'formello_news', $formello_result - 1, DAY_IN_SECONDS );
+	}
 }
 ?>
 
