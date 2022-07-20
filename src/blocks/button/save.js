@@ -42,6 +42,7 @@ export default function save( { attributes } ) {
 
 	const blockProps = useBlockProps.save( {
 		className: buttonClasses,
+		style: colorProps.style
 	} );
 
 	return (

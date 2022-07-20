@@ -46,7 +46,7 @@ echo esc_attr(
 				echo '<tr>';
 				echo sprintf( '<th>%s</th>', esc_html( str_replace( '_', ' ', ucfirst( strtolower( $formello_field ) ) ) ) );
 				echo '<td>';
-				echo esc_html( formello_field_value( $formello_value, 5000 ) );
+				echo formello_field_value( $formello_value, 5000 );
 				echo '</td>';
 				echo '</tr>';
 			}
