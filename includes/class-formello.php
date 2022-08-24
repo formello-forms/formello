@@ -97,7 +97,7 @@ final class Formello {
 	 */
 	private function define_constants() {
 		$this->define( 'FORMELLO_ABSPATH', dirname( FORMELLO_PLUGIN_FILE ) . '/' );
-        $this->define('FORMELLO_VERSION', get_file_data(FORMELLO_PLUGIN_FILE, [ 'Version' ])[0]); // phpcs:ignore
+        $this->define( 'FORMELLO_VERSION', get_file_data(FORMELLO_PLUGIN_FILE, [ 'Version' ])[0]); // phpcs:ignore
 		$this->define( 'FORMELLO_PLUGIN_URL', plugin_dir_url( FORMELLO_PLUGIN_FILE ) );
 		$this->define( 'FORMELLO_ASSETS', FORMELLO_PLUGIN_URL . 'build' );
 		$this->define( 'FORMELLO_PLUGIN_BASENAME', plugin_basename( FORMELLO_PLUGIN_FILE ) );

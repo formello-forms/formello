@@ -13,10 +13,6 @@
 			"type": "string",
 			"default": "Submit"
 		},
-		"iconPosition": {
-			"type": "string",
-			"default": "ld-ext-right"
-		},
 		"type": {
 			"type": "string",
 			"default": "Loading"
