@@ -48,9 +48,6 @@ function register_cpt() {
 		'template'            => array(
 			array(
 				'formello/form',
-				array(
-					'cpt' => true,
-				),
 			),
 		),
 		'template_lock'       => 'insert', // This will block template insertion.

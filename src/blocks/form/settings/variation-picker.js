@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { Button, Placeholder } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
-import { TemplatesModal } from './library';
+import { TemplatesModal } from './library2';
 import { useState } from '@wordpress/element';
 
 function BlockVariationPicker( {

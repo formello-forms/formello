@@ -69,6 +69,13 @@ export default function Edit( props ) {
 				<BlockControls>
 					<ToolbarGroup>
 						<ToolbarButton
+							label={ __( 'Template', 'popper' ) }
+							icon={ 'layout' }
+							onClick={ () => {
+								setModalOpen( 'templates' );
+							} }
+						/>
+						<ToolbarButton
 							label={ __( 'Edit this form', 'formello' ) }
 							icon="edit"
 							onClick={ () => window.open( editUrl, '_blank' ) }

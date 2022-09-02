@@ -169,7 +169,7 @@ class Form {
 	}
 
 	/**
-	 * Get form settings
+	 * Get form setting
 	 *
 	 * @param array $setting The setting to load.
 	 * @return array

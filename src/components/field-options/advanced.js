@@ -57,7 +57,7 @@ function AdvancedOptions( props ) {
 				/>
 			) }
 			{ 'select' !== type && <DatepickerSettings { ...props } /> }
-			<DatepickerSettings { ...props } />
+
 			{ supported.includes( 'step' ) && (
 				<Fragment>
 					<TextControl
@@ -93,7 +93,7 @@ function AdvancedOptions( props ) {
 						type="number"
 						label={ __( 'Step Value', 'formello' ) }
 						value={ step || '' }
-						onChange={ ( val ) => setAttributes( { step: val } ) }
+						onChange={ ( val ) => setAttributes( { step: Number( val ) } ) }
 					/>
 				</Fragment>
 			) }
@@ -243,9 +243,6 @@ function AdvancedOptions( props ) {
 						} )
 					}
 				/>
-			) }
-			{ 'hidden' === type && (
-				<p>No advanced options for this field type.</p>
 			) }
 		</Fragment>
 	);

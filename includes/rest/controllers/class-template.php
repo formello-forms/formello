@@ -97,8 +97,8 @@ class Template extends Base {
 
 		foreach ( $all_templates as $template ) {
 			$local_templates[] = array(
-				'id'    => $template->ID,
 				'title' => $template->post_title,
+				'id' => $template->ID,
 				'types' => array(
 					array(
 						'slug' => 'local',

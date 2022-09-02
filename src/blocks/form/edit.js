@@ -346,6 +346,10 @@ function Edit( props ) {
 							</Flex>
 						);
 					} ) }
+					{
+						!attributes.actions.length &&
+						<p>{ __( 'No action added.', 'formello' ) }</p>
+					}
 				</PanelBody>
 			</InspectorControls>
 			<AdvancedSettings { ...props } />

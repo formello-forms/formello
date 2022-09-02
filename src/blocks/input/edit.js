@@ -122,6 +122,7 @@ export default function Edit( props ) {
 					type={ attributes.type }
 					value={ 'password' !== attributes.type ? attributes.value : '' }
 					checked={ attributes.checked || false }
+					step={ attributes.step || undefined }
 					onChange={ onChange }
 					placeholder={ attributes.placeholder }
 					disabled={ 'file' === attributes.type }

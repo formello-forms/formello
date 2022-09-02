@@ -161,7 +161,8 @@ const variations = [
 			name: 'password',
 			type: 'password',
 			label: 'Password',
-			pattern: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*',
+			//pattern: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*',
+			pattern: '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*',
 			validation: 'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, and 1 number.'
 		},
 		scope: [ 'block', 'inserter', 'transform' ],

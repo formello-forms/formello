@@ -121,6 +121,7 @@ export function getFieldConstraint( field ) {
 	if ( field.attributes.type === 'url' ) {
 		constraints.push( 'url' );
 	}
+
 	if ( field.attributes.required ) {
 		constraints.push( 'required' );
 	}
@@ -154,6 +155,10 @@ export function getFieldConstraint( field ) {
 
 	if ( 'date' === field.attributes.type && ! field.attributes.advancedDate ) {
 		constraints.push( 'date' );
+	}
+
+	if ( field.attributes.pattern ) {
+		constraints.push( 'regex:/' + field.attributes.pattern + '/' );
 	}
 
 	if ( 'file' === field.attributes.type && field.attributes.max ) {
