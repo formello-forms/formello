@@ -291,7 +291,7 @@ function Edit( props ) {
 							setAttributes( { hide: val } );
 						} }
 					/>
-					<div>
+					<div style={ { width: '90%' } }>
 						<URLInput
 							label={ __( 'Redirect Url', 'formello' ) }
 							value={ attributes.redirectUrl }

@@ -10,7 +10,78 @@ import classnames from 'classnames';
 import { createBlock } from '@wordpress/blocks';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
-export default [
+const blockAttributes = {
+		id: {
+			type: 'number'
+		},
+		name: {
+			type: 'string',
+			default: ''
+		},
+		successMessage: {
+			type: 'string',
+			default: ''
+		},
+		errorMessage: {
+			type: 'string',
+			default: ''
+		},
+		redirectUrl: {
+			type: 'string',
+			default: ''
+		},
+		debug: {
+			type: 'boolean',
+			default: false
+		},
+		recaptchaEnabled: {
+			type: 'boolean',
+			default: false
+		},
+		recaptchaVersion: {
+			type: 'number',
+			default: 3
+		},
+		labelIsBold: {
+			type: 'boolean',
+			default: false
+		},
+		labelAlign: {
+			type: 'string',
+			default: ''
+		},
+		requiredText: {
+			type: 'string',
+			default: '*'
+		},
+		storeSubmissions: {
+			type: 'boolean',
+			default: true
+		},
+		hide: {
+			type: 'boolean',
+			default: false
+		},
+		constraints: {
+			type: 'array'
+		},
+		fields: {
+			type: 'array'
+		},
+		formSettings: {
+			type: 'object'
+		},
+		asRow: {
+			type: 'boolean',
+			default: false
+		},
+		actions: {
+			type: 'array',
+			default: []
+		}		
+}
+
+const deprecated = [
 	{
 		attributes: {
 			id: {
@@ -65,7 +136,7 @@ export default [
 						type="text"
 						name={ honeypot }
 						className="formello-hp"
-						autoComplete="nope"
+						autocomplete="nope"
 					/>
 					<input type="hidden" name="action" value="formello" />
 					<InnerBlocks.Content />
@@ -76,3 +147,5 @@ export default [
 		},
 	},
 ];
+
+export default deprecated;

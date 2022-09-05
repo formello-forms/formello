@@ -25,7 +25,7 @@ function register_cpt() {
 			'all_items'           => __( 'Forms', 'formello' ),
 			'view_item'           => __( 'View Form', 'formello' ),
 			'add_new_item'        => __( 'Add New Form', 'formello' ),
-			'add_new'             => __( 'Add New', 'formello' ),
+			'add_new'             => __( 'Add New Form', 'formello' ),
 			'edit_item'           => __( 'Edit Form', 'formello' ),
 			'update_item'         => __( 'Update Form', 'formello' ),
 			'search_items'        => __( 'Search Form', 'formello' ),
@@ -55,6 +55,7 @@ function register_cpt() {
 			'title',
 			'editor',
 			'custom-fields',
+			'revisions',
 		),
 	);
 	register_post_type( 'formello_form', $args );

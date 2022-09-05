@@ -126,7 +126,7 @@ export default function Edit( props ) {
 					onChange={ onChange }
 					placeholder={ attributes.placeholder }
 					disabled={ 'file' === attributes.type }
-					autoComplete="new-password"
+					autoComplete={ attributes.autocomplete || 'new-password' }
 				/>
 			) }
 			{ attributes.withButton && children }

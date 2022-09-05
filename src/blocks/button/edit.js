@@ -37,23 +37,23 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const ALIGNMENT_CONTROLS = [
 		{
-			icon: 'editor-alignleft',
-			title: __( 'Align Button Left', 'formello' ),
+			icon: 'align-left',
+			title: __( 'Align Left', 'formello' ),
 			align: 'left',
 		},
 		{
-			icon: 'editor-aligncenter',
-			title: __( 'Align Button Center', 'formello' ),
+			icon: 'align-center',
+			title: __( 'Align Center', 'formello' ),
 			align: 'center',
 		},
 		{
-			icon: 'editor-alignright',
-			title: __( 'Align Button Right', 'formello' ),
+			icon: 'align-right',
+			title: __( 'Align Right', 'formello' ),
 			align: 'right',
 		},
 		{
 			icon: 'align-wide',
-			title: __( 'Wide Button', 'formello' ),
+			title: __( 'Wide', 'formello' ),
 			align: 'wide',
 		},
 	];

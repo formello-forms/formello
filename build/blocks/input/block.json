@@ -42,6 +42,10 @@
 			"type": "string",
 			"default": ""
 		},
+		"enableMismatch": {
+			"type": "boolean",
+			"default": false
+		},
 		"mismatchMessage": {
 			"type": "string",
 			"default": ""

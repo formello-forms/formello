@@ -4,8 +4,6 @@ class Formello {
 	constructor( element ) {
 		this.element = element;
 
-		//this.element.addEventListener( 'submit', this.handleSubmit.bind(this), true )
-
 		this.element.addEventListener(
 			'bouncerFormValid',
 			this.handleSubmit.bind( this ),
@@ -22,7 +20,7 @@ class Formello {
 	}
 
 	handleSubmit( e ) {
-		// always prevent default (because regular submit doesn't work for Formello)
+		// always prevent default (because regular submit doesn't work for Formello
 		e.preventDefault();
 		e.stopPropagation();
 

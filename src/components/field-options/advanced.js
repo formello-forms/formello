@@ -35,6 +35,7 @@ function AdvancedOptions( props ) {
 			cols,
 			rows,
 			enableRtf,
+			enableMismatch,
 			pattern,
 			match,
 			mismatchMessage
@@ -131,7 +132,14 @@ function AdvancedOptions( props ) {
 					onChange={ ( val ) => setAttributes( { validation: val } ) }
 				/>
 			) }
-			{ 'password' === type && (
+			<ToggleControl
+				label={ __( 'Enable match field', 'formello' ) }
+				checked={ enableMismatch }
+				onChange={ ( newval ) =>
+					setAttributes( { enableMismatch: newval } )
+				}
+			/>
+			{ enableMismatch && (
 				<Fragment>
 					<TextControl
 						type="text"

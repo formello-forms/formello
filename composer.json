@@ -36,5 +36,8 @@
         "classmap": [
             "includes/"
         ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.5.x-dev"
     }
 }

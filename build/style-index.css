@@ -1,2 +1,559 @@
-:root{--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,161;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media(-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.block-editor-block-pattern-setup{align-items:flex-start;border-radius:2px;display:flex;flex-direction:column;justify-content:center;width:100%}.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__toolbar{justify-content:center}.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container{-moz-column-count:2;column-count:2;-moz-column-gap:24px;column-gap:24px;display:block;padding:0 32px;width:100%}@media(min-width:1440px){.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container{-moz-column-count:3;column-count:3}}.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-preview__container,.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container div[role=button]{cursor:pointer}.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-pattern-setup-list__list-item{-moz-column-break-inside:avoid;break-inside:avoid-column;margin-bottom:24px}.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-pattern-setup-list__list-item .block-editor-block-preview__container{border:1px solid #ddd;border-radius:2px;min-height:100px}.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-pattern-setup-list__list-item .block-editor-block-preview__content{width:100%}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar{align-items:center;align-self:flex-end;background-color:#fff;border-top:1px solid #ddd;bottom:0;box-sizing:border-box;color:#1e1e1e;display:flex;flex-direction:row;height:60px;justify-content:space-between;margin:0;padding:16px;position:absolute;text-align:left;width:100%}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__display-controls{display:flex}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__actions,.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__navigation{display:flex;width:calc(50% - 36px)}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__actions{justify-content:flex-end}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container{box-sizing:border-box;display:flex;flex-direction:column;width:100%}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container{list-style:none;margin:0;overflow:hidden;padding:0;position:relative;transform-style:preserve-3d}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container *{box-sizing:border-box}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide{margin:auto;padding:0;position:absolute;top:0;transition:transform .5s,z-index .5s;width:100%;z-index:100}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide.active-slide{opacity:1;position:relative;z-index:102}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide.previous-slide{transform:translateX(-100%);z-index:101}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide.next-slide{transform:translateX(100%);z-index:101}.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .block-list-appender{display:none}.block-editor-block-pattern-setup__carousel,.block-editor-block-pattern-setup__grid{width:100%}.block-editor-block-patterns-list__list-item{cursor:pointer;margin-bottom:24px}.block-editor-block-patterns-list__list-item.is-placeholder{min-height:100px}.block-editor-block-patterns-list__list-item[draggable=true] .block-editor-block-preview__container{cursor:-webkit-grab;cursor:grab}.block-editor-block-patterns-list__item{height:100%}.block-editor-block-patterns-list__item .block-editor-block-preview__container{align-items:center;border:1px solid #f0f0f0;border-radius:2px;display:flex;overflow:hidden}.block-editor-block-patterns-list__item .block-editor-block-patterns-list__item-title{font-size:12px;padding-top:8px;text-align:center}.block-editor-block-patterns-list__item:hover .block-editor-block-preview__container{border:1px solid var(--wp-admin-theme-color)}.block-editor-block-patterns-list__item:focus .block-editor-block-preview__container{box-shadow:inset 0 0 0 1px #fff,0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);outline:2px solid transparent}.block-editor-block-patterns-list__item:focus .block-editor-block-patterns-list__item-title,.block-editor-block-patterns-list__item:hover .block-editor-block-patterns-list__item-title{color:var(--wp-admin-theme-color)}
-html{scroll-behavior:smooth}.formello-message{display:none;margin:1em 0}.formello-message p{margin:0}.formello-message.success{background-color:#dff0d8;border:1px solid #d0e9c6;color:#3c763d;display:block;padding:1em}.formello-message.error{background-color:#fcf8e3;border:1px solid #faf2cc;color:#8a6d3b;display:block;padding:1em}.wp-block-formello-form{display:flex;flex-direction:column}.wp-block-formello-form div[hidden=true],.wp-block-formello-form fieldset[hidden=true]{display:none}.wp-block-formello-form .formello{display:flex;flex-direction:column;margin-bottom:1em}.wp-block-formello-form .formello-checkbox{align-items:center;flex-direction:row;flex-wrap:wrap}.wp-block-formello-form .formello-checkbox label{order:2;padding:0 10px}.wp-block-formello-form .formello-checkbox input{order:1}.wp-block-formello-form .formello-checkbox small{margin:0 8px;order:3;width:auto}.wp-block-formello-form .formello-checkbox .error-message{order:4;width:100%}.wp-block-formello-form .formello-group{align-items:center;flex-direction:row;flex-wrap:wrap}.wp-block-formello-form .formello-group label{width:100%}.wp-block-formello-form .formello-group input{flex:auto;width:1%}.wp-block-formello-form .formello-group button{-ms-grid-row-align:stretch;align-self:stretch;margin-bottom:0;margin-left:10px}.wp-block-formello-form .formello-group.grouped input{border-bottom-right-radius:0;border-right:0;border-top-right-radius:0}.wp-block-formello-form .formello-group.grouped button{margin:0}.wp-block-formello-form .formello-group .error-message{order:4;width:100%}.wp-block-formello-form label{box-sizing:border-box;padding:0 10px 0 0}.wp-block-formello-form label.hide{display:none}.wp-block-formello-form label span.required{color:red;font-weight:400;margin:0 5px}.wp-block-formello-form input[type],.wp-block-formello-form select,.wp-block-formello-form textarea{font-family:inherit;font-size:inherit;line-height:inherit;margin:0}.wp-block-formello-form fieldset{border:1px solid;margin-bottom:1em;padding:1em}.wp-block-formello-form fieldset.no-border{border:none;padding:0}.wp-block-formello-form legend{margin:.5em 0}.wp-block-formello-form output{border:1px solid #d7dbdd;border-radius:3px;font-size:1em;margin:0 0 0 1em;min-height:2.6em;min-width:2.4em;padding:.4em;text-align:center}.wp-block-formello-form button{align-items:center;color:var(--wp--preset--color--primary);cursor:pointer;display:flex;justify-content:center;padding:10px;position:relative}.wp-block-formello-form button[disabled]{opacity:.5}.wp-block-formello-form .wp-block-columns{margin-bottom:0}.wp-block-formello-form.is-bold label{font-weight:700}.wp-block-formello-form.is-bold .formello-checkbox label{font-weight:400}.wp-block-formello-form .wp-block-formello-button{align-self:flex-start;flex-direction:row}.wp-block-formello-form .wp-block-formello-button.center{-ms-grid-row-align:center;align-self:center}.wp-block-formello-form .wp-block-formello-button.right{align-self:flex-end}.wp-block-formello-form .wp-block-formello-button.wide{-ms-grid-row-align:auto;align-self:auto}.wp-block-formello-form .wp-block-formello-form button:disabled:not(.running),.wp-block-formello-form .wp-block-formello-form button[disabled]:not(.running){cursor:revert}.wp-block-formello-form .formello-hp{left:-5000px;position:absolute!important}.wp-block-formello-form .error{border-color:red}.wp-block-formello-form .error-message{color:red}.wp-block-formello-form .g-recaptcha{margin-bottom:1em}@media(min-width:768px){.wp-block-formello-form.as-row.formello-label-right label{text-align:right}.wp-block-formello-form.as-row .formello{flex-direction:row;flex-wrap:wrap}.wp-block-formello-form.as-row .formello label{-ms-grid-row-align:center;align-self:center;min-width:190px;width:190px}.wp-block-formello-form.as-row .formello label.textarea-label{-ms-grid-row-align:auto;align-self:auto}.wp-block-formello-form.as-row .formello input,.wp-block-formello-form.as-row .formello select,.wp-block-formello-form.as-row .formello textarea{flex:1}.wp-block-formello-form.as-row .formello .error-message,.wp-block-formello-form.as-row .formello small{margin-left:190px;width:100%}.wp-block-formello-form.as-row .formello-checkbox{margin-left:190px}.wp-block-formello-form.as-row .formello-checkbox label{min-width:auto;width:auto}.wp-block-formello-form.as-row .formello-checkbox input{flex:0}.wp-block-formello-form.as-row .formello-checkbox small{margin:0 8px;width:auto}.wp-block-formello-form.as-row .formello-checkbox .error-message{margin-left:0;width:100%}.wp-block-formello-form.as-row .formello-textarea label{align-self:baseline}.wp-block-formello-form.as-row .formello-group .error-message{margin-left:0;width:100%}.wp-block-formello-form.as-row .formello-group button{margin-left:10px}.wp-block-formello-form.as-row .formello-group.grouped button{margin-left:0}.wp-block-formello-form.as-row fieldset{margin-left:190px}.wp-block-formello-form.as-row fieldset .formello-checkbox{margin-left:0}.wp-block-formello-form.as-row .wp-block-formello-button{flex-direction:row;margin-left:190px}}.wp-block-formello-form button.wp-block-formello-button span{opacity:1;transition:all .2s}.wp-block-formello-form button.wp-block-formello-button svg{display:none;height:1.4rem;margin:0 .4em;transition:all .5s}.wp-block-formello-form button.wp-block-formello-button svg path,.wp-block-formello-form button.wp-block-formello-button svg rect{fill:currentColor}.wp-block-formello-form button.wp-block-formello-button--loading{cursor:revert}.wp-block-formello-form button.wp-block-formello-button--loading span{margin-right:5px}.wp-block-formello-form button.wp-block-formello-button--loading svg{display:block}@-webkit-keyframes button-loading-spinner{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}@keyframes button-loading-spinner{0%{transform:rotate(0deg)}to{transform:rotate(1turn)}}
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/blocks/form/settings/style.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * Colors
+ */
+/**
+ * SCSS Variables.
+ *
+ * Please use variables from this sheet to ensure consistency across the UI.
+ * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
+ * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
+ */
+/**
+ * Colors
+ */
+/**
+ * Fonts & basic variables.
+ */
+/**
+ * Grid System.
+ * https://make.wordpress.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-wordpress/
+ */
+/**
+ * Dimensions.
+ */
+/**
+ * Shadows.
+ */
+/**
+ * Editor widths.
+ */
+/**
+ * Block & Editor UI.
+ */
+/**
+ * Block paddings.
+ */
+/**
+ * React Native specific.
+ * These variables do not appear to be used anywhere else.
+ */
+/**
+*  Converts a hex value into the rgb equivalent.
+*
+* @param {string} hex - the hexadecimal value to convert
+* @return {string} comma separated rgb values
+*/
+/**
+ * Breakpoint mixins
+ */
+/**
+ * Long content fade mixin
+ *
+ * Creates a fading overlay to signify that the content is longer
+ * than the space allows.
+ */
+/**
+ * Focus styles.
+ */
+/**
+ * Applies editor left position to the selector passed as argument
+ */
+/**
+ * Styles that are reused verbatim in a few places
+ */
+/**
+ * Allows users to opt-out of animations via OS-level preferences.
+ */
+/**
+ * Reset default styles for JavaScript UI based pages.
+ * This is a WP-admin agnostic reset
+ */
+/**
+ * Reset the WP Admin page styles for Gutenberg-like pages.
+ */
+/**
+ * Breakpoints & Media Queries
+ */
+:root {
+  --wp-admin-theme-color: #007cba;
+  --wp-admin-theme-color--rgb: 0, 124, 186;
+  --wp-admin-theme-color-darker-10: #006ba1;
+  --wp-admin-theme-color-darker-10--rgb: 0, 107, 161;
+  --wp-admin-theme-color-darker-20: #005a87;
+  --wp-admin-theme-color-darker-20--rgb: 0, 90, 135;
+  --wp-admin-border-width-focus: 2px;
+}
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  :root {
+    --wp-admin-border-width-focus: 1.5px;
+  }
+}
+
+.block-editor-block-pattern-setup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  border-radius: 2px;
+}
+.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__toolbar {
+  justify-content: center;
+}
+.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container {
+  -moz-column-gap: 24px;
+       column-gap: 24px;
+  display: block;
+  width: 100%;
+  padding: 32px;
+  padding-bottom: 0;
+  padding-top: 0;
+  -moz-column-count: 2;
+       column-count: 2;
+}
+@media (min-width: 1440px) {
+  .block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container {
+    -moz-column-count: 3;
+         column-count: 3;
+  }
+}
+.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-preview__container,
+.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container div[role=button] {
+  cursor: pointer;
+}
+.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-pattern-setup-list__list-item {
+  -moz-column-break-inside: avoid;
+       break-inside: avoid-column;
+  margin-bottom: 24px;
+}
+.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-pattern-setup-list__list-item .block-editor-block-preview__container {
+  min-height: 100px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+.block-editor-block-pattern-setup.view-mode-grid .block-editor-block-pattern-setup__container .block-editor-block-pattern-setup-list__list-item .block-editor-block-preview__content {
+  width: 100%;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar {
+  height: 60px;
+  box-sizing: border-box;
+  padding: 16px;
+  width: 100%;
+  text-align: left;
+  margin: 0;
+  color: #1e1e1e;
+  position: absolute;
+  bottom: 0;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #ddd;
+  align-self: flex-end;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__display-controls {
+  display: flex;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__navigation,
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__actions {
+  width: calc(50% - 36px);
+  display: flex;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__toolbar .block-editor-block-pattern-setup__actions {
+  justify-content: flex-end;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container {
+  overflow: hidden;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  transform-style: preserve-3d;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container * {
+  box-sizing: border-box;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  margin: auto;
+  padding: 0;
+  transition: transform 0.5s, z-index 0.5s;
+  z-index: 100;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide.active-slide {
+  opacity: 1;
+  position: relative;
+  z-index: 102;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide.previous-slide {
+  transform: translateX(-100%);
+  z-index: 101;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .carousel-container .pattern-slide.next-slide {
+  transform: translateX(100%);
+  z-index: 101;
+}
+.block-editor-block-pattern-setup .block-editor-block-pattern-setup__container .block-list-appender {
+  display: none;
+}
+
+.block-editor-block-pattern-setup__carousel,
+.block-editor-block-pattern-setup__grid {
+  width: 100%;
+}
+
+.block-editor-block-patterns-list__list-item {
+  cursor: pointer;
+  margin-bottom: 24px;
+}
+.block-editor-block-patterns-list__list-item.is-placeholder {
+  min-height: 100px;
+}
+.block-editor-block-patterns-list__list-item[draggable=true] .block-editor-block-preview__container {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.block-editor-block-patterns-list__item {
+  height: 100%;
+}
+.block-editor-block-patterns-list__item .block-editor-block-preview__container {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid #f0f0f0;
+}
+.block-editor-block-patterns-list__item .block-editor-block-patterns-list__item-title {
+  padding-top: 8px;
+  font-size: 12px;
+  text-align: center;
+}
+.block-editor-block-patterns-list__item:hover .block-editor-block-preview__container {
+  border: 1px solid var(--wp-admin-theme-color);
+}
+.block-editor-block-patterns-list__item:focus .block-editor-block-preview__container {
+  box-shadow: inset 0 0 0 1px #fff, 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+  outline: 2px solid transparent;
+}
+.block-editor-block-patterns-list__item:hover .block-editor-block-patterns-list__item-title, .block-editor-block-patterns-list__item:focus .block-editor-block-patterns-list__item-title {
+  color: var(--wp-admin-theme-color);
+}
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[3].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[3].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[3].use[3]!./src/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+html {
+  scroll-behavior: smooth;
+}
+
+.formello-message {
+  margin: 1em 0;
+  display: none;
+}
+.formello-message p {
+  margin: 0;
+}
+.formello-message.success {
+  display: block;
+  padding: 1em;
+  background-color: #dff0d8;
+  border: 1px solid #d0e9c6;
+  color: #3c763d;
+}
+.formello-message.error {
+  display: block;
+  padding: 1em;
+  background-color: #fcf8e3;
+  border: 1px solid #faf2cc;
+  color: #8a6d3b;
+}
+
+.wp-block-formello-form {
+  display: flex;
+  flex-direction: column;
+  /* HONEYPOT position */
+}
+.wp-block-formello-form > div {
+  margin-bottom: 1em;
+}
+.wp-block-formello-form div[hidden=true], .wp-block-formello-form fieldset[hidden=true] {
+  display: none;
+}
+.wp-block-formello-form .formello {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.wp-block-formello-form .is-layout-flex {
+  align-items: flex-start;
+}
+.wp-block-formello-form .formello-checkbox {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.wp-block-formello-form .formello-checkbox label {
+  order: 2;
+  padding: 0 0.5em;
+}
+.wp-block-formello-form .formello-checkbox input {
+  order: 1;
+}
+.wp-block-formello-form .formello-checkbox small {
+  order: 3;
+  width: auto;
+  margin: 0 8px;
+}
+.wp-block-formello-form .formello-checkbox .error-message {
+  order: 4;
+  width: 100%;
+}
+.wp-block-formello-form .formello-group {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.wp-block-formello-form .formello-group label {
+  width: 100%;
+}
+.wp-block-formello-form .formello-group input {
+  flex: auto;
+  width: 1%;
+}
+.wp-block-formello-form .formello-group button {
+  margin-bottom: 0;
+  margin-top: 0;
+  -ms-grid-row-align: stretch !important;
+      align-self: stretch !important;
+  margin-left: 0.5em;
+}
+.wp-block-formello-form .formello-group.grouped input {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.wp-block-formello-form .formello-group.grouped button {
+  margin: 0;
+}
+.wp-block-formello-form .formello-group .error-message {
+  order: 4;
+  width: 100%;
+}
+.wp-block-formello-form label {
+  padding: 0 0.5em 0 0;
+  box-sizing: border-box;
+}
+.wp-block-formello-form label.hide {
+  display: none;
+}
+.wp-block-formello-form label span.required {
+  color: red;
+  margin: 0 5px;
+  font-weight: normal;
+}
+.wp-block-formello-form input[type],
+.wp-block-formello-form select,
+.wp-block-formello-form textarea {
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+.wp-block-formello-form fieldset {
+  padding: 1em;
+  margin-bottom: 1em;
+  border: 1px solid;
+}
+.wp-block-formello-form fieldset.no-border {
+  border: none;
+  padding: 0;
+}
+.wp-block-formello-form legend {
+  margin: 0.5em 0;
+}
+.wp-block-formello-form output {
+  margin: 0 0 0 1em;
+  border: 1px solid #d7dbdd;
+  font-size: 1em;
+  padding: 0.4em 0.4em;
+  border-radius: 3px;
+  min-width: 2.4em;
+  min-height: 2.6em;
+  text-align: center;
+}
+.wp-block-formello-form button {
+  cursor: pointer;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: var(--wp--preset--color--primary);
+  padding: 0.5em;
+}
+.wp-block-formello-form button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.wp-block-formello-form.is-style-bolded label, .wp-block-formello-form.is-style-bolded legend {
+  font-weight: bold;
+}
+.wp-block-formello-form.is-style-bolded .formello-checkbox label {
+  font-weight: normal;
+}
+.wp-block-formello-form .wp-block-formello-button {
+  flex-direction: row;
+  align-self: flex-start;
+}
+.wp-block-formello-form .wp-block-formello-button.center {
+  -ms-grid-row-align: center;
+      align-self: center;
+}
+.wp-block-formello-form .wp-block-formello-button.right {
+  align-self: flex-end;
+}
+.wp-block-formello-form .wp-block-formello-button.wide {
+  -ms-grid-row-align: auto;
+      align-self: auto;
+}
+.wp-block-formello-form .wp-block-formello-form button:disabled:not(.running),
+.wp-block-formello-form .wp-block-formello-form button[disabled]:not(.running) {
+  cursor: revert;
+}
+.wp-block-formello-form .formello-hp {
+  position: absolute !important;
+  left: -5000px;
+}
+.wp-block-formello-form .error {
+  border-color: red;
+}
+.wp-block-formello-form .error-message {
+  color: red;
+}
+.wp-block-formello-form .g-recaptcha {
+  margin-bottom: 1em;
+}
+@media (min-width: 768px) {
+  .wp-block-formello-form.as-row.formello-label-right label {
+    text-align: right;
+  }
+  .wp-block-formello-form.as-row .formello {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .wp-block-formello-form.as-row .formello label {
+    min-width: 190px;
+    width: 190px;
+    -ms-grid-row-align: center;
+        align-self: center;
+  }
+  .wp-block-formello-form.as-row .formello label.textarea-label {
+    -ms-grid-row-align: auto;
+        align-self: auto;
+  }
+  .wp-block-formello-form.as-row .formello input,
+.wp-block-formello-form.as-row .formello textarea,
+.wp-block-formello-form.as-row .formello select {
+    flex: 1;
+  }
+  .wp-block-formello-form.as-row .formello small {
+    width: 100%;
+    margin-left: 190px;
+  }
+  .wp-block-formello-form.as-row .formello .error-message {
+    width: 100%;
+    margin-left: 190px;
+  }
+  .wp-block-formello-form.as-row .formello-checkbox {
+    margin-left: 190px;
+  }
+  .wp-block-formello-form.as-row .formello-checkbox label {
+    min-width: auto;
+    width: auto;
+  }
+  .wp-block-formello-form.as-row .formello-checkbox input {
+    flex: 0;
+  }
+  .wp-block-formello-form.as-row .formello-checkbox small {
+    margin: 0 8px;
+    width: auto;
+  }
+  .wp-block-formello-form.as-row .formello-checkbox .error-message {
+    width: 100%;
+    margin-left: 0;
+  }
+  .wp-block-formello-form.as-row .formello-textarea label {
+    align-self: baseline;
+  }
+  .wp-block-formello-form.as-row .formello-group .error-message {
+    width: 100%;
+    margin-left: 0;
+  }
+  .wp-block-formello-form.as-row .formello-group button {
+    margin-left: 0.5em;
+  }
+  .wp-block-formello-form.as-row .formello-group.grouped button {
+    margin-left: 0;
+  }
+  .wp-block-formello-form.as-row fieldset {
+    margin-left: 190px;
+  }
+  .wp-block-formello-form.as-row fieldset .formello-checkbox {
+    margin-left: 0;
+  }
+  .wp-block-formello-form.as-row .wp-block-formello-button {
+    margin-left: 190px;
+    flex-direction: row;
+  }
+}
+.wp-block-formello-form button.wp-block-formello-button span {
+  transition: all 0.2s;
+  opacity: 1;
+}
+.wp-block-formello-form button.wp-block-formello-button svg {
+  display: none;
+  margin: 0 0.3em;
+  height: 1.4rem;
+  transition: all 0.5s;
+}
+.wp-block-formello-form button.wp-block-formello-button svg path, .wp-block-formello-form button.wp-block-formello-button svg rect {
+  fill: currentColor;
+}
+.wp-block-formello-form button.wp-block-formello-button--loading {
+  cursor: revert;
+}
+.wp-block-formello-form button.wp-block-formello-button--loading span {
+  margin-right: 5px;
+}
+.wp-block-formello-form button.wp-block-formello-button--loading svg {
+  display: block;
+}
+@-webkit-keyframes button-loading-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes button-loading-spinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/

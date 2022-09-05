@@ -1,4 +1,5 @@
 $label-width: 190px;
+$margin-left: .5em;
 $small-margin: 0 8px;
 
 html {
@@ -34,6 +35,10 @@ html {
 	display: flex;
 	flex-direction: column;
 
+	> div {
+		margin-bottom: 1em;
+	}
+
 	div[hidden="true"], fieldset[hidden="true"] {
 		display: none;
 	}
@@ -41,7 +46,11 @@ html {
 	.formello {
 		display: flex;
 		flex-direction: column;
-		margin-bottom: 1em;
+		flex: 1;
+	}
+
+	.is-layout-flex {
+		align-items: flex-start;
 	}
 
 	.formello-checkbox {
@@ -51,7 +60,7 @@ html {
 
 		label {
 			order: 2;
-			padding: 0 10px;
+			padding: 0 $margin-left;
 		}
 
 		input {
@@ -86,8 +95,9 @@ html {
 
 		button {
 			margin-bottom: 0;
-			align-self: stretch;
-			margin-left: 10px;
+			margin-top: 0;
+			align-self: stretch !important;
+			margin-left: $margin-left;
 		}
 
 		&.grouped {
@@ -110,7 +120,7 @@ html {
 	}
 
 	label {
-		padding: 0 10px 0 0;
+		padding: 0 $margin-left 0 0;
 		box-sizing: border-box;
 
 		&.hide {
@@ -166,20 +176,17 @@ html {
 		align-items: center;
 		display: flex;				
 		color: var(--wp--preset--color--primary);
-		padding: 10px;
+		padding: .5em;
 	}
 	
 	button[disabled] {
 		opacity: .5;
+		cursor: not-allowed;
 	}
 
-	.wp-block-columns {
-		margin-bottom: 0;
-	}
+	&.is-style-bolded {
 
-	&.is-bold {
-
-		label {
+		label, legend {
 			font-weight: bold;
 		}
 
@@ -311,7 +318,7 @@ html {
 				}
 
 				button {
-					margin-left: 10px;
+					margin-left: $margin-left;
 				}
 
 				&.grouped {
@@ -341,11 +348,11 @@ html {
 	button.wp-block-formello-button {
 		span{
 			transition: all .2s;
-			opacity:1;
+			opacity: 1;
 		}
 		svg{
 			display: none; 
-			margin: 0 .4em;
+			margin: 0 .3em;
 			height: 1.4rem;
 			transition: all .5s;
 			path, rect {

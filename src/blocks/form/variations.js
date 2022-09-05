@@ -85,36 +85,29 @@ const variations = [
 		),
 		innerBlocks: [
 			[
-				'core/columns',
-				{},
+				'core/group',
+				{
+					layout: {
+						type: 'flex',
+						flexWrap: 'wrap'
+					}
+				},
 				[
 					[
-						'core/column',
-						{},
-						[
-							[
-								'formello/input',
-								{
-									type: 'text',
-									label: 'First Name',
-									name: 'name',
-								},
-							],
-						],
+						'formello/input',
+						{
+							type: 'text',
+							label: 'First Name',
+							name: 'name',
+						},
 					],
 					[
-						'core/column',
-						{},
-						[
-							[
-								'formello/input',
-								{
-									type: 'text',
-									label: 'Last Name',
-									name: 'last_name',
-								},
-							],
-						],
+						'formello/input',
+						{
+							type: 'text',
+							label: 'Last Name',
+							name: 'last_name',
+						},
 					],
 				],
 			],
@@ -132,33 +125,26 @@ const variations = [
 				{ type: 'tel', label: 'Phone', name: 'phone', required: true },
 			],
 			[
-				'core/columns',
-				{},
+				'core/group',
+				{
+					layout: {
+						type: 'flex',
+						flexWrap: 'wrap'
+					}
+				},
 				[
 					[
-						'core/column',
-						{},
-						[
-							[
-								'formello/input',
-								{
-									type: 'date',
-									label: 'Date',
-									name: 'date',
-									required: true,
-								},
-							],
-						],
+						'formello/input',
+						{
+							type: 'date',
+							label: 'Date',
+							name: 'date',
+							required: true,
+						},
 					],
 					[
-						'core/column',
-						{},
-						[
-							[
-								'formello/input',
-								{ type: 'time', label: 'Hour', name: 'hour' },
-							],
-						],
+						'formello/input',
+						{ type: 'time', label: 'Hour', name: 'hour' },
 					],
 				],
 			],

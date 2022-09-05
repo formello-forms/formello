@@ -77,6 +77,14 @@
 			"default": []
 		}		
 	},
+	"styles": [
+		{
+			"name": "regular",
+			"label": "Default",
+			"isDefault": true
+		},
+		{ "name": "bolded", "label": "Bolded label" }
+	],
 	"editorScript": "file:../../../build/index.js",
 	"editorStyle": "file:../../../build/index.css",
 	"style": "file:../../../build/style-index.css",

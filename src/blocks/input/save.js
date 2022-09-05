@@ -40,11 +40,11 @@ export default function save( { attributes, className } ) {
 		htmlAttrs[ 'data-bouncer-message' ] = attributes.validation;
 	}
 
-	if ( 'password' === attributes.type && attributes.mismatchMessage ) {
+	if ( attributes.enableMismatch && attributes.mismatchMessage ) {
 		htmlAttrs[ 'data-bouncer-mismatch-message' ] = attributes.mismatchMessage;
 	}
 
-	if ( 'password' === attributes.type && attributes.match ) {
+	if ( attributes.enableMismatch && attributes.match ) {
 		htmlAttrs[ 'data-bouncer-match' ] = attributes.match;
 	}
 
