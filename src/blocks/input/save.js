@@ -69,7 +69,7 @@ export default function save( { attributes, className } ) {
 	}
 
 	if ( attributes.noWrapper || 'hidden' === attributes.type ) {
-		return <input { ...htmlAttrs } />;
+		return <input { ...htmlAttrs } className={ fieldClassName } />;
 	}
 
 	return (
@@ -92,7 +92,7 @@ export default function save( { attributes, className } ) {
 				<input { ...htmlAttrs } className={ fieldClassName } />
 			) }
 			{ attributes.withButton && <InnerBlocks.Content /> }
-			{ attributes.withOutput && <output></output> }
+			{ attributes.withOutput && <output>{ attributes.value }</output> }
 			{ 'hidden' !== attributes.type && attributes.showHelp && (
 				<RichText.Content tagName="small" value={ attributes.help } />
 			) }

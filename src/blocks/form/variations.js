@@ -3,9 +3,9 @@ import { __ } from '@wordpress/i18n';
 
 const variations = [
 	{
-		name: 'basic',
-		title: __( 'Basic' ),
-		description: __( 'Basic form' ),
+		name: 'blank',
+		title: __( 'Blank' ),
+		description: __( 'Blank form' ),
 		icon: (
 			<SVG
 				width="48"
@@ -22,8 +22,7 @@ const variations = [
 		),
 		isDefault: true,
 		innerBlocks: [
-			[ 'formello/input', { type: 'text', label: 'Name', name: 'name' } ],
-			[ 'formello/button', { txt: 'Book appointment' } ],
+			[ 'core/paragraph' ],
 		],
 		scope: [ 'block' ],
 	},

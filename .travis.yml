@@ -1,71 +1,42 @@
-sudo: false
-dist: trusty
-
-language: php
-
-notifications:
-  email:
-    on_success: never
-    on_failure: change
-
 branches:
   only:
     - master
 
-cache:
-  directories:
-    - $HOME/.composer/cache
+language: php
+
+services:
+  - mysql
+
+env:
+  global:
+    - WP_DB_USER=wp
+    - WP_DB_PASS=password
+    - WP_DB_NAME=wp_tests
+    - WP_VERSION=*
+
+php:
+  - 8.0
+  - 7.4
+  - 5.6
 
 matrix:
   include:
-    - php: 7.4
-      env: WP_VERSION=latest
-    - php: 7.3
-      env: WP_VERSION=latest
-    - php: 7.2
-      env: WP_VERSION=latest
-    - php: 7.1
-      env: WP_VERSION=latest
-    - php: 7.0
-      env: WP_VERSION=latest
     - php: 5.6
-      env: WP_VERSION=5.4.0
-    - php: 5.6
-      env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=trunk
-    - php: 5.6
-      env: WP_TRAVISCI=phpcs
+      env: WP_VERSION=4.9.*
 
 before_script:
-  - export PATH="$HOME/.composer/vendor/bin:$PATH"
-  - |
-    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-      phpenv config-rm xdebug.ini
-    else
-      echo "xdebug.ini does not exist"
-    fi
-  - |
-    if [[ ! -z "$WP_VERSION" ]] ; then
-      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-      composer global require "phpunit/phpunit=4.8.*|5.7.*"
-    fi
-  - |
-    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
-      composer global require wp-coding-standards/wpcs
-      composer global require phpcompatibility/php-compatibility
-      composer global require phpcompatibility/phpcompatibility-paragonie
-      composer global require phpcompatibility/phpcompatibility-wp
-      phpcs --config-set installed_paths $HOME/.composer/vendor/wp-coding-standards/wpcs,$HOME/.composer/vendor/phpcompatibility/php-compatibility,$HOME/.composer/vendor/phpcompatibility/phpcompatibility-paragonie,$HOME/.composer/vendor/phpcompatibility/phpcompatibility-wp
-    fi
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
+  - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
+
+install:
+  - composer validate --strict
+  - composer require --no-update --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
+  - "[ $TRAVIS_PHP_VERSION == '8.0' ] || composer install"
+  # Temporary hack to allow installing PHPUnit 7 with PHP 8 until WP 5.9.
+  # as WP PHPUnit does not allow PHPUnit higher than 7 yet.
+  # See https://github.com/WordPress/wordpress-develop/commit/8def694fe4c5df95f8e20e40389faf9cb92b6dca
+  - "[ $TRAVIS_PHP_VERSION != '8.0' ] || composer install --ignore-platform-reqs"
+  - composer show
 
 script:
-  - |
-    if [[ ! -z "$WP_VERSION" ]] ; then
-      phpunit
-      WP_MULTISITE=1 phpunit
-    fi
-  - |
-    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
-      phpcs
-    fi
+  - composer test

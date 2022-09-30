@@ -30,8 +30,8 @@ add_action( 'rest_api_init', __NAMESPACE__ . '\register_routes' );
 /**
  * Include our custom REST API controllers.
  */
-require_once FORMELLO_ABSPATH . 'includes/rest/controllers/class-base.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/controllers/class-integrations.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/controllers/class-license.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/controllers/class-template.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/controllers/class-forms.php';
+require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Base.php';
+require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Integrations.php';
+require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/License.php';
+require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Template.php';
+require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Forms.php';

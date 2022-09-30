@@ -47,6 +47,7 @@ html {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
+		margin-bottom: 1em;
 	}
 
 	.is-layout-flex {
@@ -91,6 +92,10 @@ html {
 		input {
 			flex: auto;
 			width: 1%;
+		}
+
+		small {
+			width: 100%;
 		}
 
 		button {
@@ -176,7 +181,6 @@ html {
 		align-items: center;
 		display: flex;				
 		color: var(--wp--preset--color--primary);
-		padding: .5em;
 	}
 	
 	button[disabled] {
@@ -314,7 +318,6 @@ html {
 
 				.error-message {
 					width: 100%;
-					margin-left: 0;
 				}
 
 				button {
@@ -346,6 +349,7 @@ html {
 	}
 
 	button.wp-block-formello-button {
+		padding: .5em;
 		span{
 			transition: all .2s;
 			opacity: 1;
@@ -353,7 +357,7 @@ html {
 		svg{
 			display: none; 
 			margin: 0 .3em;
-			height: 1.4rem;
+			height: 1em;
 			transition: all .5s;
 			path, rect {
 				fill: currentColor;

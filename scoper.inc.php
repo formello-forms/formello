@@ -70,7 +70,7 @@ return array(
 	// Fore more see https://github.com/humbug/php-scoper#whitelist
 	'whitelist' => array(
 		// 'PHPUnit\Framework\TestCase',   // A specific class
-		// 'PHPUnit\Framework\*',          // The whole namespace
+		//'PHPUnit\*',          // The whole namespace
 		// '*',                            // Everything
 	),
 

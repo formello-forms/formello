@@ -1,8 +1,9 @@
 <?php
 
-namespace Formello\Rakit\Validation\Rules;
+namespace Rakit\Validation\Rules;
 
-use Formello\Rakit\Validation\Rule;
+use Rakit\Validation\Rule;
+
 class Nullable extends Rule
 {
     /**
@@ -11,8 +12,8 @@ class Nullable extends Rule
      * @param mixed $value
      * @return bool
      */
-    public function check($value) : bool
+    public function check($value): bool
     {
-        return \true;
+        return true;
     }
 }

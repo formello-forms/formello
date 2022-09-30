@@ -26,6 +26,7 @@ export default function save( { attributes, className } ) {
 			data-recaptcha={ attributes.recaptchaEnabled }
 			data-redirect={ attributes.redirectUrl }
 			noValidate
+			autoComplete={ attributes.autoComplete ? 'on' : 'off' }
 		>
 			<input type="hidden" name="_formello_id" value={ attributes.id } />
 			<input

@@ -9,9 +9,6 @@ import deprecated from './deprecated';
 import getIcon from '../../utils/get-icon';
 import metadata from './block.json';
 
-//import './editor.scss';
-//import asyncDb from './asyncDb';
-
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 
@@ -31,6 +28,7 @@ registerBlockType( metadata, {
 		className: true,
 		multiple: false,
 		html: false,
+		lock: false,
 		// eslint-disable-next-line
 		inserter:
 			'formello_form' === pagenow || 'popper' === pagenow ? true : false,

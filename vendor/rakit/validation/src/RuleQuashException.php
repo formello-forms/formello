@@ -1,6 +1,6 @@
 <?php
 
-namespace Formello\Rakit\Validation;
+namespace Rakit\Validation;
 
 class RuleQuashException extends \Exception
 {

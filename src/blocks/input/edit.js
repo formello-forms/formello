@@ -18,6 +18,7 @@ import classnames from 'classnames';
 import getIcon from '../../utils/get-icon';
 import Label from '../../components/label';
 import Options from '../../components/field-options';
+import ValidationOptions from '../../components/field-options/validation';
 import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
 
@@ -93,6 +94,7 @@ export default function Edit( props ) {
 			</BlockControls>
 			<InspectorControls>
 				<Options { ...props } />
+				<ValidationOptions { ...props } />
 			</InspectorControls>
 			<InspectorAdvancedControls>
 				<AdvancedOptions { ...props } />

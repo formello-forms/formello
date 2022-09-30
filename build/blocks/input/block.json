@@ -118,12 +118,10 @@
 			"default": 5
 		},
 		"minlength": {
-			"type": "number",
-			"default": ""
+			"type": "string"
 		},
 		"maxlength": {
-			"type": "number",
-			"default": ""
+			"type": "string"
 		},
 		"pattern": {
 			"type": "string",

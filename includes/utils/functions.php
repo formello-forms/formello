@@ -16,8 +16,42 @@ defined( 'ABSPATH' ) || exit;
 function formello_frontend_option() {
 	$settings = get_option( 'formello' );
 
+	$defaults = array(
+		'messages' => array(
+			'form' => array(
+				'success' => __( 'Thanks for submitting this form.', 'formello' ),
+				'error' => __( 'Ops. An error occurred.', 'formello' ),
+			),
+			'missingValue' => array(
+				'default'         => __( 'Please fill out this field.', 'formello' ),
+				'checkbox'        => __( 'This field is required.', 'formello' ),
+				'radio'           => __( 'Please select a value.', 'formello' ),
+				'select'          => __( 'Please select a value.', 'formello' ),
+				'select-multiple' => __( 'Please select at least one value.', 'formello' ),
+			),
+			'patternMismatch' => array(
+				'email'   => __( 'Please enter a valid email address.', 'formello' ),
+				'url'     => __( 'Please enter a URL.', 'formello' ),
+				'number'  => __( 'Please enter a number', 'formello' ),
+				'color'   => __( 'Please match the following format: #rrggbb', 'formello' ),
+				'date'    => __( 'Please use the YYYY-MM-DD format', 'formello' ),
+				'time'    => __( 'Please use the 24-hour time format. Ex. 23:00', 'formello' ),
+				'month'   => __( 'Please use the YYYY-MM format', 'formello' ),
+				'default' => __( 'Please match the requested format.', 'formello' ),
+			),
+			'outOfRange' => array(
+				'over'  => __( 'Please select a value that is no more than {max}.', 'formello' ),
+				'under' => __( 'Please select a value that is no less than {min}.', 'formello' ),
+			),
+			'wrongLength' => array(
+				'over'  => __( 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.', 'formello' ),
+				'under' => __( 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.', 'formello' ),
+			),
+		),
+	);
+
 	if ( empty( $settings ) ) {
-		return array();
+		return $defaults;
 	}
 
 	$frontend_settings = array(
@@ -218,6 +252,30 @@ function formello_columns_display( $column, $post_id ) {
 
 	}
 }
+
+add_filter(
+	'block_editor_settings_all',
+	static function( $settings, $context ) {
+
+		// Allow for the Editor role and above.
+		$settings['__experimentalCanLockBlocks'] = current_user_can( 'delete_others_posts' );
+
+		// Only enable for specific user(s).
+		$user = wp_get_current_user();
+		//if ( in_array( $user->user_email, array( 'george@example.com' ), true ) ) {
+			$settings['__experimentalCanLockBlocks'] = false;
+		//}
+
+		// Disable for posts/pages.
+		//if ( $context->post && $context->post->post_type === 'page' ) {
+			$settings['__experimentalCanLockBlocks'] = false;
+		//}
+
+		return $settings;
+	},
+	10,
+	2
+);
 
 add_filter( 'cron_schedules', __NAMESPACE__ . '\formello_cron_schedules' );
 add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option', 5 );

@@ -1,16 +1,24 @@
 <?xml version="1.0"?>
 <phpunit
-	bootstrap="tests/bootstrap.php"
-	backupGlobals="false"
-	colors="true"
-	convertErrorsToExceptions="true"
-	convertNoticesToExceptions="true"
-	convertWarningsToExceptions="true"
-	>
-	<testsuites>
-		<testsuite>
-			<directory prefix="test-" suffix=".php">./tests/</directory>
-			<exclude>./tests/test-sample.php</exclude>
-		</testsuite>
-	</testsuites>
+    bootstrap="tests/bootstrap.php"
+    backupGlobals="false"
+    colors="true"
+    convertErrorsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertWarningsToExceptions="true"
+    >
+    <testsuites>
+        <testsuite name="unit">
+            <directory prefix="test-" suffix=".php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+    <groups>
+        <exclude>
+            <group>ajax</group>
+        </exclude>
+    </groups>
+    <php>
+        <env name="WP_PHPUNIT__TESTS_CONFIG" value="tests/wp-config.php" />
+    </php>
 </phpunit>
+

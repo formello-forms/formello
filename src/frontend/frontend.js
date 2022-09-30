@@ -12,7 +12,7 @@ new Bouncer( '.wp-block-formello-form', {
 			if (!selector) return false;
 
 			// Get the field to compare
-			var otherField = field.form.querySelector(selector);
+			var otherField = field.form.querySelector( '[name=' + selector + ']' );
 			if (!otherField) return false;
 
 			// Compare the two field values
@@ -23,6 +23,10 @@ new Bouncer( '.wp-block-formello-form', {
 		}
 	},
 	messages: {
+		missingValue: formello.settings.messages.missingValue,
+		patternMismatch: formello.settings.messages.patternMismatch,
+		outOfRange: formello.settings.messages.outOfRange,
+		wrongLength: formello.settings.messages.wrongLength,
 		valueMismatch: function (field) {
 			var customMessage = field.getAttribute('data-bouncer-mismatch-message');
 			return customMessage ? customMessage : 'Please make sure the fields match.'

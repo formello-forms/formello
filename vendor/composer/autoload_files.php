@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'dbe920d25ef8abb2ed635ba56cd8a6d6' => $baseDir . '/includes/utils/functions.php',
-    '154a9dd6be49f608c90f9b4bab3f6132' => $baseDir . '/includes/register-cpt.php',
-    'bd19d6a91140de072ebbaaece830094f' => $baseDir . '/includes/register-settings.php',
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+    '38fbb71d514eee25044aa9d94851ee76' => $vendorDir . '/wp-phpunit/wp-phpunit/__loaded.php',
+    '7d3b315c4f303f2fc14aca642a738e50' => $vendorDir . '/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php',
 );

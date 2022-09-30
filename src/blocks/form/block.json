@@ -72,6 +72,10 @@
 			"type": "boolean",
 			"default": false
 		},
+		"autoComplete": {
+			"type": "boolean",
+			"default": false
+		},
 		"actions": {
 			"type": "array",
 			"default": []

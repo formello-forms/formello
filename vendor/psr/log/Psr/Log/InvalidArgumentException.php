@@ -1,6 +1,6 @@
 <?php
 
-namespace Formello\Psr\Log;
+namespace Psr\Log;
 
 class InvalidArgumentException extends \InvalidArgumentException
 {

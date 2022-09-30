@@ -17,13 +17,7 @@ function AdvancedOptions( props ) {
 	const {
 		attributes: {
 			type,
-			min,
-			max,
 			advanced,
-			step,
-			minlength,
-			maxlength,
-			validation,
 			disabled,
 			enableAutoComplete,
 			autocomplete,
@@ -34,11 +28,7 @@ function AdvancedOptions( props ) {
 			flatpickr,
 			cols,
 			rows,
-			enableRtf,
-			enableMismatch,
-			pattern,
-			match,
-			mismatchMessage
+			enableRtf
 		},
 		setAttributes,
 		clientId
@@ -48,114 +38,6 @@ function AdvancedOptions( props ) {
 
 	return (
 		<Fragment>
-			{ 'date' === type && (
-				<ToggleControl
-					label={ __( 'Advanced Date', 'formello' ) }
-					checked={ advanced }
-					onChange={ ( val ) => {
-						setAttributes( { advanced: val } );
-					} }
-				/>
-			) }
-			{ 'select' !== type && <DatepickerSettings { ...props } /> }
-
-			{ supported.includes( 'step' ) && (
-				<Fragment>
-					<TextControl
-						label={ __( 'Min Value', 'formello' ) }
-						value={ min || '' }
-						min={ '0' }
-						type={ 'range' === type ? 'number' : type }
-						onChange={ ( val ) => {
-							setAttributes( { min: val } );
-							setAttributes( {
-								flatpickr: {
-									...flatpickr,
-									'min-date': val,
-								},
-							} );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Max Value', 'formello' ) }
-						value={ max || '' }
-						type={ 'range' === type ? 'number' : type }
-						onChange={ ( val ) => {
-							setAttributes( { max: val } );
-							setAttributes( {
-								flatpickr: {
-									...flatpickr,
-									'max-date': val,
-								},
-							} );
-						} }
-					/>
-					<TextControl
-						type="number"
-						label={ __( 'Step Value', 'formello' ) }
-						value={ step || '' }
-						onChange={ ( val ) => setAttributes( { step: Number( val ) } ) }
-					/>
-				</Fragment>
-			) }
-			{ supported.includes( 'minlength' ) && true !== advanced && (
-				<Fragment>
-					<TextControl
-						type="number"
-						label={ __( 'Min Characters', 'formello' ) }
-						value={ minlength || '' }
-						onChange={ ( val ) =>
-							setAttributes( { minlength: Number( val ) } )
-						}
-					/>
-					<TextControl
-						type="number"
-						label={ __( 'Max Characters', 'formello' ) }
-						value={ maxlength || '' }
-						onChange={ ( val ) =>
-							setAttributes( { maxlength: Number( val ) } )
-						}
-					/>
-				</Fragment>
-			) }
-			{ supported.includes( 'pattern' ) && true !== advanced && (
-				<TextControl
-					label={ __( 'Pattern', 'formello' ) }
-					value={ pattern || '' }
-					onChange={ ( val ) => setAttributes( { pattern: val } ) }
-				/>
-			) }
-			{ supported.includes( 'pattern' ) && (
-				<TextControl
-					label={ __( 'Custom Validation Message', 'formello' ) }
-					value={ validation }
-					onChange={ ( val ) => setAttributes( { validation: val } ) }
-				/>
-			) }
-			<ToggleControl
-				label={ __( 'Enable match field', 'formello' ) }
-				checked={ enableMismatch }
-				onChange={ ( newval ) =>
-					setAttributes( { enableMismatch: newval } )
-				}
-			/>
-			{ enableMismatch && (
-				<Fragment>
-					<TextControl
-						type="text"
-						label={ __( 'Match', 'formello' ) }
-						value={ match || '' }
-						help={ __( 'Insert the id of the field to match', 'formello' ) }
-						onChange={ ( val ) => setAttributes( { match: val } ) }
-					/>
-					<TextControl
-						type="text"
-						label={ __( 'Mismatch message', 'formello' ) }
-						value={ mismatchMessage || '' }
-						onChange={ ( val ) => setAttributes( { mismatchMessage: val } ) }
-					/>
-				</Fragment>
-			) }
 			{ 'textarea' === type && (
 				<Fragment>
 					<TextControl
@@ -182,6 +64,17 @@ function AdvancedOptions( props ) {
 						}
 					/>
 				</Fragment>
+			) }
+			{ withButton && (
+				<ToggleControl
+					label={ __( 'Group button with input', 'formello' ) }
+					checked={ grouped }
+					onChange={ ( val ) =>
+						setAttributes( {
+							grouped: val,
+						} )
+					}
+				/>
 			) }
 			{ 'hidden' !== type && (
 				<Fragment>
@@ -227,17 +120,6 @@ function AdvancedOptions( props ) {
 					checked={ withButton }
 					onChange={ ( newval ) =>
 						setAttributes( { withButton: newval } )
-					}
-				/>
-			) }
-			{ withButton && (
-				<ToggleControl
-					label={ __( 'Group button with input', 'formello' ) }
-					checked={ grouped }
-					onChange={ ( val ) =>
-						setAttributes( {
-							grouped: val,
-						} )
 					}
 				/>
 			) }

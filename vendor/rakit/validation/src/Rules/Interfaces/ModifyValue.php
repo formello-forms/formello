@@ -1,6 +1,6 @@
 <?php
 
-namespace Formello\Rakit\Validation\Rules\Interfaces;
+namespace Rakit\Validation\Rules\Interfaces;
 
 interface ModifyValue
 {

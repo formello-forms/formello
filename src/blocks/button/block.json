@@ -27,12 +27,16 @@
 				"color": {
 					"background": "#000000",
 					"text": "#ffffff"
+				},
+				"padding": {
+					"top": "10"
 				}
 			}
 		}
 	},
 	"supports": {
 		"html": false,
+		"lock": false,
 		"multiple": false,
 		"reusable": false,
 		"color": {

@@ -1,27 +1,37 @@
 <?php
 
-namespace Formello\Rakit\Validation;
+namespace Rakit\Validation;
 
-use Formello\Rakit\Validation\MissingRequiredParameterException;
+use Rakit\Validation\MissingRequiredParameterException;
+
 abstract class Rule
 {
     /** @var string */
     protected $key;
+
     /** @var \Rakit\Validation\Attribute|null */
     protected $attribute;
+
     /** @var \Rakit\Validation\Validation|null */
     protected $validation;
+
     /** @var bool */
-    protected $implicit = \false;
+    protected $implicit = false;
+
     /** @var array */
     protected $params = [];
+
     /** @var array */
     protected $paramsTexts = [];
+
     /** @var array */
     protected $fillableParams = [];
+
     /** @var string */
     protected $message = "The :attribute is invalid";
-    public abstract function check($value) : bool;
+
+    abstract public function check($value): bool;
+
     /**
      * Set Validation class instance
      *
@@ -32,6 +42,7 @@ abstract class Rule
     {
         $this->validation = $validation;
     }
+
     /**
      * Set key
      *
@@ -42,6 +53,7 @@ abstract class Rule
     {
         $this->key = $key;
     }
+
     /**
      * Get key
      *
@@ -49,8 +61,9 @@ abstract class Rule
      */
     public function getKey()
     {
-        return $this->key ?: \get_class($this);
+        return $this->key ?: get_class($this);
     }
+
     /**
      * Set attribute
      *
@@ -61,6 +74,7 @@ abstract class Rule
     {
         $this->attribute = $attribute;
     }
+
     /**
      * Get attribute
      *
@@ -70,26 +84,29 @@ abstract class Rule
     {
         return $this->attribute;
     }
+
     /**
      * Get parameters
      *
      * @return array
      */
-    public function getParameters() : array
+    public function getParameters(): array
     {
         return $this->params;
     }
+
     /**
      * Set params
      *
      * @param array $params
      * @return \Rakit\Validation\Rule
      */
-    public function setParameters(array $params) : Rule
+    public function setParameters(array $params): Rule
     {
-        $this->params = \array_merge($this->params, $params);
+        $this->params = array_merge($this->params, $params);
         return $this;
     }
+
     /**
      * Set parameters
      *
@@ -97,27 +114,29 @@ abstract class Rule
      * @param mixed $value
      * @return \Rakit\Validation\Rule
      */
-    public function setParameter(string $key, $value) : Rule
+    public function setParameter(string $key, $value): Rule
     {
         $this->params[$key] = $value;
         return $this;
     }
+
     /**
      * Fill $params to $this->params
      *
      * @param array $params
      * @return \Rakit\Validation\Rule
      */
-    public function fillParameters(array $params) : Rule
+    public function fillParameters(array $params): Rule
     {
         foreach ($this->fillableParams as $key) {
             if (empty($params)) {
                 break;
             }
-            $this->params[$key] = \array_shift($params);
+            $this->params[$key] = array_shift($params);
         }
         return $this;
     }
+
     /**
      * Get parameter from given $key, return null if it not exists
      *
@@ -126,8 +145,9 @@ abstract class Rule
      */
     public function parameter(string $key)
     {
-        return isset($this->params[$key]) ? $this->params[$key] : null;
+        return isset($this->params[$key])? $this->params[$key] : null;
     }
+
     /**
      * Set parameter text that can be displayed in error message using ':param_key'
      *
@@ -139,54 +159,60 @@ abstract class Rule
     {
         $this->paramsTexts[$key] = $text;
     }
+
     /**
      * Get $paramsTexts
      *
      * @return array
      */
-    public function getParametersTexts() : array
+    public function getParametersTexts(): array
     {
         return $this->paramsTexts;
     }
+
     /**
      * Check whether this rule is implicit
      *
      * @return boolean
      */
-    public function isImplicit() : bool
+    public function isImplicit(): bool
     {
         return $this->implicit;
     }
+
     /**
      * Just alias of setMessage
      *
      * @param string $message
      * @return \Rakit\Validation\Rule
      */
-    public function message(string $message) : Rule
+    public function message(string $message): Rule
     {
         return $this->setMessage($message);
     }
+
     /**
      * Set message
      *
      * @param string $message
      * @return \Rakit\Validation\Rule
      */
-    public function setMessage(string $message) : Rule
+    public function setMessage(string $message): Rule
     {
         $this->message = $message;
         return $this;
     }
+
     /**
      * Get message
      *
      * @return string
      */
-    public function getMessage() : string
+    public function getMessage(): string
     {
         return $this->message;
     }
+
     /**
      * Check given $params must be exists
      *

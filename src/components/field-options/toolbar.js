@@ -41,6 +41,14 @@ export default function Toolbar( props ) {
 					setAttributes( { hideLabel: ! attributes.hideLabel } );
 				} }
 			/>
+			<ToolbarButton
+				label={ __( 'Show help message' ) }
+				icon={ 'editor-help' }
+				isPressed={ attributes.showHelp }
+				onClick={ () => {
+					setAttributes( { showHelp: ! attributes.showHelp } );
+				} }
+			/>
 		</Fragment>
 	);
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Formello\Psr\Log\Test;
+namespace Psr\Log\Test;
 
 /**
  * This class is internal and does not follow the BC promise.

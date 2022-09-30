@@ -19,17 +19,17 @@ if ( ! defined( 'FORMELLO_PLUGIN_FILE' ) ) {
 }
 
 if ( ! class_exists( 'Formello' ) ) {
-	include_once dirname( FORMELLO_PLUGIN_FILE ) . '/includes/class-formello.php';
+	include_once dirname( FORMELLO_PLUGIN_FILE ) . '/includes/Plugin.php';
 }
 
 /**
- * The main function that returns the Block Visibility class
+ * The main function that returns the Plugin class
  *
  * @since 1.0.0
  * @return object|Formello
  */
 function formello_load_plugin() {
-	return Formello::instance();
+	return Formello\Plugin::instance();
 }
 
 // Get the plugin running.
@@ -46,12 +46,13 @@ function formello_activate() {
 	// create table for storing form settings.
 	$wpdb->query(
 		"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
-		`post_id` BIGINT(20) UNSIGNED PRIMARY KEY,
+		`id` BIGINT(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+		`post_id` BIGINT(20) UNSIGNED,
 		`name` VARCHAR(255),
 		`settings` TEXT NOT NULL,
 		`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		FOREIGN KEY (post_id) REFERENCES {$wpdb->prefix}posts(ID) ON DELETE CASCADE
-		) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+		) ENGINE=InnoDB CHARACTER SET={$wpdb->charset};"
 	);
 
 	// create table for storing submissions.
@@ -67,7 +68,7 @@ function formello_activate() {
 		`referer_url` VARCHAR(255) NULL,
 		`submitted_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		`log` TEXT NULL
-		) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+		) ENGINE=InnoDB CHARACTER SET={$wpdb->charset};"
 	);
 
 	// create table for storing submissions meta.
@@ -79,7 +80,7 @@ function formello_activate() {
 		`field_name` VARCHAR(255) NOT NULL,
 		`field_value` TEXT NULL,
 		FOREIGN KEY (submission_id) REFERENCES {$wpdb->prefix}formello_submissions(id) ON DELETE CASCADE
-		) ENGINE=INNODB CHARACTER SET={$wpdb->charset};"
+		) ENGINE=InnoDB CHARACTER SET={$wpdb->charset};"
 	);
 
 	$upload_dir = wp_upload_dir();
@@ -94,7 +95,7 @@ function formello_activate() {
 		require_once ABSPATH . '/wp-admin/includes/file.php';
 		WP_Filesystem();
 	}
-
+	// Add a white index.
 	$wp_filesystem->put_contents( trailingslashit( $formello_dir ) . 'index.html', '', 0644 );
 
 }

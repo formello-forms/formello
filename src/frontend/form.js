@@ -91,7 +91,8 @@ class Formello {
 					// Show form message
 					if ( response.message ) {
 						parent.addMessage(
-							response.message,
+							response.message.text,
+							response.message.type,
 							response.errors,
 							response.hide_form
 						);
@@ -118,6 +119,13 @@ class Formello {
 						parent.element.reset();
 					}
 				} else {
+					response = JSON.parse( this.responseText );
+					parent.addMessage(
+						response.data,
+						'error',
+						[],
+						false
+					);
 					// Server error :(
 					console.log( response );
 				}
@@ -174,10 +182,10 @@ class Formello {
 		} );
 	}
 
-	addMessage( message, errors, hide ) {
+	addMessage( message, type, errors, hide ) {
 		const msg = this.element.querySelector( '.formello-message' );
-		msg.classList.add( message.type );
-		msg.innerHTML = '<p>' + message.text + '</p>';
+		msg.classList.add( type );
+		msg.innerHTML = '<p>' + message + '</p>';
 
 		if ( errors.length ) {
 			const ul = document.createElement( 'ul' );

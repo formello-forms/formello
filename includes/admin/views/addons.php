@@ -5,8 +5,6 @@
  * @package Formello
  */
 
-namespace Formello\Views;
-
 defined( 'ABSPATH' ) || exit;
 
 $formello_url    = 'https://formello.net/edd-api/products?nocache=' . time();

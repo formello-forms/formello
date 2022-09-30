@@ -66,17 +66,24 @@ export function AdvancedSettings( props ) {
 					checked={ attributes.labelIsBold }
 					onChange={ ( val ) => setAttributes( { labelIsBold: val } ) }
 				/>
+				<TextControl
+					label={ __( 'Required Field Indicator', 'formello' ) }
+					value={ attributes.requiredText }
+					onChange={ changeRequiredText }
+				/>
+				<ToggleControl
+					label={ __( 'Autocomplete', 'formello' ) }
+					checked={ attributes.autoComplete }
+					onChange={ ( val ) => {
+						setAttributes( { autoComplete: val } );
+					} }
+				/>
 				<ToggleControl
 					label={ __( 'Enable debug', 'formello' ) }
 					checked={ attributes.debug }
 					onChange={ ( val ) => {
 						setAttributes( { debug: val } );
 					} }
-				/>
-				<TextControl
-					label={ __( 'Required Field Indicator', 'formello' ) }
-					value={ attributes.requiredText }
-					onChange={ changeRequiredText }
 				/>
 			</InspectorAdvancedControls>
 		</Fragment>

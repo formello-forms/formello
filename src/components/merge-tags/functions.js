@@ -44,7 +44,7 @@ export function getFieldsBlock( clientId ) {
 }
 
 /**
- * Find the root form block.
+ * Get fields type.
  *
  * @param {string} clientId The id of the form block of which we are finding the children fields
  */
@@ -72,7 +72,21 @@ export function serializeFields( clientId ) {
 	fieldsBlock.forEach( ( b ) => {
 		fields.push( {
 			title: b.attributes.name,
-			tag: '{{fields.' + b.attributes.name + '}}',
+			tag: '{{fields.' + b.attributes.name + '}}'
+		} );
+	} );
+
+	return fields;
+}
+
+export function serializeFieldsName( clientId ) {
+	const fields = [];
+	const fieldsBlock = getFieldsBlock( clientId );
+
+	fieldsBlock.forEach( ( b ) => {
+		fields.push( {
+			label: b.attributes.name,
+			value: b.attributes.name
 		} );
 	} );
 
@@ -127,11 +141,11 @@ export function getFieldConstraint( field ) {
 	}
 
 	if ( field.attributes.minlength ) {
-		constraints.push( 'min:' + field.attributes.minlength );
+		constraints.push( 'minlength:' + field.attributes.minlength );
 	}
 
 	if ( field.attributes.maxlength ) {
-		constraints.push( 'max:' + field.attributes.maxlength );
+		constraints.push( 'maxlength:' + field.attributes.maxlength );
 	}
 
 	if ( field.attributes.min && 'date' !== field.attributes.type ) {
@@ -153,7 +167,7 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'numeric' );
 	}
 
-	if ( 'date' === field.attributes.type && ! field.attributes.advancedDate ) {
+	if ( 'date' === field.attributes.type && ! field.attributes.advanced ) {
 		constraints.push( 'date' );
 	}
 
@@ -174,11 +188,15 @@ export function getFieldConstraint( field ) {
 	}
 
 	if (
-		field.attributes.advancedDate &&
+		field.attributes.advanced &&
 		'range' !== field.attributes.flatpickr.mode &&
 		'multiple' !== field.attributes.flatpickr.mode
 	) {
 		constraints.push( 'date:' + field.attributes.flatpickr[ 'date-format' ] );
+	}
+
+	if ( field.attributes.enableMismatch && '' !== field.attributes.match ) {
+		constraints.push( 'same:' + field.attributes.match );
 	}
 
 	if ( constraints.length ) {
