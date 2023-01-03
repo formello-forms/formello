@@ -5,41 +5,52 @@
 	"title": "Text Input",
 	"description": "Input field.",
 	"category": "formello",
-	"icon": "button",
 	"ancestor": ["formello/form"],
 	"textdomain": "formello",
 	"attributes": {
 		"type": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "type",
 			"default": "text"
 		},
 		"id": {
-			"type": "string"
-		},
-		"color": {
-			"type": "string"
+			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "id",
+			"default": ""
 		},
 		"name": {
-			"type": "string"
+			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "name"
 		},
 		"label": {
 			"type": "string",
-			"default": "Input Text"
-		},
-		"description": {
-			"type": "string",
-			"default": ""
+			"default": "My input"
 		},
 		"placeholder": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "placeholder",
 			"default": ""
 		},
 		"value": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "value",
 			"default": ""
 		},
 		"validation": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "data-bouncer-message",
 			"default": ""
 		},
 		"enableMismatch": {
@@ -48,22 +59,26 @@
 		},
 		"mismatchMessage": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "data-bouncer-mismatch-message",
 			"default": ""
 		},
 		"match": {
 			"type": "string",
-			"default": ""
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "data-bouncer-match"
 		},
 		"hideLabel": {
 			"type": "boolean",
 			"default": false
 		},
-		"labelVAlign": {
-			"type": "string",
-			"default": ""
-		},
 		"required": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "required",
 			"default": false
 		},
 		"enableAutoComplete": {
@@ -72,7 +87,10 @@
 		},
 		"autocomplete": {
 			"type": "string",
-			"default": ""
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "autocomplete",
+			"default": "off"
 		},
 		"hideRequired": {
 			"type": "boolean",
@@ -83,14 +101,23 @@
 		},
 		"disabled": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "disabled",
 			"default": false
 		},
-		"readOnly": {
+		"readonly": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "readonly",
 			"default": false
 		},
 		"checked": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "checked",
 			"default": false
 		},
 		"showHelp": {
@@ -109,30 +136,39 @@
 			"type": "boolean",
 			"default": false
 		},
-		"cols": {
-			"type": "number",
-			"default": 3
-		},
-		"rows": {
-			"type": "number",
-			"default": 5
-		},
 		"minlength": {
-			"type": "string"
+			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "minlength",
+			"default": ""
 		},
 		"maxlength": {
-			"type": "string"
+			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "maxlength",
+			"default": ""
 		},
 		"pattern": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "pattern",
 			"default": ""
 		},
 		"min": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "min",
 			"default": ""
 		},
 		"max": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "max",
 			"default": ""
 		},
 		"withButton": {
@@ -153,14 +189,28 @@
 		},
 		"step": {
 			"type": "number",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "step",
 			"default": ""
 		},
 		"flatpickr": {
 			"type": "object",
-			"default": {}
-		},
-		"enableRtf": {
-			"type": "boolean"
+	        "source": "query",
+	        "selector": "input",
+	        "query": {
+	            "enable-time": {
+	                "type": "string",
+	                "source": "attribute",
+	                "attribute": "data-enable-time"
+	            },
+	            "minDate": {
+	                "type": "string",
+	                "source": "attribute",
+	                "attribute": "data-min-date"
+	            }
+	        },
+	        "default": {}
 		},
 		"advanced": {
 			"type": "boolean"

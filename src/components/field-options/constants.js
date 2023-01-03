@@ -157,7 +157,6 @@ export const SUPPORTED_ATTRIBUTES = {
 	textarea: [
 		'name',
 		'id',
-		'type',
 		'required',
 		'value',
 		'readonly',

@@ -22,6 +22,7 @@ new Bouncer( '.wp-block-formello-form', {
 
 		}
 	},
+	messageCustom: 'data-bouncer-message', // The data attribute to use for custom error messages
 	messages: {
 		missingValue: formello.settings.messages.missingValue,
 		patternMismatch: formello.settings.messages.patternMismatch,

@@ -22,7 +22,10 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { parse } from '@wordpress/blocks';
 
 import { Spinner, Modal } from '@wordpress/components';
-import { BlockPreview } from '@wordpress/block-editor';
+import { 
+	BlockPreview,
+	__experimentalBlockPatternSetup as BlockPatternSetup,
+} from '@wordpress/block-editor';
 
 export function TemplatesModal( props ) {
 	const { onRequestClose, type, clientId } = props;

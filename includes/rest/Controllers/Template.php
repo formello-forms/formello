@@ -74,7 +74,7 @@ class Template extends Base {
 				if ( $new_templates && is_array( $new_templates ) ) {
 					$templates = $new_templates;
 
-					set_transient( 'formello_templates', $templates, DAY_IN_SECONDS );
+					set_transient( 'formello_templates', $templates );
 				}
 			} else {
 				$templates = array();
@@ -98,19 +98,21 @@ class Template extends Base {
 		foreach ( $all_templates as $template ) {
 			$local_templates[] = array(
 				'title' => $template->post_title,
-				'id' => $template->ID,
-				'types' => array(
-					array(
-						'slug' => 'local',
-					),
-				),
 				'content' => $template->post_content,
-				'url' => $template->guid,
+				'description' => '',
+				'blockTypes' => array(
+					'formello/library',
+				),
+				'keywords' => array(),
+				'categories' => array( 'form' ),
+				'name' => 'formello/' . sanitize_title( $template->post_title ),
 			);
 		}
 
 		// merge all available templates.
 		$templates = array_merge( $templates, $local_templates );
+
+		set_transient( 'formello_templates', $templates );
 
 		if ( is_array( $templates ) ) {
 			return $this->success( $templates );
@@ -129,6 +131,10 @@ class Template extends Base {
 	public function sync_template_library( $request ) {
 		delete_transient( 'formello_templates' );
 		delete_transient( 'popper_templates' );
+
+		if ( current_user_can( 'manage_options' ) ) {
+			$this->get_templates();
+		}
 
 		return $this->success( true );
 	}

@@ -16,7 +16,7 @@ import DatepickerSettings from './date';
 function AdvancedOptions( props ) {
 	const {
 		attributes: {
-			type,
+			type = 'textarea',
 			advanced,
 			disabled,
 			enableAutoComplete,
@@ -34,7 +34,7 @@ function AdvancedOptions( props ) {
 		clientId
 	} = props;
 
-	const supported = SUPPORTED_ATTRIBUTES[ type ];
+	const supported = SUPPORTED_ATTRIBUTES[ type ?? 'textarea' ];
 
 	return (
 		<Fragment>
@@ -65,6 +65,46 @@ function AdvancedOptions( props ) {
 					/>
 				</Fragment>
 			) }
+			{
+				supported.includes( 'autocomplete' ) &&
+				<ToggleControl
+					label={ __( 'Autocomplete', 'formello' ) }
+					checked={ enableAutoComplete }
+					onChange={ ( newval ) =>
+						setAttributes( { enableAutoComplete: newval } )
+					}
+				/>
+			}
+			{
+				enableAutoComplete && supported.includes( 'autocomplete' ) &&
+				<TextControl
+					label={ __( 'Autocomplete attribute', 'formello' ) }
+					value={ autocomplete }
+					onChange={ ( newval ) =>
+						setAttributes( { autocomplete: newval } )
+					}
+				/>
+			}
+			{ 'range' === type && (
+				<ToggleControl
+					label={ __( 'Show output', 'formello' ) }
+					checked={ withOutput }
+					onChange={ ( val ) =>
+						setAttributes( {
+							withOutput: val,
+						} )
+					}
+				/>
+			) }
+			{ [ 'text', 'url', 'email', 'number', 'tel' ].includes( type ) && (
+				<ToggleControl
+					label={ __( 'Show button', 'formello' ) }
+					checked={ withButton }
+					onChange={ ( newval ) =>
+						setAttributes( { withButton: newval } )
+					}
+				/>
+			) }
 			{ withButton && (
 				<ToggleControl
 					label={ __( 'Group button with input', 'formello' ) }
@@ -93,46 +133,6 @@ function AdvancedOptions( props ) {
 						}
 					/>
 				</Fragment>
-			) }
-			{
-				supported.includes( 'autocomplete' ) &&
-				<ToggleControl
-					label={ __( 'Autocomplete', 'formello' ) }
-					checked={ enableAutoComplete }
-					onChange={ ( newval ) =>
-						setAttributes( { enableAutoComplete: newval } )
-					}
-				/>
-			}
-			{
-				enableAutoComplete && supported.includes( 'autocomplete' ) &&
-				<TextControl
-					label={ __( 'Autocomplete attribute', 'formello' ) }
-					value={ autocomplete }
-					onChange={ ( newval ) =>
-						setAttributes( { autocomplete: newval } )
-					}
-				/>
-			}
-			{ [ 'text', 'url', 'email', 'number', 'tel' ].includes( type ) && (
-				<ToggleControl
-					label={ __( 'Show button', 'formello' ) }
-					checked={ withButton }
-					onChange={ ( newval ) =>
-						setAttributes( { withButton: newval } )
-					}
-				/>
-			) }
-			{ 'range' === type && (
-				<ToggleControl
-					label={ __( 'Show output', 'formello' ) }
-					checked={ withOutput }
-					onChange={ ( val ) =>
-						setAttributes( {
-							withOutput: val,
-						} )
-					}
-				/>
 			) }
 		</Fragment>
 	);

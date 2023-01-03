@@ -83,12 +83,11 @@ class Admin {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_bar_menu', array( $this, 'admin_bar_item' ), 500 );
-		add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
-		add_action( 'formello_tools_area', array( $this, 'add_tools_container' ) );
+		add_action( 'admin_bar_menu', array( $this, 'admin_bar_item' ), 1000 );
+		//add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
+		//add_action( 'formello_tools_area', array( $this, 'add_tools_container' ) );
 		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
 		$this->baselink = add_query_arg( array( 'post_type' => 'formello_form' ), admin_url( 'edit.php' ) );
-
 	}
 
 	/**
@@ -133,7 +132,7 @@ class Admin {
 			array( $this, 'submission_page_detail' )
 		);
 		$settings_hook = add_submenu_page(
-			$slug,
+			null,
 			__( 'Settings', 'formello' ),
 			__( 'Settings', 'formello' ),
 			$capability,
@@ -141,26 +140,50 @@ class Admin {
 			array( $this, 'settings_page' )
 		);
 		$tools_hook = add_submenu_page(
-			$slug,
+			null,
 			__( 'Tools', 'formello' ),
 			__( 'Tools', 'formello' ),
 			$capability,
-			'formello-tools',
-			array( $this, 'tools_page' )
+			'formello-settings#/tools',
+			array( $this, 'settings_page' )
 		);
 		$addons_hook = add_submenu_page(
-			$slug,
+			null,
 			__( 'Addons', 'formello' ),
 			__( 'Addons', 'formello' ),
 			$capability,
-			'formello-addons',
-			array( $this, 'addons_page' )
+			'formello-settings#/addons',
+			array( $this, 'settings_page' )
 		);
+
+		global $submenu;
+		$formello_settings = 'formello-settings';
+		if ( current_user_can( $capability ) ) {
+			// phpcs:ignore
+			$submenu[ $slug ][] = array(
+				'Settings',
+				$capability,
+				'edit.php?post_type=formello_form&page=' . $formello_settings . '#/',
+			);
+			// phpcs:ignore
+			$submenu[ $slug ][] = array(
+				__( 'Tools', 'formello' ),
+				$capability,
+				'edit.php?post_type=formello_form&page=' . $formello_settings . '#/tools',
+			);
+			// phpcs:ignore
+			$submenu[ $slug ][] = array(
+				__( 'Addons', 'formello' ),
+				$capability,
+				'edit.php?post_type=formello_form&page=' . $formello_settings . '#/addons',
+			);
+		}
 
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
 		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
 		add_action( "load-$settings_hook", array( $this, 'settings_hooks' ) );
-		add_action( "load-$tools_hook", array( $this, 'tools_hooks' ) );
+		add_action( "load-$tools_hook", array( $this, 'settings_hooks' ) );
+		add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
 		add_filter( 'submenu_file', array( $this, 'remove_submenu' ) );
 	}
 
@@ -246,12 +269,14 @@ class Admin {
 	}
 
 	/**
-	 * Initialize our hooks for the admin page
+	 * Output our Dashboard HTML.
 	 *
-	 * @return void
+	 * @since 0.1
 	 */
-	public function settings_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_settings_scripts' ) );
+	public function settings_page() {
+		?>
+			<div id="formello__plugin-settings"></div>
+		<?php
 	}
 
 	/**
@@ -259,8 +284,8 @@ class Admin {
 	 *
 	 * @return void
 	 */
-	public function tools_hooks() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_tools_scripts' ) );
+	public function settings_hooks() {
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_settings_scripts' ) );
 	}
 
 	/**
@@ -274,28 +299,6 @@ class Admin {
 
 		// add settings script from addon.
 		do_action( 'formello_settings_scripts' );
-	}
-
-	/**
-	 * Load scripts and styles for the app
-	 *
-	 * @return void
-	 */
-	public function enqueue_tools_scripts() {
-		wp_enqueue_script( 'formello-tools' );
-		wp_enqueue_style( 'formello-settings' );
-
-		// add settings script from addon.
-		do_action( 'formello_tools_scripts' );
-	}
-
-	/**
-	 * Add settings container.
-	 *
-	 * @since 1.2.0
-	 */
-	public function add_settings_container() {
-		echo '<div id="formello-block-default-settings"></div>';
 	}
 
 	/**
@@ -367,46 +370,6 @@ class Admin {
 			$this->error_notice( $message );
 		}
 		require dirname( __FILE__ ) . '/views/submissions.php';
-	}
-
-	/**
-	 * Output our Dashboard HTML.
-	 *
-	 * @since 0.1
-	 */
-	public function settings_page() {
-		?>
-			<div class="formello-dashboard-wrap">
-				<div class="formello-settings-area">
-					<?php do_action( 'formello_settings_area' ); ?>
-				</div>
-			</div>
-		<?php
-	}
-
-	/**
-	 * Output tools page.
-	 *
-	 * @since 0.1
-	 */
-	public function tools_page() {
-		?>
-			<div class="formello-dashboard-wrap">
-				<div class="formello-tools-area">
-					<div id="formello-block-tools"></div>
-				</div>
-			</div>
-		<?php
-	}
-
-	/**
-	 * Output our Dashboard HTML.
-	 *
-	 * @since 0.1
-	 */
-	public function addons_page() {
-		wp_enqueue_style( 'formello-settings' );
-		require dirname( __FILE__ ) . '/views/addons.php';
 	}
 
 	/**

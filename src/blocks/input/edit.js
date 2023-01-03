@@ -15,7 +15,9 @@ import { useEffect } from '@wordpress/element';
 
 import classnames from 'classnames';
 
-import getIcon from '../../utils/get-icon';
+import { 
+	Hidden,
+} from '../../utils/icons';
 import Label from '../../components/label';
 import Options from '../../components/field-options';
 import ValidationOptions from '../../components/field-options/validation';
@@ -24,7 +26,6 @@ import Toolbar from '../../components/field-options/toolbar';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-const hiddenIcon = getIcon( 'hidden' );
 /**
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
@@ -65,6 +66,10 @@ export default function Edit( props ) {
 		'formello-textarea': 'textarea' === attributes.type,
 	} );
 
+	const labelClassName = classnames( {
+		hide: attributes.hideLabel
+	} );
+
 	const blockProps = useBlockProps( {
 		className,
 	} );
@@ -101,36 +106,26 @@ export default function Edit( props ) {
 			</InspectorAdvancedControls>
 
 			{ 'hidden' !== attributes.type ? (
-				<Label { ...props } htmlFor="input" />
+				<Label { ...props } className={ labelClassName } htmlFor="input" />
 			) : (
 				<div className="formello-hidden">
-					{ hiddenIcon }
+					<Hidden width="30" height="30" />
 					<label htmlFor="input">[{ attributes.name }] </label>
 				</div>
 			) }
-			{ 'textarea' === attributes.type ? (
-				<textarea
-					type={ attributes.type }
-					cols={ attributes.cols }
-					rows={ attributes.rows }
-					value={ attributes.value || '' }
-					onChange={ onChange }
-					className={ attributes.fieldClass }
-					placeholder={ attributes.placeholder }
-				></textarea>
-			) : (
-				<input
-					className={ attributes.fieldClass }
-					type={ attributes.type }
-					value={ 'password' !== attributes.type ? attributes.value : '' }
-					checked={ attributes.checked || false }
-					step={ attributes.step || undefined }
-					onChange={ onChange }
-					placeholder={ attributes.placeholder }
-					disabled={ 'file' === attributes.type }
-					autoComplete={ attributes.autocomplete || 'new-password' }
-				/>
-			) }
+
+			<input
+				className={ attributes.fieldClass }
+				type={ attributes.type }
+				value={ 'password' !== attributes.type ? attributes.value : '' }
+				checked={ attributes.checked || false }
+				step={ attributes.step || undefined }
+				onChange={ onChange }
+				placeholder={ attributes.placeholder }
+				disabled={ 'file' === attributes.type }
+				autoComplete={ attributes.autocomplete || 'new-password' }
+			/>
+
 			{ attributes.withButton && children }
 			{ attributes.withOutput && <output></output> }
 			{ 'hidden' !== attributes.type && attributes.showHelp && (

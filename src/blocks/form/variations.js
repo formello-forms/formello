@@ -56,9 +56,8 @@ const variations = [
 				{ type: 'text', label: 'Subject', name: 'subject' },
 			],
 			[
-				'formello/input',
+				'formello/textarea',
 				{
-					type: 'textarea',
 					label: 'Message',
 					name: 'message',
 					rows: 5,
@@ -148,9 +147,8 @@ const variations = [
 				],
 			],
 			[
-				'formello/input',
+				'formello/textarea',
 				{
-					type: 'textarea',
 					label: 'Message',
 					name: 'message',
 					rows: 5,

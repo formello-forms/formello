@@ -1,1 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'><svg enable-background="new 0 0 48 48" height="24px" id="Layer_3" version="1.1" viewBox="0 0 24 24" width="24px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g><rect fill="#241F20" height="4" width="16" x="8.979" y="22"/><rect fill="#241F20" height="4" width="16" x="8.979" y="29"/><rect fill="#241F20" height="4" width="16" x="8.979" y="36"/><path d="M31.979,0h-30v14.167V18v30h30V18h14.043V0H31.979z M27.979,44h-22V18h22V44z M27.979,14h-22V4h22V14z    M37,11.422L33.086,6.62h7.83L37,11.422z" fill="#241F20"/></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg width="800px" height="800px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<path fill="#1e72bd" d="M15 4h-14c-0.6 0-1 0.4-1 1v6c0 0.6 0.4 1 1 1h14c0.6 0 1-0.4 1-1v-6c0-0.6-0.4-1-1-1zM10 11h-9v-6h9v6zM13 8.4l-2-1.4h4l-2 1.4z"></path>
+<path fill="#1e72bd" d="M2 6h1v4h-1v-4z"></path>
+</svg>

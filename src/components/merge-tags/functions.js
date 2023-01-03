@@ -3,7 +3,7 @@ import { each } from 'lodash';
 const { getBlock, getClientIdsOfDescendants, getBlockParents } =
 	wp.data.select( 'core/block-editor' );
 
-const allowed = [ 'formello/input', 'formello/select' ];
+const allowed = [ 'formello/input', 'formello/select', 'formello/textarea' ];
 
 /**
  * Find the root form block.
@@ -179,7 +179,7 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'uploaded_file' );
 	}
 
-	if ( 'file' === field.attributes.type && field.attributes.accept.length ) {
+	if ( 'file' === field.attributes.type && field.attributes.accept?.length ) {
 		constraints.push( 'mimes:' + field.attributes.accept.join(',').replace(/\|/g, ",") );
 	}
 

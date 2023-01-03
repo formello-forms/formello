@@ -79,6 +79,7 @@ class Assets {
 
 		$settings = array(
 			'settings' => get_option( 'formello' ),
+			'post_url' => esc_url( admin_url( 'admin-post.php' ) ),
 		);
 
 		wp_localize_script(
@@ -136,15 +137,15 @@ class Assets {
 		$script_asset = require $script_asset_path;
 
 		$scripts = array(
-			'formello-settings'          => array(
-				'src'       => FORMELLO_ASSETS . '/dashboard.js',
-				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-notices' ),
+			'formello-tools'          => array(
+				'src'       => FORMELLO_ASSETS . '/tools.js',
+				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-core-data' ),
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),
-			'formello-tools'          => array(
-				'src'       => FORMELLO_ASSETS . '/tools.js',
-				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-notices' ),
+			'formello-settings'          => array(
+				'src'       => FORMELLO_ASSETS . '/test.js',
+				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-core-data' ),
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),
@@ -174,7 +175,7 @@ class Assets {
 				'src' => FORMELLO_ASSETS . '/style-index.css',
 			),
 			'formello-settings'          => array(
-				'src'  => FORMELLO_ASSETS . '/dashboard.css',
+				'src'  => FORMELLO_ASSETS . '/style-test.css',
 				'deps' => array( 'wp-components', 'wp-reset-editor-styles' ),
 			),
 		);

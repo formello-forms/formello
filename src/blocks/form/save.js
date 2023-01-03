@@ -3,32 +3,40 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 import classnames from 'classnames';
 
 export default function save( { attributes, className } ) {
+	const { 
+		asRow,
+		labelAlign,
+		id,
+		hide,
+		recaptchaEnabled,
+		redirectUrl,
+		autoComplete
+	} = attributes;
+
 	className = classnames(
-		//blockProps.className,
-		attributes.asRow ? attributes.labelAlign : undefined,
+		asRow ? labelAlign : undefined,
 		{
-			'as-row': attributes.asRow,
-			'is-bold': attributes.labelIsBold,
-			'formello-label-right': 'right' === attributes.labelAlign,
+			'as-row': asRow,
+			'formello-label-right': 'right' === labelAlign,
 		}
 	);
 
-	const honeypot = '_formello_h' + attributes.id;
+	const honeypot = '_formello_h' + id;
 	return (
 		<form
 			{ ...useBlockProps.save( {
 				className,
 			} ) }
 			method="post"
-			id={ 'formello-' + attributes.id }
-			data-id={ 'formello-' + attributes.id }
-			data-hide={ attributes.hide }
-			data-recaptcha={ attributes.recaptchaEnabled }
-			data-redirect={ attributes.redirectUrl }
-			noValidate
-			autoComplete={ attributes.autoComplete ? 'on' : 'off' }
+			id={ 'formello-' + id }
+			data-id={ 'formello-' + id }
+			data-hide={ hide }
+			data-recaptcha={ recaptchaEnabled }
+			data-redirect={ redirectUrl }
+			novalidate
+			autocomplete={ autoComplete }
 		>
-			<input type="hidden" name="_formello_id" value={ attributes.id } />
+			<input type="hidden" name="_formello_id" value={ id } />
 			<input
 				type="text"
 				name={ honeypot }

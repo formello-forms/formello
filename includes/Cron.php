@@ -55,7 +55,7 @@ class Cron {
 	}
 
 	/**
-	 * Register our dynamic blocks.
+	 * Schedule every 5 min.
 	 *
 	 * @since 1.2.0
 	 */
@@ -66,7 +66,7 @@ class Cron {
 	}
 
 	/**
-	 * Register our dynamic blocks.
+	 * Retrieve newly submitted entries.
 	 *
 	 * @since 1.2.0
 	 */

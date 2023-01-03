@@ -64,13 +64,6 @@ class Form {
 	protected $settings = array();
 
 	/**
-	 * The form messages
-	 *
-	 * @var array
-	 */
-	protected $messages = array();
-
-	/**
 	 * The form errors
 	 *
 	 * @var array
@@ -176,10 +169,10 @@ class Form {
 			),
 		);
 		if ( '' === $settings['messages']['success'] ) {
-			$settings['messages']['success'] = __( 'Thanks for submitting this form.', 'formello' );
+			$settings['messages']['success'] = $this->formello_settings['messages']['form']['success'];
 		}
 		if ( '' === $settings['messages']['error'] ) {
-			$settings['messages']['error'] = __( 'Ops. An error occurred.', 'formello' );
+			$settings['messages']['error'] = $this->formello_settings['messages']['form']['error'];
 		}
 		return wp_parse_args( $settings, $defaults );
 	}
@@ -328,12 +321,13 @@ class Form {
 		$form = array();
 
 		$form['id']       = $this->ID;
-		$form['details']  = $this->data['details'];
 		$form['actions']  = $this->data['actions'];
-		$form['fields']   = $this->data['fields'];
 		$form['errors']   = $this->errors;
-		$form['messages'] = $this->messages;
-		$form['settings'] = $this->settings;
+		if ( $this->is_debug() ) {
+			$form['settings'] = $this->settings;
+			$form['fields']   = $this->data['fields'];
+			$form['details']  = $this->data['details'];
+		}
 
 		return $form;
 	}
@@ -374,7 +368,7 @@ class Form {
 		$this->data['details']['ip_address']   = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 		$this->data['details']['user_agent']   = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 		$this->data['details']['referer_url']  = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
-		$this->data['details']['submitted_at'] = gmdate( 'Y-m-d H:i:s' );
+		$this->data['details']['submitted_at'] = wp_date( 'Y-m-d H:i:s' );
 
 		$form_actions = $this->get_setting( 'actions' );
 

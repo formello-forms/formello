@@ -20,6 +20,7 @@ import { ActionsModal } from './actions/modal';
 import { getActions } from './actions/actions';
 
 import {
+	BaseControl,
 	TextareaControl,
 	ToggleControl,
 	PanelBody,
@@ -44,13 +45,14 @@ const ALLOWED_BLOCKS = [
 	'formello/button',
 	'formello/fieldset',
 	'formello/input',
+	'formello/textarea',
 	'formello/email',
 	'formello/checkboxes',
 	'formello/select',
 	'formello/fileupload',
 ];
 import apiFetch from '@wordpress/api-fetch';
-import { TemplatesModal } from './settings/library';
+import TemplatesModal from '../library/templates-modal.js';
 import { AdvancedSettings } from './settings/advanced';
 import {
 	getConstraints,
@@ -126,21 +128,21 @@ function Edit( props ) {
 	const [ showActionsModal, setShowActionsModal ] = useState( false );
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
-	useEffect( () => {
+	/*useEffect( () => {
 		if ( 'formello_form' === postType && undefined !== postTitle ) {
 			setAttributes( { name: postTitle } );
 		}
-	}, [ postTitle ] );
+	}, [ postTitle ] );*/
 
 	useEffect( () => {
-		const idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace( /-/g, '' );
-		if ( attributes.name.length < 1 ) {
+		/*const idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace( /-/g, '' );
+		if ( !attributes.name ) {
 			setAttributes( {
 				name: 'form-' + idx,
 			} );
-		}
-		if ( 'formello_form' === postType && undefined !== postTitle ) {
-			setAttributes( { name: postTitle } );
+		}*/
+		if ( 'formello_form' !== postType || 'popper' !== postType ) {
+			setAttributes( { storeSubmissions: false } );
 		}
 		if (
 			undefined === attributes.id ||
@@ -159,7 +161,6 @@ function Edit( props ) {
 			attributes.asRow ? attributes.labelAlign : undefined,
 			{
 				'as-row': attributes.asRow,
-				'is-bold': attributes.labelIsBold,
 				'formello-label-right': 'right' === attributes.labelAlign,
 			}
 		);
@@ -196,55 +197,54 @@ function Edit( props ) {
 	const settingsUrl = addQueryArgs( 'edit.php', {
 		post_type: 'formello_form',
 		page: 'formello-settings',
-		tab: 'recaptcha',
-	} );
+	} ) + '#/recaptcha';
 
 	return (
 		<div { ...innerBlocksProps }>
-			<InspectorControls>
-				<BlockControls>
-					<ToolbarGroup>
-						<ToolbarButton
-							label={ __( 'Template', 'popper' ) }
-							icon={ 'layout' }
-							onClick={ () => {
-								setModalOpen( 'templates' );
-							} }
-						/>
-					</ToolbarGroup>
-					<ToolbarGroup>
-						<ToolbarDropdownMenu
-							icon={ 'admin-generic' }
-							label={ __( 'Add action', 'formello' ) }
-							controls={ actions.map( ( a ) => {
-								return {
-									title: a.title,
-									icon: a.icon,
-									onClick: () => {
-										addAction( a.type );
-									},
-								};
-							} ) }
-						/>
-						{ attributes.actions.map( ( a, i ) => {
-							let action = find(actions, {type:a.type});
-							if( ! action ){
-								return
-							}
-							return (
-								<ToolbarButton
-									label={ a.title }
-									icon={ action.icon }
-									key={ i }
-									onClick={ () => {
-										setActive( i );
-										setShowActionsModal( a );
-									} }
-								/>
-							);
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						label={ __( 'Template', 'popper' ) }
+						icon={ 'layout' }
+						onClick={ () => {
+							setModalOpen( 'templates' );
+						} }
+					/>
+				</ToolbarGroup>
+				<ToolbarGroup>
+					<ToolbarDropdownMenu
+						icon={ 'admin-generic' }
+						label={ __( 'Add action', 'formello' ) }
+						controls={ actions.map( ( a ) => {
+							return {
+								title: a.title,
+								icon: a.icon,
+								onClick: () => {
+									addAction( a.type );
+								},
+							};
 						} ) }
-					</ToolbarGroup>
-				</BlockControls>
+					/>
+					{ attributes.actions.map( ( a, i ) => {
+						let action = find(actions, {type:a.type});
+						if( ! action ){
+							return
+						}
+						return (
+							<ToolbarButton
+								label={ a.title }
+								icon={ action.icon }
+								key={ i }
+								onClick={ () => {
+									setActive( i );
+									setShowActionsModal( a );
+								} }
+							/>
+						);
+					} ) }
+				</ToolbarGroup>
+			</BlockControls>
+			<InspectorControls>
 				<PanelBody
 					title={ __( 'Settings', 'formello' ) }
 					initialOpen={ true }
@@ -291,7 +291,7 @@ function Edit( props ) {
 							setAttributes( { hide: val } );
 						} }
 					/>
-					<div style={ { width: '90%' } }>
+					<BaseControl>
 						<URLInput
 							label={ __( 'Redirect Url', 'formello' ) }
 							value={ attributes.redirectUrl }
@@ -300,17 +300,19 @@ function Edit( props ) {
 							}
 							className={ 'formello-urlinput' }
 						/>
-					</div>
+					</BaseControl>
 					<TextareaControl
 						label={ __( 'Success Message', 'formello' ) }
-						value={ attributes.successMessage || formello.settings.messages.form.success }
+						placeholder={ formello.settings.messages.form.success }
+						value={ attributes.successMessage }
 						onChange={ ( val ) =>
 							setAttributes( { successMessage: val } )
 						}
 					/>
 					<TextareaControl
 						label={ __( 'Error Message', 'formello' ) }
-						value={ attributes.errorMessage || formello.settings.messages.form.error }
+						placeholder={ formello.settings.messages.form.error }
+						value={ attributes.errorMessage }
 						onChange={ ( val ) => setAttributes( { errorMessage: val } ) }
 					/>
 				</PanelBody>
@@ -355,8 +357,8 @@ function Edit( props ) {
 			<AdvancedSettings { ...props } />
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
-					type={ 'remote' }
-					onRequestClose={ () => setModalOpen( false ) }
+					blockName={ props.name }
+					setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
 					clientId={ clientId }
 				/>
 			) }

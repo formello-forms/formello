@@ -35,10 +35,6 @@ html {
 	display: flex;
 	flex-direction: column;
 
-	> div {
-		margin-bottom: 1em;
-	}
-
 	div[hidden="true"], fieldset[hidden="true"] {
 		display: none;
 	}
@@ -261,6 +257,11 @@ html {
 					min-width: $label-width;
 					width: $label-width;
 					align-self: center;
+
+					&.hide {
+						visibility: hidden;
+						display: block;
+					}
 
 					&.textarea-label {
 						align-self: auto;

@@ -45,12 +45,14 @@
 			"gradients": true
 		},
 		"spacing": {
-			"padding": true,
-			"__experimentalDefaultControls": {
-				"padding": true
-			}
+			"padding": true
 		},
-		"__experimentalBorder": true,
+		"__experimentalBorder": {
+			"radius": true,
+			"width": true,
+			"color": true,
+			"style": true
+		},
 	    "typography": {
 	        "fontSize": true
 	    }

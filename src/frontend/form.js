@@ -24,7 +24,7 @@ class Formello {
 		e.preventDefault();
 		e.stopPropagation();
 
-		if ( this.enableRecaptcha ) {
+		if ( this.enableRecaptcha && 1 === formello.settings.reCaptcha?.version ) {
 			this.reCaptchaToken();
 			return;
 		}
@@ -143,14 +143,14 @@ class Formello {
 
 		const sitekey = formello.settings.reCaptcha?.site_key;
 		const version = formello.settings.reCaptcha?.version;
-		const buttons = this.element.getElementsByTagName( 'button' );
+		const button = this.element.querySelector('.wp-block-formello-button');
 
 		if ( '1' === version ) {
 			const recaptchaDiv = document.createElement( 'div' );
 			recaptchaDiv.classList.add( 'g-recaptcha' );
 			recaptchaDiv.setAttribute( 'data-sitekey', sitekey );
 
-			this.element.insertBefore( recaptchaDiv, buttons[ 0 ] );
+			this.element.insertBefore( recaptchaDiv, button );
 		} else {
 			recaptchaUrl += '?render=' + sitekey;
 			const recaptchaInput = document.createElement( 'input' );
@@ -210,6 +210,7 @@ class Formello {
 		const debugDiv = document.createElement( 'div' );
 		debugDiv.classList.add( 'formello-debug' );
 		debugDiv.innerHTML = '<p>Debug output:</p>';
+		debugDiv.innerHTML += '<small>This output is visible only to admin.</small>';
 		debugDiv.innerHTML +=
 			'<pre>' + JSON.stringify( debug, undefined, 2 ) + '</pre>';
 

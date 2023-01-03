@@ -21,12 +21,10 @@ export default function save( { attributes, className } ) {
 	} );
 
 	const labelClassName = classnames( {
-		hide: attributes.hideLabel,
-		'textarea-label': 'textarea' === attributes.type,
+		hide: attributes.hideLabel
 	} );
 
 	const fieldClassName = classnames( {
-		'formello-rtf': attributes.enableRtf && 'textarea' === attributes.type,
 		'flatpickr': attributes.advanced && 'date' === attributes.type,
 		'filepond': attributes.advanced && 'file' === attributes.type,
 	} );
@@ -57,8 +55,8 @@ export default function save( { attributes, className } ) {
 	}
 
 	if ( 'file' === attributes.type ) {
-		htmlAttrs.name += '[]';
-		htmlAttrs.accept = attributes.accept.join(',');
+		htmlAttrs.name;
+		htmlAttrs.accept = attributes.accept?.join(',');
 	}
 
 	if ( attributes.advanced && 'date' === attributes.type ) {
@@ -84,13 +82,9 @@ export default function save( { attributes, className } ) {
 					) }
 				</label>
 			) }
-			{ 'textarea' === attributes.type ? (
-				<textarea { ...htmlAttrs } className={ fieldClassName }>
-					{ attributes.value }
-				</textarea>
-			) : (
-				<input { ...htmlAttrs } className={ fieldClassName } />
-			) }
+
+			<input { ...htmlAttrs } className={ fieldClassName } />
+
 			{ attributes.withButton && <InnerBlocks.Content /> }
 			{ attributes.withOutput && <output>{ attributes.value }</output> }
 			{ 'hidden' !== attributes.type && attributes.showHelp && (

@@ -136,7 +136,7 @@ class License extends Base {
 
 		// Check if anything passed on a message constituting a failure.
 		if ( ! empty( $message ) ) {
-			return $this->response( $message );
+			return $this->failed( $message );
 		}
 
 		return $this->response( $license_data );

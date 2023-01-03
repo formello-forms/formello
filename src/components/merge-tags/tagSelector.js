@@ -44,7 +44,7 @@ function TagSelector( props ) {
 			</div>
 			<div>
 				{ isEmpty( search ) ? (
-					<TabPanel className="" activeClass="" tabs={ tabs }>
+					<TabPanel tabs={ tabs }>
 						{ ( tab ) => {
 							return (
 								<TagList

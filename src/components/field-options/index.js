@@ -20,7 +20,7 @@ import { SUPPORTED_ATTRIBUTES } from './constants';
 export default function Options( props ) {
 	const { attributes, setAttributes, clientId, setModalOpen } = props;
 
-	const supported = SUPPORTED_ATTRIBUTES[ attributes.type ];
+	const supported = SUPPORTED_ATTRIBUTES[ attributes.type ?? 'textarea' ];
 
 	return (
 		<Fragment>

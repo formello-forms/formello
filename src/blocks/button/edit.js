@@ -17,9 +17,11 @@ import classnames from 'classnames';
 import {
 	Loading,
 	Loading2,
-	Loading3,
+	Pulse,
 	Loading4,
 	Loading5,
+	LoadingCircles,
+	LoadingCirclePath,
 } from '../../utils/icons';
 
 export default function Edit( { attributes, setAttributes } ) {
@@ -28,9 +30,11 @@ export default function Edit( { attributes, setAttributes } ) {
 	const icons = {
 		Loading,
 		Loading2,
-		Loading3,
+		Pulse,
 		Loading4,
 		Loading5,
+		LoadingCircles,
+		LoadingCirclePath
 	};
 
 	const ButtonIcon = icons[ type ];
@@ -113,9 +117,11 @@ export default function Edit( { attributes, setAttributes } ) {
 					options={ [
 						{ label: 'Version 1', value: 'Loading' },
 						{ label: 'Version 2', value: 'Loading2' },
-						{ label: 'Version 3', value: 'Loading3' },
+						{ label: 'Pulse', value: 'Pulse' },
 						{ label: 'Version 4', value: 'Loading4' },
 						{ label: 'Version 5', value: 'Loading5' },
+						{ label: 'Loading Circles', value: 'LoadingCircles' },
+						{ label: 'Loading Circle Path', value: 'LoadingCirclePath' },
 					] }
 					onChange={ ( val ) => {
 						setAttributes( { type: val } );

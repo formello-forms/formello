@@ -71,7 +71,7 @@ final class Plugin {
 		include_once FORMELLO_ABSPATH . 'includes/Utils/functions.php';
 		include_once FORMELLO_ABSPATH . 'includes/register-settings.php';
 		include_once FORMELLO_ABSPATH . 'includes/register-cpt.php';
-		include_once FORMELLO_ABSPATH . 'includes/rest/register-routes.php';
+		include_once FORMELLO_ABSPATH . 'includes/Rest/register-routes.php';
 		include_once FORMELLO_ABSPATH . 'includes/Assets.php';
 		include_once FORMELLO_ABSPATH . 'includes/Blocks.php';
 		include_once FORMELLO_ABSPATH . 'includes/Frontend.php';
@@ -79,16 +79,16 @@ final class Plugin {
 		include_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
 		include_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
 		include_once FORMELLO_ABSPATH . 'includes/TagReplacers/Replacer.php';
-		include_once FORMELLO_ABSPATH . 'includes/Logger.php';
+		include_once FORMELLO_ABSPATH . 'includes/Log.php';
 		include_once FORMELLO_ABSPATH . 'includes/Updater.php';
 		include_once FORMELLO_ABSPATH . 'includes/Cron.php';
+		include_once FORMELLO_ABSPATH . 'includes/Admin/Admin.php';
 
 		// Only include in the admin.
 		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			include_once FORMELLO_ABSPATH . 'includes/Utils/format-utils.php';
-			include_once FORMELLO_ABSPATH . 'includes/admin/Admin.php';
-			include_once FORMELLO_ABSPATH . 'includes/admin/tables/class-forms.php';
-			include_once FORMELLO_ABSPATH . 'includes/admin/tables/class-submissions.php';
+			include_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Forms.php';
+			include_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Submissions.php';
 		}
 	}
 

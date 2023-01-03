@@ -13,7 +13,9 @@
 		},
 		"name": {
 			"type": "string",
-			"default": ""
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "name"
 		},
 		"successMessage": {
 			"type": "string",
@@ -25,6 +27,9 @@
 		},
 		"redirectUrl": {
 			"type": "string",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "data-redirect",
 			"default": ""
 		},
 		"debug": {
@@ -33,6 +38,9 @@
 		},
 		"recaptchaEnabled": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "data-recaptcha",
 			"default": false
 		},
 		"recaptchaVersion": {
@@ -57,24 +65,21 @@
 		},
 		"hide": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "data-hide",
 			"default": false
-		},
-		"constraints": {
-			"type": "array"
-		},
-		"fields": {
-			"type": "array"
-		},
-		"formSettings": {
-			"type": "object"
 		},
 		"asRow": {
 			"type": "boolean",
 			"default": false
 		},
 		"autoComplete": {
-			"type": "boolean",
-			"default": false
+			"type": "string",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "autocomplete",
+			"default": "off"
 		},
 		"actions": {
 			"type": "array",

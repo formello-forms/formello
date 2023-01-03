@@ -6,7 +6,7 @@ import variations from './variations';
 import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
-import getIcon from '../../utils/get-icon';
+import { ReactComponent as Form } from '../../../assets/icons/form.svg';
 import metadata from './block.json';
 
 import { __ } from '@wordpress/i18n';
@@ -21,7 +21,7 @@ import { registerBlockType } from '@wordpress/blocks';
  *                             registered; otherwise `undefined`.
  */
 registerBlockType( metadata, {
-	icon: getIcon( 'form' ),
+	icon: Form,
 	variations,
 	supports: {
 		reusable: false,

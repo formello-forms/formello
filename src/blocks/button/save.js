@@ -9,9 +9,10 @@ import {
 import {
 	Loading,
 	Loading2,
-	Loading3,
+	Pulse,
 	Loading4,
 	Loading5,
+	LoadingCircles
 } from '../../utils/icons';
 
 export default function save( { attributes } ) {
@@ -20,9 +21,10 @@ export default function save( { attributes } ) {
 	const icons = {
 		Loading,
 		Loading2,
-		Loading3,
+		Pulse,
 		Loading4,
 		Loading5,
+		LoadingCircles
 	};
 
 	const ButtonIcon = icons[ type ];

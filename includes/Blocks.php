@@ -41,6 +41,7 @@ class Blocks {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
+		add_action( 'init', array( $this, 'register_block_pattern_category' ) );
 		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
 		add_shortcode( 'formello', array( $this, 'do_reusable_block' ) );
 	}
@@ -63,6 +64,10 @@ class Blocks {
 			array(
 				'render_callback' => array( $this, 'do_input_block' ),
 			)
+		);
+
+		register_block_type(
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/textarea'
 		);
 
 		register_block_type(
@@ -170,6 +175,29 @@ class Blocks {
 			),
 			$categories
 		);
+	}
+
+	/**
+	 * Add formello block pattern category
+	 */
+	public function register_block_pattern_category() {
+		register_block_pattern_category(
+			'form',
+			array( 'label' => __( 'Form', 'formello' ) )
+		);
+		$patterns = get_transient( 'formello_templates', false );
+
+		if ( ! $patterns ) {
+			return;
+		}
+
+		foreach ( $patterns as $pattern ) {
+			register_block_pattern(
+				$pattern['name'],
+				$pattern
+			);
+		}
+
 	}
 
 }

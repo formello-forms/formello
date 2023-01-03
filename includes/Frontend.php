@@ -42,8 +42,6 @@ class Frontend {
 	 * Constructor
 	 */
 	public function __construct() {
-		add_action( 'wp_post_formello', array( $this, 'listen_for_submit' ) );
-		add_action( 'wp_post_nopriv_formello', array( $this, 'listen_for_submit' ) );
 		add_action( 'wp_ajax_formello', array( $this, 'listen_for_submit' ) );
 		add_action( 'wp_ajax_nopriv_formello', array( $this, 'listen_for_submit' ) );
 	}
@@ -69,6 +67,37 @@ class Frontend {
 		if ( ! $form->validate() ) {
 			$form->log( 'debug', 'Not validated:', $form->to_array() );
 			wp_send_json( $form->get_response() );
+			wp_die();
+		};
+
+		$this->process_form( $form );
+		$form->log( 'debug', 'Form sent:', $form->to_array() );
+
+		$response = $form->get_response();
+
+		wp_send_json( $response, 200 );
+		wp_die();
+	}
+
+	/**
+	 * Listen for form submit
+	 */
+	public function listen_for_submit2() {
+
+		// only respond to AJAX requests with _formello_id set.
+        // phpcs:ignore
+        if (empty($_POST['_formello_id']) ) {
+			wp_send_json_error( __( 'Missing form id', 'formello' ), 500 );
+			wp_die();
+		}
+
+        // phpcs:ignore
+        $form_id = absint( $_POST['_formello_id'] );
+		$form = new Form( $form_id );
+
+		if ( ! $form->validate() ) {
+			$form->log( 'debug', 'Not validated:', $form->to_array() );
+			d( $form->get_response() );
 			wp_die();
 		};
 
@@ -109,12 +138,13 @@ class Frontend {
 				/**
 				 * Processes the specified form action and passes related data.
 				 *
-				 * @param Form $form
 				 * @param array $action_settings
+				 * @param Form $form
 				 */
 				if ( $action_settings['async'] ) {
 					wp_schedule_single_event(
-						time() + 60, 'formello_process_form_action_' . $action_settings['type'],
+						time() + 60,
+						'formello_process_form_action_' . $action_settings['type'],
 						array( 'action_settings' => $action_settings ),
 						true
 					);

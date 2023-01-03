@@ -6,13 +6,13 @@
   "license": "GPL-2.0-or-later",
   "main": "build/index.js",
   "scripts": {
-    "build": "wp-scripts build src/index.js src/settings/dashboard.js src/frontend/frontend.js src/tools/tools.js",
+    "build": "wp-scripts build src/index.js src/frontend/frontend.js src/new-settings/test.js",
     "format": "wp-scripts format",
     "format:src": "wp-scripts format ./src",
     "lint:css": "wp-scripts lint-style",
     "lint:js": "wp-scripts lint-js",
     "start": "wp-scripts start",
-    "start:custom": "wp-scripts start src/index.js src/settings/dashboard.js src/frontend/frontend.js src/tools/tools.js",
+    "start:custom": "wp-scripts start src/index.js src/frontend/frontend.js src/new-settings/test.js",
     "packages-update": "wp-scripts packages-update"
   },
   "devDependencies": {
@@ -27,6 +27,7 @@
     "formbouncerjs": "^1.4.6",
     "lodash": "^4.17.21",
     "react-lazyload": "^3.2.0",
-    "react-masonry-component": "^6.2.1"
+    "react-masonry-component": "^6.2.1",
+    "react-router-dom": "^6.6.1"
   }
 }

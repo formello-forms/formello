@@ -17,7 +17,7 @@ import {
 } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 import { addQueryArgs } from '@wordpress/url';
-import { TemplatesModal } from '../form/settings/library';
+import TemplatesModal from './templates-modal.js';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
@@ -134,14 +134,9 @@ export default function Edit( props ) {
 			</Fragment>
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
-					onRequestClose={ ( id ) => {
-						setModalOpen( false );
-						if ( 'number' === typeof id ) {
-							setAttributes( { id } );
-						}
-					} }
+					blockName={ props.name }
+					setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
 					clientId={ clientId }
-					type={ 'local' }
 				/>
 			) }
 		</div>

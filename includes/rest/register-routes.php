@@ -24,14 +24,17 @@ function register_routes() {
 	$integrations_controller->register_routes();
 	$forms_controller = new Controllers\Forms();
 	$forms_controller->register_routes();
+	$addons_controller = new Controllers\Addons();
+	$addons_controller->register_routes();
 }
 add_action( 'rest_api_init', __NAMESPACE__ . '\register_routes' );
 
 /**
  * Include our custom REST API controllers.
  */
-require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Base.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Integrations.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/License.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Template.php';
-require_once FORMELLO_ABSPATH . 'includes/rest/Controllers/Forms.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Base.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Integrations.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/License.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Template.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Forms.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Addons.php';

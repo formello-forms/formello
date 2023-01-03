@@ -145,7 +145,7 @@ function register_settings() {
 		'log' => false,
 		'log_file' => 'formello_' . time() . '.txt',
 		'license' => '',
-		'license_status' => 'invalid',
+		'license_status' => '',
 		'messages' => array(
 			'form' => array(
 				'success' => __( 'Thanks for submitting this form.', 'formello' ),
