@@ -191,7 +191,7 @@ function formello_dir() {
  */
 function formello_dir_url() {
 	$upload_dir = wp_upload_dir();
-	return $upload_dir['baseurl'] . DIRECTORY_SEPARATOR . 'formello';
+	return $upload_dir['baseurl'] . '/formello';
 }
 
 /**
@@ -259,7 +259,7 @@ function formello_columns_display( $column, $post_id ) {
  * @param array  $hidden The columns.
  * @param string $screen The screen id.
  */
-function hide_ad_list_columns( $hidden, $screen ) {
+function formello_hide_shortcode_columns( $hidden, $screen ) {
 	// "edit-advanced_ads" needs to be adjusted to your own screen ID, this one is for my "advanced_ads" post type
 	if ( isset( $screen->id ) && 'edit-formello_form' === $screen->id ) {
 		$hidden[] = 'shortcode';
@@ -299,7 +299,7 @@ add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks
 add_filter( 'post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2 );
 add_filter( 'manage_formello_form_posts_columns', __NAMESPACE__ . '\formello_columns_table' );
 add_action( 'manage_formello_form_posts_custom_column', __NAMESPACE__ . '\formello_columns_display', 10, 2 );
-add_filter( 'default_hidden_columns', __NAMESPACE__ . '\hide_ad_list_columns', 10, 2 );
+add_filter( 'default_hidden_columns', __NAMESPACE__ . '\formello_hide_shortcode_columns', 10, 2 );
 
 function wpdocs_plugin_update_message( $plugin_data, $new_data ) {
 	if ( isset( $plugin_data['update'] ) && $plugin_data['update'] && isset( $new_data->upgrade_notice ) ) {

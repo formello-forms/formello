@@ -29,19 +29,18 @@ export default function AddonLicense( props ) {
 		icon, 
 	} = props;
 	const [ loading, setLoading ] = useState( false );
-	const [ hasUpdates, setHasUpdates ] = useState( false );
 	const { saveEntityRecord } = useDispatch( coreStore );
 	const Icon = icon;
 
 	const validateLicense = () => {
 		const endpoint =
-			'valid' !== settings.license_status ? 'activate' : 'deactivate';
+			'valid' !== addonSettings.license_status ? 'activate' : 'deactivate';
 		setLoading( true );
 		apiFetch( {
 			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
-				license: settings.license,
+				license: addonSettings.license,
 				item_name: title,
 			},
 		} ).then(
@@ -50,41 +49,37 @@ export default function AddonLicense( props ) {
 				setLicense( 'license_status', result.response.license );
 
 				if ( result.response.success ) {
-					//onSettingsChange()
+					onSettingsChange( 'license_status', result.response.license )
 				}
 
 				if (
 					! result.success
 				) {
-					setLicense( 'license_status', result.response );
-					onSettingsChange()
-					console.log(settings)
+					onSettingsChange( 'license_status', result.response )
 				}
 			},
 			( result ) => {
 
 			}
-		).finally( () => console.log('ok') )
+		).finally( () => setLoading(false) )
 	};
 
 	// Handle all setting changes, and save to the database.
-	async function onSettingsChange( type = 'save' ) {
-		let record = '';
+	async function onSettingsChange( key, value ) {
 
-		record = { [optionName]: settings[optionName] };
+		const newSettings = Object.assign( {}, settings[optionName] );
+		newSettings[ key ] = value;
 
 		let response = '';
 		response = await saveEntityRecord(
 			'root',
 			'site',
-			record
+			{ [optionName]: newSettings }
 		);
 
 		if ( response ) {
 			setSettings( response );
-			setHasUpdates( false );
-		} else {
-		}
+		} 
 	}
 
 	function setLicense( key, value ) {
@@ -94,7 +89,6 @@ export default function AddonLicense( props ) {
 			...settings,
 			[ optionName ]: newSettings
 		} );
-		setHasUpdates(true);
 	}
 
 	return (
@@ -139,10 +133,10 @@ export default function AddonLicense( props ) {
 						{ sprintf(
 							/* translators: License status. */
 							__(
-								'License status: <strong class="license-%s">%s</strong>.',
+								'License status: <strong class="license-%s">%s</strong>',
 								'formello'
 							),
-							`${ addonSettings.license_status || 'error' }`,
+							`${ 'valid' === addonSettings.license_status || 'error' }`,
 							`${ addonSettings.license_status }`,
 						) }
 					</RawHTML>

@@ -8,6 +8,7 @@
 namespace Formello;
 
 use \Katzgrau\KLogger\Logger;
+use function Formello\Utils\formello_dir;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -51,6 +52,7 @@ class Cron {
 	 */
 	public function __construct() {
 		add_action( 'formello_retrieve_news', array( $this, 'get_news' ) );
+		add_action( 'formello_delete_logs', array( $this, 'delete_logs' ) );
 		$this->cron();
 	}
 
@@ -62,6 +64,12 @@ class Cron {
 	private function cron() {
 		if ( ! wp_next_scheduled( 'formello_retrieve_news' ) ) {
 			wp_schedule_event( time(), '5min', 'formello_retrieve_news' );
+		}
+		if ( ! wp_next_scheduled( 'formello_delete_logs' ) ) {
+			wp_schedule_event( time(), 'daily', 'formello_delete_logs' );
+		}
+		if ( ! wp_next_scheduled( 'formello_delete_tmp' ) ) {
+			wp_schedule_event( time(), '5min', 'formello_delete_tmp' );
 		}
 	}
 
@@ -91,6 +99,26 @@ class Cron {
 	 */
 	public static function delete_orphaned_entries() {
 
+	}
+
+	/**
+	 * Delete all logs and tmp folder.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function delete_logs() {
+		$log_folder = formello_dir() . '/logs';
+		array_map( 'unlink', array_filter( (array) glob( $log_folder . '/*' ) ) );
+	}
+
+	/**
+	 * Delete all logs and tmp folder.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function delete_tmp() {
+		$tmp_folder = formello_dir() . '/tmp';
+		array_map( 'unlink', array_filter( (array) glob( $tmp_folder . '/*' ) ) );
 	}
 
 }

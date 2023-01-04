@@ -11,7 +11,5 @@ import './blocks/input';
 import './blocks/textarea';
 import './blocks/button';
 
-//import './store';
-
 import './style.scss';
 import './editor.scss';

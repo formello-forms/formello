@@ -134,7 +134,7 @@ final class Plugin {
 	private function define( $name, $value ) {
 		if ( ! defined( $name ) ) {
             // phpcs:ignore
-            define($name, $value);
+            define( $name, $value );
 		}
 	}
 

@@ -144,7 +144,7 @@ class Assets {
 				'in_footer' => true,
 			),
 			'formello-settings'          => array(
-				'src'       => FORMELLO_ASSETS . '/test.js',
+				'src'       => FORMELLO_ASSETS . '/settings.js',
 				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-core-data' ),
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
@@ -175,7 +175,7 @@ class Assets {
 				'src' => FORMELLO_ASSETS . '/style-index.css',
 			),
 			'formello-settings'          => array(
-				'src'  => FORMELLO_ASSETS . '/style-test.css',
+				'src'  => FORMELLO_ASSETS . '/style-settings.css',
 				'deps' => array( 'wp-components', 'wp-reset-editor-styles' ),
 			),
 		);

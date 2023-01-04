@@ -13,6 +13,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 import { useState, useRef } from '@wordpress/element';
 import { cloud, Icon } from '@wordpress/icons';
+import MessageBox from './message-box.js';
 
 /**
  * Renders the update settings buttons and animation
@@ -22,13 +23,14 @@ import { cloud, Icon } from '@wordpress/icons';
  * @return {string}		 Return the rendered JSX
  */
 export default function UpdateSettings( props ) {
-	const [ loading, setLoading ] = useState( false );
-	const [ message, setMessage ] = useState( false );
 	const {
 		onClick,
-		text
+		text,
+		message,
+		messageType,
+		setMessage,
+		loading
 	} = props;
-	const elementRef = useRef();
 
 	const updateButton =
 		status === 'saving'
@@ -38,16 +40,15 @@ export default function UpdateSettings( props ) {
 	return (
 		<div className="setting-controls__save-settings">
 			<Button
-				className={ classnames( 'save-settings__save-button', {
-					'is-busy': status === 'saving',
-				} ) }
-				onClick={ () => onClick() }
+				onClick={ onClick }
 				isPrimary
+				isBusy={ loading }
+				disabled={ loading }
 			>
 				{ text }
 			</Button>
 			{ [
-				status === 'saving' && (
+				loading === 'saving' && (
 					<Animate type="loading">
 						{ ( { className: animateClassName } ) => (
 							<span
@@ -61,6 +62,9 @@ export default function UpdateSettings( props ) {
 							</span>
 						) }
 					</Animate>
+				),
+				message && (
+					<MessageBox message={ message } messageType={ messageType } handleClose={ setMessage } />
 				)
 			] }
 		</div>

@@ -35,7 +35,9 @@ import {
 import classnames from 'classnames';
 import useFormSaved from './useFormSaved';
 
-import getIcon from '../../utils/get-icon';
+import { 
+	Form
+} from '../../utils/icons';
 
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
@@ -79,7 +81,7 @@ function Edit( props ) {
 
 	const updateTransient = () => {
 		apiFetch( {
-			path: '/formello/v1/sync_template_library/',
+			path: '/formello/v1/patterns/',
 			method: 'POST',
 			data: {},
 		} );
@@ -400,7 +402,7 @@ function Placeholder( props ) {
 	return (
 		<div { ...useBlockProps() }>
 			<BlockVariationPicker
-				icon={ getIcon( 'form' ) }
+				icon={ Form }
 				label={ 'Form' }
 				instructions={ __( 'Select a form to start with.', 'formello' ) }
 				variations={ variations }

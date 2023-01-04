@@ -1,11 +1,13 @@
-import getIcon from '../../utils/get-icon';
+import { 
+	Form
+} from '../../utils/icons';
 import { registerBlockType } from '@wordpress/blocks';
 
 import edit from './edit';
 import metadata from './block.json';
 
 registerBlockType( metadata, {
-	icon: getIcon( 'form' ),
+	icon: Form,
 
 	edit,
 

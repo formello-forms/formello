@@ -20,7 +20,6 @@ import { useState, useEffect } from '@wordpress/element';
  */
 export default function MessageBox( props ) {
 	const { handleClose, message, messageType } = props;
-	const [ status, setStatus ] = useState( 'saved' );
 
 	useEffect(() => {
 		if ( message ) {

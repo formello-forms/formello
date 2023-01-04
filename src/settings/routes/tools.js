@@ -1,4 +1,4 @@
-import { SlotFillProvider, Slot, TabPanel } from '@wordpress/components';
+import { TabPanel } from '@wordpress/components';
 import { useParams, useNavigate } from "react-router-dom";
 
 import { Fragment, render } from '@wordpress/element';
@@ -6,6 +6,8 @@ import { Fragment, render } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { applyFilters } from '@wordpress/hooks';
 import General from '../components/tools/general.js';
+import Exporter from '../components/tools/exporter.js';
+import Importer from '../components/tools/importer.js';
 import Header from '../components/masthead.js';
 
 export default function Tools( props ) {
@@ -16,8 +18,19 @@ export default function Tools( props ) {
 			title: __( 'General', 'formello' ),
 			component: General,
 		},
+		{
+			name: 'exporters',
+			title: __( 'Exporters', 'formello' ),
+			component: Exporter,
+		},
+		{
+			name: 'importers',
+			title: __( 'Importers', 'formello' ),
+			component: Importer,
+		},
 	];
 
+	// Filter to add a tab
 	applyFilters( 'formello.ToolsTabs', '', toolsTabs );
 
 	const routeParams = useParams();
@@ -29,17 +42,13 @@ export default function Tools( props ) {
 	};
 
 	return (
-		<SlotFillProvider>
+		<Fragment>
 
 			<Header title={ __( 'Tools', 'formello' ) } />
-
-			{ applyFilters( 'formello.Test', '', this ) }
 
 			<div className="setting-tabs">
 				
 				{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
-				
-				<Slot name="ToolsTab" />
 
 				<TabPanel
 					tabs={ toolsTabs }
@@ -63,6 +72,6 @@ export default function Tools( props ) {
 
 				{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
 			</div>
-		</SlotFillProvider>
+		</Fragment>
 	);
 }

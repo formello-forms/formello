@@ -1,3 +1,7 @@
+import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
+import { ReactComponent as Form } from '../../assets/icons/form.svg';
+import { ReactComponent as Fieldset } from '../../assets/icons/fieldset.svg';
+import { ReactComponent as Asterisk } from '../../assets/icons/asterisk.svg';
 import { ReactComponent as Checkbox } from '../../assets/icons/checkbox.svg';
 import { ReactComponent as Checkboxes } from '../../assets/icons/checkboxes.svg';
 import { ReactComponent as Email } from '../../assets/icons/email-field.svg';
@@ -13,7 +17,7 @@ import { ReactComponent as Calendar } from '../../assets/icons/date-field.svg';
 import { ReactComponent as Color } from '../../assets/icons/color-field.svg';
 import { ReactComponent as Tel } from '../../assets/icons/phone-field.svg';
 import { ReactComponent as Radio } from '../../assets/icons/radio-field.svg';
-import { ReactComponent as Radios } from '../../assets/icons/radio-button-group.svg';
+import { ReactComponent as Radios } from '../../assets/icons/radio-buttons.svg';
 import { ReactComponent as Textarea } from '../../assets/icons/textarea-field.svg';
 import { ReactComponent as Select } from '../../assets/icons/select.svg';
 import { ReactComponent as Loading } from '../../assets/icons/loading.svg';
@@ -25,6 +29,10 @@ import { ReactComponent as LoadingCircles } from '../../assets/icons/loading-cir
 import { ReactComponent as LoadingCirclePath } from '../../assets/icons/loading-circle-path.svg';
 
 export { 
+	Logo,
+	Form,
+	Asterisk,
+	Fieldset,
 	Checkbox,
 	Checkboxes,
 	Email,

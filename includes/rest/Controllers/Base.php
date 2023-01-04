@@ -20,7 +20,7 @@ class Base extends WP_REST_Controller {
 	 */
 	public function __construct() {
 		$this->namespace = 'formello/v1';
-		$this->rest_base = '';
+		$this->rest_base = 'settings';
 	}
 
 	/**
@@ -48,6 +48,18 @@ class Base extends WP_REST_Controller {
 				array(
 					'methods'             => \WP_REST_Server::EDITABLE,
 					'callback'            => array( $this, 'update_settings' ),
+					'permission_callback' => array( $this, 'update_settings_permissions' ),
+					'args'                => $this->get_collection_params(),
+				),
+			)
+		);
+		register_rest_route(
+			$this->namespace,
+			'/' . $this->rest_base . '/reset',
+			array(
+				array(
+					'methods'             => \WP_REST_Server::EDITABLE,
+					'callback'            => array( $this, 'reset_settings' ),
 					'permission_callback' => array( $this, 'update_settings_permissions' ),
 					'args'                => $this->get_collection_params(),
 				),
@@ -101,6 +113,25 @@ class Base extends WP_REST_Controller {
 			array(
 				'success'  => true,
 				'response' => __( 'Settings saved.', 'formello' ),
+			)
+		);
+	}
+
+	/**
+	 * Update Settings.
+	 *
+	 * @param \WP_REST_Request $request  request object.
+	 *
+	 * @return mixed
+	 */
+	public function reset_settings( \WP_REST_Request $request ) {
+
+		delete_option( 'formello' );
+
+		return rest_ensure_response(
+			array(
+				'success'  => true,
+				'response' => __( 'Reset settings completed.', 'formello' ),
 			)
 		);
 	}
@@ -198,7 +229,7 @@ class Base extends WP_REST_Controller {
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
 	public function update_settings_permissions( $request ) {
-		return current_user_can( 'edit_posts' );
+		return current_user_can( 'manage_options' );
 	}
 
 	/**

@@ -8,7 +8,9 @@ import { __ } from '@wordpress/i18n';
 import { ToolbarButton } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
-import getIcon from '../../utils/get-icon';
+import { 
+	Asterisk,
+} from '../../utils/icons';
 import { select } from '@wordpress/data';
 
 export default function Toolbar( props ) {
@@ -26,7 +28,7 @@ export default function Toolbar( props ) {
 		<Fragment>
 			<ToolbarButton
 				label={ __( 'Required' ) }
-				icon={ getIcon( 'asterisk' ) }
+				icon={ Asterisk }
 				isPressed={ attributes.required }
 				onClick={ () => {
 					setRequiredTxt();

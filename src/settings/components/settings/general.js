@@ -7,7 +7,7 @@ import {
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
-import { RawHTML, useState, Fragment, useRef } from '@wordpress/element';
+import { RawHTML, useState, Fragment } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
@@ -31,8 +31,6 @@ export default function General( props ) {
 		setHasUpdates(true)
 	}
 
-	const elementRef = useRef();
-
 	const updateLicense = () => {
 		const endpoint =
 			'valid' !== license_status ? 'activate' : 'deactivate';
@@ -49,12 +47,11 @@ export default function General( props ) {
 			setLicense( 'license_status', result.response.license )
 
 			if (
-				! result.success ||
-				! result.response ||
-				! result.response.success
+				! result.success
 			) {
 				setMessage( result.response )
 				setMessageType( result.response.success ? 'success' : 'error' )
+				setLicense( 'license_status', result.response )
 			}
 		}, ( error ) => {
 			setLoading( false );

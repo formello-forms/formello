@@ -29,4 +29,9 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-delete_option( 'formello' );
+$formello_option = get_option( 'formello', false );
+
+if ( $formello_option ) {
+	delete_option( 'formello_installed' );
+	delete_option( 'formello' );
+}

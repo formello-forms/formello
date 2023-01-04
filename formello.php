@@ -98,6 +98,8 @@ function formello_activate() {
 	// Add a white index.
 	$wp_filesystem->put_contents( trailingslashit( $formello_dir ) . 'index.html', '', 0644 );
 
+	delete_transient( 'formello_addons' );
+
 }
 
 register_activation_hook( __FILE__, 'formello_activate' );

@@ -32,6 +32,9 @@ function register_settings() {
 		'license_status' => array(
 			'type' => 'string',
 		),
+		'version' => array(
+			'type' => 'string',
+		),
 		'messages' => array(
 			'type' => 'object',
 			'properties' => array(
@@ -146,6 +149,7 @@ function register_settings() {
 		'log_file' => 'formello_' . time() . '.txt',
 		'license' => '',
 		'license_status' => '',
+		'version' => '1.0',
 		'messages' => array(
 			'form' => array(
 				'success' => __( 'Thanks for submitting this form.', 'formello' ),

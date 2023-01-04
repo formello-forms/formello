@@ -13,7 +13,7 @@ import { applyFilters } from '@wordpress/hooks';
  * Internal dependencies
  */
 import './dashboard.scss';
-import getIcon from '../utils/get-icon';
+import Logo from '../utils/icons';
 
 import { useDispatch, useSelect, dispatch } from '@wordpress/data';
 import { getQueryArg, addQueryArgs } from '@wordpress/url';
@@ -103,7 +103,7 @@ function App() {
 				<div className="inner-container">
 					<div className="masthead__branding">
 						<h1>
-							{ getIcon( 'logo' ) }
+							<Logo />
 							{ __( 'Settings', 'formello' ) }
 						</h1>
 					</div>

@@ -14,8 +14,8 @@ defined( 'ABSPATH' ) || exit;
  * Function to register our new routes from the controller.
  */
 function register_routes() {
-	//$base_controller = new Controllers\Base();
-	//$base_controller->register_routes();
+	$base_controller = new Controllers\Base();
+	$base_controller->register_routes();
 	$template_controller = new Controllers\Template();
 	$template_controller->register_routes();
 	$license_controller = new Controllers\License();

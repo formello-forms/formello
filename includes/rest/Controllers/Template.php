@@ -19,7 +19,7 @@ class Template extends Base {
 	 */
 	public function __construct() {
 		$this->namespace = 'formello/v1';
-		$this->rest_base = 'settings';
+		$this->rest_base = 'templates';
 	}
 
 	/**
@@ -32,15 +32,26 @@ class Template extends Base {
 		// Get Templates.
 		register_rest_route(
 			$this->namespace,
-			'/get_templates/',
+			$this->rest_base . '/export',
 			array(
-				'methods'  => \WP_REST_Server::READABLE,
-				'callback' => array( $this, 'get_templates' ),
+				'methods'  => \WP_REST_Server::EDITABLE,
+				'callback' => array( $this, 'export_forms' ),
 				'permission_callback' => '__return_true',
 			)
 		);
 
-		// Regenerate CSS Files.
+		// Get Patterns.
+		register_rest_route(
+			$this->namespace,
+			'/patterns/',
+			array(
+				'methods'  => \WP_REST_Server::EDITABLE,
+				'callback' => array( $this, 'get_patterns' ),
+				'permission_callback' => '__return_true',
+			)
+		);
+
+		// Sync template from Formello.net.
 		register_rest_route(
 			$this->namespace,
 			'/sync_template_library/',
@@ -53,11 +64,123 @@ class Template extends Base {
 	}
 
 	/**
+	 * Export forms.
+	 *
+	 * @return mixed
+	 */
+	public function export_forms() {
+
+		$patterns = $this->get_local_patterns();
+		$dir = \Formello\Utils\formello_dir() . '/tmp/formello.json';
+		$dir_url = \Formello\Utils\formello_dir_url() . '/tmp/formello.json';
+
+		global $wp_filesystem;
+		// Initialize the WP filesystem, no more using 'file-put-contents' function.
+		if ( empty( $wp_filesystem ) ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+		// Add a white index.
+		$wp_filesystem->put_contents( $dir, wp_json_encode( $patterns ), 0644 );
+
+		if ( is_array( $patterns ) ) {
+			return $this->success( $dir_url );
+		} else {
+			return $this->error( 'no_templates', __( 'Templates not found.', 'formello' ) );
+		}
+	}
+
+	/**
+	 * Get patterns.
+	 *
+	 * @return mixed
+	 */
+	public function get_patterns() {
+
+		$local_patterns = $this->get_local_patterns();
+
+		set_transient( 'formello_patterns', $local_patterns );
+
+		if ( is_array( $local_patterns ) ) {
+			return $this->success( $local_patterns );
+		} else {
+			return $this->error( 'no_templates', __( 'Templates not found.', 'formello' ) );
+		}
+	}
+
+	/**
+	 * Sync the template library.
+	 *
+	 * @param WP_REST_Request $request  request object.
+	 *
+	 * @return mixed
+	 */
+	public function sync_template_library( $request ) {
+		delete_transient( 'formello_templates' );
+		delete_transient( 'popper_templates' );
+
+		if ( current_user_can( 'manage_options' ) ) {
+			$this->get_templates();
+		}
+
+		return $this->success( __( 'Templates synced!', 'formello' ) );
+	}
+
+	/**
+	 * Get local patterns.
+	 *
+	 * @return mixed
+	 */
+	private function get_local_patterns() {
+
+		$args = array(
+			'post_type'     => 'formello_form',
+			'fields'        => '',
+			'no_found_rows' => true,
+			'post_status'   => 'publish',
+            'numberposts'   => 500, // phpcs:ignore
+		);
+
+		$all_patterns = get_posts( $args );
+		$local_patterns = array();
+
+		$args = array(
+			'public'   => true,
+			'_builtin' => true,
+		);
+
+		$output = 'names';
+		$operator = 'and';
+
+		$post_types = get_post_types( $args, $output, $operator );
+
+		foreach ( $all_patterns as $pattern ) {
+			$local_patterns[] = array(
+				'title' => $pattern->post_title,
+				'content' => $pattern->post_content,
+				'description' => '',
+				'blockTypes' => array(
+					'formello/library',
+				),
+				'postTypes' => $post_types,
+				'keywords' => array(),
+				'categories' => array( 'form' ),
+				'name' => 'formello/' . sanitize_title( $pattern->post_title ),
+			);
+		}
+
+		set_transient( 'formello_patterns', $local_patterns );
+
+		return $local_patterns;
+
+	}
+
+	/**
 	 * Get templates.
 	 *
 	 * @return mixed
 	 */
-	public function get_templates() {
+	private function get_templates() {
 		$url       = 'https://formello.net/wp-json/formello/v1/formello_templates?nocache=' . time();
 		$templates = get_transient( 'formello_templates', false );
 
@@ -95,6 +218,16 @@ class Template extends Base {
 		$all_templates = get_posts( $args );
 		$local_templates = array();
 
+		$args = array(
+			'public'   => true,
+			'_builtin' => true,
+		);
+
+		$output = 'names';
+		$operator = 'and';
+
+		$post_types = get_post_types( $args, $output, $operator );
+
 		foreach ( $all_templates as $template ) {
 			$local_templates[] = array(
 				'title' => $template->post_title,
@@ -103,6 +236,7 @@ class Template extends Base {
 				'blockTypes' => array(
 					'formello/library',
 				),
+				'postTypes' => $postTypes,
 				'keywords' => array(),
 				'categories' => array( 'form' ),
 				'name' => 'formello/' . sanitize_title( $template->post_title ),
@@ -114,29 +248,7 @@ class Template extends Base {
 
 		set_transient( 'formello_templates', $templates );
 
-		if ( is_array( $templates ) ) {
-			return $this->success( $templates );
-		} else {
-			return $this->error( 'no_templates', __( 'Templates not found.', 'formello' ) );
-		}
+		return $this->success( $templates );
+
 	}
-
-	/**
-	 * Sync the template library.
-	 *
-	 * @param WP_REST_Request $request  request object.
-	 *
-	 * @return mixed
-	 */
-	public function sync_template_library( $request ) {
-		delete_transient( 'formello_templates' );
-		delete_transient( 'popper_templates' );
-
-		if ( current_user_can( 'manage_options' ) ) {
-			$this->get_templates();
-		}
-
-		return $this->success( true );
-	}
-
 }

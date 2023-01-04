@@ -256,6 +256,7 @@ $mobile: 426px;
 						display: grid;
 						grid-gap: 1rem;
 						grid-template-columns: repeat( 3, 1fr );
+						grid-template-areas: none;
 					}
 
 					div.components-card > div {
@@ -293,6 +294,9 @@ $mobile: 426px;
 					}
 					select[multiple] + .components-input-control__suffix {
 						display: none;
+					}
+					.components-notice {
+						margin: 1em 0;
 					}
 				}
 			}

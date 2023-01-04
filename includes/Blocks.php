@@ -185,7 +185,7 @@ class Blocks {
 			'form',
 			array( 'label' => __( 'Form', 'formello' ) )
 		);
-		$patterns = get_transient( 'formello_templates', false );
+		$patterns = get_transient( 'formello_patterns', false );
 
 		if ( ! $patterns ) {
 			return;

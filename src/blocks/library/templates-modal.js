@@ -23,10 +23,10 @@ function TemplatesModal( {
 			updateBlockAttributes( clientId, {
 				id: blocks[0].attributes.id
 			} );
-			setIsPatternSelectionModalOpen( false )
+			setIsPatternSelectionModalOpen( false );
 		} else {
 			replaceInnerBlocks( clientId, blocks[0].innerBlocks );
-			setIsPatternSelectionModalOpen( false )
+			setIsPatternSelectionModalOpen( false );
 		}
 
 	};
