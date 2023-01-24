@@ -77,6 +77,10 @@ If you like this plugin, then consider checking out our other projects:
 * [Search Console](https://wordpress.org/plugins/search-console): view all your search console data inside WordPress admin.
 * [Pdf Embed](https://wordpress.org/plugins/pdf-embed): embed your PDFs using the official Adobe Embed API.
 
+**CONTRIBUTE**
+
+Formello is open source and you can [contribute here](https://github.com/formello-forms/formello).
+
 
 == Installation ==
 

@@ -81,37 +81,6 @@ class Frontend {
 
 	/**
 	 * Listen for form submit
-	 */
-	public function listen_for_submit2() {
-
-		// only respond to AJAX requests with _formello_id set.
-        // phpcs:ignore
-        if (empty($_POST['_formello_id']) ) {
-			wp_send_json_error( __( 'Missing form id', 'formello' ), 500 );
-			wp_die();
-		}
-
-        // phpcs:ignore
-        $form_id = absint( $_POST['_formello_id'] );
-		$form = new Form( $form_id );
-
-		if ( ! $form->validate() ) {
-			$form->log( 'debug', 'Not validated:', $form->to_array() );
-			d( $form->get_response() );
-			wp_die();
-		};
-
-		$this->process_form( $form );
-		$form->log( 'debug', 'Form sent:', $form->to_array() );
-
-		$response = $form->get_response();
-
-		wp_send_json( $response, 200 );
-		wp_die();
-	}
-
-	/**
-	 * Listen for form submit
 	 *
 	 * @param Form $form The form object.
 	 */
