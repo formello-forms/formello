@@ -22,11 +22,15 @@ export default function MessageBox( props ) {
 	const { handleClose, message, messageType } = props;
 
 	useEffect(() => {
+		let timer;
 		if ( message ) {
-			setTimeout(() => {
+			timer = setTimeout(() => {
 				handleClose( false );
 			}, 3000);
 		}
+		return () => {
+			clearTimeout(timer);
+		};
 	}, [ message ]);
 
 	return (

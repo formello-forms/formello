@@ -15,13 +15,6 @@ use Formello\Utils\Formatter as Formatter;
 class Submissions extends \WP_List_Table {
 
 	/**
-	 * The date formate var.
-	 *
-	 * @var $date_format
-	 */
-	protected $date_format;
-
-	/**
 	 * The datetime formate var.
 	 *
 	 * @var $datetime_format
@@ -87,8 +80,7 @@ class Submissions extends \WP_List_Table {
 			)
 		);
 
-		$this->date_format     = get_option( 'date_format' );
-		$this->datetime_format = sprintf( '%s %s', $this->date_format, get_option( 'time_format' ) );
+		$this->datetime_format = sprintf( '%s %s', get_option( 'date_format' ), get_option( 'time_format' ) );
 		$this->form_id         = isset( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : 0;
 		$this->settings        = get_post_meta( $this->form_id, '_formello_settings', true );
 	}
@@ -202,8 +194,8 @@ class Submissions extends \WP_List_Table {
 	 *
 	 * @return string
 	 */
-	protected function column_submitted_at( $item ) {
-		return gmdate( $this->datetime_format, strtotime( $item['submitted_at'] ) );
+	protected function column_formello_date( $item ) {
+		return wp_date( $this->datetime_format, strtotime( $item['submitted_at'] ) );
 	}
 
 	/**
@@ -246,7 +238,6 @@ class Submissions extends \WP_List_Table {
 
 		$filter = ( isset( $_REQUEST['formello'] ) ? $_REQUEST['formello'] : 'total' );
 
-		$hidden   = $this->get_hidden_columns();
 		$sortable = $this->get_sortable_columns();
 
 		/** Process bulk action */
@@ -259,6 +250,7 @@ class Submissions extends \WP_List_Table {
 		$data = $this->get_data( $filter );
 
 		$columns = $this->get_columns();
+		$hidden  = $this->get_hidden_columns();
 
 		$this->set_pagination_args(
 			array(
@@ -299,7 +291,6 @@ class Submissions extends \WP_List_Table {
 						__( 'Go get a life script kiddies.', 'formello' )
 					);
 					echo wp_kses_post( $message_box );
-					wp_die();
 				} else {
 					self::delete_submissions( $marked_ids );
 					$this->refresh_table( __( 'Entry successfully deleted.', 'formello' ) );
@@ -336,7 +327,11 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	public function get_hidden_columns() {
-		return array();
+
+		$form_fields = array_keys( $this->settings['fields'] );
+		$clean = array_diff( $this->columns, $form_fields, array( 'cb', 'id', 'formello_date' ) );
+
+		return $clean;
 	}
 
 	/**
@@ -430,20 +425,29 @@ class Submissions extends \WP_List_Table {
 	 * @return Array
 	 */
 	private function get_submission_columns() {
-		$columns                   = array();
-		$columns['cb']             = '<input type="checkbox" />';
-		$columns['id']             = 'ID';
+		$columns       = array();
+		$columns['cb'] = '<input type="checkbox" />';
+		$columns['id'] = 'ID';
 
-		$settings = get_post_meta( $this->form_id, '_formello_settings', true );
+		global $wpdb;
+		$results = $wpdb->get_col(
+			$wpdb->prepare(
+				"SELECT DISTINCT field_name from {$wpdb->prefix}formello_submissions_meta where form_id = %d",
+				array( 'form_id' => $this->form_id )
+			),
+		);
 
-		if ( isset( $this->settings['fields'] ) ) {
-			foreach ( array_keys( $settings['fields'] ) as $col ) {
+		$fields = array_merge( array_keys( $this->settings['fields'] ), $results );
+
+		if ( $fields ) {
+			foreach ( $fields as $col ) {
 				$columns[ sanitize_key( $col ) ] = esc_html( ucfirst( trim( sanitize_key( $col ) ) ) );
 			}
 		}
 
-		$columns['formello_date'] = __( 'Submitted At' );
+		$columns['formello_date'] = __( 'Submitted At', 'formello' );
 		$this->columns = array_keys( $columns );
+
 		return $columns;
 	}
 
@@ -461,7 +465,7 @@ class Submissions extends \WP_List_Table {
 				return $item['submitted_at'];
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
-				return Formatter::format( $item, $this->settings['fields'][ $column_name ] ? $this->settings['fields'][ $column_name ] : '' );
+				return Formatter::format( $item, ! empty ( $this->settings['fields'][ $column_name ] ) ? $this->settings['fields'][ $column_name ] : '' );
 		}
 	}
 
@@ -601,7 +605,14 @@ class Submissions extends \WP_List_Table {
 	}
 
 	/**
-	 * Refresh table after changes
+	 * Gets the list of views available on this table.
+	 *
+	 * The format is an associative array:
+	 * - `'id' => 'link'`
+	 *
+	 * @since 3.1.0
+	 *
+	 * @return array
 	 */
 	protected function get_views() {
 

@@ -1,56 +1,66 @@
 import { RichText, useBlockProps } from '@wordpress/block-editor';
 import classnames from 'classnames';
+import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-export default function save( { attributes } ) {
-	const opts = attributes.selectedOpt.map( ( item ) => {
-		return item.value;
-	} );
+export default function save( { attributes, className } ) {
 
-	if ( ! attributes.name ) {
-		attributes.name = attributes.id;
-	}
+	const {
+		name,
+		id,
+		label,
+		hideLabel,
+		options,
+		required,
+		requiredText,
+		readonly,
+		disabled,
+		multiple,
+		showHelp,
+		help
+	} = attributes;
 
-	const labelClassName = classnames( {
-		hide: attributes.hideLabel,
-		'textarea-label': attributes.multiple,
+	className = classnames( 'formello' );
+
+	const labelClassName = classnames( 'select-label', {
+		hide: hideLabel,
 	} );
 
 	const blockProps = useBlockProps.save( {
 		className: 'formello',
 	} );
 
-	const name = attributes.name + ( attributes.multiple ? '[]' : '' );
+	// include only supported attributes
+	let htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ 'select' ].map( col => [col, attributes[col] ] ) );
+
+	const selectedOpts = options
+		.filter( x => true === x.selected ) 
+		.map( x => x.value )
 
 	return (
-		<div { ...blockProps }>
-			<label className={ labelClassName } htmlFor={ attributes.id }>
-				{ attributes.label }
-				{ attributes.required && ! attributes.hideRequired && (
-					<span className="required">{ attributes.requiredText }</span>
+		<div className={ className }>
+			<label className={ labelClassName } htmlFor={ id }>
+				<RichText.Content tagName="span" value={ label } />
+				{ required && (
+					<span className="required">
+						{ requiredText }
+					</span>
 				) }
 			</label>
-			<select
-				id={ attributes.id }
-				name={ name }
-				className={ attributes.fieldClass }
-				multiple={ attributes.multiple }
-				defaultValue={ attributes.selectedOpt }
-				required={ attributes.required }
-			>
-				{ attributes.options.map( ( obj, index ) => {
+			<select {...htmlAttrs} defaultValue={ selectedOpts }>
+				{ options.map( ( opt, index ) => {
 					return (
 						<option
-							value={ obj.value || obj.label }
+							value={ opt.value || opt.label }
 							key={ index }
-							selected={ opts.includes( obj.value ) }
+							selected={ opt.selected }
 						>
-							{ obj.label }
+							{ opt.label }
 						</option>
 					);
 				} ) }
 			</select>
-			{ attributes.showHelp && (
-				<RichText.Content tagName="small" value={ attributes.help } />
+			{ showHelp && (
+				<RichText.Content tagName="small" value={ help } />
 			) }
 		</div>
 	);

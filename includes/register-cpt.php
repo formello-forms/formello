@@ -38,7 +38,7 @@ function register_cpt() {
 		'show_ui'             => true,
 		'menu_icon'           => 'dashicons-feedback',
 		'exclude_from_search' => true,
-		'show_in_nav_menus'   => false,
+		'show_in_nav_menus'   => true,
 		'rewrite'             => false,
 		'hierarchical'        => false,
 		'show_in_menu'        => true,
@@ -62,12 +62,34 @@ function register_cpt() {
 
 	register_rest_field(
 		'formello_form',
-		'metadata',
+		'_settings',
 		array(
 			'get_callback' => function ( $data ) {
 				return get_post_meta( $data['id'], '_formello_settings', true );
 			},
 		)
+	);
+
+	register_post_meta(
+		'formello_form',
+		'_actions',
+		array(
+			'show_in_rest' => array(
+				'schema' => array(
+					'items' => array(
+						'type' => 'object',
+						'properties' => array(),
+						'additionalProperties' => true,
+					),
+				),
+			),
+			'single' => true,
+			'type' => 'array',
+			'additionalProperties' => true,
+			'auth_callback' => function () {
+				return current_user_can( 'manage_options' );
+			},
+		),
 	);
 
 }

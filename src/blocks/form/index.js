@@ -9,7 +9,7 @@ import deprecated from './deprecated';
 import metadata from './block.json';
 import { 
 	Form
-} from '../../utils/icons';
+} from '../../icons/icons';
 
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
@@ -31,9 +31,10 @@ registerBlockType( metadata, {
 		multiple: false,
 		html: false,
 		lock: false,
+		//anchor: true,
 		// eslint-disable-next-line
 		inserter:
-			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
+			'formello_form' === pagenow ? true : false,
 		spacing: {
 			padding: true,
 		},

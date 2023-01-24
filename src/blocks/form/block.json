@@ -9,7 +9,10 @@
 	"keywords": ["form", "forms", "formello"],
 	"attributes": {
 		"id": {
-			"type": "number"
+			"type": "string",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "data-id"
 		},
 		"name": {
 			"type": "string",
@@ -43,12 +46,14 @@
 			"attribute": "data-recaptcha",
 			"default": false
 		},
-		"recaptchaVersion": {
-			"type": "number",
-			"default": 3
-		},
 		"labelIsBold": {
 			"type": "boolean",
+			"default": false
+		},
+		"asRow": {
+			"type": "boolean",
+			"source": "attribute",
+			"selector": ".as-row",
 			"default": false
 		},
 		"labelAlign": {
@@ -67,23 +72,25 @@
 			"type": "boolean",
 			"source": "attribute",
 			"selector": "form",
-			"attribute": "data-hide",
-			"default": false
-		},
-		"asRow": {
-			"type": "boolean",
-			"default": false
+			"attribute": "data-hide"
 		},
 		"autoComplete": {
-			"type": "string",
+			"enum": ["on", "off"],
 			"source": "attribute",
 			"selector": "form",
-			"attribute": "autocomplete",
-			"default": "off"
+			"attribute": "autocomplete"
 		},
-		"actions": {
-			"type": "array",
-			"default": []
+		"enableJsValidation": {
+			"type": "boolean",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "data-validate"
+		},
+		"noValidate": {
+			"type": "boolean",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "novalidate"
 		}		
 	},
 	"styles": [
@@ -92,7 +99,10 @@
 			"label": "Default",
 			"isDefault": true
 		},
-		{ "name": "bolded", "label": "Bolded label" }
+		{
+			"name": "bolded", 
+			"label": "Bolded label" 
+		}
 	],
 	"editorScript": "file:../../../build/index.js",
 	"editorStyle": "file:../../../build/index.css",

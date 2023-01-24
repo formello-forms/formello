@@ -52,6 +52,7 @@ class Blocks {
 	 * @since 1.2.0
 	 */
 	public function register_blocks() {
+
 		register_block_type(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/library',
 			array(
@@ -153,8 +154,8 @@ class Blocks {
 	 */
 	public function do_button_block( $attributes, $content = '' ) {
 		if ( ! is_admin() && ! defined( 'REST_REQUEST' ) ) {
-			$n = wp_nonce_field( '_formello', '_formello', true, false );
-			$content .= $n;
+			$nonce = wp_nonce_field( '_formello', '_formello', true, false );
+			$content .= $nonce;
 		}
 
 		return $content;
@@ -186,6 +187,9 @@ class Blocks {
 			array( 'label' => __( 'Form', 'formello' ) )
 		);
 		$patterns = get_transient( 'formello_patterns', false );
+		$templates = get_transient( 'formello_templates', false );
+
+		$patterns = array_merge( $patterns, $templates );
 
 		if ( ! $patterns ) {
 			return;

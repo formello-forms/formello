@@ -53,6 +53,7 @@ class Cron {
 	public function __construct() {
 		add_action( 'formello_retrieve_news', array( $this, 'get_news' ) );
 		add_action( 'formello_delete_logs', array( $this, 'delete_logs' ) );
+		add_action( 'formello_delete_tmp', array( $this, 'delete_tmp' ) );
 		$this->cron();
 	}
 
@@ -84,9 +85,17 @@ class Cron {
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 		$table_posts  = "{$wpdb->prefix}posts";
 
-		$sql = "SELECT count(*) as total FROM {$table_submissions} s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM {$table_posts} f WHERE f.id = s.form_id AND f.post_type = 'formello_form' );";
-		// phpcs:ignore
-		$result = $wpdb->get_row( $sql );
+		$result = $wpdb->get_row(
+			$wpdb->prepare(
+				'SELECT count(*) as total FROM `%1s` s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM `%1s` f WHERE f.id = s.form_id AND f.post_type = %s AND f.post_status = %s );',
+				array(
+					'table_submissions' => $table_submissions,
+					'table_posts' => $table_posts,
+					'post_type' => 'formello_form',
+					'post_status' => 'publish',
+				)
+			)
+		);
 
 		set_transient( 'formello_news', $result->total, DAY_IN_SECONDS );
 
@@ -97,7 +106,7 @@ class Cron {
 	 *
 	 * @since 1.2.0
 	 */
-	public static function delete_orphaned_entries() {
+	public function delete_orphaned_entries() {
 
 	}
 
@@ -106,7 +115,7 @@ class Cron {
 	 *
 	 * @since 1.2.0
 	 */
-	public static function delete_logs() {
+	public function delete_logs() {
 		$log_folder = formello_dir() . '/logs';
 		array_map( 'unlink', array_filter( (array) glob( $log_folder . '/*' ) ) );
 	}
@@ -116,7 +125,7 @@ class Cron {
 	 *
 	 * @since 1.2.0
 	 */
-	public static function delete_tmp() {
+	public function delete_tmp() {
 		$tmp_folder = formello_dir() . '/tmp';
 		array_map( 'unlink', array_filter( (array) glob( $tmp_folder . '/*' ) ) );
 	}

@@ -5,8 +5,10 @@ import {
 	CardBody,
 	Card,
 	CardHeader,
-	CardFooter
+	CardFooter,
+	Notice
 } from '@wordpress/components';
+import classnames from 'classnames';
 
 import { useState, useRef, RawHTML } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
@@ -14,7 +16,8 @@ import { store as coreStore } from '@wordpress/core-data';
 
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import UpdateSettings from './update-settings';
+import UpdateSettings from '../update-settings';
+import UpdateLicense from '../update-license';
 
 export default function AddonLicense( props ) {
 
@@ -24,63 +27,36 @@ export default function AddonLicense( props ) {
 		addonSettings, 
 		optionName, 
 		name, 
-		showMessage, 
+		saveSettings,
 		setSettings, 
 		icon, 
 	} = props;
 	const [ loading, setLoading ] = useState( false );
-	const { saveEntityRecord } = useDispatch( coreStore );
+	const [ hasUpdates, setHasUpdates ] = useState( false );
 	const Icon = icon;
 
-	const validateLicense = () => {
+	const updateLicense = () => {
 		const endpoint =
 			'valid' !== addonSettings.license_status ? 'activate' : 'deactivate';
-		setLoading( true );
-		apiFetch( {
+
+		return apiFetch( {
 			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
 				license: addonSettings.license,
 				item_name: title,
 			},
-		} ).then(
-			( result ) => {
-				setLoading( false );
-				setLicense( 'license_status', result.response.license );
+		} ).then( (result) => {
 
-				if ( result.response.success ) {
-					onSettingsChange( 'license_status', result.response.license )
-				}
-
-				if (
-					! result.success
-				) {
-					onSettingsChange( 'license_status', result.response )
-				}
-			},
-			( result ) => {
-
+			if ( typeof result.response === 'object' ) {
+				setLicense( 'license_status', result.response.license )
+			} else {
+				setLicense( 'license_status', result.response )
 			}
-		).finally( () => setLoading(false) )
+			return Promise.resolve(result)
+		} )
+
 	};
-
-	// Handle all setting changes, and save to the database.
-	async function onSettingsChange( key, value ) {
-
-		const newSettings = Object.assign( {}, settings[optionName] );
-		newSettings[ key ] = value;
-
-		let response = '';
-		response = await saveEntityRecord(
-			'root',
-			'site',
-			{ [optionName]: newSettings }
-		);
-
-		if ( response ) {
-			setSettings( response );
-		} 
-	}
 
 	function setLicense( key, value ) {
 		const newSettings = Object.assign( {}, settings[optionName] );
@@ -89,6 +65,10 @@ export default function AddonLicense( props ) {
 			...settings,
 			[ optionName ]: newSettings
 		} );
+		setHasUpdates(true)
+		if( 'license_status' === key ){
+			saveSettings( optionName )
+		}
 	}
 
 	return (
@@ -99,49 +79,21 @@ export default function AddonLicense( props ) {
 			</CardHeader>
 
 			<CardBody>
-				<BaseControl>
-					<InputControl
-						label={ __( 'License Key', 'formello-mailchimp' ) }
-						value={ addonSettings.license }
-						onChange={ ( val ) => {
-							setLicense( 'license', val );
-						} }
-						type={ 'text' }
-						readOnly={ 'valid' === addonSettings.license_status }
-						autoComplete={ 'nope' }
-						suffix={
-							<Button
-								onClick={ () => validateLicense() }
-								isPrimary={ 'valid' !== addonSettings.license_status }
-								isSecondary={
-									'valid' === addonSettings.license_status
-								}
-								disabled={ loading || !addonSettings.license }
-								aria-disabled={ loading }
-								isBusy={ loading }
-							>
-								{ 'valid' !== addonSettings.license_status
-									? 'Activate'
-									: 'Deactivate' }
-							</Button>
-						}
-					/>
-				</BaseControl>
-				{
-					addonSettings.license_status && 
-					<RawHTML>
-						{ sprintf(
-							/* translators: License status. */
-							__(
-								'License status: <strong class="license-%s">%s</strong>',
-								'formello'
-							),
-							`${ 'valid' === addonSettings.license_status || 'error' }`,
-							`${ addonSettings.license_status }`,
-						) }
-					</RawHTML>
-				}
+				<UpdateLicense
+					req={ updateLicense }
+					license={ addonSettings.license }
+					license_status={ addonSettings.license_status }
+					onChange={ (val) => setLicense( 'license', val ) }
+				/>
 			</CardBody>
+			<CardFooter>
+				<UpdateSettings
+					req={ () => saveSettings(optionName).finally( () => setHasUpdates(false) ) }
+					text={ __( 'Save options', 'formello' ) }
+					disabled={ ! hasUpdates }
+					variant={ 'primary' }
+				/>
+			</CardFooter>
 		</Card>
 	);
 }

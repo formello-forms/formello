@@ -48,7 +48,8 @@ class Addons extends Base {
 	 * @return mixed
 	 */
 	public function get_addons() {
-		$url    = 'https://formello.net/edd-api/products?nocache=' . time();
+		$lang   = substr( get_bloginfo( 'language' ), 0, 2 );
+		$url    = 'https://formello.net/en/edd-api/products?nocache=' . time();
 		$addons = get_transient( 'formello_addons', false );
 
 		/*

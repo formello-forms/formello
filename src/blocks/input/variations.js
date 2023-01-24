@@ -14,7 +14,7 @@ import {
 	Tel,
 	Number as NumberField,
 	Radio
-} from '../../utils/icons';
+} from '../../icons/icons';
 
 const variations = [
 	{
@@ -37,7 +37,6 @@ const variations = [
 			name: 'hidden',
 			type: 'hidden',
 			label: 'Hidden Input',
-			hasTooltip: false,
 			required: false,
 		},
 		scope: [ 'block', 'inserter', 'transform' ],

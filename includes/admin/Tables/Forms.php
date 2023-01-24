@@ -18,6 +18,13 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 class Forms extends \WP_List_Table {
 
 	/**
+	 * The date formate var.
+	 *
+	 * @var $date_format
+	 */
+	protected $date_format;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -28,6 +35,7 @@ class Forms extends \WP_List_Table {
 				'ajax'     => false, // does this table support ajax?
 			)
 		);
+		$this->date_format = get_option( 'date_format' );
 	}
 
 	/**
@@ -75,12 +83,11 @@ class Forms extends \WP_List_Table {
 			esc_attr(
 				add_query_arg(
 					array(
-						'page'    => 'formello-submissions',
-						'form'    => $item['form_name'],
-						'form_id' => $item['id'],
-						'paged'   => false,
-						'order'   => false,
-						'orderby' => false,
+						'page'     => 'formello-submissions',
+						'form_id'  => $item['id'],
+						'paged'    => false,
+						'order'    => false,
+						'orderby'  => false,
 					)
 				)
 			),
@@ -129,7 +136,7 @@ class Forms extends \WP_List_Table {
 	 */
 	public function get_columns() {
 		$columns = array(
-			'name'       => 'Name',
+			'name' => 'Name',
 			'date' => 'Created',
 		);
 		return $columns;
@@ -177,7 +184,7 @@ class Forms extends \WP_List_Table {
 		$table_forms  = "{$wpdb->prefix}posts";
 		$table_submissions  = "{$wpdb->prefix}formello_submissions";
 
-		$sql = "SELECT id, post_title as form_name, post_date as created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE ( f.post_type = %s OR f.post_type = %s ) AND f.post_status ='publish'";
+		$sql = "SELECT id, post_title as form_name, post_date as created_at, (SELECT count(*) FROM {$table_submissions} s WHERE s.form_id = f.id AND s.is_new = 1 ) as news FROM {$table_forms} f WHERE ( f.post_type = %s OR f.post_type = %s ) AND f.post_status = 'publish'";
 
 		if ( ! empty( $_REQUEST['orderby'] ) ) {
 			$order              = sanitize_text_field( $_REQUEST['order'] );
@@ -198,6 +205,7 @@ class Forms extends \WP_List_Table {
 		$sql .= ' OFFSET %d';
 
 		$result = $wpdb->get_results(
+			// phpcs:ignore
 			$wpdb->prepare( $sql, $params ),
 			ARRAY_A
 		);
@@ -216,10 +224,11 @@ class Forms extends \WP_List_Table {
 	public function column_default( $item, $column_name ) {
 		switch ( $column_name ) {
 			case 'name':
+				return esc_html( $item['name'] );
 			case 'date':
-				return $item['created_at'];
+				return wp_date( $this->date_format, strtotime( $item['created_at'] ) );
 			default:
-				return esc_html( $item );
+				return esc_html( $item[ $column_name ] );
 		}
 	}
 }

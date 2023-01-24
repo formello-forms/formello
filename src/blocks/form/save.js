@@ -10,7 +10,10 @@ export default function save( { attributes, className } ) {
 		hide,
 		recaptchaEnabled,
 		redirectUrl,
-		autoComplete
+		autoComplete,
+		novalidate,
+		enableJsValidation,
+		noValidate
 	} = attributes;
 
 	className = classnames(
@@ -29,11 +32,12 @@ export default function save( { attributes, className } ) {
 			} ) }
 			method="post"
 			id={ 'formello-' + id }
-			data-id={ 'formello-' + id }
-			data-hide={ hide }
-			data-recaptcha={ recaptchaEnabled }
+			data-id={ id }
+			data-hide={ hide || undefined }
+			data-recaptcha={ recaptchaEnabled || undefined }
 			data-redirect={ redirectUrl }
-			novalidate
+			data-validate={ enableJsValidation || undefined }
+			novalidate={ noValidate || undefined }
 			autocomplete={ autoComplete }
 		>
 			<input type="hidden" name="_formello_id" value={ id } />

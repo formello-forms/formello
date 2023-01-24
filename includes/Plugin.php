@@ -37,7 +37,6 @@ final class Plugin {
 	 */
 	private function __construct() {
 		$this->define_constants();
-		$this->formello_dir();
 		$this->includes();
 		$this->actions();
 		$this->updater();
@@ -86,7 +85,6 @@ final class Plugin {
 
 		// Only include in the admin.
 		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			include_once FORMELLO_ABSPATH . 'includes/Utils/format-utils.php';
 			include_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Forms.php';
 			include_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Submissions.php';
 		}
@@ -103,24 +101,10 @@ final class Plugin {
 		$this->define( 'FORMELLO_PLUGIN_URL', plugin_dir_url( FORMELLO_PLUGIN_FILE ) );
 		$this->define( 'FORMELLO_ASSETS', FORMELLO_PLUGIN_URL . 'build' );
 		$this->define( 'FORMELLO_PLUGIN_BASENAME', plugin_basename( FORMELLO_PLUGIN_FILE ) );
-		$this->define( 'FORMELLO_SUPPORT_URL', 'https://wordpress.org/support/plugin/formllo/' );
-		$this->define( 'FORMELLO_SETTINGS_URL', admin_url( 'options-general.php?page=formllo-settings' ) );
+		$this->define( 'FORMELLO_SUPPORT_URL', 'https://wordpress.org/support/plugin/formello/' );
+		$this->define( 'FORMELLO_SETTINGS_URL', admin_url( 'options-general.php?page=formello-settings' ) );
 		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed.
 		$this->define( 'FORMELLO_STORE_URL', 'https://formello.net' );
-	}
-
-	/**
-	 * Define the formello dir.
-	 *
-	 * @since 1.4.0
-	 */
-	private function formello_dir() {
-		$upload_dir = wp_upload_dir();
-		$formello_dir = $upload_dir['basedir'] . '/formello';
-		if ( ! is_dir( $formello_dir ) ) {
-			wp_mkdir_p( $formello_dir );
-		}
-		$this->define( 'FORMELLO_UPLOAD', $formello_dir );
 	}
 
 	/**

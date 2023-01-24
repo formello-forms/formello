@@ -1,6 +1,6 @@
 import { 
 	Form
-} from '../../utils/icons';
+} from '../../icons/icons';
 import { registerBlockType } from '@wordpress/blocks';
 
 import edit from './edit';

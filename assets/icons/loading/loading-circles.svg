@@ -6,7 +6,7 @@
          attributeName="transform" 
          attributeType="XML" 
          type="rotate"
-         dur="2s" 
+         dur="1s" 
          from="0 50 50"
          to="360 50 50" 
          repeatCount="indefinite" />
@@ -17,7 +17,7 @@
          attributeName="transform" 
          attributeType="XML" 
          type="rotate"
-         dur="1s" 
+         dur=".4s" 
          from="0 50 50"
          to="-360 50 50" 
          repeatCount="indefinite" />

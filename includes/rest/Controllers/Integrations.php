@@ -34,7 +34,7 @@ class Integrations extends Base {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_lists' ),
-				'permission_callback' => array( $this, 'get_lists_permissions_check' ),
+				'permission_callback' => array( $this, 'update_settings_permissions' ),
 				'args'                => array( $this->get_collection_params() ),
 			)
 		);
@@ -44,7 +44,7 @@ class Integrations extends Base {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'validate' ),
-				'permission_callback' => array( $this, 'get_lists_permissions_check' ),
+				'permission_callback' => array( $this, 'update_settings_permissions' ),
 				'args'                => array( $this->get_collection_params() ),
 			)
 		);
@@ -54,7 +54,7 @@ class Integrations extends Base {
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => array( $this, 'get_merge_fields' ),
-				'permission_callback' => array( $this, 'get_lists_permissions_check' ),
+				'permission_callback' => array( $this, 'update_settings_permissions' ),
 				'args'                => array( $this->get_collection_params() ),
 			)
 		);
@@ -93,23 +93,4 @@ class Integrations extends Base {
 		return rest_ensure_response( $result );
 	}
 
-	/**
-	 * Checks if a given request has access to read the items.
-	 *
-	 * @param  WP_REST_Request $request Full details about the request.
-	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
-	 */
-	public function get_lists_permissions_check( $request ) {
-		return current_user_can( 'manage_options' );
-	}
-
-	/**
-	 * Retrieves the query params for the items collection.
-	 *
-	 * @return array Collection parameters.
-	 */
-	public function get_collection_params() {
-		return array();
-	}
 }

@@ -41,7 +41,7 @@ add_action( 'plugins_loaded', 'formello_load_plugin' );
 function formello_activate() {
 	global $wpdb;
 
-	update_option( 'formello_installed', time() );
+	update_option( 'formello_version', get_file_data( __FILE__, array( 'Version' ) )[0] );
 
 	// create table for storing form settings.
 	$wpdb->query(
@@ -98,6 +98,7 @@ function formello_activate() {
 	// Add a white index.
 	$wp_filesystem->put_contents( trailingslashit( $formello_dir ) . 'index.html', '', 0644 );
 
+	// refresh all addons.
 	delete_transient( 'formello_addons' );
 
 }

@@ -28,11 +28,11 @@ registerBlockType( metadata, {
 	    // Specifying a background color to appear with the icon e.g.: in the inserter.
 	    background: '#fff',
 	    // Specifying a color for the icon (optional: if not set, a readable color will be automatically defined)
-	    foreground: '#1e72bd',
+	    foreground: '#000000',
 	   	
 	   	src: 'button'
 
-	} ,
+	},
 
 	/**
 	 * @see ./edit.js

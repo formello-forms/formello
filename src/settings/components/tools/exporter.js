@@ -1,10 +1,8 @@
-import { Card, CardHeader, CardBody, CardDivider, Notice } from '@wordpress/components';
+import { Card, CardHeader, CardBody, CardDivider } from '@wordpress/components';
 
-import { useState, Fragment } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
 import ExportForms from './components/export-forms';
 
 export default function Exporter() {

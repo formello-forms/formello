@@ -1,6 +1,7 @@
 import { each } from 'lodash';
+import { applyFilters } from '@wordpress/hooks';
 
-const { getBlock, getClientIdsOfDescendants, getBlockParents } =
+const { getBlock, getClientIdsOfDescendants, getBlockParents, getBlockParentsByBlockName } =
 	wp.data.select( 'core/block-editor' );
 
 const allowed = [ 'formello/input', 'formello/select', 'formello/textarea' ];
@@ -11,6 +12,13 @@ const allowed = [ 'formello/input', 'formello/select', 'formello/textarea' ];
  * @param {string} clientId The id of the block of which we are finding the form block
  */
 export function getFormBlock( clientId ) {
+
+	const formBlock = getBlockParentsByBlockName( clientId, 'formello/form' );
+
+	if( formBlock.length ){
+		return formBlock[0]
+	}
+	
 	if ( 'formello/form' === getBlock( clientId ).name ) {
 		return getBlock( clientId );
 	}
@@ -53,12 +61,18 @@ export function getFieldsName( clientId ) {
 	const fieldsBlock = getFieldsBlock( clientId );
 
 	fieldsBlock.forEach( ( b ) => {
-		fields[ b.attributes.name ] = b.attributes.type;
+		// get block type by name
+		let type = b.name.split('/')[1]
+		if( 'input' === type ){
+			type = b.attributes.type
+		}
+
+		fields[ b.attributes.name ] = type;
 		if ( b.attributes.enableRtf ) {
 			fields[ b.attributes.name ] = 'richtext';
 		}
-		if ( b.attributes.multiple && 'select' === b.attributes.type ) {
-			fields[ b.attributes.name ] = 'select-multiple';
+		if ( b.attributes.multiple && 'select' === type ) {
+			fields[ b.attributes.name ] = type + '-multiple';
 		}
 	} );
 
@@ -117,7 +131,8 @@ export function getConstraints( clientId ) {
 		fields.forEach( ( b ) => {
 			const constraint = getFieldConstraint( b );
 			let name = b.attributes.name;
-			if( 'file' === b.attributes.type ){
+
+			if( b.attributes.multiple ){
 				name += '.*';
 			}
 			if ( constraint ) {
@@ -172,32 +187,22 @@ export function getFieldConstraint( field ) {
 	}
 
 	if ( field.attributes.pattern ) {
-		constraints.push( 'regex:/' + field.attributes.pattern + '/' );
-	}
-
-	if ( 'file' === field.attributes.type && field.attributes.max ) {
-		constraints.push( 'uploaded_file' );
-	}
-
-	if ( 'file' === field.attributes.type && field.attributes.accept?.length ) {
-		constraints.push( 'mimes:' + field.attributes.accept.join(',').replace(/\|/g, ",") );
-	}
-
-	if ( 'file' === field.attributes.type && field.attributes.max ) {
-		constraints.push( 'max:' + field.attributes.max + 'KB' );
+		const regEx = new RegExp( field.attributes.pattern );
+		constraints.push( 'regex:' + regEx );
 	}
 
 	if (
 		field.attributes.advanced &&
-		'range' !== field.attributes.flatpickr.mode &&
-		'multiple' !== field.attributes.flatpickr.mode
+		'date' !== field.attributes.type
 	) {
-		constraints.push( 'date:' + field.attributes.flatpickr[ 'date-format' ] );
+		constraints.push( 'date:' + field.attributes.dateFormat );
 	}
 
 	if ( field.attributes.enableMismatch && '' !== field.attributes.match ) {
 		constraints.push( 'same:' + field.attributes.match );
 	}
+
+	applyFilters( 'formello.constraints', constraints, field );
 
 	if ( constraints.length ) {
 		constraints = constraints.join( '|' );
@@ -227,63 +232,63 @@ export function getWordpressTags() {
 	const tags = [
 		{
 			title: 'Post ID',
-			tag: `{{wp.post_id}}`, // done
+			tag: `{{wp.post_id}}`,
 		},
 		{
 			title: 'Post Title',
-			tag: `{{wp.post_title}}`, // done
+			tag: `{{wp.post_title}}`,
 		},
 		{
 			title: 'Post URL',
-			tag: `{{wp.post_url}}`, // done
+			tag: `{{wp.post_url}}`,
 		},
 		{
 			title: 'Post Author',
-			tag: `{{wp.post_author}}`, // done
+			tag: `{{wp.post_author}}`,
 		},
 		{
 			title: 'Post Author Email',
-			tag: `{{wp.post_author_email}}`, // done
+			tag: `{{wp.post_author_email}}`,
 		},
 		{
 			title: 'User ID',
-			tag: `{{wp.user_id}}`, // done
+			tag: `{{wp.user_id}}`,
 		},
 		{
 			title: 'User First Name',
-			tag: `{{wp.user_first_name}}`, // done
+			tag: `{{wp.user_first_name}}`,
 		},
 		{
 			title: 'User Last Name',
-			tag: `{{wp.user_last_name}}`, // done
+			tag: `{{wp.user_last_name}}`,
 		},
 		{
 			title: 'User Display Name',
-			tag: `{{wp.user_display_name}}`, // done
+			tag: `{{wp.user_display_name}}`,
 		},
 		{
 			title: 'User Username',
-			tag: `{{wp.user_username}}`, // done
+			tag: `{{wp.user_username}}`,
 		},
 		{
 			title: 'User Email',
-			tag: `{{wp.user_email}}`, // done
+			tag: `{{wp.user_email}}`,
 		},
 		{
 			title: 'User URL',
-			tag: `{{wp.user_url}}`, // done
+			tag: `{{wp.user_url}}`,
 		},
 		{
 			title: 'Site Title',
-			tag: `{{wp.site_title}}`, // done
+			tag: `{{wp.site_title}}`,
 		},
 		{
 			title: 'Site URL',
-			tag: `{{wp.site_url}}`, // done
+			tag: `{{wp.site_url}}`,
 		},
 		{
 			title: 'Admin Email',
-			tag: `{{wp.admin_email}}`, // done
+			tag: `{{wp.admin_email}}`,
 		},
 	];
 
@@ -326,4 +331,43 @@ export function getOtherTags() {
 	];
 
 	return tags;
+}
+
+export function getPatternTabs() {
+	const passwords = [
+		{
+			title: 'Password',
+			tag: `^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$`,
+		},
+		{
+			title: 'Password with special characters',
+			tag: `^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$`,
+		},
+	];
+
+	const dates = [
+		{
+			title: 'dd/mm/yyyy',
+			tag: '^\\d{2}-\\d{2}-\\d{4}$'
+		},
+		{
+			title: 'dd/mm/yy',
+			tag: '^\\d{2}-\\d{2}-\\d{2}$'
+		},
+	]
+
+	const tabs = [
+		{
+			name: 'passwords',
+			title: 'Passwords',
+			data: passwords
+		},
+		{
+			name: 'dates',
+			title: 'Dates',
+			data: dates
+		},
+	];
+
+	return tabs;
 }

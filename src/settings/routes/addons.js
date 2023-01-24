@@ -50,7 +50,7 @@ export default function Addons( props ) {
 					</Button>
 					<Button 
 						className="components-button components-tab-panel__tabs-item"
-						onClick={ () => setFilter('integration') }
+						onClick={ () => setFilter('integrations') }
 					>
 						{ __( 'Email', 'formello' ) }
 					</Button>

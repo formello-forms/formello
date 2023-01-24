@@ -121,6 +121,12 @@ Yes, you can insert Formello forms using a shortcode.
 * Use pattern instead of custom template
 * Change attribute source
 * New and better loading icons
+* Better handling button align
+* Added form import/export
+* Don't store password
+* New simplified merge tags
+* Better column management on submissions table
+* Added options to disable js and html5 validation
 
 = 1.8.2 =
 * Added select to match field

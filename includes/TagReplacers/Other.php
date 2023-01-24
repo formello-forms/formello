@@ -33,7 +33,7 @@ class Other {
 	/**
 	 * Get referrer url
 	 */
-	public function referrer() {
+	public function referrer_url() {
 		return $_SERVER['HTTP_REFERER'];
 	}
 

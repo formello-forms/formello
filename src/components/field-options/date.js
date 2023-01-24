@@ -8,106 +8,64 @@ import {
 
 export default function DatepickerSettings( props ) {
 	const {
-		attributes: { flatpickr, advanced },
+		attributes: { 
+			flatpickr, 
+			advanced, 
+			type, 
+			dateFormat, 
+			timeFormat,
+			enableTime,
+			inlineCalendar,
+			mode,
+			minDate
+		},
 		setAttributes,
 	} = props;
 
-	const change = ( key, val ) => {
-		setAttributes( {
-			flatpickr: {
-				...flatpickr,
-				[ key ]: val,
-			},
-		} );
-	};
-
-	const setFormat = () => {
-		let format = dateFormat;
-		if ( timeEnabled ) {
-			format += ' ' + timeFormat;
-		}
-		change( 'date-format', format );
-	};
-
-	const [ dateFormat, setDateFormat ] = useState( 'Y-m-d' );
-	const [ timeFormat, setTimeFormat ] = useState( 'H:i' );
-	const [ timeEnabled, setTimeEnabled ] = useState( flatpickr[ 'enable-time' ] );
-
-	useEffect( () => {
-		setFormat();
-	}, [ dateFormat, timeFormat, timeEnabled ] );
-
 	return (
 		<Fragment>
-			{ advanced && (
+			{ advanced && 'date' === type && (
 				<Fragment>
 					<ToggleControl
 						label={ __( 'Minimum date from today', 'formello' ) }
-						checked={ 'today' === flatpickr[ 'min-date' ] }
+						checked={ 'today' === minDate }
 						onChange={ ( val ) => {
-							change( 'min-date', val ? 'today' : '' );
+							setAttributes( { minDate: val ? 'today' : false } );
 						} }
 					/>
 					<SelectControl
 						label={ __( 'Date Format', 'formello' ) }
-						value={ flatpickr[ 'date-format' ] }
+						value={ dateFormat }
 						options={ [
 							{ label: '2022-04-26', value: 'Y-m-d' },
 							{ label: '04/26/2022', value: 'm/d/Y' },
 							{ label: '26/04/2022', value: 'd/m/Y' },
 						] }
 						onChange={ ( val ) => {
-							setDateFormat( val );
-						} }
-					/>
-					<TextControl
-						label={ __( 'Custom Date Format', 'formello' ) }
-						value={ flatpickr[ 'date-format' ] || 'Y-m-d' }
-						onChange={ ( val ) => {
-							change( 'date-format', val );
+							setAttributes( { dateFormat: val } );
 						} }
 					/>
 					<ToggleControl
 						label={ __( 'Enable time', 'formello' ) }
-						checked={ flatpickr[ 'enable-time' ] }
+						checked={ enableTime }
 						onChange={ ( val ) => {
-							setTimeEnabled( val );
-							change( 'enable-time', val );
+							setAttributes( { enableTime: val } );
 						} }
 					/>
-					{ flatpickr[ 'enable-time' ] && (
-						<Fragment>
-							<TextControl
-								label={ __( 'Time Format', 'formello' ) }
-								value={ timeFormat }
-								onChange={ ( val ) => {
-									setTimeFormat( val );
-								} }
-							/>
-							<ToggleControl
-								label={ __( 'Enable seconds', 'formello' ) }
-								checked={ flatpickr[ 'enable-seconds' ] }
-								onChange={ ( val ) => {
-									setTimeFormat( timeFormat + ':s' );
-									change( 'enable-seconds', val );
-								} }
-							/>
-						</Fragment>
-					) }
 					<SelectControl
 						label={ __( 'Mode', 'formello' ) }
-						value={ flatpickr.mode }
+						value={ mode }
 						options={ [
 							{ label: 'Single', value: 'single' },
 							{ label: 'Multiple', value: 'multiple' },
 							{ label: 'Range', value: 'range' },
 						] }
-						onChange={ ( val ) => change( 'mode', val ) }
+						onChange={ ( val ) => setAttributes( { mode: val } ) }
 					/>
 					<ToggleControl
 						label={ __( 'Inline calendar', 'formello' ) }
-						checked={ flatpickr.inline }
-						onChange={ ( val ) => change( 'inline', val ) }
+						checked={ inlineCalendar }
+						onChange={ ( val ) => setAttributes( { inlineCalendar: val } ) }
 					/>
 				</Fragment>
 			) }

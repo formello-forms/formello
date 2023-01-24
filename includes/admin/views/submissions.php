@@ -37,6 +37,6 @@ $this->notice;
 ?>
 </form>
 
-<div class="hf-small-margin">
+<div>
 	<p><a href="<?php echo esc_attr( $this->back_button ); ?>">&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?></a></p>
 </div>

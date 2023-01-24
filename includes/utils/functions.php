@@ -260,36 +260,27 @@ function formello_columns_display( $column, $post_id ) {
  * @param string $screen The screen id.
  */
 function formello_hide_shortcode_columns( $hidden, $screen ) {
-	// "edit-advanced_ads" needs to be adjusted to your own screen ID, this one is for my "advanced_ads" post type
+
 	if ( isset( $screen->id ) && 'edit-formello_form' === $screen->id ) {
 		$hidden[] = 'shortcode';
 	}
+
 	return $hidden;
+
 }
 
-add_filter(
-	'block_editor_settings_all',
-	static function( $settings, $context ) {
+/**
+ * Allow upload of json for form importing.
+ *
+ * @param array $mimes The mimes.
+ */
+function formello_custom_mime_types( $mimes ) {
 
-		// Allow for the Editor role and above.
-		$settings['__experimentalCanLockBlocks'] = current_user_can( 'delete_others_posts' );
+	// New allowed mime types.
+	$mimes['json'] = 'application/json';
 
-		// Only enable for specific user(s).
-		$user = wp_get_current_user();
-		//if ( in_array( $user->user_email, array( 'george@example.com' ), true ) ) {
-			$settings['__experimentalCanLockBlocks'] = false;
-		//}
-
-		// Disable for posts/pages.
-		//if ( $context->post && $context->post->post_type === 'page' ) {
-			$settings['__experimentalCanLockBlocks'] = false;
-		//}
-
-		return $settings;
-	},
-	10,
-	2
-);
+	return $mimes;
+}
 
 // phpcs:ignore.
 add_filter( 'cron_schedules', __NAMESPACE__ . '\formello_cron_schedules' );
@@ -300,14 +291,4 @@ add_filter( 'post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2 );
 add_filter( 'manage_formello_form_posts_columns', __NAMESPACE__ . '\formello_columns_table' );
 add_action( 'manage_formello_form_posts_custom_column', __NAMESPACE__ . '\formello_columns_display', 10, 2 );
 add_filter( 'default_hidden_columns', __NAMESPACE__ . '\formello_hide_shortcode_columns', 10, 2 );
-
-function wpdocs_plugin_update_message( $plugin_data, $new_data ) {
-	if ( isset( $plugin_data['update'] ) && $plugin_data['update'] && isset( $new_data->upgrade_notice ) ) {
-		printf(
-			'<div class="update-message"><p><strong>%s</strong>: %s</p></div>',
-			$new_data -> new_version,
-			wpautop( $new_data -> upgrade_notice )
-		);
-	}
-}
-//add_action( 'in_plugin_update_message-formello-exporter/formello-exporter.php', __NAMESPACE__ . '\wpdocs_plugin_update_message', 10, 2 );
+add_filter( 'upload_mimes', __NAMESPACE__ . '\formello_custom_mime_types', 10 );

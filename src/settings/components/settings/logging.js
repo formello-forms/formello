@@ -9,7 +9,7 @@ import { useSelect, dispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 const LoggingTab = ( props ) => {
-	const { settings, setSettings, setHasUpdates } = props;
+	const { settings, setSettings } = props;
 	const log = settings.formello.log;
 
 	function setLog( value ) {
@@ -19,7 +19,6 @@ const LoggingTab = ( props ) => {
 			...settings,
 			formello: newSettings
 		} );
-		setHasUpdates(true)
 	}
 
 	return (

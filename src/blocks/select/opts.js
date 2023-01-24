@@ -1,8 +1,9 @@
-import { TextControl, Flex, FlexItem, Button } from '@wordpress/components';
+import { TextControl, CheckboxControl, Flex, FlexItem, Button } from '@wordpress/components';
 
 import { __ } from '@wordpress/i18n';
 
 const OptionsList = ( props ) => {
+
 	return props.options.map( ( obj, index ) => {
 		return (
 			<Flex
@@ -10,6 +11,12 @@ const OptionsList = ( props ) => {
 				justify="flex-start"
 				className={ 'formello-fields-row' }
 			>
+				<FlexItem>
+					<CheckboxControl
+						checked={ obj.selected }
+						onChange={ ( val ) => props.onChange( val, index, 'selected' ) }
+					/>
+				</FlexItem>
 				{ props.showValue && (
 					<FlexItem>
 						<TextControl

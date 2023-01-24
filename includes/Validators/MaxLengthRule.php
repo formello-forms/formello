@@ -17,9 +17,9 @@ class MaxLengthRule extends Rule
     {
     }
 
-    public function check($value): bool
+    public function check( $value ): bool
     {
-        $this->requireParameters($this->fillableParams);
+        $this->requireParameters( $this->fillableParams );
 
         $length = (int) $this->parameter('maxlength');
 

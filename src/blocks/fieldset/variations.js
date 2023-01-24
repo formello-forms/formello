@@ -6,7 +6,7 @@ import { __ } from '@wordpress/i18n';
 import { 
 	Checkboxes,
 	Radios
-} from '../../utils/icons';
+} from '../../icons/icons';
 
 const variations = [
 	{

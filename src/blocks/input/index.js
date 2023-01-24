@@ -4,7 +4,7 @@ import save from './save';
 import variations from './variations';
 import metadata from './block.json';
 import { createBlock } from '@wordpress/blocks';
-import { Input } from '../../utils/icons';
+import { Input } from '../../icons/icons';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -16,10 +16,9 @@ registerBlockType( metadata, {
 
 	supports: {
 		// eslint-disable-next-line no-undef
-		inserter:
-			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
+		inserter: 'formello_form' === pagenow ? true : false,
 		html: false,
-		className: false,
+		className: true,
 		reusable: false,
 	},
 

@@ -1,7 +1,10 @@
 /**
  * WordPress dependencies
  */
-import { useSelect } from '@wordpress/data';
+import { 
+	useSelect,
+	store as coreStore,
+} from '@wordpress/data';
 import {
 	parse,
 } from '@wordpress/blocks';

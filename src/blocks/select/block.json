@@ -9,29 +9,54 @@
 	"ancestor": ["formello/form"],
 	"textdomain": "formello",
 	"attributes": {
-		"type": {
-			"type": "string",
-			"default": "select"
-		},
 		"id": {
 			"type": "string",
-			"default": "field"
+			"source": "attribute",
+			"selector": "select",
+			"attribute": "id",
+			"default": ""
 		},
 		"name": {
 			"type": "string",
-			"default": "select"
+			"source": "attribute",
+			"selector": "select",
+			"attribute": "name"
 		},
 		"label": {
 			"type": "string",
-			"default": "Select"
+			"source": "html",
+			"selector": "label span:not(.required)",
+			"default": "My input"
 		},
-		"options": {
-			"type": "array",
+		"hideLabel": {
+			"type": "boolean",
+			"selector": "label.hide",
+			"default": false
+		},
+	    "options": {
+	        "type": "array",
+	        "source": "query",
+	        "selector": "option",
+	        "query": {
+	            "value": {
+	                "type": "string",
+	                "source": "attribute",
+	                "attribute": "value"
+	            },
+	            "label": {
+	                "type": "string",
+	                "source": "text"
+	            },
+	            "selected": {
+	            	"type": "boolean",
+					"source": "attribute",
+					"attribute": "selected"
+	            }
+	        },
 			"default": [
 				{
 		    		"value": "",
-		    		"label": "Select an option",
-		    		"default": true
+		    		"label": "Select an option"
 		    	},
 				{
 		    		"value": "1",
@@ -46,29 +71,36 @@
 		    		"label": "Three"
 		    	}
 			]
-		},
+	    },
 		"multiple": {
 			"type": "boolean",
-			"default": false
-		},
-		"hasDefault": {
-			"type": "boolean",
-			"default": true
-		},
-		"selectedOpt": {
-			"type": "array",
-			"default": []
+			"source": "attribute",
+			"selector": "select",
+			"attribute": "multiple"
 		},
 		"required": {
 			"type": "boolean",
-			"default": false
+			"source": "attribute",
+			"selector": "select",
+			"attribute": "required"
 		},
 		"requiredText": {
-			"type": "string"
+			"type": "string",
+			"source": "text",
+			"selector": "label span.required",
+			"default": "*"
 		},
-		"hideRequired": {
+		"disabled": {
 			"type": "boolean",
-			"default": false
+			"source": "attribute",
+			"selector": "select",
+			"attribute": "disabled"
+		},
+		"readonly": {
+			"type": "boolean",
+			"source": "attribute",
+			"selector": "select",
+			"attribute": "readonly"
 		},
 		"showHelp": {
 			"type": "boolean",
@@ -76,6 +108,8 @@
 		},
 		"help": {
 			"type": "string",
+			"source": "html",
+			"selector": "small",
 			"default": ""
 		}
 	}

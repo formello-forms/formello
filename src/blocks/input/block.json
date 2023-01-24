@@ -30,21 +30,26 @@
 		},
 		"label": {
 			"type": "string",
+			"source": "html",
+			"selector": "label span:not(.required)",
 			"default": "My input"
+		},
+		"hideLabel": {
+			"type": "boolean",
+			"selector": "label.hide",
+			"default": false
 		},
 		"placeholder": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "placeholder",
-			"default": ""
+			"attribute": "placeholder"
 		},
 		"value": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "value",
-			"default": ""
+			"attribute": "value"
 		},
 		"validation": {
 			"type": "string",
@@ -70,16 +75,18 @@
 			"selector": "input",
 			"attribute": "data-bouncer-match"
 		},
-		"hideLabel": {
-			"type": "boolean",
-			"default": false
-		},
 		"required": {
 			"type": "boolean",
 			"source": "attribute",
 			"selector": "input",
 			"attribute": "required",
 			"default": false
+		},
+		"requiredText": {
+			"type": "string",
+			"source": "text",
+			"selector": "label span.required",
+			"default": "*"
 		},
 		"enableAutoComplete": {
 			"type": "boolean",
@@ -91,13 +98,6 @@
 			"selector": "input",
 			"attribute": "autocomplete",
 			"default": "off"
-		},
-		"hideRequired": {
-			"type": "boolean",
-			"default": false
-		},
-		"requiredText": {
-			"type": "string"
 		},
 		"disabled": {
 			"type": "boolean",
@@ -128,48 +128,35 @@
 			"type": "string",
 			"default": ""
 		},
-		"tooltip": {
-			"type": "string",
-			"default": ""
-		},
-		"hasTooltip": {
-			"type": "boolean",
-			"default": false
-		},
 		"minlength": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "minlength",
-			"default": ""
+			"attribute": "minlength"
 		},
 		"maxlength": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "maxlength",
-			"default": ""
+			"attribute": "maxlength"
 		},
 		"pattern": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "pattern",
-			"default": ""
+			"attribute": "pattern"
 		},
 		"min": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "min",
-			"default": ""
+			"attribute": "min"
 		},
 		"max": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "max",
-			"default": ""
+			"attribute": "max"
 		},
 		"withButton": {
 			"type": "boolean",
@@ -191,27 +178,37 @@
 			"type": "number",
 			"source": "attribute",
 			"selector": "input",
-			"attribute": "step",
-			"default": ""
+			"attribute": "step"
 		},
-		"flatpickr": {
-			"type": "object",
-	        "source": "query",
-	        "selector": "input",
-	        "query": {
-	            "enable-time": {
-	                "type": "string",
-	                "source": "attribute",
-	                "attribute": "data-enable-time"
-	            },
-	            "minDate": {
-	                "type": "string",
-	                "source": "attribute",
-	                "attribute": "data-min-date"
-	            }
-	        },
-	        "default": {}
-		},
+        "dateFormat": {
+            "type": "string",
+            "source": "attribute",
+			"selector": "input",
+            "attribute": "data-date-format"
+        },
+        "timeFormat": {
+            "type": "string",
+            "source": "attribute",
+			"selector": "input",
+            "attribute": "data-time-format"
+        },
+        "enableTime": {
+            "type": "string",
+            "source": "attribute",
+            "attribute": "data-enable-time",
+            "default": false
+        },
+        "inlineCalendar": {
+            "type": "string",
+            "source": "attribute",
+            "attribute": "data-inline",
+            "default": false
+        },
+        "mode": {
+            "type": "string",
+            "source": "attribute",
+            "attribute": "data-mode"
+        },
 		"advanced": {
 			"type": "boolean"
 		}

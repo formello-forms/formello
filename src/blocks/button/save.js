@@ -7,24 +7,36 @@ import {
 	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
 import {
-	Loading,
-	Loading2,
-	Pulse,
-	Loading4,
-	Loading5,
-	LoadingCircles
-} from '../../utils/icons';
+	Loading, 
+	Loading2, 
+	Pulse, 
+	Loading4, 
+	LoadingCircles, 
+	LoadingCirclePath,
+	Audio,
+	BallTriangle,
+	Bars,
+	Circles,
+	Grid,
+	ThreeDots,
+} from '../../icons/loading';
 
 export default function save( { attributes } ) {
 	const { text, alignment, type, style } = attributes;
 
 	const icons = {
-		Loading,
-		Loading2,
-		Pulse,
-		Loading4,
-		Loading5,
-		LoadingCircles
+		Loading, 
+		Loading2, 
+		Pulse, 
+		Loading4, 
+		LoadingCircles, 
+		LoadingCirclePath,
+		Audio,
+		BallTriangle,
+		Bars,
+		Circles,
+		Grid,
+		ThreeDots,
 	};
 
 	const ButtonIcon = icons[ type ];
@@ -40,7 +52,11 @@ export default function save( { attributes } ) {
 
 	const colorProps = getColorClassesAndStyles( attributes );
 
-	const buttonClasses = classnames( colorProps.className, alignment );
+	const buttonClasses = classnames(
+		borderProps.className,
+		colorProps.className,
+		alignment
+	);
 
 	const blockProps = useBlockProps.save( {
 		className: buttonClasses,

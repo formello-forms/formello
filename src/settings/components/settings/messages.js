@@ -5,7 +5,7 @@ import { useSelect, dispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 export default function Messages( props ) {
-	const { settings, setSettings, setHasUpdates } = props;
+	const { settings, setSettings } = props;
 	const messages = settings.formello.messages ?? {};
 
 	function setMessage( group, field, value ) {
@@ -15,7 +15,6 @@ export default function Messages( props ) {
 			...settings,
 			formello: newSettings
 		} );
-		setHasUpdates(true)
 	}
 
 	const formMessages = Object.keys( messages.form );

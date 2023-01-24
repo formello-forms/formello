@@ -12,7 +12,7 @@ import {
 	Loading3,
 	Loading4,
 	Loading5,
-} from '../../utils/icons';
+} from '../../icons/icons';
 
 const v1 = 
 	{

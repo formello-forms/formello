@@ -84,9 +84,8 @@ class Admin {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar_item' ), 1000 );
-		//add_action( 'formello_settings_area', array( $this, 'add_settings_container' ) );
-		//add_action( 'formello_tools_area', array( $this, 'add_tools_container' ) );
 		add_filter( 'set-screen-option', array( $this, 'set_screen' ), 10, 3 );
+		add_action( 'admin_notices', array( $this, 'admin_notice__error' ) );
 		$this->baselink = add_query_arg( array( 'post_type' => 'formello_form' ), admin_url( 'edit.php' ) );
 	}
 
@@ -221,8 +220,8 @@ class Admin {
 	public function forms_screen_option() {
 		$option = 'per_page';
 		$args   = array(
-			'label'   => 'Forms',
-			'default' => 5,
+			'label'   => __( 'Number of forms per page', 'formello' ),
+			'default' => 10,
 			'option'  => 'forms_per_page',
 		);
 
@@ -238,7 +237,7 @@ class Admin {
 		$option = 'per_page';
 		$args   = array(
 			'label'   => 'Submissions',
-			'default' => 10,
+			'default' => 20,
 			'option'  => 'submissions_per_page',
 		);
 
@@ -259,7 +258,7 @@ class Admin {
 	public static function set_screen( $status, $option, $value ) {
 		$option = 'per_page';
 		$args   = array(
-			'label'   => 'Forms',
+			'label'   => __( 'Number of forms per page', 'formello' ),
 			'default' => 10,
 			'option'  => 'forms_per_page',
 		);
@@ -310,7 +309,7 @@ class Admin {
 
 		if ( empty( absint( $_GET['submission_id'] ) ) ) {
 			$message = __( 'No submission ID provided.', 'formello' );
-			$this->error_notice( $message );
+			$this->notice( $message );
 		}
 
 		$id = sanitize_text_field( absint( $_GET['submission_id'] ) );
@@ -320,7 +319,7 @@ class Admin {
 
 		if ( empty( $this->submission ) ) {
 			$message = __( 'No submission found.', 'formello' );
-			$this->error_notice( $message );
+			$this->notice( $message );
 		}
 		$this->back_button = add_query_arg(
 			array(
@@ -329,6 +328,8 @@ class Admin {
 			),
 			$this->baselink
 		);
+		$this->settings = get_post_meta( $this->submission->form_id, '_formello_settings', true );
+
 		require dirname( __FILE__ ) . '/views/submission.php';
 	}
 
@@ -349,14 +350,16 @@ class Admin {
 		wp_enqueue_style( 'formello-settings' );
 		$this->back_button = add_query_arg( array( 'page' => 'formello' ), $this->baselink );
 
+		if ( empty( $_REQUEST['_wpnonce'] ) || ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'formello' ) ) {
+			//$this->invalid_nonce_redirect();
+		}
+
 		if ( isset( $_GET['form_id'] ) ) {
 			$id = absint( $_GET['form_id'] );
 		}
 		if ( empty( $id ) ) {
 			$message = __( 'No form.', 'formello' );
-			$this->error_notice( $message );
-			require dirname( __FILE__ ) . '/views/submissions.php';
-			return;
+			$this->notice( $message );
 		}
 		$form = get_post( $id );
 		if ( $form ) {
@@ -367,7 +370,7 @@ class Admin {
 		}
 		if ( empty( $form ) ) {
 			$message = __( 'No submissions found for this form.', 'formello' );
-			$this->error_notice( $message );
+			$this->notice( $message );
 		}
 		require dirname( __FILE__ ) . '/views/submissions.php';
 	}
@@ -454,13 +457,42 @@ class Admin {
 	}
 
 	/**
-	 * Add settings container.
+	 * Add notice.
 	 *
-	 * @param string $message The precision.
+	 * @param string $message The message.
+	 * @param string $type The message type.
 	 */
-	public function error_notice( $message ) {
-		$class = 'notice notice-error is-dismissible';
-		$this->notice = printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+	public function notice( $message, $type = 'error' ) {
+		$this->notice = printf(
+			'<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
+			esc_attr( $type ),
+			esc_html( $message )
+		);
+	}
+
+	/**
+	 * Show admin notice.
+	 */
+	public function admin_notice__error() {
+		return $this->notice;
+	}
+
+	/**
+	 * Die when the nonce check fails.
+	 *
+	 * @since    1.0.0
+	 *
+	 * @return void
+	 */
+	public function invalid_nonce_redirect() {
+		wp_die(
+			__( 'Invalid Nonce', 'formello' ),
+			__( 'Error', 'formello' ),
+			array(
+				'response' 	=> 403,
+				'back_link' => true,
+			)
+		);
 	}
 
 }

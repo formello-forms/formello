@@ -23,7 +23,14 @@
 		},
 		"label": {
 			"type": "string",
+			"source": "html",
+			"selector": "label span:not(.required)",
 			"default": "My textarea"
+		},
+		"hideLabel": {
+			"type": "boolean",
+			"selector": "label.hide",
+			"default": false
 		},
 		"placeholder": {
 			"type": "string",
@@ -63,14 +70,6 @@
 			"attribute": "data-bouncer-match",
 			"default": ""
 		},
-		"hideLabel": {
-			"type": "boolean",
-			"default": false
-		},
-		"labelVAlign": {
-			"type": "string",
-			"default": ""
-		},
 		"required": {
 			"type": "boolean",
 			"source": "attribute",
@@ -85,12 +84,11 @@
 			"attribute": "autocomplete",
 			"default": "off"
 		},
-		"hideRequired": {
-			"type": "boolean",
-			"default": false
-		},
 		"requiredText": {
-			"type": "string"
+			"type": "string",
+			"source": "text",
+			"selector": "label span.required",
+			"default": "*"
 		},
 		"disabled": {
 			"type": "boolean",

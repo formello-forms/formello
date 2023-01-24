@@ -2,13 +2,11 @@ import { __ } from '@wordpress/i18n';
 
 import {
 	ToggleControl,
-	BaseControl,
 	TextControl,
 	withFilters,
 } from '@wordpress/components';
 
 import { Fragment, RawHTML } from '@wordpress/element';
-import MergeTags from '../merge-tags';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 import DatepickerSettings from './date';
@@ -16,8 +14,7 @@ import DatepickerSettings from './date';
 function AdvancedOptions( props ) {
 	const {
 		attributes: {
-			type = 'textarea',
-			advanced,
+			type,
 			disabled,
 			enableAutoComplete,
 			autocomplete,
@@ -31,14 +28,15 @@ function AdvancedOptions( props ) {
 			enableRtf
 		},
 		setAttributes,
+		fieldType,
 		clientId
 	} = props;
 
-	const supported = SUPPORTED_ATTRIBUTES[ type ?? 'textarea' ];
+	const supported = SUPPORTED_ATTRIBUTES[ fieldType ];
 
 	return (
 		<Fragment>
-			{ 'textarea' === type && (
+			{	supported.includes( 'cols' ) && (
 				<Fragment>
 					<TextControl
 						type="number"

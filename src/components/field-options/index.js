@@ -6,6 +6,7 @@
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
+	PanelRow,
 	FormTokenField,
 	ToggleControl,
 	TextControl,
@@ -14,31 +15,44 @@ import {
 
 import { Fragment } from '@wordpress/element';
 import MergeTags from '../merge-tags';
+import {
+	useTabs,
+} from '../merge-tags/use-tabs';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
 export default function Options( props ) {
-	const { attributes, setAttributes, clientId, setModalOpen } = props;
+	const { attributes, setAttributes, clientId, setModalOpen, fieldType } = props;
 
-	const supported = SUPPORTED_ATTRIBUTES[ attributes.type ?? 'textarea' ];
+	const {
+		type,
+		name,
+		value,
+		placeholder,
+		required,
+		multiple,
+		options,
+		checked,
+		showHelp
+	} = attributes;
+
+	const supported = SUPPORTED_ATTRIBUTES[ fieldType ];
 
 	return (
 		<Fragment>
 			<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
 				<TextControl
 					label={ __( 'Name', 'formello' ) }
-					value={ attributes.name }
+					value={ name }
 					onChange={ ( val ) =>
 						setAttributes( { name: val.toLowerCase() } )
 					}
 				/>
 				{ supported.includes( 'value' ) && (
 					<MergeTags
-						className={ 'formello-flex' }
-						noFields={ true }
 						clientId={ clientId }
 						label={ __( 'Value', 'formello' ) }
-						value={ attributes.value }
+						value={ value }
 						onChange={ ( val ) => {
 							setAttributes( { value: val } );
 						} }
@@ -47,7 +61,7 @@ export default function Options( props ) {
 				{ supported.includes( 'placeholder' ) && (
 					<TextControl
 						label={ __( 'Placeholder', 'formello' ) }
-						value={ attributes.placeholder }
+						value={ placeholder }
 						onChange={ ( val ) =>
 							setAttributes( { placeholder: val } )
 						}
@@ -56,77 +70,50 @@ export default function Options( props ) {
 				{ supported.includes( 'required' ) && (
 					<ToggleControl
 						label={ __( 'Required', 'formello' ) }
-						checked={ attributes.required }
-						onChange={ ( newval ) =>
-							setAttributes( { required: newval } )
+						checked={ required }
+						onChange={ ( val ) =>
+							setAttributes( { required: val } )
 						}
 					/>
 				) }
 				{ supported.includes( 'multiple' ) && (
 					<ToggleControl
 						label={ __( 'Multiple', 'formello' ) }
-						checked={ attributes.multiple }
+						checked={ multiple }
 						onChange={ ( val ) =>
-							setAttributes( {
-								multiple: val,
-							} )
+							setAttributes( { multiple: val } )
 						}
 					/>
-				) }
-				{ 'select' === attributes.type && (
-					<Fragment>
-						<Button
-							isPrimary
-							isSmall
-							className={ 'formello-fields-margin' }
-							onClick={ () => {
-								setModalOpen( true );
-							} }
-						>
-							{ __( 'Add options', 'formello' ) }
-						</Button>
-						<FormTokenField
-							label={ __( 'Selected option', 'formello' ) }
-							value={
-								attributes.selectedOpt &&
-								attributes.selectedOpt.map( ( item ) => {
-									return item.label;
-								} )
-							}
-							onChange={ ( opts ) => {
-								const selections = attributes.options.filter(
-									( x ) => opts.includes( x.label )
-								);
-								setAttributes( { selectedOpt: selections } );
-							} }
-							suggestions={
-								attributes.options &&
-								attributes.options.map( ( item ) => {
-									return item.label;
-								} )
-							}
-							maxSuggestions={ 3 }
-							maxLength={ () => ( attributes.multiple ? 20 : 1 ) }
-						/>
-					</Fragment>
 				) }
 				{ supported.includes( 'checked' ) && (
 					<ToggleControl
 						label={ __( 'Checked', 'formello' ) }
-						checked={ attributes.checked }
+						checked={ checked }
 						onChange={ ( newval ) =>
 							setAttributes( { checked: newval } )
 						}
 					/>
 				) }
-				{ ! ( 'hidden' === attributes.type ) && (
+				{ ! ( 'hidden' === type ) && (
 					<ToggleControl
 						label={ __( 'Show Description', 'formello' ) }
-						checked={ attributes.showHelp }
+						checked={ showHelp }
 						onChange={ ( newval ) =>
 							setAttributes( { showHelp: newval } )
 						}
 					/>
+				) }
+				{ 'select' === fieldType && (
+					<Fragment>
+						<Button
+							variant={ 'primary' }
+							onClick={ () => {
+								setModalOpen( true );
+							} }
+						>
+							{ __( 'Manage Options', 'formello' ) }
+						</Button>
+					</Fragment>
 				) }
 			</PanelBody>
 		</Fragment>

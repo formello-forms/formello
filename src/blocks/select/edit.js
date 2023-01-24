@@ -43,35 +43,54 @@ import AdvancedOptions from '../../components/field-options/advanced';
  */
 export default function Edit( props ) {
 	const { attributes, setAttributes, className, clientId } = props;
+	const {
+		name,
+		id,
+		label,
+		hideLabel,
+		options,
+		required,
+		requiredText,
+		showHelp,
+		help,
+		readonly,
+		multiple,
+		disabled
+	} = attributes;
 
-	useEffect(
-		() =>
+	useEffect( () => {
+		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
+		if ( ! id ) {
 			setAttributes( {
-				id: 'field_' + clientId.substr( 2, 9 ).replace( '-', '' ),
-			} ),
-		[]
-	);
+				id: 'field_' + idx,
+			} );
+		}
+		if ( ! name ) {
+			setAttributes( {
+				name: 'field_' + idx,
+			} );
+		}
+	}, [] );
 
-	const [ options, setOptions ] = useState( attributes.options );
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
 	const addNewRow = () => {
 		setAttributes( {
-			options: [ ...attributes.options, { label: '', value: '' } ],
+			options: [ ...options, { label: '', value: '' } ],
 		} );
 	};
 
 	const deleteRow = ( record, index ) => {
-		const items = [ ...attributes.options ]; // make a separate copy of the array
+		const items = [ ...options ]; // make a separate copy of the array
 		items.splice( index, 1 );
 		setAttributes( { options: items } );
 	};
 
 	const handleChange = ( value, index, prop ) => {
 		// 1. Make a shallow copy of the items
-		const items = [ ...attributes.options ];
+		const items = [ ...options ];
 		// 2. Make a shallow copy of the item you want to mutate
-		const item = { ...attributes.options[ index ] };
+		const item = { ...options[ index ] };
 		// 3. Replace the property you're intested in
 		item[ prop ] = value;
 		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
@@ -90,22 +109,19 @@ export default function Edit( props ) {
 		setAttributes( { options: newSettings } );
 	};
 
-	const defaultOpts = ( options ) => {
-		if ( ! options.length ) {
-			return attributes.multiple ? [] : '';
-		}
-		options = options.map( ( opt ) => {
-			return opt.value;
-		} );
-		if ( ! attributes.multiple && options.length ) {
-			options = options[ 0 ];
-		}
-		return options;
-	};
-
 	const blockProps = useBlockProps( {
 		className: 'formello',
 	} );
+
+	const selectedOpts = () => {
+		const selection = options
+			.filter( x => true === x.selected ) 
+			.map( x => x.value )
+		if( !multiple ){
+			return selection[0]
+		}
+		return selection
+	}
 
 	return (
 		<div { ...blockProps }>
@@ -122,34 +138,38 @@ export default function Edit( props ) {
 						/>
 					</ToolbarGroup>
 				</BlockControls>
-				<Options { ...props } setModalOpen={ setModalOpen } />
+				<Options { ...props } setModalOpen={ setModalOpen } fieldType="select" />
 			</InspectorControls>
 			<InspectorAdvancedControls>
-				<AdvancedOptions { ...props } />
+				<AdvancedOptions { ...props } fieldType="select" />
 			</InspectorAdvancedControls>
 			<Fragment>
 				<Label { ...props } />
 
 				<select
-					id={ attributes.id }
-					name={ attributes.name }
-					className={ attributes.fieldClass }
-					multiple={ attributes.multiple }
-					defaultValue={ defaultOpts( attributes.selectedOpt ) }
+					id={ id }
+					name={ name }
+					multiple={ multiple }
+					readOnly={ readonly }
+					disabled={ disabled }
+					defaultValue={ selectedOpts() }
 				>
-					{ attributes.options.map( ( obj, index ) => {
+					{ options.map( ( opt, index ) => {
 						return (
-							<option value={ obj.value } key={ index }>
-								{ obj.label }
+							<option
+								value={ opt.value || opt.label }
+								key={ index }
+								//selected={ opt.selected }
+							>
+								{ opt.label }
 							</option>
 						);
 					} ) }
 				</select>
-				{ attributes.showHelp && (
+				{ showHelp && (
 					<RichText
 						tagName="small"
-						className={ className }
-						value={ attributes.help }
+						value={ help }
 						onChange={ ( help ) => setAttributes( { help } ) }
 						placeholder={ __( 'Enter help message…', 'formello' ) }
 						allowedFormats={ [

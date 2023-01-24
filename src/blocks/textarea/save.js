@@ -18,10 +18,6 @@ export default function save( { attributes, className } ) {
 		requiredText 
 	} = attributes;
 
-	if ( ! name ) {
-		name = id;
-	}
-
 	className = classnames( 'formello' );
 
 	const labelClassName = classnames( 'textarea-label', {
@@ -41,8 +37,8 @@ export default function save( { attributes, className } ) {
 
 	return (
 		<div { ...useBlockProps.save() } className={ className }>
-			<label className={ labelClassName } htmlFor={ id }>
-				{ label }
+			<label className={ labelClassName } for={ id }>
+				<RichText.Content tagName="span" value={ label } />
 				{ required && (
 					<span className="required">
 						{ requiredText }
@@ -52,7 +48,7 @@ export default function save( { attributes, className } ) {
 			<textarea { ...htmlAttrs } className={ fieldClassName }>
 				{ value }
 			</textarea>
-			{ showHelp && (
+			{ help.length > 0 && (
 				<RichText.Content tagName="small" value={ help } />
 			) }
 		</div>

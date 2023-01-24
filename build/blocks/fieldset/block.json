@@ -20,13 +20,11 @@
 		}
 	},
 	"supports": {
-		"className": true,
+		"className": false,
 		"anchor": true,
 		"html": false,
 		"color": true,
-		"spacing": {
-			"padding": true
-		},
+		"spacing": true,
 		"__experimentalBorder": true
 	}
 }

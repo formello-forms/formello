@@ -7,6 +7,8 @@ import { Fragment, useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 
 import { useParams, useNavigate } from "react-router-dom";
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
 
 import Help from '../components/settings/help.js';
 import General from '../components/settings/general.js';
@@ -15,15 +17,17 @@ import Messages from '../components/settings/messages.js';
 import Integrations from '../components/settings/integrations.js';
 import Logging from '../components/settings/logging.js';
 import Licenses from '../components/settings/licenses.js';
-import api from '@wordpress/api';
-import UpdateSettings from '../components/settings/update-settings';
+import apiFetch from '@wordpress/api-fetch';
+import UpdateSettings from '../components/update-settings';
 import Header from '../components/masthead.js';
 
 export default function Settings( props ) {
 
 	const { savedSettings } = props;
-	const [ settings, setSettings ] = useState( null );
+	const [ settings, setSettings ] = useState( savedSettings );
 	const [ hasUpdates, setHasUpdates ] = useState( false );
+
+	const { saveEntityRecord } = useDispatch( coreStore );
 
 	const routeParams = useParams();
 	const initialTab = routeParams.tab;
@@ -66,8 +70,28 @@ export default function Settings( props ) {
 		},
 	];
 
+	// Handle button update status
 	function onSetSettings( newSettings ) {
+		setHasUpdates( true );
 		setSettings( newSettings );
+	}
+
+	// Handle all setting changes, and save to the database.
+	async function saveSettings( optionName = 'formello' ) {
+
+		let record = '';
+		record = { [optionName]: settings[optionName] };
+
+		let response = '';
+		response = await saveEntityRecord(
+			'root',
+			'site',
+			record
+		);
+		if( response ){
+			setHasUpdates( false );
+		}
+		return response
 	}
 
 	return (
@@ -91,8 +115,7 @@ export default function Settings( props ) {
 									<SettingsTab
 										settings={ settings ?? savedSettings }
 										setSettings={ onSetSettings }
-										hasUpdates={ hasUpdates }
-										setHasUpdates={ setHasUpdates }
+										saveSettings={ saveSettings }
 									/>
 									{ ( 'general' === tab.name ||
 										'recaptcha' === tab.name ||
@@ -100,11 +123,10 @@ export default function Settings( props ) {
 										'logging' === tab.name ) && (
 										<Fragment>
 											<UpdateSettings
-												hasUpdates={ hasUpdates }
-												settings={ settings }
-												setSettings={ onSetSettings }
-												setHasUpdates={ setHasUpdates }
-												tabSettings={ 'formello' }
+												req={ saveSettings }
+												text={ __( 'Save options', 'formello' ) }
+												disabled={ ! hasUpdates }
+												variant={ 'primary' }
 											/>
 										</Fragment>
 									) }

@@ -127,7 +127,7 @@ class Assets {
 	 * @throws \Error Assets not loaded.
 	 */
 	public function get_scripts() {
-		$script_asset_path = FORMELLO_ABSPATH . '/build/index.asset.php';
+		$script_asset_path = FORMELLO_ABSPATH . '/build/settings.asset.php';
 		if ( ! file_exists( $script_asset_path ) ) {
 			throw new \Error(
 				'You need to run `npm start` or `npm run build` for the "create-block/formello" block first.'
@@ -137,15 +137,9 @@ class Assets {
 		$script_asset = require $script_asset_path;
 
 		$scripts = array(
-			'formello-tools'          => array(
-				'src'       => FORMELLO_ASSETS . '/tools.js',
-				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-core-data' ),
-				'version'   => $script_asset['version'],
-				'in_footer' => true,
-			),
 			'formello-settings'          => array(
 				'src'       => FORMELLO_ASSETS . '/settings.js',
-				'deps'      => array( 'wp-api', 'wp-i18n', 'wp-components', 'wp-element', 'wp-api-fetch', 'wp-core-data' ),
+				'deps'      => $script_asset['dependencies'],
 				'version'   => $script_asset['version'],
 				'in_footer' => true,
 			),

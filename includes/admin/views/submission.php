@@ -46,7 +46,14 @@ echo esc_attr(
 				echo '<tr>';
 				echo sprintf( '<th>%s</th>', esc_html( str_replace( '_', ' ', ucfirst( strtolower( $formello_field ) ) ) ) );
 				echo '<td>';
-				echo formello_field_value( $formello_value, 5000 );
+				// phpcs:ignore
+				echo \Formello\Utils\Formatter::format(
+					$formello_value,
+					! empty( $this->settings['fields'][ $formello_field ] ) ?
+						$this->settings['fields'][ $formello_field ] :
+						$formello_value,
+					0 // disable string limit.
+				);
 				echo '</td>';
 				echo '</tr>';
 			}
@@ -60,7 +67,7 @@ echo esc_attr(
 			<tbody>
 			<tr>
 				<th><?php esc_html_e( 'Timestamp', 'formello' ); ?></th>
-				<td><?php echo esc_html( formello_field_value( $this->submission->submitted_at ) ); ?></td>
+				<td><?php echo esc_html( \Formello\Utils\Formatter::format( $this->submission->submitted_at, 'date' ) ); ?></td>
 			</tr>
 
 			<?php if ( ! empty( $this->submission->user_agent ) ) { ?>

@@ -150,7 +150,7 @@ class Forms extends Base {
 
 		$settings = $request['settings'];
 
-		$result = update_post_meta( $id, '_formello_settings', $settings );
+		$result = update_post_meta( $id, '_formello_settings', wp_slash( $settings ) );
 
 		$response = rest_ensure_response( $result );
 

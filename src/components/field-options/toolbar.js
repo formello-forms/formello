@@ -10,11 +10,16 @@ import { ToolbarButton } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 import { 
 	Asterisk,
-} from '../../utils/icons';
+} from '../../icons/icons';
 import { select } from '@wordpress/data';
 
 export default function Toolbar( props ) {
 	const { attributes, setAttributes, clientId } = props;
+	const {
+		required,
+		showHelp,
+		hideLabel
+	} = attributes;
 
 	const setRequiredTxt = () => {
 		const parent = select( 'core/block-editor' ).getBlockParents( clientId );
@@ -29,26 +34,26 @@ export default function Toolbar( props ) {
 			<ToolbarButton
 				label={ __( 'Required' ) }
 				icon={ Asterisk }
-				isPressed={ attributes.required }
+				isPressed={ required }
 				onClick={ () => {
 					setRequiredTxt();
-					setAttributes( { required: ! attributes.required } );
+					setAttributes( { required: ! required } );
 				} }
 			/>
 			<ToolbarButton
 				label={ __( 'Hide label' ) }
 				icon={ 'hidden' }
-				isPressed={ attributes.hideLabel }
+				isPressed={ hideLabel }
 				onClick={ () => {
-					setAttributes( { hideLabel: ! attributes.hideLabel } );
+					setAttributes( { hideLabel: ! hideLabel } );
 				} }
 			/>
 			<ToolbarButton
 				label={ __( 'Show help message' ) }
 				icon={ 'editor-help' }
-				isPressed={ attributes.showHelp }
+				isPressed={ showHelp }
 				onClick={ () => {
-					setAttributes( { showHelp: ! attributes.showHelp } );
+					setAttributes( { showHelp: ! showHelp } );
 				} }
 			/>
 		</Fragment>

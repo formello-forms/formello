@@ -11,15 +11,17 @@
 	"attributes": {
 		"text": {
 			"type": "string",
+			"source": "text",
+			"selector": "span",
 			"default": "Submit"
-		},
-		"type": {
-			"type": "string",
-			"default": "Loading"
 		},
 		"alignment": {
 			"type": "string",
 			"default": "left"
+		},
+		"type": {
+			"type": "string",
+			"default": "Loading"
 		},
 		"style": {
 			"type": "object",
@@ -45,7 +47,8 @@
 			"gradients": true
 		},
 		"spacing": {
-			"padding": true
+			"padding": true,
+			"margin": true
 		},
 		"__experimentalBorder": {
 			"radius": true,

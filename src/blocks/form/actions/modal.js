@@ -9,24 +9,8 @@ import { __ } from '@wordpress/i18n';
 import MergeTags from '../../../components/merge-tags';
 
 export function ActionsModal( props ) {
-	const { onRequestClose, action, actionId, attributes, setAttributes } =
+	const { onRequestClose, action, deleteAction, updateAction, clientId } =
 		props;
-
-	const handleUpdate = ( settings ) => {
-		// 1. Make a shallow copy of the items
-		const items = [ ...attributes.actions ];
-		// 2. Make a shallow copy of the item you want to mutate
-		items[ actionId ] = settings;
-
-		setAttributes( { actions: items } );
-	};
-
-	const deleteAction = () => {
-		const items = [ ...attributes.actions ]; // make a separate copy of the array
-		items.splice( actionId, 1 );
-		setAttributes( { actions: items } );
-		onRequestClose();
-	};
 
 	const settingsUrl = addQueryArgs( 'edit.php', {
 		post_type: 'formello_form',
@@ -47,7 +31,7 @@ export function ActionsModal( props ) {
 					'',
 					props,
 					MergeTags,
-					handleUpdate,
+					updateAction,
 					settingsUrl
 				) }
 
@@ -58,7 +42,7 @@ export function ActionsModal( props ) {
 							onRequestClose();
 						} }
 					>
-						Save
+						{ __( 'Save' ) }
 					</Button>
 					<Button
 						isDestructive={ true }
@@ -68,7 +52,7 @@ export function ActionsModal( props ) {
 							}
 						} }
 					>
-						Delete
+						{ __( 'Delete', 'formello' ) }
 					</Button>
 				</div>
 			</Fragment>

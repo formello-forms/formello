@@ -2,7 +2,6 @@ import { __ } from '@wordpress/i18n';
 
 import {
 	useBlockProps,
-	AlignmentToolbar,
 	BlockControls,
 	InspectorAdvancedControls,
 	RichText,
@@ -10,31 +9,41 @@ import {
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
 
-import { SelectControl, ToggleControl } from '@wordpress/components';
+import { SelectControl, ToggleControl, ToolbarDropdownMenu, ToolbarGroup } from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
 import classnames from 'classnames';
 import {
-	Loading,
-	Loading2,
-	Pulse,
-	Loading4,
-	Loading5,
-	LoadingCircles,
+	Loading, 
+	Loading2, 
+	Pulse, 
+	Loading4, 
+	LoadingCircles, 
 	LoadingCirclePath,
-} from '../../utils/icons';
+	Audio,
+	BallTriangle,
+	Bars,
+	Circles,
+	Grid,
+	ThreeDots,
+} from '../../icons/loading';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { style, type } = attributes;
+	const { style, type, alignment } = attributes;
 
 	const icons = {
-		Loading,
-		Loading2,
-		Pulse,
-		Loading4,
-		Loading5,
-		LoadingCircles,
-		LoadingCirclePath
+		Loading, 
+		Loading2, 
+		Pulse, 
+		Loading4, 
+		LoadingCircles, 
+		LoadingCirclePath,
+		Audio,
+		BallTriangle,
+		Bars,
+		Circles,
+		Grid,
+		ThreeDots,
 	};
 
 	const ButtonIcon = icons[ type ];
@@ -82,7 +91,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const buttonClasses = classnames(
 		borderProps.className,
 		colorProps.className,
-		attributes.alignment,
+		alignment,
 		{
 			'wp-block-formello-button--loading': showIcon,
 		}
@@ -95,13 +104,22 @@ export default function Edit( { attributes, setAttributes } ) {
 	return (
 		<button { ...blockProps }>
 			<BlockControls>
-				<AlignmentToolbar
-					value={ attributes.alignment }
-					alignmentControls={ ALIGNMENT_CONTROLS }
-					onChange={ ( nextAlign ) => {
-						setAttributes( { alignment: nextAlign } );
-					} }
-				/>
+				<ToolbarGroup>
+					<ToolbarDropdownMenu
+						icon={ 'align-' + alignment }
+						label={ __( 'Align' ) }
+						controls={ ALIGNMENT_CONTROLS.map( ( control ) => {
+							const { align } = control;
+							const isActive = align === alignment;
+
+							return {
+								...control,
+								isActive,
+								onClick: () => setAttributes( { alignment: align } ),
+							}
+						} ) }
+					/>
+				</ToolbarGroup>
 			</BlockControls>
 			<InspectorAdvancedControls>
 				<ToggleControl
@@ -114,7 +132,12 @@ export default function Edit( { attributes, setAttributes } ) {
 				<SelectControl
 					label={ __( 'Icon type', 'formello' ) }
 					value={ attributes.type }
-					options={ [
+					options={
+						Object.keys(icons).map( (icon) => {
+							return { label: icon, value: icon }
+						} )
+					}
+					/*options={ [
 						{ label: 'Version 1', value: 'Loading' },
 						{ label: 'Version 2', value: 'Loading2' },
 						{ label: 'Pulse', value: 'Pulse' },
@@ -122,7 +145,14 @@ export default function Edit( { attributes, setAttributes } ) {
 						{ label: 'Version 5', value: 'Loading5' },
 						{ label: 'Loading Circles', value: 'LoadingCircles' },
 						{ label: 'Loading Circle Path', value: 'LoadingCirclePath' },
-					] }
+						{ label: 'Audio', value: 'Audio' },
+						{ label: 'BallTriangle', value: 'BallTriangle' },
+						{ label: 'Bars', value: 'Bars' },
+						{ label: 'Circles', value: 'Circles' },
+						{ label: 'Grid', value: 'Grid' },
+						{ label: 'Puff', value: 'Puff' },
+						{ label: 'ThreeDots', value: 'ThreeDots' },
+					] }*/
 					onChange={ ( val ) => {
 						setAttributes( { type: val } );
 					} }

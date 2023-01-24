@@ -3,18 +3,29 @@ import { RichText } from '@wordpress/block-editor';
 
 import classnames from 'classnames';
 
-export default function Label( props ) {
-	const { attributes, setAttributes } = props;
+export default function Label( { attributes, setAttributes } ) {
+	const {
+		labelClass,
+		labelAlign,
+		labelVAlign,
+		hideLabel,
+		required,
+		multiple,
+		type,
+		label,
+		hideRequired,
+		requiredText
+	} = attributes;
 
 	const labelClassName = classnames(
-		attributes.labelClass,
-		attributes.labelAlign,
-		attributes.labelVAlign,
+		labelClass,
+		labelAlign,
+		labelVAlign,
 		{
-			hide: attributes.hideLabel,
-			required: attributes.required,
+			hide: hideLabel,
+			required: required,
 			'textarea-label':
-				attributes.multiple || 'textarea' === attributes.type,
+				multiple || 'textarea' === type,
 		}
 	);
 
@@ -22,13 +33,18 @@ export default function Label( props ) {
 		<label className={ labelClassName } htmlFor="input">
 			<RichText
 				tagName="span"
-				value={ attributes.label }
+				value={ label }
 				onChange={ ( val ) => setAttributes( { label: val } ) }
 				placeholder={ __( 'Enter label…', 'formello' ) }
+				allowedFormats={ [
+					'core/bold',
+					'core/italic',
+					'core/link',
+				] }
 			/>
 
-			{ attributes.required && ! attributes.hideRequired && (
-				<span className="required">{ attributes.requiredText }</span>
+			{ required && (
+				<span className="required">{ requiredText }</span>
 			) }
 		</label>
 	);

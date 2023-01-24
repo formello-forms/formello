@@ -43,17 +43,6 @@ export default function Edit( props ) {
 		} );
 	}, [] );
 
-	let blockContent = <p>{ __( 'Please, select a form to show', 'formello' ) }</p>;
-
-	if ( attributes.id ) {
-		blockContent = (
-			<ServerSideRender
-				block="formello/library"
-				attributes={ attributes }
-			/>
-		);
-	}
-
 	const editUrl = addQueryArgs( 'post.php', {
 		post: attributes.id,
 		action: 'edit',
@@ -84,7 +73,7 @@ export default function Edit( props ) {
 				</BlockControls>
 			) }
 			<InspectorControls>
-				<PanelBody title="Form Settings" initialOpen={ true }>
+				<PanelBody title={ __( 'Form Settings', 'formello' ) } initialOpen={ true }>
 					<SelectControl
 						label={ __( 'Choose a form', 'formello' ) }
 						value={ attributes.id }
@@ -96,8 +85,13 @@ export default function Edit( props ) {
 				</PanelBody>
 			</InspectorControls>
 			<Fragment>
-				{ attributes.id > 0 ? (
-					<Disabled>{ blockContent }</Disabled>
+				{ attributes.id ? (
+					<Disabled isDisabled={ false }>
+						<ServerSideRender
+							block="formello/library"
+							attributes={ attributes }
+						/>
+					</Disabled>
 				) : (
 					<Placeholder label={ __( 'Insert a form', 'formello' ) }>
 						{ 'widgets' === pagenow ? (
@@ -110,9 +104,8 @@ export default function Edit( props ) {
 								} }
 							/>
 						) : (
-							<>
+							<Fragment>
 								<Button
-									className="plugin-formello-panel-button is-large"
 									isPrimary
 									onClick={ () => {
 										setModalOpen( 'templates' );
@@ -127,7 +120,7 @@ export default function Edit( props ) {
 								>
 									{ __( 'Create new form', 'formello' ) }
 								</Button>
-							</>
+							</Fragment>
 						) }
 					</Placeholder>
 				) }

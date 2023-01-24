@@ -21,7 +21,6 @@ export default function ReCaptcha( props ) {
 			...settings,
 			formello: newSettings
 		} );
-		setHasUpdates(true)
 	}
 
 	return (

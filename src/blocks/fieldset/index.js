@@ -9,7 +9,7 @@ import variations from './variations';
 import metadata from './block.json';
 import { 
 	Fieldset
-} from '../../utils/icons';
+} from '../../icons/icons';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -24,23 +24,6 @@ registerBlockType( metadata, {
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
 	icon: Fieldset,
-
-	/**
-	 * Optional block extended support features.
-	 */
-	supports: {
-		// Removes support for an HTML mode.
-		className: false,
-		html: false,
-		reusable: false,
-		spacing: true,
-		__experimentalBorder: {
-			color: true,
-			radius: true,
-			style: true,
-			width: true,
-		},
-	},
 
 	/**
 	 * @see ./edit.js

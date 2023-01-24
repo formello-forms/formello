@@ -3,7 +3,7 @@ import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
 import { createBlock } from '@wordpress/blocks';
-import { Textarea } from '../../utils/icons';
+import { Textarea } from '../../icons/icons';
 
 /**
  * Every block starts by registering a new block type definition.

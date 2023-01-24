@@ -4,22 +4,24 @@ import {
 	CardBody,
 	Button,
 	ExternalLink,
+	BaseControl,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
 import { RawHTML, useState, Fragment } from '@wordpress/element';
 
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import MessageBox from './message-box.js';
+import UpdateLicense from '../update-license';
 
 export default function General( props ) {
-	const { settings, setSettings, setHasUpdates } = props;
-	const [ loading, setLoading ] = useState( false );
-	const [ message, setMessage ] = useState('');
-	const [ messageType, setMessageType ] = useState('error');
-	const license = settings.formello.license ?? '';
-	const license_status = settings.formello.license_status ?? '';
+	const { settings, setSettings, saveSettings } = props;
+
+	const license = settings.formello.license;
+	const license_status = settings.formello.license_status;
+	const { saveEntityRecord } = useDispatch( coreStore );
 
 	function setLicense( key, value ) {
 		const newSettings = Object.assign( {}, settings.formello );
@@ -28,37 +30,32 @@ export default function General( props ) {
 			...settings,
 			formello: newSettings
 		} );
-		setHasUpdates(true)
 	}
 
 	const updateLicense = () => {
 		const endpoint =
 			'valid' !== license_status ? 'activate' : 'deactivate';
 
-		setLoading( true );
-		apiFetch( {
+		return apiFetch( {
 			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
 				license: license,
 			},
-		} ).then( ( result ) => {
-			setLoading( false );
-			setLicense( 'license_status', result.response.license )
+		} ).then( (result) => {
+
+			if ( result.response?.success ) {
+				setLicense( 'license_status', result.response.license )
+			}
 
 			if (
 				! result.success
 			) {
-				setMessage( result.response )
-				setMessageType( result.response.success ? 'success' : 'error' )
 				setLicense( 'license_status', result.response )
 			}
-		}, ( error ) => {
-			setLoading( false );
-			setLicense( 'license_status', error.response )
-			setMessage( error.response )
-			setMessageType( 'error' )
-		} );
+			return Promise.resolve(result)
+		} )
+
 	};
 
 	return (
@@ -81,47 +78,13 @@ export default function General( props ) {
 						`<strong>free license</strong>`
 					) }
 				</RawHTML>
-				<InputControl
-					type="text"
-					autoComplete="new-password"
-					label={ __( 'License Key', 'formello' ) }
-					value={ license }
-					onChange={ ( val ) => {
-						setLicense( 'license', val )
-					} }
-					readOnly={ 'valid' === license_status }
-					suffix={
-						<Button
-							onClick={ () => updateLicense() }
-							isPrimary={ 'valid' !== license_status }
-							isSecondary={
-								'valid' === license_status
-							}
-							aria-disabled={ loading }
-							isBusy={ loading }
-							disabled={ '' === license }
-						>
-							{ 'valid' !== license_status
-								? 'Activate'
-								: 'Deactivate' }
-						</Button>
-					}
+				<UpdateLicense
+					req={ updateLicense }
+					license={ license }
+					license_status={ license_status }
+					onChange={ (val) => setLicense('license', val) }
+					saveSettings={ saveSettings }
 				/>
-				<MessageBox message={ message } messageType={ messageType } handleClose={ setMessage } />
-				{
-					'' !== license && '' !== license_status &&
-					<RawHTML>
-						{ sprintf(
-							/* translators: License status. */
-							__(
-								'<p>License status: <strong class="license-%s">%s</strong>.</p>',
-								'formello'
-							),
-							`${ license_status || 'invalid' }`,
-							`${ license_status || 'invalid' }`,
-						) }
-					</RawHTML>
-				}
 			</CardBody>
 		</Card>
 	);

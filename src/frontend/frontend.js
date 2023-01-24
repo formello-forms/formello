@@ -1,7 +1,7 @@
 import { Formello } from './form';
 import Bouncer from 'formbouncerjs';
 
-new Bouncer( '.wp-block-formello-form', {
+new Bouncer( '.wp-block-formello-form[data-validate]', {
 	disableSubmit: true,
 	customValidations: {
 		valueMismatch: function (field) {
@@ -43,6 +43,7 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 	forms.forEach( ( block ) => {
+		console.log(block)
 		new Formello( block );
 	} );
 } );

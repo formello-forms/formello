@@ -1,14 +1,9 @@
 export const SUPPORTED_ATTRIBUTES = {
-	select: [
-		'name',
+	hidden: [ 'name',
 		'id',
 		'type',
-		'required',
-		'readonly',
-		'disabled',
-		'multiple',
+		'value'
 	],
-	hidden: [ 'name', 'id', 'type', 'value' ],
 	text: [
 		'name',
 		'id',
@@ -153,7 +148,15 @@ export const SUPPORTED_ATTRIBUTES = {
 		'capture',
 		'multiple',
 	],
-	color: [ 'name', 'id', 'type', 'value', 'required', 'readonly', 'disabled' ],
+	color: [ 
+		'name', 
+		'id',
+		'type',
+		'value',
+		'required',
+		'readonly',
+		'disabled'
+	],
 	textarea: [
 		'name',
 		'id',
@@ -167,4 +170,12 @@ export const SUPPORTED_ATTRIBUTES = {
 		'cols',
 		'rows',
 	],
+	select: [
+		'name',
+		'id',
+		'required',
+		'readonly',
+		'disabled',
+		'multiple',
+	]
 };

@@ -17,7 +17,7 @@ import classnames from 'classnames';
 
 import { 
 	Hidden,
-} from '../../utils/icons';
+} from '../../icons/icons';
 import Label from '../../components/label';
 import Options from '../../components/field-options';
 import ValidationOptions from '../../components/field-options/validation';
@@ -39,8 +39,22 @@ import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
  */
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
+	const {
+		name,
+		id,
+		type,
+		label,
+		hideLabel,
+		value,
+		placeholder,
+		required,
+		requiredText,
+		readonly,
+		showHelp,
+		help
+	} = attributes;
 
-	const supported = SUPPORTED_ATTRIBUTES[ attributes.type ];
+	const supported = SUPPORTED_ATTRIBUTES[ type ];
 	const MY_TEMPLATE = [ [ 'formello/button', {} ] ];
 
 	useEffect( () => {
@@ -59,11 +73,11 @@ export default function Edit( props ) {
 
 	const className = classnames( {
 		formello: true,
-		'formello-group': attributes.withButton || 'range' === attributes.type,
+		'formello-group': attributes.withButton || 'range' === type,
 		'formello-group grouped': attributes.grouped,
 		'formello-checkbox':
-			'checkbox' === attributes.type || 'radio' === attributes.type,
-		'formello-textarea': 'textarea' === attributes.type,
+			'checkbox' === type || 'radio' === type,
+		'formello-textarea': 'textarea' === type,
 	} );
 
 	const labelClassName = classnames( {
@@ -77,12 +91,12 @@ export default function Edit( props ) {
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		allowedBlocks: [ 'formello/button' ],
 		template: MY_TEMPLATE,
-		templateLock: 'all',
+		templateLock: 'insert',
 		orientation: 'horizontal',
 	} );
 
 	const onChange = ( e ) => {
-		if ( 'checkbox' === attributes.type || 'radio' === attributes.type ) {
+		if ( 'checkbox' === type || 'radio' === type ) {
 			setAttributes( { checked: ! attributes.checked } );
 		}
 		setAttributes( { value: e.target.value } );
@@ -98,14 +112,17 @@ export default function Edit( props ) {
 				) }
 			</BlockControls>
 			<InspectorControls>
-				<Options { ...props } />
-				<ValidationOptions { ...props } />
+				<Options { ...props } fieldType={ type } />
+				{
+					'hidden' !== type &&
+					<ValidationOptions { ...props } fieldType={ type } />
+				}
 			</InspectorControls>
 			<InspectorAdvancedControls>
-				<AdvancedOptions { ...props } />
+				<AdvancedOptions { ...props } fieldType={ type } />
 			</InspectorAdvancedControls>
 
-			{ 'hidden' !== attributes.type ? (
+			{ 'hidden' !== type ? (
 				<Label { ...props } className={ labelClassName } htmlFor="input" />
 			) : (
 				<div className="formello-hidden">
@@ -116,19 +133,19 @@ export default function Edit( props ) {
 
 			<input
 				className={ attributes.fieldClass }
-				type={ attributes.type }
-				value={ 'password' !== attributes.type ? attributes.value : '' }
+				type={ type }
+				value={ 'password' !== type ? attributes.value : '' }
 				checked={ attributes.checked || false }
 				step={ attributes.step || undefined }
 				onChange={ onChange }
 				placeholder={ attributes.placeholder }
-				disabled={ 'file' === attributes.type }
+				disabled={ 'file' === type }
 				autoComplete={ attributes.autocomplete || 'new-password' }
 			/>
 
 			{ attributes.withButton && children }
 			{ attributes.withOutput && <output></output> }
-			{ 'hidden' !== attributes.type && attributes.showHelp && (
+			{ 'hidden' !== type && attributes.showHelp && (
 				<RichText
 					tagName="small"
 					value={ attributes.help }

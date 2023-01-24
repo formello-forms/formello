@@ -5,6 +5,11 @@ class Formello {
 		this.element = element;
 
 		this.element.addEventListener(
+			'submit', 
+			this.handleSubmit.bind( this ),
+			true
+		);
+		this.element.addEventListener(
 			'bouncerFormValid',
 			this.handleSubmit.bind( this ),
 			true
@@ -14,6 +19,10 @@ class Formello {
 	}
 
 	init() {
+		this.element.querySelectorAll("[multiple]").forEach( (e) => {
+			const name = e.getAttribute( 'name' );
+			e.setAttribute( 'name', name + '[]' )
+		} )
 		this.reCaptcha();
 		this.isRtfEnabled();
 		this.addFlatpickr();
@@ -135,7 +144,7 @@ class Formello {
 
 	reCaptcha() {
 		const { recaptcha } = this.element.dataset;
-		if ( ! JSON.parse( recaptcha ) ) {
+		if ( ! recaptcha ) {
 			return;
 		}
 

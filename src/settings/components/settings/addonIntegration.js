@@ -12,7 +12,8 @@ import { useState, useRef, RawHTML } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
-import UpdateSettings from './update-settings';
+import UpdateSettings from '../update-settings';
+import MessageBox from '../message-box.js';
 
 export default function AddonLicense( props ) {
 
@@ -25,11 +26,12 @@ export default function AddonLicense( props ) {
 		showMessage, 
 		setSettings, 
 		icon, 
-		apiurl
+		apiurl,
+		saveSettings
 	} = props;
 	const [ loading, setLoading ] = useState( false );
 	const [ hasUpdates, setHasUpdates ] = useState( false );
-	const elementRef = useRef();
+	const [ message, setMessage ] = useState(false)
 	const Icon = icon;
 
 	const validateKey = () => {
@@ -43,25 +45,23 @@ export default function AddonLicense( props ) {
 			}
 		} ).then(
 			( result ) => {
-				setLoading( false );
-				if ( ! result.length ) {
-					showMessage(
-						"Are you sure it's correct?",
-						'error',
-						elementRef
-					);
-				}
-				showMessage( 'Good!', 'success', elementRef );
+				setMessage({
+					type: 'error',
+					message: __( 'Api key is valid', 'formello' )
+				})
 			},
-			( result ) => {
-				setLoading( false );
-				showMessage(
-					'Please insert a valid api key.',
-					'error',
-					elementRef
-				);
+			( error ) => {
+				setMessage({
+					type: 'error',
+					message: error.message
+				})	
 			}
-		);
+		).catch( (error) => {
+			setMessage({
+				type: 'error',
+				message: error.message
+			})			
+		} ).finally( () => setLoading(false) )
 	};
 
 	function setIntegration( key, value ) {
@@ -84,7 +84,7 @@ export default function AddonLicense( props ) {
 			<CardBody>
 				<BaseControl>
 					<InputControl
-						label={ __( 'Api Key', 'formello-mailchimp' ) }
+						label={ __( 'Api Key', 'formello' ) }
 						value={ addonSettings.api_key }
 						onChange={ ( val ) => {
 							setIntegration( 'api_key', val );
@@ -113,20 +113,19 @@ export default function AddonLicense( props ) {
 						) }
 					</RawHTML>	
 				</BaseControl>
+				{ 
+					message && (
+						<MessageBox message={ message.message } messageType={ message.type } handleClose={ setMessage } key="message" />
+					)
+				}
 			</CardBody>
 			<CardFooter>
 				<UpdateSettings
-					hasUpdates={ hasUpdates }
-					settings={ settings }
-					setSettings={ setSettings }
-					setHasUpdates={ setHasUpdates }
-					hasUpdates={ hasUpdates }
-					tabSettings={ optionName }
+					req={ () => saveSettings(optionName).finally( () => setHasUpdates(false) ) }
+					text={ __( 'Save options', 'formello' ) }
+					disabled={ ! hasUpdates }
+					variant={ 'primary' }
 				/>
-				<span
-					ref={ elementRef }
-					className="formello-action-message"
-				></span>
 			</CardFooter>
 		</Card>
 	);

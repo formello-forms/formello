@@ -9,8 +9,14 @@ $mobile: 426px;
 }
 
 /* Hide WP notices on the settings page */
-.notice {
-	display: none;
+.formello_form_page_formello-settings {
+	.notice {
+		display: none;
+	}	
+}
+
+.fixed .column-formello_date {
+	width: 14%;
 }
 
 #formello__plugin-settings {
@@ -299,6 +305,11 @@ $mobile: 426px;
 						margin: 1em 0;
 					}
 				}
+
+				.components-external-link__icon {
+					width: 1.2em;
+					margin: 0 .2em 0;
+				}
 			}
 
 			.ads-container {
@@ -440,10 +451,6 @@ $mobile: 426px;
 					}
 				}
 
-				.components-external-link__icon {
-					width: 1.2em;
-					margin: 0 .2em 0;
-				}
 			}
 		}
 
@@ -451,6 +458,7 @@ $mobile: 426px;
 			display: flex;
 			align-items: center;
 			gap: 1em;
+			margin-bottom: 1em;
 
 			.message {
 

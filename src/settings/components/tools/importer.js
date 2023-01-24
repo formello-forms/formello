@@ -1,11 +1,9 @@
-import { Card, CardHeader, CardBody, CardDivider, Button } from '@wordpress/components';
+import { Card, CardHeader, CardBody, CardDivider } from '@wordpress/components';
 
-import { useState, Fragment } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 
 import { __ } from '@wordpress/i18n';
-import apiFetch from '@wordpress/api-fetch';
-import UpdateSettings from '../update-settings';
+import ImportForms from './components/import-forms';
 
 export default function Importer() {
 
@@ -17,11 +15,7 @@ export default function Importer() {
 				</CardHeader>
 
 				<CardBody>
-
-
-					<CardDivider />
-
-
+					<ImportForms />
 				</CardBody>
 			</Card>
 

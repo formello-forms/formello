@@ -40,14 +40,25 @@ class Template extends Base {
 			)
 		);
 
+		// Get Templates.
+		register_rest_route(
+			$this->namespace,
+			$this->rest_base . '/import',
+			array(
+				'methods'  => \WP_REST_Server::EDITABLE,
+				'callback' => array( $this, 'import_forms' ),
+				'permission_callback' => array( $this, 'update_settings_permissions' ),
+			)
+		);
+
 		// Get Patterns.
 		register_rest_route(
 			$this->namespace,
 			'/patterns/',
 			array(
 				'methods'  => \WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'get_patterns' ),
-				'permission_callback' => '__return_true',
+				'callback' => array( $this, 'set_patterns' ),
+				'permission_callback' => array( $this, 'update_settings_permissions' ),
 			)
 		);
 
@@ -58,7 +69,7 @@ class Template extends Base {
 			array(
 				'methods'             => \WP_REST_Server::EDITABLE,
 				'callback'            => array( $this, 'sync_template_library' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => array( $this, 'update_settings_permissions' ),
 			)
 		);
 	}
@@ -70,7 +81,7 @@ class Template extends Base {
 	 */
 	public function export_forms() {
 
-		$patterns = $this->get_local_patterns();
+		$forms = $this->get_forms();
 		$dir = \Formello\Utils\formello_dir() . '/tmp/formello.json';
 		$dir_url = \Formello\Utils\formello_dir_url() . '/tmp/formello.json';
 
@@ -80,14 +91,72 @@ class Template extends Base {
 			require_once ABSPATH . '/wp-admin/includes/file.php';
 			WP_Filesystem();
 		}
-		// Add a white index.
-		$wp_filesystem->put_contents( $dir, wp_json_encode( $patterns ), 0644 );
+		// Add json string.
+		$wp_filesystem->put_contents( $dir, wp_json_encode( $forms ), 0644 );
 
-		if ( is_array( $patterns ) ) {
-			return $this->success( $dir_url );
+		$response = sprintf(
+			/* Translators: %s is the url of the file */
+			__( 'Your export is complete. Please click to <a rel="download" target="_blank" href="%s">download</a>.', 'formello' ),
+			$dir_url
+		);
+
+		if ( is_array( $forms ) ) {
+			return $this->success( $response );
 		} else {
 			return $this->error( 'no_templates', __( 'Templates not found.', 'formello' ) );
 		}
+	}
+
+	/**
+	 * Export forms.
+	 *
+	 * @return mixed
+	 */
+	public function import_forms( $request ) {
+		$body = $request->get_file_params( 'file' );
+
+		global $wp_filesystem;
+		// Initialize the WP filesystem, no more using 'file-put-contents' function.
+		if ( empty( $wp_filesystem ) ) {
+			require_once ABSPATH . '/wp-admin/includes/file.php';
+			WP_Filesystem();
+		}
+
+		$filepath = $body['file']['tmp_name'];
+		$fileSize = filesize( $filepath );
+		$fileinfo = finfo_open( FILEINFO_MIME_TYPE );
+		$filetype = finfo_file( $fileinfo, $filepath );
+
+		if ( $fileSize > 3145728 ) { // 3 MB (1 byte * 1024 * 1024 * 3 (for 3 MB)).
+			return $this->error( 'no_templates', __( 'File max size is 3MB.', 'formello' ) );
+		}
+
+		$allowedTypes = array(
+			'application/json' => 'json',
+		);
+
+		if ( ! in_array( $filetype, array_keys( $allowedTypes ) ) ) {
+			return $this->error( 'no_templates', __( 'Allowed file is json.', 'formello' ) );
+		}
+
+		$forms = $wp_filesystem->get_contents( $filepath );
+		$forms = json_decode( $forms );
+
+		foreach ( $forms as $form ) {
+			// Create post object.
+			$my_post = array(
+				'post_title'   => wp_strip_all_tags( $form->post_title ),
+				'post_content' => $form->post_content,
+				'post_status'  => 'draft',
+				'post_author'  => 1,
+				'post_type'    => $form->post_type,
+			);
+			wp_insert_post( $my_post );
+
+		}
+
+		return $this->success( __( 'Forms imported!', 'formello' ) );
+
 	}
 
 	/**
@@ -95,7 +164,7 @@ class Template extends Base {
 	 *
 	 * @return mixed
 	 */
-	public function get_patterns() {
+	public function set_patterns() {
 
 		$local_patterns = $this->get_local_patterns();
 
@@ -120,7 +189,7 @@ class Template extends Base {
 		delete_transient( 'popper_templates' );
 
 		if ( current_user_can( 'manage_options' ) ) {
-			$this->get_templates();
+			$templates = $this->get_templates();
 		}
 
 		return $this->success( __( 'Templates synced!', 'formello' ) );
@@ -133,36 +202,20 @@ class Template extends Base {
 	 */
 	private function get_local_patterns() {
 
-		$args = array(
-			'post_type'     => 'formello_form',
-			'fields'        => '',
-			'no_found_rows' => true,
-			'post_status'   => 'publish',
-            'numberposts'   => 500, // phpcs:ignore
-		);
-
-		$all_patterns = get_posts( $args );
+		$all_patterns = $this->get_forms();
 		$local_patterns = array();
-
-		$args = array(
-			'public'   => true,
-			'_builtin' => true,
-		);
-
-		$output = 'names';
-		$operator = 'and';
-
-		$post_types = get_post_types( $args, $output, $operator );
 
 		foreach ( $all_patterns as $pattern ) {
 			$local_patterns[] = array(
 				'title' => $pattern->post_title,
-				'content' => $pattern->post_content,
+				'content' => sprintf(
+					'<!-- wp:formello/library {"id":%s} /-->',
+					$pattern->ID
+				),
 				'description' => '',
 				'blockTypes' => array(
 					'formello/library',
 				),
-				'postTypes' => $post_types,
 				'keywords' => array(),
 				'categories' => array( 'form' ),
 				'name' => 'formello/' . sanitize_title( $pattern->post_title ),
@@ -204,9 +257,16 @@ class Template extends Base {
 			}
 		}
 
-		/*
-		 * Get user templates from db.
-		 */
+		set_transient( 'formello_templates', $templates );
+
+		return $templates;
+
+	}
+
+	/**
+	 * Retrieve form post types.
+	 */
+	private function get_forms() {
 		$args = array(
 			'post_type'     => 'formello_form',
 			'fields'        => '',
@@ -215,40 +275,9 @@ class Template extends Base {
             'numberposts'   => 500, // phpcs:ignore
 		);
 
-		$all_templates = get_posts( $args );
-		$local_templates = array();
+		$forms = get_posts( $args );
 
-		$args = array(
-			'public'   => true,
-			'_builtin' => true,
-		);
-
-		$output = 'names';
-		$operator = 'and';
-
-		$post_types = get_post_types( $args, $output, $operator );
-
-		foreach ( $all_templates as $template ) {
-			$local_templates[] = array(
-				'title' => $template->post_title,
-				'content' => $template->post_content,
-				'description' => '',
-				'blockTypes' => array(
-					'formello/library',
-				),
-				'postTypes' => $postTypes,
-				'keywords' => array(),
-				'categories' => array( 'form' ),
-				'name' => 'formello/' . sanitize_title( $template->post_title ),
-			);
-		}
-
-		// merge all available templates.
-		$templates = array_merge( $templates, $local_templates );
-
-		set_transient( 'formello_templates', $templates );
-
-		return $this->success( $templates );
-
+		return $forms;
 	}
+
 }

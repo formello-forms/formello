@@ -1,8 +1,8 @@
 import { __, sprintf } from '@wordpress/i18n';
 
-import { useState, useEffect, RawHTML } from '@wordpress/element';
-import { addQueryArgs } from '@wordpress/url';
+import { useState, useEffect } from '@wordpress/element';
 import { useSelect, dispatch, select } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
 
 import {
 	InspectorControls,
@@ -20,16 +20,9 @@ import { ActionsModal } from './actions/modal';
 import { getActions } from './actions/actions';
 
 import {
-	BaseControl,
-	TextareaControl,
-	ToggleControl,
-	PanelBody,
 	ToolbarButton,
 	ToolbarGroup,
 	ToolbarDropdownMenu,
-	Notice,
-	Button,
-	Flex
 } from '@wordpress/components';
 
 import classnames from 'classnames';
@@ -37,7 +30,7 @@ import useFormSaved from './useFormSaved';
 
 import { 
 	Form
-} from '../../utils/icons';
+} from '../../icons/icons';
 
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
@@ -54,13 +47,14 @@ const ALLOWED_BLOCKS = [
 	'formello/fileupload',
 ];
 import apiFetch from '@wordpress/api-fetch';
+
 import TemplatesModal from '../library/templates-modal.js';
+import { Settings } from './settings/basic';
 import { AdvancedSettings } from './settings/advanced';
 import {
 	getConstraints,
 	getFieldsName,
 } from '../../components/merge-tags/functions';
-import { find } from 'lodash';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -77,7 +71,18 @@ function Edit( props ) {
 	const { attributes, className, setAttributes, clientId, hasInnerBlocks } =
 		props;
 
+	const { postType } = useSelect( ( select ) => ( {
+		postType: select( 'core/editor' ).getCurrentPostType()
+	} ) );
+
+	const { postId } = useSelect( ( select ) => ( {
+		postId: select( 'core/editor' ).getCurrentPostId()
+	} ) );
+
 	const saved = useFormSaved();
+    const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
+	const registeredActions = getActions();
+    const actions = meta[ '_actions' ];
 
 	const updateTransient = () => {
 		apiFetch( {
@@ -100,12 +105,11 @@ function Edit( props ) {
 					redirect_url: attributes.redirectUrl,
 					fields: getFieldsName( clientId ),
 					constraints: getConstraints( clientId ),
-					actions: attributes.actions,
+					actions: actions,
 					messages: {
 						success: attributes.successMessage,
 						error: attributes.errorMessage,
-					},
-					others: attributes.formSettings
+					}
 				},
 			},
 		} ).then( () => {
@@ -113,39 +117,11 @@ function Edit( props ) {
 		} );
 	}
 
-	const postType = useSelect(
-		( select ) => select( 'core/editor' ).getCurrentPostType(),
-		[]
-	);
-	const postTitle = useSelect(
-		( select ) => select( 'core/editor' ).getPostEdits().title,
-		[]
-	);
-
-	const postId = useSelect( ( select ) =>
-		select( 'core/editor' ).getCurrentPostId()
-	);
-
 	const [ active, setActive ] = useState( false );
 	const [ showActionsModal, setShowActionsModal ] = useState( false );
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
-	/*useEffect( () => {
-		if ( 'formello_form' === postType && undefined !== postTitle ) {
-			setAttributes( { name: postTitle } );
-		}
-	}, [ postTitle ] );*/
-
 	useEffect( () => {
-		/*const idx = clientId.substr( 2, 9 ).replace( '-', '' ).replace( /-/g, '' );
-		if ( !attributes.name ) {
-			setAttributes( {
-				name: 'form-' + idx,
-			} );
-		}*/
-		if ( 'formello_form' !== postType || 'popper' !== postType ) {
-			setAttributes( { storeSubmissions: false } );
-		}
 		if (
 			undefined === attributes.id ||
 			0 === attributes.id ||
@@ -168,21 +144,29 @@ function Edit( props ) {
 		);
 	};
 
-	const actions = getActions();
-
 	const addAction = ( type ) => {
-		actions.forEach( ( a ) => {
+		registeredActions.forEach( ( a ) => {
 			if ( a.type === type ) {
-				setAttributes( { actions: [ ...attributes.actions, a ] } );
+				setMeta( { _actions: [ ...meta['_actions'], a ] } );
 				setShowActionsModal(a)
 			}
 		} );
 	};
 
+	const updateAction = ( settings ) => {
+		// 1. Make a shallow copy of the items
+		const items = [ ...actions ];
+		// 2. Make a shallow copy of the item you want to mutate
+		items[ active ] = settings;
+
+		setMeta( { _actions: items } );
+	};
+
 	const deleteAction = ( actionId ) => {
-		const items = [ ...attributes.actions ]; // make a separate copy of the array
-		items.splice( actionId, 1 );
-		setAttributes( { actions: items } );
+		const items = [ ...actions ]; // make a separate copy of the array
+		items.splice( active, 1 );
+		setMeta( { _actions: items } );
+		setShowActionsModal( false );
 	};
 
 	const blockProps = useBlockProps( {
@@ -195,11 +179,6 @@ function Edit( props ) {
 		template: [ [ 'formello/button' ] ],
 		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
 	} );
-
-	const settingsUrl = addQueryArgs( 'edit.php', {
-		post_type: 'formello_form',
-		page: 'formello-settings',
-	} ) + '#/recaptcha';
 
 	return (
 		<div { ...innerBlocksProps }>
@@ -217,7 +196,7 @@ function Edit( props ) {
 					<ToolbarDropdownMenu
 						icon={ 'admin-generic' }
 						label={ __( 'Add action', 'formello' ) }
-						controls={ actions.map( ( a ) => {
+						controls={ registeredActions.map( ( a ) => {
 							return {
 								title: a.title,
 								icon: a.icon,
@@ -227,8 +206,10 @@ function Edit( props ) {
 							};
 						} ) }
 					/>
-					{ attributes.actions.map( ( a, i ) => {
-						let action = find(actions, {type:a.type});
+					{ actions.map( ( a, i ) => {
+						let action = registeredActions.find(obj => {
+						  return obj.type === a.type
+						})
 						if( ! action ){
 							return
 						}
@@ -247,114 +228,7 @@ function Edit( props ) {
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody
-					title={ __( 'Settings', 'formello' ) }
-					initialOpen={ true }
-				>
-					<ToggleControl
-						label={ __( 'Store submissions', 'formello' ) }
-						checked={ attributes.storeSubmissions }
-						onChange={ ( val ) => {
-							setAttributes( { storeSubmissions: val } );
-						} }
-					/>
-					<ToggleControl
-						label={ __( 'Enable ReCaptcha', 'formello' ) }
-						checked={ attributes.recaptchaEnabled }
-						onChange={ ( val ) => {
-							setAttributes( { recaptchaEnabled: val } );
-						} }
-					/>
-					{ ( '' === formello.settings.reCaptcha.site_key ||
-						'' === formello.settings.reCaptcha.secret_key ) &&
-							attributes.recaptchaEnabled && (
-							<div className="block-editor-contrast-checker">
-								<Notice
-									status="warning"
-									isDismissible={ false }
-								>
-									<RawHTML>
-										{ sprintf(
-											/* translators: Number of templates. */
-											__(
-												'Please be sure to add a ReCaptcha API key on %s',
-												'formello'
-											),
-											`<a href="${ settingsUrl }">settings page</a>`
-										) }
-									</RawHTML>
-								</Notice>
-							</div>
-						) }
-					<ToggleControl
-						label={ __( 'Hide form after submission', 'formello' ) }
-						checked={ attributes.hide }
-						onChange={ ( val ) => {
-							setAttributes( { hide: val } );
-						} }
-					/>
-					<BaseControl>
-						<URLInput
-							label={ __( 'Redirect Url', 'formello' ) }
-							value={ attributes.redirectUrl }
-							onChange={ ( newURL ) =>
-								setAttributes( { redirectUrl: newURL } )
-							}
-							className={ 'formello-urlinput' }
-						/>
-					</BaseControl>
-					<TextareaControl
-						label={ __( 'Success Message', 'formello' ) }
-						placeholder={ formello.settings.messages.form.success }
-						value={ attributes.successMessage }
-						onChange={ ( val ) =>
-							setAttributes( { successMessage: val } )
-						}
-					/>
-					<TextareaControl
-						label={ __( 'Error Message', 'formello' ) }
-						placeholder={ formello.settings.messages.form.error }
-						value={ attributes.errorMessage }
-						onChange={ ( val ) => setAttributes( { errorMessage: val } ) }
-					/>
-				</PanelBody>
-				<PanelBody
-					title={ __( 'Actions', 'formello' ) }
-					initialOpen={ false }
-				>
-					{ attributes.actions.map( ( a, i ) => {
-						let action = find(actions, {type:a.type});
-						return (
-							<Flex
-								className={ 'formello-actions' }
-								key={ i }
-							>
-								<a 
-									href="#"
-									onClick={ () => {
-										setActive( i );
-										setShowActionsModal( a );
-									} }
-								>
-									{ a.title }
-								</a>
-								<Button 
-									onClick={ () => {
-										if ( window.confirm( __( 'Delete action ' + a.title + '?', 'formello' ) ) ) {
-											deleteAction( i );
-										}
-									} }
-									icon={ 'no' } 
-									isSmall
-								/>
-							</Flex>
-						);
-					} ) }
-					{
-						!attributes.actions.length &&
-						<p>{ __( 'No action added.', 'formello' ) }</p>
-					}
-				</PanelBody>
+				<Settings {...props} />
 			</InspectorControls>
 			<AdvancedSettings { ...props } />
 			{ 'templates' === isModalOpen && (
@@ -366,10 +240,12 @@ function Edit( props ) {
 			) }
 			{ showActionsModal && (
 				<ActionsModal
-					{ ...props }
 					action={ showActionsModal }
 					actionId={ active }
 					className={ 'formello-modal' }
+					clientId={ clientId }
+					deleteAction={ deleteAction }
+					updateAction={ updateAction }
 					onRequestClose={ () => {
 						setShowActionsModal( false );
 					} }

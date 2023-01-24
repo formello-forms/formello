@@ -2,8 +2,7 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	Button,
-	Icon,
+	ExternalLink,
 } from '@wordpress/components';
 
 import { __ } from '@wordpress/i18n';
@@ -24,16 +23,9 @@ export default function Help() {
 						) }
 					</p>
 
-					<Button
-						isSecondary
-						href="https://docs.formello.net"
-						target="_blank"
-						icon="external"
-						iconPosition="right"
-					>
+					<ExternalLink href="https://docs.formello.net">
 						{ __( 'Documentation', 'formello' ) }
-					</Button>
-
+					</ExternalLink>
 					<p>
 						{ __(
 							'We would love to help you out if you need any help.',
@@ -41,15 +33,10 @@ export default function Help() {
 						) }
 					</p>
 
-					<Button
-						isSecondary
-						target="_blank"
-						href="https://wordpress.org/support/plugin/formello/"
-						icon="external"
-						iconPosition="right"
-					>
+					<ExternalLink href="https://wordpress.org/support/plugin/formello/">
 						{ __( 'Ask a question', 'formello' ) }
-					</Button>
+					</ExternalLink>
+
 				</CardBody>
 			</Card>
 			<Card className="ads-container__reviews">
@@ -60,24 +47,13 @@ export default function Help() {
 				<CardBody>
 					<p>
 						{ __(
-							'If you like the plugin you can share a review to help us and spread some love!',
+							'If you like the Formello you can share a review to help us and spread some love!',
 							'formello'
 						) }
 					</p>
-
-					<Button
-						variant="secondary"
-						target="_blank"
-						className="formello-ratings"
-						href="https://wordpress.org/support/plugin/formello/reviews/#new-post"
-					>
-						{ __( 'Rate', 'formello' ) }
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-						<Icon icon="star-filled" />
-					</Button>
+					<ExternalLink href="https://wordpress.org/support/plugin/formello/reviews/#new-post">
+						{ __( 'Rate 5 stars!', 'formello' ) }
+					</ExternalLink>
 				</CardBody>
 			</Card>
 		</div>

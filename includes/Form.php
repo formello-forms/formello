@@ -100,9 +100,9 @@ class Form {
 		$this->formello_settings = get_option( 'formello' );
 
 		if ( ! empty( $id ) ) {
-			$this->ID       = $id;
-			$settings = get_post_meta( $id, '_formello_settings', true );
-			$this->logger   = Log::get_instance();
+			$this->ID     = $id;
+			$settings     = get_post_meta( $id, '_formello_settings', true );
+			$this->logger = Log::get_instance();
 		}
 		// parse default settings.
 		$this->settings = $this->parse_settings( $settings );
@@ -157,7 +157,7 @@ class Form {
 	 *
 	 * @return array
 	 */
-	public function parse_settings( $settings ) {
+	private function parse_settings( $settings ) {
 		$defaults = array(
 			'storeSubmissions' => true,
 			'recaptchaEnabled' => false,
@@ -206,16 +206,40 @@ class Form {
 	}
 
 	/**
-	 * Get form fields
+	 * Get form fields description.
 	 *
 	 * @return array
 	 */
 	public function get_fields() {
 		$fields = array();
 		foreach ( $this->settings['fields'] as $key => $value ) {
-			$fields[ sanitize_key( $key ) ] = $value;
+			$fields[ $key ] = $value;
 		}
 		return $fields;
+	}
+
+	/**
+	 * Get form fields value.
+	 *
+	 * @param string $name The field name.
+	 * @return array
+	 */
+	public function get_field( $name ) {
+		if ( ! empty( $this->data['fields'][ $name ] ) ) {
+			return $this->data['fields'][ $name ];
+		}
+	}
+
+	/**
+	 * Set form fields value.
+	 *
+	 * @param string $name The field name.
+	 * @param string $value The field name.
+	 */
+	public function set_field( $name, $value ) {
+		if ( ! empty( $this->settings['fields'][ $name ] ) ) {
+			$this->data['fields'][ $name ] = $this->sanitize( $name, $value );
+		}
 	}
 
 	/**
@@ -308,6 +332,7 @@ class Form {
 		$query = 'INSERT INTO ' . $wpdb->prefix . 'formello_submissions_meta (form_id, submission_id, field_name, field_value) VALUES ';
 		$query .= implode( ', ', $place_holders );
 
+		//phpcs:ignore
 		$wpdb->query( $wpdb->prepare( $query, $values ) );
 
 	}
@@ -351,13 +376,22 @@ class Form {
 			return false;
 		}
 
+		// clean up post request.
 		// phpcs:ignore
-		$posted_values = array_intersect_key($_POST, $this->get_fields());
+		$posted_values = array_intersect_key( $_POST, $this->get_fields() );
 
 		// filter out ignored field names and sanitize.
 		foreach ( $posted_values as $key => $value ) {
-			$this->data['fields'][ sanitize_key( $key ) ] = $this->sanitize( $key, $value );
+			$this->set_field( $key, $value );
 		}
+
+		/**
+		 * This filter allows you to add fields to request that needs to be validated.
+		 *
+		 * @param array $fields
+		 * @param Formello\Form $form
+		 */
+		$this->data['fields'] = apply_filters( 'formello_data_fields', $this->data['fields'], $this );
 
 		// Not spam, we can validate.
 		if ( ! $this->is_valid() ) {
@@ -401,6 +435,16 @@ class Form {
 	private function sanitize( $key, $value ) {
 		$fields = $this->get_fields();
 
+		// Skip file.
+		if ( 'file' === $fields[ $key ] ) {
+			return sanitize_text_field( $value );
+		}
+
+		// Skip password. We do not store password.
+		if ( 'password' === $fields[ $key ] ) {
+			return sanitize_text_field( $value );
+		}
+
 		if ( is_array( $value ) ) {
 			$field = array_map( array( $this, 'replace_tags' ), $value );
 			return array_map( 'sanitize_text_field', $field );
@@ -413,10 +457,6 @@ class Form {
 
 		if ( 'textarea' === $fields[ $key ] ) {
 			return sanitize_textarea_field( $this->replace_tags( $value ) );
-		}
-
-		if ( 'file' === $fields[ $key ] ) {
-			error_log( $key );
 		}
 
 		return sanitize_text_field( $this->replace_tags( $value ) );
@@ -463,44 +503,21 @@ class Form {
 	private function is_valid() {
 		$errors = array();
 
-		// perform validation.
-		$validator = new Validator(
-			array(
-				'required' => ':attribute ' . $this->formello_settings['messages']['missingValue']['default'],
-				'color' => ':value ' . $this->formello_settings['messages']['patternMismatch']['color'],
-				'date' => ':value ' . $this->formello_settings['messages']['patternMismatch']['date'],
-				'email' => ':value ' . $this->formello_settings['messages']['patternMismatch']['email'],
-				'regex' => ':value ' . $this->formello_settings['messages']['patternMismatch']['default'],
-				'month' => ':value ' . $this->formello_settings['messages']['patternMismatch']['month'],
-				'numeric' => ':value ' . $this->formello_settings['messages']['patternMismatch']['number'],
-				'time' => ':value ' . $this->formello_settings['messages']['patternMismatch']['time'],
-				'url' => ':value ' . $this->formello_settings['messages']['patternMismatch']['url'],
-				'minlength' => str_replace(
-					array( '{minLength}', '{length}' ),
-					array( ':minlength', ':value' ),
-					$this->formello_settings['messages']['wrongLength']['under'],
-				),
-				'maxlength' => str_replace(
-					array( '{maxLength}', '{length}' ),
-					array( ':maxlength', ':value' ),
-					$this->formello_settings['messages']['wrongLength']['over'],
-				),
-				'min' => ':value ' . str_replace( '{min}', ':min', $this->formello_settings['messages']['outOfRange']['under'] ),
-				'max' => ':value ' . str_replace( '{max}', ':max', $this->formello_settings['messages']['outOfRange']['over'] ),
-			)
-		);
-		$validator->addValidator( 'maxlength', new \Formello\Validators\MaxLengthRule() );
-		$validator->addValidator( 'minlength', new \Formello\Validators\MinLengthRule() );
+		if ( ! empty( $this->data['fields'] ) ) {
+			// perform validation.
+			$validator = new Validator( $this->get_validation_messages() );
+			$validator->addValidator( 'maxlength', new \Formello\Validators\MaxLengthRule() );
+			$validator->addValidator( 'minlength', new \Formello\Validators\MinLengthRule() );
 
-		// phpcs:ignore
-		$validation = $validator->make( $_POST + $_FILES, $this->get_constraints() );
+			$validation = $validator->make( $this->data['fields'], $this->get_constraints() );
 
-		// then validate.
-		$validation->validate();
+			// then validate.
+			$validation->validate();
 
-		if ( $validation->fails() ) {
-			// handling errors.
-			$errors = $validation->errors()->all( ':message' );
+			if ( $validation->fails() ) {
+				// handling errors.
+				$errors = $validation->errors()->all( ':message' );
+			}
 		}
 
 		/**
@@ -522,8 +539,7 @@ class Form {
 		 * Error codes with a specific error message are: "required_field_missing", "invalid_email", and "error"
 		 *
 		 * @param string $errors
-		 * @param Form $form
-		 * @param array $data
+		 * @param Formello\Form $form
 		 */
 		$errors = apply_filters( 'formello_validate_form', $errors, $this );
 
@@ -644,4 +660,36 @@ class Form {
 
 		return $actions;
 	}
+
+	/**
+	 * Get validation messages
+	 *
+	 * @return array The validation messages.
+	 */
+	public function get_validation_messages() {
+		return array(
+			'required' => ':attribute ' . $this->formello_settings['messages']['missingValue']['default'],
+			'color' => ':value ' . $this->formello_settings['messages']['patternMismatch']['color'],
+			'date' => ':value ' . $this->formello_settings['messages']['patternMismatch']['date'],
+			'email' => ':value ' . $this->formello_settings['messages']['patternMismatch']['email'],
+			'regex' => ':value ' . $this->formello_settings['messages']['patternMismatch']['default'],
+			'month' => ':value ' . $this->formello_settings['messages']['patternMismatch']['month'],
+			'numeric' => ':value ' . $this->formello_settings['messages']['patternMismatch']['number'],
+			'time' => ':value ' . $this->formello_settings['messages']['patternMismatch']['time'],
+			'url' => ':value ' . $this->formello_settings['messages']['patternMismatch']['url'],
+			'minlength' => str_replace(
+				array( '{minLength}', '{length}' ),
+				array( ':minlength', ':value' ),
+				$this->formello_settings['messages']['wrongLength']['under'],
+			),
+			'maxlength' => str_replace(
+				array( '{maxLength}', '{length}' ),
+				array( ':maxlength', ':value' ),
+				$this->formello_settings['messages']['wrongLength']['over'],
+			),
+			'min' => ':value ' . str_replace( '{min}', ':min', $this->formello_settings['messages']['outOfRange']['under'] ),
+			'max' => ':value ' . str_replace( '{max}', ':max', $this->formello_settings['messages']['outOfRange']['over'] ),
+		);
+	}
+
 }

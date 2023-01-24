@@ -8,6 +8,7 @@
 namespace Formello;
 
 use \Katzgrau\KLogger\Logger;
+use function Formello\Utils\formello_dir;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -67,7 +68,7 @@ class Log {
 			)
 		);
 		$this->logger = new \Katzgrau\KLogger\Logger(
-			FORMELLO_UPLOAD . '/logs',
+			formello_dir() . '/logs',
 			'debug',
 			array(
 				'filename' => $settings['log_file'],

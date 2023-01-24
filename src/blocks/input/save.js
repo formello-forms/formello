@@ -1,83 +1,111 @@
 import { RichText, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import classnames from 'classnames';
-import { pickBy, identity, pick } from 'lodash';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-export default function save( { attributes, className } ) {
-	// if value is empty assign undefined;
-	if ( 'checkbox' === attributes.type || 'radio' === attributes.type ) {
-		attributes.value = attributes.value ? attributes.value : undefined;
-	}
+export default function save( { attributes } ) {
 
-	if ( ! attributes.name ) {
-		attributes.name = attributes.id;
-	}
+	const {
+		type,
+		value,
+		name,
+		id,
+		withButton,
+		withOutput,
+		grouped,
+		advanced,
+		validation,
+		enableMismatch,
+		mismatchMessage,
+		match,
+		autocomplete,
+		enableAutoComplete,
+		accept,
+		flatpickr,
+		noWrapper,
+		required,
+		requiredText,
+		hideRequired,
+		label,
+		hideLabel,
+		showHelp,
+		help,
+		dateFormat,
+		mode,
+		inlineCalendar,
+		timeFormat,
+		enableTime,
+		minDate,
+		className,
+		multiple
+	} = attributes;
 
-	className = classnames( 'formello', {
-		'formello-group': attributes.withButton || attributes.withOutput,
-		'formello-group grouped': attributes.grouped,
+	const containerClass = classnames( 'formello', className, {
+		'formello-group': withButton || withOutput,
+		'formello-group grouped': grouped,
 		'formello-checkbox':
-			'checkbox' === attributes.type || 'radio' === attributes.type,
+			'checkbox' === type || 'radio' === type,
 	} );
 
 	const labelClassName = classnames( {
-		hide: attributes.hideLabel
+		hide: hideLabel
 	} );
 
 	const fieldClassName = classnames( {
-		'flatpickr': attributes.advanced && 'date' === attributes.type,
-		'filepond': attributes.advanced && 'file' === attributes.type,
+		'formello-advanced': advanced,
 	} );
 
 	// include only supported attributes
-	let htmlAttrs = pick( attributes, SUPPORTED_ATTRIBUTES[ attributes.type ] );
-	// clean empty attributes
-	htmlAttrs = pickBy( htmlAttrs, identity );
+	let htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ type ].map( col => [col, attributes[col] ] ) );
 
-	if ( attributes.validation ) {
-		htmlAttrs[ 'data-bouncer-message' ] = attributes.validation;
+	Object.keys(htmlAttrs).forEach((k) => htmlAttrs[k] == '' && delete htmlAttrs[k]);
+
+
+	if ( validation ) {
+		htmlAttrs[ 'data-bouncer-message' ] = validation;
 	}
 
-	if ( attributes.enableMismatch && attributes.mismatchMessage ) {
-		htmlAttrs[ 'data-bouncer-mismatch-message' ] = attributes.mismatchMessage;
+	if ( enableMismatch && mismatchMessage ) {
+		htmlAttrs[ 'data-bouncer-mismatch-message' ] = mismatchMessage;
 	}
 
-	if ( attributes.enableMismatch && attributes.match ) {
-		htmlAttrs[ 'data-bouncer-match' ] = attributes.match;
+	if ( enableMismatch && match ) {
+		htmlAttrs[ 'data-bouncer-match' ] = match;
 	}
 
-	if ( attributes.withOutput ) {
+	if ( withOutput ) {
 		htmlAttrs.oninput = 'this.nextElementSibling.value = this.value';
 	}
 
-	if ( ! attributes.enableAutoComplete ) {
+	if ( ! enableAutoComplete ) {
 		htmlAttrs.autocomplete = undefined;
 	}
 
-	if ( 'file' === attributes.type ) {
-		htmlAttrs.name;
-		htmlAttrs.accept = attributes.accept?.join(',');
+	if ( advanced && 'date' === type ) {
+		htmlAttrs['data-date-format'] = dateFormat;
+		htmlAttrs['data-time-format'] = timeFormat;
+		htmlAttrs['data-enable-time'] = enableTime;
+		htmlAttrs['data-mode'] = mode;
+		htmlAttrs['data-min-date'] = minDate;
+		htmlAttrs['data-inline'] = inlineCalendar;
 	}
 
-	if ( attributes.advanced && 'date' === attributes.type ) {
-		htmlAttrs.type = 'text';
-		Object.entries( attributes.flatpickr ).forEach( ( [ key, value ] ) => {
-			htmlAttrs[ 'data-' + key ] = value;
-		} );
+	if ( advanced && 'time' === type ) {
+		htmlAttrs['data-time-format'] = timeFormat;
+		htmlAttrs['data-enable-time'] = enableTime;
 	}
 
-	if ( attributes.noWrapper || 'hidden' === attributes.type ) {
+	if ( noWrapper || 'hidden' === type ) {
 		return <input { ...htmlAttrs } className={ fieldClassName } />;
 	}
 
 	return (
-		<div { ...useBlockProps.save() } className={ className }>
-			{ 'hidden' !== attributes.type && (
-				<label className={ labelClassName } htmlFor={ attributes.id }>
-					{ attributes.label }
-					{ attributes.required && ! attributes.hideRequired && (
+		<div { ...useBlockProps.save() } className={ containerClass }>
+			{ 'hidden' !== type && (
+				<label className={ labelClassName } htmlFor={ id }>
+					<RichText.Content tagName="span" value={ label } />
+					{ required && (
 						<span className="required">
-							{ attributes.requiredText }
+							{ requiredText }
 						</span>
 					) }
 				</label>
@@ -85,10 +113,10 @@ export default function save( { attributes, className } ) {
 
 			<input { ...htmlAttrs } className={ fieldClassName } />
 
-			{ attributes.withButton && <InnerBlocks.Content /> }
-			{ attributes.withOutput && <output>{ attributes.value }</output> }
-			{ 'hidden' !== attributes.type && attributes.showHelp && (
-				<RichText.Content tagName="small" value={ attributes.help } />
+			{ withButton && <InnerBlocks.Content /> }
+			{ withOutput && <output>{ value }</output> }
+			{ 'hidden' !== type && showHelp && (
+				<RichText.Content tagName="small" value={ help } />
 			) }
 		</div>
 	);

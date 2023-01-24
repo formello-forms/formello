@@ -71,11 +71,29 @@ export function AdvancedSettings( props ) {
 					value={ attributes.requiredText }
 					onChange={ changeRequiredText }
 				/>
-				<ToggleControl
+				<SelectControl
 					label={ __( 'Autocomplete', 'formello' ) }
-					checked={ attributes.autoComplete }
+		            value={ attributes.autoComplete }
+		            options={ [
+		                { label: 'On', value: 'on' },
+		                { label: 'Off', value: 'off' },
+		            ] }
 					onChange={ ( val ) => {
 						setAttributes( { autoComplete: val } );
+					} }
+				/>
+				<ToggleControl
+					label={ __( 'Enable Js validation', 'formello' ) }
+					checked={ attributes.enableJsValidation }
+					onChange={ ( val ) => {
+						setAttributes( { enableJsValidation: val } );
+					} }
+				/>
+				<ToggleControl
+					label={ __( 'No HTML5 validation', 'formello' ) }
+					checked={ attributes.noValidate }
+					onChange={ ( val ) => {
+						setAttributes( { noValidate: val } );
 					} }
 				/>
 				<ToggleControl

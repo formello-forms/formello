@@ -5,54 +5,49 @@
  */
 import {
 	BaseControl,
-	Button,
-	Dropdown,
+	DropdownMenu,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
-
-import TagSelector from './tagSelector';
+import {
+	useTabs,
+} from './use-tabs';
+import TabContent from './tab-content';
 
 export default function mergeTags( props ) {
-	const { label, value, placeholder, onChange, className } = props;
-
-	const icon = 'list-view';
+	const { 
+		label,
+		value,
+		placeholder,
+		onChange,
+		icon = 'list-view',
+		clientId,
+		tabs = useTabs( clientId ),
+		children
+	} = props;
 
 	const change = ( val ) => {
 		onChange( val );
-		//onChange( value + val );
 	};
 
 	return (
 		<BaseControl>
 			<InputControl
-				className={ className }
 				value={ value }
 				label={ label }
-				onChange={ ( val ) => onChange( val ) }
-				labelPosition="top"
+				onChange={ onChange }
 				placeholder={ placeholder }
 				suffix={
-					<Dropdown
-						position="bottom right"
-						renderToggle={ ( { isOpen, onToggle } ) => (
-							<Button
-								isSmall
-								icon={ icon }
-								onClick={ onToggle }
-								aria-expanded={ isOpen }
-							/>
+					<DropdownMenu 
+						icon={ icon } 
+						label={ label } 
+						toggleProps={{ isSmall: true }}
+					>
+						{ ( { onClose } ) => (
+							
+							<TabContent tabs={ tabs } onChange={ onChange } />
+						
 						) }
-						renderContent={ ( { onToggle } ) => (
-							<TagSelector
-								{ ...props }
-								insertTag={ ( val ) => {
-									onToggle();
-									change( val );
-								} }
-								onToggle={ onToggle }
-							/>
-						) }
-					/>
+					</DropdownMenu>
 				}
 			/>
 		</BaseControl>

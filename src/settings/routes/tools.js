@@ -9,6 +9,7 @@ import General from '../components/tools/general.js';
 import Exporter from '../components/tools/exporter.js';
 import Importer from '../components/tools/importer.js';
 import Header from '../components/masthead.js';
+import api from '@wordpress/api';
 
 export default function Tools( props ) {
 

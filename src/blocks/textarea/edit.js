@@ -35,17 +35,32 @@ import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
  */
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
+	const {
+		name,
+		id,
+		label,
+		hideLabel,
+		cols,
+		rows,
+		value,
+		placeholder,
+		required,
+		requiredText,
+		readonly,
+		showHelp,
+		help
+	} = attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES[ 'textarea' ];
 
 	useEffect( () => {
 		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
-		if ( ! attributes.id ) {
+		if ( ! id ) {
 			setAttributes( {
 				id: 'field_' + idx,
 			} );
 		}
-		if ( ! attributes.name ) {
+		if ( ! name ) {
 			setAttributes( {
 				name: 'field_' + idx,
 			} );
@@ -72,28 +87,26 @@ export default function Edit( props ) {
 				) }
 			</BlockControls>
 			<InspectorControls>
-				<Options { ...props } />
-				<ValidationOptions { ...props } />
+				<Options { ...props } fieldType="textarea" />
+				<ValidationOptions { ...props } fieldType="textarea" />
 			</InspectorControls>
 			<InspectorAdvancedControls>
-				<AdvancedOptions { ...props } />
+				<AdvancedOptions { ...props } fieldType="textarea" />
 			</InspectorAdvancedControls>
 
-			<Label { ...props } htmlFor="input" />
+			<Label { ...props } htmlFor="textarea" />
 			<textarea
-				type={ attributes.type }
-				cols={ attributes.cols }
-				rows={ attributes.rows }
-				value={ attributes.value || '' }
+				cols={ cols }
+				rows={ rows }
+				value={ value }
 				onChange={ onChange }
-				className={ attributes.fieldClass }
-				placeholder={ attributes.placeholder }
+				placeholder={ placeholder }
 			></textarea>
 
-			{ attributes.showHelp && (
+			{ showHelp && (
 				<RichText
 					tagName="small"
-					value={ attributes.help }
+					value={ help }
 					onChange={ ( val ) => setAttributes( { help: val } ) }
 					placeholder={ __( 'Enter help message…', 'formello' ) }
 					allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
