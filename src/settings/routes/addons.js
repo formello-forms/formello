@@ -56,6 +56,12 @@ export default function Addons( props ) {
 					</Button>
 					<Button 
 						className="components-button components-tab-panel__tabs-item"
+						onClick={ () => setFilter('utility') }
+					>
+						{ __( 'Utility', 'formello' ) }
+					</Button>
+					<Button 
+						className="components-button components-tab-panel__tabs-item"
 						onClick={ () => setFilter('free') }
 					>
 						{ __( 'Free', 'formello' ) }

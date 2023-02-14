@@ -2,12 +2,6 @@ import menuFix from './menuFix'
 import './style.scss';
 
 import { __ } from '@wordpress/i18n';
-import {
-	Button,
-	Spinner,
-	Notice,
-	SelectControl
-} from '@wordpress/components';
 import { HashRouter, Routes, Route, useNavigate } from "react-router-dom";
 import LoadingSpinner from './components/loading-spinner.js';
 

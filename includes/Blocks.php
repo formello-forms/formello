@@ -186,16 +186,15 @@ class Blocks {
 			'form',
 			array( 'label' => __( 'Form', 'formello' ) )
 		);
+
 		$patterns = get_transient( 'formello_patterns', false );
 		$templates = get_transient( 'formello_templates', false );
 
-		$patterns = array_merge( $patterns, $templates );
-
-		if ( ! $patterns ) {
-			return;
+		if ( $patterns ) {
+			$templates = array_merge( $patterns, $templates );
 		}
 
-		foreach ( $patterns as $pattern ) {
+		foreach ( $templates as $pattern ) {
 			register_block_pattern(
 				$pattern['name'],
 				$pattern

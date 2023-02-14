@@ -4,6 +4,7 @@
 /.github
 /.storybook
 /src
+/tests
 /assets/images
 
 .distignore
@@ -13,6 +14,9 @@
 .eslintrc.json
 .gitattributes
 .gitignore
+.phpunit.result.cache
+.tavis.yml
+
 package-lock.json
 package.json
 composer.json
@@ -21,6 +25,8 @@ phpcs.xml.dist
 scoper.inc.php
 Gruntfile.js
 config.json
+phpunit.xml.dist
+
 
 *.zip
 *.psd

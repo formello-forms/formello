@@ -43,7 +43,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 	forms.forEach( ( block ) => {
-		console.log(block)
 		new Formello( block );
 	} );
 } );

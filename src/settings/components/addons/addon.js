@@ -6,7 +6,7 @@ export default function Addon( props ) {
 	const { info } = props;
 
 	return (
-		<Card className="stocazzo">
+		<Card>
 			<CardHeader>
 				<h2>{ info.title }</h2>
 			</CardHeader>

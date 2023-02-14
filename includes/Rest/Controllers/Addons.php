@@ -65,7 +65,7 @@ class Addons extends Base {
 				if ( $new_addons && is_array( $new_addons ) ) {
 					$addons = $new_addons;
 
-					set_transient( 'formello_addons', $addons, DAY_IN_SECONDS );
+					set_transient( 'formello_addons', $addons );
 				}
 			} else {
 				$addons = array();

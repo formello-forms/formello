@@ -11,12 +11,17 @@ namespace Formello\Utils;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Function to retrieve unencrypted settings
+ * Get default options
+ *
+ * @return array Default options.
  */
-function formello_frontend_option() {
-	$settings = get_option( 'formello' );
-
+function formello_default_options() {
 	$defaults = array(
+		'log' => false,
+		'log_file' => 'formello_' . time() . '.txt',
+		'license' => '',
+		'license_status' => '',
+		'version' => '1.0',
 		'messages' => array(
 			'form' => array(
 				'success' => __( 'Thanks for submitting this form.', 'formello' ),
@@ -48,11 +53,22 @@ function formello_frontend_option() {
 				'under' => __( 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.', 'formello' ),
 			),
 		),
+		'reCaptcha' => array(
+			'version'    => '3',
+			'site_key'   => '',
+			'secret_key' => '',
+			'threshold'  => 0.4,
+		),
 	);
+	return $defaults;
+}
 
-	if ( empty( $settings ) ) {
-		return $defaults;
-	}
+
+/**
+ * Function to retrieve unencrypted settings
+ */
+function formello_frontend_option() {
+	$settings = get_option( 'formello', formello_default_options() );
 
 	$frontend_settings = array(
 		'messages' => $settings['messages'],

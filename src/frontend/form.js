@@ -19,7 +19,7 @@ class Formello {
 	}
 
 	init() {
-		this.element.querySelectorAll("[multiple]").forEach( (e) => {
+		this.element.querySelectorAll( '[multiple]' ).forEach( (e) => {
 			const name = e.getAttribute( 'name' );
 			e.setAttribute( 'name', name + '[]' )
 		} )

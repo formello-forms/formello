@@ -10,6 +10,7 @@ namespace Formello;
 
 use function Formello\Utils\recursive_sanitize_text_field;
 use function Formello\Utils\formello_dir_url;
+use function Formello\Utils\formello_default_options;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -144,50 +145,7 @@ function register_settings() {
 
 	$settings = apply_filters( 'formello_settings', $settings );
 
-	$defaults = array(
-		'log' => false,
-		'log_file' => 'formello_' . time() . '.txt',
-		'license' => '',
-		'license_status' => '',
-		'version' => '1.0',
-		'messages' => array(
-			'form' => array(
-				'success' => __( 'Thanks for submitting this form.', 'formello' ),
-				'error' => __( 'Ops. An error occurred.', 'formello' ),
-			),
-			'missingValue' => array(
-				'default'         => __( 'Please fill out this field.', 'formello' ),
-				'checkbox'        => __( 'This field is required.', 'formello' ),
-				'radio'           => __( 'Please select a value.', 'formello' ),
-				'select'          => __( 'Please select a value.', 'formello' ),
-				'select-multiple' => __( 'Please select at least one value.', 'formello' ),
-			),
-			'patternMismatch' => array(
-				'email'   => __( 'Please enter a valid email address.', 'formello' ),
-				'url'     => __( 'Please enter a URL.', 'formello' ),
-				'number'  => __( 'Please enter a number', 'formello' ),
-				'color'   => __( 'Please match the following format: #rrggbb', 'formello' ),
-				'date'    => __( 'Please use the YYYY-MM-DD format', 'formello' ),
-				'time'    => __( 'Please use the 24-hour time format. Ex. 23:00', 'formello' ),
-				'month'   => __( 'Please use the YYYY-MM format', 'formello' ),
-				'default' => __( 'Please match the requested format.', 'formello' ),
-			),
-			'outOfRange' => array(
-				'over'  => __( 'Please select a value that is no more than {max}.', 'formello' ),
-				'under' => __( 'Please select a value that is no less than {min}.', 'formello' ),
-			),
-			'wrongLength' => array(
-				'over'  => __( 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.', 'formello' ),
-				'under' => __( 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.', 'formello' ),
-			),
-		),
-		'reCaptcha' => array(
-			'version'    => '3',
-			'site_key'   => '',
-			'secret_key' => '',
-			'threshold'  => 0.4,
-		),
-	);
+	$defaults = formello_default_options();
 
 	$defaults = apply_filters( 'formello_settings_defaults', $defaults );
 
