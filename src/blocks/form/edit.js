@@ -125,7 +125,7 @@ function Edit( props ) {
 		if (
 			undefined === attributes.id ||
 			0 === attributes.id ||
-			attributes.id !== postId
+			Number(attributes.id )!== postId
 		) {
 			setAttributes( {
 				id: postId,
