@@ -190,7 +190,7 @@ class Blocks {
 		$patterns = get_transient( 'formello_patterns' );
 		$templates = get_transient( 'formello_templates' );
 
-		if ( $patterns ) {
+		if ( $patterns && $templates ) {
 			$templates = array_merge( $patterns, $templates );
 		}
 

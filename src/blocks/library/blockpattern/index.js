@@ -5,10 +5,14 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { cloneBlock } from '@wordpress/blocks';
 import {
 	VisuallyHidden,
+	Notice,
 	__unstableComposite as Composite,
 	__unstableUseCompositeState as useCompositeState,
 	__unstableCompositeItem as CompositeItem,
 } from '@wordpress/components';
+
+import { RawHTML } from '@wordpress/element';
+import { addQueryArgs } from '@wordpress/url';
 
 import { useState } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
@@ -155,8 +159,29 @@ const BlockPatternSetup = ( {
 	const { replaceBlock } = useDispatch( blockEditorStore );
 	const patterns = usePatternsSetup( clientId, blockName, filterPatternsFn );
 
+	const settingsUrl = addQueryArgs( 'edit.php', {
+		post_type: 'formello_form',
+		page: 'formello-settings',
+	} ) + '#/tools';
+
 	if ( ! patterns?.length ) {
-		return null;
+		return (
+			<Notice
+				status="warning"
+				isDismissible={ false }
+			>
+				<RawHTML>
+					{ sprintf(
+						/* translators: Number of templates. */
+						__(
+							'No pattern registered. Please try to resync on %s.',
+							'formello'
+						),
+						`<a href="${ settingsUrl }">tools page</a>`
+					) }
+				</RawHTML>
+			</Notice>
+		);
 	}
 
 	const onBlockPatternSelectDefault = ( blocks ) => {
