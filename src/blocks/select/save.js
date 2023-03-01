@@ -37,7 +37,7 @@ export default function save( { attributes, className } ) {
 		.map( x => x.value )
 
 	return (
-		<div className={ className }>
+		<div {...blockProps}>
 			<label className={ labelClassName } htmlFor={ id }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (

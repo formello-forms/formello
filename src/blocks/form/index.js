@@ -31,7 +31,7 @@ registerBlockType( metadata, {
 		multiple: false,
 		html: false,
 		lock: false,
-		//anchor: true,
+		anchor: true,
 		// eslint-disable-next-line
 		inserter:
 			'formello_form' === pagenow ? true : false,

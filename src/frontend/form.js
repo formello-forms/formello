@@ -5,11 +5,6 @@ class Formello {
 		this.element = element;
 
 		this.element.addEventListener(
-			'submit', 
-			this.handleSubmit.bind( this ),
-			true
-		);
-		this.element.addEventListener(
 			'bouncerFormValid',
 			this.handleSubmit.bind( this ),
 			true
@@ -26,6 +21,16 @@ class Formello {
 		this.reCaptcha();
 		this.isRtfEnabled();
 		this.addFlatpickr();
+
+		const { validate } = this.element.dataset;
+		if ( ! validate ) {
+			this.element.addEventListener(
+				'submit', 
+				this.handleSubmit.bind( this ),
+				true
+			);
+		}
+
 	}
 
 	handleSubmit( e ) {

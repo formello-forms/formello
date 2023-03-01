@@ -2,6 +2,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import variations from './variations';
+import deprecated from './deprecated';
 import metadata from './block.json';
 import { createBlock } from '@wordpress/blocks';
 import { Input } from '../../icons/icons';
@@ -13,6 +14,8 @@ import { Input } from '../../icons/icons';
  */
 registerBlockType( metadata, {
 	variations,
+
+	deprecated,
 
 	supports: {
 		// eslint-disable-next-line no-undef

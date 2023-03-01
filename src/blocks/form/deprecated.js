@@ -12,7 +12,7 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
 const blockAttributes = {
 		id: {
-			type: 'number'
+			type: 'string'
 		},
 		name: {
 			type: 'string',
@@ -170,6 +170,51 @@ const v2 =
 		}
 	};
 
-const deprecated = [ v1, v2 ]
+const v3 = 
+	{
+		attributes: blockAttributes,
+		save( { attributes, className } ) {
+			className = classnames(
+				//blockProps.className,
+				attributes.asRow ? attributes.labelAlign : undefined,
+				{
+					'as-row': attributes.asRow,
+					'is-bold': attributes.labelIsBold,
+					'formello-label-right': 'right' === attributes.labelAlign,
+				}
+			);
+			const honeypot = '_formello_h' + attributes.id;
+
+			return (
+				<form
+					{ ...useBlockProps.save( {
+						className,
+					} ) }
+					method="post"
+					id={ 'formello-' + attributes.id }
+					data-id={ attributes.id }
+					data-hide={ attributes.hide || undefined }
+					data-recaptcha={ attributes.recaptchaEnabled }
+					data-redirect={ attributes.redirectUrl }
+					noValidate
+					autoComplete={ attributes.autoComplete ? 'on' : 'off' }
+				>
+					<input type="hidden" name="_formello_id" value={ attributes.id } />
+					<input
+						type="text"
+						name={ honeypot }
+						className="formello-hp"
+						autocomplete="nope"
+					/>
+					<input type="hidden" name="action" value="formello" />
+					<InnerBlocks.Content />
+					<div className="formello-message"></div>
+				</form>
+			)
+
+		}
+	};
+
+const deprecated = [ v3, v2, v1 ]
 
 export default deprecated;

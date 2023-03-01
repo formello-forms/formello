@@ -31,7 +31,7 @@ export default function save( { attributes, className } ) {
 				className,
 			} ) }
 			method="post"
-			id={ 'formello-' + id }
+			//id={ 'formello-' + id }
 			data-id={ id }
 			data-hide={ hide || undefined }
 			data-recaptcha={ recaptchaEnabled || undefined }
