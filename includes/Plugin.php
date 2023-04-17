@@ -60,11 +60,6 @@ final class Plugin {
 	 */
 	public function includes() {
 
-		// Require once the Composer Autoload.
-		if ( file_exists( dirname( FORMELLO_PLUGIN_FILE ) . '/vendor/autoload.php' ) ) {
-			require_once dirname( FORMELLO_PLUGIN_FILE ) . '/vendor/autoload.php';
-		}
-
 		// Needs to be included at all times due to show_in_rest.
 		require_once FORMELLO_ABSPATH . 'includes/Utils/Encryption.php';
 		require_once FORMELLO_ABSPATH . 'includes/Utils/functions.php';

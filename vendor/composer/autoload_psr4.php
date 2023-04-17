@@ -6,8 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Roots\\Composer\\' => array($vendorDir . '/roots/wordpress-core-installer/src'),
     'Rakit\\Validation\\' => array($vendorDir . '/rakit/validation/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'Katzgrau\\KLogger\\' => array($vendorDir . '/katzgrau/klogger/src'),
+    'Formello\\Tests\\' => array($baseDir . '/tests'),
     'Formello\\' => array($baseDir . '/includes'),
+    'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
+    'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
+    'Appsero\\' => array($vendorDir . '/appsero/client/src'),
 );

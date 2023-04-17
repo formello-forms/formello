@@ -176,4 +176,4 @@ function register_cpt_meta() {
 }
 
 add_action( 'init', __NAMESPACE__ . '\register_cpt' );
-add_action( 'rest_api_init', __NAMESPACE__ . '\register_cpt_meta' );
+add_action( 'init', __NAMESPACE__ . '\register_cpt_meta' );

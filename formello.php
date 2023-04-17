@@ -20,6 +20,11 @@ if ( ! defined( 'FORMELLO_PLUGIN_FILE' ) ) {
 	define( 'FORMELLO_PLUGIN_DIR', __DIR__ );
 }
 
+// Require once the Composer Autoload.
+if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+}
+
 if ( ! class_exists( 'Formello' ) ) {
 	require_once dirname( FORMELLO_PLUGIN_FILE ) . '/includes/Plugin.php';
 }
@@ -126,3 +131,26 @@ function formello_deactivate() {
 
 register_activation_hook( __FILE__, 'formello_activate' );
 register_uninstall_hook( __FILE__, 'formello_deactivate' );
+
+/**
+ * Initialize the plugin tracker
+ *
+ * @return void
+ */
+function formello_appsero_init_tracker() {
+
+	if ( ! class_exists( 'Appsero\Client' ) ) {
+		require_once __DIR__ . '/appsero/src/Client.php';
+	}
+
+	$client = new Appsero\Client( '2dafee7d-6e70-4948-8115-816bc5e6e979', 'Contact form builder for Gutenberg &#8211; Formello', __FILE__ );
+
+	// Active insights.
+	$client->insights()->init();
+
+	// Active automatic updater.
+	$client->updater();
+
+}
+
+formello_appsero_init_tracker();

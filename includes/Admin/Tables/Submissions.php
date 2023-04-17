@@ -83,6 +83,7 @@ class Submissions extends \WP_List_Table {
 		$this->datetime_format = sprintf( '%s %s', get_option( 'date_format' ), get_option( 'time_format' ) );
 		$this->form_id         = isset( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : 0;
 		$this->settings        = get_post_meta( $this->form_id, '_formello_settings', true );
+
 	}
 
 	/**
