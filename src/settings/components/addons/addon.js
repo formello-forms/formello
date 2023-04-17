@@ -89,7 +89,13 @@ export default function Addon( props ) {
 							info.title
 						) }
 					</RawHTML>
-					<Button variant="primary" onClick={ closeModal } icon="cart" iconPosition={ 'right' }>
+					<Button
+						variant="primary" 
+						href="https://formello.net" 
+						icon="cart" 
+						iconPosition={ 'right' }
+						target="_blank"
+					>
 						{ __( 'Buy now', 'formello-pro' ) }
 					</Button>
 				</Modal>
