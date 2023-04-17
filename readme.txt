@@ -77,6 +77,15 @@ If you like this plugin, then consider checking out our other projects:
 * [Search Console](https://wordpress.org/plugins/search-console): view all your search console data inside WordPress admin.
 * [Pdf Embed](https://wordpress.org/plugins/pdf-embed): embed your PDFs using the official Adobe Embed API.
 
+## Privacy Policy 
+Contact form builder for Gutenberg &#8211; Formello uses [Appsero](https://appsero.com) SDK to collect some telemetry data upon user's confirmation. This helps us to troubleshoot problems faster & make product improvements.
+
+Appsero SDK **does not gather any data by default.** The SDK only starts gathering basic telemetry data **when a user allows it via the admin notice**. We collect the data to ensure a great user experience for all our users. 
+
+Integrating Appsero SDK **DOES NOT IMMEDIATELY** start gathering data, **without confirmation from users in any case.**
+
+Learn more about how [Appsero collects and uses this data](https://appsero.com/privacy-policy/).
+
 **CONTRIBUTE**
 
 Formello is open source and you can [contribute here](https://github.com/formello-forms/formello).
