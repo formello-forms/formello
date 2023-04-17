@@ -12,13 +12,12 @@ const allowed = [ 'formello/input', 'formello/select', 'formello/textarea' ];
  * @param {string} clientId The id of the block of which we are finding the form block
  */
 export function getFormBlock( clientId ) {
-
 	const formBlock = getBlockParentsByBlockName( clientId, 'formello/form' );
 
-	if( formBlock.length ){
-		return formBlock[0]
+	if ( formBlock.length ) {
+		return formBlock[ 0 ];
 	}
-	
+
 	if ( 'formello/form' === getBlock( clientId ).name ) {
 		return getBlock( clientId );
 	}
@@ -62,9 +61,9 @@ export function getFieldsName( clientId ) {
 
 	fieldsBlock.forEach( ( b ) => {
 		// get block type by name
-		let type = b.name.split('/')[1]
-		if( 'input' === type ){
-			type = b.attributes.type
+		let type = b.name.split( '/' )[ 1 ];
+		if ( 'input' === type ) {
+			type = b.attributes.type;
 		}
 
 		fields[ b.attributes.name ] = type;
@@ -86,7 +85,7 @@ export function serializeFields( clientId ) {
 	fieldsBlock.forEach( ( b ) => {
 		fields.push( {
 			title: b.attributes.name,
-			tag: '{{fields.' + b.attributes.name + '}}'
+			tag: '{{fields.' + b.attributes.name + '}}',
 		} );
 	} );
 
@@ -100,7 +99,7 @@ export function serializeFieldsName( clientId ) {
 	fieldsBlock.forEach( ( b ) => {
 		fields.push( {
 			label: b.attributes.name,
-			value: b.attributes.name
+			value: b.attributes.name,
 		} );
 	} );
 
@@ -132,7 +131,7 @@ export function getConstraints( clientId ) {
 			const constraint = getFieldConstraint( b );
 			let name = b.attributes.name;
 
-			if( b.attributes.multiple ){
+			if ( b.attributes.multiple ) {
 				name += '.*';
 			}
 			if ( constraint ) {
@@ -338,34 +337,36 @@ export function getPatternTabs() {
 		{
 			title: 'Password',
 			tag: `^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$`,
+			description: 'One uppercase, one number, at least 8 chars',
 		},
 		{
 			title: 'Password with special characters',
 			tag: `^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$`,
+			description: 'One uppercase, one number, one special chars, at least 8 chars',
 		},
 	];
 
 	const dates = [
 		{
 			title: 'dd/mm/yyyy',
-			tag: '^\\d{2}-\\d{2}-\\d{4}$'
+			tag: '^\\d{2}-\\d{2}-\\d{4}$',
 		},
 		{
 			title: 'dd/mm/yy',
-			tag: '^\\d{2}-\\d{2}-\\d{2}$'
+			tag: '^\\d{2}-\\d{2}-\\d{2}$',
 		},
-	]
+	];
 
 	const tabs = [
 		{
 			name: 'passwords',
 			title: 'Passwords',
-			data: passwords
+			data: passwords,
 		},
 		{
 			name: 'dates',
 			title: 'Dates',
-			data: dates
+			data: dates,
 		},
 	];
 

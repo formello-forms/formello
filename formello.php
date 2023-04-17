@@ -3,7 +3,7 @@
  * Plugin Name: Formello
  * Plugin URI: https://formello.net/
  * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
- * Version: 1.9.4
+ * Version: 1.9.5
  * Author: Formello
  * Author URI: https://formello.net
  * License: GPL2
@@ -11,15 +11,17 @@
  * Text Domain: formello
  * Domain Path: /languages
  *
+ * @fs_premium_only /build/premium/, /premium-modules/
  * @package Formello
  */
 
 if ( ! defined( 'FORMELLO_PLUGIN_FILE' ) ) {
 	define( 'FORMELLO_PLUGIN_FILE', __FILE__ );
+	define( 'FORMELLO_PLUGIN_DIR', __DIR__ );
 }
 
 if ( ! class_exists( 'Formello' ) ) {
-	include_once dirname( FORMELLO_PLUGIN_FILE ) . '/includes/Plugin.php';
+	require_once dirname( FORMELLO_PLUGIN_FILE ) . '/includes/Plugin.php';
 }
 
 /**
@@ -100,7 +102,27 @@ function formello_activate() {
 
 	// refresh all addons.
 	delete_transient( 'formello_addons' );
+	delete_transient( 'formello_patterns' );
+
+	$options = get_option( 'formello', false );
+
+	if ( ! empty( $options ) ) {
+		$options['enabled_addons'] = array();
+		update_option( $options );
+	}
 
 }
 
+/**
+ * Uninstall hook
+ */
+function formello_deactivate() {
+	$formello_option = get_option( 'formello', false );
+
+	if ( $formello_option ) {
+		delete_option( 'formello_installed' );
+	}
+}
+
 register_activation_hook( __FILE__, 'formello_activate' );
+register_uninstall_hook( __FILE__, 'formello_deactivate' );

@@ -111,8 +111,8 @@ class Submissions extends \WP_List_Table {
 		$ids = implode( ',', array_map( 'absint', $ids ) );
 		$wpdb->query(
 			$wpdb->prepare(
-				'DELETE FROM ' . $wpdb->prefix . 'formello_submissions WHERE id in ( %1s );',
-				$ids,
+				'DELETE FROM ' . $wpdb->prefix . 'formello_submissions WHERE id in ( %s );',
+				$ids
 			)
 		);
 	}
@@ -136,7 +136,7 @@ class Submissions extends \WP_List_Table {
 				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET %1s = %d WHERE id in ( %1s );',
 				$column,
 				$value,
-				$ids,
+				$ids
 			)
 		);
 		$this->refresh_table( __( 'Submission(s) updated.', 'formello' ) );
@@ -258,7 +258,6 @@ class Submissions extends \WP_List_Table {
 				'per_page'    => $per_page,
 			)
 		);
-
 		$this->_column_headers = array( $columns, $hidden, $sortable );
 		$this->items           = $this->data;
 	}
@@ -331,7 +330,21 @@ class Submissions extends \WP_List_Table {
 		$form_fields = array_keys( $this->settings['fields'] );
 		$clean = array_diff( $this->columns, $form_fields, array( 'cb', 'id', 'formello_date' ) );
 
-		return $clean;
+		$hidden = is_array(
+			get_user_meta(
+				get_current_user_id(),
+				'manageformello_form_page_formello-submissionscolumnshidden',
+				true
+			)
+		) ?
+			get_user_meta(
+				get_current_user_id(),
+				'manageformello_form_page_formello-submissionscolumnshidden',
+				true
+			) :
+			$clean;
+
+		return $hidden;
 	}
 
 	/**
@@ -434,7 +447,7 @@ class Submissions extends \WP_List_Table {
 			$wpdb->prepare(
 				"SELECT DISTINCT field_name from {$wpdb->prefix}formello_submissions_meta where form_id = %d",
 				array( 'form_id' => $this->form_id )
-			),
+			)
 		);
 
 		$fields = array_merge( array_keys( $this->settings['fields'] ), $results );
@@ -465,7 +478,12 @@ class Submissions extends \WP_List_Table {
 				return $item['submitted_at'];
 			default:
 				$item = ! empty( $item[ $column_name ] ) ? $item[ $column_name ] : '';
-				return Formatter::format( $item, ! empty ( $this->settings['fields'][ $column_name ] ) ? $this->settings['fields'][ $column_name ] : '' );
+				return Formatter::format(
+					$item,
+					! empty( $this->settings['fields'][ $column_name ] )
+						? $this->settings['fields'][ $column_name ]
+						: ''
+				);
 		}
 	}
 
@@ -530,7 +548,7 @@ class Submissions extends \WP_List_Table {
 			),
 			esc_attr(
 				$starred
-			),
+			)
 		);
 
 		$output = '<div class="formello-icons-group">' . $title . $icons . '</div><div class="row-actions">' . $view_link . ' | ' . $delete_link . '</div>';

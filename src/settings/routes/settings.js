@@ -2,11 +2,14 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Button, TabPanel } from '@wordpress/components';
+import {
+	__experimentalGrid as Grid,
+	TabPanel,
+} from '@wordpress/components';
 import { Fragment, useState } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from 'react-router-dom';
 import { store as coreStore } from '@wordpress/core-data';
 import { useDispatch } from '@wordpress/data';
 
@@ -17,12 +20,10 @@ import Messages from '../components/settings/messages.js';
 import Integrations from '../components/settings/integrations.js';
 import Logging from '../components/settings/logging.js';
 import Licenses from '../components/settings/licenses.js';
-import apiFetch from '@wordpress/api-fetch';
 import UpdateSettings from '../components/update-settings';
 import Header from '../components/masthead.js';
 
 export default function Settings( props ) {
-
 	const { savedSettings } = props;
 	const [ settings, setSettings ] = useState( savedSettings );
 	const [ hasUpdates, setHasUpdates ] = useState( false );
@@ -78,9 +79,8 @@ export default function Settings( props ) {
 
 	// Handle all setting changes, and save to the database.
 	async function saveSettings( optionName = 'formello' ) {
-
 		let record = '';
-		record = { [optionName]: settings[optionName] };
+		record = { [ optionName ]: settings[ optionName ] };
 
 		let response = '';
 		response = await saveEntityRecord(
@@ -88,10 +88,10 @@ export default function Settings( props ) {
 			'site',
 			record
 		);
-		if( response ){
+		if ( response ) {
 			setHasUpdates( false );
 		}
-		return response
+		return response;
 	}
 
 	return (
@@ -109,9 +109,8 @@ export default function Settings( props ) {
 					{ ( tab ) => {
 						const SettingsTab = tab.component;
 						return (
-							<Fragment>
-								<Help />
-								<div className="setting-tabs__block-manager inner-container">
+							<Grid columns={ 4 } templateColumns="3fr 1fr" gap="4">
+								<div>
 									<SettingsTab
 										settings={ settings ?? savedSettings }
 										setSettings={ onSetSettings }
@@ -121,17 +120,18 @@ export default function Settings( props ) {
 										'recaptcha' === tab.name ||
 										'messages' === tab.name ||
 										'logging' === tab.name ) && (
-										<Fragment>
-											<UpdateSettings
-												req={ saveSettings }
-												text={ __( 'Save options', 'formello' ) }
-												disabled={ ! hasUpdates }
-												variant={ 'primary' }
-											/>
-										</Fragment>
+
+										<UpdateSettings
+											req={ saveSettings }
+											text={ __( 'Save options', 'formello' ) }
+											disabled={ ! hasUpdates }
+											variant={ 'primary' }
+										/>
+
 									) }
-								</div>								
-							</Fragment>
+								</div>
+								<Help />
+							</Grid>
 
 						);
 					} }
@@ -142,5 +142,5 @@ export default function Settings( props ) {
 				{ applyFilters( 'formello.dashboard.afterSettings', '', this ) }
 			</div>
 		</Fragment>
-	)
+	);
 }

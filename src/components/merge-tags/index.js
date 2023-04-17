@@ -13,8 +13,8 @@ import {
 } from './use-tabs';
 import TabContent from './tab-content';
 
-export default function mergeTags( props ) {
-	const { 
+export default function MergeTags( props ) {
+	const {
 		label,
 		value,
 		placeholder,
@@ -22,12 +22,7 @@ export default function mergeTags( props ) {
 		icon = 'list-view',
 		clientId,
 		tabs = useTabs( clientId ),
-		children
 	} = props;
-
-	const change = ( val ) => {
-		onChange( val );
-	};
 
 	return (
 		<BaseControl>
@@ -37,15 +32,15 @@ export default function mergeTags( props ) {
 				onChange={ onChange }
 				placeholder={ placeholder }
 				suffix={
-					<DropdownMenu 
-						icon={ icon } 
-						label={ label } 
-						toggleProps={{ isSmall: true }}
+					<DropdownMenu
+						icon={ icon }
+						label={ label }
+						toggleProps={ { isSmall: true } }
 					>
-						{ ( { onClose } ) => (
-							
+						{ () => (
+
 							<TabContent tabs={ tabs } onChange={ onChange } />
-						
+
 						) }
 					</DropdownMenu>
 				}

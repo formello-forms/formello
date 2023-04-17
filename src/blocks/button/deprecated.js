@@ -14,36 +14,35 @@ import {
 	Loading5,
 } from '../../icons/icons';
 
-const v1 = 
+const v1 =
 	{
 		attributes: {
-			"text": {
-				"type": "string",
-				"default": "Submit"
+			text: {
+				type: 'string',
+				default: 'Submit',
 			},
-			"type": {
-				"type": "string",
-				"default": "Loading"
+			type: {
+				type: 'string',
+				default: 'Loading',
 			},
-			"alignment": {
-				"type": "string",
-				"default": "left"
+			alignment: {
+				type: 'string',
+				default: 'left',
 			},
-			"style": {
-				"type": "object",
-				"default": {
-					"color": {
-						"background": "#000000",
-						"text": "#ffffff"
+			style: {
+				type: 'object',
+				default: {
+					color: {
+						background: '#000000',
+						text: '#ffffff',
 					},
-					"padding": {
-						"top": "10"
-					}
-				}
-			}
+					padding: {
+						top: '10',
+					},
+				},
+			},
 		},
 		save( { attributes, className } ) {
-
 			const { text, alignment, type, style } = attributes;
 
 			const icons = {
@@ -71,7 +70,7 @@ const v1 =
 
 			const blockProps = useBlockProps.save( {
 				className: buttonClasses,
-				style: colorProps.style
+				style: colorProps.style,
 			} );
 
 			return (
@@ -80,10 +79,9 @@ const v1 =
 					<ButtonIcon />
 				</button>
 			);
-
-		}
+		},
 	};
 
-const deprecated = [ v1 ]
+const deprecated = [ v1 ];
 
 export default deprecated;

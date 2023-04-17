@@ -8,7 +8,7 @@ import { __ } from '@wordpress/i18n';
 import { ToolbarButton } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
-import { 
+import {
 	Asterisk,
 } from '../../icons/icons';
 import { select } from '@wordpress/data';
@@ -18,7 +18,7 @@ export default function Toolbar( props ) {
 	const {
 		required,
 		showHelp,
-		hideLabel
+		hideLabel,
 	} = attributes;
 
 	const setRequiredTxt = () => {

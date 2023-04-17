@@ -1,10 +1,9 @@
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import variations from './variations';
 import deprecated from './deprecated';
 import metadata from './block.json';
-import { createBlock } from '@wordpress/blocks';
 import { Input } from '../../icons/icons';
 
 /**
@@ -17,24 +16,16 @@ registerBlockType( metadata, {
 
 	deprecated,
 
-	supports: {
-		// eslint-disable-next-line no-undef
-		inserter: 'formello_form' === pagenow ? true : false,
-		html: false,
-		className: true,
-		reusable: false,
-	},
-
 	transforms: {
-	    from: [
-	        {
-	            type: 'block',
-	            blocks: [ 'formello/textarea' ],
-	            transform: ( attrs ) => {
-	                return createBlock( 'formello/input', attrs );
-	            },
-	        },
-	    ]
+		from: [
+			{
+				type: 'block',
+				blocks: [ 'formello/textarea' ],
+				transform: ( attrs ) => {
+					return createBlock( 'formello/input', attrs );
+				},
+			},
+		],
 	},
 
 	/**

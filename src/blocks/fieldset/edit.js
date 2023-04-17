@@ -12,6 +12,7 @@ const ALLOWED_BLOCKS = [
 	'core/paragraph',
 	'core/heading',
 	'core/columns',
+	'core/group',
 	'formello/input',
 	'formello/email',
 	'formello/select',

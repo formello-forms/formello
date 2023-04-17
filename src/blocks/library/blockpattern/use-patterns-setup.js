@@ -1,9 +1,8 @@
 /**
  * WordPress dependencies
  */
-import { 
+import {
 	useSelect,
-	store as coreStore,
 } from '@wordpress/data';
 import {
 	parse,
@@ -16,10 +15,6 @@ function usePatternsSetup( clientId, blockName, filterPatternsFn ) {
 	return useSelect(
 		( select ) => {
 			const {
-				getBlockRootClientId,
-				__experimentalBlockPatterns,
-				__experimentalGetPatternsByBlockTypes,
-				__experimentalGetAllowedPatterns,
 				getSettings,
 			} = select( blockEditorStore );
 			const allPatterns = getSettings().__experimentalBlockPatterns;
@@ -27,11 +22,11 @@ function usePatternsSetup( clientId, blockName, filterPatternsFn ) {
 				? blockName
 				: [ blockName ];
 
-			const patterns = allPatterns.filter( ( pattern ) => 
-					pattern?.blockTypes?.some?.( ( name ) => 
-						normalizedBlockNames.includes( name )
-					)
-				);
+			const patterns = allPatterns.filter( ( pattern ) =>
+				pattern?.blockTypes?.some?.( ( name ) =>
+					normalizedBlockNames.includes( name )
+				)
+			);
 
 			if ( filterPatternsFn ) {
 				return patterns.filter(
@@ -46,8 +41,7 @@ function usePatternsSetup( clientId, blockName, filterPatternsFn ) {
 							__unstableSkipMigrationLogs: true,
 						} ),
 					};
-				});
-
+				} );
 		},
 		[ clientId, blockName, filterPatternsFn ]
 	);

@@ -1,23 +1,21 @@
 import { __ } from '@wordpress/i18n';
-import { Fragment, useState, useEffect } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import {
-	TextControl,
 	SelectControl,
 	ToggleControl,
 } from '@wordpress/components';
 
 export default function DatepickerSettings( props ) {
 	const {
-		attributes: { 
-			flatpickr, 
-			advanced, 
-			type, 
-			dateFormat, 
+		attributes: {
+			advanced,
+			type,
+			dateFormat,
 			timeFormat,
 			enableTime,
 			inlineCalendar,
 			mode,
-			minDate
+			minDate,
 		},
 		setAttributes,
 	} = props;

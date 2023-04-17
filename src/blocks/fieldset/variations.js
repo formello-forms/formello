@@ -1,11 +1,10 @@
 /**
  * WordPress dependencies
  */
-import { Path, SVG } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { 
+import {
 	Checkboxes,
-	Radios
+	Radios,
 } from '../../icons/icons';
 
 const variations = [

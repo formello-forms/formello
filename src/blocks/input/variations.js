@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { 
+import {
 	Checkbox,
 	GDPR,
 	Input,
@@ -13,7 +13,7 @@ import {
 	Color,
 	Tel,
 	Number as NumberField,
-	Radio
+	Radio,
 } from '../../icons/icons';
 
 const variations = [
@@ -168,13 +168,27 @@ const variations = [
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
 	{
+		name: 'inputbutton',
+		title: __( 'Input with button' ),
+		icon: Input,
+		attributes: {
+			type: 'email',
+			label: 'Email',
+			withButton: true,
+		},
+		innerBlocks: [
+			[ 'formello/button' ],
+		],
+		scope: [ 'block', 'inserter' ],
+	},
+	{
 		name: 'password',
 		title: __( 'Password' ),
 		icon: Password,
 		attributes: {
 			type: 'password',
 			pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$',
-			validation: 'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, and 1 number.'
+			validation: 'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, and 1 number.',
 		},
 		scope: [ 'block', 'inserter', 'transform' ],
 	},
@@ -186,11 +200,8 @@ const variations = [
  *  Block by providing its attributes.
  */
 variations.forEach( ( variation ) => {
-	if ( 'rangeoutput' !== variation.name ) {
-		variation.attributes.withOutput = false;
-	}
-	if ( 'inputbutton' !== variation.name ) {
-		variation.attributes.withButton = false;
+	if ( 'file' === variation.name ) {
+		variation.attributes.value = undefined;
 	}
 	if ( 'radio' !== variation.name || 'checkbox' !== variation.name ) {
 		variation.attributes.checked = undefined;

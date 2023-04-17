@@ -1,111 +1,125 @@
 {
-	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": "2",
-	"name": "formello/form",
-	"title": "Form",
-	"description": "A block collection to build forms.",
-	"category": "formello",
-	"textdomain": "formello",
-	"keywords": ["form", "forms", "formello"],
-	"attributes": {
-		"id": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-id"
-		},
-		"name": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "name"
-		},
-		"successMessage": {
-			"type": "string",
-			"default": ""
-		},
-		"errorMessage": {
-			"type": "string",
-			"default": ""
-		},
-		"redirectUrl": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-redirect",
-			"default": ""
-		},
-		"debug": {
-			"type": "boolean",
-			"default": false
-		},
-		"recaptchaEnabled": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-recaptcha",
-			"default": false
-		},
-		"labelIsBold": {
-			"type": "boolean",
-			"default": false
-		},
-		"asRow": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": ".as-row",
-			"default": false
-		},
-		"labelAlign": {
-			"type": "string",
-			"default": ""
-		},
-		"requiredText": {
-			"type": "string",
-			"default": "*"
-		},
-		"storeSubmissions": {
-			"type": "boolean",
-			"default": true
-		},
-		"hide": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-hide"
-		},
-		"autoComplete": {
-			"enum": ["on", "off"],
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "autocomplete"
-		},
-		"enableJsValidation": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-validate"
-		},
-		"noValidate": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "novalidate"
-		}		
-	},
-	"styles": [
-		{
-			"name": "regular",
-			"label": "Default",
-			"isDefault": true
-		},
-		{
-			"name": "bolded", 
-			"label": "Bolded label" 
-		}
-	],
-	"editorScript": "file:../../../build/index.js",
-	"editorStyle": "file:../../../build/index.css",
-	"style": "file:../../../build/style-index.css",
-	"viewScript": "file:../../../build/frontend.js"
+  "$schema": "https://json.schemastore.org/block.json",
+  "apiVersion": "2",
+  "name": "formello/form",
+  "title": "Form",
+  "description": "A block collection to build forms.",
+  "category": "formello",
+  "textdomain": "formello",
+  "keywords": [
+    "form",
+    "forms",
+    "formello"
+  ],
+  "attributes": {
+    "id": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "data-id"
+    },
+    "name": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "name"
+    },
+    "action": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "action"
+    },
+    "successMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "errorMessage": {
+      "type": "string",
+      "default": ""
+    },
+    "redirectUrl": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "data-redirect",
+      "default": ""
+    },
+    "debug": {
+      "type": "boolean",
+      "default": false
+    },
+    "recaptchaEnabled": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "data-recaptcha",
+      "default": false
+    },
+    "labelIsBold": {
+      "type": "boolean",
+      "default": false
+    },
+    "asRow": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": ".as-row",
+      "default": false
+    },
+    "labelAlign": {
+      "type": "string",
+      "default": ""
+    },
+    "requiredText": {
+      "type": "string",
+      "default": "*"
+    },
+    "storeSubmissions": {
+      "type": "boolean",
+      "default": true
+    },
+    "hide": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "data-hide"
+    },
+    "autoComplete": {
+      "enum": [
+        "on",
+        "off"
+      ],
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "autocomplete"
+    },
+    "enableJsValidation": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "data-validate",
+      "default": true
+    },
+    "noValidate": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "form",
+      "attribute": "novalidate"
+    }
+  },
+  "styles": [
+    {
+      "name": "regular",
+      "label": "Default",
+      "isDefault": true
+    },
+    {
+      "name": "modern",
+      "label": "Modern"
+    }
+  ],
+  "editorScript": "file:../../../build/index.js",
+  "editorStyle": "file:../../../build/index.css",
+  "style": "file:../../../build/style-index.css",
+  "viewScript": "file:../../../build/frontend.js"
 }

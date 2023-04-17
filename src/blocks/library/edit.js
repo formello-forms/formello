@@ -86,7 +86,7 @@ export default function Edit( props ) {
 			</InspectorControls>
 			<Fragment>
 				{ attributes.id ? (
-					<Disabled isDisabled={ false }>
+					<Disabled isDisabled={ true }>
 						<ServerSideRender
 							block="formello/library"
 							attributes={ attributes }

@@ -20,6 +20,12 @@
 			"selector": "form",
 			"attribute": "name"
 		},
+		"action": {
+			"type": "string",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "action"
+		},
 		"successMessage": {
 			"type": "string",
 			"default": ""
@@ -84,7 +90,8 @@
 			"type": "boolean",
 			"source": "attribute",
 			"selector": "form",
-			"attribute": "data-validate"
+			"attribute": "data-validate",
+			"default": true
 		},
 		"noValidate": {
 			"type": "boolean",
@@ -100,8 +107,8 @@
 			"isDefault": true
 		},
 		{
-			"name": "bolded", 
-			"label": "Bolded label" 
+			"name": "modern", 
+			"label": "Modern" 
 		}
 	],
 	"editorScript": "file:../../../build/index.js",

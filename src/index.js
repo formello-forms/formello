@@ -10,6 +10,7 @@ import './blocks/select';
 import './blocks/input';
 import './blocks/textarea';
 import './blocks/button';
+import './blocks/output';
 
 import './style.scss';
 import './editor.scss';

@@ -6,18 +6,13 @@
 import { __ } from '@wordpress/i18n';
 import {
 	PanelBody,
-	PanelRow,
-	FormTokenField,
 	ToggleControl,
 	TextControl,
-	Button
+	Button,
 } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
 import MergeTags from '../merge-tags';
-import {
-	useTabs,
-} from '../merge-tags/use-tabs';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
@@ -31,9 +26,8 @@ export default function Options( props ) {
 		placeholder,
 		required,
 		multiple,
-		options,
 		checked,
-		showHelp
+		showHelp,
 	} = attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES[ fieldType ];
@@ -96,7 +90,7 @@ export default function Options( props ) {
 				) }
 				{ ! ( 'hidden' === type ) && (
 					<ToggleControl
-						label={ __( 'Show Description', 'formello' ) }
+						label={ __( 'Show help message', 'formello' ) }
 						checked={ showHelp }
 						onChange={ ( newval ) =>
 							setAttributes( { showHelp: newval } )

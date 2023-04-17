@@ -16,19 +16,17 @@ function TemplatesModal( {
 	blockName,
 	setIsPatternSelectionModalOpen,
 } ) {
-	const { replaceBlock, updateBlockAttributes, replaceInnerBlocks } = useDispatch( blockEditorStore );
+	const { updateBlockAttributes, replaceInnerBlocks } = useDispatch( blockEditorStore );
 	const onBlockPatternSelect = ( blocks ) => {
-
-		if( 'formello/library' === blockName ){
+		if ( 'formello/library' === blockName ) {
 			updateBlockAttributes( clientId, {
-				id: blocks[0].attributes.id
+				id: blocks[ 0 ].attributes.id,
 			} );
 			setIsPatternSelectionModalOpen( false );
 		} else {
-			replaceInnerBlocks( clientId, blocks[0].innerBlocks );
+			replaceInnerBlocks( clientId, blocks[ 0 ].innerBlocks );
 			setIsPatternSelectionModalOpen( false );
 		}
-
 	};
 
 	return (

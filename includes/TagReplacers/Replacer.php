@@ -69,7 +69,7 @@ class Replacer {
 	 * @param string $param The param variable.
 	 * @param string $default Default value.
 	 */
-	protected function replace( $tag, $param, $default='' ) {
+	protected function replace( $tag, $param, $default = '' ) {
 		$replacement = $this->replacers[ $tag ];
 
 		if ( array_key_exists( $tag, $this->replacers ) ) {

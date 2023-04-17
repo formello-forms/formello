@@ -5,7 +5,6 @@ import {
 	ExternalLink,
 	ToggleControl,
 } from '@wordpress/components';
-import { useSelect, dispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 const LoggingTab = ( props ) => {
@@ -17,7 +16,7 @@ const LoggingTab = ( props ) => {
 		newSettings.log = value;
 		setSettings( {
 			...settings,
-			formello: newSettings
+			formello: newSettings,
 		} );
 	}
 
@@ -39,7 +38,7 @@ const LoggingTab = ( props ) => {
 					label={ __( 'Enable log', 'formello' ) }
 					checked={ log }
 					onChange={ ( val ) => {
-						setLog( val )
+						setLog( val );
 					} }
 				/>
 				{ log && (

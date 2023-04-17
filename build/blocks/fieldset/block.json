@@ -1,30 +1,43 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "formello/fieldset",
-	"title": "Fieldset",
-	"description": "A block to display form fieldset.",
-	"category": "formello",
-	"ancestor": ["formello/form"],
-	"textdomain": "formello",
-	"attributes": {
-		"showLegend": {
-			"type": "boolean",
-			"default": true
-		},
-		"legend": {
-			"type": "string",
-			"source": "text",
-			"selector": "legend",
-			"default": "Legend"
-		}
-	},
-	"supports": {
-		"className": false,
-		"anchor": true,
-		"html": false,
-		"color": true,
-		"spacing": true,
-		"__experimentalBorder": true
-	}
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "formello/fieldset",
+  "title": "Fieldset",
+  "description": "A block to display form fieldset.",
+  "category": "formello",
+  "ancestor": [
+    "formello/form"
+  ],
+  "textdomain": "formello",
+  "attributes": {
+    "showLegend": {
+      "type": "boolean",
+      "default": true
+    },
+    "legend": {
+      "type": "string",
+      "source": "text",
+      "selector": "legend",
+      "default": "Legend"
+    }
+  },
+  "supports": {
+    "className": false,
+    "anchor": true,
+    "html": false,
+    "color": true,
+    "spacing": true,
+    "__experimentalBorder": true,
+    "__experimentalLayout": {
+      "allowSwitching": false,
+      "allowInheriting": false,
+      "allowSizingOnChildren": true,
+      "default": {
+        "type": "flex",
+        "justifyContent": "stretch",
+        "orientation": "vertical",
+        "flexWrap": "nowrap"
+      }
+    }
+  }
 }

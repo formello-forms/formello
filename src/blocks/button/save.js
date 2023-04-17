@@ -4,14 +4,13 @@ import {
 	RichText,
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
 	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
-	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
 import {
-	Loading, 
-	Loading2, 
-	Pulse, 
-	Loading4, 
-	LoadingCircles, 
+	Loading,
+	Loading2,
+	Pulse,
+	Loading4,
+	LoadingCircles,
 	LoadingCirclePath,
 	Audio,
 	BallTriangle,
@@ -25,11 +24,11 @@ export default function save( { attributes } ) {
 	const { text, alignment, type, style } = attributes;
 
 	const icons = {
-		Loading, 
-		Loading2, 
-		Pulse, 
-		Loading4, 
-		LoadingCircles, 
+		Loading,
+		Loading2,
+		Pulse,
+		Loading4,
+		LoadingCircles,
 		LoadingCirclePath,
 		Audio,
 		BallTriangle,
@@ -60,7 +59,7 @@ export default function save( { attributes } ) {
 
 	const blockProps = useBlockProps.save( {
 		className: buttonClasses,
-		style: colorProps.style
+		style: colorProps.style,
 	} );
 
 	return (

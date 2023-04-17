@@ -7,6 +7,7 @@ import {
 	RichText,
 	useBlockProps,
 	useInnerBlocksProps,
+	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
 
 import { ToolbarGroup } from '@wordpress/components';
@@ -15,7 +16,7 @@ import { useEffect } from '@wordpress/element';
 
 import classnames from 'classnames';
 
-import { 
+import {
 	Hidden,
 } from '../../icons/icons';
 import Label from '../../components/label';
@@ -40,22 +41,10 @@ import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
 	const {
-		name,
-		id,
 		type,
-		label,
-		hideLabel,
-		value,
-		placeholder,
-		required,
-		requiredText,
-		readonly,
-		showHelp,
-		help
 	} = attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES[ type ];
-	const MY_TEMPLATE = [ [ 'formello/button', {} ] ];
 
 	useEffect( () => {
 		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
@@ -71,17 +60,18 @@ export default function Edit( props ) {
 		}
 	}, [] );
 
+	const borderProps = useBorderProps( attributes );
+
 	const className = classnames( {
 		formello: true,
 		'formello-group': attributes.withButton || 'range' === type,
 		'formello-group grouped': attributes.grouped,
 		'formello-checkbox':
-			'checkbox' === type || 'radio' === type,
-		'formello-textarea': 'textarea' === type,
+			'checkbox' === type || 'radio' === type || 'hidden' === type,
 	} );
 
 	const labelClassName = classnames( {
-		hide: attributes.hideLabel
+		hide: attributes.hideLabel,
 	} );
 
 	const blockProps = useBlockProps( {
@@ -89,10 +79,9 @@ export default function Edit( props ) {
 	} );
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
-		allowedBlocks: [ 'formello/button' ],
-		template: MY_TEMPLATE,
-		templateLock: 'insert',
+		allowedBlocks: [ 'formello/button', 'formello/output' ],
 		orientation: 'horizontal',
+		renderAppender: false,
 	} );
 
 	const onChange = ( e ) => {
@@ -132,19 +121,20 @@ export default function Edit( props ) {
 			) }
 
 			<input
-				className={ attributes.fieldClass }
+				className={ borderProps.className }
+				style={ borderProps.style }
 				type={ type }
 				value={ 'password' !== type ? attributes.value : '' }
 				checked={ attributes.checked || false }
 				step={ attributes.step || undefined }
 				onChange={ onChange }
 				placeholder={ attributes.placeholder }
-				disabled={ 'file' === type }
+				disabled={ 'file' === type || 'password' === type }
 				autoComplete={ attributes.autocomplete || 'new-password' }
 			/>
 
-			{ attributes.withButton && children }
-			{ attributes.withOutput && <output></output> }
+			{ children }
+
 			{ 'hidden' !== type && attributes.showHelp && (
 				<RichText
 					tagName="small"

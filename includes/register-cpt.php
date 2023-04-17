@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit;
  * @since 1.0.0
  */
 function register_cpt() {
+
 	$args = array(
 		'labels' => array(
 			'name'                => _x( 'Forms', 'formello' ),
@@ -40,39 +41,89 @@ function register_cpt() {
 		'exclude_from_search' => true,
 		'show_in_nav_menus'   => true,
 		'rewrite'             => false,
+		'rest_controller_class' => '\Formello\Rest\Controllers\Forms',
 		'hierarchical'        => false,
 		'show_in_menu'        => true,
 		'show_in_admin_bar'   => true,
 		'show_in_rest'        => true,
-		'capability_type'     => 'post',
 		'template'            => array(
 			array(
 				'formello/form',
+				array(
+					'lock' => array(
+						'move'   => false,
+						'remove' => true,
+					),
+				),
 			),
 		),
-		'template_lock'       => 'insert', // This will block template insertion.
+		//'template_lock'       => 'insert', // This will block template insertion.
 		'supports'            => array(
 			'title',
 			'editor',
+			'excerpt',
 			'custom-fields',
 			'revisions',
 		),
 	);
 	register_post_type( 'formello_form', $args );
 
-	register_rest_field(
+}
+
+/**
+ * Register FOrmello Forms CPT
+ *
+ * @since 1.0.0
+ */
+function register_cpt_meta() {
+
+	$defaults = array(
+		'storeSubmissions' => true,
+		'recaptchaEnabled' => false,
+		'hide' => false,
+		'debug' => false,
+		'redirect_url' => '',
+		'actions' => array(),
+		'constraints' => array(),
+		'fields' => array(),
+	);
+
+	register_post_meta(
 		'formello_form',
-		'_settings',
+		'_formello_parent',
 		array(
-			'get_callback' => function ( $data ) {
-				return get_post_meta( $data['id'], '_formello_settings', true );
+			'show_in_rest' => true,
+			'default' => 0,
+			'single' => true,
+			'type' => 'number',
+			'auth_callback' => function () {
+				return current_user_can( 'edit_posts' );
 			},
 		)
 	);
 
 	register_post_meta(
 		'formello_form',
-		'_actions',
+		'_formello_settings',
+		array(
+			'show_in_rest' => array(
+				'schema' => array(
+					'type' => 'object',
+					'additionalProperties' => true,
+				),
+			),
+			'default' => $defaults,
+			'single' => true,
+			'type' => 'object',
+			'auth_callback' => function () {
+				return current_user_can( 'edit_posts' );
+			},
+		)
+	);
+
+	register_post_meta(
+		'formello_form',
+		'_formello_actions',
 		array(
 			'show_in_rest' => array(
 				'schema' => array(
@@ -87,10 +138,42 @@ function register_cpt() {
 			'type' => 'array',
 			'additionalProperties' => true,
 			'auth_callback' => function () {
-				return current_user_can( 'manage_options' );
+				return current_user_can( 'edit_posts' );
 			},
-		),
+		)
+	);
+
+	register_post_status(
+		'formello-private',
+		array(
+			'label'                     => _x( 'Formello private', 'post' ),
+			'public'                    => false,
+			'private'                   => false,
+			'internal'                  => false,
+			'protected'                 => false,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => false,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Private <span class="count">(%s)</span>', 'Private <span class="count">(%s)</span>' ),
+		)
+	);
+
+	register_post_status(
+		'formello-trash',
+		array(
+			'label'                     => _x( 'Private trash', 'post' ),
+			'public'                    => false,
+			'private'                   => false,
+			'internal'                  => false,
+			'protected'                 => true,
+			'exclude_from_search'       => false,
+			'show_in_admin_all_list'    => false,
+			'show_in_admin_status_list' => true,
+			'label_count'               => _n_noop( 'Private Trashed <span class="count">(%s)</span>', 'Private Trashed <span class="count">(%s)</span>' ),
+		)
 	);
 
 }
+
 add_action( 'init', __NAMESPACE__ . '\register_cpt' );
+add_action( 'rest_api_init', __NAMESPACE__ . '\register_cpt_meta' );

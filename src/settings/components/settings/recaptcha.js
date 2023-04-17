@@ -4,14 +4,12 @@ import {
 	CardBody,
 	TextControl,
 	RadioControl,
-	__experimentalNumberControl as NumberControl,
 } from '@wordpress/components';
-import { useSelect, dispatch } from '@wordpress/data';
 
 import { __ } from '@wordpress/i18n';
 
 export default function ReCaptcha( props ) {
-	const { settings, setSettings, setHasUpdates } = props;
+	const { settings, setSettings } = props;
 	const reCaptcha = settings.formello.reCaptcha ?? {};
 
 	function setReCaptcha( key, value ) {
@@ -19,7 +17,7 @@ export default function ReCaptcha( props ) {
 		newSettings.reCaptcha[ key ] = value;
 		setSettings( {
 			...settings,
-			formello: newSettings
+			formello: newSettings,
 		} );
 	}
 
@@ -37,30 +35,31 @@ export default function ReCaptcha( props ) {
 						{ label: 'reCaptcha v3 invisible', value: '3' },
 					] }
 					onChange={ ( val ) => {
-						setReCaptcha( 'version', val )
+						setReCaptcha( 'version', val );
 					} }
 				/>
 				<TextControl
 					label={ __( 'Site Key', 'formello' ) }
 					value={ reCaptcha.site_key }
 					onChange={ ( val ) => {
-						setReCaptcha( 'site_key', val )
+						setReCaptcha( 'site_key', val );
 					} }
 				/>
 				<TextControl
 					label={ __( 'Secret Key', 'formello' ) }
 					value={ reCaptcha.secret_key }
 					onChange={ ( val ) => {
-						setReCaptcha( 'secret_key', val )
+						setReCaptcha( 'secret_key', val );
 					} }
 				/>
 				{ 3 === Number( reCaptcha.version ) && (
-					<NumberControl
+					<TextControl
 						label={ __( 'Threshold', 'formello' ) }
 						value={ reCaptcha.threshold }
 						onChange={ ( val ) => {
-							setReCaptcha( 'threshold', val )
+							setReCaptcha( 'threshold', val );
 						} }
+						type="number"
 						step={ '0.1' }
 						min={ '0' }
 						max={ '1' }

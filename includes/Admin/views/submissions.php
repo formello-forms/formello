@@ -1,13 +1,11 @@
 <?php
 /**
- * The submissions veiew
+ * The submissions view
  *
  * @package Formello
  */
 
 defined( 'ABSPATH' ) || exit;
-
-$this->submissions_table->prepare_items();
 
 ?>
 <div class="wrap">
@@ -23,10 +21,20 @@ echo esc_attr(
 );
 ?>
 </h1>
-<a href="<?php echo esc_attr( $this->back_button ); ?>" class="page-title-action">&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?></a>
+<a href="<?php echo esc_attr( $this->back_button ); ?>" class="page-title-action">
+	&lsaquo; <?php esc_html_e( 'Back to forms list', 'formello' ); ?>
+</a>
+
 <hr class="wp-header-end">
+
 <?php
-$this->notice;
+
+if ( ! empty( $this->notice ) ) {
+	$this->notice;
+	return;
+}
+
+	$this->submissions_table->prepare_items();
 ?>
 
 <form method="post">

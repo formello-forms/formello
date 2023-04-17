@@ -3,6 +3,7 @@
 .gitignore export-ignore
 .jshintrc export-ignore
 /src/ export-ignore
+/premium-modules/ export-ignore
 /assets/images/ export-ignore
 scoper.inc.php export-ignore
 composer.json export-ignore

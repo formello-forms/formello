@@ -41,7 +41,7 @@ class Blocks {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
-		add_action( 'init', array( $this, 'register_block_pattern_category' ) );
+		add_action( 'admin_init', array( $this, 'register_block_pattern_category' ) );
 		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
 		add_shortcode( 'formello', array( $this, 'do_reusable_block' ) );
 	}
@@ -72,7 +72,10 @@ class Blocks {
 		);
 
 		register_block_type(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/select'
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/select',
+			array(
+				'render_callback' => array( $this, 'do_input_block' ),
+			)
 		);
 
 		register_block_type(
@@ -87,7 +90,7 @@ class Blocks {
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form',
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form'
 		);
 	}
 
@@ -96,8 +99,10 @@ class Blocks {
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
+	 * @param  object $block The bock object.
 	 */
-	public function do_formello_block( $attributes, $content = '' ) {
+	public function do_formello_block( $attributes, $content = '', $block ) {
+
 		do_action( 'formello_block_render' );
 
 		return $content;
@@ -141,6 +146,20 @@ class Blocks {
 
 		if ( 'password' === $attributes['type'] ) {
 			wp_enqueue_script( 'password-strength-meter' );
+		}
+
+		if ( empty( $attributes['multiple'] ) ) {
+			return $content;
+		}
+
+		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
+			$p = new \WP_HTML_Tag_Processor( $content );
+
+			if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
+				$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
+			}
+
+			return $p->get_updated_html();
 		}
 
 		return $content;

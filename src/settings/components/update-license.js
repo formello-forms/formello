@@ -6,13 +6,11 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { useState, RawHTML, Fragment } from '@wordpress/element';
-import MessageBox from './message-box.js';
 import {
 	Button,
-	Notice, 
-	BaseControl,
+	Notice,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
@@ -28,45 +26,38 @@ export default function UpdateLicense( props ) {
 		license,
 		license_status,
 		req,
-		withNotice,
 		onChange,
-		saveSettings,
-		optionName
 	} = props;
 
-	const [ message, setMessage ] = useState(false)
-	const [ loading, setLoading ] = useState(false)
+	const [ message, setMessage ] = useState( false );
+	const [ loading, setLoading ] = useState( false );
 
 	const action = () => {
-
-		const endpoint =
-			'valid' !== license_status ? 'activate' : 'deactivate';
-
-		setLoading( true )
+		setLoading( true );
 		req()
-			.then( (data) => {
+			.then( ( data ) => {
 				if ( typeof data.response === 'object' ) {
-					setMessage({
+					setMessage( {
 						type: data.response.success ? 'success' : 'error',
-						message: data.response.license
-					})
+						text: data.response.license,
+					} );
 				} else {
-					setMessage({
+					setMessage( {
 						type: 'error',
-						message: data.response
-					})
+						text: data.response,
+					} );
 				}
 			} )
-			.catch( (error) => {
-				setMessage({
+			.catch( ( error ) => {
+				setMessage( {
 					type: 'error',
-					message: error.message
-				})
+					text: error.message,
+				} );
 			} )
 			.finally( () => {
-				setLoading(false)
-			} )
-	}
+				setLoading( false );
+			} );
+	};
 
 	return (
 		<Fragment>
@@ -94,16 +85,23 @@ export default function UpdateLicense( props ) {
 					</Button>
 				}
 			/>
-			{ 
-				message && ! withNotice && (
-					<MessageBox message={ message.message } messageType={ message.type } handleClose={ setMessage } key="message" />
+			{
+				message && (
+					<Notice
+						//status={ message.type }
+						onRemove={ () => setMessage( false ) }
+						isDismissible={ true }
+						status={ message.type }
+					>
+						{ message.text }
+					</Notice>
 				)
 			}
 			{ '' !== license && license_status && (
-                <Notice
-                    //status={ message.type }
-                    onRemove={ () => setMessage( false ) }
-                    isDismissible={ false }
+				<Notice
+					//status={ message.type }
+					onRemove={ () => setMessage( false ) }
+					isDismissible={ false }
 					className={ classnames(
 						'message',
 						{
@@ -111,10 +109,10 @@ export default function UpdateLicense( props ) {
 							'is-warning': 'valid' !== license_status,
 						}
 					) }
-                >
-                    <RawHTML>
+				>
+					<RawHTML>
 						{ sprintf(
-							/* translators: License status. */
+							/* translators: %s: License status. */
 							__(
 								'License status: <strong class="license-%s">%s</strong>',
 								'formello'
@@ -122,8 +120,8 @@ export default function UpdateLicense( props ) {
 							`${ 'valid' === license_status || 'error' }`,
 							`${ license_status }`,
 						) }
-                    </RawHTML>
-                </Notice>
+					</RawHTML>
+				</Notice>
 			) }
 		</Fragment>
 	);

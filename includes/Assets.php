@@ -46,7 +46,6 @@ class Assets {
 			add_action( 'admin_enqueue_scripts', array( $this, 'register' ), 5 );
 		} else {
 			add_action( 'wp_enqueue_scripts', array( $this, 'register' ), 5 );
-			add_filter( 'clean_url', array( $this, 'add_async_forscript' ), 11, 1 );
 		}
 	}
 
@@ -80,6 +79,7 @@ class Assets {
 		$settings = array(
 			'settings' => get_option( 'formello' ),
 			'post_url' => esc_url( admin_url( 'admin-post.php' ) ),
+			'can_use_premium_code' => is_plugin_active( 'formello-pro/formello-pro.php' ),
 		);
 
 		wp_localize_script(
@@ -103,6 +103,9 @@ class Assets {
 			'formello',
 			$settings
 		);
+
+		wp_add_inline_script( 'formello-settings', 'const formello = ' . wp_json_encode( $settings ), 'before' );
+
 	}
 
 	/**
@@ -127,20 +130,28 @@ class Assets {
 	 * @throws \Error Assets not loaded.
 	 */
 	public function get_scripts() {
-		$script_asset_path = FORMELLO_ABSPATH . '/build/settings.asset.php';
-		if ( ! file_exists( $script_asset_path ) ) {
+		$settings_asset_path = FORMELLO_ABSPATH . '/build/settings.asset.php';
+		$submission_asset_path = FORMELLO_ABSPATH . '/build/submission.asset.php';
+		if ( ! file_exists( $settings_asset_path ) ) {
 			throw new \Error(
 				'You need to run `npm start` or `npm run build` for the "create-block/formello" block first.'
 			);
 		}
 
-		$script_asset = require $script_asset_path;
+		$settings_script_asset = require $settings_asset_path;
+		$submission_script_asset = require $settings_asset_path;
 
 		$scripts = array(
-			'formello-settings'          => array(
+			'formello-settings' => array(
 				'src'       => FORMELLO_ASSETS . '/settings.js',
-				'deps'      => $script_asset['dependencies'],
-				'version'   => $script_asset['version'],
+				'deps'      => $settings_script_asset['dependencies'],
+				'version'   => $settings_script_asset['version'],
+				'in_footer' => true,
+			),
+			'formello-submission' => array(
+				'src'       => FORMELLO_ASSETS . '/submission.js',
+				'deps'      => $submission_script_asset['dependencies'],
+				'version'   => $submission_script_asset['version'],
 				'in_footer' => true,
 			),
 		);
@@ -177,20 +188,5 @@ class Assets {
 		return $styles;
 	}
 
-	/**
-	 * Get async loaded string
-	 *
-	 * @param string $url The url of script.
-	 * @return string
-	 */
-	public function add_async_forscript( $url ) {
-		if ( strpos( $url, '#asyncload' ) === false ) {
-			return $url;
-		} elseif ( is_admin() ) {
-			return str_replace( '#asyncload', '', $url );
-		} else {
-			return str_replace( '#asyncload', '', $url ) . "' async='async' defer='defer";
-		}
-	}
 }
 Assets::get_instance();

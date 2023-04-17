@@ -25,6 +25,17 @@
 		"html": false,
 		"color": true,
 		"spacing": true,
-		"__experimentalBorder": true
+		"__experimentalBorder": true,
+		"__experimentalLayout": {
+			"allowSwitching": false,
+			"allowInheriting": false,
+			"allowSizingOnChildren": true,
+			"default": {
+				"type": "flex",
+				"justifyContent": "stretch",
+				"orientation": "vertical",
+				"flexWrap": "nowrap"
+			}
+		}
 	}
 }

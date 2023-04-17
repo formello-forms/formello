@@ -42,20 +42,16 @@ import AdvancedOptions from '../../components/field-options/advanced';
  * @return {WPElement} Element to render.
  */
 export default function Edit( props ) {
-	const { attributes, setAttributes, className, clientId } = props;
+	const { attributes, setAttributes, clientId } = props;
 	const {
 		name,
 		id,
-		label,
-		hideLabel,
 		options,
-		required,
-		requiredText,
 		showHelp,
 		help,
 		readonly,
 		multiple,
-		disabled
+		disabled,
 	} = attributes;
 
 	useEffect( () => {
@@ -74,54 +70,19 @@ export default function Edit( props ) {
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
-	const addNewRow = () => {
-		setAttributes( {
-			options: [ ...options, { label: '', value: '' } ],
-		} );
-	};
-
-	const deleteRow = ( record, index ) => {
-		const items = [ ...options ]; // make a separate copy of the array
-		items.splice( index, 1 );
-		setAttributes( { options: items } );
-	};
-
-	const handleChange = ( value, index, prop ) => {
-		// 1. Make a shallow copy of the items
-		const items = [ ...options ];
-		// 2. Make a shallow copy of the item you want to mutate
-		const item = { ...options[ index ] };
-		// 3. Replace the property you're intested in
-		item[ prop ] = value;
-		// 4. Put it back into our array. N.B. we *are* mutating the array here, but that's why we made a copy first
-		items[ index ] = item;
-		// 5. Set the state to our new copy
-		setAttributes( { options: items } );
-	};
-
-	const bulkOpts = ( val ) => {
-		const opts = val.match( /[^\r\n]+/g );
-		const newSettings = [];
-		for ( const i in opts ) {
-			const tmp = opts[ i ].split( ',' );
-			newSettings.push( { value: tmp[ 0 ], label: tmp[ 1 ] } );
-		}
-		setAttributes( { options: newSettings } );
-	};
-
 	const blockProps = useBlockProps( {
 		className: 'formello',
 	} );
 
 	const selectedOpts = () => {
 		const selection = options
-			.filter( x => true === x.selected ) 
-			.map( x => x.value )
-		if( !multiple ){
-			return selection[0]
+			.filter( ( x ) => true === x.selected )
+			.map( ( x ) => x.value );
+		if ( ! multiple ) {
+			return selection[ 0 ];
 		}
-		return selection
-	}
+		return selection;
+	};
 
 	return (
 		<div { ...blockProps }>

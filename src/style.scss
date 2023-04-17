@@ -1,5 +1,5 @@
 $label-width: 190px;
-$margin-left: .5em;
+$margin-left: 0.5em;
 $small-margin: 0 8px;
 
 html {
@@ -7,15 +7,15 @@ html {
 }
 
 .formello-message {
-	margin: 1em 0;
 	display: none;
+
 	p {
 		margin: 0;
 	}
 
 	&.success {
 		display: block;
-		padding: 1em;
+		padding: .5em;
 		background-color: #dff0d8;
 		border: 1px solid #d0e9c6;
 		color: #3c763d;
@@ -34,8 +34,11 @@ html {
 
 	display: flex;
 	flex-direction: column;
+	gap: 1em;
 
-	div[hidden="true"], fieldset[hidden="true"] {
+	div[hidden="true"],
+	fieldset[hidden="true"],
+	button[hidden="true"] {
 		display: none;
 	}
 
@@ -43,7 +46,6 @@ html {
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		margin-bottom: 1em;
 	}
 
 	.is-layout-flex {
@@ -146,7 +148,6 @@ html {
 
 	fieldset {
 		padding: 1em;
-		margin-bottom: 1em;
 		border: 1px solid;
 	}
 
@@ -160,14 +161,14 @@ html {
 	}
 
 	output {
-		margin: 0 0 0 1em;
+		margin: 0 .5em;
 		border: 1px solid #d7dbdd;
 		font-size: 1em;
-		padding: 0.4em 0.4em;
 		border-radius: 3px;
-		min-width: 2.4em;
-		min-height: 2.6em;
+		min-width: 1em;
+		min-height: 1em;
 		text-align: center;
+		padding: 0 .5em;
 	}
 
 	button {
@@ -175,18 +176,19 @@ html {
 		position: relative;
 		justify-content: center;
 		align-items: center;
-		display: flex;				
+		display: flex;
 		color: var(--wp--preset--color--primary);
 	}
-	
+
 	button[disabled] {
-		opacity: .5;
+		opacity: 0.5;
 		cursor: not-allowed;
 	}
 
 	&.is-style-bolded {
 
-		label, legend {
+		label,
+		legend {
 			font-weight: bold;
 		}
 
@@ -236,7 +238,6 @@ html {
 	}
 
 	.g-recaptcha {
-		margin-bottom: 1em;
 	}
 
 	@media (min-width: 768px) {
@@ -244,6 +245,7 @@ html {
 		&.as-row {
 
 			&.formello-label-right {
+
 				label {
 					text-align: right;
 				}
@@ -330,6 +332,7 @@ html {
 				}
 
 				&.grouped {
+
 					button {
 						margin-left: 0;
 					}
@@ -354,27 +357,33 @@ html {
 	}
 
 	button.wp-block-formello-button {
-		padding: .5em;
-		span{
-			transition: all .2s;
+		padding: 0.5em;
+
+		span {
+			transition: all 0.2s;
 			opacity: 1;
 		}
-		svg{
-			display: none; 
-			margin: 0 .3em;
+
+		svg {
+			display: none;
+			margin: 0 0.3em;
 			height: 1em;
-			transition: all .5s;
-			path, rect {
-				fill: currentColor;
+			transition: all 0.5s;
+
+			path,
+			rect {
+				fill: currentcolor;
 			}
 		}
 	}
 
 	button.wp-block-formello-button--loading {
 		cursor: revert;
+
 		span {
 			margin-right: 5px;
 		}
+
 		svg {
 			display: block;
 		}
@@ -391,4 +400,16 @@ html {
 		}
 	}
 
+}
+
+.wp-block-formello-form.is-style-modern {
+
+	input,
+	select,
+	textarea {
+		border: none;
+		border-bottom: 1px solid;
+		border-radius: 0;
+		background-color: transparent;
+	}
 }

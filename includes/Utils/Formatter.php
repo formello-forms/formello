@@ -47,7 +47,7 @@ class Formatter {
 				$value = self::format_password( $value );
 				break;
 			default:
-				$value = self::formello_field_value( $value );
+				$value = self::formello_field_value( $value, $limit );
 		}
 
 		// limit string to certain length.

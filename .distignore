@@ -4,6 +4,7 @@
 /.github
 /.storybook
 /src
+/premium-modules
 /tests
 /assets/images
 

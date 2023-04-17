@@ -1,63 +1,65 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "formello/button",
-	"title": "Button",
-	"description": "A block to display form button.",
-	"category": "formello",
-	"ancestor": ["formello/form"],
-	"icon": "button",
-	"textdomain": "formello",
-	"attributes": {
-		"text": {
-			"type": "string",
-			"source": "text",
-			"selector": "span",
-			"default": "Submit"
-		},
-		"alignment": {
-			"type": "string",
-			"default": "left"
-		},
-		"type": {
-			"type": "string",
-			"default": "Loading"
-		},
-		"style": {
-			"type": "object",
-			"default": {
-				"color": {
-					"background": "#000000",
-					"text": "#ffffff"
-				},
-				"padding": {
-					"top": "10"
-				}
-			}
-		}
-	},
-	"supports": {
-		"html": false,
-		"lock": false,
-		"multiple": false,
-		"reusable": false,
-		"color": {
-			"background": true,
-			"text": true,
-			"gradients": true
-		},
-		"spacing": {
-			"padding": true,
-			"margin": true
-		},
-		"__experimentalBorder": {
-			"radius": true,
-			"width": true,
-			"color": true,
-			"style": true
-		},
-	    "typography": {
-	        "fontSize": true
-	    }
-	}
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "formello/button",
+  "title": "Button",
+  "description": "A block to display form button.",
+  "category": "formello",
+  "ancestor": [
+    "formello/form"
+  ],
+  "icon": "button",
+  "textdomain": "formello",
+  "attributes": {
+    "text": {
+      "type": "string",
+      "source": "text",
+      "selector": "span",
+      "default": "Submit"
+    },
+    "alignment": {
+      "type": "string",
+      "default": "left"
+    },
+    "type": {
+      "type": "string",
+      "default": "Loading"
+    },
+    "style": {
+      "type": "object",
+      "default": {
+        "color": {
+          "background": "#000000",
+          "text": "#ffffff"
+        },
+        "padding": {
+          "top": "10"
+        }
+      }
+    }
+  },
+  "supports": {
+    "html": false,
+    "lock": false,
+    "multiple": false,
+    "reusable": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "gradients": true
+    },
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "__experimentalBorder": {
+      "radius": true,
+      "width": true,
+      "color": true,
+      "style": true
+    },
+    "typography": {
+      "fontSize": true
+    }
+  }
 }

@@ -1,9 +1,8 @@
 import {
-	Spinner
+	Spinner,
 } from '@wordpress/components';
 
 export default function LoadingSpinner( { text } ) {
-
 	return (
 		<div className="loading-settings">
 			<Spinner />

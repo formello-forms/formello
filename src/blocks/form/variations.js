@@ -87,8 +87,8 @@ const variations = [
 				{
 					layout: {
 						type: 'flex',
-						flexWrap: 'wrap'
-					}
+						flexWrap: 'wrap',
+					},
 				},
 				[
 					[
@@ -127,8 +127,8 @@ const variations = [
 				{
 					layout: {
 						type: 'flex',
-						flexWrap: 'wrap'
-					}
+						flexWrap: 'wrap',
+					},
 				},
 				[
 					[

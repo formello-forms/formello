@@ -1,157 +1,180 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "formello/textarea",
-	"title": "Textarea",
-	"description": "Textarea field.",
-	"category": "formello",
-	"ancestor": ["formello/form"],
-	"textdomain": "formello",
-	"attributes": {
-		"id": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "id",
-			"default": ""
-		},
-		"name": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "name"
-		},
-		"label": {
-			"type": "string",
-			"source": "html",
-			"selector": "label span:not(.required)",
-			"default": "My textarea"
-		},
-		"hideLabel": {
-			"type": "boolean",
-			"selector": "label.hide",
-			"default": false
-		},
-		"placeholder": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "placeholder",
-			"default": ""
-		},
-		"value": {
-			"type": "string",
-			"source": "text",
-			"selector": "textarea",
-			"default": ""
-		},
-		"validation": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "data-bouncer-message",
-			"default": ""
-		},
-		"enableMismatch": {
-			"type": "boolean",
-			"default": false
-		},
-		"mismatchMessage": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "data-bouncer-mismatch-message",
-			"default": ""
-		},
-		"match": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "data-bouncer-match",
-			"default": ""
-		},
-		"required": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "required",
-			"default": false
-		},
-		"autocomplete": {
-			"enum": ["on", "off"],
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "autocomplete",
-			"default": "off"
-		},
-		"requiredText": {
-			"type": "string",
-			"source": "text",
-			"selector": "label span.required",
-			"default": "*"
-		},
-		"disabled": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "disabled",
-			"default": false
-		},
-		"readonly": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "readonly",
-			"default": false
-		},
-		"showHelp": {
-			"type": "boolean",
-			"default": false
-		},
-		"help": {
-			"type": "string",
-			"source": "html",
-			"selector": "small",
-			"default": ""
-		},
-		"cols": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "cols",
-			"default": ""
-		},
-		"rows": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "rows",
-			"default": ""
-		},
-		"minlength": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "minlength",
-			"default": ""
-		},
-		"maxlength": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "maxlength",
-			"default": ""
-		},
-		"pattern": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "textarea",
-			"attribute": "pattern",
-			"default": ""
-		},
-		"enableRtf": {
-			"type": "boolean",
-			"selector": ".formello-rft"
-		}
-	}
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "formello/textarea",
+  "title": "Textarea",
+  "description": "Textarea field.",
+  "category": "formello",
+  "ancestor": [
+    "formello/form"
+  ],
+  "textdomain": "formello",
+  "attributes": {
+    "id": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "id",
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "name"
+    },
+    "label": {
+      "type": "string",
+      "source": "html",
+      "selector": "label span:not(.required)",
+      "default": "My textarea"
+    },
+    "hideLabel": {
+      "type": "boolean",
+      "selector": "label.hide",
+      "default": false
+    },
+    "placeholder": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "placeholder",
+      "default": ""
+    },
+    "value": {
+      "type": "string",
+      "source": "text",
+      "selector": "textarea",
+      "default": ""
+    },
+    "validation": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "data-bouncer-message",
+      "default": ""
+    },
+    "enableMismatch": {
+      "type": "boolean",
+      "default": false
+    },
+    "mismatchMessage": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "data-bouncer-mismatch-message",
+      "default": ""
+    },
+    "match": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "data-bouncer-match",
+      "default": ""
+    },
+    "required": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "required",
+      "default": false
+    },
+    "autocomplete": {
+      "enum": [
+        "on",
+        "off"
+      ],
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "autocomplete",
+      "default": "off"
+    },
+    "requiredText": {
+      "type": "string",
+      "source": "text",
+      "selector": "label span.required",
+      "default": "*"
+    },
+    "disabled": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "disabled",
+      "default": false
+    },
+    "readonly": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "readonly",
+      "default": false
+    },
+    "showHelp": {
+      "type": "boolean",
+      "default": false
+    },
+    "help": {
+      "type": "string",
+      "source": "html",
+      "selector": "small",
+      "default": ""
+    },
+    "cols": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "cols",
+      "default": ""
+    },
+    "rows": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "rows",
+      "default": ""
+    },
+    "minlength": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "minlength",
+      "default": ""
+    },
+    "maxlength": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "maxlength",
+      "default": ""
+    },
+    "pattern": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "textarea",
+      "attribute": "pattern",
+      "default": ""
+    },
+    "enableRtf": {
+      "type": "boolean",
+      "selector": ".formello-rft"
+    }
+  },
+  "supports": {
+    "html": false,
+    "className": false,
+    "reusable": false,
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true,
+      "__experimentalSkipSerialization": true,
+      "__experimentalDefaultControls": {
+        "color": true,
+        "radius": true,
+        "style": true,
+        "width": true
+      }
+    }
+  }
 }

@@ -2,14 +2,12 @@
  * External dependencies
  */
 import classnames from 'classnames';
-import { assign } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { Animate, Notice } from '@wordpress/components';
-import { useState, useEffect } from '@wordpress/element';
+import { Animate } from '@wordpress/components';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Renders the update settings buttons and animation
@@ -21,33 +19,33 @@ import { useState, useEffect } from '@wordpress/element';
 export default function MessageBox( props ) {
 	const { handleClose, message, messageType } = props;
 
-	useEffect(() => {
+	useEffect( () => {
 		let timer;
 		if ( message ) {
-			timer = setTimeout(() => {
+			timer = setTimeout( () => {
 				handleClose( false );
-			}, 3000);
+			}, 3000 );
 		}
 		return () => {
-			clearTimeout(timer);
+			clearTimeout( timer );
 		};
-	}, [ message ]);
+	}, [ message ] );
 
 	return (
-			<Animate type="slide-in" options={ { origin: 'top' } }>
-				{ ( { animateClassName } ) => (
-						<span className={ classnames(
-								'formello-message',
-								animateClassName,
-								messageType,
-								{
-									'show': message
-								}
-							) }
-						>
-							{ message }
-						</span>
+		<Animate type="slide-in" options={ { origin: 'top' } }>
+			{ ( { animateClassName } ) => (
+				<span className={ classnames(
+					'formello-message',
+					animateClassName,
+					messageType,
+					{
+						show: message,
+					}
 				) }
-			</Animate>
-		)
+				>
+					{ message }
+				</span>
+			) }
+		</Animate>
+	);
 }

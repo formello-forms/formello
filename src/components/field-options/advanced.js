@@ -5,11 +5,16 @@ import {
 	TextControl,
 	withFilters,
 } from '@wordpress/components';
+import { useSelect, useDispatch } from '@wordpress/data';
+import {
+	store as blockEditorStore,
+} from '@wordpress/block-editor';
 
-import { Fragment, RawHTML } from '@wordpress/element';
+import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
+
+import { Fragment } from '@wordpress/element';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
-import DatepickerSettings from './date';
 
 function AdvancedOptions( props ) {
 	const {
@@ -19,20 +24,42 @@ function AdvancedOptions( props ) {
 			enableAutoComplete,
 			autocomplete,
 			readonly,
-			withButton,
-			withOutput,
-			grouped,
-			flatpickr,
 			cols,
 			rows,
-			enableRtf
+			enableRtf,
 		},
 		setAttributes,
 		fieldType,
-		clientId
+		clientId,
 	} = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[ fieldType ];
+
+	const hasInnerBlocks = useSelect(
+		( select ) => {
+			const { getBlock } = select( blockEditorStore );
+			const block = getBlock( clientId );
+			return !! ( block && block.innerBlocks.length );
+		},
+		[ clientId ]
+	);
+
+	const { replaceInnerBlocks } =
+		useDispatch( blockEditorStore );
+
+	const addButton = () => {
+		let child = 'formello/button';
+		if ( 'range' === type ) {
+			child = 'formello/output';
+		}
+		replaceInnerBlocks(
+			props.clientId,
+			createBlocksFromInnerBlocksTemplate(
+				[ [ child ] ]
+			),
+			true
+		);
+	};
 
 	return (
 		<Fragment>
@@ -83,35 +110,23 @@ function AdvancedOptions( props ) {
 					}
 				/>
 			}
-			{ 'range' === type && (
+			{ [ 'text', 'url', 'email', 'number', 'tel', 'range' ].includes( type ) && (
 				<ToggleControl
-					label={ __( 'Show output', 'formello' ) }
-					checked={ withOutput }
-					onChange={ ( val ) =>
-						setAttributes( {
-							withOutput: val,
-						} )
-					}
-				/>
-			) }
-			{ [ 'text', 'url', 'email', 'number', 'tel' ].includes( type ) && (
-				<ToggleControl
-					label={ __( 'Show button', 'formello' ) }
-					checked={ withButton }
-					onChange={ ( newval ) =>
-						setAttributes( { withButton: newval } )
-					}
-				/>
-			) }
-			{ withButton && (
-				<ToggleControl
-					label={ __( 'Group button with input', 'formello' ) }
-					checked={ grouped }
-					onChange={ ( val ) =>
-						setAttributes( {
-							grouped: val,
-						} )
-					}
+					label={ 'range' === type ? __( 'Show output', 'formello' ) : __( 'Show button', 'formello' ) }
+					checked={ hasInnerBlocks }
+					onChange={ ( newval ) => {
+						if ( newval ) {
+							setAttributes( { withButton: true } );
+							addButton();
+						} else {
+							setAttributes( { withButton: false } );
+							replaceInnerBlocks(
+								clientId,
+								[],
+								true
+							);
+						}
+					} }
 				/>
 			) }
 			{ 'hidden' !== type && (

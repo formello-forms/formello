@@ -1,13 +1,16 @@
-import { RichText, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import {
+	RichText,
+	useBlockProps,
+	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+	InnerBlocks,
+} from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function save( { attributes } ) {
-
 	const {
 		type,
 		value,
-		name,
 		id,
 		withButton,
 		withOutput,
@@ -17,14 +20,10 @@ export default function save( { attributes } ) {
 		enableMismatch,
 		mismatchMessage,
 		match,
-		autocomplete,
 		enableAutoComplete,
-		accept,
-		flatpickr,
 		noWrapper,
 		required,
 		requiredText,
-		hideRequired,
 		label,
 		hideLabel,
 		showHelp,
@@ -36,8 +35,9 @@ export default function save( { attributes } ) {
 		enableTime,
 		minDate,
 		className,
-		multiple
 	} = attributes;
+
+	const borderProps = getBorderClassesAndStyles( attributes );
 
 	const containerClass = classnames( 'formello', className, {
 		'formello-group': withButton || withOutput,
@@ -47,18 +47,17 @@ export default function save( { attributes } ) {
 	} );
 
 	const labelClassName = classnames( {
-		hide: hideLabel
+		hide: hideLabel,
 	} );
 
-	const fieldClassName = classnames( {
+	const fieldClassName = classnames( borderProps.className, {
 		'formello-advanced': advanced,
 	} );
 
 	// include only supported attributes
-	let htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ type ].map( col => [col, attributes[col] ] ) );
+	const htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ type ].map( ( col ) => [ col, attributes[ col ] ] ) );
 
-	Object.keys(htmlAttrs).forEach((k) => htmlAttrs[k] == '' && delete htmlAttrs[k]);
-
+	Object.keys( htmlAttrs ).forEach( ( k ) => htmlAttrs[ k ] === '' && delete htmlAttrs[ k ] );
 
 	if ( validation ) {
 		htmlAttrs[ 'data-bouncer-message' ] = validation;
@@ -81,17 +80,17 @@ export default function save( { attributes } ) {
 	}
 
 	if ( advanced && 'date' === type ) {
-		htmlAttrs['data-date-format'] = dateFormat;
-		htmlAttrs['data-time-format'] = timeFormat;
-		htmlAttrs['data-enable-time'] = enableTime;
-		htmlAttrs['data-mode'] = mode;
-		htmlAttrs['data-min-date'] = minDate;
-		htmlAttrs['data-inline'] = inlineCalendar;
+		htmlAttrs[ 'data-date-format' ] = dateFormat;
+		htmlAttrs[ 'data-time-format' ] = timeFormat;
+		htmlAttrs[ 'data-enable-time' ] = enableTime;
+		htmlAttrs[ 'data-mode' ] = mode;
+		htmlAttrs[ 'data-min-date' ] = minDate;
+		htmlAttrs[ 'data-inline' ] = inlineCalendar;
 	}
 
 	if ( advanced && 'time' === type ) {
-		htmlAttrs['data-time-format'] = timeFormat;
-		htmlAttrs['data-enable-time'] = enableTime;
+		htmlAttrs[ 'data-time-format' ] = timeFormat;
+		htmlAttrs[ 'data-enable-time' ] = enableTime;
 	}
 
 	if ( noWrapper || 'hidden' === type ) {
@@ -111,9 +110,9 @@ export default function save( { attributes } ) {
 				</label>
 			) }
 
-			<input { ...htmlAttrs } className={ fieldClassName } />
+			<input { ...htmlAttrs } className={ fieldClassName } style={ borderProps.style } />
 
-			{ withButton && <InnerBlocks.Content /> }
+			<InnerBlocks.Content />
 			{ withOutput && <output>{ value }</output> }
 			{ 'hidden' !== type && showHelp && (
 				<RichText.Content tagName="small" value={ help } />

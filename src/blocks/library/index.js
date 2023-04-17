@@ -1,5 +1,5 @@
-import { 
-	Form
+import {
+	Form,
 } from '../../icons/icons';
 import { registerBlockType } from '@wordpress/blocks';
 

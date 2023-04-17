@@ -82,34 +82,20 @@ class Template extends Base {
 	public function export_forms() {
 
 		$forms = $this->get_forms();
-		$dir = \Formello\Utils\formello_dir() . '/tmp/formello.json';
-		$dir_url = \Formello\Utils\formello_dir_url() . '/tmp/formello.json';
 
-		global $wp_filesystem;
-		// Initialize the WP filesystem, no more using 'file-put-contents' function.
-		if ( empty( $wp_filesystem ) ) {
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-			WP_Filesystem();
-		}
-		// Add json string.
-		$wp_filesystem->put_contents( $dir, wp_json_encode( $forms ), 0644 );
+		$response = new \WP_REST_Response( $forms, 200 );
 
-		$response = sprintf(
-			/* Translators: %s is the url of the file */
-			__( 'Your export is complete. Please click to <a rel="download" target="_blank" href="%s">download</a>.', 'formello' ),
-			$dir_url
-		);
+		$response->header( 'Content-Type', 'application/json; charset=utf-8' );
+		$response->header( 'Content-Disposition', 'attachment; filename=forms.json' );
 
-		if ( is_array( $forms ) ) {
-			return $this->success( $response );
-		} else {
-			return $this->error( 'no_templates', __( 'Templates not found.', 'formello' ) );
-		}
+		return $response;
+
 	}
 
 	/**
 	 * Export forms.
 	 *
+	 * @param WP_REST_Request $request  request object.
 	 * @return mixed
 	 */
 	public function import_forms( $request ) {

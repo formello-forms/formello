@@ -153,5 +153,23 @@
 			"type": "boolean",
 			"selector": ".formello-rft"
 		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"reusable": false,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		}
 	}
 }

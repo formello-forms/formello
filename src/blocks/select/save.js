@@ -2,24 +2,17 @@ import { RichText, useBlockProps } from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-export default function save( { attributes, className } ) {
-
+export default function save( { attributes } ) {
 	const {
-		name,
 		id,
 		label,
 		hideLabel,
 		options,
 		required,
 		requiredText,
-		readonly,
-		disabled,
-		multiple,
 		showHelp,
-		help
+		help,
 	} = attributes;
-
-	className = classnames( 'formello' );
 
 	const labelClassName = classnames( 'select-label', {
 		hide: hideLabel,
@@ -30,14 +23,14 @@ export default function save( { attributes, className } ) {
 	} );
 
 	// include only supported attributes
-	let htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ 'select' ].map( col => [col, attributes[col] ] ) );
+	const htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES.select.map( ( col ) => [ col, attributes[ col ] ] ) );
 
 	const selectedOpts = options
-		.filter( x => true === x.selected ) 
-		.map( x => x.value )
+		.filter( ( x ) => true === x.selected )
+		.map( ( x ) => x.value );
 
 	return (
-		<div {...blockProps}>
+		<div { ...blockProps }>
 			<label className={ labelClassName } htmlFor={ id }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
@@ -46,7 +39,7 @@ export default function save( { attributes, className } ) {
 					</span>
 				) }
 			</label>
-			<select {...htmlAttrs} defaultValue={ selectedOpts }>
+			<select { ...htmlAttrs } defaultValue={ selectedOpts }>
 				{ options.map( ( opt, index ) => {
 					return (
 						<option

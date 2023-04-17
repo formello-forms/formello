@@ -5,16 +5,15 @@ import apiFetch from '@wordpress/api-fetch';
 import UpdateSettings from '../../update-settings';
 
 export default function ReSync() {
-
 	const reSync = () => {
 		return apiFetch( {
 			path: '/formello/v1/sync_template_library',
 			method: 'POST',
 			data: {
 				type: 'formello_form',
-				categories: 'form'
-			}
-		} )
+				categories: 'form',
+			},
+		} );
 	};
 
 	return (

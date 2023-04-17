@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "formello/output",
+  "title": "Output",
+  "description": "A block to display range output.",
+  "category": "formello",
+  "parent": [
+    "formello/input"
+  ],
+  "icon": "number",
+  "textdomain": "formello",
+  "attributes": {
+    "text": {
+      "type": "string",
+      "source": "text",
+      "selector": "span",
+      "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "lock": false,
+    "reusable": false,
+    "inserter": false,
+    "color": {
+      "background": true,
+      "text": true
+    },
+    "spacing": {
+      "padding": [
+        "left",
+        "right"
+      ],
+      "margin": [
+        "left",
+        "right"
+      ]
+    },
+    "__experimentalBorder": {
+      "radius": true,
+      "width": true,
+      "color": true,
+      "style": true
+    },
+    "typography": {
+      "fontSize": true
+    }
+  }
+}

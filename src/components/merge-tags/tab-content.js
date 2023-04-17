@@ -6,20 +6,19 @@
 import {
 	SearchControl,
 	TabPanel,
-	MenuItem
+	MenuItem,
 } from '@wordpress/components';
 import { useState, Fragment } from '@wordpress/element';
 
 export default function TabContent( { tabs, onChange } ) {
-
 	const [ searchInput, setSearchInput ] = useState( '' );
 
 	const filterAddon = ( element ) => {
-		if( '' === searchInput ){
+		if ( '' === searchInput ) {
 			return true;
 		}
 		return element.title.toLowerCase().search( searchInput.toLowerCase() ) !== -1;
-	}
+	};
 
 	return (
 		<Fragment>
@@ -28,16 +27,20 @@ export default function TabContent( { tabs, onChange } ) {
 				onChange={ setSearchInput }
 			/>
 			<TabPanel tabs={ tabs }>
-				{ ( tab ) => 
+				{ ( tab ) =>
 
-					tab.data.filter( (element) => {
-						return filterAddon( element )
-					}).map( ( data ) => {
+					tab.data.filter( ( element ) => {
+						return filterAddon( element );
+					} ).map( ( data ) => {
 						return (
-							<MenuItem key={ data.title } onClick={ () => onChange( data.tag ) }>
+							<MenuItem
+								key={ data.title }
+								onClick={ () => onChange( data.tag ) }
+								info={ data.description }
+							>
 								{ data.title }
 							</MenuItem>
-						)
+						);
 					} )
 
 				}

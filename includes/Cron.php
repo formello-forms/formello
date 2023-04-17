@@ -9,6 +9,7 @@ namespace Formello;
 
 use \Katzgrau\KLogger\Logger;
 use function Formello\Utils\formello_dir;
+use \Formello\Submission as Data;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -81,28 +82,12 @@ class Cron {
 	 */
 	public function get_news() {
 
-		global $wpdb;
-		$table_submissions  = "{$wpdb->prefix}formello_submissions";
-		$table_posts  = "{$wpdb->prefix}posts";
-
-		$result = $wpdb->get_row(
-			$wpdb->prepare(
-				'SELECT count(*) as total FROM `%1s` s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM `%1s` f WHERE f.id = s.form_id AND f.post_type = %s AND f.post_status = %s );',
-				array(
-					'table_submissions' => $table_submissions,
-					'table_posts' => $table_posts,
-					'post_type' => 'formello_form',
-					'post_status' => 'publish',
-				)
-			)
-		);
-
-		set_transient( 'formello_news', $result->total, DAY_IN_SECONDS );
+		Data::get_news();
 
 	}
 
 	/**
-	 * Register our dynamic blocks.
+	 * Delete orphaned entries.
 	 *
 	 * @since 1.2.0
 	 */

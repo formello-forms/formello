@@ -13,8 +13,7 @@ export default function Label( { attributes, setAttributes } ) {
 		multiple,
 		type,
 		label,
-		hideRequired,
-		requiredText
+		requiredText,
 	} = attributes;
 
 	const labelClassName = classnames(
@@ -23,7 +22,7 @@ export default function Label( { attributes, setAttributes } ) {
 		labelVAlign,
 		{
 			hide: hideLabel,
-			required: required,
+			required,
 			'textarea-label':
 				multiple || 'textarea' === type,
 		}

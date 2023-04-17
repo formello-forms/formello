@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { omit } from 'lodash';
 import classnames from 'classnames';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
@@ -16,70 +15,69 @@ const blockAttributes = {
 		type: 'string',
 	},
 	id: {
-		type: 'string'
+		type: 'string',
 	},
 	type: {
 		type: 'string',
-		default: 'text'
+		default: 'text',
 	},
 	label: {
-		type: 'string'
+		type: 'string',
 	},
 	hideLabel: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	value: {
-		type: 'string'
+		type: 'string',
 	},
 	placeholder: {
-		type: 'string'
+		type: 'string',
 	},
 	required: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	requiredText: {
-		type: 'string'
+		type: 'string',
 	},
 	validation: {
-		type: 'string'
+		type: 'string',
 	},
 	readonly: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	showHelp: {
-		type: 'string'
+		type: 'string',
 	},
 	help: {
-		type: 'string'
+		type: 'string',
 	},
 	withButton: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	withButton: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	enableMismatch: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	enableAutoComplete: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	advanced: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	noWrapper: {
-		type: 'boolean'
+		type: 'boolean',
 	},
 	grouped: {
-		type: 'boolean'
+		type: 'boolean',
 	},
-}
+};
 
-const v1 = 
+const v1 =
 	{
 		attributes: blockAttributes,
 		save( { attributes, className } ) {
-
 			const {
 				name,
 				id,
@@ -111,16 +109,16 @@ const v1 =
 			} );
 
 			const labelClassName = classnames( {
-				hide: hideLabel
+				hide: hideLabel,
 			} );
 
 			const fieldClassName = classnames( {
-				'flatpickr': advanced && 'date' === type,
-				'filepond': advanced && 'file' === type,
+				flatpickr: advanced && 'date' === type,
+				filepond: advanced && 'file' === type,
 			} );
 
 			// include only supported attributes
-			let htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ type ].map( col => [col, attributes[col] ] ) );
+			const htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ type ].map( ( col ) => [ col, attributes[ col ] ] ) );
 
 			if ( validation ) {
 				htmlAttrs[ 'data-bouncer-message' ] = validation;
@@ -144,7 +142,7 @@ const v1 =
 
 			if ( 'file' === type ) {
 				htmlAttrs.name;
-				htmlAttrs.accept = accept?.join(',');
+				htmlAttrs.accept = accept?.join( ',' );
 			}
 
 			if ( advanced && 'date' === type ) {
@@ -180,10 +178,10 @@ const v1 =
 						<RichText.Content tagName="small" value={ help } />
 					) }
 				</div>
-			)
-		}
+			);
+		},
 	};
 
-const deprecated = [ v1 ]
+const deprecated = [ v1 ];
 
 export default deprecated;

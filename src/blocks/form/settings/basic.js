@@ -1,6 +1,10 @@
 import { __, sprintf } from '@wordpress/i18n';
 
-import { Fragment, RawHTML } from '@wordpress/element';
+import { RawHTML } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import {
+	useEntityProp,
+} from '@wordpress/core-data';
 
 import {
 	TextControl,
@@ -8,10 +12,9 @@ import {
 	Notice,
 	PanelBody,
 	TextareaControl,
-	BaseControl
+	BaseControl,
 } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
-
 import {
 	URLInput,
 } from '@wordpress/block-editor';
@@ -28,26 +31,49 @@ import {
  * @return {WPElement} Element to render.
  */
 export function Settings( props ) {
-	const { attributes, setAttributes, clientId } = props;
+	const { attributes, setAttributes } = props;
 
-	const { 
-		storeSubmissions, 
-		recaptchaEnabled, 
-		hide, redirectUrl, 
-		successMessage, 
-		errorMessage 
+	const {
+		storeSubmissions,
+		recaptchaEnabled,
+		hide,
+		redirectUrl,
+		successMessage,
+		errorMessage,
+		id,
 	} = attributes;
 
 	const settingsUrl = addQueryArgs( 'edit.php', {
 		post_type: 'formello_form',
 		page: 'formello-settings',
 	} ) + '#/recaptcha';
-	
+
+	const { postType } = useSelect( ( select ) => ( {
+		postType: select( 'core/editor' ).getCurrentPostType(),
+	} ) );
+
+	const [ title, setTitle ] = useEntityProp(
+		'postType',
+		'formello_form',
+		'title',
+		id
+	);
+
 	return (
 		<PanelBody
 			title={ __( 'Settings', 'formello' ) }
 			initialOpen={ true }
 		>
+			{
+				'formello_form' !== postType &&
+				<TextControl
+					label={ __( 'Form name', 'formello' ) }
+					value={ title }
+					onChange={ ( val ) => {
+						setTitle( val );
+					} }
+				/>
+			}
 			<ToggleControl
 				label={ __( 'Store submissions', 'formello' ) }
 				checked={ storeSubmissions }
@@ -63,26 +89,24 @@ export function Settings( props ) {
 				} }
 			/>
 			{ ( '' === formello.settings.reCaptcha.site_key ||
-				'' === formello.settings.reCaptcha.secret_key ) &&
-					recaptchaEnabled && (
-					<div className="block-editor-contrast-checker">
-						<Notice
-							status="warning"
-							isDismissible={ false }
-						>
-							<RawHTML>
-								{ sprintf(
-									/* translators: Number of templates. */
-									__(
-										'Please be sure to add a ReCaptcha API key on %s',
-										'formello'
-									),
-									`<a href="${ settingsUrl }">settings page</a>`
-								) }
-							</RawHTML>
-						</Notice>
-					</div>
-				) }
+				'' === formello.settings.reCaptcha.secret_key ) && recaptchaEnabled && (
+				<Notice
+					status="warning"
+					isDismissible={ false }
+					className={ 'formello-notice' }
+				>
+					<RawHTML>
+						{ sprintf(
+							/* translators: Url of settings page. */
+							__(
+								'Please be sure to add a ReCaptcha API key on %s',
+								'formello'
+							),
+							`<a href="${ settingsUrl }">settings page</a>`
+						) }
+					</RawHTML>
+				</Notice>
+			) }
 			<ToggleControl
 				label={ __( 'Hide form after submission', 'formello' ) }
 				checked={ hide }
@@ -98,6 +122,7 @@ export function Settings( props ) {
 						setAttributes( { redirectUrl: newURL } )
 					}
 					className={ 'formello-urlinput' }
+					__nextHasNoMarginBottom
 				/>
 			</BaseControl>
 			<TextareaControl

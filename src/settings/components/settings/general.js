@@ -2,16 +2,11 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	Button,
 	ExternalLink,
-	BaseControl,
-	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
 
-import { RawHTML, useState, Fragment } from '@wordpress/element';
+import { RawHTML } from '@wordpress/element';
 
-import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import UpdateLicense from '../update-license';
@@ -21,14 +16,13 @@ export default function General( props ) {
 
 	const license = settings.formello.license;
 	const license_status = settings.formello.license_status;
-	const { saveEntityRecord } = useDispatch( coreStore );
 
 	function setLicense( key, value ) {
 		const newSettings = Object.assign( {}, settings.formello );
 		newSettings[ key ] = value;
 		setSettings( {
 			...settings,
-			formello: newSettings
+			formello: newSettings,
 		} );
 	}
 
@@ -40,22 +34,20 @@ export default function General( props ) {
 			path: '/formello/v1/license/' + endpoint,
 			method: 'POST',
 			data: {
-				license: license,
+				license,
 			},
-		} ).then( (result) => {
-
+		} ).then( ( result ) => {
 			if ( result.response?.success ) {
-				setLicense( 'license_status', result.response.license )
+				setLicense( 'license_status', result.response.license );
 			}
 
 			if (
 				! result.success
 			) {
-				setLicense( 'license_status', result.response )
+				setLicense( 'license_status', result.response );
 			}
-			return Promise.resolve(result)
-		} )
-
+			return Promise.resolve( result );
+		} );
 	};
 
 	return (
@@ -82,7 +74,7 @@ export default function General( props ) {
 					req={ updateLicense }
 					license={ license }
 					license_status={ license_status }
-					onChange={ (val) => setLicense('license', val) }
+					onChange={ ( val ) => setLicense( 'license', val ) }
 					saveSettings={ saveSettings }
 				/>
 			</CardBody>

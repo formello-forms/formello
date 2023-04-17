@@ -14,11 +14,11 @@ import { useState } from '@wordpress/element';
 
 import classnames from 'classnames';
 import {
-	Loading, 
-	Loading2, 
-	Pulse, 
-	Loading4, 
-	LoadingCircles, 
+	Loading,
+	Loading2,
+	Pulse,
+	Loading4,
+	LoadingCircles,
 	LoadingCirclePath,
 	Audio,
 	BallTriangle,
@@ -32,11 +32,11 @@ export default function Edit( { attributes, setAttributes } ) {
 	const { style, type, alignment } = attributes;
 
 	const icons = {
-		Loading, 
-		Loading2, 
-		Pulse, 
-		Loading4, 
-		LoadingCircles, 
+		Loading,
+		Loading2,
+		Pulse,
+		Loading4,
+		LoadingCircles,
 		LoadingCirclePath,
 		Audio,
 		BallTriangle,
@@ -116,7 +116,7 @@ export default function Edit( { attributes, setAttributes } ) {
 								...control,
 								isActive,
 								onClick: () => setAttributes( { alignment: align } ),
-							}
+							};
 						} ) }
 					/>
 				</ToolbarGroup>
@@ -133,8 +133,8 @@ export default function Edit( { attributes, setAttributes } ) {
 					label={ __( 'Icon type', 'formello' ) }
 					value={ attributes.type }
 					options={
-						Object.keys(icons).map( (icon) => {
-							return { label: icon, value: icon }
+						Object.keys( icons ).map( ( icon ) => {
+							return { label: icon, value: icon };
 						} )
 					}
 					/*options={ [

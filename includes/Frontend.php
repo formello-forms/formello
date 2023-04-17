@@ -110,7 +110,7 @@ class Frontend {
 				 * @param array $action_settings
 				 * @param Form $form
 				 */
-				if ( $action_settings['async'] ) {
+				if ( $action_settings['async'] && ! $form->is_debug() ) {
 					wp_schedule_single_event(
 						time() + 60,
 						'formello_process_form_action_' . $action_settings['type'],

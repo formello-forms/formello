@@ -140,7 +140,9 @@ function register_settings() {
 				),
 			),
 		),
-
+		'enabled_addons' => array(
+			'type' => 'array',
+		),
 	);
 
 	$settings = apply_filters( 'formello_settings', $settings );

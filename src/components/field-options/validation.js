@@ -6,21 +6,16 @@ import {
 	TextControl,
 	SelectControl,
 	PanelBody,
-	DropdownMenu,
-	MenuGroup,
-	MenuItem
 } from '@wordpress/components';
 
-import { Fragment, RawHTML } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 import MergeTags from '../merge-tags';
-import {
-	getPatternTabs,
-} from '../merge-tags/functions';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 import DatepickerSettings from './date';
 
 import {
+	getPatternTabs,
 	getFormBlock,
 	serializeFieldsName,
 } from '../merge-tags/functions';
@@ -39,16 +34,16 @@ function ValidationOptions( props ) {
 			enableMismatch,
 			pattern,
 			match,
-			mismatchMessage
+			mismatchMessage,
 		},
 		setAttributes,
-		clientId
+		clientId,
 	} = props;
 
 	const supported = SUPPORTED_ATTRIBUTES[ type ?? 'textarea' ];
 
-	const formId = getFormBlock(clientId).clientId;
-	const fields = serializeFieldsName(formId);
+	const formId = getFormBlock( clientId ).clientId;
+	const fields = serializeFieldsName( formId );
 
 	const tabs = getPatternTabs();
 
@@ -64,13 +59,13 @@ function ValidationOptions( props ) {
 					} }
 				/>
 			) }
-			{ ('date' === type || 'time' === type) && (
+			{ ( 'date' === type || 'time' === type ) && (
 				<DatepickerSettings { ...props } />
 			) }
 
 			{ applyFilters( 'formello.Validation', '', props ) }
 
-			{ supported.includes( 'step' ) && !advanced && (
+			{ supported.includes( 'step' ) && ! advanced && (
 				<Fragment>
 					<TextControl
 						label={ __( 'Min Value', 'formello' ) }
@@ -121,10 +116,10 @@ function ValidationOptions( props ) {
 			) }
 			{ supported.includes( 'pattern' ) && (
 				<Fragment>
-					<MergeTags 
+					<MergeTags
 						label={ 'Pattern' }
 						clientId={ clientId }
-						tabs={ tabs } 
+						tabs={ tabs }
 						value={ pattern }
 						onChange={ ( val ) => {
 							setAttributes( { pattern: val } );
@@ -149,16 +144,16 @@ function ValidationOptions( props ) {
 			/>
 			{ enableMismatch && (
 				<Fragment>
-			        <SelectControl
+					<SelectControl
 						label={ __( 'Match', 'formello' ) }
-			            value={ match }
-			            options={ [
-			            	{ value: '', label: __( 'Select a field', 'formello' ) },
-			            	...fields
-			            ] }
+						value={ match }
+						options={ [
+							{ value: '', label: __( 'Select a field', 'formello' ) },
+							...fields,
+						] }
 						onChange={ ( val ) => setAttributes( { match: val } ) }
 						help={ __( 'Select the field to match', 'formello' ) }
-			        />
+					/>
 					<TextControl
 						type="text"
 						label={ __( 'Mismatch message', 'formello' ) }

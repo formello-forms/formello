@@ -1,43 +1,46 @@
-import { RichText, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
+import {
+	RichText,
+	useBlockProps,
+	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+} from '@wordpress/block-editor';
 import classnames from 'classnames';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-export default function save( { attributes, className } ) {
-
-	const { 
-		name,
+export default function save( { attributes } ) {
+	const {
 		id,
 		hideLabel,
 		enableRtf,
 		validation,
-		showHelp,
 		help,
 		value,
 		label,
 		required,
-		requiredText 
+		requiredText,
 	} = attributes;
 
-	className = classnames( 'formello' );
+	const borderProps = getBorderClassesAndStyles( attributes );
+
+	const wrapperClassName = classnames( 'formello' );
 
 	const labelClassName = classnames( 'textarea-label', {
 		hide: hideLabel,
 	} );
 
-	const fieldClassName = classnames( {
+	const fieldClassName = classnames( borderProps.className, {
 		'formello-rtf': enableRtf,
 	} );
 
 	// include only supported attributes
-	let htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ 'textarea' ].map( col => [col, attributes[col] ] ) );
+	const htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES.textarea.map( ( col ) => [ col, attributes[ col ] ] ) );
 
 	if ( validation ) {
 		htmlAttrs[ 'data-bouncer-message' ] = validation;
 	}
 
 	return (
-		<div { ...useBlockProps.save() } className={ className }>
-			<label className={ labelClassName } for={ id }>
+		<div { ...useBlockProps.save() } className={ wrapperClassName }>
+			<label className={ labelClassName } htmlFor={ id }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
 					<span className="required">
@@ -45,7 +48,7 @@ export default function save( { attributes, className } ) {
 					</span>
 				) }
 			</label>
-			<textarea { ...htmlAttrs } className={ fieldClassName }>
+			<textarea { ...htmlAttrs } className={ fieldClassName } style={ borderProps.style }>
 				{ value }
 			</textarea>
 			{ help.length > 0 && (

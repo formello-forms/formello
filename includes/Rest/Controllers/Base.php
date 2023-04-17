@@ -68,39 +68,11 @@ class Base extends WP_REST_Controller {
 	}
 
 	/**
-	 * Sanitize our options.
-	 *
-	 * @since 1.2.0
-	 * @param string $name The setting name.
-	 * @param mixed  $value The value to save.
-	 */
-	public function sanitize_value( $name, $value ) {
-		$callbacks = apply_filters(
-			'formello_option_sanitize_callbacks',
-			array(
-				'recaptcha' => array(
-					'site_key'   => 'sanitize_text_field',
-					'secret_key' => 'sanitize_text_field',
-					'version'    => 'sanitize_text_field',
-				),
-			)
-		);
-
-		$callback = $callbacks[ $name ];
-
-		if ( ! is_callable( $callback ) ) {
-			return sanitize_text_field( $value );
-		}
-
-		return $callback( $value );
-	}
-
-	/**
 	 * Update Settings.
 	 *
 	 * @param \WP_REST_Request $request  request object.
 	 *
-	 * @return mixed
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function update_settings( \WP_REST_Request $request ) {
 		$new_settings = $request->get_param( 'settings' );
@@ -122,7 +94,7 @@ class Base extends WP_REST_Controller {
 	 *
 	 * @param \WP_REST_Request $request  request object.
 	 *
-	 * @return mixed
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function reset_settings( \WP_REST_Request $request ) {
 
@@ -141,7 +113,7 @@ class Base extends WP_REST_Controller {
 	 *
 	 * @param array $array the array of data.
 	 *
-	 * @return mixed
+	 * @return array
 	 */
 	public function recursive_sanitize_text_field( $array ) {
 		foreach ( $array as $key => &$value ) {
@@ -159,7 +131,7 @@ class Base extends WP_REST_Controller {
 	 *
 	 * @param string $message The message.
 	 *
-	 * @return mixed
+	 * @return \WP_REST_Response|\WP_Error
 	 */
 	public function response( $message ) {
 		return rest_ensure_response(
@@ -174,7 +146,7 @@ class Base extends WP_REST_Controller {
 	 * Success rest.
 	 *
 	 * @param mixed $response response data.
-	 * @return mixed
+	 * @return \WP_REST_Response
 	 */
 	public function success( $response ) {
 		return new \WP_REST_Response(
@@ -190,7 +162,7 @@ class Base extends WP_REST_Controller {
 	 * Failed rest.
 	 *
 	 * @param mixed $response response data.
-	 * @return mixed
+	 * @return \WP_REST_Response
 	 */
 	public function failed( $response ) {
 		return new \WP_REST_Response(
@@ -207,7 +179,7 @@ class Base extends WP_REST_Controller {
 	 *
 	 * @param mixed $code     error code.
 	 * @param mixed $response response data.
-	 * @return mixed
+	 * @return \WP_REST_Response
 	 */
 	public function error( $code, $response ) {
 		return new \WP_REST_Response(

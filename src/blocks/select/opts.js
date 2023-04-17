@@ -3,7 +3,6 @@ import { TextControl, CheckboxControl, Flex, FlexItem, Button } from '@wordpress
 import { __ } from '@wordpress/i18n';
 
 const OptionsList = ( props ) => {
-
 	return props.options.map( ( obj, index ) => {
 		return (
 			<Flex

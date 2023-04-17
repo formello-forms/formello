@@ -7,8 +7,8 @@ import Edit from './edit';
 import save from './save';
 import variations from './variations';
 import metadata from './block.json';
-import { 
-	Fieldset
+import {
+	Fieldset,
 } from '../../icons/icons';
 
 /**

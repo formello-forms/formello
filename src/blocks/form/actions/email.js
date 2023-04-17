@@ -1,26 +1,20 @@
 import { addFilter } from '@wordpress/hooks';
 
 import {
-	TextControl,
 	ToggleControl,
+	BaseControl,
 	Notice,
 	Button,
 } from '@wordpress/components';
 import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
-import { Editor } from '@tinymce/tinymce-react';
 
-export default function Email( content, props, MergeTags, handleUpdate ) {
-	const { action, clientId } = props;
+export default function Email( content, props, settings, MergeTags, ClassicEdit, handleUpdate ) {
+	const { clientId } = props;
 
-	const [ settings, setSettings ] = useState( Object.assign( {}, action ) );
+	const id = `editor-${ clientId }`;
 	const [ advanced, setAdvanced ] = useState( false );
-
-	const updateSettings = ( prop, val ) => {
-		setSettings( { ...settings, [ prop ]: val } );
-		handleUpdate( { ...settings, [ prop ]: val } );
-	};
 
 	const editorRef = useRef( null );
 	const [ dirty, setDirty ] = useState( false );
@@ -32,25 +26,18 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 			setDirty( false );
 			editorRef.current.setDirty( false );
 			// an application would save the editor content to the server here
-			updateSettings( 'message', message );
+			handleUpdate( 'message', message );
 		}
 	};
 
 	return (
 		<Fragment>
-			<TextControl
-				label="Name"
-				value={ settings.title }
-				onChange={ ( val ) => {
-					updateSettings( 'title', val );
-				} }
-			/>
 			<MergeTags
 				clientId={ clientId }
 				label="From"
 				value={ settings.from }
 				onChange={ ( val ) => {
-					updateSettings( 'from', val );
+					handleUpdate( 'from', val );
 				} }
 			/>
 
@@ -59,12 +46,12 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 				label="To"
 				value={ settings.to }
 				onChange={ ( val ) => {
-					updateSettings( 'to', val );
+					handleUpdate( 'to', val );
 				} }
 			/>
 
 			<ToggleControl
-				label={ __( 'More', 'formello' ) }
+				label={ __( 'CC/BCC', 'formello' ) }
 				onChange={ ( val ) => {
 					setAdvanced( val );
 				} }
@@ -78,7 +65,7 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 						label="CC"
 						value={ settings.cc }
 						onChange={ ( val ) => {
-							updateSettings( 'cc', val );
+							handleUpdate( 'cc', val );
 						} }
 					/>
 
@@ -87,7 +74,7 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 						label="BCC"
 						value={ settings.bcc }
 						onChange={ ( val ) => {
-							updateSettings( 'bcc', val );
+							handleUpdate( 'bcc', val );
 						} }
 					/>
 				</>
@@ -95,10 +82,10 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 
 			<MergeTags
 				clientId={ clientId }
-				label="Reply To"
+				label={ __( 'Reply to', 'formello' ) }
 				value={ settings.replyTo }
 				onChange={ ( val ) => {
-					updateSettings( 'replyTo', val );
+					handleUpdate( 'replyTo', val );
 				} }
 			/>
 
@@ -107,22 +94,14 @@ export default function Email( content, props, MergeTags, handleUpdate ) {
 				label="Subject"
 				value={ settings.subject }
 				onChange={ ( val ) => {
-					updateSettings( 'subject', val );
+					handleUpdate( 'subject', val );
 				} }
 			/>
-			<label>{ __( 'Message', 'formello' ) }</label>
-			<Editor
-				initialValue={ settings.message }
-				onInit={ ( evt, editor ) => ( editorRef.current = editor ) }
-				onDirty={ () => setDirty( true ) }
-				init={ {
-					height: 200,
-					menubar: false,
-					plugins: [ 'lists link image charmap' ],
-					toolbar:
-						'bold italic | aligncenter | bullist numlist | link unlink | undo redo ',
-				} }
-			/>
+
+			<BaseControl id={ id } label={ __( 'Message', 'formello' ) } __nextHasNoMarginBottom={ true }>
+				<ClassicEdit id={ id } defaultValue={ settings.message } />
+			</BaseControl>
+
 			{ dirty && (
 				<Notice status="warning" isDismissible={ false }>
 					<span>{ __( 'You have unsaved content! ', 'formello' ) }</span>

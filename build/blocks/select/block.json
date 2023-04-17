@@ -1,116 +1,118 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 2,
-	"name": "formello/select",
-	"title": "Select",
-	"description": "Dropdown select.",
-	"category": "formello",
-	"icon": "button",
-	"ancestor": ["formello/form"],
-	"textdomain": "formello",
-	"attributes": {
-		"id": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "select",
-			"attribute": "id",
-			"default": ""
-		},
-		"name": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "select",
-			"attribute": "name"
-		},
-		"label": {
-			"type": "string",
-			"source": "html",
-			"selector": "label span:not(.required)",
-			"default": "My input"
-		},
-		"hideLabel": {
-			"type": "boolean",
-			"selector": "label.hide",
-			"default": false
-		},
-	    "options": {
-	        "type": "array",
-	        "source": "query",
-	        "selector": "option",
-	        "query": {
-	            "value": {
-	                "type": "string",
-	                "source": "attribute",
-	                "attribute": "value"
-	            },
-	            "label": {
-	                "type": "string",
-	                "source": "text"
-	            },
-	            "selected": {
-	            	"type": "boolean",
-					"source": "attribute",
-					"attribute": "selected"
-	            }
-	        },
-			"default": [
-				{
-		    		"value": "",
-		    		"label": "Select an option"
-		    	},
-				{
-		    		"value": "1",
-		    		"label": "One"
-		    	},
-		    	{
-		    		"value": "2",
-		    		"label": "Two"
-		    	},
-		    	{
-		    		"value": "3",
-		    		"label": "Three"
-		    	}
-			]
-	    },
-		"multiple": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "select",
-			"attribute": "multiple"
-		},
-		"required": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "select",
-			"attribute": "required"
-		},
-		"requiredText": {
-			"type": "string",
-			"source": "text",
-			"selector": "label span.required",
-			"default": "*"
-		},
-		"disabled": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "select",
-			"attribute": "disabled"
-		},
-		"readonly": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "select",
-			"attribute": "readonly"
-		},
-		"showHelp": {
-			"type": "boolean",
-			"default": false
-		},
-		"help": {
-			"type": "string",
-			"source": "html",
-			"selector": "small",
-			"default": ""
-		}
-	}
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "formello/select",
+  "title": "Select",
+  "description": "Dropdown select.",
+  "category": "formello",
+  "icon": "button",
+  "ancestor": [
+    "formello/form"
+  ],
+  "textdomain": "formello",
+  "attributes": {
+    "id": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "select",
+      "attribute": "id",
+      "default": ""
+    },
+    "name": {
+      "type": "string",
+      "source": "attribute",
+      "selector": "select",
+      "attribute": "name"
+    },
+    "label": {
+      "type": "string",
+      "source": "html",
+      "selector": "label span:not(.required)",
+      "default": "My input"
+    },
+    "hideLabel": {
+      "type": "boolean",
+      "selector": "label.hide",
+      "default": false
+    },
+    "options": {
+      "type": "array",
+      "source": "query",
+      "selector": "option",
+      "query": {
+        "value": {
+          "type": "string",
+          "source": "attribute",
+          "attribute": "value"
+        },
+        "label": {
+          "type": "string",
+          "source": "text"
+        },
+        "selected": {
+          "type": "boolean",
+          "source": "attribute",
+          "attribute": "selected"
+        }
+      },
+      "default": [
+        {
+          "value": "",
+          "label": "Select an option"
+        },
+        {
+          "value": "1",
+          "label": "One"
+        },
+        {
+          "value": "2",
+          "label": "Two"
+        },
+        {
+          "value": "3",
+          "label": "Three"
+        }
+      ]
+    },
+    "multiple": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "select",
+      "attribute": "multiple"
+    },
+    "required": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "select",
+      "attribute": "required"
+    },
+    "requiredText": {
+      "type": "string",
+      "source": "text",
+      "selector": "label span.required",
+      "default": "*"
+    },
+    "disabled": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "select",
+      "attribute": "disabled"
+    },
+    "readonly": {
+      "type": "boolean",
+      "source": "attribute",
+      "selector": "select",
+      "attribute": "readonly"
+    },
+    "showHelp": {
+      "type": "boolean",
+      "default": false
+    },
+    "help": {
+      "type": "string",
+      "source": "html",
+      "selector": "small",
+      "default": ""
+    }
+  }
 }

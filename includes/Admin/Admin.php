@@ -243,7 +243,7 @@ class Admin {
 
 		add_screen_option( $option, $args );
 
-		do_action( 'formello_submissions_table_script' );
+		do_action( 'formello_submissions_table_scripts' );
 
 		$this->submissions_table = new Tables\Submissions();
 	}
@@ -274,7 +274,7 @@ class Admin {
 	 */
 	public function settings_page() {
 		?>
-			<div id="formello__plugin-settings"></div>
+			<div id="formello-plugin-settings"></div>
 		<?php
 	}
 
@@ -306,31 +306,10 @@ class Admin {
 	public function submission_page_detail() {
 		// Enqueue styling for admin tables.
 		wp_enqueue_style( 'formello-settings' );
-
-		if ( empty( absint( $_GET['submission_id'] ) ) ) {
-			$message = __( 'No submission ID provided.', 'formello' );
-			$this->notice( $message );
-		}
-
-		$id = sanitize_text_field( absint( $_GET['submission_id'] ) );
-
-		$data = new \Formello\Submission( $id );
-		$this->submission = $data->get();
-
-		if ( empty( $this->submission ) ) {
-			$message = __( 'No submission found.', 'formello' );
-			$this->notice( $message );
-		}
-		$this->back_button = add_query_arg(
-			array(
-				'page' => 'formello-submissions',
-				'form_id' => isset( $this->submission->form_id ) ? $this->submission->form_id : '',
-			),
-			$this->baselink
-		);
-		$this->settings = get_post_meta( $this->submission->form_id, '_formello_settings', true );
-
-		require dirname( __FILE__ ) . '/views/submission.php';
+		wp_enqueue_script( 'formello-submission' );
+		?>
+			<div id="formello-submission"></div>
+		<?php
 	}
 
 	/**
@@ -362,15 +341,16 @@ class Admin {
 			$this->notice( $message );
 		}
 		$form = get_post( $id );
+
+		if ( empty( $form ) || 'formello_form' !== $form->post_type ) {
+			$message = __( 'No submissions found for this form.', 'formello' );
+			$this->notice( $message );
+		}
 		if ( $form ) {
 			$title = $form->post_title;
 		}
 		if ( empty( $title ) ) {
 			$title = __( '(No title)', 'formello' );
-		}
-		if ( empty( $form ) ) {
-			$message = __( 'No submissions found for this form.', 'formello' );
-			$this->notice( $message );
 		}
 		require dirname( __FILE__ ) . '/views/submissions.php';
 	}
@@ -464,9 +444,11 @@ class Admin {
 	 */
 	public function notice( $message, $type = 'error' ) {
 		$this->notice = printf(
-			'<div class="notice notice-%s is-dismissible"><p>%s</p></div>',
+			'<div class="notice notice-%s">
+				<p>%s</p>
+			</div>',
 			esc_attr( $type ),
-			esc_html( $message )
+			esc_html( $message ),
 		);
 	}
 

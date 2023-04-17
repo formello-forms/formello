@@ -21,7 +21,7 @@ import { ReactComponent as Tel } from '../../assets/icons/phone-field.svg';
 import { ReactComponent as Textarea } from '../../assets/icons/textarea-field.svg';
 import { ReactComponent as Url } from '../../assets/icons/url-field.svg';
 
-export { 
+export {
 	Asterisk,
 	Checkbox,
 	Checkboxes,
@@ -32,7 +32,7 @@ export {
 	Form,
 	GDPR,
 	Hidden,
-	Input, 
+	Input,
 	Logo,
 	Number,
 	Password,
@@ -41,7 +41,7 @@ export {
 	Radios,
 	Select,
 	Tel,
-	Textarea, 
+	Textarea,
 	Url,
 	Calendar,
 };

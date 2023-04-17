@@ -6,19 +6,19 @@
 		padding: 8px;
 	}
 
-	select, textarea {
+	select,
+	textarea {
 		max-width: 100%;
 	}
+
 	.wp-block {
-		margin-right: 0;
-		margin-left: 0;
-		margin-top: 0;
+		margin: 0;
 	}
 
-	padding: .5em;
 }
 
 .wp-block-formello-form {
+
 	input[disabled],
 	select[disabled],
 	textarea[disabled],
@@ -43,16 +43,20 @@
 	}
 }
 
-.formello-urlinput {
 
-	input {
-		width: 100% !important;
-		border: 1px solid #8c8f94 !important;
-	}
+.formello-urlinput input[type="text"] {
+	width: 100%;
+	border: 1px solid #8c8f94 !important;
+}
+
+.formello-urlinput__suggestions {
+	width: 260px;
 }
 
 .formello-hidden {
 	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .wp-block-formello-button {
@@ -77,11 +81,15 @@
 /* ------------------ ACTION MODAL ------------------ */
 
 .formello-modal {
-	min-width: 500px;
+
+	@media only screen and (min-width: 768px) {
+		min-width: 640px;
+	}
 
 	select {
 		min-width: 100%;
 	}
+
 	fieldset {
 		border: 1px solid #dedede;
 		padding: 10px;
@@ -102,14 +110,15 @@
 
 
 .formello-fields-row {
-    margin-bottom: 10px;
-    .components-base-control__field {
-    	margin-bottom: 0;
-    }
+	margin-bottom: 10px;
+
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
 }
 
 .formello-fields-margin {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 
 .formello-mergetags-container {
@@ -126,6 +135,10 @@
 	color: white;
 }
 
+.formello-notice {
+	margin: 1em 0;
+}
+
 /* ------------------ END FIELDS -------------------------- */
 
 /* ------------------ MCE EDITOR ------------------------------- */
@@ -135,8 +148,6 @@
 }
 
 /* ------------------ END MCE EDITOR ------------------------------- */
-
-/**/
 
 .block-editor-block-variation-picker__skip button {
 	display: inline;

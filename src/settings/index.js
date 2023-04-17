@@ -1,31 +1,28 @@
-import menuFix from './menuFix'
+import menuFix from './menufix';
 import './style.scss';
 
 import { __ } from '@wordpress/i18n';
-import { HashRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import LoadingSpinner from './components/loading-spinner.js';
 
 import {
 	useState,
 	render,
-	Fragment,
-	useEffect
 } from '@wordpress/element';
 import {
 	useSelect,
-	select,
-	useDispatch
 } from '@wordpress/data';
-
+import {
+	store as coreStore,
+} from '@wordpress/core-data';
 import Settings from './routes/settings';
 import Tools from './routes/tools';
 import Addons from './routes/addons';
 
 const App = () => {
-
-	const [ settings, setSettings ] = useState( null );
+	const [ settings ] = useState( null );
 	const { savedSettings } = useSelect( ( select ) => {
-		const { getEntityRecord } = select( 'core' );
+		const { getEntityRecord } = select( coreStore );
 		const fetchedSettings =
 			getEntityRecord( 'root', 'site' ) ?? null;
 		return { savedSettings: fetchedSettings };
@@ -44,18 +41,17 @@ const App = () => {
 				<Routes>
 					<Route path="/:tab?" element={ <Settings savedSettings={ settings ?? savedSettings } /> } />
 					<Route path="/tools/:tab?" element={ <Tools savedSettings={ settings ?? savedSettings } /> } />
-					<Route path="/addons" element={ <Addons /> } />
+					<Route path="/addons" element={ <Addons savedSettings={ settings ?? savedSettings } /> } />
 				</Routes>
 			</HashRouter>
 		</React.StrictMode>
-	)
-
-}
+	);
+};
 
 window.addEventListener( 'DOMContentLoaded', () => {
 	render(
 		<App />,
-		document.getElementById( 'formello__plugin-settings' )
+		document.getElementById( 'formello-plugin-settings' )
 	);
 } );
 

@@ -14,10 +14,10 @@ class Formello {
 	}
 
 	init() {
-		this.element.querySelectorAll( '[multiple]' ).forEach( (e) => {
+		this.element.querySelectorAll( '[multiple]' ).forEach( ( e ) => {
 			const name = e.getAttribute( 'name' );
-			e.setAttribute( 'name', name + '[]' )
-		} )
+			e.setAttribute( 'name', name + '[]' );
+		} );
 		this.reCaptcha();
 		this.isRtfEnabled();
 		this.addFlatpickr();
@@ -25,12 +25,11 @@ class Formello {
 		const { validate } = this.element.dataset;
 		if ( ! validate ) {
 			this.element.addEventListener(
-				'submit', 
+				'submit',
 				this.handleSubmit.bind( this ),
 				true
 			);
 		}
-
 	}
 
 	handleSubmit( e ) {
@@ -102,6 +101,12 @@ class Formello {
 						parent.emitEvent( 'success', this.element );
 					}
 
+					// Should we redirect?
+					if ( response.redirect_url && ! response.errors.length ) {
+						window.location = response.redirect_url;
+						return false;
+					}
+
 					// Show form message
 					if ( response.message ) {
 						parent.addMessage(
@@ -121,11 +126,6 @@ class Formello {
 					if ( response.debug ) {
 						parent.addDebug( response.debug );
 						console.log( response.debug );
-					}
-
-					// Should we redirect?
-					if ( response.redirect_url ) {
-						window.location = response.redirect_url;
 					}
 
 					// clear form
@@ -157,7 +157,7 @@ class Formello {
 
 		const sitekey = formello.settings.reCaptcha?.site_key;
 		const version = formello.settings.reCaptcha?.version;
-		const button = this.element.querySelector('.wp-block-formello-button');
+		const button = this.element.querySelector( '.wp-block-formello-button' );
 
 		if ( '1' === version ) {
 			const recaptchaDiv = document.createElement( 'div' );
@@ -299,7 +299,6 @@ class Formello {
 			document.head.appendChild( css ); //or something of the likes
 		}
 	}
-
 }
 
 export { Formello };

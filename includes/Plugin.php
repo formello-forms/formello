@@ -66,28 +66,31 @@ final class Plugin {
 		}
 
 		// Needs to be included at all times due to show_in_rest.
-		include_once FORMELLO_ABSPATH . 'includes/Utils/Encryption.php';
-		include_once FORMELLO_ABSPATH . 'includes/Utils/functions.php';
-		include_once FORMELLO_ABSPATH . 'includes/register-settings.php';
-		include_once FORMELLO_ABSPATH . 'includes/register-cpt.php';
-		include_once FORMELLO_ABSPATH . 'includes/Rest/register-routes.php';
-		include_once FORMELLO_ABSPATH . 'includes/Assets.php';
-		include_once FORMELLO_ABSPATH . 'includes/Blocks.php';
-		include_once FORMELLO_ABSPATH . 'includes/Frontend.php';
-		include_once FORMELLO_ABSPATH . 'includes/Form.php';
-		include_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
-		include_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
-		include_once FORMELLO_ABSPATH . 'includes/TagReplacers/Replacer.php';
-		include_once FORMELLO_ABSPATH . 'includes/Log.php';
-		include_once FORMELLO_ABSPATH . 'includes/Updater.php';
-		include_once FORMELLO_ABSPATH . 'includes/Cron.php';
-		include_once FORMELLO_ABSPATH . 'includes/Admin/Admin.php';
+		require_once FORMELLO_ABSPATH . 'includes/Utils/Encryption.php';
+		require_once FORMELLO_ABSPATH . 'includes/Utils/functions.php';
+		require_once FORMELLO_ABSPATH . 'includes/register-settings.php';
+		require_once FORMELLO_ABSPATH . 'includes/register-cpt.php';
+		require_once FORMELLO_ABSPATH . 'includes/Rest/register-routes.php';
+		require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Forms.php';
+		require_once FORMELLO_ABSPATH . 'includes/Assets.php';
+		require_once FORMELLO_ABSPATH . 'includes/Blocks.php';
+		require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
+		require_once FORMELLO_ABSPATH . 'includes/Form.php';
+		require_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
+		require_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
+		require_once FORMELLO_ABSPATH . 'includes/TagReplacers/Replacer.php';
+		require_once FORMELLO_ABSPATH . 'includes/Log.php';
+		require_once FORMELLO_ABSPATH . 'includes/Cron.php';
+		require_once FORMELLO_ABSPATH . 'includes/Admin/Admin.php';
 
 		// Only include in the admin.
 		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			include_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Forms.php';
-			include_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Submissions.php';
+			require_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Forms.php';
+			require_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Submissions.php';
 		}
+
+		do_action( 'formello_loaded' );
+
 	}
 
 	/**

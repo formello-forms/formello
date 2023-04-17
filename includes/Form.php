@@ -100,9 +100,10 @@ class Form {
 		$this->formello_settings = get_option( 'formello' );
 
 		if ( ! empty( $id ) ) {
-			$this->ID     = $id;
-			$settings     = get_post_meta( $id, '_formello_settings', true );
-			$this->logger = Log::get_instance();
+			$this->ID      = $id;
+			$settings      = get_post_meta( $id, '_formello_settings', true );
+			$this->actions = get_post_meta( $id, '_formello_actions', true );
+			$this->logger  = Log::get_instance();
 		}
 		// parse default settings.
 		$this->settings = $this->parse_settings( $settings );
@@ -257,7 +258,7 @@ class Form {
 	 * @param array $actions The actions response.
 	 */
 	public function set_actions( $actions ) {
-		$this->data['actions'] = $actions;
+		$this->actions = $actions;
 	}
 
 	/**
@@ -335,6 +336,9 @@ class Form {
 		//phpcs:ignore
 		$wpdb->query( $wpdb->prepare( $query, $values ) );
 
+		$formello_result = get_transient( 'formello_news', false );
+		set_transient( 'formello_news', $formello_result + 1, DAY_IN_SECONDS );
+
 	}
 
 	/**
@@ -404,7 +408,7 @@ class Form {
 		$this->data['details']['referer_url']  = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 		$this->data['details']['submitted_at'] = wp_date( 'Y-m-d H:i:s' );
 
-		$form_actions = $this->get_setting( 'actions' );
+		$form_actions = $this->actions;
 
 		$this->data['actions'] = array();
 		if ( isset( $form_actions ) ) {
@@ -680,12 +684,12 @@ class Form {
 			'minlength' => str_replace(
 				array( '{minLength}', '{length}' ),
 				array( ':minlength', ':value' ),
-				$this->formello_settings['messages']['wrongLength']['under'],
+				$this->formello_settings['messages']['wrongLength']['under']
 			),
 			'maxlength' => str_replace(
 				array( '{maxLength}', '{length}' ),
 				array( ':maxlength', ':value' ),
-				$this->formello_settings['messages']['wrongLength']['over'],
+				$this->formello_settings['messages']['wrongLength']['over']
 			),
 			'min' => ':value ' . str_replace( '{min}', ':min', $this->formello_settings['messages']['outOfRange']['under'] ),
 			'max' => ':value ' . str_replace( '{max}', ':max', $this->formello_settings['messages']['outOfRange']['over'] ),

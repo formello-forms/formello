@@ -5,10 +5,9 @@ import { RawHTML, Fragment } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import AddonLicense from './addonLicense.js';
 import { applyFilters } from '@wordpress/hooks';
-import { useSelect } from '@wordpress/data';
 
 const LicensesTab = ( props ) => {
-	const { settings, setSettings, setHasUpdates, hasUpdates, showMessage } = props;
+	const { settings, setSettings } = props;
 
 	const addons = [];
 	const items = [];
@@ -20,6 +19,7 @@ const LicensesTab = ( props ) => {
 		const name = addons[ addon ].name;
 		const icon = addons[ addon ].icon;
 		const optionName = 'formello_' + name;
+
 		items.push(
 			<AddonLicense
 				{ ...props }
@@ -46,7 +46,7 @@ const LicensesTab = ( props ) => {
 				<CardBody>
 					<RawHTML>
 						{ sprintf(
-							/* translators: Addon licenses link. */
+							/* translators: %s: Addon licenses link. */
 							__(
 								'<p>Here you can add license for %s.</p><p>To get your licenses key go to your %s.</p>',
 								'formello'

@@ -6,24 +6,21 @@ import { ReactComponent as Grid } from '../../assets/icons/loading/grid.svg';
 import { ReactComponent as Loading } from '../../assets/icons/loading/loading.svg';
 import { ReactComponent as Loading2 } from '../../assets/icons/loading/loading2.svg';
 import { ReactComponent as Loading4 } from '../../assets/icons/loading/loading4.svg';
-import { ReactComponent as Loading5 } from '../../assets/icons/loading/loading5.svg';
 import { ReactComponent as LoadingCircles } from '../../assets/icons/loading/loading-circles.svg';
 import { ReactComponent as LoadingCirclePath } from '../../assets/icons/loading/loading-circle-path.svg';
 import { ReactComponent as Pulse } from '../../assets/icons/loading/pulse.svg';
-import { ReactComponent as Rings } from '../../assets/icons/loading/rings.svg';
 import { ReactComponent as ThreeDots } from '../../assets/icons/loading/three-dots.svg';
 
-
-export { 
+export {
 	Audio,
 	BallTriangle,
 	Bars,
 	Circles,
 	Grid,
-	Loading, 
-	Loading2, 
-	Loading4, 
-	LoadingCircles, 
+	Loading,
+	Loading2,
+	Loading4,
+	LoadingCircles,
 	LoadingCirclePath,
 	Pulse,
 	ThreeDots,

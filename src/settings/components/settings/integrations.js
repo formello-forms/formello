@@ -5,10 +5,9 @@ import { RawHTML, Fragment } from '@wordpress/element';
 import { __, sprintf } from '@wordpress/i18n';
 import AddonIntegration from './addonIntegration.js';
 import { applyFilters } from '@wordpress/hooks';
-import { useSelect } from '@wordpress/data';
 
 const IntegrationsTab = ( props ) => {
-	const { settings, setSettings, setHasUpdates, hasUpdates, showMessage } = props;
+	const { settings, setSettings } = props;
 
 	const addons = [];
 	const items = [];

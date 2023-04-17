@@ -5,33 +5,31 @@ import {
 	CardBody,
 	Card,
 	CardHeader,
-	CardFooter
+	CardFooter,
+	Notice,
 } from '@wordpress/components';
 
-import { useState, useRef, RawHTML } from '@wordpress/element';
+import { useState, RawHTML } from '@wordpress/element';
 
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import UpdateSettings from '../update-settings';
-import MessageBox from '../message-box.js';
 
 export default function AddonLicense( props ) {
-
-	const { 
-		title, 
-		settings, 
-		addonSettings, 
-		optionName, 
-		name, 
-		showMessage, 
-		setSettings, 
-		icon, 
+	const {
+		title,
+		settings,
+		addonSettings,
+		optionName,
+		name,
+		setSettings,
+		icon,
 		apiurl,
-		saveSettings
+		saveSettings,
 	} = props;
 	const [ loading, setLoading ] = useState( false );
 	const [ hasUpdates, setHasUpdates ] = useState( false );
-	const [ message, setMessage ] = useState(false)
+	const [ message, setMessage ] = useState( false );
 	const Icon = icon;
 
 	const validateKey = () => {
@@ -41,37 +39,31 @@ export default function AddonLicense( props ) {
 			path: '/formello/v1/' + name + '/validate',
 			method: 'POST',
 			data: {
-				key: addonSettings.api_key
-			}
-		} ).then(
-			( result ) => {
-				setMessage({
-					type: 'error',
-					message: __( 'Api key is valid', 'formello' )
-				})
+				key: addonSettings.api_key,
 			},
-			( error ) => {
-				setMessage({
-					type: 'error',
-					message: error.message
-				})	
+		} ).then(
+			() => {
+				setMessage( {
+					type: 'success',
+					text: __( 'Api key is valid', 'formello' ),
+				} );
 			}
-		).catch( (error) => {
-			setMessage({
-				type: 'error',
-				message: error.message
-			})			
-		} ).finally( () => setLoading(false) )
+		).catch( ( error ) => {
+			setMessage( {
+				type: 'warning',
+				text: error.message,
+			} );
+		} ).finally( () => setLoading( false ) );
 	};
 
 	function setIntegration( key, value ) {
-		const newSettings = Object.assign( {}, settings[optionName] );
+		const newSettings = Object.assign( {}, settings[ optionName ] );
 		newSettings[ key ] = value;
 		setSettings( {
 			...settings,
-			[ optionName ]: newSettings
+			[ optionName ]: newSettings,
 		} );
-		setHasUpdates(true);
+		setHasUpdates( true );
 	}
 
 	return (
@@ -111,17 +103,24 @@ export default function AddonLicense( props ) {
 							title,
 							`<a href="${ apiurl }">here</a>`
 						) }
-					</RawHTML>	
+					</RawHTML>
 				</BaseControl>
-				{ 
+				{
 					message && (
-						<MessageBox message={ message.message } messageType={ message.type } handleClose={ setMessage } key="message" />
+						<Notice
+							//status={ message.type }
+							onRemove={ () => setMessage( false ) }
+							isDismissible={ true }
+							status={ message.type }
+						>
+							{ message.text }
+						</Notice>
 					)
 				}
 			</CardBody>
 			<CardFooter>
 				<UpdateSettings
-					req={ () => saveSettings(optionName).finally( () => setHasUpdates(false) ) }
+					req={ () => saveSettings( optionName ).finally( () => setHasUpdates( false ) ) }
 					text={ __( 'Save options', 'formello' ) }
 					disabled={ ! hasUpdates }
 					variant={ 'primary' }

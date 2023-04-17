@@ -1,7 +1,10 @@
-import { TabPanel } from '@wordpress/components';
-import { useParams, useNavigate } from "react-router-dom";
+import {
+	__experimentalGrid as Grid,
+	TabPanel,
+} from '@wordpress/components';
+import { useParams, useNavigate } from 'react-router-dom';
 
-import { Fragment, render } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 import { applyFilters } from '@wordpress/hooks';
@@ -9,10 +12,9 @@ import General from '../components/tools/general.js';
 import Exporter from '../components/tools/exporter.js';
 import Importer from '../components/tools/importer.js';
 import Header from '../components/masthead.js';
-import api from '@wordpress/api';
+import Help from '../components/settings/help.js';
 
-export default function Tools( props ) {
-
+export default function Tools() {
 	const toolsTabs = [
 		{
 			name: 'general',
@@ -48,7 +50,7 @@ export default function Tools( props ) {
 			<Header title={ __( 'Tools', 'formello' ) } />
 
 			<div className="setting-tabs">
-				
+
 				{ applyFilters( 'formello.dashboard.beforeSettings', '', this ) }
 
 				<TabPanel
@@ -57,15 +59,13 @@ export default function Tools( props ) {
 					initialTabName={ initialTab }
 				>
 					{ ( tab ) => {
-						switch ( tab.name ) {
-							case 'general':
-								return (
-									<General />
-								);
-							default:
-								const Tab = tab.component;
-								return <Tab />;
-						}
+						const Tab = tab.component;
+						return (
+							<Grid columns={ 4 } templateColumns="3fr 1fr" gap="4">
+								<Tab />
+								<Help />
+							</Grid>
+						);
 					} }
 				</TabPanel>
 

@@ -120,6 +120,13 @@
 			"attribute": "checked",
 			"default": false
 		},
+		"multiple": {
+			"type": "boolean",
+			"source": "attribute",
+			"selector": "input",
+			"attribute": "multiple",
+			"default": false
+		},
 		"showHelp": {
 			"type": "boolean",
 			"default": false
@@ -211,6 +218,24 @@
         },
 		"advanced": {
 			"type": "boolean"
+		}
+	},
+	"supports": {
+		"html": false,
+		"className": false,
+		"reusable": false,
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
 		}
 	}
 }

@@ -1,87 +1,85 @@
 /**
  * External dependencies
  */
-import { omit } from 'lodash';
 import classnames from 'classnames';
 
 /**
  * WordPress dependencies
  */
-import { createBlock } from '@wordpress/blocks';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
 const blockAttributes = {
-		id: {
-			type: 'string'
-		},
-		name: {
-			type: 'string',
-			default: ''
-		},
-		successMessage: {
-			type: 'string',
-			default: ''
-		},
-		errorMessage: {
-			type: 'string',
-			default: ''
-		},
-		redirectUrl: {
-			type: 'string',
-			default: ''
-		},
-		debug: {
-			type: 'boolean',
-			default: false
-		},
-		recaptchaEnabled: {
-			type: 'boolean',
-			default: false
-		},
-		recaptchaVersion: {
-			type: 'number',
-			default: 3
-		},
-		labelIsBold: {
-			type: 'boolean',
-			default: false
-		},
-		labelAlign: {
-			type: 'string',
-			default: ''
-		},
-		requiredText: {
-			type: 'string',
-			default: '*'
-		},
-		storeSubmissions: {
-			type: 'boolean',
-			default: true
-		},
-		hide: {
-			type: 'boolean',
-			default: false
-		},
-		constraints: {
-			type: 'array'
-		},
-		fields: {
-			type: 'array'
-		},
-		formSettings: {
-			type: 'object'
-		},
-		asRow: {
-			type: 'boolean',
-			default: false
-		},
-		actions: {
-			type: 'array',
-			default: []
-		}		
-}
+	id: {
+		type: 'string',
+	},
+	name: {
+		type: 'string',
+		default: '',
+	},
+	successMessage: {
+		type: 'string',
+		default: '',
+	},
+	errorMessage: {
+		type: 'string',
+		default: '',
+	},
+	redirectUrl: {
+		type: 'string',
+		default: '',
+	},
+	debug: {
+		type: 'boolean',
+		default: false,
+	},
+	recaptchaEnabled: {
+		type: 'boolean',
+		default: false,
+	},
+	recaptchaVersion: {
+		type: 'number',
+		default: 3,
+	},
+	labelIsBold: {
+		type: 'boolean',
+		default: false,
+	},
+	labelAlign: {
+		type: 'string',
+		default: '',
+	},
+	requiredText: {
+		type: 'string',
+		default: '*',
+	},
+	storeSubmissions: {
+		type: 'boolean',
+		default: true,
+	},
+	hide: {
+		type: 'boolean',
+		default: false,
+	},
+	constraints: {
+		type: 'array',
+	},
+	fields: {
+		type: 'array',
+	},
+	formSettings: {
+		type: 'object',
+	},
+	asRow: {
+		type: 'boolean',
+		default: false,
+	},
+	actions: {
+		type: 'array',
+		default: [],
+	},
+};
 
-const v1 = 
+const v1 =
 	{
 		attributes: blockAttributes,
 		save( { attributes, className } ) {
@@ -114,18 +112,17 @@ const v1 =
 						type="text"
 						name={ honeypot }
 						className="formello-hp"
-						autocomplete="nope"
+						autoComplete="nope"
 					/>
 					<input type="hidden" name="action" value="formello" />
 					<InnerBlocks.Content />
 					<div className="formello-message"></div>
 				</form>
-			)
-
-		}
+			);
+		},
 	};
 
-const v2 = 
+const v2 =
 	{
 		attributes: blockAttributes,
 		save( { attributes, className } ) {
@@ -159,18 +156,17 @@ const v2 =
 						type="text"
 						name={ honeypot }
 						className="formello-hp"
-						autocomplete="nope"
+						autoComplete="nope"
 					/>
 					<input type="hidden" name="action" value="formello" />
 					<InnerBlocks.Content />
 					<div className="formello-message"></div>
 				</form>
-			)
-
-		}
+			);
+		},
 	};
 
-const v3 = 
+const v3 =
 	{
 		attributes: blockAttributes,
 		save( { attributes, className } ) {
@@ -204,17 +200,16 @@ const v3 =
 						type="text"
 						name={ honeypot }
 						className="formello-hp"
-						autocomplete="nope"
+						autoComplete="nope"
 					/>
 					<input type="hidden" name="action" value="formello" />
 					<InnerBlocks.Content />
 					<div className="formello-message"></div>
 				</form>
-			)
-
-		}
+			);
+		},
 	};
 
-const deprecated = [ v3, v2, v1 ]
+const deprecated = [ v3, v2, v1 ];
 
 export default deprecated;

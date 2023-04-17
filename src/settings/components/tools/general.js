@@ -5,9 +5,8 @@ import ReSync from './components/resync-template';
 import ResetSettings from './components/reset-settings';
 
 export default function General() {
-
 	return (
-		<div className="setting-tabs__block-manager inner-container">
+		<div>
 			<Card>
 				<CardHeader>
 					<h2>{ __( 'General', 'formello' ) }</h2>

@@ -1,6 +1,5 @@
 import { Card, CardHeader, CardBody, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
-import { useSelect, dispatch } from '@wordpress/data';
 
 import { __ } from '@wordpress/i18n';
 
@@ -13,7 +12,7 @@ export default function Messages( props ) {
 		newSettings.messages[ group ][ field ] = value;
 		setSettings( {
 			...settings,
-			formello: newSettings
+			formello: newSettings,
 		} );
 	}
 

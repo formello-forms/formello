@@ -1,8 +1,7 @@
-import { registerBlockType } from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
-import { createBlock } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 import { Textarea } from '../../icons/icons';
 
 /**
@@ -12,25 +11,16 @@ import { Textarea } from '../../icons/icons';
  */
 registerBlockType( metadata, {
 
-	supports: {
-		// eslint-disable-next-line no-undef
-		inserter:
-			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
-		html: false,
-		className: false,
-		reusable: false,
-	},
-
 	transforms: {
-	    from: [
-	        {
-	            type: 'block',
-	            blocks: [ 'formello/input' ],
-	            transform: ( attributes ) => {
-	                return createBlock( 'formello/textarea', attributes );
-	            },
-	        },
-	    ]
+		from: [
+			{
+				type: 'block',
+				blocks: [ 'formello/input' ],
+				transform: ( attributes ) => {
+					return createBlock( 'formello/textarea', attributes );
+				},
+			},
+		],
 	},
 
 	/**

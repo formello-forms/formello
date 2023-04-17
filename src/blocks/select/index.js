@@ -12,9 +12,6 @@ registerBlockType( metadata, {
 	icon: Icon,
 
 	supports: {
-		// eslint-disable-next-line no-undef
-		inserter:
-			'formello_form' === pagenow || 'popper' === pagenow ? true : false,
 		html: false,
 		className: false,
 		reusable: false,

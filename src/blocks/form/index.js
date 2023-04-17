@@ -3,12 +3,13 @@
  */
 
 import variations from './variations';
-import edit from './edit';
+//import edit from './edit';
+import edit from './edit/index.js';
 import save from './save';
 import deprecated from './deprecated';
 import metadata from './block.json';
-import { 
-	Form
+import {
+	Form,
 } from '../../icons/icons';
 
 import { __ } from '@wordpress/i18n';
@@ -28,15 +29,23 @@ registerBlockType( metadata, {
 	supports: {
 		reusable: false,
 		className: true,
-		multiple: false,
 		html: false,
 		lock: false,
 		anchor: true,
+		color: true,
 		// eslint-disable-next-line
-		inserter:
-			'formello_form' === pagenow ? true : false,
+		multiple: ( 'formello_form' !== pagenow ) ? true : false,
 		spacing: {
 			padding: true,
+			blockGap: true, // Enables axial (column/row) block spacing controls
+			__experimentalDefaultControls: {
+				blockGap: true,
+			},
+		},
+		typography: {
+			fontSize: true,
+			__experimentalFontWeight: true,
+			__experimentalTextDecoration: false,
 		},
 	},
 	example: {
@@ -73,5 +82,5 @@ registerBlockType( metadata, {
 	},
 	deprecated,
 	edit,
-	save
+	save,
 } );

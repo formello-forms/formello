@@ -2,7 +2,7 @@ export const SUPPORTED_ATTRIBUTES = {
 	hidden: [ 'name',
 		'id',
 		'type',
-		'value'
+		'value',
 	],
 	text: [
 		'name',
@@ -16,7 +16,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'maxlength',
 		'minlength',
 		'pattern',
-		'autocomplete'
+		'autocomplete',
 	],
 	tel: [
 		'name',
@@ -30,7 +30,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'maxlength',
 		'minlength',
 		'pattern',
-		'autocomplete'
+		'autocomplete',
 	],
 	url: [
 		'name',
@@ -44,7 +44,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'maxlength',
 		'minlength',
 		'pattern',
-		'autocomplete'
+		'autocomplete',
 	],
 	email: [
 		'name',
@@ -55,7 +55,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'readonly',
 		'disabled',
 		'placeholder',
-		'autocomplete'
+		'autocomplete',
 	],
 	password: [
 		'name',
@@ -67,7 +67,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'pattern',
 		'maxlength',
 		'minlength',
-		'autocomplete'
+		'autocomplete',
 	],
 	number: [
 		'name',
@@ -148,14 +148,14 @@ export const SUPPORTED_ATTRIBUTES = {
 		'capture',
 		'multiple',
 	],
-	color: [ 
-		'name', 
+	color: [
+		'name',
 		'id',
 		'type',
 		'value',
 		'required',
 		'readonly',
-		'disabled'
+		'disabled',
 	],
 	textarea: [
 		'name',
@@ -177,5 +177,5 @@ export const SUPPORTED_ATTRIBUTES = {
 		'readonly',
 		'disabled',
 		'multiple',
-	]
+	],
 };

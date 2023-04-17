@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { cloneBlock } from '@wordpress/blocks';
 import {
 	VisuallyHidden,
@@ -11,12 +11,11 @@ import {
 	__unstableCompositeItem as CompositeItem,
 } from '@wordpress/components';
 
-import { RawHTML } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 
-import { useState } from '@wordpress/element';
+import { useState, RawHTML } from '@wordpress/element';
 import { useInstanceId } from '@wordpress/compose';
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies

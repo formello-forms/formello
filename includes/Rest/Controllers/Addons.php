@@ -49,7 +49,7 @@ class Addons extends Base {
 	 */
 	public function get_addons() {
 		$lang   = substr( get_bloginfo( 'language' ), 0, 2 );
-		$url    = 'https://formello.net/en/edd-api/products?nocache=' . time();
+		$url    = 'https://formello.net/' . $lang . '/edd-api/products?nocache=' . time();
 		$addons = get_transient( 'formello_addons', false );
 
 		/*

@@ -9,7 +9,11 @@
 		"tinymce": true,
 		"flatpickr": true,
 		"popper": true,
-		"formello": true
+		"formello": true,
+		"FilePond": true,
+		"jQuery": true,
+		"React": true,
+		"mfConditionalFields": true
 	},
 	"env": {
 	  "browser": true,
@@ -34,7 +38,7 @@
 			"pragma": "wp"
 		}
 	},
-    "rules": {
-      "no-shadow": "off"
-    }
+  "rules": {
+    "no-shadow": "off"
+  }
 }

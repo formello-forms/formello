@@ -6,6 +6,7 @@ import {
 	BlockControls,
 	RichText,
 	useBlockProps,
+	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
 
 import { ToolbarGroup } from '@wordpress/components';
@@ -38,20 +39,15 @@ export default function Edit( props ) {
 	const {
 		name,
 		id,
-		label,
-		hideLabel,
 		cols,
 		rows,
 		value,
 		placeholder,
-		required,
-		requiredText,
-		readonly,
 		showHelp,
-		help
+		help,
 	} = attributes;
 
-	const supported = SUPPORTED_ATTRIBUTES[ 'textarea' ];
+	const supported = SUPPORTED_ATTRIBUTES.textarea;
 
 	useEffect( () => {
 		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
@@ -66,6 +62,8 @@ export default function Edit( props ) {
 			} );
 		}
 	}, [] );
+
+	const borderProps = useBorderProps( attributes );
 
 	const className = classnames( 'formello', 'formello-textarea' );
 
@@ -101,6 +99,8 @@ export default function Edit( props ) {
 				value={ value }
 				onChange={ onChange }
 				placeholder={ placeholder }
+				className={ borderProps.className }
+				style={ borderProps.style }
 			></textarea>
 
 			{ showHelp && (
