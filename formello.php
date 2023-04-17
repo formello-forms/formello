@@ -48,20 +48,6 @@ add_action( 'plugins_loaded', 'formello_load_plugin' );
 function formello_activate() {
 	global $wpdb;
 
-	update_option( 'formello_version', get_file_data( __FILE__, array( 'Version' ) )[0] );
-
-	// create table for storing form settings.
-	$wpdb->query(
-		"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_forms (
-		`id` BIGINT(20) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-		`post_id` BIGINT(20) UNSIGNED,
-		`name` VARCHAR(255),
-		`settings` TEXT NOT NULL,
-		`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		FOREIGN KEY (post_id) REFERENCES {$wpdb->prefix}posts(ID) ON DELETE CASCADE
-		) ENGINE=InnoDB CHARACTER SET={$wpdb->charset};"
-	);
-
 	// create table for storing submissions.
 	$wpdb->query(
 		"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions (
@@ -111,10 +97,12 @@ function formello_activate() {
 
 	$options = get_option( 'formello', false );
 
-	if ( ! empty( $options ) ) {
+	if ( ! empty( $options ) && ! isset( $options['enabled_addons'] ) ) {
 		$options['enabled_addons'] = array();
 		update_option( $options );
 	}
+
+	update_option( 'formello_version', get_file_data( __FILE__, array( 'Version' ) )[0] );
 
 }
 
