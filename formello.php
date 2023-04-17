@@ -11,7 +11,6 @@
  * Text Domain: formello
  * Domain Path: /languages
  *
- * @fs_premium_only /build/premium/, /premium-modules/
  * @package Formello
  */
 
