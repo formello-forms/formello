@@ -2,6 +2,7 @@
 .gitattributes export-ignore
 .gitignore export-ignore
 .jshintrc export-ignore
+webpack.config.js export-ignore
 /src/ export-ignore
 /premium-modules/ export-ignore
 /assets/images/ export-ignore

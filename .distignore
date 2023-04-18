@@ -27,6 +27,7 @@ scoper.inc.php
 Gruntfile.js
 config.json
 phpunit.xml.dist
+webpack.config.js
 
 
 *.zip
