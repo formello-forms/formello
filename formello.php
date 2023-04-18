@@ -3,7 +3,7 @@
  * Plugin Name: Formello
  * Plugin URI: https://formello.net/
  * Description: Lightweight Gutenberg contact form builder, blazingly fast with minnimal external dependencies and ReCaptcha support.
- * Version: 1.9.7
+ * Version: 1.9.8
  * Author: Formello
  * Author URI: https://formello.net
  * License: GPL2
@@ -100,6 +100,8 @@ function formello_activate() {
 		$options['enabled_addons'] = array();
 		update_option( $options );
 	}
+
+	//maybe_add_column( $wpdb->prefix . 'formello_submissions_meta', 'field_type', 'TEXT' );
 
 	update_option( 'formello_version', get_file_data( __FILE__, array( 'Version' ) )[0] );
 

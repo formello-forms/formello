@@ -40,7 +40,8 @@
     "autoload": {
         "psr-4": {
             "Formello\\": "includes/"
-        }
+        },
+        "files": ["includes/Utils/functions.php"]
     },
     "autoload-dev": {
         "psr-4": {

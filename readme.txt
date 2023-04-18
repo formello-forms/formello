@@ -4,7 +4,7 @@ Donate link: 	   https://formello.net
 Tags:              contact form, form builder, form block, gutenberg form, forms, gutenberg block, contact form plugin, forms, form builder, custom form, contact button, contact me, custom contact form, form manager, form, forms builder, forms creator, captcha, recaptcha, email form, web form, feedback form, email submit form, message form, contact form block, wordpress form plugin
 Requires at least: 6.2.0
 Tested up to:      6.2.0
-Stable tag:        1.9.7
+Stable tag:        1.9.8
 Requires PHP:      5.6
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -119,6 +119,9 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
+
+= 1.9.8 =
+* Fix fatal error on install
 
 = 1.9.7 =
 * Fix composer dump autoload no dev
