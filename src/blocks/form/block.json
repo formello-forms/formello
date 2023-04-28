@@ -97,7 +97,8 @@
 			"type": "boolean",
 			"source": "attribute",
 			"selector": "form",
-			"attribute": "novalidate"
+			"attribute": "novalidate",
+			"default": true
 		}		
 	},
 	"styles": [

@@ -155,6 +155,15 @@ export default function Edit( props ) {
 		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
 	} );
 
+	// It's a preview
+	if( ! postType ){
+		return (
+			<div { ...innerBlocksProps }>
+				{ children }
+			</div>
+		);
+	}
+
 	if ( isFormelloFormMissing && 'formello_form' !== postType ) {
 		return (
 			<div { ...blockProps }>

@@ -89,6 +89,7 @@ export default function Edit( { attributes, setAttributes } ) {
 	const colorProps = useColorProps( attributes );
 
 	const buttonClasses = classnames(
+		'wp-element-button',
 		borderProps.className,
 		colorProps.className,
 		alignment,

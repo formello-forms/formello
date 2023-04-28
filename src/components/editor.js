@@ -3,9 +3,7 @@ import { store } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 
 export default function ClassicEdit( props ) {
-	const styles = useSelect(
-		( select ) => select( store ).getSettings().styles
-	);
+
 	useEffect( () => {
 		const { baseURL, suffix, settings } = window.wpEditorL10n.tinymce;
 
@@ -18,13 +16,8 @@ export default function ClassicEdit( props ) {
 			tinymce: {
 				...settings,
 				setup( editor ) {
-					editor.on( 'init', () => {
-						const doc = editor.getDoc();
-						styles.forEach( ( { css } ) => {
-							const styleEl = doc.createElement( 'style' );
-							styleEl.innerHTML = css;
-							doc.head.appendChild( styleEl );
-						} );
+					editor.on( 'change', (val) => {
+						props.onChange( 'message', editor.getContent() );
 					} );
 				},
 			},

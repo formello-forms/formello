@@ -1,4 +1,7 @@
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import {
+	useBlockProps,
+	InnerBlocks,
+} from '@wordpress/block-editor';
 
 import classnames from 'classnames';
 
@@ -20,7 +23,7 @@ export default function save( { attributes, className } ) {
 		{
 			'as-row': asRow,
 			'formello-label-right': 'right' === labelAlign,
-		}
+		},
 	);
 
 	const honeypot = '_formello_h' + id;

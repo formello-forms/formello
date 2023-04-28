@@ -224,8 +224,11 @@
   },
   "supports": {
     "html": false,
-    "className": false,
     "reusable": false,
+    "spacing": {
+      "padding": true,
+      "__experimentalSkipSerialization": true
+    },
     "__experimentalBorder": {
       "color": true,
       "radius": true,

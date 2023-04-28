@@ -52,6 +52,7 @@ export default function save( { attributes } ) {
 	const colorProps = getColorClassesAndStyles( attributes );
 
 	const buttonClasses = classnames(
+		'wp-element-button',
 		borderProps.className,
 		colorProps.className,
 		alignment

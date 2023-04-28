@@ -45,7 +45,6 @@ html {
 	.formello {
 		display: flex;
 		flex-direction: column;
-		flex: 1;
 	}
 
 	.is-layout-flex {
@@ -177,7 +176,6 @@ html {
 		justify-content: center;
 		align-items: center;
 		display: flex;
-		color: var(--wp--preset--color--primary);
 	}
 
 	button[disabled] {

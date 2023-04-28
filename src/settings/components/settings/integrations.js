@@ -20,20 +20,22 @@ const IntegrationsTab = ( props ) => {
 		const icon = addons[ addon ].icon;
 		const apiurl = addons[ addon ].apiurl;
 		const optionName = 'formello_' + name;
-		items.push(
-			<AddonIntegration
-				{ ...props }
-				key={ title }
-				icon={ icon }
-				title={ title }
-				name={ name }
-				apiurl={ apiurl }
-				optionName={ optionName }
-				settings={ settings }
-				addonSettings={ settings[ optionName ] }
-				setSettings={ setSettings }
-			/>
-		);
+		if( settings.formello.enabled_addons.includes( name ) ) {
+			items.push(
+				<AddonIntegration
+					{ ...props }
+					key={ title }
+					icon={ icon }
+					title={ title }
+					name={ name }
+					apiurl={ apiurl }
+					optionName={ optionName }
+					settings={ settings }
+					addonSettings={ settings[ optionName ] }
+					setSettings={ setSettings }
+				/>
+			);
+		}
 	}
 
 	return (

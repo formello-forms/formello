@@ -37,10 +37,6 @@ registerBlockType( metadata, {
 		multiple: ( 'formello_form' !== pagenow ) ? true : false,
 		spacing: {
 			padding: true,
-			blockGap: true, // Enables axial (column/row) block spacing controls
-			__experimentalDefaultControls: {
-				blockGap: true,
-			},
 		},
 		typography: {
 			fontSize: true,

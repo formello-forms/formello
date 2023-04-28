@@ -330,7 +330,7 @@ class Form {
 		}
 		$sql = implode( ',', $values );
 
-		$query = 'INSERT INTO ' . $wpdb->prefix . 'formello_submissions_meta (form_id, submission_id, field_name, field_value) VALUES ';
+		$query = 'INSERT INTO ' . $wpdb->prefix . 'formello_submissions_meta (form_id, submission_id, field_name, field_value ) VALUES ';
 		$query .= implode( ', ', $place_holders );
 
 		//phpcs:ignore

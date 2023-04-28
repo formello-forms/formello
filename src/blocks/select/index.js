@@ -13,7 +13,6 @@ registerBlockType( metadata, {
 
 	supports: {
 		html: false,
-		className: false,
 		reusable: false,
 	},
 

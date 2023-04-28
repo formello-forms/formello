@@ -22,7 +22,6 @@
     }
   },
   "supports": {
-    "className": false,
     "anchor": true,
     "html": false,
     "color": true,

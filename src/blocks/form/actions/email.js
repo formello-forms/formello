@@ -29,6 +29,7 @@ export default function Email( content, props, settings, MergeTags, ClassicEdit,
 			handleUpdate( 'message', message );
 		}
 	};
+console.log( settings.message );
 
 	return (
 		<Fragment>
@@ -99,7 +100,11 @@ export default function Email( content, props, settings, MergeTags, ClassicEdit,
 			/>
 
 			<BaseControl id={ id } label={ __( 'Message', 'formello' ) } __nextHasNoMarginBottom={ true }>
-				<ClassicEdit id={ id } defaultValue={ settings.message } />
+				<ClassicEdit
+					id={ id } 
+					defaultValue={ settings.message }
+					onChange={ handleUpdate }
+				/>
 			</BaseControl>
 
 			{ dirty && (

@@ -2,6 +2,7 @@ import {
 	RichText,
 	useBlockProps,
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 	InnerBlocks,
 } from '@wordpress/block-editor';
 import classnames from 'classnames';
@@ -34,12 +35,12 @@ export default function save( { attributes } ) {
 		timeFormat,
 		enableTime,
 		minDate,
-		className,
 	} = attributes;
 
 	const borderProps = getBorderClassesAndStyles( attributes );
+	const spacingProps = getSpacingClassesAndStyles( attributes );
 
-	const containerClass = classnames( 'formello', className, {
+	const containerClass = classnames( 'formello', {
 		'formello-group': withButton || withOutput,
 		'formello-group grouped': grouped,
 		'formello-checkbox':
@@ -93,8 +94,13 @@ export default function save( { attributes } ) {
 		htmlAttrs[ 'data-enable-time' ] = enableTime;
 	}
 
+	const inputStyle = {
+		...borderProps.style,
+		...spacingProps.style
+	}
+
 	if ( noWrapper || 'hidden' === type ) {
-		return <input { ...htmlAttrs } className={ fieldClassName } />;
+		return <input { ...htmlAttrs } className={ fieldClassName } style={ inputStyle } />;
 	}
 
 	return (
@@ -110,7 +116,7 @@ export default function save( { attributes } ) {
 				</label>
 			) }
 
-			<input { ...htmlAttrs } className={ fieldClassName } style={ borderProps.style } />
+			<input { ...htmlAttrs } className={ fieldClassName } style={ inputStyle } />
 
 			<InnerBlocks.Content />
 			{ withOutput && <output>{ value }</output> }

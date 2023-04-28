@@ -8,6 +8,7 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	__experimentalUseBorderProps as useBorderProps,
+	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
 
 import { ToolbarGroup } from '@wordpress/components';
@@ -27,17 +28,6 @@ import Toolbar from '../../components/field-options/toolbar';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @param {Object} [props]           Properties passed from the editor.
- * @param {string} [props.className] Class name generated for the block.
- *
- * @return {WPElement} Element to render.
- */
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
 	const {
@@ -61,8 +51,9 @@ export default function Edit( props ) {
 	}, [] );
 
 	const borderProps = useBorderProps( attributes );
+	const spacingProps = getSpacingClassesAndStyles( attributes );
 
-	const className = classnames( {
+	const containerClass = classnames( {
 		formello: true,
 		'formello-group': attributes.withButton || 'range' === type,
 		'formello-group grouped': attributes.grouped,
@@ -70,12 +61,13 @@ export default function Edit( props ) {
 			'checkbox' === type || 'radio' === type || 'hidden' === type,
 	} );
 
-	const labelClassName = classnames( {
-		hide: attributes.hideLabel,
-	} );
+	const inputStyle = {
+		...borderProps.style,
+		...spacingProps.style
+	}
 
 	const blockProps = useBlockProps( {
-		className,
+		className: containerClass,
 	} );
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
@@ -112,7 +104,7 @@ export default function Edit( props ) {
 			</InspectorAdvancedControls>
 
 			{ 'hidden' !== type ? (
-				<Label { ...props } className={ labelClassName } htmlFor="input" />
+				<Label { ...props } htmlFor="input" />
 			) : (
 				<div className="formello-hidden">
 					<Hidden width="30" height="30" />
@@ -122,7 +114,7 @@ export default function Edit( props ) {
 
 			<input
 				className={ borderProps.className }
-				style={ borderProps.style }
+				style={ inputStyle }
 				type={ type }
 				value={ 'password' !== type ? attributes.value : '' }
 				checked={ attributes.checked || false }

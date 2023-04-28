@@ -60,11 +60,6 @@ export default function Settings( props ) {
 			component: Integrations,
 		},
 		{
-			name: 'licenses',
-			title: 'Licenses',
-			component: Licenses,
-		},
-		{
 			name: 'logging',
 			title: 'Logging',
 			component: Logging,
