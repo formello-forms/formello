@@ -26,6 +26,7 @@ export function ActionsModal( props ) {
 	} );
 
 	const updateSettings = ( prop, val ) => {
+		console.log(action.to)
 		setAction( { ...action, [ prop ]: val } );
 	};
 

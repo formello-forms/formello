@@ -90,10 +90,10 @@ export default function Email( content, props, settings, MergeTags, ClassicEdit,
 			/>
 
 			<BaseControl label={ __( 'Message', 'formello' ) } __nextHasNoMarginBottom={ true }>
-				<textarea
+				<ClassicEdit
 					id={ id } 
 					value={ settings.message }
-					onChange={ (val) => handleUpdate( 'message', val.target.value ) }
+					onChange={ (val) => handleUpdate( 'message', val ) }
 				/>
 			</BaseControl>
 

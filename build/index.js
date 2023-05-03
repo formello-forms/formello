@@ -2601,10 +2601,10 @@ function Email(content, props, settings, MergeTags, ClassicEdit, handleUpdate) {
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.BaseControl, {
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Message', 'formello'),
     __nextHasNoMarginBottom: true
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("textarea", {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ClassicEdit, {
     id: id,
     value: settings.message,
-    onChange: val => handleUpdate('message', val.target.value)
+    onChange: val => handleUpdate('message', val)
   })));
 }
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_1__.addFilter)('formello.modal.email', 'formello/actions-email', Email);
@@ -2657,6 +2657,7 @@ function ActionsModal(props) {
   });
 
   const updateSettings = (prop, val) => {
+    console.log(action.to);
     setAction({ ...action,
       [prop]: val
     });
@@ -6434,7 +6435,6 @@ function ClassicEdit(props) {
 
         setup(editor) {
           editor.on('change', val => {
-            console.log(val);
             props.onChange('message', editor.getContent());
           });
         }
