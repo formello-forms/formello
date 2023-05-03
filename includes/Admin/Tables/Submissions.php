@@ -270,8 +270,7 @@ class Submissions extends \WP_List_Table {
 
 		$action     = $this->current_action();
 		$marked_ids = isset( $_REQUEST['bulk-delete'] ) ? wp_parse_id_list( wp_unslash( $_REQUEST['bulk-delete'] ) ) : array();
-var_dump($marked_ids);
-//exit;
+
 		switch ( $action ) {
 			case 'delete':
 				if ( ! wp_verify_nonce( esc_attr( $_REQUEST['_wpnonce'] ), 'formello' ) ) {
