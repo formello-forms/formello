@@ -2,6 +2,8 @@ import { useEffect } from '@wordpress/element';
 import { store } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 
+const { wp } = window;
+
 export default function ClassicEdit( props ) {
 
 	useEffect( () => {
@@ -12,11 +14,11 @@ export default function ClassicEdit( props ) {
 			suffix,
 		} );
 
-		window.wp.oldEditor.initialize( props.id, {
+		wp.oldEditor.initialize( props.id, {
 			tinymce: {
 				...settings,
 				setup( editor ) {
-					editor.on( 'change', (val) => {
+					editor.on( 'blur', () => {
 						props.onChange( 'message', editor.getContent() );
 					} );
 				},
@@ -24,7 +26,7 @@ export default function ClassicEdit( props ) {
 		} );
 
 		return () => {
-			window.wp.oldEditor.remove( props.id );
+			wp.oldEditor.remove( props.id );
 		};
 	}, [] );
 

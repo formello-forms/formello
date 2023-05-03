@@ -2,6 +2,7 @@ import { addFilter } from '@wordpress/hooks';
 
 import {
 	ToggleControl,
+	TextareaControl,
 	BaseControl,
 	Notice,
 	Button,
@@ -89,13 +90,12 @@ export default function Email( content, props, settings, MergeTags, ClassicEdit,
 				} }
 			/>
 
-			<BaseControl label={ __( 'Message', 'formello' ) } __nextHasNoMarginBottom={ true }>
-				<ClassicEdit
-					id={ id } 
-					value={ settings.message }
-					onChange={ (val) => handleUpdate( 'message', val ) }
-				/>
-			</BaseControl>
+			<TextareaControl
+				id={ id } 
+				label={ __( 'Message', 'formello' ) }
+				value={ settings.message }
+				onChange={ (val) => handleUpdate( 'message', val ) }
+			/>
 
 		</Fragment>
 	);

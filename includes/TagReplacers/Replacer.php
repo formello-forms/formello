@@ -38,7 +38,7 @@ class Replacer {
 	 * @param string $template The template variable.
 	 */
 	public function parse( $template ) {
-		$pattern = '/\{\{ *(\w+)(?:\.([\w-\.]+))? *(?:\|\| *(\w+))? *\}\}/i';
+		$pattern = '/\{\{ *(\w+)(?:\.([\w-]+))? *(?:\|\| *(\w+))? *\}\}/i';
 
 		$result = preg_replace_callback( $pattern, array( $this, 'get_data' ), $template );
 
