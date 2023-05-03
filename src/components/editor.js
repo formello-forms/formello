@@ -17,6 +17,7 @@ export default function ClassicEdit( props ) {
 				...settings,
 				setup( editor ) {
 					editor.on( 'change', (val) => {
+						console.log(val)
 						props.onChange( 'message', editor.getContent() );
 					} );
 				},

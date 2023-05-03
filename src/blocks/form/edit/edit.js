@@ -156,7 +156,7 @@ export default function Edit( props ) {
 	} );
 
 	// It's a preview
-	if( ! postType ){
+	if( ! postType || isDisabled ){
 		return (
 			<div { ...innerBlocksProps }>
 				{ children }

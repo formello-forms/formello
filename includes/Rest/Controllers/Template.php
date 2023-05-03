@@ -194,10 +194,7 @@ class Template extends Base {
 		foreach ( $all_patterns as $pattern ) {
 			$local_patterns[] = array(
 				'title' => $pattern->post_title,
-				'content' => sprintf(
-					'<!-- wp:formello/library {"id":%s} /-->',
-					$pattern->ID
-				),
+				'content' => $pattern->post_content,
 				'description' => '',
 				'blockTypes' => array(
 					'formello/library',

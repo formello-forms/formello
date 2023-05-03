@@ -16,20 +16,10 @@ export default function Email( content, props, settings, MergeTags, ClassicEdit,
 	const id = `editor-${ clientId }`;
 	const [ advanced, setAdvanced ] = useState( false );
 
-	const editorRef = useRef( null );
-	const [ dirty, setDirty ] = useState( false );
-	useEffect( () => setDirty( false ), [ settings.message ] );
-
-	const save = () => {
-		if ( editorRef.current ) {
-			const message = editorRef.current.getContent();
-			setDirty( false );
-			editorRef.current.setDirty( false );
-			// an application would save the editor content to the server here
-			handleUpdate( 'message', message );
-		}
-	};
-console.log( settings.message );
+	const onChangeMessage = ( val ) => {
+		console.log( val )
+		handleUpdate( 'message', val );
+	}
 
 	return (
 		<Fragment>
@@ -92,30 +82,21 @@ console.log( settings.message );
 
 			<MergeTags
 				clientId={ clientId }
-				label="Subject"
+				label={ __( 'Subject', 'formello' ) }
 				value={ settings.subject }
 				onChange={ ( val ) => {
 					handleUpdate( 'subject', val );
 				} }
 			/>
 
-			<BaseControl id={ id } label={ __( 'Message', 'formello' ) } __nextHasNoMarginBottom={ true }>
-				<ClassicEdit
+			<BaseControl label={ __( 'Message', 'formello' ) } __nextHasNoMarginBottom={ true }>
+				<textarea
 					id={ id } 
-					defaultValue={ settings.message }
-					onChange={ handleUpdate }
+					value={ settings.message }
+					onChange={ (val) => handleUpdate( 'message', val.target.value ) }
 				/>
 			</BaseControl>
 
-			{ dirty && (
-				<Notice status="warning" isDismissible={ false }>
-					<span>{ __( 'You have unsaved content! ', 'formello' ) }</span>
-
-					<Button isPrimary isSmall onClick={ save } disabled={ ! dirty }>
-						{ __( 'Save', 'formello' ) }
-					</Button>
-				</Notice>
-			) }
 		</Fragment>
 	);
 }

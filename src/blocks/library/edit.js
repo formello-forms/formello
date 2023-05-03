@@ -18,6 +18,7 @@ import {
 import ServerSideRender from '@wordpress/server-side-render';
 import { addQueryArgs } from '@wordpress/url';
 import TemplatesModal from './templates-modal.js';
+import { layout } from '@wordpress/icons';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
@@ -59,7 +60,7 @@ export default function Edit( props ) {
 					<ToolbarGroup>
 						<ToolbarButton
 							label={ __( 'Template', 'popper' ) }
-							icon={ 'layout' }
+							icon={ layout }
 							onClick={ () => {
 								setModalOpen( 'templates' );
 							} }

@@ -68,6 +68,7 @@ export function AdvancedSettings( props ) {
 				onChange={ ( val ) => {
 					setAttributes( { autoComplete: val } );
 				} }
+				help={ __( 'Add "autocomplete" attribute fo form tag.', 'formello' ) }
 			/>
 			<ToggleControl
 				label={ __( 'Enable Js validation', 'formello' ) }
@@ -77,11 +78,12 @@ export function AdvancedSettings( props ) {
 				} }
 			/>
 			<ToggleControl
-				label={ __( 'No HTML5 validation', 'formello' ) }
+				label={ __( 'Disable HTML5 validation', 'formello' ) }
 				checked={ attributes.noValidate }
 				onChange={ ( val ) => {
 					setAttributes( { noValidate: val } );
 				} }
+				help={ __( 'Add "novalidate" attribute fo form tag.', 'formello' ) }
 			/>
 			<ToggleControl
 				label={ __( 'Enable debug', 'formello' ) }

@@ -16,6 +16,7 @@ export default function save( { attributes, className } ) {
 		autoComplete,
 		enableJsValidation,
 		noValidate,
+		labelIsBold
 	} = attributes;
 
 	const formClass = classnames(
@@ -23,6 +24,7 @@ export default function save( { attributes, className } ) {
 		{
 			'as-row': asRow,
 			'formello-label-right': 'right' === labelAlign,
+			'is-style-bolded': labelIsBold
 		},
 	);
 

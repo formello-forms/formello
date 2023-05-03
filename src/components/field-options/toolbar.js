@@ -32,7 +32,7 @@ export default function Toolbar( props ) {
 	return (
 		<Fragment>
 			<ToolbarButton
-				label={ __( 'Required' ) }
+				label={ __( 'Required', 'formello' ) }
 				icon={ Asterisk }
 				isPressed={ required }
 				onClick={ () => {
@@ -41,7 +41,7 @@ export default function Toolbar( props ) {
 				} }
 			/>
 			<ToolbarButton
-				label={ __( 'Hide label' ) }
+				label={ __( 'Hide label', 'formello' ) }
 				icon={ 'hidden' }
 				isPressed={ hideLabel }
 				onClick={ () => {
@@ -49,7 +49,7 @@ export default function Toolbar( props ) {
 				} }
 			/>
 			<ToolbarButton
-				label={ __( 'Show help message' ) }
+				label={ __( 'Show help message', 'formello' ) }
 				icon={ 'editor-help' }
 				isPressed={ showHelp }
 				onClick={ () => {
