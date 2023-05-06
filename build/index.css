@@ -1,1 +1,146 @@
-.wp-block-formello-form input,.wp-block-formello-form select,.wp-block-formello-form textarea{padding:8px}.wp-block-formello-form select,.wp-block-formello-form textarea{max-width:100%}.wp-block-formello-form .wp-block{margin:0}.wp-block-formello-form button[disabled],.wp-block-formello-form input[disabled],.wp-block-formello-form select[disabled],.wp-block-formello-form textarea[disabled]{opacity:1}.formello-templates-list{display:flex;flex-wrap:wrap}.formello-templates-list li{flex:1 1 33.333%;padding:10px;width:33.333%}.formello-templates-list li a{cursor:pointer;text-align:center}.formello-urlinput input[type=text]{border:1px solid #8c8f94!important;width:100%}.formello-urlinput__suggestions{width:260px}.formello-hidden{align-items:center;display:flex;flex-direction:row}.wp-block-formello-button{border:1px solid transparent;display:block;font-weight:400;margin:0}.wp-block-formello-button.left{margin-left:0}.wp-block-formello-button.right{margin-right:0}.wp-block-formello-button.wide{width:auto}@media only screen and (min-width:768px){.formello-modal{min-width:640px}}.formello-modal select{min-width:100%}.formello-modal fieldset{border:1px solid #dedede;margin-bottom:10px;padding:10px}.formello-modal-buttons{display:flex;flex-flow:row-reverse;justify-content:space-between;margin:20px 0}.formello-fields-row{margin-bottom:10px}.formello-fields-row .components-base-control__field{margin-bottom:0}.formello-fields-margin{margin-bottom:10px}.formello-mergetags-container{min-width:300px}.formello-tag-option{cursor:pointer;margin-bottom:5px}.formello-tag-option:hover{background-color:#007cba;color:#fff}.formello-notice{margin:1em 0}.mce-container{z-index:9000000!important}.block-editor-block-variation-picker__skip button{display:inline}
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+.wp-block-formello-form input,
+.wp-block-formello-form select,
+.wp-block-formello-form textarea {
+  padding: 8px;
+}
+.wp-block-formello-form select,
+.wp-block-formello-form textarea {
+  max-width: 100%;
+}
+.wp-block-formello-form .wp-block {
+  margin: 0;
+}
+.wp-block-formello-form input[disabled],
+.wp-block-formello-form select[disabled],
+.wp-block-formello-form textarea[disabled],
+.wp-block-formello-form button[disabled] {
+  opacity: 1;
+}
+
+.formello-templates-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+.formello-templates-list li {
+  padding: 10px;
+  flex: 1 1 33.333%;
+  width: 33.333%;
+}
+.formello-templates-list li a {
+  text-align: center;
+  cursor: pointer;
+}
+
+.formello-urlinput input[type=text] {
+  width: 100%;
+  border: 1px solid #8c8f94 !important;
+}
+
+.formello-urlinput__suggestions {
+  width: 260px;
+}
+
+.formello-hidden {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.wp-block-formello-button {
+  border: 1px solid transparent;
+  display: block;
+  margin: 0;
+}
+.wp-block-formello-button.left {
+  margin-left: 0;
+}
+.wp-block-formello-button.right {
+  margin-right: 0;
+}
+.wp-block-formello-button.wide {
+  width: auto;
+}
+
+/* ------------------ ACTION MODAL ------------------ */
+@media only screen and (min-width: 768px) {
+  .formello-modal {
+    min-width: 640px;
+  }
+}
+.formello-modal .formello-action-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+.formello-modal .formello-action-modal .components-base-control__help {
+  margin-bottom: 0;
+}
+.formello-modal select {
+  min-width: 100%;
+}
+.formello-modal fieldset {
+  border: 1px solid #dedede;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+.formello-modal fieldset legend {
+  display: flex;
+  align-items: center;
+}
+
+.formello-modal-buttons {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-between;
+  flex-flow: row-reverse;
+}
+
+/* ------------------ END ACTION MODAL ------------------ */
+/* ------------------ FIELDS -------------------------- */
+.formello-fields-row {
+  margin-bottom: 1em;
+}
+.formello-fields-row .components-base-control {
+  margin-bottom: 0;
+}
+.formello-fields-row .components-base-control__field {
+  margin-bottom: 0;
+}
+
+.formello-fields-margin {
+  margin-bottom: 10px;
+}
+
+.formello-mergetags-container {
+  min-width: 300px;
+}
+
+.formello-tag-option {
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.formello-tag-option:hover {
+  background-color: #007cba;
+  color: #fff;
+}
+
+.formello-notice {
+  margin: 1em 0;
+}
+
+/* ------------------ END FIELDS -------------------------- */
+/* ------------------ MCE EDITOR ------------------------------- */
+.mce-container {
+  z-index: 9000000 !important;
+}
+
+/* ------------------ END MCE EDITOR ------------------------------- */
+.block-editor-block-variation-picker__skip button {
+  display: inline;
+}
+
+/*# sourceMappingURL=index.css.map*/

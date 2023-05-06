@@ -54,6 +54,8 @@
 		},
 		"labelIsBold": {
 			"type": "boolean",
+			"source": "attribute",
+			"selector": ".is-style-bolded",
 			"default": false
 		},
 		"asRow": {

@@ -15,10 +15,6 @@
 		margin: 0;
 	}
 
-}
-
-.wp-block-formello-form {
-
 	input[disabled],
 	select[disabled],
 	textarea[disabled],
@@ -62,7 +58,6 @@
 .wp-block-formello-button {
 	border: 1px solid transparent;
 	display: block;
-	font-weight: normal;
 	margin: 0;
 
 	&.left {
@@ -86,14 +81,29 @@
 		min-width: 640px;
 	}
 
+	.formello-action-modal {
+		display: flex;
+		flex-direction: column;
+		gap: 1em;
+
+		.components-base-control__help {
+			margin-bottom: 0;
+		}
+	}
+
 	select {
 		min-width: 100%;
 	}
 
 	fieldset {
 		border: 1px solid #dedede;
-		padding: 10px;
+		padding: 10px 20px;
 		margin-bottom: 10px;
+
+		legend {
+			display: flex;
+			align-items: center;
+		}
 	}
 }
 
@@ -110,7 +120,11 @@
 
 
 .formello-fields-row {
-	margin-bottom: 10px;
+	margin-bottom: 1em;
+
+	.components-base-control {
+		margin-bottom: 0;
+	}
 
 	.components-base-control__field {
 		margin-bottom: 0;
@@ -132,7 +146,7 @@
 
 .formello-tag-option:hover {
 	background-color: #007cba;
-	color: white;
+	color: #fff;
 }
 
 .formello-notice {

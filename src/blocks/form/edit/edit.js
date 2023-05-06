@@ -140,6 +140,7 @@ export default function Edit( props ) {
 			{
 				'as-row': attributes.asRow,
 				'formello-label-right': 'right' === attributes.labelAlign,
+				'is-style-bolded': attributes.labelIsBold
 			}
 		);
 	};

@@ -12,7 +12,6 @@ import {
 import {
 	useState,
 	Fragment,
-	RawHTML,
 } from '@wordpress/element';
 import {
 	addQueryArgs,
@@ -82,21 +81,19 @@ export default function Addon( props ) {
 					shouldCloseOnClickOutside={ false }
 					onRequestClose={ closeModal }
 				>
-					<RawHTML>
-						{ sprintf(
-							/* translators: %s: Addon title */
-							__( '<p>To enable this addon you need a valid %s license.</p>' ),
-							info.title
-						) }
-					</RawHTML>
+					<p>
+						{ 
+							__( 'To enable this addon you need a free Formello license.', 'formello' )
+						}
+					</p>
 					<Button
 						variant="primary" 
 						href="https://formello.net" 
-						icon="cart" 
+						icon="download" 
 						iconPosition={ 'right' }
 						target="_blank"
 					>
-						{ __( 'Buy now', 'formello-pro' ) }
+						{ __( 'Free download', 'formello-pro' ) }
 					</Button>
 				</Modal>
 			) }

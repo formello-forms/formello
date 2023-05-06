@@ -52,7 +52,6 @@ export function Controls( { attributes, clientId } ) {
 
 	return (
 		<Fragment>
-
 			<ToolbarGroup>
 				<ToolbarDropdownMenu
 					icon={ 'admin-generic' }

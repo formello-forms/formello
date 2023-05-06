@@ -47,7 +47,7 @@ export default function Help() {
 				<CardBody>
 					<p>
 						{ __(
-							'If you like the Formello you can share a review to help us and spread some love!',
+							'If you like Formello plugin you can share a review to help us and spread some love!',
 							'formello'
 						) }
 					</p>

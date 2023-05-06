@@ -15,7 +15,7 @@ html {
 
 	&.success {
 		display: block;
-		padding: .5em;
+		padding: 0.5em;
 		background-color: #dff0d8;
 		border: 1px solid #d0e9c6;
 		color: #3c763d;
@@ -49,6 +49,83 @@ html {
 
 	.is-layout-flex {
 		align-items: flex-start;
+	}
+
+	label {
+		padding: 0 $margin-left 0 0;
+		box-sizing: border-box;
+
+		&.hide {
+			display: none;
+		}
+
+		span.required {
+			color: red;
+			margin: 0 5px;
+			font-weight: normal;
+		}
+	}
+
+	input[type],
+	select,
+	textarea {
+		font-size: inherit;
+		font-family: inherit;
+		line-height: inherit;
+		margin: 0;
+	}
+
+	fieldset {
+		padding: 1em;
+		border: 1px solid;
+	}
+
+	fieldset.no-border {
+		border: none;
+		padding: 0;
+	}
+
+	legend {
+		margin: 0.5em 0;
+	}
+
+	output {
+		margin: 0 0.5em;
+		border: 1px solid #d7dbdd;
+		font-size: 1em;
+		border-radius: 3px;
+		min-width: 1em;
+		min-height: 1em;
+		text-align: center;
+		padding: 0 0.5em;
+	}
+
+	button {
+		cursor: pointer;
+		position: relative;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+	}
+
+	button[disabled] {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&.is-style-bolded {
+
+		label,
+		legend {
+			font-weight: bold;
+		}
+
+		.formello-checkbox {
+
+			label {
+				font-weight: normal;
+			}
+		}
 	}
 
 	.formello-checkbox {
@@ -118,83 +195,6 @@ html {
 		.error-message {
 			order: 4;
 			width: 100%;
-		}
-	}
-
-	label {
-		padding: 0 $margin-left 0 0;
-		box-sizing: border-box;
-
-		&.hide {
-			display: none;
-		}
-
-		span.required {
-			color: red;
-			margin: 0 5px;
-			font-weight: normal;
-		}
-	}
-
-	input[type],
-	select,
-	textarea {
-		font-size: inherit;
-		font-family: inherit;
-		line-height: inherit;
-		margin: 0;
-	}
-
-	fieldset {
-		padding: 1em;
-		border: 1px solid;
-	}
-
-	fieldset.no-border {
-		border: none;
-		padding: 0;
-	}
-
-	legend {
-		margin: 0.5em 0;
-	}
-
-	output {
-		margin: 0 .5em;
-		border: 1px solid #d7dbdd;
-		font-size: 1em;
-		border-radius: 3px;
-		min-width: 1em;
-		min-height: 1em;
-		text-align: center;
-		padding: 0 .5em;
-	}
-
-	button {
-		cursor: pointer;
-		position: relative;
-		justify-content: center;
-		align-items: center;
-		display: flex;
-	}
-
-	button[disabled] {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
-	&.is-style-bolded {
-
-		label,
-		legend {
-			font-weight: bold;
-		}
-
-		.formello-checkbox {
-
-			label {
-				font-weight: normal;
-			}
 		}
 	}
 

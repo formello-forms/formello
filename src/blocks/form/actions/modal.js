@@ -7,7 +7,7 @@ import { applyFilters } from '@wordpress/hooks';
 import { __, sprintf } from '@wordpress/i18n';
 
 import MergeTags from '../../../components/merge-tags';
-import ClassicEdit from '../../../components/editor.js';
+//import ClassicEdit from '../../../components/editor.js';
 
 export function ActionsModal( props ) {
 	const {
@@ -36,53 +36,55 @@ export function ActionsModal( props ) {
 			onRequestClose={ onRequestClose }
 			shouldCloseOnClickOutside={ false }
 		>
-			<TextControl
-				label={ __( 'Title' ) }
-				value={ action.title }
-				onChange={ ( val ) =>
-					updateSettings( 'title', val )
-				}
-				help={ __( 'Name of the action. For debug purpose.', 'formello' ) }
-			/>
-			<Fragment>
-				{ applyFilters(
-					'formello.modal.' + settings.type,
-					'',
-					props,
-					action,
-					MergeTags,
-					ClassicEdit,
-					updateSettings,
-					settingsUrl,
-				) }
+			<div className="formello-action-modal">
+				<TextControl
+					label={ __( 'Title' ) }
+					value={ action.title }
+					onChange={ ( val ) =>
+						updateSettings( 'title', val )
+					}
+					help={ __( 'Name of the action. For debug purpose.', 'formello' ) }
+				/>
+				<Fragment>
+					{ applyFilters(
+						'formello.modal.' + settings.type,
+						'',
+						props,
+						action,
+						MergeTags,
+						//ClassicEdit,
+						updateSettings,
+						settingsUrl,
+					) }
 
-				<div className="formello-modal-buttons">
-					<Button
-						isPrimary={ true }
-						onClick={ () => {
-							onRequestClose( action );
-							updateAction( action );
-						} }
-					>
-						{ __( 'Save' ) }
-					</Button>
-					<Button
-						isDestructive={ true }
-						onClick={ () => {
-							if (
-								window.confirm(
-									/* translators: %s: Name of form action */
-									sprintf( __( `Delete action %s?`, 'formello' ), settings.title )
-								)
-							) {
-								deleteAction( action );
-							}
-						} }
-					>
-						{ __( 'Delete', 'formello' ) }
-					</Button>
-				</div>
-			</Fragment>
+					<div className="formello-modal-buttons">
+						<Button
+							isPrimary={ true }
+							onClick={ () => {
+								onRequestClose( action );
+								updateAction( action );
+							} }
+						>
+							{ __( 'Save' ) }
+						</Button>
+						<Button
+							isDestructive={ true }
+							onClick={ () => {
+								if (
+									window.confirm(
+										/* translators: %s: Name of form action */
+										sprintf( __( `Delete action %s?`, 'formello' ), settings.title )
+									)
+								) {
+									deleteAction( action );
+								}
+							} }
+						>
+							{ __( 'Delete', 'formello' ) }
+						</Button>
+					</div>
+				</Fragment>
+			</div>
 		</Modal>
 	);
 }

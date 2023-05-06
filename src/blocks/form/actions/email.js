@@ -10,15 +10,15 @@ import {
 import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
+import ClassicEdit from '../../../components/editor.js';
 
-export default function Email( content, props, settings, MergeTags, ClassicEdit, handleUpdate ) {
+export default function Email( content, props, settings, MergeTags, handleUpdate ) {
 	const { clientId } = props;
 
 	const id = `editor-${ clientId }`;
 	const [ advanced, setAdvanced ] = useState( false );
 
 	const onChangeMessage = ( val ) => {
-		console.log( val )
 		handleUpdate( 'message', val );
 	}
 
@@ -90,12 +90,13 @@ export default function Email( content, props, settings, MergeTags, ClassicEdit,
 				} }
 			/>
 
-			<TextareaControl
-				id={ id } 
-				label={ __( 'Message', 'formello' ) }
-				value={ settings.message }
-				onChange={ (val) => handleUpdate( 'message', val ) }
-			/>
+			<BaseControl label={ __( 'Message', 'formello' ) }>
+				<ClassicEdit
+					id={ id } 
+					value={ settings.message }
+					onChange={ onChangeMessage }
+				/>
+			</BaseControl>
 
 		</Fragment>
 	);

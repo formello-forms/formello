@@ -2,9 +2,9 @@ import { useEffect } from '@wordpress/element';
 import { store } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 
-const { wp } = window;
-
 export default function ClassicEdit( props ) {
+
+	const { id, onChange } = props;
 
 	useEffect( () => {
 		const { baseURL, suffix, settings } = window.wpEditorL10n.tinymce;
@@ -14,21 +14,24 @@ export default function ClassicEdit( props ) {
 			suffix,
 		} );
 
-		wp.oldEditor.initialize( props.id, {
+		wp.oldEditor.initialize( id, {
 			tinymce: {
 				...settings,
 				setup( editor ) {
-					editor.on( 'blur', () => {
-						props.onChange( 'message', editor.getContent() );
-					} );
+					/*editor.on( 'blur', () => {
+						onChange( editor.getContent() );
+					} );*/
+					//editor.on( 'loadContent', () => editor.setContent( props.value ) );
 				},
 			},
 		} );
 
 		return () => {
-			wp.oldEditor.remove( props.id );
+			wp.oldEditor.remove( id );
 		};
+
 	}, [] );
 
 	return <textarea { ...props } />;
+
 }
