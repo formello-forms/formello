@@ -3,41 +3,8 @@ import { Card, CardHeader, CardBody, withFilters } from '@wordpress/components';
 import { RawHTML, Fragment } from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
-import AddonIntegration from './addonIntegration.js';
-import { applyFilters } from '@wordpress/hooks';
 
 const IntegrationsTab = ( props ) => {
-	const { settings, setSettings } = props;
-
-	const addons = [];
-	const items = [];
-
-	applyFilters( 'formello.AddonIntegration', '', addons );
-
-	for ( const addon in addons ) {
-		const title = addons[ addon ].title;
-		const name = addons[ addon ].name;
-		const icon = addons[ addon ].icon;
-		const apiurl = addons[ addon ].apiurl;
-		const optionName = 'formello_' + name;
-		if( settings.formello.enabled_addons.includes( name ) ) {
-			items.push(
-				<AddonIntegration
-					{ ...props }
-					key={ title }
-					icon={ icon }
-					title={ title }
-					name={ name }
-					apiurl={ apiurl }
-					optionName={ optionName }
-					settings={ settings }
-					addonSettings={ settings[ optionName ] }
-					setSettings={ setSettings }
-				/>
-			);
-		}
-	}
-
 	return (
 		<Fragment>
 			<Card>
@@ -58,9 +25,8 @@ const IntegrationsTab = ( props ) => {
 					</RawHTML>
 				</CardBody>
 			</Card>
-			{ items }
 		</Fragment>
 	);
 };
 
-export default withFilters( 'formello.settings' )( IntegrationsTab );
+export default withFilters( 'formello.settings.integrations' )( IntegrationsTab );

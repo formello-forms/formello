@@ -6,7 +6,6 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import LoadingSpinner from './components/loading-spinner.js';
 
 import {
-	useState,
 	render,
 } from '@wordpress/element';
 import {
@@ -20,7 +19,6 @@ import Tools from './routes/tools';
 import Addons from './routes/addons';
 
 const App = () => {
-	const [ settings ] = useState( null );
 	const { savedSettings } = useSelect( ( select ) => {
 		const { getEntityRecord } = select( coreStore );
 		const fetchedSettings =
@@ -39,9 +37,9 @@ const App = () => {
 		<React.StrictMode>
 			<HashRouter basename="/">
 				<Routes>
-					<Route path="/:tab?" element={ <Settings savedSettings={ settings ?? savedSettings } /> } />
-					<Route path="/tools/:tab?" element={ <Tools savedSettings={ settings ?? savedSettings } /> } />
-					<Route path="/addons" element={ <Addons savedSettings={ settings ?? savedSettings } /> } />
+					<Route path="/:tab?" element={ <Settings savedSettings={ savedSettings } /> } />
+					<Route path="/tools/:tab?" element={ <Tools savedSettings={ savedSettings } /> } />
+					<Route path="/addons" element={ <Addons savedSettings={ savedSettings } /> } />
 				</Routes>
 			</HashRouter>
 		</React.StrictMode>

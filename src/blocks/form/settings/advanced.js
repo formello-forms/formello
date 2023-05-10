@@ -9,7 +9,7 @@ import {
 	TextControl,
 	ToggleControl,
 	SelectControl,
-	PanelBody
+	PanelBody,
 } from '@wordpress/components';
 
 export function AdvancedSettings( props ) {

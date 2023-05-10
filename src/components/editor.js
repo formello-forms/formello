@@ -3,7 +3,6 @@ import { store } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 
 export default function ClassicEdit( props ) {
-
 	const { id, onChange } = props;
 
 	useEffect( () => {
@@ -29,9 +28,7 @@ export default function ClassicEdit( props ) {
 		return () => {
 			wp.oldEditor.remove( id );
 		};
-
 	}, [] );
 
 	return <textarea { ...props } />;
-
 }

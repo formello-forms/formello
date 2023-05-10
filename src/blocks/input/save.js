@@ -96,8 +96,8 @@ export default function save( { attributes } ) {
 
 	const inputStyle = {
 		...borderProps.style,
-		...spacingProps.style
-	}
+		...spacingProps.style,
+	};
 
 	if ( noWrapper || 'hidden' === type ) {
 		return <input { ...htmlAttrs } className={ fieldClassName } style={ inputStyle } />;

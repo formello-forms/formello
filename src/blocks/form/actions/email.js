@@ -20,7 +20,7 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 
 	const onChangeMessage = ( val ) => {
 		handleUpdate( 'message', val );
-	}
+	};
 
 	return (
 		<Fragment>
@@ -92,7 +92,7 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 
 			<BaseControl label={ __( 'Message', 'formello' ) }>
 				<ClassicEdit
-					id={ id } 
+					id={ id }
 					value={ settings.message }
 					onChange={ onChangeMessage }
 				/>

@@ -1,3 +1,4 @@
+import { SVG, Rect } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import {
 	Checkbox,
@@ -18,9 +19,10 @@ import {
 
 const variations = [
 	{
-		name: 'text input',
+		name: 'text-field',
 		title: __( 'Text' ),
 		icon: Input,
+		description: __( 'Create basic single-line text fields.', 'formello' ),
 		attributes: {
 			name: 'text',
 			type: 'text',
@@ -32,6 +34,7 @@ const variations = [
 	{
 		name: 'hidden',
 		title: __( 'Hidden' ),
+		description: __( 'Create basic single-line text fields.', 'formello' ),
 		icon: Hidden,
 		attributes: {
 			name: 'hidden',
@@ -170,7 +173,19 @@ const variations = [
 	{
 		name: 'inputbutton',
 		title: __( 'Input with button' ),
-		icon: Input,
+		icon: <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+			<Rect
+				x="4.75"
+				y="15.25"
+				width="6.5"
+				height="14.5"
+				transform="rotate(-90 4.75 15.25)"
+				stroke="currentColor"
+				strokeWidth="1.5"
+				fill="none"
+			/>
+			<Rect x="14" y="10" width="4" height="4" rx="1" fill="currentColor" />
+		</SVG>,
 		attributes: {
 			type: 'email',
 			label: 'Email',

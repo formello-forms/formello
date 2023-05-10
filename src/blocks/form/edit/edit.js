@@ -140,7 +140,7 @@ export default function Edit( props ) {
 			{
 				'as-row': attributes.asRow,
 				'formello-label-right': 'right' === attributes.labelAlign,
-				'is-style-bolded': attributes.labelIsBold
+				'is-style-bolded': attributes.labelIsBold,
 			}
 		);
 	};
@@ -157,7 +157,7 @@ export default function Edit( props ) {
 	} );
 
 	// It's a preview
-	if( ! postType || isDisabled ){
+	if ( ! postType || isDisabled ) {
 		return (
 			<div { ...innerBlocksProps }>
 				{ children }

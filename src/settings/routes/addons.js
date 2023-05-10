@@ -14,11 +14,11 @@ import LoadingSpinner from '../components/loading-spinner.js';
 import Addon from '../components/addons/addon.js';
 import {
 	useSelect,
+	useDispatch
 } from '@wordpress/data';
 import {
 	store as coreStore,
 } from '@wordpress/core-data';
-import { useDispatch } from '@wordpress/data';
 
 export default function Addons() {
 	const addonsTabs = [

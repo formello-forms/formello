@@ -141,10 +141,12 @@ $mobile: 426px;
 		}
 
 		.components-card.addon {
+
 			> div {
 				display: flex;
 				flex-direction: column;
 			}
+			
 			.components-card__body {
 				flex-grow: 1;
 			}

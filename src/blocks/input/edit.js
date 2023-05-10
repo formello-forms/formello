@@ -32,18 +32,29 @@ export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
 	const {
 		type,
+		showHelp,
+		id,
+		name,
+		grouped,
+		withButton,
+		checked,
+		value,
+		step,
+		placeholder,
+		autocomplete,
+		help,
 	} = attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES[ type ];
 
 	useEffect( () => {
 		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
-		if ( ! attributes.id ) {
+		if ( ! id ) {
 			setAttributes( {
 				id: 'field_' + idx,
 			} );
 		}
-		if ( ! attributes.name ) {
+		if ( ! name ) {
 			setAttributes( {
 				name: 'field_' + idx,
 			} );
@@ -55,16 +66,16 @@ export default function Edit( props ) {
 
 	const containerClass = classnames( {
 		formello: true,
-		'formello-group': attributes.withButton || 'range' === type,
-		'formello-group grouped': attributes.grouped,
+		'formello-group': withButton || 'range' === type,
+		'formello-group grouped': grouped,
 		'formello-checkbox':
 			'checkbox' === type || 'radio' === type || 'hidden' === type,
 	} );
 
 	const inputStyle = {
 		...borderProps.style,
-		...spacingProps.style
-	}
+		...spacingProps.style,
+	};
 
 	const blockProps = useBlockProps( {
 		className: containerClass,
@@ -78,7 +89,7 @@ export default function Edit( props ) {
 
 	const onChange = ( e ) => {
 		if ( 'checkbox' === type || 'radio' === type ) {
-			setAttributes( { checked: ! attributes.checked } );
+			setAttributes( { checked: ! checked } );
 		}
 		setAttributes( { value: e.target.value } );
 	};
@@ -108,29 +119,29 @@ export default function Edit( props ) {
 			) : (
 				<div className="formello-hidden">
 					<Hidden width="30" height="30" />
-					<label htmlFor="input">[{ attributes.name }] </label>
+					<label htmlFor="input">[{ name }] </label>
 				</div>
 			) }
 
 			<input
 				className={ borderProps.className }
 				style={ inputStyle }
-				type={ type }
-				value={ 'password' !== type ? attributes.value : '' }
-				checked={ attributes.checked || false }
-				step={ attributes.step || undefined }
+				type={ 'password' !== type ? type : 'text' }
+				value={ 'password' !== type ? value : '' }
+				checked={ checked || false }
+				step={ step || undefined }
 				onChange={ onChange }
-				placeholder={ attributes.placeholder }
-				disabled={ 'file' === type || 'password' === type }
-				autoComplete={ attributes.autocomplete || 'new-password' }
+				placeholder={ placeholder }
+				disabled={ 'file' === type }
+				autoComplete={ autocomplete || 'new-password' }
 			/>
 
 			{ children }
 
-			{ 'hidden' !== type && attributes.showHelp && (
+			{ 'hidden' !== type && showHelp && (
 				<RichText
 					tagName="small"
-					value={ attributes.help }
+					value={ help }
 					onChange={ ( val ) => setAttributes( { help: val } ) }
 					placeholder={ __( 'Enter help message…', 'formello' ) }
 					allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }

@@ -19,7 +19,7 @@ import Recaptcha from '../components/settings/recaptcha.js';
 import Messages from '../components/settings/messages.js';
 import Integrations from '../components/settings/integrations.js';
 import Logging from '../components/settings/logging.js';
-import Licenses from '../components/settings/licenses.js';
+//import Licenses from '../components/settings/licenses.js';
 import UpdateSettings from '../components/update-settings';
 import Header from '../components/masthead.js';
 

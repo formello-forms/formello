@@ -4,8 +4,7 @@
  * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
-
-import { ToolbarButton } from '@wordpress/components';
+import { SVG, Rect, ToolbarButton } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
 import {
@@ -19,6 +18,8 @@ export default function Toolbar( props ) {
 		required,
 		showHelp,
 		hideLabel,
+		label,
+		type,
 	} = attributes;
 
 	const setRequiredTxt = () => {
@@ -28,6 +29,22 @@ export default function Toolbar( props ) {
 		);
 		setAttributes( { requiredText: parentAtts.requiredText } );
 	};
+
+	const toggleLabel = (
+		<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+			<Rect
+				x="4.75"
+				y="17.25"
+				width="5.5"
+				height="14.5"
+				transform="rotate(-90 4.75 17.25)"
+				stroke="currentColor"
+				fill="none"
+				strokeWidth="1.5"
+			/>
+			<Rect x="4" y="7" width="10" height="2" fill="currentColor" />
+		</SVG>
+	);
 
 	return (
 		<Fragment>
@@ -40,14 +57,17 @@ export default function Toolbar( props ) {
 					setAttributes( { required: ! required } );
 				} }
 			/>
-			<ToolbarButton
-				label={ __( 'Hide label', 'formello' ) }
-				icon={ 'hidden' }
-				isPressed={ hideLabel }
-				onClick={ () => {
-					setAttributes( { hideLabel: ! hideLabel } );
-				} }
-			/>
+			{
+				( ( 'checkbox' || 'radio' ) !== type ) &&
+				<ToolbarButton
+					label={ __( 'Toggle label visibility', 'formello' ) }
+					icon={ toggleLabel }
+					isPressed={ ! hideLabel }
+					onClick={ () => {
+						setAttributes( { hideLabel: ! hideLabel } );
+					} }
+				/>
+			}
 			<ToolbarButton
 				label={ __( 'Show help message', 'formello' ) }
 				icon={ 'editor-help' }

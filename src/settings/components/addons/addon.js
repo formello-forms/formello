@@ -12,6 +12,7 @@ import {
 import {
 	useState,
 	Fragment,
+	RawHTML,
 } from '@wordpress/element';
 import {
 	addQueryArgs,
@@ -66,11 +67,10 @@ export default function Addon( props ) {
 									info.title
 								) }
 							</Button>
-							:	
-							<ToggleControl
-								checked={ isChecked }
-								onChange={ ( checked ) => onAddonChange( checked ) }
-								__nextHasNoMarginBottom
+							:								<ToggleControl
+									checked={ isChecked }
+									onChange={ ( checked ) => onAddonChange( checked ) }
+									__nextHasNoMarginBottom
 							/>
 					}
 				</CardFooter>
@@ -82,14 +82,14 @@ export default function Addon( props ) {
 					onRequestClose={ closeModal }
 				>
 					<p>
-						{ 
+						{
 							__( 'To enable this addon you need a free Formello license.', 'formello' )
 						}
 					</p>
 					<Button
-						variant="primary" 
-						href="https://formello.net" 
-						icon="download" 
+						variant="primary"
+						href="https://formello.net"
+						icon="download"
 						iconPosition={ 'right' }
 						target="_blank"
 					>

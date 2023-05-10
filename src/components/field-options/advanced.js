@@ -110,9 +110,9 @@ function AdvancedOptions( props ) {
 					}
 				/>
 			}
-			{ [ 'text', 'url', 'email', 'number', 'tel', 'range' ].includes( type ) && (
+			{ 'range' === type && (
 				<ToggleControl
-					label={ 'range' === type ? __( 'Show output', 'formello' ) : __( 'Show button', 'formello' ) }
+					label={ __( 'Show output', 'formello' ) }
 					checked={ hasInnerBlocks }
 					onChange={ ( newval ) => {
 						if ( newval ) {
