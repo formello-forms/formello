@@ -170,13 +170,6 @@ class Admin {
 				$capability,
 				'edit.php?post_type=formello_form&page=' . $formello_settings . '#/tools',
 			);
-			// phpcs:ignore
-			/*$submenu[ $slug ][] = array(
-				__( 'Addons', 'formello' ),
-				$capability,
-				$slug . '&page=formello-addons',
-				__( 'Addons', 'formello' ),
-			);*/
 		}
 
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );
