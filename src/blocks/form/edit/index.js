@@ -1,13 +1,9 @@
 import { useEffect, useContext } from '@wordpress/element';
-import { useSelect } from '@wordpress/data';
-import {
-	useEntityProp,
-} from '@wordpress/core-data';
-
+import { useSelect, dispatch } from '@wordpress/data';
 import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
-
+import { createBlock } from '@wordpress/blocks';
 import BlockVariationPicker from './variation-picker';
 
 import {
@@ -20,6 +16,7 @@ const FormEdit = ( props ) => {
 	const { clientId, attributes, setAttributes } = props;
 
 	const isDisabled = useContext( Disabled.Context );
+	const { replaceBlock } = dispatch( blockEditorStore );
 
 	const { wasBlockJustInserted, postType, postId } = useSelect( ( select ) => {
 		const { wasBlockJustInserted } = select(
@@ -36,6 +33,15 @@ const FormEdit = ( props ) => {
 	} );
 
 	useEffect( () => {
+
+		if( 'formello_form' !== postType && Number( attributes.id ) && ! isDisabled ) {
+			replaceBlock(
+				clientId,
+				createBlock( 'formello/library', {
+					ref: attributes.id,
+				} )
+			);
+		}
 
 		// if is a formello_form CPT always set id eq post_id
 		if (

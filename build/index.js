@@ -2965,10 +2965,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/data */ "@wordpress/data");
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/core-data */ "@wordpress/core-data");
-/* harmony import */ var _wordpress_core_data__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
+/* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _variation_picker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./variation-picker */ "./src/blocks/form/edit/variation-picker.js");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__);
@@ -2990,13 +2990,16 @@ const FormEdit = props => {
   } = props;
   const isDisabled = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useContext)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.Disabled.Context);
   const {
+    replaceBlock
+  } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.dispatch)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.store);
+  const {
     wasBlockJustInserted,
     postType,
     postId
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_1__.useSelect)(select => {
     const {
       wasBlockJustInserted
-    } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.store);
+    } = select(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.store);
     return {
       wasBlockJustInserted: wasBlockJustInserted(clientId),
       postType: select('core/editor').getCurrentPostType(),
@@ -3004,7 +3007,13 @@ const FormEdit = props => {
     };
   });
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    // if is a formello_form CPT always set id eq post_id
+    if ('formello_form' !== postType && Number(attributes.id) && !isDisabled) {
+      replaceBlock(clientId, (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_3__.createBlock)('formello/library', {
+        ref: attributes.id
+      }));
+    } // if is a formello_form CPT always set id eq post_id
+
+
     if (Number(attributes.id) !== postId && 'formello_form' === postType && !isDisabled) {
       setAttributes({
         id: postId
