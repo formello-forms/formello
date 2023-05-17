@@ -147,7 +147,7 @@ class Admin {
 			array( $this, 'settings_page' )
 		);
 		$addons_hook = add_submenu_page(
-			null,
+			$slug,
 			__( 'Addons', 'formello' ),
 			__( 'Addons', 'formello' ),
 			$capability,
@@ -171,13 +171,12 @@ class Admin {
 				'edit.php?post_type=formello_form&page=' . $formello_settings . '#/tools',
 			);
 			// phpcs:ignore
-			$submenu[ $slug ][] = array(
+			/*$submenu[ $slug ][] = array(
 				__( 'Addons', 'formello' ),
 				$capability,
-				//'edit.php?post_type=formello_form&page=' . $formello_settings . '#/addons',
-				'formello-addons',
+				$slug . '&page=formello-addons',
 				__( 'Addons', 'formello' ),
-			);
+			);*/
 		}
 
 		add_action( "load-$form_hook", array( $this, 'forms_screen_option' ) );

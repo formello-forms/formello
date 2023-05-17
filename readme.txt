@@ -29,11 +29,14 @@ This is the next generation **WordPress form builder plugin**. You can create fo
 
 == Extensions ==
 
+If you wanna extend the form functionality with more useful features, you can download, from our [site](https://formello.net), an advanced version which includes this addons:
+
 * [Mailchimp](https://formello.net/addons/mailchimp): action to send subscriber emails to your Mailchimp lists.
 * [MailPoet](https://formello.net/addons/mailpoet): action to send subscriber emails to your MailPoet lists.
+* [MailerLite](https://formello.net/addons/mailerlite): action to send subscriber emails to your MailerLite lists.
 * [Sendinblue](https://formello.net/addons/sendinblue): action to send subscriber emails to your SendinBlue lists.
 * [GetResponse](https://formello.net/addons/mailchimp): action to send subscriber emails to your GetResponse lists.
-* Inserter: automatically insert form on posts/page.
+* [Inserter](https://formello.net/addons/inserter): automatically insert form on posts/page.
 * [Exporter](https://formello.net/addons/exporter): export all your submission in an Excel ready format or CSV.
 * [Web Hooks](https://formello.net/addons/web-hooks): send your mail submissions to any external endpoint.
 * [Conditional fields](https://formello.net/addons/conditional-fields): add rules to display fields based on your defined conditions.
@@ -126,7 +129,7 @@ Yes, you can insert Formello forms using a shortcode.
 * Added multi choices
 * Code reduction
 * Better handling of form in post/page
-
+* Fixed addons page
 
 = 2.0.1 =
 * Fix hyphen in action tags not parsed
