@@ -4,12 +4,10 @@
 import { useDispatch } from '@wordpress/data';
 import {
 	store as blockEditorStore,
-	//__experimentalBlockPatternSetup as BlockPatternSetup,
+	__experimentalBlockPatternSetup as BlockPatternSetup,
 } from '@wordpress/block-editor';
 import { Modal } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-
-import BlockPatternSetup from './blockpattern';
 
 function TemplatesModal( {
 	clientId,
@@ -20,7 +18,7 @@ function TemplatesModal( {
 	const onBlockPatternSelect = ( blocks ) => {
 		if ( 'formello/library' === blockName ) {
 			updateBlockAttributes( clientId, {
-				id: blocks[ 0 ].attributes.id,
+				ref: blocks[ 0 ].attributes.id,
 			} );
 			setIsPatternSelectionModalOpen( false );
 		} else {
@@ -31,7 +29,7 @@ function TemplatesModal( {
 
 	return (
 		<Modal
-			className="block-editor-query-pattern__selection-modal"
+			//className="block-editor-query-pattern__selection-modal"
 			isFullScreen
 			title={ __( 'Choose a pattern' ) }
 			closeLabel={ __( 'Cancel' ) }

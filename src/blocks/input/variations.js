@@ -22,7 +22,7 @@ const variations = [
 		name: 'text-field',
 		title: __( 'Text' ),
 		icon: Input,
-		description: __( 'Create basic single-line text fields.', 'formello' ),
+		description: __( 'A basic single-line text field.', 'formello' ),
 		attributes: {
 			name: 'text',
 			type: 'text',
@@ -34,7 +34,7 @@ const variations = [
 	{
 		name: 'hidden',
 		title: __( 'Hidden' ),
-		description: __( 'Create basic single-line text fields.', 'formello' ),
+		description: __( 'Display hidden field.', 'formello' ),
 		icon: Hidden,
 		attributes: {
 			name: 'hidden',
@@ -42,7 +42,7 @@ const variations = [
 			label: 'Hidden Input',
 			required: false,
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'checkbox',
@@ -54,7 +54,7 @@ const variations = [
 			label: 'Checkbox',
 			placeholder: undefined,
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'radio',
@@ -65,7 +65,7 @@ const variations = [
 			type: 'radio',
 			label: 'Radio',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'gdpr',
@@ -80,7 +80,7 @@ const variations = [
 			),
 			required: true,
 		},
-		scope: [ 'block', 'inserter' ],
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'range',

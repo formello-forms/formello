@@ -8,6 +8,7 @@ import {
 import {
 	__experimentalGrid as Grid,
 	TabPanel,
+	Notice
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import LoadingSpinner from '../components/loading-spinner.js';
@@ -50,6 +51,7 @@ export default function Addons() {
 	const [ addons, setAddons ] = useState( false );
 	const [ filter, setFilter ] = useState( 'all' );
 	const [ enabled, setEnabled ] = useState( Object.assign( [], settings.enabled_addons ) );
+	const [ isDirty, setDirty ] = useState( false );
 
 	useEffect( () => {
 		apiFetch( {
@@ -76,6 +78,7 @@ export default function Addons() {
 		}
 		setEnabled( currentDisabledBlocks );
 		updateAddons( currentDisabledBlocks );
+		setDirty( true );
 	}
 
 	const updateAddons = ( addons ) => {
@@ -101,6 +104,7 @@ export default function Addons() {
 	return (
 		<Fragment>
 			<Header title={ __( 'Addons', 'formello' ) } />
+
 			<div className="setting-tabs">
 				<TabPanel
 					tabs={ addonsTabs }
@@ -109,6 +113,12 @@ export default function Addons() {
 				>
 					{ () => {
 						return (
+							<Fragment>
+							{ isDirty &&
+							    <Notice status="info" isDismissible={ false }>
+							        { __( 'You must reload the page to make your changes take effect.', 'formello' ) }
+							    </Notice>
+							}							
 							<Grid columns={ 3 }>
 								{
 									addons.filter( ( element ) => {
@@ -126,6 +136,7 @@ export default function Addons() {
 									} )
 								}
 							</Grid>
+							</Fragment>
 						);
 					} }
 				</TabPanel>

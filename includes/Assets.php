@@ -79,7 +79,7 @@ class Assets {
 		$settings = array(
 			'settings' => get_option( 'formello' ),
 			'post_url' => esc_url( admin_url( 'admin-post.php' ) ),
-			'can_use_premium_code' => is_plugin_active( 'formello-pro/formello-pro.php' ),
+			'can_use_premium_code' => (int) is_plugin_active( 'formello-pro/formello-pro.php' ),
 		);
 
 		wp_localize_script(
@@ -98,13 +98,8 @@ class Assets {
 		*/
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
-		wp_localize_script(
-			'formello-form-editor-script',
-			'formello',
-			$settings
-		);
-
 		wp_add_inline_script( 'formello-settings', 'const formello = ' . wp_json_encode( $settings ), 'before' );
+		wp_add_inline_script( 'formello-form-editor-script', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 
 	}
 

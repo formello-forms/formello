@@ -66,6 +66,13 @@ export function AdvancedSettings( props ) {
 					help={ __( 'Add "novalidate" attribute fo form tag.', 'formello' ) }
 				/>
 				<ToggleControl
+					label={ __( 'Disable Ajax', 'formello' ) }
+					checked={ attributes.noAjax }
+					onChange={ ( val ) => {
+						setAttributes( { noAjax: val } );
+					} }
+				/>
+				<ToggleControl
 					label={ __( 'Enable debug', 'formello' ) }
 					checked={ attributes.debug }
 					onChange={ ( val ) => {

@@ -68,13 +68,16 @@ class Blocks {
 		);
 
 		register_block_type(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/textarea'
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/textarea',
+			array(
+				'render_callback' => array( $this, 'do_textarea_block' ),
+			)
 		);
 
 		register_block_type(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/select',
 			array(
-				'render_callback' => array( $this, 'do_input_block' ),
+				'render_callback' => array( $this, 'do_select_block' ),
 			)
 		);
 
@@ -92,6 +95,7 @@ class Blocks {
 		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form'
 		);
+
 	}
 
 	/**
@@ -115,11 +119,12 @@ class Blocks {
 	 * @param  string $content The bock content.
 	 */
 	public function do_reusable_block( $attributes, $content = '' ) {
-		if ( empty( $attributes['id'] ) ) {
+
+		if ( empty( $attributes['ref'] ) ) {
 			return '';
 		}
 
-		$form = get_post( $attributes['id'] );
+		$form = get_post( $attributes['ref'] );
 
 		if ( ! $form || 'formello_form' !== $form->post_type ) {
 			return '';
@@ -140,7 +145,6 @@ class Blocks {
 	 */
 	public function do_input_block( $attributes, $content = '' ) {
 		$replacer = new TagReplacers\Replacer();
-		$content   = $replacer->parse( $content );
 
 		do_action( 'formello_input_block_render', $attributes, $content );
 
@@ -148,18 +152,77 @@ class Blocks {
 			wp_enqueue_script( 'password-strength-meter' );
 		}
 
-		if ( empty( $attributes['multiple'] ) ) {
-			return $content;
-		}
-
 		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
 			$p = new \WP_HTML_Tag_Processor( $content );
 
 			if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
-				$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
+
+				$p->set_attribute( 'value', $replacer->parse( $p->get_attribute( 'value' ) ) );
+
+				if ( $attributes['multiple'] ) {
+					$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
+				}
+				$input_name = $p->get_attribute( 'name' );
+				// phpcs:ignore
+				if ( isset( $_POST[ $input_name ] ) ) {
+					// phpcs:ignore
+					$p->set_attribute( 'value', sanitize_text_field( $_POST[ $input_name ] ) );
+				}
 			}
 
 			return $p->get_updated_html();
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Render input block
+	 *
+	 * @param  array  $attributes The attributes of block.
+	 * @param  string $content The bock content.
+	 */
+	public function do_select_block( $attributes, $content = '' ) {
+
+		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
+			$p = new \WP_HTML_Tag_Processor( $content );
+
+			if ( $p->next_tag( array( 'tag_name' => 'select' ) ) ) {
+
+				if ( $p->get_attribute( 'multiple' ) ) {
+
+					$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
+				}
+			}
+
+			return $p->get_updated_html();
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Render input block
+	 *
+	 * @param  array  $attributes The attributes of block.
+	 * @param  string $content The bock content.
+	 */
+	public function do_textarea_block( $attributes, $content = '' ) {
+		$replacer = new TagReplacers\Replacer();
+		$content = $replacer->parse( $content );
+
+		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
+			$p = new \WP_HTML_Tag_Processor( $content );
+
+			if ( $p->next_tag( array( 'tag_name' => 'textarea' ) ) ) {
+				$textarea_name = $p->get_attribute( 'name' );
+
+				// phpcs:ignore
+				if ( isset( $_POST[ $textarea_name ] ) ) {
+					// phpcs:ignore
+					$content = str_replace( '</textarea>', wp_kses_post( $_POST[ $textarea_name ] ) . '</textarea>', $p->get_updated_html() );
+				}
+			}
 		}
 
 		return $content;

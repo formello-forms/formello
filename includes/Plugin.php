@@ -69,7 +69,7 @@ final class Plugin {
 		require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Forms.php';
 		require_once FORMELLO_ABSPATH . 'includes/Assets.php';
 		require_once FORMELLO_ABSPATH . 'includes/Blocks.php';
-		require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
+		//require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
 		require_once FORMELLO_ABSPATH . 'includes/Updater.php';
 		require_once FORMELLO_ABSPATH . 'includes/Form.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
@@ -78,6 +78,9 @@ final class Plugin {
 		require_once FORMELLO_ABSPATH . 'includes/Log.php';
 		require_once FORMELLO_ABSPATH . 'includes/Cron.php';
 		require_once FORMELLO_ABSPATH . 'includes/Admin/Admin.php';
+		require_once FORMELLO_ABSPATH . 'includes/Form/Controller.php';
+		require_once FORMELLO_ABSPATH . 'includes/Form/Request.php';
+		require_once FORMELLO_ABSPATH . 'includes/Form/Response.php';
 
 		// Only include in the admin.
 		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {

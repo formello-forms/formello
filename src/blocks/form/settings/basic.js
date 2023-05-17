@@ -64,16 +64,6 @@ export function Settings( props ) {
 			title={ __( 'Settings', 'formello' ) }
 			initialOpen={ true }
 		>
-			{
-				'formello_form' !== postType &&
-				<TextControl
-					label={ __( 'Form name', 'formello' ) }
-					value={ title }
-					onChange={ ( val ) => {
-						setTitle( val );
-					} }
-				/>
-			}
 			<ToggleControl
 				label={ __( 'Store submissions', 'formello' ) }
 				checked={ storeSubmissions }

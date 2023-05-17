@@ -26,8 +26,7 @@ import {
 import { layout } from '@wordpress/icons';
 
 import classnames from 'classnames';
-import useSaveForm from '../hooks/use-save-form';
-import useForm from '../hooks/use-form';
+import useSaveForm from './use-save-form';
 
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
@@ -39,13 +38,13 @@ const ALLOWED_BLOCKS = [
 	'formello/button',
 	'formello/output',
 	'formello/fieldset',
-	'formello/checkboxes',
 	'formello/select',
+	'formello/multichoices',
 	'formello/fileupload',
 ];
 import apiFetch from '@wordpress/api-fetch';
 
-import TemplatesModal from '../../library/templates-modal.js';
+import TemplatesModal from './templates-modal.js';
 import { Settings } from '../settings/basic';
 import { Controls } from '../settings/controls';
 import { AdvancedSettings } from '../settings/advanced';
@@ -72,28 +71,10 @@ export default function Edit( props ) {
 		[ clientId ]
 	);
 
-	const {
-		isFormelloFormResolved,
-		isFormelloFormMissing,
-	} = useForm( attributes.id );
-
 	const isDisabled = useContext( Disabled.Context );
-	const [ status, setStatus ] = useEntityProp( 'postType', 'formello_form', 'status', attributes.id );
+
 	const [ meta, setMeta ] = useEntityProp( 'postType', 'formello_form', 'meta', attributes.id );
 	const [ isModalOpen, setModalOpen ] = useState( false );
-
-	useEffect( () => {
-		return () => {
-			// Bails when the block is inside a preview container.
-			if ( 'formello_form' === postType || isDisabled ) {
-				return;
-			}
-
-			if ( attributes.id ) {
-				setStatus( 'formello-trash' );
-			}
-		};
-	}, [] );
 
 	useEffect( () => {
 		if ( ! meta ) {
@@ -165,29 +146,12 @@ export default function Edit( props ) {
 		);
 	}
 
-	if ( isFormelloFormMissing && 'formello_form' !== postType ) {
-		return (
-			<div { ...blockProps }>
-				<Warning>{ __( 'Form has been deleted or is unavailable.', 'formello' ) }</Warning>
-			</div>
-		);
-	}
-
-	if ( ! isFormelloFormResolved && 'formello_form' !== postType ) {
-		return (
-			<div { ...blockProps }>
-				<Placeholder>
-					<Spinner />
-				</Placeholder>
-			</div>
-		);
-	}
-
 	return (
-		<EntityProvider kind="postType" type="formello_form" id={ attributes.id }>
-			<div { ...innerBlocksProps }>
+		<div { ...innerBlocksProps }>
 
-				<BlockControls>
+			<BlockControls>
+				{
+					'formello_form' === postType &&
 					<ToolbarGroup>
 						<ToolbarButton
 							label={ __( 'Template', 'popper' ) }
@@ -197,23 +161,23 @@ export default function Edit( props ) {
 							} }
 						/>
 					</ToolbarGroup>
-					<Controls { ...props } />
-				</BlockControls>
+				}
+				<Controls { ...props } />
+			</BlockControls>
 
-				<InspectorControls>
-					<Settings { ...props } />
-				</InspectorControls>
-				<AdvancedSettings { ...props } />
-				{ 'templates' === isModalOpen && (
-					<TemplatesModal
-						blockName={ props.name }
-						setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
-						clientId={ clientId }
-					/>
-				) }
+			<InspectorControls>
+				<Settings { ...props } />
+			</InspectorControls>
+			<AdvancedSettings { ...props } />
+			{ 'templates' === isModalOpen && (
+				<TemplatesModal
+					blockName={ props.name }
+					setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
+					clientId={ clientId }
+				/>
+			) }
 
-				{ children }
-			</div>
-		</EntityProvider>
+			{ children }
+		</div>
 	);
 }

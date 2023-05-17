@@ -3,6 +3,7 @@ import {
 	CardHeader,
 	CardBody,
 } from '@wordpress/components';
+import { RawHTML } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 export function FieldsData( props ) {
@@ -22,7 +23,7 @@ export function FieldsData( props ) {
 								return (
 									<tr key={ i }>
 										<th>{ key }</th>
-										<td>{ data.data[ key ] }</td>
+										<td><RawHTML>{ data.data[ key ] }</RawHTML></td>
 									</tr>
 								);
 							} )

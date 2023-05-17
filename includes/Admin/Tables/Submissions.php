@@ -112,7 +112,8 @@ class Submissions extends \WP_List_Table {
 		$ids = implode( ',', array_map( 'absint', $ids ) );
 		$wpdb->query(
 			$wpdb->prepare(
-				'DELETE FROM ' . $wpdb->prefix . 'formello_submissions WHERE id in ( %1s );',
+				'DELETE FROM %i WHERE id in ( %1s );',
+				$wpdb->prefix . 'formello_submissions',
 				$ids
 			)
 		);
@@ -134,7 +135,8 @@ class Submissions extends \WP_List_Table {
 
 		$wpdb->query(
 			$wpdb->prepare(
-				'UPDATE ' . $wpdb->prefix . 'formello_submissions SET %1s = %d WHERE id in ( %1s );',
+				'UPDATE %i SET %i = %d WHERE id in ( %1s );',
+				$wpdb->prefix . 'formello_submissions',
 				$column,
 				$value,
 				$ids
@@ -415,6 +417,7 @@ class Submissions extends \WP_List_Table {
 		$sql .= ' OFFSET %d';
 
 		$results = $wpdb->get_results(
+			// phpcs:ignore
 			$wpdb->prepare( $sql, $params ),
 			ARRAY_A
 		);

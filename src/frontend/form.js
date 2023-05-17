@@ -14,10 +14,7 @@ class Formello {
 	}
 
 	init() {
-		this.element.querySelectorAll( '[multiple]' ).forEach( ( e ) => {
-			const name = e.getAttribute( 'name' );
-			e.setAttribute( 'name', name + '[]' );
-		} );
+
 		this.reCaptcha();
 		this.isRtfEnabled();
 		this.addFlatpickr();
@@ -33,7 +30,13 @@ class Formello {
 	}
 
 	handleSubmit( e ) {
-		// always prevent default (because regular submit doesn't work for Formello
+
+		const { noajax } = this.element.dataset;
+		if ( noajax ) {
+			return;
+		}
+
+		// prevent default, we send trough ajax
 		e.preventDefault();
 		e.stopPropagation();
 
@@ -256,6 +259,11 @@ class Formello {
 			script.onload = function() {
 				tinymce.init( {
 					selector: '.formello-rtf',
+				    setup: function (editor) {
+				        editor.on('change', function () {
+				            tinymce.triggerSave();
+				        });
+				    },
 					menubar: false,
 					plugins: [
 						'advlist autolink lists link image charmap print preview anchor',

@@ -14,9 +14,11 @@ export default function save( { attributes, className } ) {
 		recaptchaEnabled,
 		redirectUrl,
 		autoComplete,
+		action,
 		enableJsValidation,
 		noValidate,
 		labelIsBold,
+		noAjax
 	} = attributes;
 
 	const formClass = classnames(
@@ -38,10 +40,12 @@ export default function save( { attributes, className } ) {
 			data-id={ id }
 			data-hide={ hide || undefined }
 			data-recaptcha={ recaptchaEnabled || undefined }
-			data-redirect={ redirectUrl }
+			data-redirect={ redirectUrl || undefined }
 			data-validate={ enableJsValidation || undefined }
-			noValidate={ noValidate || undefined }
+			data-noajax={ noAjax || undefined }
+			novalidate={ noValidate || undefined }
 			autoComplete={ autoComplete }
+			action={ action }
 		>
 			<input type="hidden" name="_formello_id" value={ id } />
 			<input
@@ -49,10 +53,11 @@ export default function save( { attributes, className } ) {
 				name={ honeypot }
 				className="formello-hp"
 				autoComplete="nope"
+				aria-label="Don't fill this. It's a honeypot form spammers"
 			/>
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
-			<div className="formello-message"></div>
+			<div className="formello-message" id={ 'formello-message-' + id }></div>
 		</form>
 	);
 }

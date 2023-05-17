@@ -34,6 +34,7 @@ registerBlockType( metadata, {
 		anchor: true,
 		color: true,
 		// eslint-disable-next-line
+		inserter: ( 'formello_form' === pagenow ) ? true : false,
 		multiple: ( 'formello_form' !== pagenow ) ? true : false,
 		spacing: {
 			padding: true,

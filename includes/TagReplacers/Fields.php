@@ -23,7 +23,7 @@ class Fields {
 		if ( 'all_data' === $param ) {
 			return $this->all_fields();
 		}
-		return isset( $_POST[ $param ] ) ? sanitize_text_field( wp_unslash( $_POST[ $param ] ) ) : false;
+		return isset( $_POST[ $param ] ) ? wp_kses_post( $_POST[ $param ] ) : false;
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Fields {
 				$value = implode( ', ', $value );
 			};
 
-			$value = sanitize_text_field( $value );
+			$value = wp_kses_post( $value );
 
 			$return .= '<tr><td><b>' . $field . '</b>:</td><td>' . $value . '</td></tr>';
 		}

@@ -7,13 +7,18 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Button, Placeholder } from '@wordpress/components';
+import { 
+	Button, 
+	Placeholder,
+	Modal
+} from '@wordpress/components';
 import { layout } from '@wordpress/icons';
-import TemplatesModal from '../../library/templates-modal.js';
+import TemplatesModal from './templates-modal.js';
 import { useState } from '@wordpress/element';
 import { useSelect, dispatch, select } from '@wordpress/data';
 import {
 	useBlockProps,
+	__experimentalBlockPatternSetup as BlockPatternSetup,
 } from '@wordpress/block-editor';
 import {
 	store as blocksStore,
@@ -45,6 +50,11 @@ function BlockVariationPicker( props ) {
 	const blockProps = useBlockProps( {
 		className: classes,
 	} );
+
+	const onBlockPatternSelect = ( blocks ) => {
+		replaceInnerBlocks( clientId, blocks[ 0 ].innerBlocks );
+		setIsPatternSelectionModalOpen( false );
+	};
 
 	const onSelect = ( nextVariation = defaultVariation ) => {
 		if ( nextVariation.attributes ) {
@@ -100,8 +110,8 @@ function BlockVariationPicker( props ) {
 
 				<div className="block-editor-block-variation-picker__skip">
 					<Button
-						className="plugin-formello-panel-button is-large"
 						isPrimary
+						icon={ 'book' }
 						onClick={ () => {
 							setModalOpen( 'templates' );
 						} }
@@ -115,7 +125,7 @@ function BlockVariationPicker( props ) {
 
 				{ 'templates' === isModalOpen && (
 					<TemplatesModal
-						blockName={ 'formello/form' }
+						blockName={ props.name }
 						setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
 						clientId={ clientId }
 					/>

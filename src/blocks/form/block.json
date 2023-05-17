@@ -95,6 +95,12 @@
 			"attribute": "data-validate",
 			"default": true
 		},
+		"noAjax": {
+			"type": "boolean",
+			"source": "attribute",
+			"selector": "form",
+			"attribute": "data-noajax"
+		},
 		"noValidate": {
 			"type": "boolean",
 			"source": "attribute",

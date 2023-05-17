@@ -51,6 +51,7 @@ class Replacer {
 	 * @param string $matches The matches array.
 	 */
 	protected function get_data( $matches ) {
+
 		if ( $matches ) {
 			$tag     = $matches[1];
 			$param   = ! isset( $matches[2] ) ? '' : $matches[2];

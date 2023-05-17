@@ -118,36 +118,31 @@
 			"type": "string",
 			"source": "attribute",
 			"selector": "textarea",
-			"attribute": "cols",
-			"default": ""
+			"attribute": "cols"
 		},
 		"rows": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "textarea",
-			"attribute": "rows",
-			"default": ""
+			"attribute": "rows"
 		},
 		"minlength": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "textarea",
-			"attribute": "minlength",
-			"default": ""
+			"attribute": "minlength"
 		},
 		"maxlength": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "textarea",
-			"attribute": "maxlength",
-			"default": ""
+			"attribute": "maxlength"
 		},
 		"pattern": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "textarea",
-			"attribute": "pattern",
-			"default": ""
+			"attribute": "pattern"
 		},
 		"enableRtf": {
 			"type": "boolean",

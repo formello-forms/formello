@@ -55,8 +55,8 @@ export default function Addon( props ) {
 				</CardBody>
 				<CardFooter>
 					{
-						'popper' === info.slug
-							? <Button
+						'popper' === info.slug ? 
+							<Button
 								href={ installUrl }
 								variant="primary"
 								isSmall
@@ -67,7 +67,8 @@ export default function Addon( props ) {
 									info.title
 								) }
 							</Button>
-							:								<ToggleControl
+							:
+							<ToggleControl
 									checked={ isChecked }
 									onChange={ ( checked ) => onAddonChange( checked ) }
 									__nextHasNoMarginBottom

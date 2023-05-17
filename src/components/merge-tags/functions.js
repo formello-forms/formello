@@ -4,7 +4,7 @@ import { applyFilters } from '@wordpress/hooks';
 const { getBlock, getClientIdsOfDescendants, getBlockParents, getBlockParentsByBlockName } =
 	wp.data.select( 'core/block-editor' );
 
-const allowed = [ 'formello/input', 'formello/select', 'formello/textarea' ];
+const allowed = [ 'formello/input', 'formello/select', 'formello/textarea', 'formello/multichoices' ];
 
 /**
  * Find the root form block.

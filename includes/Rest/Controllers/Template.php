@@ -194,7 +194,10 @@ class Template extends Base {
 		foreach ( $all_patterns as $pattern ) {
 			$local_patterns[] = array(
 				'title' => $pattern->post_title,
-				'content' => $pattern->post_content,
+				'content' => wp_sprintf(
+					'<!-- wp:formello/library {"ref":%d} /-->',
+					$pattern->ID
+				),
 				'description' => '',
 				'blockTypes' => array(
 					'formello/library',
@@ -217,7 +220,7 @@ class Template extends Base {
 	 * @return mixed
 	 */
 	private function get_templates() {
-		$url       = 'https://formello.net/wp-json/formello/v1/formello_templates?nocache=' . time();
+		$url       = 'https://formello.net/wp-json/formello/v1/formello_templates?type=formello_form&nocache=' . time();
 		$templates = get_transient( 'formello_templates', false );
 
 		/*

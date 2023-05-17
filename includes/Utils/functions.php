@@ -152,6 +152,7 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 			'formello/textarea',
 			'formello/select',
 			'formello/fieldset',
+			'formello/multichoices',
 			'core/image',
 			'core/spacer',
 			'core/paragraph',
@@ -300,88 +301,6 @@ function formello_custom_mime_types( $mimes ) {
 	return $mimes;
 }
 
-/**
- * Revert back previous post status on untrashed forms.
- *
- * @param array $new_status The new status.
- * @param array $post_id The post id.
- * @param array $previous_status The previous status.
- */
-function untrash_formello_private( $new_status, $post_id, $previous_status ) {
-
-	if ( 'formello-private' === $previous_status ) {
-		return $previous_status;
-	}
-
-	return $new_status;
-}
-
-/**
- * Remove delete link on trashed forms.
- *
- * @param array   $actions The actions.
- * @param WP_Post $post The post object.
- */
-function hide_row_action( $actions, $post ) {
-
-	if ( 'formello_form' !== $post->post_type ) {
-		return $actions;
-	}
-	$statuses = array( 'formello-private', 'formello-trash' );
-
-	if ( in_array( $post->post_status, $statuses ) ) {
-		unset( $actions['trash'] );
-		unset( $actions['inline hide-if-no-js'] );
-		unset( $actions['delete'] );
-	}
-
-	return $actions;
-}
-
-/**
- * Remove forms after deleted post.
- *
- * @param number  $postid The actions.
- * @param WP_Post $post The post object.
- */
-function delete_form( $postid, $post ) {
-
-	$statuses = array( 'formello-private', 'formello-trash' );
-	$args = array(
-		'post_type' => 'formello_form',
-		'post_status' => $statuses,
-		'meta_key' => '_formello_parent',
-		'meta_value' => $postid,
-		'meta_compare' => '=',
-		'type_key' => 'numeric',
-	);
-
-	$forms = get_posts( $args );
-
-	foreach ( $forms as $form ) {
-		wp_delete_post( $form->ID );
-	}
-
-}
-
-/**
- * Remove bulk actions from private post status.
- *
- * @param  array $actions The actions.
- * @return array $actions The actions.
- */
-function remove_bulk_actions( $actions ) {
-
-	$statuses = array( 'formello-private', 'formello-trash' );
-
-	// phpcs:ignore.
-	if ( isset( $_GET['post_status'] ) && in_array( $_GET['post_status'], $statuses ) ) {
-		unset( $actions['trash'] );
-	}
-
-	return $actions;
-}
-
 // phpcs:ignore.
 add_filter( 'cron_schedules', __NAMESPACE__ . '\formello_cron_schedules' );
 add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option', 5 );
@@ -392,7 +311,4 @@ add_filter( 'manage_formello_form_posts_columns', __NAMESPACE__ . '\formello_col
 add_action( 'manage_formello_form_posts_custom_column', __NAMESPACE__ . '\formello_columns_display', 10, 2 );
 add_filter( 'default_hidden_columns', __NAMESPACE__ . '\formello_hide_shortcode_columns', 10, 2 );
 add_filter( 'upload_mimes', __NAMESPACE__ . '\formello_custom_mime_types', 10 );
-add_filter( 'wp_untrash_post_status', __NAMESPACE__ . '\untrash_formello_private', 10, 3 );
-add_filter( 'post_row_actions', __NAMESPACE__ . '\hide_row_action', 10, 2 );
-add_action( 'after_delete_post', __NAMESPACE__ . '\delete_form', 10, 2 );
-add_filter( 'bulk_actions-edit-formello_form', __NAMESPACE__ . '\remove_bulk_actions' );
+

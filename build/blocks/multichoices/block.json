@@ -1,0 +1,83 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "formello/multichoices",
+  "title": "Multi choices",
+  "category": "formello",
+  "ancestor": [
+    "formello/form"
+  ],
+  "textdomain": "formello",
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "enum": [
+        "radio",
+        "checkbox"
+      ],
+      "default": "checkbox"
+    },
+    "required": {
+      "type": "boolean"
+    },
+    "options": {
+      "type": "array",
+      "source": "query",
+      "selector": "div.formello-checkbox",
+      "query": {
+        "value": {
+          "type": "string",
+          "selector": "input",
+          "source": "attribute",
+          "attribute": "value"
+        },
+        "label": {
+          "type": "string",
+          "selector": "label",
+          "source": "html"
+        },
+        "selected": {
+          "type": "boolean",
+          "selector": "input",
+          "source": "attribute",
+          "attribute": "checked"
+        }
+      },
+      "default": [
+        {
+          "value": "1",
+          "label": "One"
+        },
+        {
+          "value": "2",
+          "label": "Two"
+        },
+        {
+          "value": "3",
+          "label": "Three"
+        }
+      ]
+    }
+  },
+  "supports": {
+    "anchor": true,
+    "html": false,
+    "color": true,
+    "spacing": true,
+    "inserter": true,
+    "__experimentalBorder": true,
+    "__experimentalLayout": {
+      "allowSwitching": false,
+      "allowInheriting": false,
+      "allowSizingOnChildren": true,
+      "default": {
+        "type": "flex",
+        "justifyContent": "stretch",
+        "orientation": "vertical",
+        "flexWrap": "nowrap"
+      }
+    }
+  }
+}

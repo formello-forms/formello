@@ -2,17 +2,19 @@
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
   "name": "formello/library",
-  "title": "Form library",
-  "description": "Block showing all locally registered Formello forms.",
+  "title": "Form Library",
+  "description": "A block to display or create forms.",
   "category": "formello",
-  "icon": "form",
   "textdomain": "formello",
   "attributes": {
-    "id": {
+    "ref": {
       "type": "number"
     }
   },
   "supports": {
-    "html": false
+    "html": false,
+    "lock": false,
+    "reusable": false,
+    "inserter": true
   }
 }

@@ -45,6 +45,9 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 	forms.forEach( ( block ) => {
+		if( block.hasAttribute( 'data-validate' ) ){
+			block.setAttribute( 'novalidate', true )
+		}
 		new Formello( block );
 	} );
 } );

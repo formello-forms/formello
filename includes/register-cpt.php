@@ -134,42 +134,13 @@ function register_cpt_meta() {
 					),
 				),
 			),
+			'default' => array(),
 			'single' => true,
 			'type' => 'array',
 			'additionalProperties' => true,
 			'auth_callback' => function () {
 				return current_user_can( 'edit_posts' );
 			},
-		)
-	);
-
-	register_post_status(
-		'formello-private',
-		array(
-			'label'                     => _x( 'Formello private', 'post' ),
-			'public'                    => false,
-			'private'                   => false,
-			'internal'                  => false,
-			'protected'                 => false,
-			'exclude_from_search'       => false,
-			'show_in_admin_all_list'    => false,
-			'show_in_admin_status_list' => true,
-			'label_count'               => _n_noop( 'Private <span class="count">(%s)</span>', 'Private <span class="count">(%s)</span>' ),
-		)
-	);
-
-	register_post_status(
-		'formello-trash',
-		array(
-			'label'                     => _x( 'Private trash', 'post' ),
-			'public'                    => false,
-			'private'                   => false,
-			'internal'                  => false,
-			'protected'                 => true,
-			'exclude_from_search'       => false,
-			'show_in_admin_all_list'    => false,
-			'show_in_admin_status_list' => true,
-			'label_count'               => _n_noop( 'Private Trashed <span class="count">(%s)</span>', 'Private Trashed <span class="count">(%s)</span>' ),
 		)
 	);
 

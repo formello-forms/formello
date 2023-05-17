@@ -654,11 +654,16 @@ class Form {
 	 * @return mixed
 	 */
 	protected function recursive_actions( $actions ) {
+
 		foreach ( $actions as $key => &$value ) {
 			if ( is_array( $value ) ) {
+
 				$value = $this->recursive_actions( $value );
-			} else {
+
+			} elseif ( is_string( $value ) ) {
+
 				$value = $this->replace_tags( $value );
+
 			}
 		}
 
