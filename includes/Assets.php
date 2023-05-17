@@ -98,6 +98,7 @@ class Assets {
 		*/
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
+		wp_add_inline_script( 'formello-addons', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 		wp_add_inline_script( 'formello-settings', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 		wp_add_inline_script( 'formello-form-editor-script', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 
@@ -139,6 +140,12 @@ class Assets {
 		$scripts = array(
 			'formello-settings' => array(
 				'src'       => FORMELLO_ASSETS . '/settings.js',
+				'deps'      => $settings_script_asset['dependencies'],
+				'version'   => $settings_script_asset['version'],
+				'in_footer' => true,
+			),
+			'formello-addons' => array(
+				'src'       => FORMELLO_ASSETS . '/addons.js',
 				'deps'      => $settings_script_asset['dependencies'],
 				'version'   => $settings_script_asset['version'],
 				'in_footer' => true,

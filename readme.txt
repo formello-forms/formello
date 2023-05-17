@@ -121,6 +121,8 @@ Yes, you can insert Formello forms using a shortcode.
 == Changelog ==
 
 = 2.1.0 =
+* No JS form sending
+* Better handling of form request and response
 * Added multi choices
 * Code reduction
 * Better handling of form in post/page

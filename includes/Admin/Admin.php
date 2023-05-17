@@ -151,7 +151,7 @@ class Admin {
 			__( 'Addons', 'formello' ),
 			__( 'Addons', 'formello' ),
 			$capability,
-			'formello-settings#/addons',
+			'formello-addons',
 			array( $this, 'settings_page' )
 		);
 
@@ -174,7 +174,9 @@ class Admin {
 			$submenu[ $slug ][] = array(
 				__( 'Addons', 'formello' ),
 				$capability,
-				'edit.php?post_type=formello_form&page=' . $formello_settings . '#/addons',
+				//'edit.php?post_type=formello_form&page=' . $formello_settings . '#/addons',
+				'formello-addons',
+				__( 'Addons', 'formello' ),
 			);
 		}
 
@@ -182,7 +184,7 @@ class Admin {
 		add_action( "load-$submissions_hook", array( $this, 'submissions_screen_option' ) );
 		add_action( "load-$settings_hook", array( $this, 'settings_hooks' ) );
 		add_action( "load-$tools_hook", array( $this, 'settings_hooks' ) );
-		add_action( "load-$addons_hook", array( $this, 'settings_hooks' ) );
+		add_action( "load-$addons_hook", array( $this, 'addons_hooks' ) );
 		add_filter( 'submenu_file', array( $this, 'remove_submenu' ) );
 	}
 
@@ -268,7 +270,7 @@ class Admin {
 	}
 
 	/**
-	 * Output our Dashboard HTML.
+	 * Output our Settings HTML.
 	 *
 	 * @since 0.1
 	 */
@@ -285,6 +287,16 @@ class Admin {
 	 */
 	public function settings_hooks() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_settings_scripts' ) );
+	}
+
+	/**
+	 * Initialize our hooks for the admin page
+	 *
+	 * @return void
+	 */
+	public function addons_hooks() {
+		wp_enqueue_script( 'formello-addons' );
+		wp_enqueue_style( 'formello-settings' );
 	}
 
 	/**

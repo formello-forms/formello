@@ -17,29 +17,55 @@ import {
 import {
 	addQueryArgs,
 } from '@wordpress/url';
+import { useSelect } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 
 export default function Addon( props ) {
 	const { info, addons, handleAddonChange } = props;
 
-	const isChecked = formello.can_use_premium_code ? addons.includes( info.slug ) : false;
-
 	const [ isOpen, setOpen ] = useState( false );
+	const [ loading, setLoading ] = useState( false );
 
 	const closeModal = () => setOpen( false );
 
-	const installUrl = addQueryArgs( 'plugin-install.php', {
-		s: 'popper',
-		type: 'term',
-		tab: 'search',
+	const { isPopperInstalled, isPopperActive, popperInstallUrl } = useSelect( ( select ) => {
+		const popper = select( 'core' ).getPlugin( 'popper/popper' );
+		return {
+			isPopperInstalled: popper,
+			isPopperActive: popper?.status === 'active',
+			popperInstallUrl: popper?._links.self[0].href,
+		};
 	} );
 
-	function onAddonChange( checked ) {
+	const installPopper = async () => {
+		const status = isPopperActive ? 'inactive' : 'active';
+		setLoading(true)
+		if ( popperInstallUrl ) {
+			await apiFetch( {
+				method: 'PUT',
+				url: popperInstallUrl,
+				data: { status: status },
+			} );
+		} else {
+			await apiFetch( {
+				method: 'POST',
+				path: 'wp/v2/plugins',
+				data: { slug: 'popper', status: 'active' },
+			} );
+		}
+		setLoading(false)
+		window.navigation.reload()
+	}
+
+	const onAddonChange = ( checked ) => {
 		if ( formello.can_use_premium_code ) {
 			handleAddonChange( checked, info.slug );
 		} else {
 			setOpen( true );
 		}
 	}
+
+	const isChecked = ( 'popper' === info.slug ) ? isPopperActive : addons.includes( info.slug );
 
 	return (
 		<Fragment>
@@ -49,21 +75,23 @@ export default function Addon( props ) {
 				</CardHeader>
 				<CardBody>
 					<CardMedia as="aside">
-						<img src={ require( `../../../../assets/addons/${ info.slug }.png` ) } alt={ info.title } />
+						<img src={ require( `../../../assets/addons/${ info.slug }.png` ) } alt={ info.title } />
 					</CardMedia>
 					<p>{ info.excerpt }</p>
 				</CardBody>
 				<CardFooter>
 					{
-						'popper' === info.slug ? 
+						( 'popper' === info.slug ) ? 
 							<Button
-								href={ installUrl }
+								onClick={ installPopper }
 								variant="primary"
 								isSmall
+								isBusy={ loading }
+								disabled={ loading || isPopperActive }
 							>
 								{ sprintf(
 								/* translators: %s: Popper plugin name */
-									__( 'Install %s' ),
+									isPopperInstalled ? __( 'Activate %s', 'formello' ) : __( 'Install %s', 'formello' ),
 									info.title
 								) }
 							</Button>

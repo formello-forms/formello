@@ -12,7 +12,7 @@ import {
 } from '@wordpress/components';
 import apiFetch from '@wordpress/api-fetch';
 import LoadingSpinner from '../components/loading-spinner.js';
-import Addon from '../components/addons/addon.js';
+import Addon from './addon.js';
 import {
 	useSelect,
 	useDispatch
@@ -20,6 +20,10 @@ import {
 import {
 	store as coreStore,
 } from '@wordpress/core-data';
+import {
+	render,
+} from '@wordpress/element';
+import '../style.scss';
 
 export default function Addons() {
 	const addonsTabs = [
@@ -45,13 +49,12 @@ export default function Addons() {
 		const { getEntityRecord } = select( coreStore );
 		const fetchedSettings =
 			getEntityRecord( 'root', 'site' ) ?? null;
-		return fetchedSettings.formello;
+		return fetchedSettings?.formello;
 	} );
 
 	const [ addons, setAddons ] = useState( false );
 	const [ filter, setFilter ] = useState( 'all' );
-	const [ enabled, setEnabled ] = useState( Object.assign( [], settings.enabled_addons ) );
-	const [ isDirty, setDirty ] = useState( false );
+	const [ enabled, setEnabled ] = useState( Object.assign( [], settings?.enabled_addons ) );
 
 	useEffect( () => {
 		apiFetch( {
@@ -78,7 +81,6 @@ export default function Addons() {
 		}
 		setEnabled( currentDisabledBlocks );
 		updateAddons( currentDisabledBlocks );
-		setDirty( true );
 	}
 
 	const updateAddons = ( addons ) => {
@@ -113,29 +115,24 @@ export default function Addons() {
 				>
 					{ () => {
 						return (
-							<Fragment>
-							{ isDirty &&
-							    <Notice status="info" isDismissible={ false }>
-							        { __( 'You must reload the page to make your changes take effect.', 'formello' ) }
-							    </Notice>
-							}							
-							<Grid columns={ 3 }>
-								{
-									addons.filter( ( element ) => {
-										return filterAddon( element );
-									} ).map( ( addon ) => {
-										return (
-											<Addon
-												info={ addon.info }
-												slug={ addon.slug }
-												addons={ enabled }
-												handleAddonChange={ handleAddonChange }
-												key={ addon.info.id }
-											/>
-										);
-									} )
-								}
-							</Grid>
+							<Fragment>							
+								<Grid columns={ 3 }>
+									{
+										addons.filter( ( element ) => {
+											return filterAddon( element );
+										} ).map( ( addon ) => {
+											return (
+												<Addon
+													info={ addon.info }
+													slug={ addon.slug }
+													addons={ enabled }
+													handleAddonChange={ handleAddonChange }
+													key={ addon.info.id }
+												/>
+											);
+										} )
+									}
+								</Grid>
 							</Fragment>
 						);
 					} }
@@ -144,3 +141,10 @@ export default function Addons() {
 		</Fragment>
 	);
 }
+
+window.addEventListener( 'DOMContentLoaded', () => {
+	render(
+		<Addons />,
+		document.getElementById( 'formello-plugin-settings' )
+	);
+} );

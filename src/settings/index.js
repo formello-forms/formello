@@ -16,7 +16,6 @@ import {
 } from '@wordpress/core-data';
 import Settings from './routes/settings';
 import Tools from './routes/tools';
-import Addons from './routes/addons';
 
 const App = () => {
 	const { savedSettings } = useSelect( ( select ) => {
@@ -39,7 +38,6 @@ const App = () => {
 				<Routes>
 					<Route path="/:tab?" element={ <Settings savedSettings={ savedSettings } /> } />
 					<Route path="/tools/:tab?" element={ <Tools savedSettings={ savedSettings } /> } />
-					<Route path="/addons" element={ <Addons savedSettings={ savedSettings } /> } />
 				</Routes>
 			</HashRouter>
 		</React.StrictMode>
