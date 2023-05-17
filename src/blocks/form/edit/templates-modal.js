@@ -29,7 +29,7 @@ function TemplatesModal( {
 
 	return (
 		<Modal
-			//className="block-editor-query-pattern__selection-modal"
+			className="formello-modal"
 			isFullScreen
 			title={ __( 'Choose a pattern' ) }
 			closeLabel={ __( 'Cancel' ) }

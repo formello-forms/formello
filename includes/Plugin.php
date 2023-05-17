@@ -70,8 +70,8 @@ final class Plugin {
 		require_once FORMELLO_ABSPATH . 'includes/Assets.php';
 		require_once FORMELLO_ABSPATH . 'includes/Blocks.php';
 		//require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
+		//require_once FORMELLO_ABSPATH . 'includes/Form.php';
 		require_once FORMELLO_ABSPATH . 'includes/Updater.php';
-		require_once FORMELLO_ABSPATH . 'includes/Form.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
 		require_once FORMELLO_ABSPATH . 'includes/TagReplacers/Replacer.php';

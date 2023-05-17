@@ -48,21 +48,23 @@ export default function Addons() {
 	const settings = useSelect( ( select ) => {
 		const { getEntityRecord } = select( coreStore );
 		const fetchedSettings =
-			getEntityRecord( 'root', 'site' ) ?? null;
+			getEntityRecord( 'root', 'site' );
 		return fetchedSettings?.formello;
 	} );
 
-	const [ addons, setAddons ] = useState( false );
+	const [ addons, setAddons ] = useState( [] );
 	const [ filter, setFilter ] = useState( 'all' );
 	const [ enabled, setEnabled ] = useState( Object.assign( [], settings?.enabled_addons ) );
 
 	useEffect( () => {
+
 		apiFetch( {
 			path: '/formello/v1/addons/',
 			method: 'GET',
 		} ).then( ( result ) => {
 			setAddons( result.response.products );
 		} );
+
 	}, [] );
 
 	const { saveEntityRecord } = useDispatch( coreStore );
@@ -125,7 +127,7 @@ export default function Addons() {
 												<Addon
 													info={ addon.info }
 													slug={ addon.slug }
-													addons={ enabled }
+													addons={ settings?.enabled_addons }
 													handleAddonChange={ handleAddonChange }
 													key={ addon.info.id }
 												/>
