@@ -134,7 +134,13 @@ export default function Edit( props ) {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 		template: [ [ 'formello/button' ] ],
-		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
+		renderAppender: hasInnerBlocks ? InnerBlocks.DefaultBlockAppender : null,
+		prioritizedInserterBlocks: [
+			'formello/input',
+			'formello/select',
+			'formello/textarea',
+			'formello/multichoices'
+		]
 	} );
 
 	// It's a preview

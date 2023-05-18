@@ -38,7 +38,7 @@ const FormEdit = ( props ) => {
 			replaceBlock(
 				clientId,
 				createBlock( 'formello/library', {
-					ref: attributes.id,
+					ref: parseInt( attributes.id ),
 				} )
 			);
 		}

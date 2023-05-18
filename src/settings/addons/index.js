@@ -57,6 +57,10 @@ export default function Addons() {
 	const [ enabled, setEnabled ] = useState( Object.assign( [], settings?.enabled_addons ) );
 
 	useEffect( () => {
+		setEnabled( settings?.enabled_addons );
+	}, [settings] );
+
+	useEffect( () => {
 
 		apiFetch( {
 			path: '/formello/v1/addons/',
@@ -70,19 +74,19 @@ export default function Addons() {
 	const { saveEntityRecord } = useDispatch( coreStore );
 	const without = ( arr, ...args ) => arr.filter( ( item ) => ! args.includes( item ) );
 
-	function handleAddonChange( checked, blockTypeName ) {
-		let currentDisabledBlocks = [ ...settings.enabled_addons ];
+	function handleAddonChange( checked, addonName ) {
+		let enabledAddons = [ ...settings.enabled_addons ];
 
 		if ( checked ) {
-			currentDisabledBlocks.push( blockTypeName );
+			enabledAddons.push( addonName );
 		} else {
-			currentDisabledBlocks = without(
-				currentDisabledBlocks,
-				blockTypeName
+			enabledAddons = without(
+				enabledAddons,
+				addonName
 			);
 		}
-		setEnabled( currentDisabledBlocks );
-		updateAddons( currentDisabledBlocks );
+		setEnabled( enabledAddons );
+		updateAddons( enabledAddons );
 	}
 
 	const updateAddons = ( addons ) => {
@@ -127,7 +131,7 @@ export default function Addons() {
 												<Addon
 													info={ addon.info }
 													slug={ addon.slug }
-													addons={ settings?.enabled_addons }
+													addons={ enabled }
 													handleAddonChange={ handleAddonChange }
 													key={ addon.info.id }
 												/>

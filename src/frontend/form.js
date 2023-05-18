@@ -19,7 +19,8 @@ class Formello {
 		this.isRtfEnabled();
 		this.addFlatpickr();
 
-		const { validate } = this.element.dataset;
+		const { validate, recaptcha } = this.element.dataset;
+
 		if ( ! validate ) {
 			this.element.addEventListener(
 				'submit',
@@ -40,7 +41,8 @@ class Formello {
 		e.preventDefault();
 		e.stopPropagation();
 
-		if ( this.enableRecaptcha && 1 === formello.settings.reCaptcha?.version ) {
+		if ( this.enableRecaptcha && '3' === formello.settings.reCaptcha?.version ) {
+			this.showLoading();
 			this.reCaptchaToken();
 			return;
 		}
@@ -192,6 +194,7 @@ class Formello {
 					action: 'submit',
 				} )
 				.then( ( token ) => {
+					this.showLoading();
 					this.element.querySelector( '.formello-g-recaptcha' ).value =
 						token;
 					this.submitForm();

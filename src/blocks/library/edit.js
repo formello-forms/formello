@@ -146,7 +146,7 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 		);
 	}
 
-	if ( ! ref ) {
+	if ( ! ref || isMissing ) {
 		return (
 			<div { ...blockProps }>
 				<InspectorControls>
@@ -260,7 +260,13 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 	if ( isMissing ) {
 		return (
 			<div { ...blockProps }>
-				<Warning>
+				<Warning
+					actions={ [ 
+						<Button variant="primary" onClick={ () => setModalOpen( 'create' ) }>
+							{ __( 'Create a new form' ) }
+						</Button> 
+					] }
+				>
 					{ __( 'Block has been deleted or is unavailable.' ) }
 				</Warning>
 			</div>

@@ -23,6 +23,7 @@ const variations = [
 		isDefault: true,
 		innerBlocks: [
 			[ 'core/paragraph' ],
+			[ 'formello/button' ],
 		],
 		scope: [ 'block' ],
 	},

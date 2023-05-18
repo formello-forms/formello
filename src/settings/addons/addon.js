@@ -65,7 +65,7 @@ export default function Addon( props ) {
 		}
 	}
 
-	const isChecked = ( 'popper' === info.slug ) ? isPopperActive : addons.includes( info.slug );
+	const isChecked = ( 'popper' === info.slug ) ? isPopperActive : addons?.includes( info.slug );
 
 	return (
 		<Fragment>
@@ -88,6 +88,7 @@ export default function Addon( props ) {
 								isSmall
 								isBusy={ loading }
 								disabled={ loading || isPopperActive }
+								aria-disabled={ loading || isPopperActive }
 							>
 								{ sprintf(
 								/* translators: %s: Popper plugin name */
@@ -111,9 +112,11 @@ export default function Addon( props ) {
 					onRequestClose={ closeModal }
 				>
 					<p>
-						{
-							__( 'To enable this addon you need a free Formello license.', 'formello' )
-						}
+						{ sprintf(
+							/* translators: %s: Popper plugin name */
+							__( 'To enable %s addon you need a free Formello license.', 'formello' ),
+							info.title
+						) }
 					</p>
 					<Button
 						variant="primary"
