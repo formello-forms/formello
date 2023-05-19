@@ -62,9 +62,6 @@ export default function Addons() {
 
 	useEffect( () => {
 
-		const lang = settings ? settings.language : 'en';
-
-		//const url = `https://formello.net/wp-json/formello/v1/addons`;
 		const url = `https://formello.net/en/wp-json/wp/v2/edd-downloads?per_page=100`;
 
 		const res = fetch( url )
