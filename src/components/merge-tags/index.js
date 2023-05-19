@@ -18,6 +18,7 @@ export default function MergeTags( props ) {
 		label,
 		value,
 		placeholder,
+		help,
 		onChange,
 		icon = 'list-view',
 		clientId,
@@ -31,6 +32,7 @@ export default function MergeTags( props ) {
 				label={ label }
 				onChange={ onChange }
 				placeholder={ placeholder }
+				help={ help }
 				suffix={
 					<DropdownMenu
 						icon={ icon }

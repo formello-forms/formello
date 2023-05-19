@@ -9,6 +9,7 @@ import {
 	ToggleControl,
 	TextControl,
 	Button,
+	ExternalLink
 } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
@@ -50,6 +51,12 @@ export default function Options( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { value: val } );
 						} }
+						help={ 
+							__(
+								'The initial value of the control field.',
+								'formello'
+							) 
+						}
 					/>
 				) }
 				{ supported.includes( 'placeholder' ) && (
@@ -58,6 +65,12 @@ export default function Options( props ) {
 						value={ placeholder }
 						onChange={ ( val ) =>
 							setAttributes( { placeholder: val } )
+						}
+						help={ 
+							__(
+								'Text that appears in the form control when it has no value set.',
+								'formello'
+							) 
 						}
 					/>
 				) }

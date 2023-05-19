@@ -2,13 +2,20 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
+	ExternalLink
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
 import { dateI18n, getSettings } from '@wordpress/date';
 
 export function SubmissionData( props ) {
 	const { data } = props;
 	const { formats } = getSettings();
+
+	const formUrl = addQueryArgs( 'edit.php', {
+		post: data.id,
+		action: 'edit',
+	} );
 
 	return (
 		<Card>
@@ -25,7 +32,9 @@ export function SubmissionData( props ) {
 						</tr>
 						<tr>
 							<th>{ __( 'Form ID', 'formello' ) }</th>
-							<td>{ data.form_id }</td>
+							<td>
+								<ExternalLink href={ formUrl }>{ data.form_id }</ExternalLink>
+							</td>
 						</tr>
 						<tr>
 							<th>{ 'Timestamp' }</th>
@@ -33,7 +42,9 @@ export function SubmissionData( props ) {
 						</tr>
 						<tr>
 							<th>{ 'Referrer URL' }</th>
-							<td>{ data.referer_url }</td>
+							<td>
+								<ExternalLink href={ data.referer_url }>{ data.referer_url }</ExternalLink>
+							</td>
 						</tr>
 						<tr>
 							<th>{ 'IP' }</th>

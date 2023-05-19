@@ -72,6 +72,9 @@ function AdvancedOptions( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { cols: Number( val ) } )
 						}
+						help={
+							__( 'The visible width of the control.', 'formello' )
+						}
 					/>
 					<TextControl
 						type="number"
@@ -79,6 +82,9 @@ function AdvancedOptions( props ) {
 						value={ rows }
 						onChange={ ( val ) =>
 							setAttributes( { rows: Number( val ) } )
+						}
+						help={
+							__( 'The number of visible text lines for the control.', 'formello' )
 						}
 					/>
 					<ToggleControl
@@ -97,6 +103,9 @@ function AdvancedOptions( props ) {
 					checked={ enableAutoComplete }
 					onChange={ ( newval ) =>
 						setAttributes( { enableAutoComplete: newval } )
+					}
+					help={
+						__( 'Hint for form autofill feature.', 'formello' )
 					}
 				/>
 			}
@@ -137,12 +146,18 @@ function AdvancedOptions( props ) {
 						onChange={ ( newval ) =>
 							setAttributes( { disabled: newval } )
 						}
+						help={
+							__( 'Make the control not accept clicks.', 'formello' )
+						}
 					/>
 					<ToggleControl
 						label={ __( 'Read only', 'formello' ) }
 						checked={ readonly }
 						onChange={ ( newval ) =>
 							setAttributes( { readonly: newval } )
+						}
+						help={
+							__( 'Make value not editable.', 'formello' )
 						}
 					/>
 				</Fragment>

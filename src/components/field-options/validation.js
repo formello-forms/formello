@@ -103,6 +103,12 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { minlength: val } )
 						}
+						help={ 
+							__(
+								'Minimum length (number of characters) of value.',
+								'formello'
+							) 
+						}
 					/>
 					<TextControl
 						type="number"
@@ -110,6 +116,12 @@ function ValidationOptions( props ) {
 						value={ maxlength }
 						onChange={ ( val ) =>
 							setAttributes( { maxlength: val } )
+						}
+						help={ 
+							__(
+								'Maximum length (number of characters) of value.',
+								'formello'
+							) 
 						}
 					/>
 				</Fragment>
@@ -124,13 +136,19 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { pattern: val } );
 						} }
+						help={ 
+							__(
+								'Pattern the value must match to be valid.',
+								'formello'
+							) 
+						}
 					/>
 				</Fragment>
 			) }
 			{ supported.includes( 'pattern' ) && (
 				<TextControl
 					label={ __( 'Custom Validation Message', 'formello' ) }
-					help={ __( 'The message to show if validation fails.', 'formello' ) }
+					help={ __( 'The message to show if pattern validation fails.', 'formello' ) }
 					value={ validation }
 					onChange={ ( val ) => setAttributes( { validation: val } ) }
 				/>
@@ -152,7 +170,7 @@ function ValidationOptions( props ) {
 							...fields,
 						] }
 						onChange={ ( val ) => setAttributes( { match: val } ) }
-						help={ __( 'Select the field to match', 'formello' ) }
+						help={ __( 'Select the field to match.', 'formello' ) }
 					/>
 					<TextControl
 						type="text"

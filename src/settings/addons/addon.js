@@ -94,8 +94,8 @@ export default function Addon( props ) {
 							>
 								{ sprintf(
 								/* translators: %s: Popper plugin name */
-									isPopperInstalled ? __( '%s %s', 'formello' ) : __( 'Install %s', 'formello' ),
-									isPopperActive ? __( 'Deactivate' ) : __( 'Activate' ),
+									__( '%s %s', 'formello' ),
+									isPopperInstalled ? __( 'Deactivate' ) : __( 'Activate' ),
 									title
 								) }
 							</Button>
