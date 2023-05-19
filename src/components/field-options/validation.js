@@ -48,7 +48,7 @@ function ValidationOptions( props ) {
 	const tabs = getPatternTabs();
 
 	return (
-		<PanelBody title={ __( 'Validation', 'formello' ) } initialOpen={ true }>
+		<PanelBody title={ __( 'Validation', 'formello' ) } initialOpen={ false }>
 
 			{ 'date' === type && (
 				<ToggleControl

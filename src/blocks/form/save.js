@@ -53,7 +53,7 @@ export default function save( { attributes, className } ) {
 				name={ honeypot }
 				className="formello-hp"
 				autoComplete="nope"
-				aria-label=""
+				aria-label="If you are human, leave this field blank."
 				tabIndex="-1"
 			/>
 			<input type="hidden" name="action" value="formello" />
