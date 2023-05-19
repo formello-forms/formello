@@ -92,9 +92,9 @@ class Assets {
 		);
 
 		/**
-		* Filter to add additional JS to dashboard.
+		* Filter to add additional JS to editor.
 		*
-		* @param array $scripts
+		* @param array $settings
 		*/
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
