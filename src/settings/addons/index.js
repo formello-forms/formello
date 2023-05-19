@@ -32,15 +32,15 @@ export default function Addons() {
 			title: __( 'All', 'formello' ),
 		},
 		{
-			name: 'integrations',
+			name: 27,
 			title: __( 'Integrations', 'formello' ),
 		},
 		{
-			name: 'utility',
+			name: 30,
 			title: __( 'Utility', 'formello' ),
 		},
 		{
-			name: 'free',
+			name: 4,
 			title: __( 'Free', 'formello' ),
 		},
 	];
@@ -52,7 +52,7 @@ export default function Addons() {
 		return fetchedSettings?.formello;
 	} );
 
-	const [ addons, setAddons ] = useState( [] );
+	const [ addons, setAddons ] = useState( false );
 	const [ filter, setFilter ] = useState( 'all' );
 	const [ enabled, setEnabled ] = useState( Object.assign( [], settings?.enabled_addons ) );
 
@@ -62,12 +62,17 @@ export default function Addons() {
 
 	useEffect( () => {
 
-		apiFetch( {
-			path: '/formello/v1/addons/',
-			method: 'GET',
-		} ).then( ( result ) => {
-			setAddons( result.response.products );
-		} );
+		const lang = settings ? settings.language : 'en';
+
+		//const url = `https://formello.net/wp-json/formello/v1/addons`;
+		const url = `https://formello.net/en/wp-json/wp/v2/edd-downloads?per_page=100`;
+
+		const res = fetch( url )
+			// gestisci il successo
+			.then( response => response.json() )  // converti a json
+			.then( data => setAddons( data ) )
+			.catch( err => console.log('Request Failed', err) ); // gestisci gli errori
+
 
 	}, [] );
 
@@ -102,7 +107,7 @@ export default function Addons() {
 		if ( 'all' === filter ) {
 			return addons;
 		}
-		return element.info.category.some( ( e ) => e.slug === filter );
+		return element['edd-categories'].some( ( e ) => e === filter );
 	};
 
 	if ( ! addons ) {
@@ -129,11 +134,11 @@ export default function Addons() {
 										} ).map( ( addon ) => {
 											return (
 												<Addon
-													info={ addon.info }
+													info={ addon }
 													slug={ addon.slug }
 													addons={ enabled }
 													handleAddonChange={ handleAddonChange }
-													key={ addon.info.id }
+													key={ addon.id }
 												/>
 											);
 										} )

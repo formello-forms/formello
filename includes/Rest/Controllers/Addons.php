@@ -50,13 +50,14 @@ class Addons extends Base {
 	public function get_addons() {
 		$lang   = substr( get_bloginfo( 'language' ), 0, 2 );
 		$url    = 'https://formello.net/' . $lang . '/edd-api/products?number=25&nocache=' . time();
-		$addons = get_transient( 'formello_addons', false );
+		$url2    = 'https://formello.net/' . $lang . '/wp-json/wp/v2/edd-downloads?nocache=' . time();
+		$addons = get_transient( 'formello_addons' );
 
 		/*
 		 * Get remote addons.
 		 */
 		if ( ! $addons ) {
-			$requested_addons = wp_remote_get( $url );
+			$requested_addons = wp_remote_get( $url2 );
 
 			if ( ! is_wp_error( $requested_addons ) ) {
 				$new_addons = wp_remote_retrieve_body( $requested_addons );

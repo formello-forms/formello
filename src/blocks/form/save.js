@@ -53,7 +53,8 @@ export default function save( { attributes, className } ) {
 				name={ honeypot }
 				className="formello-hp"
 				autoComplete="nope"
-				aria-label="Don't fill this. It's a honeypot form spammers"
+				aria-label=""
+				tabIndex="-1"
 			/>
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />

@@ -138,22 +138,6 @@ export default function Edit( { attributes, setAttributes } ) {
 							return { label: icon, value: icon };
 						} )
 					}
-					/*options={ [
-						{ label: 'Version 1', value: 'Loading' },
-						{ label: 'Version 2', value: 'Loading2' },
-						{ label: 'Pulse', value: 'Pulse' },
-						{ label: 'Version 4', value: 'Loading4' },
-						{ label: 'Version 5', value: 'Loading5' },
-						{ label: 'Loading Circles', value: 'LoadingCircles' },
-						{ label: 'Loading Circle Path', value: 'LoadingCirclePath' },
-						{ label: 'Audio', value: 'Audio' },
-						{ label: 'BallTriangle', value: 'BallTriangle' },
-						{ label: 'Bars', value: 'Bars' },
-						{ label: 'Circles', value: 'Circles' },
-						{ label: 'Grid', value: 'Grid' },
-						{ label: 'Puff', value: 'Puff' },
-						{ label: 'ThreeDots', value: 'ThreeDots' },
-					] }*/
 					onChange={ ( val ) => {
 						setAttributes( { type: val } );
 					} }

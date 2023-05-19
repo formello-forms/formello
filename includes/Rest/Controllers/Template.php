@@ -172,6 +172,7 @@ class Template extends Base {
 	 */
 	public function sync_template_library( $request ) {
 		delete_transient( 'formello_templates' );
+		delete_transient( 'formello_addons' );
 		delete_transient( 'popper_templates' );
 
 		if ( current_user_can( 'manage_options' ) ) {
@@ -217,7 +218,7 @@ class Template extends Base {
 	 * @return mixed
 	 */
 	private function get_templates() {
-		$url       = 'https://formello.net/wp-json/formello/v1/formello_templates?type=formello_form&nocache=' . time();
+		$url       = 'https://formello.net/wp-json/formello/v1/templates?type=formello_form&nocache=' . time();
 		$templates = get_transient( 'formello_templates', false );
 
 		/*

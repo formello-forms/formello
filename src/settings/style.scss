@@ -8,13 +8,11 @@ $mobile: 426px;
 	background: #f1f1f1;
 }
 
-/* Hide WP notices on the settings page */
-.formello_form_page_formello-settings {
-
+/* Hide WP notices on the settings and addons page */
+.formello_form_page_formello-addons, .formello_form_page_formello-settings {
 	.notice {
 		display: none;
 	}
-
 }
 
 #formello-plugin-settings {

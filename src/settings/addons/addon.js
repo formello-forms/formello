@@ -54,7 +54,7 @@ export default function Addon( props ) {
 			} );
 		}
 		setLoading(false)
-		window.navigation.reload()
+		window.navigation.reload();
 	}
 
 	const onAddonChange = ( checked ) => {
@@ -67,17 +67,19 @@ export default function Addon( props ) {
 
 	const isChecked = ( 'popper' === info.slug ) ? isPopperActive : addons?.includes( info.slug );
 
+	const title = info.title.rendered.replace(/(<([^>]+)>)/gi, '');
+
 	return (
 		<Fragment>
 			<Card className="addon">
 				<CardHeader>
-					<h2>{ info.title }</h2>
+					<h2>{ title }</h2>
 				</CardHeader>
 				<CardBody>
 					<CardMedia as="aside">
-						<img src={ require( `../../../assets/addons/${ info.slug }.png` ) } alt={ info.title } />
+						<img src={ require( `../../../assets/addons/${ info.slug }.png` ) } alt={ title } />
 					</CardMedia>
-					<p>{ info.excerpt }</p>
+					<RawHTML>{ info.excerpt.rendered }</RawHTML>
 				</CardBody>
 				<CardFooter>
 					{
@@ -87,13 +89,14 @@ export default function Addon( props ) {
 								variant="primary"
 								isSmall
 								isBusy={ loading }
-								disabled={ loading || isPopperActive }
-								aria-disabled={ loading || isPopperActive }
+								disabled={ loading }
+								aria-disabled={ loading }
 							>
 								{ sprintf(
 								/* translators: %s: Popper plugin name */
-									isPopperInstalled ? __( 'Activate %s', 'formello' ) : __( 'Install %s', 'formello' ),
-									info.title
+									isPopperInstalled ? __( '%s %s', 'formello' ) : __( 'Install %s', 'formello' ),
+									isPopperActive ? __( 'Deactivate' ) : __( 'Activate' ),
+									title
 								) }
 							</Button>
 							:
@@ -115,7 +118,7 @@ export default function Addon( props ) {
 						{ sprintf(
 							/* translators: %s: Popper plugin name */
 							__( 'To enable %s addon you need a free Formello license.', 'formello' ),
-							info.title
+							title
 						) }
 					</p>
 					<Button
