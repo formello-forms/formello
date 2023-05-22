@@ -64,12 +64,20 @@ class Formello {
     this.addFlatpickr();
     const {
       validate,
-      recaptcha
+      noajax
     } = this.element.dataset;
 
     if (!validate) {
-      this.element.addEventListener('submit', this.handleSubmit.bind(this), true);
+      this.element.addEventListener('submit', this.submitNoAjax.bind(this), true);
     }
+
+    if (validate && noajax) {
+      this.element.addEventListener('bouncerFormValid', this.submitNoAjax.bind(this), true);
+    }
+  }
+
+  submitNoAjax() {
+    this.element.submit();
   }
 
   handleSubmit(e) {

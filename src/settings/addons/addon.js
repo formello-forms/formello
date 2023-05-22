@@ -65,7 +65,7 @@ export default function Addon( props ) {
 		}
 	}
 
-	const isChecked = ( 'popper' === info.slug ) ? isPopperActive : addons?.includes( info.slug );
+	const isChecked = formello.can_use_premium_code ? addons?.includes( info.slug ) : false;
 
 	const title = info.title.rendered.replace(/(<([^>]+)>)/gi, '');
 
@@ -101,7 +101,7 @@ export default function Addon( props ) {
 							</Button>
 							:
 							<ToggleControl
-									checked={ isChecked }
+									checked={ isChecked || false }
 									onChange={ ( checked ) => onAddonChange( checked ) }
 									__nextHasNoMarginBottom
 							/>

@@ -47,7 +47,7 @@ function AdvancedOptions( props ) {
 	const { replaceInnerBlocks } =
 		useDispatch( blockEditorStore );
 
-	const addButton = () => {
+	const addOutput = () => {
 		let child = 'formello/button';
 		if ( 'range' === type ) {
 			child = 'formello/output';
@@ -125,10 +125,10 @@ function AdvancedOptions( props ) {
 					checked={ hasInnerBlocks }
 					onChange={ ( newval ) => {
 						if ( newval ) {
-							setAttributes( { withButton: true } );
-							addButton();
+							setAttributes( { withOutput: true } );
+							addOutput();
 						} else {
-							setAttributes( { withButton: false } );
+							setAttributes( { withOutput: false } );
 							replaceInnerBlocks(
 								clientId,
 								[],

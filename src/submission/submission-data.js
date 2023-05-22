@@ -12,8 +12,8 @@ export function SubmissionData( props ) {
 	const { data } = props;
 	const { formats } = getSettings();
 
-	const formUrl = addQueryArgs( 'edit.php', {
-		post: data.id,
+	const formUrl = addQueryArgs( 'post.php', {
+		post: data.form_id,
 		action: 'edit',
 	} );
 

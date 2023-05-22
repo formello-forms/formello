@@ -11,6 +11,7 @@ import {
 } from '@wordpress/components';
 
 import Edit from './edit';
+import FormePreview from './preview';
 
 const FormEdit = ( props ) => {
 	const { clientId, attributes, setAttributes } = props;
@@ -61,6 +62,10 @@ const FormEdit = ( props ) => {
 		},
 		[ clientId ]
 	);
+
+	if( isDisabled ){
+		return <FormePreview { ...props } />
+	}
 
 	const Component = hasInnerBlocks ? Edit : BlockVariationPicker;
 

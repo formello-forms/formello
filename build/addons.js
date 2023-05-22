@@ -8,6 +8,7 @@
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./calculator.png": "./assets/addons/calculator.png",
 	"./conditional-fields.png": "./assets/addons/conditional-fields.png",
 	"./exporter.png": "./assets/addons/exporter.png",
 	"./file-upload.png": "./assets/addons/file-upload.png",
@@ -20,6 +21,7 @@ var map = {
 	"./mailpoet.png": "./assets/addons/mailpoet.png",
 	"./popper.png": "./assets/addons/popper.png",
 	"./sendinblue.png": "./assets/addons/sendinblue.png",
+	"./templates.png": "./assets/addons/templates.png",
 	"./web-hooks.png": "./assets/addons/web-hooks.png"
 };
 
@@ -171,7 +173,7 @@ function Addon(props) {
     }
   };
 
-  const isChecked = 'popper' === info.slug ? isPopperActive : addons === null || addons === void 0 ? void 0 : addons.includes(info.slug);
+  const isChecked = formello.can_use_premium_code ? addons === null || addons === void 0 ? void 0 : addons.includes(info.slug) : false;
   const title = info.title.rendered.replace(/(<([^>]+)>)/gi, '');
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Card, {
     className: "addon"
@@ -190,7 +192,7 @@ function Addon(props) {
   }, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.sprintf)(
   /* translators: %s: Popper plugin name */
   (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('%s %s', 'formello'), isPopperInstalled ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Deactivate') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Activate'), title)) : (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-    checked: isChecked,
+    checked: isChecked || false,
     onChange: checked => onAddonChange(checked),
     __nextHasNoMarginBottom: true
   }))), isOpen && (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Modal, {
@@ -433,6 +435,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./assets/addons/calculator.png":
+/*!**************************************!*\
+  !*** ./assets/addons/calculator.png ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/calculator.f4991bf7.png";
+
+/***/ }),
+
 /***/ "./assets/addons/conditional-fields.png":
 /*!**********************************************!*\
   !*** ./assets/addons/conditional-fields.png ***!
@@ -473,7 +486,7 @@ module.exports = __webpack_require__.p + "images/file-upload.91b58ae6.png";
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-module.exports = __webpack_require__.p + "images/frontend-posting.2165e998.png";
+module.exports = __webpack_require__.p + "images/frontend-posting.8f7d21bf.png";
 
 /***/ }),
 
@@ -562,6 +575,17 @@ module.exports = __webpack_require__.p + "images/popper.cee57018.png";
 
 "use strict";
 module.exports = __webpack_require__.p + "images/sendinblue.08d7106f.png";
+
+/***/ }),
+
+/***/ "./assets/addons/templates.png":
+/*!*************************************!*\
+  !*** ./assets/addons/templates.png ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+"use strict";
+module.exports = __webpack_require__.p + "images/templates.6c640262.png";
 
 /***/ }),
 

@@ -19,15 +19,27 @@ class Formello {
 		this.isRtfEnabled();
 		this.addFlatpickr();
 
-		const { validate, recaptcha } = this.element.dataset;
+		const { validate, noajax } = this.element.dataset;
 
 		if ( ! validate ) {
 			this.element.addEventListener(
 				'submit',
-				this.handleSubmit.bind( this ),
+				this.submitNoAjax.bind( this ),
 				true
 			);
 		}
+
+		if ( validate && noajax ) {
+			this.element.addEventListener(
+				'bouncerFormValid',
+				this.submitNoAjax.bind( this ),
+				true
+			);
+		}
+	}
+
+	submitNoAjax() {
+		this.element.submit();
 	}
 
 	handleSubmit( e ) {

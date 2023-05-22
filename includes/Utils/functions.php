@@ -162,7 +162,8 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 			'core/column',
 			'core/list',
 		);
-		return $allowed_blocks;
+
+		return apply_filters( 'formello_allowed_blocks', $allowed_blocks );
 	}
 	return $allowed_blocks;
 }

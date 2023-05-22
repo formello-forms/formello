@@ -145,11 +145,11 @@ function register_settings() {
 		),
 	);
 
-	$settings = apply_filters( 'formello_settings', $settings );
+	$settings = apply_filters( 'formello_register_settings', $settings );
 
 	$defaults = formello_default_options();
 
-	$defaults = apply_filters( 'formello_settings_defaults', $defaults );
+	$defaults = apply_filters( 'formello_register_settings_defaults', $defaults );
 
 	register_setting(
 		'formello',

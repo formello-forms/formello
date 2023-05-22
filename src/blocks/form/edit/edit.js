@@ -2,6 +2,7 @@ import { __ } from '@wordpress/i18n';
 
 import { useState, useEffect, useContext } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
+import { applyFilters } from '@wordpress/hooks';
 import {
 	useEntityProp,
 	EntityProvider,
@@ -40,7 +41,6 @@ const ALLOWED_BLOCKS = [
 	'formello/fieldset',
 	'formello/select',
 	'formello/multichoices',
-	'formello/fileupload',
 ];
 import apiFetch from '@wordpress/api-fetch';
 
@@ -130,6 +130,8 @@ export default function Edit( props ) {
 		className: getBlockClassNames(),
 	} );
 
+	{ applyFilters( 'formello.form.allowedBlocks', ALLOWED_BLOCKS ) }
+
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
@@ -143,7 +145,7 @@ export default function Edit( props ) {
 		]
 	} );
 
-	// It's a preview
+	// It's a preview embed.
 	if ( ! postType || isDisabled ) {
 		return (
 			<div { ...innerBlocksProps }>

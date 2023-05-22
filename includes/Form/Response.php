@@ -229,8 +229,17 @@ class Response {
 		$submissions_table = $wpdb->prefix . 'formello_submissions';
 		$submissions_meta_table = $wpdb->prefix . 'formello_submissions_meta';
 		$form_id = $this->get_id();
-		$data  = array(
-			'data'    => wp_json_encode( $this->data['fields'] ),
+
+		$fields = $this->data['fields'];
+		$no_store_fields = apply_filters( 'formello_response_nostorefields', array( 'field' => 'password' ) );
+		// Remove password, we don't store it.
+		$allowed_fields = array_intersect_key(
+			$fields,
+			array_diff( $this->settings['fields'], $no_store_fields ),
+		);
+
+		$data = array(
+			'data'    => wp_json_encode( $allowed_fields ),
 			'form_id' => $form_id,
 		);
 
@@ -244,7 +253,7 @@ class Response {
 		}
 
 		// insert also in submissions meta.
-		foreach ( $this->data['fields'] as $key => $value ) {
+		foreach ( $fields as $key => $value ) {
 			array_push( $values, $form_id, $this->submission_id, $key, maybe_serialize( $value ) );
 			$place_holders[] = "('%d', '%d', '%s', '%s')";
 		}

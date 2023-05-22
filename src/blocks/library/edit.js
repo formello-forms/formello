@@ -81,7 +81,8 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 
 			const record = {
 				title,
-				content: '<!-- wp:formello/form {"lock":{"move":false,"remove":true}} --><form class="wp-block-formello-form" method="post" data-id="" data-validate="true" novalidate action=""><input type="hidden" name="_formello_id" value=""/><input type="text" name="_formello_h" class="formello-hp" autocomplete="nope" aria-label="Don\'t fill this. It\'s a honeypot form spammers"/><input type="hidden" name="action" value="formello"/><div class="formello-message" id="formello-message-"></div></form><!-- /wp:formello/form -->',
+				//content: '<!-- wp:formello/form {"lock":{"move":false,"remove":true}} --><form class="wp-block-formello-form" method="post" data-id="" data-validate="true" novalidate action=""><input type="hidden" name="_formello_id" value=""/><input type="text" name="_formello_h" class="formello-hp" autocomplete="nope" aria-label="Don\'t fill this. It\'s a honeypot form spammers"/><input type="hidden" name="action" value="formello"/><div class="formello-message" id="formello-message-"></div></form><!-- /wp:formello/form -->',
+				content: '<!-- wp:formello/form {"lock":{"move":false,"remove":true}} --><!-- /wp:formello/form -->',
 				status: 'publish',
 				excerpt: '',
 			};
