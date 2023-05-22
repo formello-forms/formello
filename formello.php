@@ -104,15 +104,6 @@ function formello_activate() {
 		update_option( $options );
 	}
 
-	/*if ( ! function_exists( 'maybe_add_column' ) ) {
-		require_once ABSPATH . '/wp-admin/includes/upgrade.php';
-		maybe_add_column(
-			$wpdb->prefix . 'formello_submissions_meta',
-			'field_type',
-			"ALTER TABLE {$wpdb->prefix}formello_submissions_meta ADD COLUMN `field_type` TEXT NULL;"
-		);
-	}*/
-
 	update_option( 'formello_version', get_file_data( __FILE__, array( 'Version' ) )[0] );
 	update_option( 'formello_installed', time() );
 }
