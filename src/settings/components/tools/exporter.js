@@ -14,6 +14,10 @@ export default function Exporter() {
 				</CardHeader>
 
 				<CardBody>
+					<p>{ __( `When you click the 
+					download button below, Formello will create a JSON file for you to save 
+					to your computer.Once you've saved the downloaded file, you can use the Import 
+					tool to import the forms.`, 'formello' ) }</p>
 					<ExportForms />
 				</CardBody>
 			</Card>

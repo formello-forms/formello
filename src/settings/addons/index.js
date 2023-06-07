@@ -62,14 +62,22 @@ export default function Addons() {
 
 	useEffect( () => {
 
-		const url = `https://formello.net/en/wp-json/wp/v2/edd-downloads?per_page=100`;
-
-		const res = fetch( url )
-			// gestisci il successo
-			.then( response => response.json() )  // converti a json
+		if( 'formello.net' === window.location.host ){
+			apiFetch({
+				path: '/wp/v2/edd-downloads?per_page=100'
+			})
 			.then( data => setAddons( data ) )
 			.catch( err => console.log('Request Failed', err) ); // gestisci gli errori
+		
+		} else {
+			const url = `https://formello.net/en/wp-json/wp/v2/edd-downloads?per_page=100`;
 
+			const res = fetch( url )
+				// gestisci il successo
+				.then( response => response.json() )  // converti a json
+				.then( data => setAddons( data ) )
+				.catch( err => console.log('Request Failed', err) ); // gestisci gli errori
+		}
 
 	}, [] );
 

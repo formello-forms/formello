@@ -5,12 +5,10 @@
  * @package Formello
  */
 
-namespace Formello\Tests;
-
 /**
  * Base test case
  */
-class Base_Test extends \WP_UnitTestCase {
+class Base_Test extends WP_UnitTestCase {
 
 	/**
 	 * Holds the WP REST Server object
@@ -39,10 +37,10 @@ class Base_Test extends \WP_UnitTestCase {
 		//remove_filter( 'query', array( $this, '_drop_temporary_table' ) );
 
 		// Initiating the REST API.
-		global $wp_rest_server;
+		//global $wp_rest_server;
 
-		$this->server = $wp_rest_server = new \WP_REST_Server();
-		do_action( 'rest_api_init' );
+		//$this->server = $wp_rest_server = new \WP_REST_Server();
+		//do_action( 'rest_api_init' );
 
 		$this->post_id = $this->factory->post->create(
 			array(
@@ -55,7 +53,6 @@ class Base_Test extends \WP_UnitTestCase {
 			$this->post_id,
 			'_formello_settings',
 			array(
-				'actions' => array(),
 				'constraints' => array(),
 				'debug' => false,
 				'fields' => array(
@@ -79,8 +76,8 @@ class Base_Test extends \WP_UnitTestCase {
 
 		parent::tearDown();
 
-		global $wp_rest_server;
-		$wp_rest_server = null;
+		//global $wp_rest_server;
+		//$wp_rest_server = null;
 
 		wp_delete_post( $this->post_id );
 	}

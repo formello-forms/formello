@@ -2,6 +2,7 @@ import {
 	useBlockProps,
 	InnerBlocks,
 } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
 
 import classnames from 'classnames';
 
@@ -53,7 +54,7 @@ export default function save( { attributes, className } ) {
 				name={ honeypot }
 				className="formello-hp"
 				autoComplete="nope"
-				aria-label="If you are human, leave this field blank."
+				aria-label={ __( 'If you are human, leave this field blank.', 'formello' ) }
 				tabIndex="-1"
 			/>
 			<input type="hidden" name="action" value="formello" />

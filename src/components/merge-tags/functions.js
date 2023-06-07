@@ -1,5 +1,8 @@
-import { each } from 'lodash';
 import { applyFilters } from '@wordpress/hooks';
+import {
+	useEntityProp,
+} from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
 const { getBlock, getClientIdsOfDescendants, getBlockParents, getBlockParentsByBlockName } =
 	wp.data.select( 'core/block-editor' );
@@ -211,18 +214,27 @@ export function getFieldConstraint( field ) {
 }
 
 export function getMetaTags() {
-	const { getEditedPostAttribute } = wp.data.select( 'core/editor' );
-	const meta = getEditedPostAttribute( 'meta' );
+
+	const { postType, postId } = useSelect( ( select ) => {
+		return {
+			postType: select( 'core/editor' ).getCurrentPostType(),
+			postId: select( 'core/editor' ).getCurrentPostId(),
+		};
+	} );
+
+	const [meta] = useEntityProp( 'postType', postType, 'meta', postId );
 	const metaTags = [];
 
-	each( meta, ( _, key ) => {
+	for (const key in meta) {
+		if( meta[key] !== Object(key) ){
+			continue;
+		}
 		const tag = {
 			title: key,
-			tag: `{{post_meta.${ key }}}`,
+			tag: `{{meta.${ key }}}`,
 		};
-
 		metaTags.push( tag );
-	} );
+	}
 
 	return metaTags;
 }

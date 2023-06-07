@@ -37,7 +37,7 @@ class Submission {
 	 */
 	public function get() {
 		if ( empty( $this->id ) ) {
-			return null;
+			return new \WP_Error( 404, __( 'Submission Not Found.', 'formello' ) );
 		}
 		global $wpdb;
 		$submission = $wpdb->get_row(

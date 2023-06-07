@@ -29,6 +29,7 @@ class Replacer {
 	public function __construct() {
 		$this->replacers['fields'] = new Fields();
 		$this->replacers['other']  = new Other();
+		$this->replacers['meta']   = new Meta();
 		$this->replacers['wp']     = new Wp();
 	}
 

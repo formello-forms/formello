@@ -14,6 +14,12 @@ export default function Importer() {
 				</CardHeader>
 
 				<CardBody>
+					<p>{ 
+						__( `Select the Formello export file(.json) you would like to import.
+						 	When you click the import button below, Formello will import the forms.`,
+							'formello' 
+						) }
+					</p>
 					<ImportForms />
 				</CardBody>
 			</Card>

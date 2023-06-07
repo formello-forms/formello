@@ -21,10 +21,10 @@ class Formello {
 
 		const { validate, noajax } = this.element.dataset;
 
-		if ( ! validate ) {
+		if ( noajax ) {
 			this.element.addEventListener(
 				'submit',
-				this.submitNoAjax.bind( this ),
+				this.handleSubmit.bind( this ),
 				true
 			);
 		}
@@ -32,10 +32,11 @@ class Formello {
 		if ( validate && noajax ) {
 			this.element.addEventListener(
 				'bouncerFormValid',
-				this.submitNoAjax.bind( this ),
+				this.handleSubmit.bind( this ),
 				true
 			);
 		}
+
 	}
 
 	submitNoAjax() {
@@ -44,14 +45,15 @@ class Formello {
 
 	handleSubmit( e ) {
 
-		const { noajax } = this.element.dataset;
-		if ( noajax ) {
-			return;
-		}
-
 		// prevent default, we send trough ajax
 		e.preventDefault();
 		e.stopPropagation();
+
+		const { noajax } = this.element.dataset;
+		if ( noajax ) {
+			this.submitNoAjax();
+			return;
+		}
 
 		if ( this.enableRecaptcha && '3' === formello.settings.reCaptcha?.version ) {
 			this.showLoading();
@@ -301,7 +303,7 @@ class Formello {
 	}
 
 	addFlatpickr() {
-		const advancedDate = this.element.querySelectorAll( '.flatpickr' );
+		const advancedDate = this.element.querySelectorAll( 'input.formello-advanced[type=date]' );
 		if ( advancedDate.length ) {
 			const script = document.createElement( 'script' );
 			const css = document.createElement( 'link' );
@@ -314,7 +316,7 @@ class Formello {
 
 			script.onload = function() {
 				//do stuff with the script
-				flatpickr( '.flatpickr' );
+				flatpickr( 'input.formello-advanced[type=date]' );
 			};
 			script.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
 

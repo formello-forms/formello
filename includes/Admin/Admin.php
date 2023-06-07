@@ -394,7 +394,7 @@ class Admin {
 			array(
 				'id'    => 'formello-submissions',
 				'parent' => 'formello-menu',
-				'title' => __( 'Submissions', 'formello' ),
+				'title' => __( 'Entries', 'formello' ) . $badge,
 				'href'  => admin_url( 'edit.php?post_type=formello_form&page=formello' ),
 			)
 		);

@@ -6,6 +6,7 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
 ?>
 
 <div class="wrap">

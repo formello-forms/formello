@@ -68,12 +68,11 @@ class Controller {
 		// phpcs:ignore
 		$form_id = absint( $_POST['_formello_id'] );
 		$this->request = new Request( $form_id );
+		$this->request->submit();
 
-		$req = $this->request->submit();
-
-		if ( ! $req->has_errors() ) {
+		if ( ! $this->request->has_errors() ) {
 			// It's valid! We can proceed with actions.
-			$this->process_form( $req );
+			$this->process_form( $this->request );
 
 			$anchor = add_query_arg(
 				array(
@@ -111,19 +110,19 @@ class Controller {
 		$form_id = absint( $_POST['_formello_id'] );
 		$this->request = new Request( $form_id );
 
-		$req = $this->request->submit();
+		$this->request->submit();
 
-		if ( $req->has_errors() ) {
-			$req->log( 'debug', 'Not validated:', $req->get_response() );
-			wp_send_json( $req->get_response() );
+		if ( $this->request->has_errors() ) {
+			$this->request->log( 'debug', 'Not validated:', $this->request->get_response() );
+			wp_send_json( $this->request->get_response() );
 			wp_die();
 
 		};
 
 		// It's valid! We can proceed.
-		$this->process_form( $req );
+		$this->process_form( $this->request );
 
-		wp_send_json( $req->get_response(), 200 );
+		wp_send_json( $this->request->get_response(), 200 );
 		wp_die();
 
 	}
@@ -131,25 +130,25 @@ class Controller {
 	/**
 	 * Listen for form submit
 	 *
-	 * @param Formello\Form\Response $response The formello response.
+	 * @param Formello\Form\Request $req The formello req.
 	 */
-	public function process_form( $response ) {
+	public function process_form( $req ) {
 
-		$form_settings = $this->request->get_settings();
+		$form_settings = $req->get_form_settings();
 
 		/**
 		* General purpose hook that runs before all form actions, so we can still modify the submission object that is passed to actions.
 		*/
-		do_action( 'formello_process_form', $response );
+		do_action( 'formello_process_form', $req );
 
 		// save submission object so that other form processor have an insert ID to work with (eg file upload).
 		if ( $form_settings['storeSubmissions'] ) {
-			$response->save();
+			$req->save();
 		}
 
-		$actions = $response->get_actions();
+		$actions = $req->get_actions();
 
-		$response->log( 'debug', 'Actions to run:', $actions );
+		$req->log( 'debug', 'Actions to run:', $actions );
 
 		// process form actions asynchronously.
 		if ( isset( $actions ) ) {
@@ -158,9 +157,9 @@ class Controller {
 				 * Processes the specified form action and passes related data.
 				 *
 				 * @param array $action_settings
-				 * @param Form $response
+				 * @param Form $req
 				 */
-				if ( $action_settings['async'] && ! $response->get_setting( 'debug' ) ) {
+				if ( $action_settings['async'] && ! $req->get_setting( 'debug' ) ) {
 					wp_schedule_single_event(
 						time() + 60,
 						'formello_process_form_action_' . $action_settings['type'],
@@ -171,7 +170,7 @@ class Controller {
 					do_action(
 						'formello_process_form_action_' . $action_settings['type'],
 						$action_settings,
-						$response // We pass form here because not async action need to access to form data.
+						$req // We pass form here because not async action need to access to form data.
 					);
 				}
 			}
@@ -180,16 +179,16 @@ class Controller {
 		/**
 		 * General purpose hook after all form actions have been processed for this specific form. The dynamic portion of the hook refers to the form ID.
 		 *
-		 * @param Form $response
+		 * @param Form $req
 		 */
-		do_action( "formello_form_{$response->get_id()}_success", $response );
+		do_action( "formello_form_{$req->get_id()}_success", $req );
 
 		/**
 		 * General purpose hook after all form actions have been processed.
 		 *
-		 * @param Form $response
+		 * @param Form $req
 		 */
-		do_action( 'formello_form_success', $response );
+		do_action( 'formello_form_success', $req );
 	}
 
 	/**
@@ -222,7 +221,7 @@ class Controller {
 			return $content . $response;
 		}
 		if ( ! empty( $this->request ) && (int) $id === $this->request->get_id() ) {
-				return $content . $this->request->get_response( true )->get_html_response();
+				return $content . $this->request->get_response( true );
 		}
 		return $content;
 	}

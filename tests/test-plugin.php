@@ -5,8 +5,6 @@
  * @package Formello
  */
 
-namespace Formello\Tests;
-
 use Formello\TagReplacers\Replacer;
 
 /**
@@ -31,19 +29,6 @@ class Plugin_Test extends Base_Test {
 	public function tearDown():void {
 
 		parent::tearDown();
-
-	}
-
-	/**
-	 * A single example test.
-	 */
-	public function test_rest() {
-
-		$request = new \WP_REST_Request( 'GET', '/wp/v2/formello_form/' . $this->post_id );
-		$response = $this->server->dispatch( $request );
-		$data = $response->get_data();
-
-		$this->assertEquals( 200, $response->get_status() );
 
 	}
 

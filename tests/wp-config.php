@@ -31,12 +31,12 @@ define( 'WP_DEBUG', true );
 // These tests will DROP ALL TABLES in the database with the prefix named below.
 // DO NOT use a production database or one that is shared with something else.
 
-define( 'DB_NAME', 'wp_phpunit_tests' );
-define( 'DB_USER', 'root' );
-define( 'DB_PASSWORD', '' );
-define( 'DB_HOST', 'localhost' );
-define( 'DB_CHARSET', 'utf8' );
-define( 'DB_COLLATE', '' );
+define( 'DB_NAME'       , getenv( 'WP_DB_NAME' ) ?: 'wp_phpunit_tests' );
+define( 'DB_USER'       , getenv( 'WP_DB_USER' ) ?: 'root' );
+define( 'DB_PASSWORD'   , getenv( 'WP_DB_PASS' ) ?: 'root' );
+define( 'DB_HOST'       , 'localhost:10006' );
+define( 'DB_CHARSET'    , 'utf8' );
+define( 'DB_COLLATE'    , '' );
 
 /**#@+
  * Authentication Unique Keys and Salts.
@@ -55,9 +55,9 @@ define( 'NONCE_SALT',       'put your unique phrase here' );
 
 $table_prefix = 'wpphpunittests_';   // Only numbers, letters, and underscores please!
 
-define( 'WP_TESTS_DOMAIN', 'localhost' );
+define( 'WP_TESTS_DOMAIN', 'example.org' );
 define( 'WP_TESTS_EMAIL', 'admin@example.org' );
-define( 'WP_TESTS_TITLE', 'Test' );
+define( 'WP_TESTS_TITLE', 'Test Blog' );
 
 define( 'WP_PHP_BINARY', 'php' );
 

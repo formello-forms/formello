@@ -10,15 +10,17 @@ export default function save( { attributes, className } ) {
 	return (
 		<div { ...blockProps }>
 			{ options.map( ( opt, index ) => {
+				const id = name + '-' + index;
 				return (
 					<div key={ index } className={ 'formello formello-checkbox' }>
-						<label>{ opt.label }</label>
+						<label for={ id }>{ opt.label }</label>
 						<input 
 							value={ opt.value || opt.label } 
 							name={ 'checkbox' === type ? name + '[]' : name } 
 							checked={ opt.selected } 
 							type={ type } 
-							required={ required } 
+							required={ required }
+							id={ id }
 						/>
 					</div>
 				);

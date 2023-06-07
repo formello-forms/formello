@@ -21,80 +21,17 @@ use Formello\TagReplacers\Replacer;
  * @since 1.0.0
  */
 class Response {
-
-	/**
-	 * The form ID
-	 *
-	 * @var Int
-	 */
-	protected $ID = 0;
-
-	/**
-	 * The data submitted
-	 *
-	 * @var array
-	 */
-	protected $data = array();
-
-	/**
-	 * The submission details
-	 *
-	 * @var array
-	 */
-	protected $details = array();
-
-	/**
-	 * The form settings
-	 *
-	 * @var array
-	 */
-	protected $settings = array();
-
-	/**
-	 * The form errors
-	 *
-	 * @var array
-	 */
-	protected $errors = array();
-
-	/**
-	 * The form debug
-	 *
-	 * @var array
-	 */
-	protected $debug = array();
-
-
-	/**
-	 * The form log
-	 *
-	 * @var boolean
-	 */
-	protected $logger;
+	use RequestTrait;
 
 	/**
 	 * The constructor.
 	 *
-	 * @param int   $id The form id.
-	 * @param array $settings The form settings.
-	 * @param array $data The form data.
-	 * @param array $errors The form errors.
+	 * @param int $settings The form settings.
+	 * @param int $data The form data.
 	 */
-	public function __construct( $id, $settings, $data, $errors ) {
-		$this->ID = $id;
-		$this->settings = $settings;
-		$this->data = $data;
-		$this->errors = $errors;
-		$this->logger = Log::get_instance();
-	}
-
-	/**
-	 * Get ID of form
-	 *
-	 * @return number
-	 */
-	public function get_id() {
-		return $this->ID;
+	public function __construct( $data, $config ) {
+		$this->data   = $data;
+		$this->config = $config;
 	}
 
 	/**
@@ -105,7 +42,7 @@ class Response {
 	 */
 	public function get_response( $as_html = false ) {
 		if ( $as_html ) {
-			return $this->get_html_response();
+			return $this->to_html();
 		}
 
 		return $this->to_array();
@@ -119,9 +56,10 @@ class Response {
 	public function to_array() {
 
 		$type = $this->message_type();
+		$settings = $this->get_form_settings();
 
 		$response = array(
-			'hide_form' => (bool) $this->settings['hide'],
+			'hide_form' => (bool) $settings['hide'],
 			'errors' => $this->get_errors(),
 			'message' => array(
 				'type'   => $type,
@@ -129,8 +67,8 @@ class Response {
 			),
 		);
 
-		if ( ! empty( $this->settings['redirect_url'] ) ) {
-			$response['redirect_url'] = $this->settings['redirect_url'];
+		if ( ! empty( $settings['redirect_url'] ) ) {
+			$response['redirect_url'] = $settings['redirect_url'];
 		}
 
 		if ( current_user_can( 'manage_options' ) && $this->is_debug() ) {
@@ -145,7 +83,7 @@ class Response {
 	 *
 	 * @return array
 	 */
-	public function get_html_response() {
+	public function to_html() {
 		$type = $this->message_type();
 		$response = sprintf(
 			'<div class="formello-message %s"><p>%s</p>%s</div>',
@@ -174,11 +112,11 @@ class Response {
 	public function get_debug() {
 		$debug = array();
 
-		$debug['id']       = $this->ID;
-		$debug['errors']   = $this->get_errors();
-		$debug['settings'] = $this->settings;
-		$debug['fields']   = $this->data['fields'];
-		$debug['actions']  = empty( $this->data['actions'] ) ? array() : $this->data['actions'];
+		$debug['id']      = $this->get_id();
+		$debug['errors']  = $this->get_errors();
+		$debug['config']  = $this->config;
+		$debug['fields']  = $this->data['fields'];
+		$debug['actions'] = empty( $this->data['actions'] ) ? array() : $this->data['actions'];
 
 		return $debug;
 	}
@@ -186,135 +124,15 @@ class Response {
 	/**
 	 * Get form message
 	 *
-	 * @param string $code The code response.
+	 * @param string $type The response type.
 	 * @return string
 	 */
-	private function get_message( $code ) {
-		$message = isset( $this->settings['messages'][ $code ] ) ? $this->settings['messages'][ $code ] : 'error';
+	private function get_message( $type ) {
+		$messages = $this->get_setting( 'messages' );
+		$message = isset( $messages['form'][ $type ] ) ? $messages['form'][ $type ] : 'error';
 
-		$message = apply_filters( 'formello_form_message_' . $code, $message );
+		$message = apply_filters( 'formello_form_message_' . $type, $message );
 		return $message;
-	}
-
-	/**
-	 * Get request details
-	 */
-	public function get_details() {
-		$respose = array();
-		// add details on response.
-		$response['ip_address']   = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-		$response['user_agent']   = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
-		$response['referer_url']  = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
-		$response['submitted_at'] = wp_date( 'Y-m-d H:i:s' );
-
-		return $response;
-	}
-
-	/**
-	 * Save form submission in DB.
-	 */
-	public function save() {
-		if ( empty( $this->data['fields'] ) ) {
-			return true;
-		}
-
-		if ( ! $this->settings['storeSubmissions'] ) {
-			return true;
-		}
-
-		global $wpdb;
-
-		$values = array();
-		$placeholder = array();
-		$submissions_table = $wpdb->prefix . 'formello_submissions';
-		$submissions_meta_table = $wpdb->prefix . 'formello_submissions_meta';
-		$form_id = $this->get_id();
-
-		$fields = $this->data['fields'];
-		$no_store_fields = apply_filters( 'formello_response_nostorefields', array( 'field' => 'password' ) );
-		// Remove password, we don't store it.
-		$allowed_fields = array_intersect_key(
-			$fields,
-			array_diff( $this->settings['fields'], $no_store_fields ),
-		);
-
-		$data = array(
-			'data'    => wp_json_encode( $allowed_fields ),
-			'form_id' => $form_id,
-		);
-
-		// add details to record.
-		$data = array_merge( $data, $this->get_details() );
-
-		// insert new row.
-		$num_rows = $wpdb->insert( $submissions_table, $data );
-		if ( $num_rows > 0 ) {
-			$this->submission_id = $wpdb->insert_id;
-		}
-
-		// insert also in submissions meta.
-		foreach ( $fields as $key => $value ) {
-			array_push( $values, $form_id, $this->submission_id, $key, maybe_serialize( $value ) );
-			$place_holders[] = "('%d', '%d', '%s', '%s')";
-		}
-		$sql = implode( ',', $values );
-
-		$query = 'INSERT INTO ' . $wpdb->prefix . 'formello_submissions_meta (form_id, submission_id, field_name, field_value ) VALUES ';
-		$query .= implode( ', ', $place_holders );
-
-		//phpcs:ignore
-		$wpdb->query( $wpdb->prepare( $query, $values ) );
-
-		$formello_result = get_transient( 'formello_news', false );
-		set_transient( 'formello_news', $formello_result + 1, DAY_IN_SECONDS );
-
-	}
-
-	/**
-	 * Get form actions
-	 *
-	 * @return array
-	 */
-	public function get_actions() {
-		return $this->data['actions'];
-	}
-
-	/**
-	 * Get debug
-	 *
-	 * @return boolean
-	 */
-	public function is_debug() {
-		return $this->settings['debug'] && current_user_can( 'manage_options' ) ? true : false;
-	}
-
-	/**
-	 * Add log debug
-	 *
-	 * @param string $level The actions response.
-	 * @param string $message The actions response.
-	 * @param array  $context The actions response.
-	 */
-	public function log( $level, $message, $context = array() ) {
-		$this->logger->log( $level, $message, $context );
-	}
-
-	/**
-	 * Check if has errors
-	 *
-	 * @return boolean
-	 */
-	public function has_errors() {
-		return ! empty( $this->errors );
-	}
-
-	/**
-	 * Check if has errors
-	 *
-	 * @return boolean
-	 */
-	private function get_errors() {
-		return $this->errors;
 	}
 
 	/**
@@ -323,7 +141,7 @@ class Response {
 	 * @return boolean
 	 */
 	private function message_type() {
-		return empty( $this->errors ) ? 'success' : 'error';
+		return $this->has_errors() ? 'error' : 'success';
 	}
 
 	/**
@@ -333,7 +151,8 @@ class Response {
 	 */
 	private function error_list() {
 		$out = '<ul>';
-		foreach ( $this->errors as $key => $error ) {
+		$errors = $this->get_errors();
+		foreach ( $errors as $key => $error ) {
 			$out .= '<li>' . $error . '</li>';
 		}
 		$out .= '</ul>';

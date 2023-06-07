@@ -2,6 +2,7 @@ import {
 	getFieldsTags,
 	getWordpressTags,
 	getOtherTags,
+	getMetaTags
 } from './functions';
 
 export function useTabs( clientId ) {
@@ -15,6 +16,11 @@ export function useTabs( clientId ) {
 			name: 'wordpress',
 			title: 'WordPress',
 			data: getWordpressTags(),
+		},
+		{
+			name: 'meta',
+			title: 'Meta',
+			data: getMetaTags(),
 		},
 		{
 			name: 'other',

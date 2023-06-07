@@ -14,7 +14,8 @@ const variations = [
 		description: __( 'Offer users a list of choices, and allow them to select multiple option.', 'formello-pro' ),
 		icon: Checkboxes,
 		attributes: {
-			type: 'checkbox'
+			type: 'checkbox',
+			name: 'checkboxes'
 		},
 		scope: [ 'inserter', 'block', 'transform' ],
 		isDefault: true
@@ -25,7 +26,8 @@ const variations = [
 		description: __( 'Offer users a list of choices, and allow them to select a single option.', 'formello-pro' ),
 		icon: Radios,
 		attributes: {
-			type: 'radio'
+			type: 'radio',
+			name: 'radios'
 		},
 		scope: [ 'inserter', 'block', 'transform' ],
 	},

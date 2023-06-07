@@ -9,24 +9,22 @@
             "email": "info@francescopepe.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
-        "php": ">=5.6",
         "appsero/client": "dev-develop",
         "katzgrau/klogger": "dev-master",
         "rakit/validation": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8",
-        "roots/wordpress": "^6.0",
-        "wp-phpunit/wp-phpunit": "^6.0",
+        "phpunit/phpunit": "^5 || ^6 || ^7",
+        "roots/wordpress": "^5.0",
+        "wp-phpunit/wp-phpunit": "^5.0",
         "yoast/phpunit-polyfills": "^1.0"
     },
     "scripts": {
         "test": "phpunit",
         "test-ajax": "phpunit --group ajax",
         "scoper": "php-scoper add-prefix --output-dir=./lib -f",
-        "php": [
+        "stok": [
             "phpcs -p .",
             "parallel-lint --exclude .git --exclude vendor --exclude node_modules .",
             "phpcs -p . --standard=WordPress --extensions=php --runtime-set testVersion 5.2- --ignore=*/vendor/,*/node_modules/"
@@ -40,12 +38,6 @@
     "autoload": {
         "psr-4": {
             "Formello\\": "includes/"
-        },
-        "files": ["includes/Utils/functions.php"]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Formello\\Tests\\": "tests/"
         }
     },
     "config": {
