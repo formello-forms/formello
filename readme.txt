@@ -36,7 +36,12 @@ If you wanna extend the form functionality with more useful features, you can do
 * [MailerLite](https://formello.net/addons/mailerlite): action to send subscriber emails to your MailerLite lists.
 * [Sendinblue](https://formello.net/addons/sendinblue): action to send subscriber emails to your SendinBlue lists.
 * [GetResponse](https://formello.net/addons/mailchimp): action to send subscriber emails to your GetResponse lists.
+* [File Upload](https://formello.net/addons/file-upload): add an upload field.
+* [AutoSuggest](https://formello.net/addons/autosuggest): enhance search form with autosuggest.
+* [Calculator](https://formello.net/addons/calculator): add a calculated field to your form.
+* [Login](https://formello.net/addons/login): add login functionality to your form.
 * [Inserter](https://formello.net/addons/inserter): automatically insert form on posts/page.
+* [Templates](https://formello.net/addons/templates): create your own form templates library.
 * [Exporter](https://formello.net/addons/exporter): export all your submission in an Excel ready format or CSV.
 * [Web Hooks](https://formello.net/addons/web-hooks): send your mail submissions to any external endpoint.
 * [Conditional fields](https://formello.net/addons/conditional-fields): add rules to display fields based on your defined conditions.

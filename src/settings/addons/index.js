@@ -64,7 +64,7 @@ export default function Addons() {
 
 		if( 'formello.net' === window.location.host ){
 			apiFetch({
-				path: '/wp/v2/edd-downloads?per_page=100'
+				path: '/wp/v2/edd-downloads?per_page=100&exclude=542'
 			})
 			.then( data => setAddons( data ) )
 			.catch( err => console.log('Request Failed', err) ); // gestisci gli errori
