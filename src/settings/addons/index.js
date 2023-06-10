@@ -64,13 +64,13 @@ export default function Addons() {
 
 		if( 'formello.net' === window.location.host ){
 			apiFetch({
-				path: '/wp/v2/edd-downloads?per_page=100&exclude=542'
+				path: '/wp/v2/addons?per_page=100'
 			})
 			.then( data => setAddons( data ) )
 			.catch( err => console.log('Request Failed', err) ); // gestisci gli errori
 		
 		} else {
-			const url = `https://formello.net/en/wp-json/wp/v2/edd-downloads?per_page=100`;
+			const url = `https://formello.net/en/wp-json/wp/v2/addons?per_page=100`;
 
 			const res = fetch( url )
 				// gestisci il successo

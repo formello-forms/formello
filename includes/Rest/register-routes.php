@@ -22,6 +22,8 @@ function register_routes() {
 	$template_controller->register_routes();
 	$addons_controller = new Controllers\Addons();
 	$addons_controller->register_routes();
+	$license_controller = new Controllers\License();
+	$license_controller->register_routes();
 }
 add_action( 'rest_api_init', __NAMESPACE__ . '\register_routes' );
 
@@ -31,3 +33,4 @@ add_action( 'rest_api_init', __NAMESPACE__ . '\register_routes' );
 require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Base.php';
 require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Template.php';
 require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Addons.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/License.php';
