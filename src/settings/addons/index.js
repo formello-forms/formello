@@ -112,7 +112,7 @@ export default function Addons() {
 		if ( 'all' === filter ) {
 			return addons;
 		}
-		return element['edd-categories'].some( ( e ) => e === filter );
+		return element['addon_category'].some( ( e ) => e === filter );
 	};
 
 	if ( ! addons ) {
