@@ -32,15 +32,15 @@ export default function Addons() {
 			title: __( 'All', 'formello' ),
 		},
 		{
-			name: 27,
+			name: 9,
 			title: __( 'Integrations', 'formello' ),
 		},
 		{
-			name: 30,
+			name: 14,
 			title: __( 'Utility', 'formello' ),
 		},
 		{
-			name: 4,
+			name: 8,
 			title: __( 'Free', 'formello' ),
 		},
 	];

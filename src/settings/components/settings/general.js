@@ -7,6 +7,8 @@ import {
 
 import { RawHTML } from '@wordpress/element';
 
+import { useDispatch } from '@wordpress/data';
+import { store as coreStore } from '@wordpress/core-data';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import UpdateLicense from '../update-license';
@@ -14,12 +16,23 @@ import UpdateLicense from '../update-license';
 export default function General( props ) {
 	const { settings, setSettings, saveSettings } = props;
 
+	const { saveEntityRecord } = useDispatch( coreStore );
+
 	const license = settings.formello.license;
 	const license_status = settings.formello.license_status;
 
 	function setLicense( key, value ) {
 		const newSettings = Object.assign( {}, settings.formello );
 		newSettings[ key ] = value;
+
+		const record = { formello: newSettings };
+		// store the license response immediately
+		saveEntityRecord(
+			'root',
+			'site',
+			record
+		);
+
 		setSettings( {
 			...settings,
 			formello: newSettings,
@@ -27,8 +40,7 @@ export default function General( props ) {
 	}
 
 	const updateLicense = () => {
-		const endpoint =
-			'valid' !== license_status ? 'activate' : 'deactivate';
+		const endpoint = 'activate';
 
 		return apiFetch( {
 			path: '/formello/v1/license/' + endpoint,
@@ -46,6 +58,7 @@ export default function General( props ) {
 			) {
 				setLicense( 'license_status', result.response );
 			}
+
 			return Promise.resolve( result );
 		} );
 	};
@@ -58,7 +71,7 @@ export default function General( props ) {
 
 			<CardBody>
 				<ExternalLink href="https://formello.net">
-					{ __( 'Get a FREE API Key' ) }
+					{ __( 'Get a FREE License' ) }
 				</ExternalLink>
 				<RawHTML>
 					{ sprintf(

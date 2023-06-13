@@ -64,7 +64,7 @@ class License extends Base {
 	 */
 	public function activate_license( \WP_REST_Request $request ) {
 		$license = sanitize_text_field( $request->get_param( 'license' ) );
-		$item_name = null !== $request->get_param( 'item_name' ) ? sanitize_text_field( $request->get_param( 'item_name' ) ) : rawurlencode( 'Formello' );
+		$item_name = null !== $request->get_param( 'item_name' ) ? sanitize_text_field( $request->get_param( 'item_name' ) ) : rawurlencode( 'Formello Pro' );
 
 		// data to send in our API request.
 		$api_params = array(

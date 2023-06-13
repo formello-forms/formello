@@ -90,20 +90,6 @@ function register_cpt_meta() {
 
 	register_post_meta(
 		'formello_form',
-		'_formello_parent',
-		array(
-			'show_in_rest' => true,
-			'default' => 0,
-			'single' => true,
-			'type' => 'number',
-			'auth_callback' => function () {
-				return current_user_can( 'edit_posts' );
-			},
-		)
-	);
-
-	register_post_meta(
-		'formello_form',
 		'_formello_settings',
 		array(
 			'show_in_rest' => array(

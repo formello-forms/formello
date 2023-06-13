@@ -29,7 +29,7 @@ const LoggingTab = ( props ) => {
 			<CardBody>
 				<p>
 					{ __(
-						'To enable logging, please set this as checked.',
+						'Enable logging can hurt site performance. Please activate logging only for debug purpose.',
 						'formello'
 					) }
 				</p>

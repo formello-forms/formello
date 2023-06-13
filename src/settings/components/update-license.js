@@ -67,40 +67,20 @@ export default function UpdateLicense( props ) {
 				label={ __( 'License Key', 'formello' ) }
 				value={ license }
 				onChange={ onChange }
-				readOnly={ 'valid' === license_status }
 				suffix={
 					<Button
 						onClick={ action }
-						isPrimary={ 'valid' !== license_status }
-						isSecondary={
-							'valid' === license_status
-						}
+						variant="secondary"
 						aria-disabled={ loading }
 						isBusy={ loading }
 						disabled={ '' === license }
 					>
-						{ 'valid' !== license_status
-							? 'Activate'
-							: 'Deactivate' }
+						{ __( 'Check', 'formello' ) }
 					</Button>
 				}
 			/>
-			{
-				message && (
-					<Notice
-						//status={ message.type }
-						onRemove={ () => setMessage( false ) }
-						isDismissible={ true }
-						status={ message.type }
-					>
-						{ message.text }
-					</Notice>
-				)
-			}
 			{ '' !== license && license_status && (
 				<Notice
-					//status={ message.type }
-					onRemove={ () => setMessage( false ) }
 					isDismissible={ false }
 					className={ classnames(
 						'message',
