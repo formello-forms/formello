@@ -23,7 +23,7 @@ export default function Help() {
 						) }
 					</p>
 
-					<ExternalLink href="https://formello.net/documentation/">
+					<ExternalLink href="https://formello.net/en/documentation/">
 						{ __( 'Documentation', 'formello' ) }
 					</ExternalLink>
 					<p>

@@ -83,7 +83,7 @@ export default function save( { attributes } ) {
 	if ( advanced && 'date' === type ) {
 		htmlAttrs[ 'data-date-format' ] = dateFormat;
 		htmlAttrs[ 'data-time-format' ] = timeFormat;
-		htmlAttrs[ 'data-enable-time' ] = enableTime;
+		htmlAttrs[ 'data-enable-time' ] = enableTime || undefined;
 		htmlAttrs[ 'data-mode' ] = mode;
 		htmlAttrs[ 'data-min-date' ] = minDate;
 		htmlAttrs[ 'data-inline' ] = inlineCalendar;

@@ -404,7 +404,7 @@ class Admin {
 				'id' => 'formello-docs',
 				'parent' => 'formello-menu',
 				'title' => 'Docs',
-				'href' => 'https://formello.net/documentation/',
+				'href' => 'https://formello.net/en/documentation/',
 				'meta' => array( 'target' => '_blank' ),
 			)
 		);

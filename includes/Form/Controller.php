@@ -159,7 +159,7 @@ class Controller {
 				 * @param array $action_settings
 				 * @param Form $req
 				 */
-				if ( $action_settings['async'] && ! $req->get_setting( 'debug' ) ) {
+				if ( $action_settings['async'] && ! $req->is_debug() ) {
 					wp_schedule_single_event(
 						time() + 60,
 						'formello_process_form_action_' . $action_settings['type'],

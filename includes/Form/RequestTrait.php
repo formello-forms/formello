@@ -72,7 +72,7 @@ trait RequestTrait {
 	}
 
 	/**
-	 * Get form settings
+	 * Get config settings
 	 *
 	 * @return array
 	 */
@@ -90,7 +90,7 @@ trait RequestTrait {
 	}
 
 	/**
-	 * Get form setting by name
+	 * Get config setting by name
 	 *
 	 * @param array $setting The setting to load.
 	 * @return array

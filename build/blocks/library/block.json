@@ -4,7 +4,7 @@
   "name": "formello/library",
   "title": "Form Library",
   "description": "A block to display or create forms.",
-  "category": "formello",
+  "category": "widgets",
   "textdomain": "formello",
   "attributes": {
     "ref": {
