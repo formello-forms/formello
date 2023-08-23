@@ -10,7 +10,8 @@ import { __ } from '@wordpress/i18n';
 import { 
 	Button, 
 	Placeholder,
-	Modal
+	Modal,
+	Flex
 } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
 import TemplatesModal from './templates-modal.js';
@@ -108,7 +109,7 @@ function BlockVariationPicker( props ) {
 					) ) }
 				</ul>
 
-				<div className="block-editor-block-variation-picker__skip">
+				<Flex justify={ 'start' }>
 					<Button
 						isPrimary
 						icon={ 'book' }
@@ -121,7 +122,7 @@ function BlockVariationPicker( props ) {
 					<Button isLink onClick={ () => onSelect() }>
 						{ __( 'Skip', 'formello' ) }
 					</Button>
-				</div>
+				</Flex>
 
 				{ 'templates' === isModalOpen && (
 					<TemplatesModal

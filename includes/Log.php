@@ -67,6 +67,9 @@ class Log {
 				'log' => false,
 			)
 		);
+		if( empty( $settings['log_file'] ) ){
+			$settings['log_file'] = 'formello_' . time() . '.txt';
+		}
 		$this->logger = new \Katzgrau\KLogger\Logger(
 			formello_dir() . '/logs',
 			'debug',
