@@ -7549,7 +7549,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _blocks_fieldset__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./blocks/fieldset */ "./src/blocks/fieldset/index.js");
 /* harmony import */ var _blocks_multichoices__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./blocks/multichoices */ "./src/blocks/multichoices/index.js");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./editor.scss */ "./src/editor.scss");
 /**
  * Formello
  */
@@ -7563,8 +7562,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
+ //import './editor.scss';
 
 /***/ }),
 
@@ -7631,19 +7629,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 	} else {}
 }());
-
-
-/***/ }),
-
-/***/ "./src/editor.scss":
-/*!*************************!*\
-  !*** ./src/editor.scss ***!
-  \*************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
 
 
 /***/ }),

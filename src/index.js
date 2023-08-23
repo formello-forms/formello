@@ -14,4 +14,4 @@ import './blocks/fieldset';
 import './blocks/multichoices';
 
 import './style.scss';
-import './editor.scss';
+//import './editor.scss';
