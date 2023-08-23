@@ -17,11 +17,11 @@
     "plugin-zip": "wp-scripts plugin-zip"
   },
   "devDependencies": {
-    "@wordpress/base-styles": "^4.20.0",
-    "@wordpress/scripts": "^26.0.0"
+    "@wordpress/base-styles": "^4.31.0",
+    "@wordpress/scripts": "^26.11.0"
   },
   "dependencies": {
-    "@wordpress/icons": "^9.20.0",
+    "@wordpress/icons": "^9.31.0",
     "classnames": "^2.3.1",
     "flatpickr": "^4.6.9",
     "formbouncerjs": "^1.4.6",
