@@ -23,8 +23,8 @@ if ( ! defined( 'FORMELLO_PLUGIN_FILE' ) ) {
 }
 
 // Require once the Composer Autoload.
-if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
-	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once __DIR__ . '/vendor/autoload.php';
 }
 
 if ( ! class_exists( 'Formello' ) ) {
@@ -78,7 +78,7 @@ function formello_activate() {
 		) ENGINE=InnoDB CHARACTER SET={$wpdb->charset};"
 	);
 
-	$upload_dir = wp_upload_dir();
+	$upload_dir   = wp_upload_dir();
 	$formello_dir = $upload_dir['basedir'] . '/formello';
 	if ( ! is_dir( $formello_dir ) ) {
 		wp_mkdir_p( $formello_dir );
@@ -124,7 +124,6 @@ function formello_appsero_init_tracker() {
 
 	// Active automatic updater.
 	$client->updater();
-
 }
 
 formello_appsero_init_tracker();
