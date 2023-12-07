@@ -9,7 +9,12 @@ import {
 	__experimentalUseColorProps as useColorProps,
 } from '@wordpress/block-editor';
 
-import { SelectControl, ToggleControl, ToolbarDropdownMenu, ToolbarGroup } from '@wordpress/components';
+import {
+	SelectControl,
+	ToggleControl,
+	ToolbarDropdownMenu,
+	ToolbarGroup,
+} from '@wordpress/components';
 import { useState } from '@wordpress/element';
 
 import classnames from 'classnames';
@@ -116,7 +121,8 @@ export default function Edit( { attributes, setAttributes } ) {
 							return {
 								...control,
 								isActive,
-								onClick: () => setAttributes( { alignment: align } ),
+								onClick: () =>
+									setAttributes( { alignment: align } ),
 							};
 						} ) }
 					/>
@@ -133,11 +139,9 @@ export default function Edit( { attributes, setAttributes } ) {
 				<SelectControl
 					label={ __( 'Icon type', 'formello' ) }
 					value={ attributes.type }
-					options={
-						Object.keys( icons ).map( ( icon ) => {
-							return { label: icon, value: icon };
-						} )
-					}
+					options={ Object.keys( icons ).map( ( icon ) => {
+						return { label: icon, value: icon };
+					} ) }
 					onChange={ ( val ) => {
 						setAttributes( { type: val } );
 					} }

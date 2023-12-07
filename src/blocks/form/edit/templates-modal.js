@@ -1,94 +1,157 @@
 /**
  * WordPress dependencies
  */
-import { useDispatch } from '@wordpress/data';
 import { useState } from '@wordpress/element';
 import {
+	BlockContextProvider,
 	store as blockEditorStore,
-	__experimentalBlockPatternSetup as BlockPatternSetup,
+	__experimentalBlockPatternsList as BlockPatternsList,
 } from '@wordpress/block-editor';
-import { Modal, Flex, Button } from '@wordpress/components';
+import { Modal, SearchControl, Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useSelect } from '@wordpress/data';
-import apiFetch from '@wordpress/api-fetch';
+import { useSelect, useDispatch } from '@wordpress/data';
+
+function PatternCategoriesList( {
+	selectedCategory,
+	patternCategories,
+	onClickCategory,
+} ) {
+	const baseClassName = 'block-editor-block-patterns-explorer__sidebar';
+	return (
+		<div className={ `${ baseClassName }__categories-list` }>
+			{ patternCategories.map( ( { name, label } ) => {
+				return (
+					<Button
+						key={ name }
+						label={ label }
+						className={ `${ baseClassName }__categories-list__item` }
+						isPressed={ selectedCategory === name }
+						onClick={ () => {
+							onClickCategory( name );
+						} }
+					>
+						{ label }
+					</Button>
+				);
+			} ) }
+		</div>
+	);
+}
+
+function PatternsExplorerSearch( { searchValue, setSearchValue } ) {
+	const baseClassName = 'block-editor-block-patterns-explorer__search';
+	return (
+		<div className={ baseClassName }>
+			<SearchControl
+				__nextHasNoMarginBottom
+				onChange={ setSearchValue }
+				value={ searchValue }
+				label={ __( 'Search for patterns' ) }
+				placeholder={ __( 'Search' ) }
+			/>
+		</div>
+	);
+}
+
+function PatternExplorerSidebar( {
+	selectedCategory,
+	patternCategories,
+	onClickCategory,
+	searchValue,
+	setSearchValue,
+} ) {
+	const baseClassName = 'block-editor-block-patterns-explorer__sidebar';
+	return (
+		<div className={ baseClassName }>
+			<PatternsExplorerSearch
+				searchValue={ searchValue }
+				setSearchValue={ setSearchValue }
+			/>
+			{ ! searchValue && (
+				<PatternCategoriesList
+					selectedCategory={ selectedCategory }
+					patternCategories={ patternCategories }
+					onClickCategory={ onClickCategory }
+				/>
+			) }
+		</div>
+	);
+}
 
 function TemplatesModal( {
 	clientId,
 	blockName,
 	setIsPatternSelectionModalOpen,
 } ) {
+	const { updateBlockAttributes, replaceInnerBlocks } =
+		useDispatch( blockEditorStore );
 
-	const { updateBlockAttributes, replaceInnerBlocks } = useDispatch( blockEditorStore );
+	const [ searchValue, setSearchValue ] = useState( '' );
+	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
 
-	const [ loading, setLoading ] = useState( false );
-
-	const onBlockPatternSelect = ( blocks ) => {
+	const onBlockPatternSelect = ( pattern ) => {
 		if ( 'formello/library' === blockName ) {
 			updateBlockAttributes( clientId, {
-				ref: blocks[ 0 ].attributes.id,
+				ref: parseInt( pattern.blocks[ 0 ].attributes.id ),
 			} );
 			setIsPatternSelectionModalOpen( false );
 		} else {
-			replaceInnerBlocks( clientId, blocks[ 0 ].innerBlocks );
+			replaceInnerBlocks( clientId, pattern.blocks[ 0 ].innerBlocks );
 			setIsPatternSelectionModalOpen( false );
 		}
 	};
 
 	const patterns = useSelect(
 		( select ) => {
-			const {
-				getBlockRootClientId,
-				getPatternsByBlockTypes,
-				__experimentalGetAllowedPatterns,
-			} = select( blockEditorStore );
+			const { getBlockRootClientId, getPatternsByBlockTypes } =
+				select( blockEditorStore );
 			const rootClientId = getBlockRootClientId( clientId );
 			return getPatternsByBlockTypes( blockName, rootClientId );
 		},
 		[ clientId, blockName ]
 	);
 
-	const updateTransient = () => {
-		setLoading( true );
-		apiFetch( {
-			path: '/formello/v1/sync_template_library/',
-			method: 'POST',
-			data: {},
-		} ).then( () => {
-			setLoading( false );
-			window.location.reload();
-		} ).catch( () => setLoading( false ) );
-	};
+	const patternCategories = patterns.map( ( p ) => {
+		return { name: p.formello_category, label: p.formello_category };
+	} );
+
+	const shownPatterns = patterns.filter( ( p ) => {
+		if ( searchValue ) {
+			return p.title.toLowerCase().includes( searchValue );
+		}
+		if ( 'all' === selectedCategory ) {
+			return true;
+		}
+		return p.formello_category.includes( selectedCategory );
+	} );
 
 	return (
 		<Modal
-			className="formello-modal"
 			isFullScreen
-			title={ __( 'Choose a pattern' ) }
+			title={ __( 'Choose a patternssssssssssss' ) }
 			closeLabel={ __( 'Cancel' ) }
 			onRequestClose={ () => setIsPatternSelectionModalOpen( false ) }
 		>
-			{
-				! patterns.length &&
-			    <div>
-			        <p>
-			            { __( 'There\'s no patterns available. Try to re-sync.', 'formello' ) }
-			        </p>
-					<Button
-						isPrimary
-						onClick={ updateTransient }
-						isBusy={ loading }
-						disabled={ loading }
+			<div className="block-editor-block-patterns-explorer">
+				<PatternExplorerSidebar
+					selectedCategory={ selectedCategory }
+					patternCategories={ patternCategories }
+					onClickCategory={ setSelectedCategory }
+					searchValue={ searchValue }
+					setSearchValue={ setSearchValue }
+				/>
+				<div className="block-editor-block-patterns-explorer__list">
+					<BlockContextProvider
+						value={ { postType: 'formello_form' } }
 					>
-						{ __( 'Sync patterns', 'popper' ) }
-					</Button>
-			    </div>				
-			}
-			<BlockPatternSetup
-				blockName={ blockName }
-				clientId={ clientId }
-				onBlockPatternSelect={ onBlockPatternSelect }
-				showTitles={ true }
-			/>
+						<BlockPatternsList
+							blockPatterns={ shownPatterns }
+							shownPatterns={ shownPatterns }
+							onClickPattern={ onBlockPatternSelect }
+						/>
+					</BlockContextProvider>
+				</div>
+			</div>
 		</Modal>
 	);
 }

@@ -1,9 +1,7 @@
 import { __ } from '@wordpress/i18n';
 import { useState, Fragment } from '@wordpress/element';
 
-import {
-	useEntityProp,
-} from '@wordpress/core-data';
+import { useEntityProp } from '@wordpress/core-data';
 
 import { ActionsModal } from '../actions/modal';
 import { getActions } from '../actions/actions';
@@ -15,7 +13,12 @@ import {
 } from '@wordpress/components';
 
 export function Controls( { attributes, clientId } ) {
-	const [ meta, setMeta ] = useEntityProp( 'postType', 'formello_form', 'meta', attributes.id );
+	const [ meta, setMeta ] = useEntityProp(
+		'postType',
+		'formello_form',
+		'meta',
+		attributes.id
+	);
 
 	const registeredActions = getActions();
 	const actions = meta?._formello_actions;
@@ -71,7 +74,7 @@ export function Controls( { attributes, clientId } ) {
 						return obj.type === a.type;
 					} );
 					if ( ! action ) {
-						return;
+						return null;
 					}
 					return (
 						<ToolbarButton

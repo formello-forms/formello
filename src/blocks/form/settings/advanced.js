@@ -3,7 +3,10 @@ import { __ } from '@wordpress/i18n';
 import { select, dispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 
-import { InspectorAdvancedControls, InspectorControls } from '@wordpress/block-editor';
+import {
+	InspectorAdvancedControls,
+	InspectorControls,
+} from '@wordpress/block-editor';
 
 import {
 	TextControl,
@@ -20,7 +23,8 @@ export function AdvancedSettings( props ) {
 
 		// Update the child block's attributes
 		const children =
-			select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ].innerBlocks;
+			select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ]
+				.innerBlocks;
 
 		children.forEach( ( child ) => {
 			dispatch( 'core/block-editor' ).updateBlockAttributes(
@@ -48,7 +52,10 @@ export function AdvancedSettings( props ) {
 					onChange={ ( val ) => {
 						setAttributes( { autoComplete: val } );
 					} }
-					help={ __( 'Add "autocomplete" attribute fo form tag.', 'formello' ) }
+					help={ __(
+						'Add "autocomplete" attribute fo form tag.',
+						'formello'
+					) }
 				/>
 				<ToggleControl
 					label={ __( 'Enable Js validation', 'formello' ) }
@@ -63,7 +70,10 @@ export function AdvancedSettings( props ) {
 					onChange={ ( val ) => {
 						setAttributes( { noValidate: val } );
 					} }
-					help={ __( 'Add "novalidate" attribute fo form tag.', 'formello' ) }
+					help={ __(
+						'Add "novalidate" attribute fo form tag.',
+						'formello'
+					) }
 				/>
 				<ToggleControl
 					label={ __( 'Disable Ajax', 'formello' ) }
@@ -92,7 +102,10 @@ export function AdvancedSettings( props ) {
 					/>
 					{ attributes.asRow && (
 						<SelectControl
-							label={ __( 'Label horizontal position', 'formello' ) }
+							label={ __(
+								'Label horizontal position',
+								'formello'
+							) }
 							value={ attributes.labelAlign }
 							options={ [
 								{ label: 'left', value: 'left' },
@@ -106,7 +119,9 @@ export function AdvancedSettings( props ) {
 					<ToggleControl
 						label={ __( 'Bolded label', 'formello' ) }
 						checked={ attributes.labelIsBold }
-						onChange={ ( val ) => setAttributes( { labelIsBold: val } ) }
+						onChange={ ( val ) =>
+							setAttributes( { labelIsBold: val } )
+						}
 					/>
 				</PanelBody>
 			</InspectorControls>

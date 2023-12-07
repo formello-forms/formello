@@ -6,22 +6,21 @@ import {
 	useEntityBlockEditor,
 	useEntityProp,
 	useEntityRecord,
-	store as coreStore 
+	store as coreStore,
 } from '@wordpress/core-data';
-import { serialize } from '@wordpress/blocks';
 import {
 	Placeholder,
 	Spinner,
 	Button,
 	Modal,
-    __experimentalVStack as VStack,
-    __experimentalHStack as HStack,
+	__experimentalVStack as VStack,
+	__experimentalHStack as HStack,
 	ToolbarGroup,
 	ToolbarButton,
 	TextControl,
 	PanelBody,
 	SelectControl,
-	Disabled
+	Disabled,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import {
@@ -33,15 +32,17 @@ import {
 	InspectorControls,
 	useBlockProps,
 	Warning,
-	store as blockEditorStore,
-	__experimentalBlockPatternSetup as BlockPatternSetup,
 } from '@wordpress/block-editor';
 
-import { edit, layout } from '@wordpress/icons';
-import { useState, useCallback, Fragment, useEffect } from '@wordpress/element';
+import { edit } from '@wordpress/icons';
+import { useState, useCallback, Fragment } from '@wordpress/element';
+import TemplatesModal from '../form/edit/templates-modal';
 
-export default function ReusableBlockEdit( { attributes: { ref }, clientId, setAttributes } ) {
-
+export default function ReusableBlockEdit( {
+	attributes: { ref },
+	clientId,
+	setAttributes,
+} ) {
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const [ isDisabled, setIsDisabled ] = useState( true );
 	const [ titleTemp, createTitle ] = useState( '' );
@@ -52,22 +53,28 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 		'formello_form',
 		ref
 	);
+
 	const isMissing = hasResolved && ! record;
 
 	const options = useSelect(
 		( select ) => {
-			const forms = select( 'core' ).getEntityRecords( 'postType', 'formello_form', {
-				per_page: -1,
-			} )
-			const opts = [ { value: '', label: __( 'Select a form', 'formello' ) } ];
-			
+			const forms = select( 'core' ).getEntityRecords(
+				'postType',
+				'formello_form',
+				{
+					per_page: -1,
+				}
+			);
+			const opts = [
+				{ value: '', label: __( 'Select a form', 'formello' ) },
+			];
+
 			forms?.forEach( ( post ) => {
 				opts.push( {
 					value: post.id,
-					label:
-						post.title.raw || __( 'No title', 'formello' ),
+					label: post.title.raw || __( 'No title', 'formello' ),
 				} );
-			} )
+			} );
 
 			return opts;
 		},
@@ -77,8 +84,11 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 	const { saveEntityRecord } = useDispatch( coreStore );
 
 	const create = useCallback(
-		async ( title = null, blocks = [], postStatus = 'formello-private' ) => {
-
+		async (
+			title = null,
+			blocks = [],
+			postStatus = 'formello-private'
+		) => {
 			const record = {
 				title,
 				content: `<!-- wp:formello/form {"lock":{"move":false,"remove":true},"className":""} -->
@@ -100,19 +110,14 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 			return saveEntityRecord( 'postType', 'formello_form', record )
 				.then( ( response ) => {
 					setAttributes( { ref: response.id } );
-					setIsDisabled( false )
+					setIsDisabled( false );
 				} )
 				.catch( ( err ) => {
-					console.log( err )
+					console.log( err );
 				} );
 		},
 		[ saveEntityRecord ]
 	);
-
-	const onBlockPatternSelect = ( blocks ) => {
-		setAttributes( { ref: Number( blocks[ 0 ].attributes.id ) } );
-		setModalOpen( false );
-	};
 
 	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
 		'postType',
@@ -126,12 +131,6 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 		ref
 	);
 
-	useEffect( () => {
-		if ( blocks[0] ) {
-			blocks[0].attributes.id = ref
-		}
-	}, [blocks] );
-
 	const blockProps = useBlockProps( {
 		className: 'block-library-block__reusable-block-container',
 	} );
@@ -140,7 +139,7 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 		value: blocks,
 		onInput,
 		onChange,
-		allowedBlocks: ['formello/form'],
+		allowedBlocks: [ 'formello/form' ],
 		renderAppender: blocks?.length
 			? undefined
 			: InnerBlocks.ButtonBlockAppender,
@@ -160,7 +159,10 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 		return (
 			<div { ...blockProps }>
 				<InspectorControls>
-					<PanelBody title={ __( 'Form Settings', 'formello' ) } initialOpen={ true }>
+					<PanelBody
+						title={ __( 'Form Settings', 'formello' ) }
+						initialOpen={ true }
+					>
 						<SelectControl
 							label={ __( 'Choose a form', 'formello' ) }
 							options={ options }
@@ -171,7 +173,10 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 					</PanelBody>
 				</InspectorControls>
 				<Placeholder
-					instructions={ __( 'Insert from library or create a new form.', 'formello' ) }
+					instructions={ __(
+						'Insert from library or create a new form.',
+						'formello'
+					) }
 					label={ __( 'Insert a form', 'formello' ) }
 				>
 					{ 'widgets' === pagenow ? (
@@ -207,7 +212,7 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 				</Placeholder>
 				{ 'create' === isModalOpen && (
 					<Modal
-						title={ __( 'Create Reusable block' ) }
+						title={ __( 'Create Reusable form' ) }
 						onRequestClose={ () => {
 							setModalOpen( false );
 							createTitle( '' );
@@ -249,19 +254,13 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 					</Modal>
 				) }
 				{ 'templates' === isModalOpen && (
-					<Modal
-						isFullScreen
-						title={ __( 'Choose a pattern' ) }
-						closeLabel={ __( 'Cancel' ) }
-						onRequestClose={ () => setModalOpen( false ) }
-					>
-						<BlockPatternSetup
-							blockName={ 'formello/library' }
-							clientId={ clientId }
-							onBlockPatternSelect={ onBlockPatternSelect }
-							showTitles={ true }
-						/>
-					</Modal>
+					<TemplatesModal
+						blockName={ 'formello/library' }
+						setIsPatternSelectionModalOpen={ () =>
+							setModalOpen( false )
+						}
+						clientId={ clientId }
+					/>
 				) }
 			</div>
 		);
@@ -271,10 +270,14 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 		return (
 			<div { ...blockProps }>
 				<Warning
-					actions={ [ 
-						<Button variant="primary" onClick={ () => setModalOpen( 'create' ) }>
+					actions={ [
+						<Button
+							variant="primary"
+							onClick={ () => setAttributes( { ref: '' } ) }
+							key="create-new"
+						>
 							{ __( 'Create a new form' ) }
-						</Button> 
+						</Button>,
 					] }
 				>
 					{ __( 'Block has been deleted or is unavailable.' ) }
@@ -307,16 +310,18 @@ export default function ReusableBlockEdit( { attributes: { ref }, clientId, setA
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'Form Settings', 'formello' ) } initialOpen={ true }>
-					{
-						! isDisabled && 
+				<PanelBody
+					title={ __( 'Form Settings', 'formello' ) }
+					initialOpen={ true }
+				>
+					{ ! isDisabled && (
 						<TextControl
 							__nextHasNoMarginBottom
 							label={ __( 'Name' ) }
 							value={ title }
 							onChange={ setTitle }
 						/>
-					}
+					) }
 					<SelectControl
 						label={ __( 'Choose a form', 'formello' ) }
 						value={ ref }

@@ -1,18 +1,19 @@
 import { addFilter } from '@wordpress/hooks';
 
-import {
-	ToggleControl,
-	TextareaControl,
-	BaseControl,
-	Notice,
-	Button,
-} from '@wordpress/components';
-import { Fragment, useState, useEffect, useRef } from '@wordpress/element';
+import { ToggleControl, BaseControl } from '@wordpress/components';
+import { Fragment, useState } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 import ClassicEdit from '../../../components/editor.js';
+import MergeTags from '../../../components/merge-tags';
 
-export default function Email( content, props, settings, MergeTags, handleUpdate ) {
+export default function Email(
+	content,
+	props,
+	action,
+	handleUpdate,
+	settingsUrl
+) {
 	const { clientId } = props;
 
 	const id = `editor-${ clientId }`;
@@ -27,7 +28,7 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 			<MergeTags
 				clientId={ clientId }
 				label="From"
-				value={ settings.from }
+				value={ action.from }
 				onChange={ ( val ) => {
 					handleUpdate( 'from', val );
 				} }
@@ -36,7 +37,7 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 			<MergeTags
 				clientId={ clientId }
 				label="To"
-				value={ settings.to }
+				value={ action.to }
 				onChange={ ( val ) => {
 					handleUpdate( 'to', val );
 				} }
@@ -51,11 +52,11 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 			/>
 
 			{ advanced && (
-				<>
+				<Fragment>
 					<MergeTags
 						clientId={ clientId }
 						label="CC"
-						value={ settings.cc }
+						value={ action.cc }
 						onChange={ ( val ) => {
 							handleUpdate( 'cc', val );
 						} }
@@ -64,18 +65,18 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 					<MergeTags
 						clientId={ clientId }
 						label="BCC"
-						value={ settings.bcc }
+						value={ action.bcc }
 						onChange={ ( val ) => {
 							handleUpdate( 'bcc', val );
 						} }
 					/>
-				</>
+				</Fragment>
 			) }
 
 			<MergeTags
 				clientId={ clientId }
 				label={ __( 'Reply to', 'formello' ) }
-				value={ settings.replyTo }
+				value={ action.replyTo }
 				onChange={ ( val ) => {
 					handleUpdate( 'replyTo', val );
 				} }
@@ -84,7 +85,7 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 			<MergeTags
 				clientId={ clientId }
 				label={ __( 'Subject', 'formello' ) }
-				value={ settings.subject }
+				value={ action.subject }
 				onChange={ ( val ) => {
 					handleUpdate( 'subject', val );
 				} }
@@ -93,11 +94,10 @@ export default function Email( content, props, settings, MergeTags, handleUpdate
 			<BaseControl label={ __( 'Message', 'formello' ) }>
 				<ClassicEdit
 					id={ id }
-					value={ settings.message }
+					value={ action.message }
 					onChange={ onChangeMessage }
 				/>
 			</BaseControl>
-
 		</Fragment>
 	);
 }

@@ -8,7 +8,9 @@
 	"textdomain": "formello",
 	"attributes": {
 		"name": {
-			"type": "string"
+			"type": "string",
+			"default": "my_choice",
+			"__experimentalRole": "content"
 		},
 		"type": {
 			"enum": ["radio", "checkbox"],
@@ -63,10 +65,10 @@
 		"spacing": true,
 		"inserter": true,
 		"__experimentalBorder": true,
-		"__experimentalLayout": {
-			"allowSwitching": false,
+		"layout": {
+			"allowSwitching": true,
 			"allowInheriting": false,
-			"allowSizingOnChildren": true,
+			"allowSizingOnChildren": false,
 			"default": {
 				"type": "flex",
 				"justifyContent": "stretch",

@@ -2,7 +2,7 @@
 /**
  * Register custom REST API routes.
  *
- * @package block-visibility
+ * @package formello
  * @since   1.3.0
  */
 
@@ -16,8 +16,10 @@ defined( 'ABSPATH' ) || exit;
 function register_routes() {
 	$base_controller = new Controllers\Base();
 	$base_controller->register_routes();
-	$submission_controller = new Controllers\Submission();
-	$submission_controller->register_routes();
+	$submissions_controller = new Controllers\Submissions();
+	$submissions_controller->register_routes();
+	$columns_controller = new Controllers\Columns();
+	$columns_controller->register_routes();
 	$template_controller = new Controllers\Template();
 	$template_controller->register_routes();
 	$addons_controller = new Controllers\Addons();
@@ -34,3 +36,5 @@ require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Base.php';
 require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Template.php';
 require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Addons.php';
 require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/License.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Submissions.php';
+require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Columns.php';

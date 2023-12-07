@@ -1,12 +1,17 @@
 {
 	"$schema": "https://json.schemastore.org/block.json",
-	"apiVersion": "2",
+	"apiVersion": 2,
 	"name": "formello/form",
 	"title": "Form",
 	"description": "A block collection to build forms.",
 	"category": "formello",
 	"textdomain": "formello",
 	"keywords": ["form", "forms", "formello"],
+    "providesContext": {
+        "formello/captchaEnabled": "captchaEnabled",
+        "formello/captchaType": "captchaType",
+        "formello/formId": "successMessage"
+    },
 	"attributes": {
 		"id": {
 			"type": "string",
@@ -45,12 +50,13 @@
 			"type": "boolean",
 			"default": false
 		},
-		"recaptchaEnabled": {
+		"captchaEnabled": {
 			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-recaptcha",
 			"default": false
+		},
+		"captchaType": {
+			"type": "string",
+			"default": "reCaptcha"
 		},
 		"labelIsBold": {
 			"type": "boolean",
@@ -73,8 +79,7 @@
 			"default": "*"
 		},
 		"storeSubmissions": {
-			"type": "boolean",
-			"default": true
+			"type": "boolean"
 		},
 		"hide": {
 			"type": "boolean",

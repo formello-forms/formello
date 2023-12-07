@@ -3,31 +3,20 @@ import { __ } from '@wordpress/i18n';
 import { useState, useEffect, useContext } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { applyFilters } from '@wordpress/hooks';
+import { useEntityProp } from '@wordpress/core-data';
 import {
-	useEntityProp,
-	EntityProvider,
-} from '@wordpress/core-data';
-
-import {
+	store as blockEditorStore,
 	InspectorControls,
 	BlockControls,
 	useBlockProps,
 	useInnerBlocksProps,
 	InnerBlocks,
-	Warning,
 } from '@wordpress/block-editor';
 
-import {
-	ToolbarButton,
-	ToolbarGroup,
-	Placeholder,
-	Spinner,
-	Disabled,
-} from '@wordpress/components';
+import { ToolbarButton, ToolbarGroup, Disabled } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
 
 import classnames from 'classnames';
-import useSaveForm from './use-save-form';
 
 const ALLOWED_BLOCKS = [
 	'core/paragraph',
@@ -42,7 +31,6 @@ const ALLOWED_BLOCKS = [
 	'formello/select',
 	'formello/multichoices',
 ];
-import apiFetch from '@wordpress/api-fetch';
 
 import TemplatesModal from './templates-modal.js';
 import { Settings } from '../settings/basic';
@@ -54,12 +42,11 @@ import {
 } from '../../../components/merge-tags/functions';
 
 export default function Edit( props ) {
-	const { attributes, className, clientId, hasInnerBlocks } =
-		props;
+	const { attributes, className, clientId, hasInnerBlocks } = props;
 
 	const { postType, postId, fields } = useSelect(
 		( select ) => {
-			const { getBlock } = select( 'core/block-editor' );
+			const { getBlock } = select( blockEditorStore );
 			const block = getBlock( clientId );
 
 			return {
@@ -73,17 +60,24 @@ export default function Edit( props ) {
 
 	const isDisabled = useContext( Disabled.Context );
 
-	const [ meta, setMeta ] = useEntityProp( 'postType', 'formello_form', 'meta', attributes.id );
+	const [ meta, setMeta ] = useEntityProp(
+		'postType',
+		'formello_form',
+		'meta',
+		attributes.id
+	);
+
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
 	useEffect( () => {
-		if ( ! meta ) {
+		if ( ! meta || isDisabled ) {
 			return;
 		}
 
 		const settings = {
 			storeSubmissions: attributes.storeSubmissions,
-			recaptchaEnabled: attributes.recaptchaEnabled,
+			captchaEnabled: attributes.captchaEnabled,
+			captchaType: attributes.captchaType,
 			hide: attributes.hide,
 			debug: attributes.debug,
 			redirect_url: attributes.redirectUrl,
@@ -101,65 +95,46 @@ export default function Edit( props ) {
 		}
 	}, [ fields, attributes ] );
 
-	const saved = useSaveForm();
-
-	const updateTransient = () => {
-		apiFetch( {
-			path: '/formello/v1/patterns/',
-			method: 'POST',
-			data: {},
-		} );
-	};
-
-	if ( saved ) {
-		updateTransient();
-	}
-
 	const getBlockClassNames = () => {
-		return classnames(
-			className,
-			{
-				'as-row': attributes.asRow,
-				'formello-label-right': 'right' === attributes.labelAlign,
-				'is-style-bolded': attributes.labelIsBold,
-			}
-		);
+		return classnames( className, {
+			'as-row': attributes.asRow,
+			'formello-label-right': 'right' === attributes.labelAlign,
+			'is-style-bolded': attributes.labelIsBold,
+		} );
 	};
 
 	const blockProps = useBlockProps( {
 		className: getBlockClassNames(),
 	} );
 
-	{ applyFilters( 'formello.form.allowedBlocks', ALLOWED_BLOCKS ) }
+	{
+		applyFilters( 'formello.form.allowedBlocks', ALLOWED_BLOCKS );
+	}
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 		template: [ [ 'formello/button' ] ],
-		renderAppender: hasInnerBlocks ? InnerBlocks.DefaultBlockAppender : null,
+		renderAppender: hasInnerBlocks
+			? InnerBlocks.DefaultBlockAppender
+			: null,
 		prioritizedInserterBlocks: [
 			'formello/input',
 			'formello/select',
 			'formello/textarea',
-			'formello/multichoices'
-		]
+			'formello/multichoices',
+		],
 	} );
 
 	// It's a preview embed.
 	if ( ! postType || isDisabled ) {
-		return (
-			<div { ...innerBlocksProps }>
-				{ children }
-			</div>
-		);
+		return <div { ...innerBlocksProps }>{ children }</div>;
 	}
 
 	return (
 		<div { ...innerBlocksProps }>
-
 			<BlockControls>
-				{
-					'formello_form' === postType &&
+				{ 'formello_form' === postType && (
 					<ToolbarGroup>
 						<ToolbarButton
 							label={ __( 'Template', 'popper' ) }
@@ -169,7 +144,7 @@ export default function Edit( props ) {
 							} }
 						/>
 					</ToolbarGroup>
-				}
+				) }
 				<Controls { ...props } />
 			</BlockControls>
 
@@ -180,7 +155,9 @@ export default function Edit( props ) {
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
 					blockName={ props.name }
-					setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
+					setIsPatternSelectionModalOpen={ () =>
+						setModalOpen( false )
+					}
 					clientId={ clientId }
 				/>
 			) }

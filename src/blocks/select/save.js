@@ -23,7 +23,9 @@ export default function save( { attributes } ) {
 	} );
 
 	// include only supported attributes
-	const htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES.select.map( ( col ) => [ col, attributes[ col ] ] ) );
+	const htmlAttrs = Object.fromEntries(
+		SUPPORTED_ATTRIBUTES.select.map( ( col ) => [ col, attributes[ col ] ] )
+	);
 
 	const selectedOpts = options
 		.filter( ( x ) => true === x.selected )
@@ -34,9 +36,7 @@ export default function save( { attributes } ) {
 			<label className={ labelClassName } htmlFor={ id }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
-					<span className="required">
-						{ requiredText }
-					</span>
+					<span className="required">{ requiredText }</span>
 				) }
 			</label>
 			<select { ...htmlAttrs } defaultValue={ selectedOpts }>
@@ -52,9 +52,7 @@ export default function save( { attributes } ) {
 					);
 				} ) }
 			</select>
-			{ showHelp && (
-				<RichText.Content tagName="small" value={ help } />
-			) }
+			{ showHelp && <RichText.Content tagName="small" value={ help } /> }
 		</div>
 	);
 }

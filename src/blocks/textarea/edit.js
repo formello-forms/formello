@@ -23,34 +23,18 @@ import Toolbar from '../../components/field-options/toolbar';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
- *
- * @param {Object} [props]           Properties passed from the editor.
- * @param {string} [props.className] Class name generated for the block.
- *
- * @return {WPElement} Element to render.
- */
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
-	const {
-		name,
-		id,
-		cols,
-		rows,
-		value,
-		placeholder,
-		showHelp,
-		help,
-	} = attributes;
+	const { name, id, cols, rows, value, placeholder, showHelp, help } =
+		attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES.textarea;
 
 	useEffect( () => {
-		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
+		const idx = clientId
+			.substr( 2, 6 )
+			.replace( '-', '' )
+			.replace( /-/g, '' );
 		if ( ! id ) {
 			setAttributes( {
 				id: 'field_' + idx,
@@ -109,7 +93,11 @@ export default function Edit( props ) {
 					value={ help }
 					onChange={ ( val ) => setAttributes( { help: val } ) }
 					placeholder={ __( 'Enter help message…', 'formello' ) }
-					allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
+					allowedFormats={ [
+						'core/bold',
+						'core/italic',
+						'core/link',
+					] }
 					multiline={ false }
 				/>
 			) }

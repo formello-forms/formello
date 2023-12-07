@@ -1,7 +1,4 @@
-import {
-	useBlockProps,
-	InnerBlocks,
-} from '@wordpress/block-editor';
+import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
 import classnames from 'classnames';
@@ -12,24 +9,22 @@ export default function save( { attributes, className } ) {
 		labelAlign,
 		id,
 		hide,
-		recaptchaEnabled,
+		captchaEnabled,
+		captchaType,
 		redirectUrl,
 		autoComplete,
 		action,
 		enableJsValidation,
 		noValidate,
 		labelIsBold,
-		noAjax
+		noAjax,
 	} = attributes;
 
-	const formClass = classnames(
-		className,
-		{
-			'as-row': asRow,
-			'formello-label-right': 'right' === labelAlign,
-			'is-style-bolded': labelIsBold,
-		},
-	);
+	const formClass = classnames( className, {
+		'as-row': asRow,
+		'formello-label-right': 'right' === labelAlign,
+		'is-style-bolded': labelIsBold,
+	} );
 
 	const honeypot = '_formello_h' + id;
 	return (
@@ -40,11 +35,11 @@ export default function save( { attributes, className } ) {
 			method="post"
 			data-id={ id }
 			data-hide={ hide || undefined }
-			data-recaptcha={ recaptchaEnabled || undefined }
+			data-captcha={ captchaEnabled ? captchaType : undefined }
 			data-redirect={ redirectUrl || undefined }
 			data-validate={ enableJsValidation || undefined }
 			data-noajax={ noAjax || undefined }
-			novalidate={ noValidate || undefined }
+			noValidate={ noValidate || undefined }
 			autoComplete={ autoComplete }
 			action={ action }
 		>
@@ -53,13 +48,18 @@ export default function save( { attributes, className } ) {
 				type="text"
 				name={ honeypot }
 				className="formello-hp"
-				autoComplete="nope"
-				aria-label={ __( 'If you are human, leave this field blank.', 'formello' ) }
+				aria-label={ __(
+					'If you are human, leave this field blank.',
+					'formello'
+				) }
 				tabIndex="-1"
 			/>
 			<input type="hidden" name="action" value="formello" />
 			<InnerBlocks.Content />
-			<div className="formello-message" id={ 'formello-message-' + id }></div>
+			<div
+				className="formello-message"
+				id={ 'formello-message-' + id }
+			></div>
 		</form>
 	);
 }

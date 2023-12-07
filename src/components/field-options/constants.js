@@ -1,9 +1,5 @@
 export const SUPPORTED_ATTRIBUTES = {
-	hidden: [ 'name',
-		'id',
-		'type',
-		'value',
-	],
+	hidden: [ 'name', 'id', 'type', 'value' ],
 	text: [
 		'name',
 		'id',
@@ -170,12 +166,5 @@ export const SUPPORTED_ATTRIBUTES = {
 		'cols',
 		'rows',
 	],
-	select: [
-		'name',
-		'id',
-		'required',
-		'readonly',
-		'disabled',
-		'multiple',
-	],
+	select: [ 'name', 'id', 'required', 'readonly', 'disabled', 'multiple' ],
 };

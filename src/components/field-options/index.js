@@ -9,7 +9,6 @@ import {
 	ToggleControl,
 	TextControl,
 	Button,
-	ExternalLink
 } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
@@ -18,7 +17,8 @@ import MergeTags from '../merge-tags';
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
 export default function Options( props ) {
-	const { attributes, setAttributes, clientId, setModalOpen, fieldType } = props;
+	const { attributes, setAttributes, clientId, setModalOpen, fieldType } =
+		props;
 
 	const {
 		type,
@@ -35,13 +35,20 @@ export default function Options( props ) {
 
 	return (
 		<Fragment>
-			<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
+			<PanelBody
+				title={ __( 'Options', 'formello' ) }
+				initialOpen={ true }
+			>
 				<TextControl
 					label={ __( 'Name', 'formello' ) }
 					value={ name }
 					onChange={ ( val ) =>
 						setAttributes( { name: val.toLowerCase() } )
 					}
+					help={ __(
+						'Affects the "name" atribute of the input element, and is used as a name for the form submission results.',
+						'formello'
+					) }
 				/>
 				{ supported.includes( 'value' ) && (
 					<MergeTags
@@ -51,12 +58,10 @@ export default function Options( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { value: val } );
 						} }
-						help={ 
-							__(
-								'The initial value of the control field.',
-								'formello'
-							) 
-						}
+						help={ __(
+							'The initial value of the control field.',
+							'formello'
+						) }
 					/>
 				) }
 				{ supported.includes( 'placeholder' ) && (
@@ -66,12 +71,10 @@ export default function Options( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { placeholder: val } )
 						}
-						help={ 
-							__(
-								'Text that appears in the form control when it has no value set.',
-								'formello'
-							) 
-						}
+						help={ __(
+							'Text that appears in the form control when it has no value set.',
+							'formello'
+						) }
 					/>
 				) }
 				{ supported.includes( 'required' ) && (

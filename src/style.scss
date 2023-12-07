@@ -9,13 +9,13 @@ html {
 .formello-message {
 	display: none;
 	box-sizing: border-box;
+	padding: 1em;
 	p {
 		margin: 0;
 	}
 
 	&.success {
 		display: block;
-		padding: 0.5em;
 		background-color: #dff0d8;
 		border: 1px solid #d0e9c6;
 		color: #3c763d;
@@ -23,7 +23,6 @@ html {
 
 	&.error {
 		display: block;
-		padding: 1em;
 		background-color: #fcf8e3;
 		border: 1px solid #faf2cc;
 		color: #8a6d3b;

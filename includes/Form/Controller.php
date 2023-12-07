@@ -59,14 +59,16 @@ class Controller {
 	 */
 	public function listen_for_submit() {
 
-		// If empty skip.
+		// Get the POST data.
 		// phpcs:ignore
-		if ( empty( $_POST['_formello_id'] ) ) {
+		$params = wp_unslash( $_POST );
+
+		// If empty skip.
+		if ( empty( $params['_formello_id'] ) ) {
 			return;
 		}
 
-		// phpcs:ignore
-		$form_id = absint( $_POST['_formello_id'] );
+		$form_id = absint( $params['_formello_id'] );
 		$this->request = new Request( $form_id );
 		$this->request->submit();
 
@@ -83,8 +85,7 @@ class Controller {
 
 			wp_safe_redirect( esc_url( $anchor ) );
 			exit;
-		};
-
+		}
 	}
 
 	/**
@@ -117,14 +118,13 @@ class Controller {
 			wp_send_json( $this->request->get_response() );
 			wp_die();
 
-		};
+		}
 
 		// It's valid! We can proceed.
 		$this->process_form( $this->request );
 
 		wp_send_json( $this->request->get_response(), 200 );
 		wp_die();
-
 	}
 
 	/**
@@ -225,6 +225,5 @@ class Controller {
 		}
 		return $content;
 	}
-
 }
 Controller::get_instance();

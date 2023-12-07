@@ -1,9 +1,6 @@
 import { registerBlockType } from '@wordpress/blocks';
 import metadata from './block.json';
-import {
-	useBlockProps,
-	RichText,
-} from '@wordpress/block-editor';
+import { useBlockProps, RichText } from '@wordpress/block-editor';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -11,7 +8,6 @@ import {
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( metadata, {
-
 	icon: {
 		// Specifying a background color to appear with the icon e.g.: in the inserter.
 		background: '#fff',
@@ -19,21 +15,28 @@ registerBlockType( metadata, {
 		foreground: '#000000',
 
 		src: 'button',
-
 	},
 
-	edit: ( { attributes, setAttributes } ) => {
+	Edit: ( { attributes, setAttributes } ) => {
 		const blockProps = useBlockProps();
 
-		return <RichText
-			{ ...blockProps }
-			tagName="output"
-			value={ attributes.text }
-			onChange={ ( val ) => setAttributes( { text: val } ) }
-			placeholder={ '55' }
-			allowedFormats={ [ 'core/bold' ] }
-		/>;
+		return (
+			<RichText
+				{ ...blockProps }
+				tagName="output"
+				value={ attributes.text }
+				onChange={ ( val ) => setAttributes( { text: val } ) }
+				placeholder={ '55' }
+				allowedFormats={ [ 'core/bold' ] }
+			/>
+		);
 	},
 
-	save: ( { attributes } ) => <RichText.Content { ...useBlockProps.save() } tagName="output" value={ attributes.text } />,
+	save: ( { attributes } ) => (
+		<RichText.Content
+			{ ...useBlockProps.save() }
+			tagName="output"
+			value={ attributes.text }
+		/>
+	),
 } );

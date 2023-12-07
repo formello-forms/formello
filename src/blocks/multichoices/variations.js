@@ -2,32 +2,33 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-	Checkboxes,
-	Radios,
-} from '../../icons/icons';
+import { Checkboxes, Radios } from '../../icons/icons';
 
 const variations = [
 	{
 		name: 'checkboxes',
 		title: __( 'Multiple choices (Checkboxes)' ),
-		description: __( 'Offer users a list of choices, and allow them to select multiple option.', 'formello-pro' ),
+		description: __(
+			'Offer users a list of choices, and allow them to select multiple option.',
+			'formello-pro'
+		),
 		icon: Checkboxes,
 		attributes: {
 			type: 'checkbox',
-			name: 'checkboxes'
 		},
 		scope: [ 'inserter', 'block', 'transform' ],
-		isDefault: true
+		isDefault: true,
 	},
 	{
 		name: 'radios',
 		title: __( 'Single choice (Radio)' ),
-		description: __( 'Offer users a list of choices, and allow them to select a single option.', 'formello-pro' ),
+		description: __(
+			'Offer users a list of choices, and allow them to select a single option.',
+			'formello-pro'
+		),
 		icon: Radios,
 		attributes: {
 			type: 'radio',
-			name: 'radios'
 		},
 		scope: [ 'inserter', 'block', 'transform' ],
 	},

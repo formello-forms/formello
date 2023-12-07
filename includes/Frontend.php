@@ -51,31 +51,26 @@ class Frontend {
 	 */
 	public function listen_for_submit() {
 
-		// only respond to AJAX requests with _formello_id set.
-        // phpcs:ignore
-        if (empty($_POST['_formello_id'])
-			|| empty( $_SERVER['HTTP_X_REQUESTED_WITH'] )
-			|| strtolower( $_SERVER['HTTP_X_REQUESTED_WITH'] ) !== strtolower( 'XMLHttpRequest' ) ) {
-			wp_send_json_error( __( 'Missing form id', 'formello' ), 500 );
+		/*if ( ! check_ajax_referer( '_formello', '_formello', false ) ) {
+			wp_send_json_error( array( 'message' => __( 'Wrong nonce', 'formello' ) ), 500 );
 			wp_die();
-		}
+		}*/
 
         // phpcs:ignore
         $form_id = absint( $_POST['_formello_id'] );
-		$form = new Form( $form_id );
+		$form    = new \Formello\Processor\Form( $form_id );
+		$form->validate();
 
-		if ( ! $form->validate() ) {
-			$form->log( 'debug', 'Not validated:', $form->to_array() );
-			wp_send_json( $form->get_response() );
+		if ( $form->has_errors() ) {
+			$form->log( 'debug', 'Not validated:', $form->get_response() );
+			wp_send_json_error( $form->get_response() );
 			wp_die();
-		};
+		}
 
 		$this->process_form( $form );
-		$form->log( 'debug', 'Form sent:', $form->to_array() );
+		$form->log( 'debug', 'Form sent:', $form->get_response() );
 
-		$response = $form->get_response();
-
-		wp_send_json( $response, 200 );
+		wp_send_json_success( $form->get_response() );
 		wp_die();
 	}
 
@@ -84,8 +79,7 @@ class Frontend {
 	 *
 	 * @param Form $form The form object.
 	 */
-	public function process_form( Form $form ) {
-		$form_settings = $form->get_settings();
+	public function process_form( $form ) {
 
 		/**
 		* General purpose hook that runs before all form actions, so we can still modify the submission object that is passed to actions.
@@ -93,9 +87,7 @@ class Frontend {
 		do_action( 'formello_process_form', $form );
 
 		// save submission object so that other form processor have an insert ID to work with (eg file upload).
-		if ( $form_settings['storeSubmissions'] ) {
-			$form->save();
-		}
+		$form->save();
 
 		$actions = $form->get_actions();
 
@@ -141,6 +133,5 @@ class Frontend {
 		 */
 		do_action( 'formello_form_success', $form );
 	}
-
 }
 Frontend::get_instance();

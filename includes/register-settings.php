@@ -123,7 +123,27 @@ function register_settings() {
 				),
 			),
 		),
+		'captcha' => array(
+			'type' => 'boolean',
+		),
 		'reCaptcha' => array(
+			'type'       => 'object',
+			'properties' => array(
+				'version' => array(
+					'type' => 'string',
+				),
+				'site_key' => array(
+					'type' => 'string',
+				),
+				'secret_key' => array(
+					'type' => 'string',
+				),
+				'threshold' => array(
+					'type' => 'number',
+				),
+			),
+		),
+		'hCaptcha' => array(
 			'type'       => 'object',
 			'properties' => array(
 				'version' => array(

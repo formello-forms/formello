@@ -41,9 +41,9 @@ function register_cpt() {
 		'exclude_from_search' => true,
 		'show_in_nav_menus'   => true,
 		'rewrite'             => false,
-		'rest_controller_class' => '\Formello\Rest\Controllers\Forms',
+		//'rest_controller_class' => '\Formello\Rest\Controllers\Forms',
 		'hierarchical'        => false,
-		'show_in_menu'        => true,
+		'show_in_menu'        => false,
 		'show_in_admin_bar'   => true,
 		'show_in_rest'        => true,
 		'template'            => array(
@@ -59,6 +59,7 @@ function register_cpt() {
 		),
 		//'template_lock'       => 'insert', // This will block template insertion.
 		'supports'            => array(
+			'author',
 			'title',
 			'editor',
 			'excerpt',
@@ -67,7 +68,6 @@ function register_cpt() {
 		),
 	);
 	register_post_type( 'formello_form', $args );
-
 }
 
 /**
@@ -129,7 +129,6 @@ function register_cpt_meta() {
 			},
 		)
 	);
-
 }
 
 add_action( 'init', __NAMESPACE__ . '\register_cpt' );

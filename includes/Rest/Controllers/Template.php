@@ -89,7 +89,6 @@ class Template extends Base {
 		$response->header( 'Content-Disposition', 'attachment; filename=forms.json' );
 
 		return $response;
-
 	}
 
 	/**
@@ -142,7 +141,6 @@ class Template extends Base {
 		}
 
 		return $this->success( __( 'Forms imported!', 'formello' ) );
-
 	}
 
 	/**
@@ -209,7 +207,6 @@ class Template extends Base {
 		set_transient( 'formello_patterns', $local_patterns );
 
 		return $local_patterns;
-
 	}
 
 	/**
@@ -244,7 +241,6 @@ class Template extends Base {
 		set_transient( 'formello_templates', $templates );
 
 		return $templates;
-
 	}
 
 	/**
@@ -263,5 +259,4 @@ class Template extends Base {
 
 		return $forms;
 	}
-
 }

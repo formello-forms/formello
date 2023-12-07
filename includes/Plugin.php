@@ -63,14 +63,15 @@ final class Plugin {
 		// Needs to be included at all times due to show_in_rest.
 		require_once FORMELLO_ABSPATH . 'includes/Utils/Encryption.php';
 		require_once FORMELLO_ABSPATH . 'includes/Utils/functions.php';
+		require_once FORMELLO_ABSPATH . 'includes/Utils/templates.php';
 		require_once FORMELLO_ABSPATH . 'includes/register-settings.php';
 		require_once FORMELLO_ABSPATH . 'includes/register-cpt.php';
 		require_once FORMELLO_ABSPATH . 'includes/Rest/register-routes.php';
 		require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Forms.php';
 		require_once FORMELLO_ABSPATH . 'includes/Assets.php';
 		require_once FORMELLO_ABSPATH . 'includes/Blocks.php';
-		//require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
-		//require_once FORMELLO_ABSPATH . 'includes/Form.php';
+		require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
+		require_once FORMELLO_ABSPATH . 'includes/Form.php';
 		require_once FORMELLO_ABSPATH . 'includes/Updater.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
@@ -78,18 +79,11 @@ final class Plugin {
 		require_once FORMELLO_ABSPATH . 'includes/Log.php';
 		require_once FORMELLO_ABSPATH . 'includes/Cron.php';
 		require_once FORMELLO_ABSPATH . 'includes/Admin/Admin.php';
-		require_once FORMELLO_ABSPATH . 'includes/Form/Controller.php';
-		require_once FORMELLO_ABSPATH . 'includes/Form/Request.php';
-		require_once FORMELLO_ABSPATH . 'includes/Form/Response.php';
-
-		// Only include in the admin.
-		if ( is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			require_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Forms.php';
-			require_once FORMELLO_ABSPATH . 'includes/Admin/Tables/Submissions.php';
-		}
+		//require_once FORMELLO_ABSPATH . 'includes/Form/Controller.php';
+		//require_once FORMELLO_ABSPATH . 'includes/Form/Request.php';
+		//require_once FORMELLO_ABSPATH . 'includes/Form/Response.php';
 
 		do_action( 'formello_loaded' );
-
 	}
 
 	/**

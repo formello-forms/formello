@@ -93,9 +93,11 @@ class Blocks {
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form'
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form',
+			array(
+				'render_callback' => array( $this, 'do_formello_block' ),
+			)
 		);
-
 	}
 
 	/**
@@ -103,11 +105,17 @@ class Blocks {
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
-	 * @param  object $block The bock object.
 	 */
-	public function do_formello_block( $attributes, $content = '', $block ) {
+	public function do_formello_block( $attributes, $content = '' ) {
 
 		do_action( 'formello_block_render' );
+
+		if ( $attributes['captchaEnabled'] && 'reCaptcha' === $attributes['captchaType'] ) {
+			wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
+		}
+		if ( $attributes['captchaEnabled'] && 'hCaptcha' === $attributes['captchaType'] ) {
+			wp_enqueue_script( 'hcaptcha', 'https://js.hcaptcha.com/1/api.js' );
+		}
 
 		return $content;
 	}
@@ -159,7 +167,7 @@ class Blocks {
 
 				$p->set_attribute( 'value', $replacer->parse( $p->get_attribute( 'value' ) ) );
 
-				if ( $attributes['multiple'] ) {
+				if ( $p->get_attribute( 'multiple' ) ) {
 					$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
 				}
 				$input_name = $p->get_attribute( 'name' );
@@ -209,7 +217,7 @@ class Blocks {
 	 */
 	public function do_textarea_block( $attributes, $content = '' ) {
 		$replacer = new TagReplacers\Replacer();
-		$content = $replacer->parse( $content );
+		$content  = $replacer->parse( $content );
 
 		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
 			$p = new \WP_HTML_Tag_Processor( $content );
@@ -233,14 +241,32 @@ class Blocks {
 	 *
 	 * @param  array  $attributes The attributes of block.
 	 * @param  string $content The bock content.
+	 * @param  object $block The bock.
 	 */
-	public function do_button_block( $attributes, $content = '' ) {
+	public function do_button_block( $attributes, $content = '', $block ) {
 		if ( ! is_admin() && ! defined( 'REST_REQUEST' ) ) {
-			$nonce = wp_nonce_field( '_formello', '_formello', true, false );
+			$nonce    = wp_nonce_field( '_formello', '_formello', true, false );
 			$content .= $nonce;
 		}
+		$settings = get_option( 'formello' );
 
-		return $content;
+		$captcha = '';
+		if ( $block->context['formello/captchaEnabled'] && 'reCaptcha' === $block->context['formello/captchaType'] ) {
+			$captcha = sprintf(
+				'<div class="g-recaptcha" data-sitekey="%s" data-size="%s" data-action="submit"></div>',
+				$settings['reCaptcha']['site_key'],
+				'1' === $settings['reCaptcha']['version'] ? 'normal' : 'invisible',
+			);
+		}
+		if ( $block->context['formello/captchaEnabled'] && 'hCaptcha' === $block->context['formello/captchaType'] ) {
+			$captcha = sprintf(
+				'<div class="h-captcha" data-sitekey="%s" data-size="%s" data-action="submit"></div>',
+				$settings['hCaptcha']['site_key'],
+				'1' === $settings['hCaptcha']['version'] ? 'normal' : 'invisible',
+			);
+		}
+
+		return $captcha . $content;
 	}
 
 	/**
@@ -268,26 +294,24 @@ class Blocks {
 			'form',
 			array( 'label' => __( 'Form', 'formello' ) )
 		);
+		register_block_pattern_category(
+			'formello',
+			array( 'label' => __( 'Formello', 'formello' ) )
+		);
 
-		$patterns = get_transient( 'formello_patterns' );
-		$templates = get_transient( 'formello_templates' );
+		$patterns = json_decode(
+			file_get_contents(
+				FORMELLO_PLUGIN_DIR . '/assets/templates/templates.json'
+			),
+			true
+		);
 
-		if ( $patterns && $templates ) {
-			$templates = array_merge( $patterns, $templates );
-		}
-
-		if ( ! $templates ) {
-			return;
-		}
-
-		foreach ( $templates as $pattern ) {
+		foreach ( $patterns as $pattern ) {
 			register_block_pattern(
 				$pattern['name'],
 				$pattern
 			);
 		}
-
 	}
-
 }
 Blocks::get_instance();

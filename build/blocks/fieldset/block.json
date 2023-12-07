@@ -26,7 +26,18 @@
     "html": false,
     "color": true,
     "spacing": true,
-    "__experimentalBorder": true,
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true,
+      "__experimentalDefaultControls": {
+        "color": true,
+        "radius": true,
+        "style": true,
+        "width": true
+      }
+    },
     "__experimentalLayout": {
       "allowSwitching": false,
       "allowInheriting": false,

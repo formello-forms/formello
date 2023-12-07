@@ -12,14 +12,10 @@ import {
 } from '@wordpress/block-editor';
 
 import { ToolbarGroup } from '@wordpress/components';
-
 import { useEffect } from '@wordpress/element';
-
 import classnames from 'classnames';
 
-import {
-	Hidden,
-} from '../../icons/icons';
+import { Hidden } from '../../icons/icons';
 import Label from '../../components/label';
 import Options from '../../components/field-options';
 import ValidationOptions from '../../components/field-options/validation';
@@ -27,6 +23,18 @@ import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
+
+const getNameFromLabel = ( content ) => {
+	return (
+		content
+			// Convert anything that's not a letter or number to a hyphen.
+			.replace( /[^\p{L}\p{N}]+/gu, '_' )
+			// Convert to lowercase
+			.toLowerCase()
+			// Remove any remaining leading or trailing hyphens.
+			.replace( /(^-+)|(-+$)/g, '' )
+	);
+};
 
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
@@ -43,21 +51,21 @@ export default function Edit( props ) {
 		placeholder,
 		autocomplete,
 		help,
+		label,
 	} = attributes;
 
+	const TagName = type === 'textarea' ? 'textarea' : 'input';
 	const supported = SUPPORTED_ATTRIBUTES[ type ];
+	const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
 
 	useEffect( () => {
-		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
 		if ( ! id ) {
 			setAttributes( {
 				id: 'field_' + idx,
 			} );
 		}
 		if ( ! name ) {
-			setAttributes( {
-				name: 'field_' + idx,
-			} );
+			setAttributes( { name: getNameFromLabel( label ) } );
 		}
 	}, [] );
 
@@ -105,10 +113,9 @@ export default function Edit( props ) {
 			</BlockControls>
 			<InspectorControls>
 				<Options { ...props } fieldType={ type } />
-				{
-					'hidden' !== type &&
+				{ 'hidden' !== type && (
 					<ValidationOptions { ...props } fieldType={ type } />
-				}
+				) }
 			</InspectorControls>
 			<InspectorAdvancedControls>
 				<AdvancedOptions { ...props } fieldType={ type } />
@@ -123,7 +130,7 @@ export default function Edit( props ) {
 				</div>
 			) }
 
-			<input
+			<TagName
 				className={ borderProps.className }
 				style={ inputStyle }
 				type={ 'password' !== type ? type : 'text' }
@@ -144,7 +151,11 @@ export default function Edit( props ) {
 					value={ help }
 					onChange={ ( val ) => setAttributes( { help: val } ) }
 					placeholder={ __( 'Enter help message…', 'formello' ) }
-					allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
+					allowedFormats={ [
+						'core/bold',
+						'core/italic',
+						'core/link',
+					] }
 					multiline={ false }
 				/>
 			) }

@@ -15,6 +15,7 @@ import {
 	Tel,
 	Number as NumberField,
 	Radio,
+	Textarea,
 } from '../../icons/icons';
 
 const variations = [
@@ -23,49 +24,32 @@ const variations = [
 		title: __( 'Text' ),
 		icon: Input,
 		description: __( 'A basic single-line text field.', 'formello' ),
-		attributes: {
-			name: 'text',
-			type: 'text',
-			label: 'Text Input',
-			checked: undefined,
-		},
-		scope: [ 'block', 'transform' ],
+		attributes: { type: 'text' },
+		scope: [ 'transform' ],
 	},
 	{
 		name: 'hidden',
 		title: __( 'Hidden' ),
 		description: __( 'Display hidden field.', 'formello' ),
 		icon: Hidden,
-		attributes: {
-			name: 'hidden',
-			type: 'hidden',
-			label: 'Hidden Input',
-			required: false,
-		},
+		attributes: { type: 'hidden' },
 		scope: [ 'inserter' ],
 	},
 	{
 		name: 'checkbox',
 		title: __( 'Checkbox' ),
+		description: __( 'A simple checkbox input.' ),
 		icon: Checkbox,
-		attributes: {
-			name: 'checkbox',
-			type: 'checkbox',
-			label: 'Checkbox',
-			placeholder: undefined,
-		},
+		attributes: { type: 'checkbox' },
 		scope: [ 'inserter' ],
 	},
 	{
 		name: 'radio',
 		title: __( 'Radio' ),
+		description: __( 'A simple radio input.' ),
 		icon: Radio,
-		attributes: {
-			name: 'radio',
-			type: 'radio',
-			label: 'Radio',
-		},
-		scope: [ 'inserter' ],
+		attributes: { type: 'radio' },
+		scope: [ 'block' ],
 	},
 	{
 		name: 'gdpr',
@@ -86,115 +70,98 @@ const variations = [
 		name: 'range',
 		title: __( 'Range' ),
 		icon: Range,
-		attributes: {
-			name: 'range',
-			type: 'range',
-			label: 'Range',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'range' },
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'email',
 		title: __( 'Email' ),
+		description: __( 'Used for email addresses.' ),
 		icon: Email,
-		attributes: {
-			name: 'email',
-			type: 'email',
-			label: 'Email',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'email' },
+		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'number',
 		title: __( 'Number' ),
 		icon: NumberField,
-		attributes: {
-			name: 'number',
-			type: 'number',
-			label: 'Number',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'number' },
+		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'color',
 		title: __( 'Color' ),
 		icon: Color,
-		attributes: {
-			name: 'color',
-			type: 'color',
-			label: 'Color',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'color' },
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'date',
 		title: __( 'Date' ),
 		icon: Calendar,
-		attributes: {
-			name: 'date',
-			type: 'date',
-			label: 'Date',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'date' },
+		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'time',
 		title: __( 'Time' ),
 		icon: Clock,
-		attributes: {
-			name: 'time',
-			type: 'time',
-			label: 'Time',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'time' },
+		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'tel',
 		title: __( 'Tel' ),
 		icon: Tel,
-		attributes: {
-			name: 'tel',
-			type: 'tel',
-			label: 'Tel',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'tel' },
+		scope: [ 'inserter', 'transform' ],
+	},
+	{
+		name: 'textarea',
+		title: __( 'Textarea' ),
+		icon: Textarea,
+		attributes: { type: 'textarea' },
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'url',
 		title: __( 'Url' ),
 		icon: Url,
-		attributes: {
-			name: 'url',
-			type: 'url',
-			label: 'URL',
-		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		attributes: { type: 'url' },
+		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'inputbutton',
 		title: __( 'Input with button' ),
-		icon: <SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-			<Rect
-				x="4.75"
-				y="15.25"
-				width="6.5"
-				height="14.5"
-				transform="rotate(-90 4.75 15.25)"
-				stroke="currentColor"
-				strokeWidth="1.5"
-				fill="none"
-			/>
-			<Rect x="14" y="10" width="4" height="4" rx="1" fill="currentColor" />
-		</SVG>,
+		icon: (
+			<SVG xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+				<Rect
+					x="4.75"
+					y="15.25"
+					width="6.5"
+					height="14.5"
+					transform="rotate(-90 4.75 15.25)"
+					stroke="currentColor"
+					strokeWidth="1.5"
+					fill="none"
+				/>
+				<Rect
+					x="14"
+					y="10"
+					width="4"
+					height="4"
+					rx="1"
+					fill="currentColor"
+				/>
+			</SVG>
+		),
 		attributes: {
 			type: 'email',
 			label: 'Email',
 			withButton: true,
 		},
-		innerBlocks: [
-			[ 'formello/button' ],
-		],
-		scope: [ 'block', 'inserter' ],
+		innerBlocks: [ [ 'formello/button' ] ],
+		scope: [ 'inserter' ],
 	},
 	{
 		name: 'password',
@@ -202,10 +169,12 @@ const variations = [
 		icon: Password,
 		attributes: {
 			type: 'password',
-			pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$',
-			validation: 'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, and 1 number.',
+			pattern:
+				'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$',
+			validation:
+				'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, and 1 number.',
 		},
-		scope: [ 'block', 'inserter', 'transform' ],
+		scope: [ 'inserter' ],
 	},
 ];
 
@@ -223,9 +192,6 @@ variations.forEach( ( variation ) => {
 	}
 	if ( 'date' !== variation.name ) {
 		variation.attributes.advanced = false;
-	}
-	if ( variation.isActive ) {
-		return;
 	}
 	variation.isActive = ( blockAttributes, variationAttributes ) =>
 		blockAttributes.type === variationAttributes.type;

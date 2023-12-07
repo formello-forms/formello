@@ -6,7 +6,7 @@ import './blocks/form';
 import './blocks/form/actions/email';
 import './blocks/library';
 import './blocks/input';
-import './blocks/textarea';
+//import './blocks/textarea';
 import './blocks/select';
 import './blocks/button';
 import './blocks/output';

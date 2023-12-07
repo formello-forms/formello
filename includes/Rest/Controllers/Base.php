@@ -111,19 +111,19 @@ class Base extends WP_REST_Controller {
 	/**
 	 * Recursive sanitation for an array
 	 *
-	 * @param array $array the array of data.
+	 * @param array $my_array the array of data.
 	 *
 	 * @return array
 	 */
-	public function recursive_sanitize_text_field( $array ) {
-		foreach ( $array as $key => &$value ) {
+	public function recursive_sanitize_text_field( $my_array ) {
+		foreach ( $my_array as $key => &$value ) {
 			if ( is_array( $value ) ) {
 				$value = $this->recursive_sanitize_text_field( $value );
 			} else {
 				$value = sanitize_text_field( $value );
 			}
 		}
-		return $array;
+		return $my_array;
 	}
 
 	/**

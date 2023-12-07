@@ -3,25 +3,20 @@ import events from './events.js';
 class Formello {
 	constructor( element ) {
 		this.element = element;
-
-		this.element.addEventListener(
-			'bouncerFormValid',
-			this.handleSubmit.bind( this ),
-			true
-		);
-
 		this.init();
 	}
 
 	init() {
+		const { validate } = this.element.dataset;
 
-		this.reCaptcha();
-		this.isRtfEnabled();
-		this.addFlatpickr();
-
-		const { validate, noajax } = this.element.dataset;
-
-		if ( noajax ) {
+		if ( validate ) {
+			this.enableJsValidation();
+			this.element.addEventListener(
+				'bouncerFormValid',
+				this.handleSubmit.bind( this ),
+				false
+			);
+		} else {
 			this.element.addEventListener(
 				'submit',
 				this.handleSubmit.bind( this ),
@@ -29,211 +24,130 @@ class Formello {
 			);
 		}
 
-		if ( validate && noajax ) {
-			this.element.addEventListener(
-				'bouncerFormValid',
-				this.handleSubmit.bind( this ),
-				true
-			);
+		this.isRtfEnabled();
+		this.addFlatpickr();
+	}
+
+	handleSubmit( e ) {
+		// prevent default, we send trough ajax
+		e.preventDefault();
+		e.stopPropagation();
+
+		this.showLoading();
+
+		const { captcha, noajax } = this.element.dataset;
+
+		if ( noajax ) {
+			this.submitNoAjax();
+			return;
 		}
 
+		if ( ! captcha ) {
+			this.submitForm();
+		} else {
+			this.submitWithCaptcha( captcha );
+		}
 	}
 
 	submitNoAjax() {
 		this.element.submit();
 	}
 
-	handleSubmit( e ) {
-
-		// prevent default, we send trough ajax
-		e.preventDefault();
-		e.stopPropagation();
-
-		const { noajax } = this.element.dataset;
-		if ( noajax ) {
-			this.submitNoAjax();
-			return;
+	submitWithCaptcha( captchaType ) {
+		if ( 'reCaptcha' === captchaType ) {
+			const captcha = this.element.querySelector( '.g-recaptcha' );
+			const { size } = captcha.dataset;
+			if ( 'invisible' === size ) {
+				window.grecaptcha.execute().then( () => this.submitForm() );
+			} else {
+				this.submitForm();
+			}
+		} else {
+			window.hcaptcha.execute().then( () => this.submitForm() );
 		}
-
-		if ( this.enableRecaptcha && '3' === formello.settings.reCaptcha?.version ) {
-			this.showLoading();
-			this.reCaptchaToken();
-			return;
-		}
-
-		this.submitForm();
 	}
 
-	submitForm( token ) {
-		this.showLoading();
+	async submitForm() {
 		this.cleanMessage();
 		this.emitEvent( 'submit' );
 
 		const formData = new FormData( this.element );
 
-		if ( token ) {
-			formData.append( 'g-recaptcha-response', token );
+		try {
+			const res = await fetch( window.formello.ajax_url, {
+				method: 'POST',
+				body: formData,
+			} );
+
+			const resData = await res.json();
+			this.showLoading();
+
+			this.response( resData );
+		} catch ( err ) {
+			this.addMessage( { data: { message: err } } );
 		}
-
-		let request = new XMLHttpRequest();
-		request.onreadystatechange = this.createRequestHandler( this.element );
-		request.open( 'POST', formello.ajax_url, true );
-		request.setRequestHeader( 'X-Requested-With', 'XMLHttpRequest' );
-		request.send( formData );
-		request = null;
 	}
 
-	emitEvent( eventName ) {
-		// browser event API: formElement.on('formello-success', ..)
-		window.dispatchEvent( new CustomEvent( 'formello-' + eventName ) );
-		this.element.dispatchEvent( new CustomEvent( 'formello-' + eventName ) );
+	response( res ) {
+		this.emitEvent( 'submitted', this.element );
 
-		// custom events API: formello.on('success', ..)
-		events.trigger( eventName, [ this.element ] );
-	}
-
-	createRequestHandler( formEl ) {
-		const parent = this;
-
-		return function() {
-			// are we done?
-			if ( this.readyState === 4 ) {
-				parent.showLoading();
-				let response;
-				if ( this.status >= 200 && this.status < 400 ) {
-					try {
-						response = JSON.parse( this.responseText );
-					} catch ( error ) {
-						console.log(
-							'Formello: failed to parse AJAX response.\n\nError: "' +
-								error +
-								'"'
-						);
-						return;
-					}
-
-					parent.emitEvent( 'submitted', this.element );
-
-					if ( response.errors.length ) {
-						parent.emitEvent( 'error', this.element );
-					} else {
-						parent.emitEvent( 'success', this.element );
-					}
-
-					// Should we redirect?
-					if ( response.redirect_url && ! response.errors.length ) {
-						window.location = response.redirect_url;
-						return false;
-					}
-
-					// Show form message
-					if ( response.message ) {
-						parent.addMessage(
-							response.message.text,
-							response.message.type,
-							response.errors,
-							response.hide_form
-						);
-						parent.emitEvent( 'message', this.element );
-					}
-
-					// Should we hide form?
-					if ( response.hide_form ) {
-						parent.element.style.display = 'none';
-					}
-
-					if ( response.debug ) {
-						parent.addDebug( response.debug );
-						console.log( response.debug );
-					}
-
-					// clear form
-					if ( ! response.errors.length ) {
-						parent.element.reset();
-					}
-				} else {
-					response = JSON.parse( this.responseText );
-					parent.addMessage(
-						response.data,
-						'error',
-						[],
-						false
-					);
-					// Server error :(
-					console.log( response );
-				}
-			}
-		};
-	}
-
-	reCaptcha() {
-		const { recaptcha } = this.element.dataset;
-		if ( ! recaptcha ) {
-			return;
-		}
-
-		let recaptchaUrl = 'https://www.google.com/recaptcha/api.js';
-
-		const sitekey = formello.settings.reCaptcha?.site_key;
-		const version = formello.settings.reCaptcha?.version;
-		const button = this.element.querySelector( '.wp-block-formello-button' );
-
-		if ( '1' === version ) {
-			const recaptchaDiv = document.createElement( 'div' );
-			recaptchaDiv.classList.add( 'g-recaptcha' );
-			recaptchaDiv.setAttribute( 'data-sitekey', sitekey );
-
-			this.element.insertBefore( recaptchaDiv, button );
+		if ( res.success ) {
+			this.emitEvent( 'success', this.element );
 		} else {
-			recaptchaUrl += '?render=' + sitekey;
-			const recaptchaInput = document.createElement( 'input' );
-			recaptchaInput.type = 'hidden';
-			recaptchaInput.name = 'g-recaptcha-response';
-			recaptchaInput.classList.add( 'formello-g-recaptcha' );
-			this.element.appendChild( recaptchaInput );
+			this.emitEvent( 'error', this.element );
 		}
-		if ( sitekey && version ) {
-			this.enableRecaptcha = true;
-			const script = document.createElement( 'script' );
-			script.src = recaptchaUrl;
 
-			document.head.appendChild( script );
+		const { data } = res;
+
+		// Should we redirect?
+		if ( data.redirect_url && res.success ) {
+			window.location = data.redirect_url;
+			return false;
+		}
+
+		// Show form message
+		if ( data.message ) {
+			this.addMessage( res );
+			this.emitEvent( 'message', this.element );
+		}
+
+		// Should we hide form?
+		if ( data.hide && res.success ) {
+			this.element.style.display = 'none';
+		}
+
+		if ( data.debug ) {
+			this.addDebug( data.debug );
+			// eslint-disable-next-line no-console
+			console.log( data.debug );
+		}
+
+		// clear form
+		if ( res.success ) {
+			this.element.reset();
 		}
 	}
 
-	reCaptchaToken() {
-		grecaptcha.ready( () => {
-			grecaptcha
-				.execute( formello.settings.reCaptcha.site_key, {
-					action: 'submit',
-				} )
-				.then( ( token ) => {
-					this.showLoading();
-					this.element.querySelector( '.formello-g-recaptcha' ).value =
-						token;
-					this.submitForm();
-				} );
-		} );
-	}
-
-	addMessage( message, type, errors, hide ) {
+	addMessage( res ) {
 		const msg = this.element.querySelector( '.formello-message' );
+		const type = res.success ? 'success' : 'error';
 		msg.classList.add( type );
-		msg.innerHTML = '<p>' + message + '</p>';
+		const { data } = res;
+		msg.innerHTML = '<p>' + data.message + '</p>';
 
-		if ( errors.length ) {
+		if ( data.errors?.length ) {
 			const ul = document.createElement( 'ul' );
 
 			msg.appendChild( ul );
 
-			errors.forEach( function( item ) {
+			data.errors.forEach( function ( item ) {
 				const li = document.createElement( 'li' );
 				ul.appendChild( li );
 				li.innerHTML += item;
 			} );
 		}
 
-		if ( hide ) {
+		if ( data.hide && res.success ) {
 			this.element.insertAdjacentElement( 'afterend', msg );
 		}
 	}
@@ -244,7 +158,8 @@ class Formello {
 		const debugDiv = document.createElement( 'div' );
 		debugDiv.classList.add( 'formello-debug' );
 		debugDiv.innerHTML = '<p>Debug output:</p>';
-		debugDiv.innerHTML += '<small>This output is visible only to admin.</small>';
+		debugDiv.innerHTML +=
+			'<small>This output is visible only to admin.</small>';
 		debugDiv.innerHTML +=
 			'<pre>' + JSON.stringify( debug, undefined, 2 ) + '</pre>';
 
@@ -268,19 +183,88 @@ class Formello {
 		btn.toggleAttribute( 'disabled' );
 	}
 
+	emitEvent( eventName ) {
+		// browser event API: formElement.on('formello-success', ..)
+		window.dispatchEvent( new CustomEvent( 'formello-' + eventName ) );
+		this.element.dispatchEvent(
+			new CustomEvent( 'formello-' + eventName )
+		);
+
+		// custom events API: formello.on('success', ..)
+		events.trigger( eventName, [ this.element ] );
+	}
+
+	enableJsValidation() {
+		const script = document.createElement( 'script' );
+		script.src =
+			'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1/dist/bouncer.polyfills.min.js';
+
+		const { id } = this.element.dataset;
+
+		script.onload = function () {
+			//do stuff with the script
+			new window.Bouncer( `.wp-block-formello-form[data-id='${id}']`, {
+				disableSubmit: true,
+				customValidations: {
+					valueMismatch( field ) {
+						// Look for a selector for a field to compare
+						// If there isn't one, return false (no error)
+						const selector =
+							field.getAttribute( 'data-bouncer-match' );
+						if ( ! selector ) {
+							return false;
+						}
+
+						// Get the field to compare
+						const otherField = field.form.querySelector(
+							'[name=' + selector + ']'
+						);
+						if ( ! otherField ) {
+							return false;
+						}
+
+						// Compare the two field values
+						// We use a negative comparison here because if they do match, the field validates
+						// We want to return true for failures, which can be confusing
+						return otherField.value !== field.value;
+					},
+				},
+				messageCustom: 'data-bouncer-message', // The data attribute to use for custom error messages
+				messages: {
+					missingValue:
+						window.formello.settings.messages.missingValue,
+					patternMismatch:
+						window.formello.settings.messages.patternMismatch,
+					outOfRange: window.formello.settings.messages.outOfRange,
+					wrongLength: window.formello.settings.messages.wrongLength,
+					valueMismatch( field ) {
+						const customMessage = field.getAttribute(
+							'data-bouncer-mismatch-message'
+						);
+						return customMessage
+							? customMessage
+							: 'Please make sure the fields match.';
+					},
+				},
+			} );
+		};
+
+		document.head.appendChild( script );
+	}
+
 	isRtfEnabled() {
 		const richtext = this.element.querySelectorAll( '.formello-rtf' );
 		if ( richtext.length ) {
 			const script = document.createElement( 'script' );
 
-			script.onload = function() {
-				tinymce.init( {
+			script.onload = function () {
+				window.tinymce.init( {
 					selector: '.formello-rtf',
-				    setup: function (editor) {
-				        editor.on('change', function () {
-				            tinymce.triggerSave();
-				        });
-				    },
+					setup: ( editor ) => {
+						editor.on( 'change', () => {
+							window.tinymce.triggerSave();
+						} );
+					},
 					menubar: false,
 					plugins: [
 						'advlist autolink lists link image charmap print preview anchor',
@@ -298,12 +282,14 @@ class Formello {
 			script.src =
 				'https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.3/tinymce.min.js';
 
-			document.head.appendChild( script ); //or something of the likes
+			document.head.appendChild( script );
 		}
 	}
 
 	addFlatpickr() {
-		const advancedDate = this.element.querySelectorAll( 'input.formello-advanced[type=date]' );
+		const advancedDate = this.element.querySelectorAll(
+			'input.formello-advanced[type=date]'
+		);
 		if ( advancedDate.length ) {
 			const script = document.createElement( 'script' );
 			const css = document.createElement( 'link' );
@@ -314,14 +300,14 @@ class Formello {
 			);
 			css.setAttribute( 'rel', 'stylesheet' );
 
-			script.onload = function() {
+			script.onload = function () {
 				//do stuff with the script
-				flatpickr( 'input.formello-advanced[type=date]' );
+				window.flatpickr( 'input.formello-advanced[type=date]' );
 			};
 			script.src = 'https://cdn.jsdelivr.net/npm/flatpickr';
 
-			document.head.appendChild( script ); //or something of the likes
-			document.head.appendChild( css ); //or something of the likes
+			document.head.appendChild( script );
+			document.head.appendChild( css );
 		}
 	}
 }

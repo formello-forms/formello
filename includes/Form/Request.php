@@ -45,7 +45,7 @@ class Request {
 
 		if ( ! empty( $id ) ) {
 			$this->config['settings'] = get_option( 'formello', \Formello\Utils\formello_default_options() );
-			$this->config['ID']       = $id;			
+			$this->config['ID']       = $id;
 			$this->config['actions']  = get_post_meta( $id, '_formello_actions', true );
 			$this->data['fields']     = array();
 			$this->data['actions']    = array();
@@ -58,7 +58,6 @@ class Request {
 
 			$this->logger = Log::get_instance();
 		}
-
 	}
 
 	/**
@@ -146,7 +145,7 @@ class Request {
 		// Remove password, we don't store it.
 		$allowed_fields = array_intersect_key(
 			$fields,
-			array_diff( $this->get_form_setting('fields'), $no_store_fields ),
+			array_diff( $this->get_form_setting( 'fields' ), $no_store_fields ),
 		);
 
 		$data = array(

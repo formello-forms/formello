@@ -1,6 +1,13 @@
 import { __ } from '@wordpress/i18n';
 
-import { TextControl, PanelBody, ToggleControl, Button, ToolbarGroup, ToolbarButton } from '@wordpress/components';
+import {
+	TextControl,
+	PanelBody,
+	ToggleControl,
+	Button,
+	ToolbarGroup,
+	ToolbarButton,
+} from '@wordpress/components';
 import {
 	InspectorControls,
 	BlockControls,
@@ -36,7 +43,10 @@ export default function Edit( props ) {
 						/>
 					</ToolbarGroup>
 				</BlockControls>
-				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Options', 'formello' ) }
+					initialOpen={ true }
+				>
 					<TextControl
 						label={ __( 'Name', 'formello' ) }
 						value={ name }
@@ -48,7 +58,7 @@ export default function Edit( props ) {
 						label={ __( 'Required', 'formello' ) }
 						checked={ required }
 						onChange={ () =>
-							setAttributes( { required: !required } )
+							setAttributes( { required: ! required } )
 						}
 					/>
 					<Button
@@ -61,24 +71,26 @@ export default function Edit( props ) {
 					</Button>
 				</PanelBody>
 			</InspectorControls>
-			{
-				isModalOpen && 
-					<OptionsModal
-						{ ...props }
-						onRequestClose={ () => {
-							setIsModalOpen( false );
-						} }
-					/>
-			}
+			{ isModalOpen && (
+				<OptionsModal
+					{ ...props }
+					onRequestClose={ () => {
+						setIsModalOpen( false );
+					} }
+				/>
+			) }
 			{ options.map( ( opt, index ) => {
 				return (
-					<div key={ index } className={ 'formello formello-checkbox' }>
+					<div
+						key={ index }
+						className={ 'formello formello-checkbox' }
+					>
 						<label>{ opt.label }</label>
-						<input 
-							value={ opt.value || opt.label } 
-							name={ name } 
-							type={ type } 
-							required={ required } 
+						<input
+							value={ opt.value || opt.label }
+							name={ name }
+							type={ type }
+							required={ required }
 							checked={ opt.selected }
 							onChange={ () => console.log( 'change' ) }
 						/>

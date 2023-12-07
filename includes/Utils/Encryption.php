@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Google\Site_Kit\Core\Storage\Data_Encryption
+ * Encryption class
  *
  * @package   Formello
  */

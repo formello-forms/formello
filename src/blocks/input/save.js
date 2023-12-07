@@ -37,28 +37,38 @@ export default function save( { attributes } ) {
 		minDate,
 	} = attributes;
 
+	const TagName = type === 'textarea' ? 'textarea' : 'input';
+
 	const borderProps = getBorderClassesAndStyles( attributes );
 	const spacingProps = getSpacingClassesAndStyles( attributes );
 
 	const containerClass = classnames( 'formello', {
 		'formello-group': withButton || withOutput,
 		'formello-group grouped': grouped,
-		'formello-checkbox':
-			'checkbox' === type || 'radio' === type,
+		'formello-checkbox': 'checkbox' === type || 'radio' === type,
 	} );
 
 	const labelClassName = classnames( {
 		hide: hideLabel,
+		'textarea-label': 'textarea' === type,
 	} );
 
 	const fieldClassName = classnames( borderProps.className, {
 		'formello-advanced': advanced,
+		'formello-rtf': advanced && 'textarea' === type,
 	} );
 
 	// include only supported attributes
-	const htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES[ type ].map( ( col ) => [ col, attributes[ col ] ] ) );
+	const htmlAttrs = Object.fromEntries(
+		SUPPORTED_ATTRIBUTES[ type ].map( ( col ) => [
+			col,
+			attributes[ col ],
+		] )
+	);
 
-	Object.keys( htmlAttrs ).forEach( ( k ) => htmlAttrs[ k ] === '' && delete htmlAttrs[ k ] );
+	Object.keys( htmlAttrs ).forEach(
+		( k ) => htmlAttrs[ k ] === '' && delete htmlAttrs[ k ]
+	);
 
 	if ( validation ) {
 		htmlAttrs[ 'data-bouncer-message' ] = validation;
@@ -100,7 +110,13 @@ export default function save( { attributes } ) {
 	};
 
 	if ( noWrapper || 'hidden' === type ) {
-		return <input { ...htmlAttrs } className={ fieldClassName } style={ inputStyle } />;
+		return (
+			<input
+				{ ...htmlAttrs }
+				className={ fieldClassName }
+				style={ inputStyle }
+			/>
+		);
 	}
 
 	return (
@@ -109,14 +125,16 @@ export default function save( { attributes } ) {
 				<label className={ labelClassName } htmlFor={ id }>
 					<RichText.Content tagName="span" value={ label } />
 					{ required && (
-						<span className="required">
-							{ requiredText }
-						</span>
+						<span className="required">{ requiredText }</span>
 					) }
 				</label>
 			) }
 
-			<input { ...htmlAttrs } className={ fieldClassName } style={ inputStyle } />
+			<TagName
+				{ ...htmlAttrs }
+				className={ fieldClassName }
+				style={ inputStyle }
+			/>
 
 			<InnerBlocks.Content />
 			{ withOutput && <output>{ value }</output> }

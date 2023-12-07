@@ -248,6 +248,4 @@ class Formatter {
 		$steps = array( 'B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' );
 		return round( $size, $precision ) . $steps[ $i ];
 	}
-
-
 }

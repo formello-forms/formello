@@ -17,17 +17,17 @@ defined( 'ABSPATH' ) || exit;
  */
 function formello_default_options() {
 	$defaults = array(
-		'log' => false,
-		'log_file' => 'formello_' . time() . '.txt',
-		'license' => '',
+		'log'            => false,
+		'log_file'       => 'formello_' . time() . '.txt',
+		'license'        => '',
 		'license_status' => '',
-		'version' => '1.0',
-		'messages' => array(
-			'form' => array(
+		'version'        => '1.0',
+		'messages'       => array(
+			'form'            => array(
 				'success' => __( 'Thanks for submitting this form.', 'formello' ),
-				'error' => __( 'Ops. An error occurred.', 'formello' ),
+				'error'   => __( 'Ops. An error occurred.', 'formello' ),
 			),
-			'missingValue' => array(
+			'missingValue'    => array(
 				'default'         => __( 'Please fill out this field.', 'formello' ),
 				'checkbox'        => __( 'This field is required.', 'formello' ),
 				'radio'           => __( 'Please select a value.', 'formello' ),
@@ -44,16 +44,23 @@ function formello_default_options() {
 				'month'   => __( 'Please use the YYYY-MM format', 'formello' ),
 				'default' => __( 'Please match the requested format.', 'formello' ),
 			),
-			'outOfRange' => array(
+			'outOfRange'      => array(
 				'over'  => __( 'Please select a value that is no more than {max}.', 'formello' ),
 				'under' => __( 'Please select a value that is no less than {min}.', 'formello' ),
 			),
-			'wrongLength' => array(
+			'wrongLength'     => array(
 				'over'  => __( 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.', 'formello' ),
 				'under' => __( 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.', 'formello' ),
 			),
 		),
-		'reCaptcha' => array(
+		'captcha'        => false,
+		'reCaptcha'      => array(
+			'version'    => '3',
+			'site_key'   => '',
+			'secret_key' => '',
+			'threshold'  => 0.4,
+		),
+		'hCaptcha'      => array(
 			'version'    => '3',
 			'site_key'   => '',
 			'secret_key' => '',
@@ -72,11 +79,8 @@ function formello_frontend_option() {
 	$settings = get_option( 'formello', formello_default_options() );
 
 	$frontend_settings = array(
-		'messages' => $settings['messages'],
-		'reCaptcha' => $settings['reCaptcha'],
+		'messages'  => $settings['messages'],
 	);
-	// remove the secret from frontend options.
-	unset( $frontend_settings['reCaptcha']['secret_key'] );
 
 	return maybe_unserialize( $frontend_settings );
 }
@@ -93,6 +97,9 @@ function formello_decrypt_option( $settings ) {
 	$crypto = new Encryption();
 
 	$settings = $crypto->decrypt( $settings );
+
+	$settings = apply_filters( 'formello_settings', $settings );
+
 	return maybe_unserialize( $settings );
 }
 
@@ -110,24 +117,22 @@ function formello_encrypt_option( $settings ) {
 /**
  * Recursive sanitation for an array
  *
- * @param mixed $array the array of data.
+ * @param mixed $my_array the array of data.
  *
  * @return mixed
  */
-function recursive_sanitize_text_field( $array ) {
-	if ( ! is_array( $array ) ) {
-		return sanitize_text_field( $array );
+function recursive_sanitize_text_field( $my_array ) {
+	if ( ! is_array( $my_array ) ) {
+		return sanitize_text_field( $my_array );
 	}
-	foreach ( $array as $key => &$value ) {
+	foreach ( $my_array as $key => &$value ) {
 		if ( is_array( $value ) ) {
 			$value = recursive_sanitize_text_field( $value );
-		} else {
-			if ( ! is_bool( $value ) ) {
-				$value = sanitize_text_field( $value );
-			};
+		} elseif ( ! is_bool( $value ) ) {
+			$value = sanitize_text_field( $value );
 		}
 	}
-	return $array;
+	return $my_array;
 }
 
 /**
@@ -169,34 +174,12 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 }
 
 /**
- * [formello_action_row description]
- *
- * @param  array   $actions Actions.
- * @param  WP_POST $post Post.
- * @return string
- */
-function formello_action_row( $actions, $post ) {
-	// check for your post type.
-	if ( 'formello_form' === $post->post_type ) {
-		$view_link = sprintf(
-			'<a href="?post_type=formello_form&page=%s&form_id=%s">%s</a>',
-			'formello-submissions',
-			absint( $post->ID ),
-			__( 'View Entries', 'formello' )
-		);
-
-		array_splice( $actions, 2, 0, array( 'view_entries' => $view_link ) );
-	}
-	return $actions;
-}
-
-/**
  * Retrieve the formello dir.
  *
  * @since 1.4.0
  */
 function formello_dir() {
-	$upload_dir = wp_upload_dir();
+	$upload_dir   = wp_upload_dir();
 	$formello_dir = $upload_dir['basedir'] . DIRECTORY_SEPARATOR . 'formello';
 	if ( ! is_dir( $formello_dir ) ) {
 		wp_mkdir_p( $formello_dir );
@@ -230,63 +213,10 @@ function formello_cron_schedules( $schedules ) {
 	if ( ! isset( $schedules['30min'] ) ) {
 		$schedules['30min'] = array(
 			'interval' => 30 * 60,
-			'display' => __( 'Once every 30 minutes', 'formello' ),
+			'display'  => __( 'Once every 30 minutes', 'formello' ),
 		);
 	}
 	return $schedules;
-}
-
-
-/**
- * Add the custom columns to the book post type.
- *
- * @param array $columns The array of columns.
- *
- * @return array $columns
- */
-function formello_columns_table( $columns ) {
-
-	$columns['shortcode'] = __( 'Shortcode', 'formello' );
-
-	unset( $columns['date'] );
-
-	$columns['date'] = __( 'Date' );
-
-	return $columns;
-}
-
-/**
- * Add the custom columns to the book post type.
- *
- * @param string $column The name of columns.
- * @param number $post_id The post id.
- */
-function formello_columns_display( $column, $post_id ) {
-	switch ( $column ) {
-		case 'shortcode':
-			echo sprintf(
-				'<code>[formello id=%d]</code>',
-				esc_attr( $post_id )
-			);
-			break;
-		default:
-	}
-}
-
-/**
- * Hide shortcode column to the formello forms post type.
- *
- * @param array  $hidden The columns.
- * @param string $screen The screen id.
- */
-function formello_hide_shortcode_columns( $hidden, $screen ) {
-
-	if ( isset( $screen->id ) && 'edit-formello_form' === $screen->id ) {
-		$hidden[] = 'shortcode';
-	}
-
-	return $hidden;
-
 }
 
 /**
@@ -302,14 +232,61 @@ function formello_custom_mime_types( $mimes ) {
 	return $mimes;
 }
 
+/**
+ * Allow upload of json for form importing.
+ */
+function add_submissions_count() {
+
+	$key = 'formello-submissions-count';
+	$query = wp_cache_get( $key, 'formello' );
+	if ( empty( $query ) ) {
+
+		global $wpdb;
+
+		$results = $wpdb->get_results(
+			// phpcs:ignore
+			$wpdb->prepare(
+				'SELECT
+					form_id,
+					count(*) AS total,
+					SUM( is_new = 1 ) AS news 
+				FROM %i
+				GROUP BY form_id',
+				array( "{$wpdb->prefix}formello_submissions" )
+			),
+			ARRAY_A
+		);
+
+		wp_cache_set( $key, $results, 'formello', 3600 );
+	}
+
+	register_rest_field(
+		'formello_form',
+		'submissions_count',
+		array(
+			'get_callback' => function ( $form ) {
+				$key = 'formello-submissions-count';
+				$query = wp_cache_get( $key, 'formello' );
+				$total = array_column( $query, 'total', 'form_id' );
+				$news = array_column( $query, 'news', 'form_id' );
+
+				return array(
+					'total' => $total[ $form['id'] ] ?? '',
+					'news' => $news[ $form['id'] ] ?? '',
+				);
+			},
+			'schema'       => array(
+				'description' => 'List number of submissions attached to this form.',
+				'type'        => 'integer',
+			),
+		)
+	);
+}
+
 // phpcs:ignore.
 add_filter( 'cron_schedules', __NAMESPACE__ . '\formello_cron_schedules' );
 add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option', 5 );
 add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_option' );
 add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
-add_filter( 'post_row_actions', __NAMESPACE__ . '\formello_action_row', 10, 2 );
-add_filter( 'manage_formello_form_posts_columns', __NAMESPACE__ . '\formello_columns_table' );
-add_action( 'manage_formello_form_posts_custom_column', __NAMESPACE__ . '\formello_columns_display', 10, 2 );
-add_filter( 'default_hidden_columns', __NAMESPACE__ . '\formello_hide_shortcode_columns', 10, 2 );
 add_filter( 'upload_mimes', __NAMESPACE__ . '\formello_custom_mime_types', 10 );
-
+add_action( 'rest_api_init', __NAMESPACE__ . '\add_submissions_count', 10, 2 );

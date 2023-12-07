@@ -7,12 +7,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { 
-	Button, 
-	Placeholder,
-	Modal,
-	Flex
-} from '@wordpress/components';
+import { Button, Placeholder, Flex } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
 import TemplatesModal from './templates-modal.js';
 import { useState } from '@wordpress/element';
@@ -77,7 +72,10 @@ function BlockVariationPicker( props ) {
 			<Placeholder
 				icon={ layout }
 				label={ __( 'Choose variation' ) }
-				instructions={ __( 'Select a form to start with.', 'formello' ) }
+				instructions={ __(
+					'Select a form to start with.',
+					'formello'
+				) }
 			>
 				{ /*
 				 * Disable reason: The `list` ARIA role is redundant but
@@ -97,7 +95,9 @@ function BlockVariationPicker( props ) {
 								iconSize={ 48 }
 								onClick={ () => onSelect( variation ) }
 								className="block-editor-block-variation-picker__variation"
-								label={ variation.description || variation.title }
+								label={
+									variation.description || variation.title
+								}
 							/>
 							<span
 								className="block-editor-block-variation-picker__variation-label"
@@ -127,7 +127,9 @@ function BlockVariationPicker( props ) {
 				{ 'templates' === isModalOpen && (
 					<TemplatesModal
 						blockName={ props.name }
-						setIsPatternSelectionModalOpen={ () => setModalOpen( false ) }
+						setIsPatternSelectionModalOpen={ () =>
+							setModalOpen( false )
+						}
 						clientId={ clientId }
 					/>
 				) }

@@ -7,9 +7,9 @@
 
 namespace Formello;
 
-use \Katzgrau\KLogger\Logger;
+use Katzgrau\KLogger\Logger;
 use function Formello\Utils\formello_dir;
-use \Formello\Submission as Data;
+use Formello\Submission as Data;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -96,7 +96,7 @@ class Cron {
 	}
 
 	/**
-	 * Delete all logs and tmp folder.
+	 * Delete all logs.
 	 *
 	 * @since 1.2.0
 	 */
@@ -106,7 +106,7 @@ class Cron {
 	}
 
 	/**
-	 * Delete all logs and tmp folder.
+	 * Delete tmp folder.
 	 *
 	 * @since 1.2.0
 	 */
@@ -114,6 +114,5 @@ class Cron {
 		$tmp_folder = formello_dir() . '/tmp';
 		array_map( 'unlink', array_filter( (array) glob( $tmp_folder . '/*' ) ) );
 	}
-
 }
 Cron::get_instance();

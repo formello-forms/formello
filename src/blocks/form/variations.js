@@ -21,10 +21,7 @@ const variations = [
 			</SVG>
 		),
 		isDefault: true,
-		innerBlocks: [
-			[ 'core/paragraph' ],
-			[ 'formello/button' ],
-		],
+		innerBlocks: [ [ 'core/paragraph' ], [ 'formello/button' ] ],
 		scope: [ 'block' ],
 	},
 	{

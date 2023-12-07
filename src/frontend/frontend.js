@@ -1,43 +1,6 @@
 import { Formello } from './form';
-import Bouncer from 'formbouncerjs';
 
-new Bouncer( '.wp-block-formello-form[data-validate]', {
-	disableSubmit: true,
-	customValidations: {
-		valueMismatch( field ) {
-			// Look for a selector for a field to compare
-			// If there isn't one, return false (no error)
-			const selector = field.getAttribute( 'data-bouncer-match' );
-			if ( ! selector ) {
-				return false;
-			}
-
-			// Get the field to compare
-			const otherField = field.form.querySelector( '[name=' + selector + ']' );
-			if ( ! otherField ) {
-				return false;
-			}
-
-			// Compare the two field values
-			// We use a negative comparison here because if they do match, the field validates
-			// We want to return true for failures, which can be confusing
-			return otherField.value !== field.value;
-		},
-	},
-	messageCustom: 'data-bouncer-message', // The data attribute to use for custom error messages
-	messages: {
-		missingValue: formello.settings.messages.missingValue,
-		patternMismatch: formello.settings.messages.patternMismatch,
-		outOfRange: formello.settings.messages.outOfRange,
-		wrongLength: formello.settings.messages.wrongLength,
-		valueMismatch( field ) {
-			const customMessage = field.getAttribute( 'data-bouncer-mismatch-message' );
-			return customMessage ? customMessage : 'Please make sure the fields match.';
-		},
-	},
-} );
-
-document.addEventListener( 'DOMContentLoaded', function() {
+document.addEventListener( 'DOMContentLoaded', function () {
 	const forms = document.querySelectorAll( '.wp-block-formello-form' );
 
 	if ( ! forms.length ) {
@@ -45,9 +8,6 @@ document.addEventListener( 'DOMContentLoaded', function() {
 	}
 
 	forms.forEach( ( block ) => {
-		if( block.hasAttribute( 'data-validate' ) ){
-			block.setAttribute( 'novalidate', true )
-		}
 		new Formello( block );
 	} );
 } );

@@ -32,5 +32,4 @@ class Forms extends \WP_REST_Posts_Controller {
 
 		return true;
 	}
-
 }

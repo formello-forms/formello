@@ -16,17 +16,11 @@ export default function Label( { attributes, setAttributes } ) {
 		requiredText,
 	} = attributes;
 
-	const labelClassName = classnames(
-		labelClass,
-		labelAlign,
-		labelVAlign,
-		{
-			hide: hideLabel,
-			required,
-			'textarea-label':
-				multiple || 'textarea' === type,
-		}
-	);
+	const labelClassName = classnames( labelClass, labelAlign, labelVAlign, {
+		hide: hideLabel,
+		required,
+		'textarea-label': multiple || 'textarea' === type,
+	} );
 
 	return (
 		<label className={ labelClassName } htmlFor="input">
@@ -35,16 +29,10 @@ export default function Label( { attributes, setAttributes } ) {
 				value={ label }
 				onChange={ ( val ) => setAttributes( { label: val } ) }
 				placeholder={ __( 'Enter label…', 'formello' ) }
-				allowedFormats={ [
-					'core/bold',
-					'core/italic',
-					'core/link',
-				] }
+				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
 			/>
 
-			{ required && (
-				<span className="required">{ requiredText }</span>
-			) }
+			{ required && <span className="required">{ requiredText }</span> }
 		</label>
 	);
 }

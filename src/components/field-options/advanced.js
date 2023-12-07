@@ -1,14 +1,8 @@
 import { __ } from '@wordpress/i18n';
 
-import {
-	ToggleControl,
-	TextControl,
-	withFilters,
-} from '@wordpress/components';
+import { ToggleControl, TextControl, withFilters } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
-import {
-	store as blockEditorStore,
-} from '@wordpress/block-editor';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 import { createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 
@@ -24,9 +18,7 @@ function AdvancedOptions( props ) {
 			enableAutoComplete,
 			autocomplete,
 			readonly,
-			cols,
-			rows,
-			enableRtf,
+			advanced,
 		},
 		setAttributes,
 		fieldType,
@@ -44,8 +36,7 @@ function AdvancedOptions( props ) {
 		[ clientId ]
 	);
 
-	const { replaceInnerBlocks } =
-		useDispatch( blockEditorStore );
+	const { replaceInnerBlocks } = useDispatch( blockEditorStore );
 
 	const addOutput = () => {
 		let child = 'formello/button';
@@ -54,63 +45,33 @@ function AdvancedOptions( props ) {
 		}
 		replaceInnerBlocks(
 			props.clientId,
-			createBlocksFromInnerBlocksTemplate(
-				[ [ child ] ]
-			),
+			createBlocksFromInnerBlocksTemplate( [ [ child ] ] ),
 			true
 		);
 	};
 
 	return (
 		<Fragment>
-			{	supported.includes( 'cols' ) && (
-				<Fragment>
-					<TextControl
-						type="number"
-						label={ __( 'Cols', 'formello' ) }
-						value={ cols }
-						onChange={ ( val ) =>
-							setAttributes( { cols: Number( val ) } )
-						}
-						help={
-							__( 'The visible width of the control.', 'formello' )
-						}
-					/>
-					<TextControl
-						type="number"
-						label={ __( 'Rows', 'formello' ) }
-						value={ rows }
-						onChange={ ( val ) =>
-							setAttributes( { rows: Number( val ) } )
-						}
-						help={
-							__( 'The number of visible text lines for the control.', 'formello' )
-						}
-					/>
-					<ToggleControl
-						label={ __( 'Enable Rich Text', 'formello' ) }
-						checked={ enableRtf }
-						onChange={ ( newval ) =>
-							setAttributes( { enableRtf: newval } )
-						}
-					/>
-				</Fragment>
+			{ 'textarea' === type && (
+				<ToggleControl
+					label={ __( 'Enable Rich Text', 'formello' ) }
+					checked={ advanced }
+					onChange={ ( newval ) =>
+						setAttributes( { advanced: newval } )
+					}
+				/>
 			) }
-			{
-				supported.includes( 'autocomplete' ) &&
+			{ supported.includes( 'autocomplete' ) && (
 				<ToggleControl
 					label={ __( 'Autocomplete', 'formello' ) }
 					checked={ enableAutoComplete }
 					onChange={ ( newval ) =>
 						setAttributes( { enableAutoComplete: newval } )
 					}
-					help={
-						__( 'Hint for form autofill feature.', 'formello' )
-					}
+					help={ __( 'Hint for form autofill feature.', 'formello' ) }
 				/>
-			}
-			{
-				enableAutoComplete && supported.includes( 'autocomplete' ) &&
+			) }
+			{ enableAutoComplete && supported.includes( 'autocomplete' ) && (
 				<TextControl
 					label={ __( 'Autocomplete attribute', 'formello' ) }
 					value={ autocomplete }
@@ -118,7 +79,7 @@ function AdvancedOptions( props ) {
 						setAttributes( { autocomplete: newval } )
 					}
 				/>
-			}
+			) }
 			{ 'range' === type && (
 				<ToggleControl
 					label={ __( 'Show output', 'formello' ) }
@@ -129,11 +90,7 @@ function AdvancedOptions( props ) {
 							addOutput();
 						} else {
 							setAttributes( { withOutput: false } );
-							replaceInnerBlocks(
-								clientId,
-								[],
-								true
-							);
+							replaceInnerBlocks( clientId, [], true );
 						}
 					} }
 				/>
@@ -146,9 +103,10 @@ function AdvancedOptions( props ) {
 						onChange={ ( newval ) =>
 							setAttributes( { disabled: newval } )
 						}
-						help={
-							__( 'Make the control not accept clicks.', 'formello' )
-						}
+						help={ __(
+							'Make the control not accept clicks.',
+							'formello'
+						) }
 					/>
 					<ToggleControl
 						label={ __( 'Read only', 'formello' ) }
@@ -156,9 +114,7 @@ function AdvancedOptions( props ) {
 						onChange={ ( newval ) =>
 							setAttributes( { readonly: newval } )
 						}
-						help={
-							__( 'Make value not editable.', 'formello' )
-						}
+						help={ __( 'Make value not editable.', 'formello' ) }
 					/>
 				</Fragment>
 			) }

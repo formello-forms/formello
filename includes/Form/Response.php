@@ -11,7 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use \Rakit\Validation\Validator;
 use Formello\Log;
 use Formello\TagReplacers\Replacer;
 

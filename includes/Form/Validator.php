@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use \Rakit\Validation\Validator as SDK;
+use Rakit\Validation\Validator as SDK;
 use Formello\TagReplacers\Replacer;
 
 /**
@@ -47,7 +47,6 @@ class Validator {
 	 */
 	private function sanitize() {
 		// clean up post request.
-		// phpcs:ignore
 		$posted_values = array_intersect_key( $_POST, $this->get_fields_definitions() );
 
 		// filter out ignored field names and sanitize.
@@ -111,6 +110,11 @@ class Validator {
 
 		if ( isset( $captcha_validate ) && false === $captcha_validate ) {
 			$this->add_error( __( 'Invalid reCaptcha.', 'formello' ) );
+			return true;
+		}
+
+		if ( isset( $captcha_validate ) && $captcha_validate['score'] && $captcha_validate['score'] < 0.5 ) {
+			$this->add_error( __( 'Go away spammer.', 'formello' ) );
 			return true;
 		}
 

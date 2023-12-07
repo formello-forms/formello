@@ -98,10 +98,10 @@ class Assets {
 		*/
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
+		wp_add_inline_script( 'formello-admin', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 		wp_add_inline_script( 'formello-addons', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 		wp_add_inline_script( 'formello-settings', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 		wp_add_inline_script( 'formello-form-editor-script', 'const formello = ' . wp_json_encode( $settings ), 'before' );
-
 	}
 
 	/**
@@ -126,34 +126,20 @@ class Assets {
 	 * @throws \Error Assets not loaded.
 	 */
 	public function get_scripts() {
-		$settings_asset_path = FORMELLO_ABSPATH . '/build/settings.asset.php';
-		$submission_asset_path = FORMELLO_ABSPATH . '/build/submission.asset.php';
-		if ( ! file_exists( $settings_asset_path ) ) {
+		$admin_asset_path = FORMELLO_ABSPATH . '/build/admin.asset.php';
+		if ( ! file_exists( $admin_asset_path ) ) {
 			throw new \Error(
 				'You need to run `npm start` or `npm run build` for the "create-block/formello" block first.'
 			);
 		}
 
-		$settings_script_asset = require $settings_asset_path;
-		$submission_script_asset = require $settings_asset_path;
+		$admin_script_asset = require $admin_asset_path;
 
 		$scripts = array(
-			'formello-settings' => array(
-				'src'       => FORMELLO_ASSETS . '/settings.js',
-				'deps'      => $settings_script_asset['dependencies'],
-				'version'   => $settings_script_asset['version'],
-				'in_footer' => true,
-			),
-			'formello-addons' => array(
-				'src'       => FORMELLO_ASSETS . '/addons.js',
-				'deps'      => $settings_script_asset['dependencies'],
-				'version'   => $settings_script_asset['version'],
-				'in_footer' => true,
-			),
-			'formello-submission' => array(
-				'src'       => FORMELLO_ASSETS . '/submission.js',
-				'deps'      => $submission_script_asset['dependencies'],
-				'version'   => $submission_script_asset['version'],
+			'formello-admin' => array(
+				'src'       => FORMELLO_ASSETS . '/admin.js',
+				'deps'      => $admin_script_asset['dependencies'],
+				'version'   => $admin_script_asset['version'],
 				'in_footer' => true,
 			),
 		);
@@ -181,14 +167,13 @@ class Assets {
 			'formello-form-block'        => array(
 				'src' => FORMELLO_ASSETS . '/style-index.css',
 			),
-			'formello-settings'          => array(
-				'src'  => FORMELLO_ASSETS . '/style-settings.css',
+			'formello-admin'          => array(
+				'src'  => FORMELLO_ASSETS . '/style-admin.css',
 				'deps' => array( 'wp-components', 'wp-reset-editor-styles' ),
 			),
 		);
 
 		return $styles;
 	}
-
 }
 Assets::get_instance();

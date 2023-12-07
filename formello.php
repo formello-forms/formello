@@ -11,7 +11,7 @@
  * Text Domain: formello
  * Domain Path: /languages
  *
- * @package Formello
+ * @package     Formello
  */
 
 // don't call the file directly.
@@ -28,7 +28,7 @@ if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
 }
 
 if ( ! class_exists( 'Formello' ) ) {
-	require_once dirname( FORMELLO_PLUGIN_FILE ) . '/includes/Plugin.php';
+	require_once __DIR__ . '/includes/Plugin.php';
 }
 
 /**

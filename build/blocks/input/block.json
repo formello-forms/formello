@@ -20,8 +20,7 @@
       "type": "string",
       "source": "attribute",
       "selector": "input",
-      "attribute": "id",
-      "default": ""
+      "attribute": "id"
     },
     "name": {
       "type": "string",
@@ -33,7 +32,8 @@
       "type": "string",
       "source": "html",
       "selector": "label span:not(.required)",
-      "default": "My input"
+      "default": "Label",
+      "__experimentalRole": "content"
     },
     "hideLabel": {
       "type": "boolean",
@@ -44,7 +44,8 @@
       "type": "string",
       "source": "attribute",
       "selector": "input",
-      "attribute": "placeholder"
+      "attribute": "placeholder",
+      "__experimentalRole": "content"
     },
     "value": {
       "type": "string",

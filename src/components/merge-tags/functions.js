@@ -1,13 +1,20 @@
 import { applyFilters } from '@wordpress/hooks';
-import {
-	useEntityProp,
-} from '@wordpress/core-data';
+import { useEntityProp } from '@wordpress/core-data';
 import { useSelect } from '@wordpress/data';
 
-const { getBlock, getClientIdsOfDescendants, getBlockParents, getBlockParentsByBlockName } =
-	wp.data.select( 'core/block-editor' );
+const {
+	getBlock,
+	getClientIdsOfDescendants,
+	getBlockParents,
+	getBlockParentsByBlockName,
+} = wp.data.select( 'core/block-editor' );
 
-const allowed = [ 'formello/input', 'formello/select', 'formello/textarea', 'formello/multichoices' ];
+const allowed = [
+	'formello/input',
+	'formello/select',
+	'formello/textarea',
+	'formello/multichoices',
+];
 
 /**
  * Find the root form block.
@@ -169,7 +176,11 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'min:' + field.attributes.min );
 	}
 
-	if ( field.attributes.max && 'date' !== field.attributes.type && 'file' !== field.attributes.type ) {
+	if (
+		field.attributes.max &&
+		'date' !== field.attributes.type &&
+		'file' !== field.attributes.type
+	) {
 		constraints.push( 'max:' + field.attributes.max );
 	}
 
@@ -193,10 +204,7 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'regex:' + regEx );
 	}
 
-	if (
-		field.attributes.advanced &&
-		'date' !== field.attributes.type
-	) {
+	if ( field.attributes.advanced && 'date' !== field.attributes.type ) {
 		constraints.push( 'date:' + field.attributes.dateFormat );
 	}
 
@@ -214,7 +222,6 @@ export function getFieldConstraint( field ) {
 }
 
 export function getMetaTags() {
-
 	const { postType, postId } = useSelect( ( select ) => {
 		return {
 			postType: select( 'core/editor' ).getCurrentPostType(),
@@ -222,11 +229,11 @@ export function getMetaTags() {
 		};
 	} );
 
-	const [meta] = useEntityProp( 'postType', postType, 'meta', postId );
+	const [ meta ] = useEntityProp( 'postType', postType, 'meta', postId );
 	const metaTags = [];
 
-	for (const key in meta) {
-		if( meta[key] !== Object(key) ){
+	for ( const key in meta ) {
+		if ( meta[ key ] !== Object( key ) ) {
 			continue;
 		}
 		const tag = {
@@ -354,7 +361,8 @@ export function getPatternTabs() {
 		{
 			title: 'Password with special characters',
 			tag: `^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$`,
-			description: 'One uppercase, one number, one special chars, at least 8 chars',
+			description:
+				'One uppercase, one number, one special chars, at least 8 chars',
 		},
 	];
 

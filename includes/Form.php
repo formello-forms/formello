@@ -80,7 +80,7 @@ class Form {
 	/**
 	 * The form log
 	 *
-	 * @var boolean
+	 * @var Formello\Log
 	 */
 	protected $logger;
 
@@ -107,7 +107,6 @@ class Form {
 		}
 		// parse default settings.
 		$this->settings = $this->parse_settings( $settings );
-
 	}
 
 	/**
@@ -338,7 +337,6 @@ class Form {
 
 		$formello_result = get_transient( 'formello_news', false );
 		set_transient( 'formello_news', $formello_result + 1, DAY_IN_SECONDS );
-
 	}
 
 	/**
@@ -629,10 +627,7 @@ class Form {
 		$response = array(
 			'hide_form' => (bool) $data['settings']['hide'],
 			'errors' => $data['errors'],
-			'message' => array(
-				'type'   => $type,
-				'text'   => $this->get_message( $type ),
-			),
+			'message' => $this->get_message( $type ),
 		);
 
 		if ( ! empty( $data['settings']['redirect_url'] ) ) {

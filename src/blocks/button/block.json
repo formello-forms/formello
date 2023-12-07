@@ -8,6 +8,7 @@
 	"ancestor": ["formello/form"],
 	"icon": "button",
 	"textdomain": "formello",
+    "usesContext": ["formello/captchaEnabled", "formello/captchaType", "formello/formId"],
 	"attributes": {
 		"text": {
 			"type": "string",

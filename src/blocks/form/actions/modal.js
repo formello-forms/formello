@@ -6,21 +6,12 @@ import { addQueryArgs } from '@wordpress/url';
 import { applyFilters } from '@wordpress/hooks';
 import { __, sprintf } from '@wordpress/i18n';
 
-import MergeTags from '../../../components/merge-tags';
-//import ClassicEdit from '../../../components/editor.js';
-
 export function ActionsModal( props ) {
-	const {
-		onRequestClose,
-		settings,
-		deleteAction,
-		updateAction,
-	} = props;
+	const { onRequestClose, settings, deleteAction, updateAction } = props;
 
 	const [ action, setAction ] = useState( Object.assign( {}, settings ) );
 
-	const settingsUrl = addQueryArgs( 'edit.php', {
-		post_type: 'formello_form',
+	const settingsUrl = addQueryArgs( 'admin.php', {
 		page: 'formello-settings',
 		tab: 'integrations',
 	} );
@@ -40,10 +31,11 @@ export function ActionsModal( props ) {
 				<TextControl
 					label={ __( 'Title' ) }
 					value={ action.title }
-					onChange={ ( val ) =>
-						updateSettings( 'title', val )
-					}
-					help={ __( 'Name of the action. For debug purpose.', 'formello' ) }
+					onChange={ ( val ) => updateSettings( 'title', val ) }
+					help={ __(
+						'Name of the action. For debug purpose.',
+						'formello'
+					) }
 				/>
 				<Fragment>
 					{ applyFilters(
@@ -51,10 +43,8 @@ export function ActionsModal( props ) {
 						'',
 						props,
 						action,
-						MergeTags,
-						//ClassicEdit,
 						updateSettings,
-						settingsUrl,
+						settingsUrl
 					) }
 
 					<div className="formello-modal-buttons">
@@ -73,7 +63,13 @@ export function ActionsModal( props ) {
 								if (
 									window.confirm(
 										/* translators: %s: Name of form action */
-										sprintf( __( `Delete action %s?`, 'formello' ), settings.title )
+										sprintf(
+											__(
+												`Delete action %s?`,
+												'formello'
+											),
+											settings.title
+										)
 									)
 								) {
 									deleteAction( action );
