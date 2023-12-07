@@ -7,7 +7,11 @@ import {
 	Button,
 } from '@wordpress/components';
 
-import { RawHTML, Fragment, createInterpolateElement } from '@wordpress/element';
+import {
+	RawHTML,
+	Fragment,
+	createInterpolateElement,
+} from '@wordpress/element';
 
 import { __, sprintf } from '@wordpress/i18n';
 
@@ -18,9 +22,14 @@ const IntegrationsTab = () => {
 			a: (
 				<Button
 					text={ __( 'addons page', 'search-console' ) }
-					onClick={ () =>
-						navigator.goTo( '/formello-addons/general' )
-					}
+					onClick={ () => {
+						window.dispatchEvent(
+							new CustomEvent( 'changePage', {
+								detail: '?page=formello-addons',
+							} )
+						);
+						navigator.goTo( '/formello-addons/general' );
+					} }
 					variant="link"
 				/>
 			),
@@ -35,19 +44,12 @@ const IntegrationsTab = () => {
 				<CardBody>
 					<p>
 						{ noticeString(
-							__( 'Go to <a /> to download your preferred integrations.', 'tropical-juice' )
+							__(
+								'Go to <a /> to enable your preferred integrations.',
+								'formello'
+							)
 						) }
 					</p>
-					<RawHTML>
-						{ sprintf(
-							/* translators: Link to addons. */
-							__(
-								'<p>Go to %s to download your preferred integrations. We are working on other integrations.</p>',
-								'formello'
-							),
-							`<a href="https://formello.net/addons/" target="_blank">addons page</a>`
-						) }
-					</RawHTML>
 				</CardBody>
 			</Card>
 		</Fragment>

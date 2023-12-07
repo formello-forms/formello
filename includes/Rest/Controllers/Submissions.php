@@ -94,7 +94,6 @@ class Submissions extends Base {
 
 		$submission_data = '';
 		foreach ( $columns as $column ) {
-			//$submission_data .= ", data->>'$." . $column . "' AS $column";
 			$submission_data .= ", JSON_UNQUOTE( JSON_EXTRACT( data, '$." . $column . "' ) ) AS $column";
 		}
 

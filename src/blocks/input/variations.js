@@ -117,13 +117,6 @@ const variations = [
 		scope: [ 'inserter', 'transform' ],
 	},
 	{
-		name: 'textarea',
-		title: __( 'Textarea' ),
-		icon: Textarea,
-		attributes: { type: 'textarea' },
-		scope: [ 'inserter' ],
-	},
-	{
 		name: 'url',
 		title: __( 'Url' ),
 		icon: Url,

@@ -7,13 +7,7 @@ import { __ } from '@wordpress/i18n';
 import ClassicEdit from '../../../components/editor.js';
 import MergeTags from '../../../components/merge-tags';
 
-export default function Email(
-	content,
-	props,
-	action,
-	handleUpdate,
-	settingsUrl
-) {
+export default function Email( content, props, action, handleUpdate ) {
 	const { clientId } = props;
 
 	const id = `editor-${ clientId }`;
@@ -91,7 +85,7 @@ export default function Email(
 				} }
 			/>
 
-			<BaseControl label={ __( 'Message', 'formello' ) }>
+			<BaseControl label={ __( 'Message', 'formello' ) } id={ id }>
 				<ClassicEdit
 					id={ id }
 					value={ action.message }

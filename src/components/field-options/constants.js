@@ -158,6 +158,7 @@ export const SUPPORTED_ATTRIBUTES = {
 		'id',
 		'required',
 		'value',
+		'type', // hack to use one component
 		'readonly',
 		'disabled',
 		'placeholder',

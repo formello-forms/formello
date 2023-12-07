@@ -38,12 +38,8 @@ export default function Tools() {
 	// Filter to add a tab
 	applyFilters( 'formello.ToolsTabs', '', toolsTabs );
 
-	const { goTo, params } = useNavigator();
+	const { params } = useNavigator();
 	const initialTab = params.tab || 'general';
-
-	const updateUrl = ( tabName ) => {
-		goTo( '/' + tabName );
-	};
 
 	return (
 		<Fragment>

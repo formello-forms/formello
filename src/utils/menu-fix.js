@@ -13,6 +13,20 @@ function menuFix( slug ) {
 	const currentUrl = window.location.href;
 	const currentPath = currentUrl.substr( currentUrl.indexOf( 'admin.php' ) );
 
+	window.addEventListener( 'changePage', ( e ) => {
+		const urlParams = new URLSearchParams( e.detail );
+
+		const page = urlParams.get( 'page' );
+
+		if ( page ) {
+			menuRoot.find( 'li[class*="current"]' ).removeClass( 'current' );
+			menuRoot
+				.find( 'a[href="admin.php?page=' + page + '"]' )
+				.parent()
+				.addClass( 'current' );
+		}
+	} );
+
 	window.addEventListener( 'popstate', () => {
 		const urlParams = new URLSearchParams( window.location.search );
 

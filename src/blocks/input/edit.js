@@ -24,18 +24,6 @@ import Toolbar from '../../components/field-options/toolbar';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
-const getNameFromLabel = ( content ) => {
-	return (
-		content
-			// Convert anything that's not a letter or number to a hyphen.
-			.replace( /[^\p{L}\p{N}]+/gu, '_' )
-			// Convert to lowercase
-			.toLowerCase()
-			// Remove any remaining leading or trailing hyphens.
-			.replace( /(^-+)|(-+$)/g, '' )
-	);
-};
-
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
 	const {
@@ -59,13 +47,19 @@ export default function Edit( props ) {
 	const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
 
 	useEffect( () => {
+		const idx = clientId
+			.substr( 2, 6 )
+			.replace( '-', '' )
+			.replace( /-/g, '' );
 		if ( ! id ) {
 			setAttributes( {
 				id: 'field_' + idx,
 			} );
 		}
 		if ( ! name ) {
-			setAttributes( { name: getNameFromLabel( label ) } );
+			setAttributes( {
+				name: 'field_' + idx,
+			} );
 		}
 	}, [] );
 

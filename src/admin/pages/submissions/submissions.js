@@ -27,10 +27,7 @@ import {
  */
 import { DataViews } from '../../components/dataviews';
 import Header from '../../components/masthead.js';
-import {
-	OPERATOR_IN,
-	ENUMERATION_TYPE,
-} from '../../components/dataviews/constants';
+import { OPERATOR_IN } from '../../components/dataviews/constants';
 
 const EMPTY_ARRAY = [];
 const defaultConfigPerViewType = {
@@ -186,8 +183,6 @@ export const Submissions = () => {
 				getValue: ( item ) => item[ key ],
 				filters: [ { id: 'search', type: 'search' } ],
 				render: ( { item } ) => {
-					console.log( typeof item.fields[ key ], item.fields[ key ] )
-
 					if ( 'submitted_at' === key ) {
 						const formattedDate = dateI18n(
 							getSettings().formats.datetimeAbbreviated,
@@ -250,7 +245,7 @@ export const Submissions = () => {
 			trashSubmissionAction,
 			{
 				id: 'mark-as-starred',
-				label: __( 'Mark as favorite' ),
+				label: __( 'Toggle favorite' ),
 				isPrimary: false,
 				isBulk: true,
 				isEligible: () => true,
@@ -264,7 +259,7 @@ export const Submissions = () => {
 			},
 			{
 				id: 'mark-as-new',
-				label: __( 'Mark as new' ),
+				label: __( 'Toggle new' ),
 				isPrimary: false,
 				isBulk: true,
 				icon: heading,

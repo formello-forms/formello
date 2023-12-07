@@ -16,6 +16,18 @@ import MergeTags from '../merge-tags';
 
 import { SUPPORTED_ATTRIBUTES } from './constants';
 
+const sanitizedName = ( content ) => {
+	return (
+		content
+			// Convert anything that's not a letter or number to a hyphen.
+			.replace( /[^\p{L}\p{N}]+/gu, '_' )
+			// Convert to lowercase
+			.toLowerCase()
+			// Remove any remaining leading or trailing hyphens.
+			.replace( /(^-+)|(-+$)/g, '' )
+	);
+};
+
 export default function Options( props ) {
 	const { attributes, setAttributes, clientId, setModalOpen, fieldType } =
 		props;
@@ -43,7 +55,7 @@ export default function Options( props ) {
 					label={ __( 'Name', 'formello' ) }
 					value={ name }
 					onChange={ ( val ) =>
-						setAttributes( { name: val.toLowerCase() } )
+						setAttributes( { name: sanitizedName( val ) } )
 					}
 					help={ __(
 						'Affects the "name" atribute of the input element, and is used as a name for the form submission results.',
