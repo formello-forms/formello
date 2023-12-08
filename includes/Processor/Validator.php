@@ -184,6 +184,11 @@ class Validator {
 			return sanitize_text_field( $value );
 		}
 
+		if ( 'checkbox' === $fields[ $key ] ) {
+			$value = sanitize_text_field( $value );
+			return $value ? $value : __( 'Yes' );
+		}
+
 		if ( is_array( $value ) ) {
 			$field = array_map( array( $this, 'replace_tags' ), $value );
 			return array_map( 'sanitize_text_field', $field );

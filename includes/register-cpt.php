@@ -41,7 +41,6 @@ function register_cpt() {
 		'exclude_from_search' => true,
 		'show_in_nav_menus'   => true,
 		'rewrite'             => false,
-		'taxonomies'          => array( 'formello_categories' ),
 		'hierarchical'        => false,
 		'show_in_menu'        => false,
 		'show_in_admin_bar'   => true,
