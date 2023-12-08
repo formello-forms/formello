@@ -261,7 +261,7 @@ class Form {
 	 *
 	 * @return boolean
 	 */
-	private function is_debug() {
+	public function is_debug() {
 		return $this->settings['debug'];
 	}
 

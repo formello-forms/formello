@@ -34,7 +34,9 @@ export function FieldsData( props ) {
 									</th>
 									<td>
 										<RawHTML>
-											{ decodeEntities( field ) }
+											{ 'null' === field
+												? ''
+												: decodeEntities( field ) }
 										</RawHTML>
 									</td>
 								</tr>

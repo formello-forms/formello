@@ -37,7 +37,13 @@ class Submissions extends Base {
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_submissions' ),
 					'permission_callback' => array( $this, 'update_settings_permissions' ),
-					'args'                => array( $this->get_collection_params() ),
+					'args' => array(
+						'id' => array(
+							'description' => __( 'Unique identifier for the submission.' ),
+							'type'        => 'integer',
+							'required'    => true,
+						),
+					),
 				),
 			)
 		);
@@ -95,6 +101,7 @@ class Submissions extends Base {
 		$submission_data = '';
 		foreach ( $columns as $column ) {
 			$submission_data .= ", JSON_UNQUOTE( JSON_EXTRACT( data, '$." . $column . "' ) ) AS $column";
+			// $submission_data .= ", JSON_VALUE( data->'$." . $column . "' ) AS $column"; ONLY FROM MYSQL 8.0.2.1
 		}
 
 		global $wpdb;

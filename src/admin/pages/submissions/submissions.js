@@ -233,12 +233,6 @@ export const Submissions = () => {
 				isPrimary: true,
 				icon: seen,
 				callback( post ) {
-					if ( post.details.is_new ) {
-						saveEntityRecord( 'formello/v1', 'submissions', {
-							id: post.id,
-							details: { is_new: false },
-						} );
-					}
 					goTo( '/formello/submission/' + post.id );
 				},
 			},

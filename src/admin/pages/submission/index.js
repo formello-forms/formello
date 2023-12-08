@@ -2,7 +2,7 @@
 /**
  * WordPress dependencies
  */
-import { useEntityRecord } from '@wordpress/core-data';
+import { useEntityRecord, store as coreStore } from '@wordpress/core-data';
 import {
 	__experimentalUseNavigator as useNavigator,
 	__experimentalGrid as Grid,
@@ -11,11 +11,12 @@ import {
 	Notice,
 } from '@wordpress/components';
 import { __, sprintf } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
+import { Fragment, useEffect } from '@wordpress/element';
 import { getQueryArg } from '@wordpress/url';
 import { SubmissionData } from './submission-data';
 import { FieldsData } from './fields-data';
 import Header from '../../components/masthead.js';
+import { useDispatch } from '@wordpress/data';
 
 export const Submission = () => {
 	const { params, goBack } = useNavigator();
@@ -25,6 +26,16 @@ export const Submission = () => {
 		'submissions',
 		params.id || getQueryArg( window.location.href, 'submission_id' )
 	);
+	const { saveEntityRecord } = useDispatch( coreStore );
+
+	useEffect( () => {
+		if ( parseInt( submission.record.details.is_new ) ) {
+			saveEntityRecord( 'formello/v1', 'submissions', {
+				id: submission.record.id,
+				details: { is_new: false },
+			} );
+		}
+	}, [] );
 
 	if ( 'ERROR' === submission.status ) {
 		return (
