@@ -12,7 +12,13 @@ import {
 import { __ } from '@wordpress/i18n';
 import { useEntityRecords } from '@wordpress/core-data';
 import { decodeEntities } from '@wordpress/html-entities';
-import { useState, useMemo, useCallback, Fragment } from '@wordpress/element';
+import {
+	useState,
+	useMemo,
+	useCallback,
+	Fragment,
+	useEffect,
+} from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import {
 	trashPostAction,
@@ -23,6 +29,7 @@ import {
 import { commentContent } from '@wordpress/icons';
 import { OPERATOR_IN } from '../../components/dataviews/constants';
 import { addQueryArgs } from '@wordpress/url';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -68,6 +75,8 @@ export const Forms = () => {
 		layout: {},
 	} );
 
+	const [ pagination, setPagination ] = useState();
+
 	const queryArgs = useMemo( () => {
 		const filters = {};
 		view.filters.forEach( ( filter ) => {
@@ -108,10 +117,21 @@ export const Forms = () => {
 		who: 'authors',
 	} );
 
+	useEffect( () => {
+		apiFetch( { path: '/wp/v2/formello_form', parse: false } ).then(
+			( response ) => {
+				setPagination( {
+					totalItems: response.headers.get( 'x-wp-total' ),
+					totalPages: response.headers.get( 'x-wp-totalpages' ),
+				} );
+			}
+		);
+	}, [] );
+
 	const paginationInfo = useMemo( () => {
 		return {
-			totalItems: forms?.totalItems,
-			totalPages: forms?.totalPages,
+			totalItems: pagination?.totalItems,
+			totalPages: pagination?.totalPages,
 		};
 	}, [ forms ] );
 

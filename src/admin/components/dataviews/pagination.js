@@ -70,7 +70,7 @@ function Pagination( {
 					)
 				}
 			</Text>
-			{ !! totalItems && (
+			{ !! totalItems && totalPages !== 1 && (
 				<HStack expanded={ false } spacing={ 1 }>
 					<Button
 						variant="tertiary"

@@ -2,7 +2,8 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	withFilters, // eslint-disable-next-line @wordpress/no-unsafe-wp-apis
+	withFilters,
+	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalUseNavigator as useNavigator,
 	Button,
 } from '@wordpress/components';

@@ -17,7 +17,7 @@ registerBlockType( metadata, {
 		src: 'button',
 	},
 
-	Edit: ( { attributes, setAttributes } ) => {
+	edit: ( { attributes, setAttributes } ) => {
 		const blockProps = useBlockProps();
 
 		return (
@@ -33,10 +33,6 @@ registerBlockType( metadata, {
 	},
 
 	save: ( { attributes } ) => (
-		<RichText.Content
-			{ ...useBlockProps.save() }
-			tagName="output"
-			value={ attributes.text }
-		/>
+		<output { ...useBlockProps.save() }>{ attributes.text }</output>
 	),
 } );

@@ -61,7 +61,9 @@ export default function Tools() {
 								templateColumns="3fr 1fr"
 								gap="4"
 							>
-								<Tab />
+								<div>
+									<Tab />
+								</div>
 								<Help />
 							</Grid>
 						);

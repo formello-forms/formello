@@ -144,9 +144,9 @@
 			"selector": "textarea",
 			"attribute": "pattern"
 		},
-		"enableRtf": {
+		"advanced": {
 			"type": "boolean",
-			"selector": ".formello-rft"
+			"selector": "textarea.formello-rft"
 		}
 	},
 	"supports": {

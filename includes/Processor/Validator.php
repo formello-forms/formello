@@ -186,7 +186,7 @@ class Validator {
 
 		if ( 'checkbox' === $fields[ $key ] ) {
 			$value = sanitize_text_field( $value );
-			return $value ? $value : __( 'Yes' );
+			return $value ? $value : __( 'yes' );
 		}
 
 		if ( is_array( $value ) ) {

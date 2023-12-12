@@ -19,18 +19,18 @@ function PatternCategoriesList( {
 	const baseClassName = 'block-editor-block-patterns-explorer__sidebar';
 	return (
 		<div className={ `${ baseClassName }__categories-list` }>
-			{ patternCategories.map( ( { name, label } ) => {
+			{ patternCategories.map( ( name ) => {
 				return (
 					<Button
 						key={ name }
-						label={ label }
+						label={ name }
 						className={ `${ baseClassName }__categories-list__item` }
 						isPressed={ selectedCategory === name }
 						onClick={ () => {
 							onClickCategory( name );
 						} }
 					>
-						{ label }
+						{ name }
 					</Button>
 				);
 			} ) }
@@ -111,9 +111,7 @@ function TemplatesModal( {
 		[ clientId, blockName ]
 	);
 
-	const patternCategories = patterns.map( ( p ) => {
-		return { name: p.formello_category, label: p.formello_category };
-	} );
+	const patternCategories = [ 'Contact', 'Newsletter' ];
 
 	const shownPatterns = patterns.filter( ( p ) => {
 		if ( searchValue ) {
@@ -122,13 +120,13 @@ function TemplatesModal( {
 		if ( 'all' === selectedCategory ) {
 			return true;
 		}
-		return p.formello_category.includes( selectedCategory );
+		return p.formello_categories.includes( selectedCategory );
 	} );
 
 	return (
 		<Modal
 			isFullScreen
-			title={ __( 'Choose a patternssssssssssss' ) }
+			title={ __( 'Choose a pattern' ) }
 			closeLabel={ __( 'Cancel' ) }
 			onRequestClose={ () => setIsPatternSelectionModalOpen( false ) }
 		>

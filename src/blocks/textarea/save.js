@@ -10,7 +10,7 @@ export default function save( { attributes } ) {
 	const {
 		id,
 		hideLabel,
-		enableRtf,
+		advanced,
 		validation,
 		help,
 		value,
@@ -28,7 +28,7 @@ export default function save( { attributes } ) {
 	} );
 
 	const fieldClassName = classnames( borderProps.className, {
-		'formello-rtf': enableRtf,
+		'formello-rtf': advanced,
 	} );
 
 	// include only supported attributes

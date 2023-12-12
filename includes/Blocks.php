@@ -86,6 +86,10 @@ class Blocks {
 		);
 
 		register_block_type(
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/output'
+		);
+
+		register_block_type(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/button',
 			array(
 				'render_callback' => array( $this, 'do_button_block' ),

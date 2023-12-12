@@ -158,6 +158,7 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 			'formello/select',
 			'formello/fieldset',
 			'formello/multichoices',
+			'formello/output',
 			'core/image',
 			'core/spacer',
 			'core/paragraph',

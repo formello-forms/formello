@@ -137,7 +137,6 @@ export default function save( { attributes } ) {
 			/>
 
 			<InnerBlocks.Content />
-			{ withOutput && <output>{ value }</output> }
 			{ 'hidden' !== type && showHelp && (
 				<RichText.Content tagName="small" value={ help } />
 			) }

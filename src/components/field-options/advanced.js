@@ -52,7 +52,7 @@ function AdvancedOptions( props ) {
 
 	return (
 		<Fragment>
-			{ 'textarea' === type && (
+			{ supported.includes( 'cols' ) && (
 				<ToggleControl
 					label={ __( 'Enable Rich Text', 'formello' ) }
 					checked={ advanced }

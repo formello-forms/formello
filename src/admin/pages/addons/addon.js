@@ -121,14 +121,13 @@ export default function Addon( props ) {
 			</Card>
 			{ isOpen && (
 				<Modal
-					title="This is my modal"
 					onRequestClose={ () => setOpen( false ) }
 				>
 					<p>
 						{ sprintf(
 							/* translators: %s: Addon name */
 							__(
-								'To enable %s addon you need a Formello license.',
+								'To enable %s addon you need a Formello Pro license.',
 								'formello'
 							),
 							addon.title
@@ -141,7 +140,7 @@ export default function Addon( props ) {
 						iconPosition={ 'right' }
 						target="_blank"
 					>
-						{ __( 'Free download', 'formello-pro' ) }
+						{ __( 'Download', 'formello-pro' ) }
 					</Button>
 				</Modal>
 			) }

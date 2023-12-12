@@ -3,9 +3,9 @@
 	"apiVersion": 2,
 	"name": "formello/output",
 	"title": "Output",
-	"description": "A block to display range output.",
+	"description": "A block to display number output.",
 	"category": "formello",
-	"parent": ["formello/input"],
+	"parent": ["formello/form"],
 	"icon": "number",
 	"textdomain": "formello",
 	"attributes": {
@@ -20,7 +20,7 @@
 		"html": false,
 		"lock": false,
 		"reusable": false,
-		"inserter": false,
+		"inserter": true,
 		"color": {
 			"background": true,
 			"text": true
