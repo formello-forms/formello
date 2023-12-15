@@ -91,17 +91,9 @@ export default function ReusableBlockEdit( {
 		) => {
 			const record = {
 				title,
-				content: `<!-- wp:formello/form {"lock":{"move":false,"remove":true},"className":""} -->
-							<form class="wp-block-formello-form" method="post" data-id="2908" 
-							data-validate="true" novalidate action="">
-							<input type="hidden" name="_formello_id" value="2908"/>
-							<input type="text" name="_formello_h2908" class="formello-hp" 
-								autocomplete="nope" 
-								aria-label="If you are human, leave this field blank." 
-								tabindex="-1"/>
-							<input type="hidden" name="action" value="formello"/>
-							<div class="formello-message" id="formello-message-2908"></div></form>
-							<!-- /wp:formello/form -->`,
+				content: `<!-- wp:formello/form {"lock":{"move":false,"remove":true}} -->
+				<form class="wp-block-formello-form" method="post" data-id="11" data-validate="true" novalidate action=""><input type="hidden" name="_formello_id" value="11"/><input type="text" name="_formello_h11" class="formello-hp" aria-label="If you are human, leave this field blank." tabindex="-1"/><input type="hidden" name="action" value="formello"/><div class="formello-message" id="formello-message-11"></div></form>
+				<!-- /wp:formello/form -->`,
 				status: 'publish',
 				excerpt: '',
 			};

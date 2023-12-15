@@ -19,7 +19,7 @@ function PatternCategoriesList( {
 	const baseClassName = 'block-editor-block-patterns-explorer__sidebar';
 	return (
 		<div className={ `${ baseClassName }__categories-list` }>
-			{ patternCategories.map( ( name ) => {
+			{ [ ...new Set( patternCategories ) ].map( ( name ) => {
 				return (
 					<Button
 						key={ name }
@@ -111,7 +111,12 @@ function TemplatesModal( {
 		[ clientId, blockName ]
 	);
 
-	const patternCategories = [ 'Contact', 'Newsletter' ];
+	const patternCategories = patterns
+		.map( ( p ) => {
+			return p.formello_categories;
+		} )
+		.join( ',' )
+		.split( ',' );
 
 	const shownPatterns = patterns.filter( ( p ) => {
 		if ( searchValue ) {

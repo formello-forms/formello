@@ -20,7 +20,6 @@ export default function ExportForms() {
 		} )
 			.then( ( res ) => res.blob() )
 			.then( ( blob ) => {
-				setLoading( false );
 				const url = window.URL.createObjectURL( blob );
 				const a = document.createElement( 'a' );
 				a.href = url;
@@ -29,7 +28,8 @@ export default function ExportForms() {
 				a.click();
 				a.remove(); //afterwards we remove the element again
 			} )
-			.catch( () => setLoading( false ) );
+			.catch( () => setLoading( false ) )
+			.finally( () => setLoading( false ) );
 	};
 
 	return (

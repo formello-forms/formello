@@ -326,7 +326,7 @@ export const deleteItem = {
 			} ),
 			[ form.id ]
 		);
-console.log(isDeleting)
+
 		return (
 			<VStack spacing="5">
 				<Text>
