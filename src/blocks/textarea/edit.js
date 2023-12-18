@@ -25,8 +25,17 @@ import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes, clientId } = props;
-	const { name, id, cols, rows, value, placeholder, showHelp, help, advanced } =
-		attributes;
+	const {
+		name,
+		id,
+		cols,
+		rows,
+		value,
+		placeholder,
+		showHelp,
+		help,
+		advanced,
+	} = attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES.textarea;
 
@@ -60,7 +69,7 @@ export default function Edit( props ) {
 	} );
 
 	const onChange = ( e ) => {
-		setAttributes( { value: e.target.value } );
+		setAttributes( { placeholder: e.target.value } );
 	};
 
 	return (

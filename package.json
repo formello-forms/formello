@@ -31,10 +31,9 @@
   },
   "files": [
     "build/**",
-    "freemius/**",
+    "vendor/**",
     "includes/**",
     "languages/**",
-    "premium-modules/**",
     "formello.php",
     "readme.txt"
   ]

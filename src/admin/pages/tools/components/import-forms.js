@@ -30,9 +30,7 @@ export default function ImportForms() {
 				>
 					{ __( 'Choose file', 'formello' ) }
 				</FormFileUpload>
-				{
-					files && files[ 0 ]?.name
-				}
+				{ files && files[ 0 ]?.name }
 			</div>
 
 			<UpdateSettings

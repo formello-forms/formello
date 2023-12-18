@@ -79,9 +79,6 @@ final class Plugin {
 		require_once FORMELLO_ABSPATH . 'includes/Log.php';
 		require_once FORMELLO_ABSPATH . 'includes/Cron.php';
 		require_once FORMELLO_ABSPATH . 'includes/Admin/Admin.php';
-		//require_once FORMELLO_ABSPATH . 'includes/Form/Controller.php';
-		//require_once FORMELLO_ABSPATH . 'includes/Form/Request.php';
-		//require_once FORMELLO_ABSPATH . 'includes/Form/Response.php';
 
 		do_action( 'formello_loaded' );
 	}

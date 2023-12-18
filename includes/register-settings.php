@@ -28,10 +28,27 @@ function register_settings() {
 			'type' => 'string',
 		),
 		'license' => array(
-			'type' => 'string',
-		),
-		'license_status' => array(
-			'type' => 'string',
+			'type' => 'object',
+			'properties' => array(
+				'activated'   => array(
+					'type' => 'boolean',
+				),
+				'error'       => array(
+					'type' => 'string',
+				),
+				'license_key' => array(
+					'type'                 => 'object',
+					'additionalProperties' => true,
+				),
+				'instance'    => array(
+					'type'                 => 'object',
+					'additionalProperties' => true,
+				),
+				'meta'        => array(
+					'type'                 => 'object',
+					'additionalProperties' => true,
+				),
+			),
 		),
 		'version' => array(
 			'type' => 'string',

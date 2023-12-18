@@ -35,7 +35,6 @@ const LoggingTab = () => {
 				{ log && (
 					<ExternalLink
 						href={
-							settings.url +
 							'/wp-content/uploads/formello/logs/' +
 							settings.log_file
 						}

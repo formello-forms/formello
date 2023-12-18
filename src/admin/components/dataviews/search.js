@@ -28,7 +28,7 @@ export default function Search( { label, view, onChangeView } ) {
 			search: debouncedSearch,
 		} ) );
 	}, [ debouncedSearch ] );
-	const searchLabel = label || __( 'Filter list' );
+	const searchLabel = label || __( 'Search' );
 	return (
 		<SearchControl
 			onChange={ setSearch }

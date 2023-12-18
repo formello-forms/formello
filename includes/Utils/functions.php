@@ -19,8 +19,7 @@ function formello_default_options() {
 	$defaults = array(
 		'log'            => false,
 		'log_file'       => 'formello_' . time() . '.txt',
-		'license'        => '',
-		'license_status' => '',
+		'license'        => array(),
 		'version'        => '1.0',
 		'messages'       => array(
 			'form'            => array(
@@ -58,13 +57,13 @@ function formello_default_options() {
 			'version'    => '3',
 			'site_key'   => '',
 			'secret_key' => '',
-			'threshold'  => 0.4,
+			'threshold'  => 0.5,
 		),
 		'hCaptcha'      => array(
 			'version'    => '3',
 			'site_key'   => '',
 			'secret_key' => '',
-			'threshold'  => 0.4,
+			'threshold'  => 0.5,
 		),
 		'enabled_addons' => array(),
 	);
@@ -99,6 +98,14 @@ function formello_decrypt_option( $settings ) {
 	$settings = $crypto->decrypt( $settings );
 
 	$settings = apply_filters( 'formello_settings', $settings );
+
+	$settings = maybe_unserialize( $settings );
+
+	if ( $settings['license'] && ! is_array( $settings['license'] ) ) {
+		$settings['license'] = array();
+	}
+
+	unset( $settings['license_status'] );
 
 	return maybe_unserialize( $settings );
 }

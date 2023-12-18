@@ -319,7 +319,8 @@ class Validator {
 		$response = wp_remote_get( 'https://www.google.com/recaptcha/api/siteverify?' . $captcha );
 		$response = json_decode( $response['body'], true );
 
-		if ( $response['score'] ) {
+		if ( $response['score'] && $response['score'] < $settings['reCaptcha']['threshold'] ) {
+			$this->add_error( __( 'Invalid reCaptcha.', 'formello' ) );
 			return $response['score'] < $settings['reCaptcha']['threshold'];
 		}
 
@@ -335,7 +336,7 @@ class Validator {
 		$settings = get_option( 'formello' );
 
 		if ( empty( $this->params['h-captcha-response'] ) ) {
-			$this->add_error( __( 'Invalid reCaptcha.', 'formello' ) );
+			$this->add_error( __( 'Invalid captcha.', 'formello' ) );
 			return false;
 		}
 
@@ -350,7 +351,8 @@ class Validator {
 		$response = wp_remote_get( 'https://api.hcaptcha.com/siteverify?' . $captcha );
 		$response = json_decode( $response['body'], true );
 
-		if ( $response['score'] ) {
+		if ( $response['score'] && $response['score'] >= $settings['hCaptcha']['threshold'] ) {
+			$this->add_error( __( 'Invalid captcha.', 'formello' ) );
 			return $response['score'] >= $settings['hCaptcha']['threshold'];
 		}
 
