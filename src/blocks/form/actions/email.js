@@ -16,7 +16,7 @@ export default function Email( content, props, action, handleUpdate ) {
 	const onChangeMessage = ( val ) => {
 		handleUpdate( 'message', val );
 	};
-console.log(action)
+
 	return (
 		<Fragment>
 			<MergeTags
