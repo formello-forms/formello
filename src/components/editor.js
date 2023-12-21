@@ -1,8 +1,24 @@
-import { useEffect } from '@wordpress/element';
+import { useEffect, useRef } from '@wordpress/element';
 
 export default function ClassicEdit( props ) {
-	const { id, onChange } = props;
+	const { id, onChange, action } = props;
 
+	const didMount = useRef( false );
+
+	useEffect( () => {
+		if ( ! didMount.current ) {
+			return;
+		}
+
+		const editor = window.tinymce.get( id );
+		const currentContent = editor?.getContent();
+
+		if ( currentContent !== action.message ) {
+			editor.setContent( action.message || '' );
+		}
+	}, [ action.message ] );
+
+	console.log( 'TINYMCE', action.subject );
 	useEffect( () => {
 		const { baseURL, suffix, settings } = window.wpEditorL10n.tinymce;
 
@@ -15,10 +31,15 @@ export default function ClassicEdit( props ) {
 			tinymce: {
 				...settings,
 				setup( editor ) {
+					editor.on( 'keydown', () => {
+						//onChange( 'message', editor.getContent() );
+					} );
 					editor.on( 'blur', () => {
 						onChange( editor.getContent() );
 					} );
-					//editor.on( 'loadContent', () => editor.setContent( props.value ) );
+					/*editor.on( 'loadContent', () =>
+						editor.setContent( action.message )
+					);*/
 				},
 			},
 		} );
@@ -28,5 +49,5 @@ export default function ClassicEdit( props ) {
 		};
 	}, [] );
 
-	return <textarea { ...props } />;
+	return <div id={ id } />;
 }

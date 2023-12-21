@@ -1,11 +1,11 @@
 import { addFilter } from '@wordpress/hooks';
 
 import { ToggleControl, BaseControl } from '@wordpress/components';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useRef } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
-import ClassicEdit from '../../../components/editor.js';
 import MergeTags from '../../../components/merge-tags';
+import { Editor } from '@tinymce/tinymce-react';
 
 export default function Email( content, props, action, handleUpdate ) {
 	const { clientId } = props;
@@ -13,9 +13,7 @@ export default function Email( content, props, action, handleUpdate ) {
 	const id = `editor-${ clientId }`;
 	const [ advanced, setAdvanced ] = useState( false );
 
-	const onChangeMessage = ( val ) => {
-		handleUpdate( 'message', val );
-	};
+	const { settings } = window.wpEditorL10n.tinymce;
 
 	return (
 		<Fragment>
@@ -86,10 +84,14 @@ export default function Email( content, props, action, handleUpdate ) {
 			/>
 
 			<BaseControl label={ __( 'Message', 'formello' ) } id={ id }>
-				<ClassicEdit
-					id={ id }
+				<Editor
 					value={ action.message }
-					onChange={ onChangeMessage }
+					init={ {
+						menubar: false,
+						plugins: settings.plugins,
+						toolbar: [ settings.toolbar1, settings.toolbar2 ],
+					} }
+					onEditorChange={ ( val ) => handleUpdate( 'message', val ) }
 				/>
 			</BaseControl>
 		</Fragment>
