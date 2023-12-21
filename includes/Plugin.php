@@ -39,7 +39,6 @@ final class Plugin {
 		$this->define_constants();
 		$this->includes();
 		$this->actions();
-		$this->updater();
 	}
 
 	/**
@@ -72,7 +71,6 @@ final class Plugin {
 		require_once FORMELLO_ABSPATH . 'includes/Blocks.php';
 		require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
 		require_once FORMELLO_ABSPATH . 'includes/Form.php';
-		require_once FORMELLO_ABSPATH . 'includes/Updater.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
 		require_once FORMELLO_ABSPATH . 'includes/TagReplacers/Replacer.php';
@@ -126,28 +124,6 @@ final class Plugin {
 			false,
 			dirname( FORMELLO_PLUGIN_BASENAME ) . '/languages/'
 		);
-	}
-
-	/**
-	 * Load plugin updater.
-	 *
-	 * @since 1.0.0
-	 */
-	private function updater() {
-		if ( ! is_admin() ) {
-			return;
-		}
-
-		$settings = get_option( 'formello' );
-
-		if ( ! $settings ) {
-			return;
-		};
-
-		$key = $settings['license'];
-
-		// Fire a hook for Addons to register their updater since we know the key is present.
-		do_action( 'formello_updater', $key );
 	}
 
 	/**

@@ -1,6 +1,4 @@
 import { useEffect } from '@wordpress/element';
-import { store } from '@wordpress/block-editor';
-import { useSelect } from '@wordpress/data';
 
 export default function ClassicEdit( props ) {
 	const { id, onChange } = props;
@@ -17,9 +15,9 @@ export default function ClassicEdit( props ) {
 			tinymce: {
 				...settings,
 				setup( editor ) {
-					/*editor.on( 'blur', () => {
+					editor.on( 'blur', () => {
 						onChange( editor.getContent() );
-					} );*/
+					} );
 					//editor.on( 'loadContent', () => editor.setContent( props.value ) );
 				},
 			},
