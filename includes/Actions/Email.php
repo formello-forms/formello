@@ -82,6 +82,8 @@ class Email extends Action {
 		if ( ! empty( $settings['headers'] ) ) {
 			$headers = explode( PHP_EOL, $settings['headers'] );
 		}
+		$headers[]    = 'Cc:' . $settings['cc'];
+		$headers[]    = 'Bcc:' . $settings['bcc'];
 
 		$content_type = $html_email ? 'text/html' : 'text/plain';
 		$charset      = get_bloginfo( 'charset' );
