@@ -3,11 +3,15 @@
 /.git
 /.github
 /.storybook
+/.vscode
 /src
-/premium-modules
 /tests
 /languages
+/assets/addons
+/assets/icons
+/assets/integrations
 /assets/images
+/assets/addon_images
 
 .distignore
 .DS_Store
