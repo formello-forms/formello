@@ -4,7 +4,7 @@ Donate link: 	   https://formello.net
 Tags:              form, block, contact form, form block, gutenberg form, forms
 Requires at least: 6.3.0
 Tested up to:      6.4.2
-Stable tag:        2.3.9
+Stable tag:        2.4.0
 Requires PHP:      7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -127,6 +127,9 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
+
+= 2.4.0 =
+* Code cleanup
 
 = 2.3.9 =
 * Fix CC/BCC on email action
