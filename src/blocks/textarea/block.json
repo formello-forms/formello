@@ -166,5 +166,6 @@
 				"width": true
 			}
 		}
-	}
+	},
+	"editorScript": "file:../../../build/index.js"
 }

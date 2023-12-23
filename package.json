@@ -33,7 +33,6 @@
     "build/**",
     "vendor/**",
     "includes/**",
-    "languages/**",
     "formello.php",
     "readme.txt"
   ]

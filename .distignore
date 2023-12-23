@@ -6,6 +6,7 @@
 /src
 /premium-modules
 /tests
+/languages
 /assets/images
 
 .distignore
@@ -16,7 +17,7 @@
 .gitattributes
 .gitignore
 .phpunit.result.cache
-.tavis.yml
+.travis.yml
 
 package-lock.json
 package.json
@@ -28,6 +29,7 @@ Gruntfile.js
 config.json
 phpunit.xml.dist
 webpack.config.js
+formello.code-workspace
 
 
 *.zip

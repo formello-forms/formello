@@ -76,5 +76,6 @@
 				"flexWrap": "nowrap"
 			}
 		}
-	}
+	},
+	"editorScript": "file:../../../build/index.js"
 }

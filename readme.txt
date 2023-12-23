@@ -1,7 +1,7 @@
 === Contact form builder for Gutenberg - Formello ===
 Contributors:      Formello, tropicalista
 Donate link: 	   https://formello.net
-Tags:              contact form, form builder, form block, gutenberg form, forms, gutenberg block, contact form plugin, forms, form builder, custom form, contact button, contact me, custom contact form, form manager, form, forms builder, forms creator, captcha, recaptcha, email form, web form, feedback form, email submit form, message form, contact form block, wordpress form plugin
+Tags:              form, block, contact form, form block, gutenberg form, forms
 Requires at least: 6.3.0
 Tested up to:      6.4.2
 Stable tag:        2.3.9

@@ -38,5 +38,6 @@
 		"typography": {
 			"fontSize": true
 		}
-	}
+	},
+	"editorScript": "file:../../../build/index.js"
 }
