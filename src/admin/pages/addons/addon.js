@@ -122,6 +122,7 @@ export default function Addon( props ) {
 			{ isOpen && (
 				<Modal
 					onRequestClose={ () => setOpen( false ) }
+					__experimentalHideHeader
 				>
 					<p>
 						{ sprintf(
