@@ -1,0 +1,57 @@
+.wp-block-formello-button {
+    flex-direction: row;
+    align-self: flex-start;
+
+    span {
+        transition: all 0.2s;
+        opacity: 1;
+    }
+
+    svg {
+        display: none;
+        margin: 0 0.3em;
+        height: 1em;
+        transition: all 0.5s;
+
+        path,
+        rect {
+            fill: currentcolor;
+        }
+    }
+
+    &.center {
+        align-self: center;
+    }
+
+    &.right {
+        align-self: flex-end;
+    }
+
+    &.wide {
+        align-self: auto;
+    }
+
+}
+
+.wp-block-formello-button--loading {
+    cursor: revert;
+
+    span {
+        margin-right: 5px;
+    }
+
+    svg {
+        display: block;
+    }
+}
+
+@keyframes button-loading-spinner {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -5,7 +5,6 @@
   "title": "Select",
   "description": "Dropdown select.",
   "category": "formello",
-  "icon": "button",
   "ancestor": [
     "formello/form"
   ],
@@ -115,5 +114,5 @@
       "default": ""
     }
   },
-  "editorScript": "file:../../../build/index.js"
+  "editorScript": "file:./index.js"
 }

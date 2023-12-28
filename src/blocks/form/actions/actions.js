@@ -15,6 +15,7 @@ export function getActions() {
 			replyTo: '',
 			subject: '',
 			message: '',
+			advanced: false,
 		},
 	];
 

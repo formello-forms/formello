@@ -128,6 +128,11 @@ Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
 
+= 2.4.1 =
+* Fix modal actions
+* Use hooks for field detections
+* Fix required not founding all blocks
+
 = 2.4.0 =
 * Code cleanup
 

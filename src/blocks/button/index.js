@@ -2,6 +2,7 @@ import { registerBlockType, createBlock } from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
+import './style.scss';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -9,7 +10,6 @@ import metadata from './block.json';
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 registerBlockType( metadata, {
-
 	transforms: {
 		from: [
 			{
@@ -27,9 +27,7 @@ registerBlockType( metadata, {
 		background: '#fff',
 		// Specifying a color for the icon (optional: if not set, a readable color will be automatically defined)
 		foreground: '#000000',
-
 		src: 'button',
-
 	},
 
 	/**

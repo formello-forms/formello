@@ -1,7 +1,7 @@
 import { addFilter } from '@wordpress/hooks';
 
 import { ToggleControl, BaseControl } from '@wordpress/components';
-import { Fragment, useState, useRef } from '@wordpress/element';
+import { Fragment, useState } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 import MergeTags from '../../../components/merge-tags';
@@ -11,7 +11,6 @@ export default function Email( content, props, action, handleUpdate ) {
 	const { clientId } = props;
 
 	const id = `editor-${ clientId }`;
-	const [ advanced, setAdvanced ] = useState( false );
 
 	const { settings } = window.wpEditorL10n.tinymce;
 
@@ -38,12 +37,12 @@ export default function Email( content, props, action, handleUpdate ) {
 			<ToggleControl
 				label={ __( 'CC/BCC', 'formello' ) }
 				onChange={ ( val ) => {
-					setAdvanced( val );
+					handleUpdate( 'advanced', val );
 				} }
-				checked={ advanced }
+				checked={ action.advanced }
 			/>
 
-			{ advanced && (
+			{ action.advanced && (
 				<Fragment>
 					<MergeTags
 						clientId={ clientId }

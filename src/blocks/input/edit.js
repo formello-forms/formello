@@ -39,12 +39,10 @@ export default function Edit( props ) {
 		placeholder,
 		autocomplete,
 		help,
-		label,
 	} = attributes;
 
 	const TagName = type === 'textarea' ? 'textarea' : 'input';
 	const supported = SUPPORTED_ATTRIBUTES[ type ];
-	const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
 
 	useEffect( () => {
 		const idx = clientId
@@ -61,7 +59,7 @@ export default function Edit( props ) {
 				name: 'field_' + idx,
 			} );
 		}
-	}, [] );
+	} );
 
 	const borderProps = useBorderProps( attributes );
 	const spacingProps = getSpacingClassesAndStyles( attributes );
@@ -93,7 +91,7 @@ export default function Edit( props ) {
 		if ( 'checkbox' === type || 'radio' === type ) {
 			setAttributes( { checked: ! checked } );
 		}
-		setAttributes( { placeholder: e.target.value } );
+		setAttributes( { value: e.target.value } );
 	};
 
 	return (

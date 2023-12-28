@@ -5,15 +5,17 @@
 import variations from './variations';
 //import edit from './edit';
 import edit from './edit/index.js';
+import './actions/email.js';
 import save from './save';
 import deprecated from './deprecated';
 import metadata from './block.json';
-import {
-	Form,
-} from '../../icons/icons';
+import { Form } from '../../icons/icons';
 
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+
+import './style.scss';
+import './editor.scss';
 
 /**
  * Register our Form block.
@@ -35,7 +37,7 @@ registerBlockType( metadata, {
 		color: true,
 		// eslint-disable-next-line
 		inserter: ( 'formello_form' === pagenow ) ? true : false,
-		multiple: ( 'formello_form' !== pagenow ) ? true : false,
+		multiple: 'formello_form' !== pagenow ? true : false,
 		spacing: {
 			padding: true,
 		},

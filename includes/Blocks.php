@@ -7,6 +7,8 @@
 
 namespace Formello;
 
+use function Formello\Utils\formello_default_options;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -53,43 +55,43 @@ class Blocks {
 	 */
 	public function register_blocks() {
 
-		register_block_type(
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/library',
 			array(
 				'render_callback' => array( $this, 'do_reusable_block' ),
 			)
 		);
 
-		register_block_type(
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/input',
 			array(
 				'render_callback' => array( $this, 'do_input_block' ),
 			)
 		);
 
-		register_block_type(
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/textarea',
 			array(
 				'render_callback' => array( $this, 'do_textarea_block' ),
 			)
 		);
 
-		register_block_type(
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/select',
 			array(
 				'render_callback' => array( $this, 'do_select_block' ),
 			)
 		);
 
-		register_block_type(
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/fieldset'
 		);
 
-		register_block_type(
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/output'
 		);
 
-		register_block_type(
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/button',
 			array(
 				'render_callback' => array( $this, 'do_button_block' ),
@@ -127,10 +129,9 @@ class Blocks {
 	/**
 	 * Render form block
 	 *
-	 * @param  array  $attributes The attributes of block.
-	 * @param  string $content The bock content.
+	 * @param array $attributes The attributes of block.
 	 */
-	public function do_reusable_block( $attributes, $content = '' ) {
+	public function do_reusable_block( $attributes ) {
 
 		if ( empty( $attributes['ref'] ) ) {
 			return '';
@@ -252,7 +253,7 @@ class Blocks {
 			$nonce    = wp_nonce_field( '_formello', '_formello', true, false );
 			$content .= $nonce;
 		}
-		$settings = get_option( 'formello' );
+		$settings = get_option( 'formello', formello_default_options() );
 
 		$captcha = '';
 		if ( $block->context['formello/captchaEnabled'] && 'reCaptcha' === $block->context['formello/captchaType'] ) {

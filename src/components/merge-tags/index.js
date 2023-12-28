@@ -8,9 +8,7 @@ import {
 	DropdownMenu,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
-import {
-	useTabs,
-} from './use-tabs';
+import { useTabs } from './use-tabs';
 import TabContent from './tab-content';
 
 export default function MergeTags( props ) {
@@ -40,9 +38,7 @@ export default function MergeTags( props ) {
 						toggleProps={ { isSmall: true } }
 					>
 						{ () => (
-
 							<TabContent tabs={ tabs } onChange={ onChange } />
-
 						) }
 					</DropdownMenu>
 				}

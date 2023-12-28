@@ -23,7 +23,7 @@ class Fields {
 		if ( 'all_data' === $param ) {
 			return $this->all_fields();
 		}
-		return isset( $_POST[ $param ] ) ? wp_kses_post( $_POST[ $param ] ) : false;
+		return isset( $_POST[ $param ] ) ? wp_kses_post( $_POST[ $param ] ) : '';
 	}
 
 	/**

@@ -5,7 +5,6 @@ import { useSelect } from '@wordpress/data';
 import { applyFilters } from '@wordpress/hooks';
 import { useEntityProp } from '@wordpress/core-data';
 import {
-	store as blockEditorStore,
 	InspectorControls,
 	BlockControls,
 	useBlockProps,
@@ -36,27 +35,17 @@ import TemplatesModal from './templates-modal.js';
 import { Settings } from '../settings/basic';
 import { Controls } from '../settings/controls';
 import { AdvancedSettings } from '../settings/advanced';
-import {
-	getConstraints,
-	getFieldsName,
-} from '../../../components/merge-tags/functions';
+import useFormFields from './use-form-fields';
 
 export default function Edit( props ) {
 	const { attributes, className, clientId, hasInnerBlocks } = props;
 
-	const { postType, postId, fields } = useSelect(
-		( select ) => {
-			const { getBlock } = select( blockEditorStore );
-			const block = getBlock( clientId );
-
-			return {
-				postType: select( 'core/editor' ).getCurrentPostType(),
-				postId: select( 'core/editor' ).getCurrentPostId(),
-				fields: block.innerBlocks,
-			};
-		},
-		[ clientId ]
-	);
+	const { postType, postId } = useSelect( ( select ) => {
+		return {
+			postType: select( 'core/editor' ).getCurrentPostType(),
+			postId: select( 'core/editor' ).getCurrentPostId(),
+		};
+	}, [] );
 
 	const isDisabled = useContext( Disabled.Context );
 
@@ -69,8 +58,10 @@ export default function Edit( props ) {
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
+	const data = useFormFields( clientId );
+
 	useEffect( () => {
-		if ( ! meta || isDisabled ) {
+		if ( isDisabled ) {
 			return;
 		}
 
@@ -81,8 +72,8 @@ export default function Edit( props ) {
 			hide: attributes.hide,
 			debug: attributes.debug,
 			redirect_url: attributes.redirectUrl,
-			fields: getFieldsName( clientId ),
-			constraints: getConstraints( clientId ),
+			fields: data.fields,
+			constraints: data.constraints,
 			messages: {
 				success: attributes.successMessage,
 				error: attributes.errorMessage,
@@ -93,7 +84,7 @@ export default function Edit( props ) {
 		if ( 'formello_form' !== postType || isDisabled ) {
 			setMeta( { _formello_parent: postId } );
 		}
-	}, [ fields, attributes ] );
+	}, [ attributes, data, isDisabled, postId, postType, setMeta ] );
 
 	const getBlockClassNames = () => {
 		return classnames( className, {

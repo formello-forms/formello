@@ -17,5 +17,5 @@
     "reusable": false,
     "inserter": true
   },
-  "editorScript": "file:../../../build/index.js"
+  "editorScript": "file:./index.js"
 }

@@ -1,13 +1,11 @@
 import { __ } from '@wordpress/i18n';
-
 import { select, dispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
-
 import {
 	InspectorAdvancedControls,
 	InspectorControls,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
-
 import {
 	TextControl,
 	ToggleControl,
@@ -15,22 +13,31 @@ import {
 	PanelBody,
 } from '@wordpress/components';
 
+const ALLOWED_BLOCKS = [
+	'formello/input',
+	'formello/textarea',
+	'formello/output',
+	'formello/select',
+	'formello/multichoices',
+];
+
 export function AdvancedSettings( props ) {
 	const { attributes, setAttributes, clientId } = props;
 
 	const changeRequiredText = ( value ) => {
 		setAttributes( { requiredText: value } );
 
-		// Update the child block's attributes
-		const children =
-			select( 'core/block-editor' ).getBlocksByClientId( clientId )[ 0 ]
-				.innerBlocks;
+		const innerBlocks =
+			select( blockEditorStore ).getClientIdsOfDescendants( clientId );
 
-		children.forEach( ( child ) => {
-			dispatch( 'core/block-editor' ).updateBlockAttributes(
-				child.clientId,
-				{ requiredText: value }
-			);
+		innerBlocks.forEach( ( id ) => {
+			const block = select( blockEditorStore ).getBlock( id );
+			if ( ALLOWED_BLOCKS.includes( block.name ) ) {
+				dispatch( blockEditorStore ).updateBlockAttributes(
+					block.clientId,
+					{ requiredText: value }
+				);
+			}
 		} );
 	};
 

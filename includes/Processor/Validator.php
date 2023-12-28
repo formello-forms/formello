@@ -365,7 +365,7 @@ class Validator {
 	 * @param mixed $template String template.
 	 */
 	private function replace_tags( $template ) {
-		$replacer = new \Formello\TagReplacers\Replacer();
+		$replacer = new Replacer( $this->params );
 		$result   = $replacer->parse( $template );
 
 		return $result;

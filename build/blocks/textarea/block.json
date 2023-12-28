@@ -172,5 +172,5 @@
       }
     }
   },
-  "editorScript": "file:../../../build/index.js"
+  "editorScript": "file:./index.js"
 }

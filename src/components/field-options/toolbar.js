@@ -7,23 +7,16 @@ import { __ } from '@wordpress/i18n';
 import { SVG, Rect, ToolbarButton } from '@wordpress/components';
 
 import { Fragment } from '@wordpress/element';
-import {
-	Asterisk,
-} from '../../icons/icons';
+import { Asterisk } from '../../icons/icons';
 import { select } from '@wordpress/data';
 
 export default function Toolbar( props ) {
 	const { attributes, setAttributes, clientId } = props;
-	const {
-		required,
-		showHelp,
-		hideLabel,
-		label,
-		type,
-	} = attributes;
+	const { required, showHelp, hideLabel, type } = attributes;
 
 	const setRequiredTxt = () => {
-		const parent = select( 'core/block-editor' ).getBlockParents( clientId );
+		const parent =
+			select( 'core/block-editor' ).getBlockParents( clientId );
 		const parentAtts = select( 'core/block-editor' ).getBlockAttributes(
 			parent[ 0 ]
 		);
@@ -57,8 +50,7 @@ export default function Toolbar( props ) {
 					setAttributes( { required: ! required } );
 				} }
 			/>
-			{
-				( ( 'checkbox' || 'radio' ) !== type ) &&
+			{ ( 'checkbox' || 'radio' ) !== type && (
 				<ToolbarButton
 					label={ __( 'Toggle label visibility', 'formello' ) }
 					icon={ toggleLabel }
@@ -67,7 +59,7 @@ export default function Toolbar( props ) {
 						setAttributes( { hideLabel: ! hideLabel } );
 					} }
 				/>
-			}
+			) }
 			<ToolbarButton
 				label={ __( 'Show help message', 'formello' ) }
 				icon={ 'editor-help' }

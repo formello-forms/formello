@@ -2,7 +2,7 @@ import {
 	getFieldsTags,
 	getWordpressTags,
 	getOtherTags,
-	getMetaTags
+	getMetaTags,
 } from './functions';
 
 export function useTabs( clientId ) {

@@ -83,7 +83,8 @@
       "default": "*"
     },
     "storeSubmissions": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": false
     },
     "hide": {
       "type": "boolean",
@@ -132,8 +133,8 @@
       "label": "Modern"
     }
   ],
-  "editorScript": "file:../../../build/index.js",
-  "editorStyle": "file:../../../build/index.css",
-  "style": "file:../../../build/style-index.css",
-  "viewScript": "file:../../../build/frontend.js"
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:../../frontend/frontend.js"
 }

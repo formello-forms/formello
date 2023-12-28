@@ -4,10 +4,14 @@ const path = require( 'path' );
 module.exports = {
 	...defaultConfig,
 	entry: {
-		index: [ path.resolve( __dirname, 'src', '', 'index.js' ) ],
+		...defaultConfig.entry(),
 		admin: [ path.resolve( __dirname, 'src', 'admin', 'index.js' ) ],
 		frontend: [
 			path.resolve( __dirname, 'src', 'frontend', 'frontend.js' ),
 		],
+	},
+	output: {
+		filename: '[name].js',
+		path: path.resolve( process.cwd(), 'build' ),
 	},
 };

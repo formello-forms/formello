@@ -1,13 +1,7 @@
 import { applyFilters } from '@wordpress/hooks';
 import { useEntityProp } from '@wordpress/core-data';
-import { useSelect } from '@wordpress/data';
-
-const {
-	getBlock,
-	getClientIdsOfDescendants,
-	getBlockParents,
-	getBlockParentsByBlockName,
-} = wp.data.select( 'core/block-editor' );
+import { useSelect, select } from '@wordpress/data';
+import { store as blockEditorStore } from '@wordpress/block-editor';
 
 const allowed = [
 	'formello/input',
@@ -22,22 +16,19 @@ const allowed = [
  * @param {string} clientId The id of the block of which we are finding the form block
  */
 export function getFormBlock( clientId ) {
-	const formBlock = getBlockParentsByBlockName( clientId, 'formello/form' );
+	const formBlock = select( blockEditorStore ).getBlockParentsByBlockName(
+		clientId,
+		'formello/form'
+	);
 
 	if ( formBlock.length ) {
 		return formBlock[ 0 ];
 	}
 
-	if ( 'formello/form' === getBlock( clientId ).name ) {
-		return getBlock( clientId );
-	}
-	// if it's not an form block, get parent form.
-	const parents = getBlockParents( clientId );
+	const block = select( blockEditorStore ).getBlock( clientId );
 
-	for ( const block of parents ) {
-		if ( getBlock( block ).name === 'formello/form' ) {
-			return getBlock( block );
-		}
+	if ( 'formello/form' === block.name ) {
+		return block;
 	}
 }
 
@@ -46,12 +37,14 @@ export function getFormBlock( clientId ) {
  *
  * @param {string} clientId The id of the form block of which we are finding the children fields
  */
-export function getFieldsBlock( clientId ) {
+function getFieldsBlock( clientId ) {
 	const fields = [];
-	const fieldsId = getClientIdsOfDescendants( [ clientId ] );
+	const fieldsId = select( blockEditorStore ).getClientIdsOfDescendants( [
+		clientId,
+	] );
 
 	fieldsId.forEach( ( b ) => {
-		const block = getBlock( b );
+		const block = select( blockEditorStore ).getBlock( b );
 		if ( allowed.includes( block.name ) ) {
 			fields.push( block );
 		}
@@ -317,11 +310,11 @@ export function getFormTags() {
 	const tags = [
 		{
 			title: 'Form ID',
-			tag: `{{form.form_id}}`, // done
+			tag: `{{form.form_id}}`,
 		},
 		{
 			title: 'Form Label',
-			tag: `{{form.form_name}}`, // done
+			tag: `{{form.form_name}}`,
 		},
 	];
 
@@ -332,11 +325,11 @@ export function getOtherTags() {
 	const tags = [
 		{
 			title: 'Date',
-			tag: `{{other.system_date}}`, // done
+			tag: `{{other.system_date}}`,
 		},
 		{
 			title: 'Time',
-			tag: `{{other.system_time}}`, // done
+			tag: `{{other.system_time}}`,
 		},
 		{
 			title: 'Referrer URL',

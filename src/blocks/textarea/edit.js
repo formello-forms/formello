@@ -68,10 +68,6 @@ export default function Edit( props ) {
 		className,
 	} );
 
-	const onChange = ( e ) => {
-		setAttributes( { placeholder: e.target.value } );
-	};
-
 	return (
 		<div { ...blockProps }>
 			<BlockControls>
@@ -94,7 +90,9 @@ export default function Edit( props ) {
 				cols={ cols }
 				rows={ rows }
 				value={ value }
-				onChange={ onChange }
+				onChange={ ( event ) =>
+					setAttributes( { value: event.target.value } )
+				}
 				placeholder={ placeholder }
 				className={ fieldClassName }
 				style={ borderProps.style }

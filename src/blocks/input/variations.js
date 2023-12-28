@@ -15,7 +15,6 @@ import {
 	Tel,
 	Number as NumberField,
 	Radio,
-	Textarea,
 } from '../../icons/icons';
 
 const variations = [

@@ -48,8 +48,10 @@ function ValidationOptions( props ) {
 	const tabs = getPatternTabs();
 
 	return (
-		<PanelBody title={ __( 'Validation', 'formello' ) } initialOpen={ false }>
-
+		<PanelBody
+			title={ __( 'Validation', 'formello' ) }
+			initialOpen={ false }
+		>
 			{ 'date' === type && (
 				<ToggleControl
 					label={ __( 'Advanced Date', 'formello' ) }
@@ -89,7 +91,9 @@ function ValidationOptions( props ) {
 						type="number"
 						label={ __( 'Step Value', 'formello' ) }
 						value={ step || '' }
-						onChange={ ( val ) => setAttributes( { step: Number( val ) } ) }
+						onChange={ ( val ) =>
+							setAttributes( { step: Number( val ) } )
+						}
 					/>
 				</Fragment>
 			) }
@@ -103,12 +107,10 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { minlength: val } )
 						}
-						help={ 
-							__(
-								'Minimum length (number of characters) of value.',
-								'formello'
-							) 
-						}
+						help={ __(
+							'Minimum length (number of characters) of value.',
+							'formello'
+						) }
 					/>
 					<TextControl
 						type="number"
@@ -117,12 +119,10 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { maxlength: val } )
 						}
-						help={ 
-							__(
-								'Maximum length (number of characters) of value.',
-								'formello'
-							) 
-						}
+						help={ __(
+							'Maximum length (number of characters) of value.',
+							'formello'
+						) }
 					/>
 				</Fragment>
 			) }
@@ -136,19 +136,20 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { pattern: val } );
 						} }
-						help={ 
-							__(
-								'Pattern the value must match to be valid.',
-								'formello'
-							) 
-						}
+						help={ __(
+							'Pattern the value must match to be valid.',
+							'formello'
+						) }
 					/>
 				</Fragment>
 			) }
 			{ supported.includes( 'pattern' ) && (
 				<TextControl
 					label={ __( 'Custom Validation Message', 'formello' ) }
-					help={ __( 'The message to show if pattern validation fails.', 'formello' ) }
+					help={ __(
+						'The message to show if pattern validation fails.',
+						'formello'
+					) }
 					value={ validation }
 					onChange={ ( val ) => setAttributes( { validation: val } ) }
 				/>
@@ -166,7 +167,10 @@ function ValidationOptions( props ) {
 						label={ __( 'Match', 'formello' ) }
 						value={ match }
 						options={ [
-							{ value: '', label: __( 'Select a field', 'formello' ) },
+							{
+								value: '',
+								label: __( 'Select a field', 'formello' ),
+							},
 							...fields,
 						] }
 						onChange={ ( val ) => setAttributes( { match: val } ) }
@@ -176,7 +180,9 @@ function ValidationOptions( props ) {
 						type="text"
 						label={ __( 'Mismatch message', 'formello' ) }
 						value={ mismatchMessage || '' }
-						onChange={ ( val ) => setAttributes( { mismatchMessage: val } ) }
+						onChange={ ( val ) =>
+							setAttributes( { mismatchMessage: val } )
+						}
 					/>
 				</Fragment>
 			) }

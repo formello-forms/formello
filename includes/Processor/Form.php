@@ -127,7 +127,7 @@ class Form {
 		global $wpdb;
 
 		$values = array();
-		$placeholder = array();
+		$place_holders = array();
 		$submissions_table = $wpdb->prefix . 'formello_submissions';
 		$submissions_meta_table = $wpdb->prefix . 'formello_submissions_meta';
 		$form_id = $this->ID;
@@ -213,13 +213,9 @@ class Form {
 
 		foreach ( $actions as $key => &$value ) {
 			if ( is_array( $value ) ) {
-
 				$value = $this->recursive_actions( $value );
-
 			} elseif ( is_string( $value ) ) {
-
 				$value = $this->replace_tags( $value );
-
 			}
 		}
 

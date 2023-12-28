@@ -56,10 +56,10 @@ class Replacer {
 		if ( $matches ) {
 			$tag     = $matches[1];
 			$param   = ! isset( $matches[2] ) ? '' : $matches[2];
-			$default = ! isset( $matches[3] ) ? '' : $matches[3];
+			$value = ! isset( $matches[3] ) ? '' : $matches[3];
 
-			$result = $this->replace( $tag, $param, $default );
-		};
+			$result = $this->replace( $tag, $param, $value );
+		}
 
 		return $result;
 	}
@@ -69,13 +69,13 @@ class Replacer {
 	 *
 	 * @param string $tag The tag variable.
 	 * @param string $param The param variable.
-	 * @param string $default Default value.
+	 * @param string $value Default value.
 	 */
-	protected function replace( $tag, $param, $default = '' ) {
+	protected function replace( $tag, $param, $value = '' ) {
 		$replacement = $this->replacers[ $tag ];
 
 		if ( array_key_exists( $tag, $this->replacers ) ) {
-			$value = method_exists( $replacement, $param ) ? $replacement->$param() : $default;
+			$value = method_exists( $replacement, $param ) ? $replacement->$param() : $value;
 		}
 
 		if ( 'fields' === $tag ) {
@@ -86,7 +86,7 @@ class Replacer {
 			$value = $this->replacers['wp']->post_meta( $param );
 		}
 
-		return ! empty( $value ) ? $value : $default;
+		return ! empty( $value ) ? $value : $value;
 	}
 
 }
