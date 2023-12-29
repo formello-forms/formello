@@ -8,7 +8,7 @@ import {
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalUseNavigator as useNavigator,
 } from '@wordpress/components';
-import { Fragment, useState, useContext } from '@wordpress/element';
+import { Fragment, useContext } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import Help from '../../components/help.js';
 import General from './components/general.js';
@@ -32,7 +32,7 @@ export default function Settings() {
 	const tabs = [
 		{
 			name: 'general',
-			title: 'General',
+			title: __( 'General', 'formello' ),
 			component: General,
 		},
 		{
@@ -42,12 +42,12 @@ export default function Settings() {
 		},
 		{
 			name: 'messages',
-			title: 'Messages',
+			title: __( 'Messages', 'formello' ),
 			component: Messages,
 		},
 		{
 			name: 'integrations',
-			title: 'Integrations',
+			title: __( 'Integrations', 'formello' ),
 			component: Integrations,
 		},
 		{

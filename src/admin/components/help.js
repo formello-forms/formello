@@ -23,7 +23,7 @@ export default function Help() {
 						) }
 					</p>
 
-					<ExternalLink href="https://formello.net/en/documentation/">
+					<ExternalLink href="https://docs.formello.net">
 						{ __( 'Documentation', 'formello' ) }
 					</ExternalLink>
 					<p>
@@ -36,7 +36,6 @@ export default function Help() {
 					<ExternalLink href="https://wordpress.org/support/plugin/formello/">
 						{ __( 'Ask a question', 'formello' ) }
 					</ExternalLink>
-
 				</CardBody>
 			</Card>
 			<Card className="ads-container__reviews">

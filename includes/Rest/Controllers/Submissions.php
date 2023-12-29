@@ -94,7 +94,7 @@ class Submissions extends Base {
 		$orderby  = $request->get_param( 'orderby' );
 		$search   = $request->get_param( 'search' );
 		$filter   = $request->get_param( 'filter' );
-		$status     = $request->get_param( 'status' );
+		$status   = $request->get_param( 'status' );
 
 		$columns = $this->get_columns( $form_id );
 

@@ -29,7 +29,10 @@ export default function Edit( { attributes, className, setAttributes } ) {
 	return (
 		<fieldset { ...innerBlocksProps }>
 			<InspectorControls>
-				<PanelBody title={ __( 'Options', 'formello' ) } initialOpen={ true }>
+				<PanelBody
+					title={ __( 'Options', 'formello' ) }
+					initialOpen={ true }
+				>
 					<ToggleControl
 						label={ __( 'Show Legend', 'formello' ) }
 						checked={ attributes.showLegend }

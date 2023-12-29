@@ -75,6 +75,7 @@ class Assets {
 			wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
 		}
 		wp_set_script_translations( 'formello-form-block-editor', 'formello', FORMELLO_ABSPATH . 'languages' );
+		wp_set_script_translations( 'formello-admin', 'formello', FORMELLO_ABSPATH . 'languages' );
 
 		$settings = array(
 			'settings' => get_option( 'formello' ),
@@ -99,9 +100,6 @@ class Assets {
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
 		wp_add_inline_script( 'formello-admin', 'const formello = ' . wp_json_encode( $settings ), 'before' );
-		wp_add_inline_script( 'formello-addons', 'const formello = ' . wp_json_encode( $settings ), 'before' );
-		wp_add_inline_script( 'formello-settings', 'const formello = ' . wp_json_encode( $settings ), 'before' );
-		wp_add_inline_script( 'formello-form-editor-script', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 	}
 
 	/**
@@ -161,13 +159,7 @@ class Assets {
 	 */
 	public function get_styles() {
 		$styles = array(
-			'formello-form-block-editor' => array(
-				'src' => FORMELLO_ASSETS . '/index.css',
-			),
-			'formello-form-block'        => array(
-				'src' => FORMELLO_ASSETS . '/style-index.css',
-			),
-			'formello-admin'          => array(
+			'formello-admin' => array(
 				'src'  => FORMELLO_ASSETS . '/style-admin.css',
 				'deps' => array( 'wp-components', 'wp-reset-editor-styles' ),
 			),

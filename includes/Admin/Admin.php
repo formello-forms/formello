@@ -180,7 +180,7 @@ class Admin {
 				'parent' => null,
 				'group'  => null,
 				'title' => 'Formello ' . $badge,
-				'href'  => admin_url( 'edit.php?post_type=formello_form&page=formello' ),
+				'href'  => admin_url( 'admin.php?page=formello' ),
 			)
 		);
 
@@ -189,7 +189,7 @@ class Admin {
 				'id'    => 'formello-submissions',
 				'parent' => 'formello-menu',
 				'title' => __( 'Entries', 'formello' ) . $badge,
-				'href'  => admin_url( 'edit.php?post_type=formello_form&page=formello' ),
+				'href'  => admin_url( 'admin.php?page=formello' ),
 			)
 		);
 
@@ -198,7 +198,7 @@ class Admin {
 				'id' => 'formello-docs',
 				'parent' => 'formello-menu',
 				'title' => 'Docs',
-				'href' => 'https://formello.net/en/documentation/',
+				'href' => 'https://docs.formello.net',
 				'meta' => array( 'target' => '_blank' ),
 			)
 		);
