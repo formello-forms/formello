@@ -34,8 +34,14 @@ export default function Captcha() {
 						<RadioControl
 							selected={ reCaptcha.version }
 							options={ [
-								{ label: 'reCaptcha v2 checkbox', value: '1' },
-								{ label: 'reCaptcha v3 invisible', value: '3' },
+								{
+									label: __( 'v2 checkbox', 'formello' ),
+									value: '1',
+								},
+								{
+									label: __( 'v3 invisible', 'formello' ),
+									value: '3',
+								},
 							] }
 							onChange={ ( val ) => {
 								setCaptcha( 'version', val, 'reCaptcha' );
@@ -78,16 +84,15 @@ export default function Captcha() {
 
 				<CardBody>
 					<VStack>
-						{ ' ' }
 						<RadioControl
 							selected={ hCaptcha?.version }
 							options={ [
 								{
-									label: 'hCaptcha checkbox',
+									label: __( 'checkbox', 'formello' ),
 									value: 'checkbox',
 								},
 								{
-									label: 'hCaptcha invisible',
+									label: __( 'invisible', 'formello' ),
 									value: 'invisible',
 								},
 							] }
@@ -109,19 +114,17 @@ export default function Captcha() {
 								setCaptcha( 'secret_key', val, 'hCaptcha' );
 							} }
 						/>
-						{ 3 === Number( hCaptcha?.version ) && (
-							<TextControl
-								label={ __( 'Threshold', 'formello' ) }
-								value={ reCaptcha.threshold }
-								onChange={ ( val ) => {
-									setCaptcha( 'threshold', val, 'hCaptcha' );
-								} }
-								type="number"
-								step={ '0.1' }
-								min={ '0' }
-								max={ '1' }
-							/>
-						) }
+						<TextControl
+							label={ __( 'Threshold', 'formello' ) }
+							value={ reCaptcha.threshold }
+							onChange={ ( val ) => {
+								setCaptcha( 'threshold', val, 'hCaptcha' );
+							} }
+							type="number"
+							step={ '0.1' }
+							min={ '0' }
+							max={ '1' }
+						/>
 					</VStack>
 				</CardBody>
 			</Card>

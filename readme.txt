@@ -9,18 +9,20 @@ Requires PHP:      7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-The Gutenberg WordPress Form Builder. Build forms directly within Gutenberg editor. Add & arrange form fields like blocks.
+Light-weight and easy plugin create forms inside the block editor.
 
 == Description ==
 
 Formello is a **Gutenberg forms builder** that helps you build beautiful html forms that seamless integrate in almost every theme with minimal effort.
+This Gutenberg WordPress Form Builder help you build forms directly within Gutenberg editor. Add & arrange form fields like blocks.
 
-This is the next generation **WordPress form builder plugin**. You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form.
+This is the next generation **WordPress form builder plugin**. You can create forms directly inside Gutenberg editor, save submitted data and also get notification of submitted form by email.
 
 == Features ==
 
 * Form validation ( both frontend and backend )
 * ReCaptcha protection (v2 and v3 invisible)
+* hCaptcha protection (checkbox and invisible)
 * Store submissions: views all submitted form
 * Email notification: receive a notification on form submissions
 * Hide form or redirect to URL after a successful submission.

@@ -16,39 +16,18 @@ import {
 	useState,
 } from '@wordpress/element';
 
-import { useDispatch } from '@wordpress/data';
-import { store as coreStore } from '@wordpress/core-data';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
 import { dateI18n } from '@wordpress/date';
-import UpdateLicense from '../../../components/update-license';
 import { SettingsContext } from '../../../context/settings-context';
 
 export default function General() {
 	const { settings, updateSetting } = useContext( SettingsContext );
 
-	const { saveEntityRecord } = useDispatch( coreStore );
-
 	const licenseKey = useRef( settings.license?.license_key?.key ?? '' );
 
 	const [ loading, setLoading ] = useState( false );
 	const [ message, setMessage ] = useState( false );
-
-	console.log( settings, licenseKey );
-
-	function setLicense( key, value ) {
-		const newSettings = Object.assign( {}, settings );
-		newSettings[ key ] = value;
-
-		const record = { formello: newSettings };
-		// store the license response immediately
-		saveEntityRecord( 'root', 'site', record );
-
-		setSettings( {
-			...settings,
-			formello: newSettings,
-		} );
-	}
 
 	const updateLicense = ( endpoint = 'activate' ) => {
 		setLoading( true );
@@ -79,16 +58,12 @@ export default function General() {
 
 			<CardBody>
 				<ExternalLink href="https://formello.net">
-					{ __( 'Get a FREE License' ) }
+					{ __( 'Get a PRO License', 'formello' ) }
 				</ExternalLink>
 				<RawHTML>
-					{ sprintf(
-						/* translators: Addon license. */
-						__(
-							'<p>Your %s key provides access to addons. You can still using Formello without a license key.</p>',
-							'formello'
-						),
-						`<strong>free license</strong>`
+					{ __(
+						'<p>Your <strong>pro license</strong> key provides access to addons. You can still using Formello without a license key.</p>',
+						'formello'
 					) }
 				</RawHTML>
 				<InputControl
