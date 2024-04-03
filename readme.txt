@@ -1,9 +1,9 @@
 === Contact form builder for Gutenberg - Formello ===
 Contributors:      Formello, tropicalista
 Donate link: 	   https://formello.net
-Tags:              form, block, contact form, form block, gutenberg form, forms
-Requires at least: 6.5.0
-Tested up to:      6.5.0
+Tags:              form, contact form, form block, gutenberg form, block
+Requires at least: 6.5
+Tested up to:      6.5
 Stable tag:        2.5.0
 Requires PHP:      7.0
 License:           GPL-2.0-or-later
@@ -129,6 +129,10 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
+
+= 2.5.0 =
+* Release for WP 6.5
+* Added native dataviews.
 
 = 2.4.2 =
 * Fix translations
