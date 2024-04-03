@@ -23,7 +23,7 @@ export default function Label( { attributes, setAttributes } ) {
 	} );
 
 	return (
-		<label className={ labelClassName } htmlFor="input">
+		<div className={ labelClassName } htmlFor="input">
 			<RichText
 				tagName="span"
 				value={ label }
@@ -33,6 +33,6 @@ export default function Label( { attributes, setAttributes } ) {
 			/>
 
 			{ required && <span className="required">{ requiredText }</span> }
-		</label>
+		</div>
 	);
 }

@@ -25,8 +25,8 @@ import {
 import { __ } from '@wordpress/i18n';
 import {
 	useInnerBlocksProps,
-	__experimentalRecursionProvider as RecursionProvider,
-	__experimentalUseHasRecursion as useHasRecursion,
+	RecursionProvider,
+	useHasRecursion,
 	InnerBlocks,
 	BlockControls,
 	InspectorControls,
@@ -56,40 +56,33 @@ export default function ReusableBlockEdit( {
 
 	const isMissing = hasResolved && ! record;
 
-	const options = useSelect(
-		( select ) => {
-			const forms = select( 'core' ).getEntityRecords(
-				'postType',
-				'formello_form',
-				{
-					per_page: -1,
-				}
-			);
-			const opts = [
-				{ value: '', label: __( 'Select a form', 'formello' ) },
-			];
+	const options = useSelect( ( select ) => {
+		const forms = select( 'core' ).getEntityRecords(
+			'postType',
+			'formello_form',
+			{
+				per_page: -1,
+			}
+		);
+		const opts = [
+			{ value: '', label: __( 'Select a form', 'formello' ) },
+		];
 
-			forms?.forEach( ( post ) => {
-				opts.push( {
-					value: post.id,
-					label: post.title.raw || __( 'No title', 'formello' ),
-				} );
+		forms?.forEach( ( post ) => {
+			opts.push( {
+				value: post.id,
+				label: post.title.raw || __( 'No title', 'formello' ),
 			} );
+		} );
 
-			return opts;
-		},
-		[ clientId ]
-	);
+		return opts;
+	}, [] );
 
 	const { saveEntityRecord } = useDispatch( coreStore );
 
 	const create = useCallback(
-		async (
-			title = null,
-			blocks = [],
-			postStatus = 'formello-private'
-		) => {
-			const record = {
+		async ( title = null ) => {
+			const template = {
 				title,
 				content: `<!-- wp:formello/form {"lock":{"move":false,"remove":true}} -->
 				<form class="wp-block-formello-form" method="post" data-id="11" data-validate="true" novalidate action=""><input type="hidden" name="_formello_id" value="11"/><input type="text" name="_formello_h11" class="formello-hp" aria-label="If you are human, leave this field blank." tabindex="-1"/><input type="hidden" name="action" value="formello"/><div class="formello-message" id="formello-message-11"></div></form>
@@ -98,17 +91,16 @@ export default function ReusableBlockEdit( {
 				excerpt: '',
 			};
 
-			// Return affords ability to await on this function directly
-			return saveEntityRecord( 'postType', 'formello_form', record )
-				.then( ( response ) => {
-					setAttributes( { ref: response.id } );
-					setIsDisabled( false );
-				} )
-				.catch( ( err ) => {
-					console.log( err );
-				} );
+			return saveEntityRecord(
+				'postType',
+				'formello_form',
+				template
+			).then( ( response ) => {
+				setAttributes( { ref: response.id } );
+				setIsDisabled( false );
+			} );
 		},
-		[ saveEntityRecord ]
+		[ saveEntityRecord, setAttributes ]
 	);
 
 	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
@@ -171,7 +163,7 @@ export default function ReusableBlockEdit( {
 					) }
 					label={ __( 'Insert a form', 'formello' ) }
 				>
-					{ 'widgets' === pagenow ? (
+					{ 'widgets' === window.pagenow ? (
 						<SelectControl
 							label={ __( 'Choose a form', 'formello' ) }
 							value={ ref }

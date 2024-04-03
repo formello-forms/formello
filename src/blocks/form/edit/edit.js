@@ -2,7 +2,6 @@ import { __ } from '@wordpress/i18n';
 
 import { useState, useEffect, useContext } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
-import { applyFilters } from '@wordpress/hooks';
 import { useEntityProp } from '@wordpress/core-data';
 import {
 	InspectorControls,
@@ -16,20 +15,6 @@ import { ToolbarButton, ToolbarGroup, Disabled } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
 
 import classnames from 'classnames';
-
-const ALLOWED_BLOCKS = [
-	'core/paragraph',
-	'core/heading',
-	'core/columns',
-	'core/group',
-	'formello/input',
-	'formello/textarea',
-	'formello/button',
-	'formello/output',
-	'formello/fieldset',
-	'formello/select',
-	'formello/multichoices',
-];
 
 import TemplatesModal from './templates-modal.js';
 import { Settings } from '../settings/basic';
@@ -98,12 +83,7 @@ export default function Edit( props ) {
 		className: getBlockClassNames(),
 	} );
 
-	{
-		applyFilters( 'formello.form.allowedBlocks', ALLOWED_BLOCKS );
-	}
-
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
-		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 		template: [ [ 'formello/button' ] ],
 		renderAppender: hasInnerBlocks

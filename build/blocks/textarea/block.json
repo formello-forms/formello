@@ -156,6 +156,7 @@
   },
   "supports": {
     "html": false,
+    "inserter": true,
     "className": false,
     "reusable": false,
     "__experimentalBorder": {

@@ -21,12 +21,13 @@
     "@wordpress/scripts": "^26.19.0"
   },
   "dependencies": {
-    "@tanstack/react-table": "^8.10.7",
     "@tinymce/tinymce-react": "^4.3.2",
+    "@wordpress/dataviews": "^0.7.0",
     "@wordpress/icons": "^9.39.0",
     "classnames": "^2.3.1",
     "flatpickr": "^4.6.9",
     "formbouncerjs": "^1.4.6",
+    "history": "^5.3.0",
     "react-router-dom": "^6.6.1"
   },
   "files": [

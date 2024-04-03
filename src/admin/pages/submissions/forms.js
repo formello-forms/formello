@@ -2,24 +2,13 @@
 /**
  * WordPress dependencies
  */
-import {
-	Button,
-	__experimentalUseNavigator as useNavigator,
-	__experimentalHeading as Heading,
-	__experimentalVStack as VStack,
-	Card,
-} from '@wordpress/components';
+import { Button, Card } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useEntityRecords } from '@wordpress/core-data';
 import { decodeEntities } from '@wordpress/html-entities';
-import {
-	useState,
-	useMemo,
-	useCallback,
-	Fragment,
-	useEffect,
-} from '@wordpress/element';
+import { useState, useMemo, Fragment } from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
+import { addQueryArgs } from '@wordpress/url';
 import {
 	trashPostAction,
 	usePermanentlyDeletePostAction,
@@ -27,20 +16,15 @@ import {
 	useEditPostAction,
 } from '../../components/actions';
 import { commentContent } from '@wordpress/icons';
-import { OPERATOR_IN } from '../../components/dataviews/constants';
-import { addQueryArgs } from '@wordpress/url';
-import apiFetch from '@wordpress/api-fetch';
+import { useHistory } from '../../router';
 
 /**
  * Internal dependencies
  */
-import { DataViews } from '../../components/dataviews';
+import { DataViews } from '@wordpress/dataviews';
 import Header from '../../components/masthead.js';
 
 const EMPTY_ARRAY = [];
-const defaultConfigPerViewType = {
-	list: {},
-};
 
 // See https://github.com/WordPress/gutenberg/issues/55886
 // We do not support custom statutes at the moment.
@@ -55,12 +39,10 @@ const STATUSES = [
 const DEFAULT_STATUSES = 'draft,future,pending,private,publish'; // All but 'trash'.
 
 export const Forms = () => {
-	const { goTo } = useNavigator();
+	const history = useHistory();
 	const [ view, setView ] = useState( {
-		type: 'list',
-		filters: [
-			{ field: 'status', operator: OPERATOR_IN, value: 'publish' },
-		],
+		type: 'table',
+		filters: [],
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -68,29 +50,25 @@ export const Forms = () => {
 			direction: 'desc',
 		},
 		search: '',
-		visibleFilters: [ 'status' ],
 		// All fields are visible by default, so it's
 		// better to keep track of the hidden ones.
 		hiddenFields: [ 'shortcode' ],
 		layout: {},
 	} );
 
-	const [ pagination, setPagination ] = useState();
-
 	const queryArgs = useMemo( () => {
 		const filters = {};
 		view.filters.forEach( ( filter ) => {
-			if (
-				filter.field === 'status' &&
-				filter.operator === OPERATOR_IN
-			) {
+			if ( filter.field === 'status' && filter.operator === 'in' ) {
 				filters.status = filter.value;
 			}
-			if (
-				filter.field === 'author' &&
-				filter.operator === OPERATOR_IN
-			) {
+			if ( filter.field === 'author' && filter.operator === 'in' ) {
 				filters.author = filter.value;
+			} else if (
+				filter.field === 'author' &&
+				filter.operator === 'notIn'
+			) {
+				filters.author_exclude = filter.value;
 			}
 		} );
 		// We want to provide a different default item for the status filter
@@ -98,7 +76,6 @@ export const Forms = () => {
 		if ( ! filters.status || filters.status === '' ) {
 			filters.status = DEFAULT_STATUSES;
 		}
-
 		return {
 			per_page: view.perPage,
 			page: view.page,
@@ -109,100 +86,68 @@ export const Forms = () => {
 			...filters,
 		};
 	}, [ view ] );
+	const {
+		records: forms,
+		isResolving: isLoadingForms,
+		totalItems,
+		totalPages,
+	} = useEntityRecords( 'postType', 'formello_form', queryArgs );
 
-	// Request post statuses to get the proper labels.
-	const forms = useEntityRecords( 'postType', 'formello_form', queryArgs );
+	const { records: authors, isResolving: isLoadingAuthors } =
+		useEntityRecords( 'root', 'user' );
 
-	const { records: authors } = useEntityRecords( 'root', 'user', {
-		who: 'authors',
-	} );
-
-	useEffect( () => {
-		apiFetch( { path: '/wp/v2/formello_form', parse: false } ).then(
-			( response ) => {
-				setPagination( {
-					totalItems: response.headers.get( 'x-wp-total' ),
-					totalPages: response.headers.get( 'x-wp-totalpages' ),
-				} );
-			}
-		);
-	}, [] );
-
-	const paginationInfo = useMemo( () => {
-		return {
-			totalItems: pagination?.totalItems,
-			totalPages: pagination?.totalPages,
-		};
-	}, [ forms ] );
+	const paginationInfo = useMemo(
+		() => ( {
+			totalItems,
+			totalPages,
+		} ),
+		[ totalItems, totalPages ]
+	);
 
 	const fields = useMemo(
 		() => [
 			{
-				header: __( 'Form' ),
+				header: __( 'Title' ),
 				id: 'title',
-				getValue: ( item ) => item.title?.rendered || item.slug,
+				getValue: ( { item } ) => item.title?.rendered,
 				render: ( { item } ) => {
 					return (
-						<VStack spacing={ 1 }>
-							<Heading as="h3" level={ 5 }>
-								<Button
-									variant="link"
-									onClick={ () => {
-										const href = addQueryArgs( 'post.php', {
-											post: item.id,
-											action: 'edit',
-										} );
-										document.location.href = href;
-									} }
-								>
-									{ decodeEntities(
-										item.title?.rendered || item.slug
-									) || __( '(no title)' ) }
-								</Button>
-								{ item.submissions_count.news > 0 && (
-									<span className="badge">
-										{ item.submissions_count.news }
-									</span>
-								) }
-							</Heading>
-						</VStack>
+						<Fragment>
+							<Button
+								variant="link"
+								onClick={ () => {
+									const href = addQueryArgs( 'post.php', {
+										post: item.id,
+										action: 'edit',
+									} );
+									document.location.href = href;
+								} }
+							>
+								{ decodeEntities(
+									item.title?.rendered || item.slug
+								) || __( '(no title)' ) }
+							</Button>
+							{ item.submissions_count.news > 0 && (
+								<span className="badge">
+									{ item.submissions_count.news }
+								</span>
+							) }
+						</Fragment>
 					);
 				},
-				maxWidth: 400,
+				maxWidth: 300,
 				enableHiding: false,
-			},
-			{
-				header: 'Shortcode',
-				id: 'shortcode',
-				getValue: ( item ) => item.id,
-				render: ( { item } ) => {
-					return <code>{ `[formello id=${ item.id }]` }</code>;
-				},
-				enableSorting: true,
 			},
 			{
 				header: __( 'Author' ),
 				id: 'author',
-				getValue: ( item ) => item._embedded?.author[ 0 ]?.name,
-				render: ( { item } ) => {
-					const author = item._embedded?.author[ 0 ];
-					return (
-						<a href={ `user-edit.php?user_id=${ author.id }` }>
-							{ author.name }
-						</a>
-					);
-				},
-				filters: [ OPERATOR_IN ],
-				elements: [
-					{
-						value: '',
-						label: __( 'All' ),
-					},
-					...( authors?.map( ( { id, name } ) => ( {
+				getValue: ( { item } ) => item._embedded?.author[ 0 ]?.name,
+				type: 'enumeration',
+				elements:
+					authors?.map( ( { id, name } ) => ( {
 						value: id,
 						label: name,
-					} ) ) || [] ),
-				],
+					} ) ) || [],
 			},
 			{
 				header: __( 'Status' ),
@@ -210,14 +155,13 @@ export const Forms = () => {
 				getValue: ( { item } ) =>
 					STATUSES.find( ( { value } ) => value === item.status )
 						?.label ?? item.status,
-				filters: [ OPERATOR_IN ],
+				type: 'enumeration',
 				elements: STATUSES,
 				enableSorting: false,
 			},
 			{
-				header: 'Date',
+				header: __( 'Date' ),
 				id: 'date',
-				getValue: ( item ) => item.date,
 				render: ( { item } ) => {
 					const formattedDate = dateI18n(
 						getSettings().formats.datetimeAbbreviated,
@@ -225,30 +169,18 @@ export const Forms = () => {
 					);
 					return <time>{ formattedDate }</time>;
 				},
+			},
+			{
+				header: 'Shortcode',
+				id: 'shortcode',
+				getValue: ( { item } ) => item.id,
+				render: ( { item } ) => {
+					return <code>{ `[formello id=${ item.id }]` }</code>;
+				},
 				enableSorting: true,
 			},
 		],
 		[ authors ]
-	);
-
-	const onChangeView = useCallback(
-		( viewUpdater ) => {
-			let updatedView =
-				typeof viewUpdater === 'function'
-					? viewUpdater( view )
-					: viewUpdater;
-			if ( updatedView.type !== view.type ) {
-				updatedView = {
-					...updatedView,
-					layout: {
-						...defaultConfigPerViewType[ updatedView.type ],
-					},
-				};
-			}
-
-			setView( updatedView );
-		},
-		[ view ]
 	);
 
 	const permanentlyDeletePostAction = usePermanentlyDeletePostAction();
@@ -261,8 +193,13 @@ export const Forms = () => {
 				label: __( 'View Submissions', 'formello' ),
 				isPrimary: true,
 				icon: commentContent,
-				callback( post ) {
-					goTo( '/formello/submissions/' + post.id );
+				callback( posts ) {
+					const post = posts[ 0 ];
+					history.push( {
+						page: 'formello',
+						section: 'submissions',
+						form_id: post.id,
+					} );
 				},
 			},
 			trashPostAction,
@@ -270,7 +207,12 @@ export const Forms = () => {
 			permanentlyDeletePostAction,
 			editPostAction,
 		],
-		[ permanentlyDeletePostAction, restorePostAction, editPostAction, goTo ]
+		[
+			permanentlyDeletePostAction,
+			restorePostAction,
+			editPostAction,
+			history,
+		]
 	);
 
 	return (
@@ -290,10 +232,11 @@ export const Forms = () => {
 						paginationInfo={ paginationInfo }
 						fields={ fields }
 						actions={ actions }
-						data={ forms.records || EMPTY_ARRAY }
-						isLoading={ forms.isResolving }
+						data={ forms || EMPTY_ARRAY }
+						isLoading={ isLoadingForms || isLoadingAuthors }
 						view={ view }
-						onChangeView={ onChangeView }
+						onChangeView={ setView }
+						supportedLayouts={ [ 'table' ] }
 					/>
 				</Card>
 			</div>

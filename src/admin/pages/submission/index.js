@@ -4,7 +4,6 @@
  */
 import { useEntityRecord, store as coreStore } from '@wordpress/core-data';
 import {
-	__experimentalUseNavigator as useNavigator,
 	__experimentalGrid as Grid,
 	Spinner,
 	Button,
@@ -17,19 +16,22 @@ import { SubmissionData } from './submission-data';
 import { FieldsData } from './fields-data';
 import Header from '../../components/masthead.js';
 import { useDispatch } from '@wordpress/data';
+import { useHistory, useLocation } from '../../router';
 
 export const Submission = () => {
-	const { params, goBack } = useNavigator();
+	const history = useHistory();
+	const { params } = useLocation();
 
 	const submission = useEntityRecord(
 		'formello/v1',
 		'submissions',
-		params.id || getQueryArg( window.location.href, 'submission_id' )
+		params.submission_id ||
+			getQueryArg( window.location.href, 'submission_id' )
 	);
 	const { saveEntityRecord } = useDispatch( coreStore );
 
 	useEffect( () => {
-		if ( parseInt( submission.record.details.is_new ) ) {
+		if ( parseInt( submission.record?.details.is_new ) ) {
 			saveEntityRecord( 'formello/v1', 'submissions', {
 				id: submission.record.id,
 				details: { is_new: false },
@@ -45,7 +47,12 @@ export const Submission = () => {
 					variant="primary"
 					size="small"
 					icon={ 'arrow-left' }
-					onClick={ goBack }
+					onClick={ () => {
+						history.push( {
+							page: 'formello',
+							section: 'submissions',
+						} );
+					} }
 				>
 					{ __( 'Go back', 'formello' ) }
 				</Button>
@@ -59,7 +66,7 @@ export const Submission = () => {
 				title={ sprintf(
 					/* Translators: %d The submission id. */
 					__( 'Submission %d', 'formello' ),
-					params.id
+					params.submission_id
 				) }
 				className="full-width"
 			>
@@ -67,7 +74,15 @@ export const Submission = () => {
 					variant="primary"
 					size="small"
 					icon={ 'arrow-left' }
-					onClick={ goBack }
+					onClick={ () => {
+						history.push( {
+							page: 'formello',
+							section: submission.record?.details.form_id
+								? 'submissions'
+								: '',
+							form_id: submission.record?.details.form_id,
+						} );
+					} }
 				>
 					{ __( 'Go back', 'formello' ) }
 				</Button>

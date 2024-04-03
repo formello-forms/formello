@@ -1,4 +1,11 @@
 <?php
+/**
+ * Uninstall hook
+ *
+ * @package formello
+ */
+
+defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 $formello_option = get_option( 'formello', false );
 

@@ -3,7 +3,6 @@
  * WordPress dependencies
  */
 import {
-	__experimentalUseNavigator as useNavigator,
 	__experimentalVStack as VStack,
 	__experimentalText as Text,
 	Button,
@@ -25,9 +24,9 @@ import {
 /**
  * Internal dependencies
  */
-import { DataViews } from '../../components/dataviews';
+import { DataViews } from '@wordpress/dataviews';
 import Header from '../../components/masthead.js';
-import { OPERATOR_IN } from '../../components/dataviews/constants';
+import { useHistory, useLocation } from '../../router';
 
 const EMPTY_ARRAY = [];
 const defaultConfigPerViewType = {
@@ -40,10 +39,11 @@ const STATUSES = [
 ];
 
 export const Submissions = () => {
-	const { goTo, params } = useNavigator();
+	const history = useHistory();
+	const { params } = useLocation();
 	const [ view, setView ] = useState( {
-		type: 'list',
-		filters: [ { field: 'status', operator: OPERATOR_IN, value: 'all' } ],
+		type: 'table',
+		filters: [ { field: 'status', operator: 'isAny', value: 'all' } ],
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -61,10 +61,7 @@ export const Submissions = () => {
 	const queryArgs = useMemo( () => {
 		const filters = {};
 		view.filters.forEach( ( filter ) => {
-			if (
-				filter.field === 'status' &&
-				filter.operator === OPERATOR_IN
-			) {
+			if ( filter.field === 'status' && filter.operator === 'isAny' ) {
 				filters.status = filter.value;
 			}
 		} );
@@ -75,7 +72,7 @@ export const Submissions = () => {
 		}
 
 		return {
-			id: params.id,
+			id: params.form_id,
 			per_page: view.perPage,
 			page: view.page,
 			order: view.sort?.direction,
@@ -91,12 +88,12 @@ export const Submissions = () => {
 		queryArgs
 	);
 
-	const columns = useEntityRecord( 'formello/v1', 'columns', params.id );
+	const columns = useEntityRecord( 'formello/v1', 'columns', params.form_id );
 
 	const { record: form } = useEntityRecord(
 		'postType',
 		'formello_form',
-		params.id
+		params.form_id
 	);
 
 	const getColumns = useCallback( () => {
@@ -125,30 +122,15 @@ export const Submissions = () => {
 					return (
 						<VStack spacing={ 1 }>
 							{ parseInt( item.details.is_new ) && (
-								<Icon
-									icon={ heading }
-									label={ 'Is new' }
-									onClick={ () =>
-										goTo(
-											`/formello/submission/${ item.id }`
-										)
-									}
-								/>
+								<Icon icon={ heading } label={ 'Is new' } />
 							) }
 							{ parseInt( item.details.starred ) && (
-								<Icon
-									icon={ starFilled }
-									onClick={ () =>
-										goTo(
-											`/formello/submission/${ item.id }`
-										)
-									}
-								/>
+								<Icon icon={ starFilled } />
 							) }
 						</VStack>
 					);
 				},
-				filters: [ OPERATOR_IN ],
+				filters: [ 'isAny' ],
 				elements: STATUSES,
 				maxWidth: 25,
 				width: 25,
@@ -164,7 +146,11 @@ export const Submissions = () => {
 						variant="link"
 						text={ item.id }
 						onClick={ () =>
-							goTo( `/formello/submission/${ item.id }` )
+							history.push( {
+								page: 'formello',
+								section: 'submission',
+								form_id: item.id,
+							} )
 						}
 					/>
 				),
@@ -202,7 +188,7 @@ export const Submissions = () => {
 			};
 		} );
 		return _fields.concat( _columns );
-	}, [ goTo, getColumns ] );
+	}, [ history, getColumns ] );
 
 	const onChangeView = useCallback(
 		( viewUpdater ) => {
@@ -227,16 +213,21 @@ export const Submissions = () => {
 	const { saveEntityRecord } = useDispatch( coreStore );
 	const actions = useMemo(
 		() => [
+			trashSubmissionAction,
 			{
 				id: 'view-submission',
 				label: __( 'View Submission', 'formello' ),
 				isPrimary: true,
 				icon: seen,
-				callback( post ) {
-					goTo( '/formello/submission/' + post.id );
+				callback( posts ) {
+					const post = posts[ 0 ];
+					history.push( {
+						page: 'formello',
+						section: 'submission',
+						submission_id: post.id,
+					} );
 				},
 			},
-			trashSubmissionAction,
 			{
 				id: 'mark-as-starred',
 				label: __( 'Toggle favorite' ),
@@ -244,10 +235,13 @@ export const Submissions = () => {
 				isBulk: true,
 				isEligible: () => true,
 				icon: starFilled,
-				callback: ( post ) => {
+				callback: ( posts ) => {
+					const post = posts[ 0 ];
 					saveEntityRecord( 'formello/v1', 'submissions', {
 						id: post.id,
-						details: { starred: ! post.details.starred },
+						details: {
+							starred: ! parseInt( post.details.starred ),
+						},
 					} );
 				},
 			},
@@ -257,15 +251,16 @@ export const Submissions = () => {
 				isPrimary: false,
 				isBulk: true,
 				icon: heading,
-				callback: ( post ) => {
+				callback: ( posts ) => {
+					const post = posts[ 0 ];
 					saveEntityRecord( 'formello/v1', 'submissions', {
 						id: post.id,
-						details: { is_new: ! post.details.is_new },
+						details: { is_new: ! parseInt( post.details.is_new ) },
 					} );
 				},
 			},
 		],
-		[ goTo ]
+		[ history, saveEntityRecord ]
 	);
 
 	// TODO: we need to handle properly `data={ data || EMPTY_ARRAY }` for when `isLoading`.
@@ -279,7 +274,11 @@ export const Submissions = () => {
 					variant="primary"
 					size="small"
 					icon={ 'arrow-left' }
-					onClick={ () => goTo( '/formello/' ) }
+					onClick={ () =>
+						history.push( {
+							page: 'formello',
+						} )
+					}
 				>
 					{ __( 'Go back', 'formello' ) }
 				</Button>
@@ -294,6 +293,7 @@ export const Submissions = () => {
 						isLoading={ submissions.isResolving }
 						view={ view }
 						onChangeView={ onChangeView }
+						supportedLayouts={ [ 'table' ] }
 					/>
 				</Card>
 			</div>

@@ -1,24 +1,18 @@
 /* eslint-disable @wordpress/no-unsafe-wp-apis */
-import { createRoot } from '@wordpress/element';
-import {
-	__experimentalNavigatorProvider as NavigatorProvider,
-	__experimentalNavigatorScreen as NavigatorScreen,
-} from '@wordpress/components';
+import { createRoot, useEffect } from '@wordpress/element';
 import { dispatch } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
-//import menuFix from '../settings/menuFix';
 import './style.scss';
-
 import { Forms } from './pages/submissions/forms';
 import { Submissions } from './pages/submissions/submissions';
 import { Submission } from './pages/submission';
 import Settings from './pages/settings';
 import Tools from './pages/tools';
 import Addons from './pages/addons';
-import { getQueryArg, hasQueryArg } from '@wordpress/url';
+import { getQueryArg } from '@wordpress/url';
 import SettingsContextProvider from './context/settings-context';
-import menuFix from '../utils/menu-fix';
+import { RouterProvider, useLocation, useHistory } from './router';
 
 /**
  * Add our custom entities for retrieving external setting and variable data.
@@ -47,39 +41,81 @@ dispatch( 'core' ).addEntities( [
 	},
 ] );
 
-const App = () => {
-	const baseUrl = window.location.href;
-	const initialTab = hasQueryArg( baseUrl, 'tab' )
-		? '/' + getQueryArg( baseUrl, 'tab' )
-		: '/general';
-	const id = hasQueryArg( baseUrl, 'id' )
-		? '/' + getQueryArg( baseUrl, 'id' )
-		: '';
-	const initialPath = '/' + getQueryArg( baseUrl, 'page' ) + initialTab + id;
+const Router = () => {
+	const history = useHistory();
+	const { params } = useLocation();
 
+	const menuRoot = document.querySelector( '#toplevel_page_formello' );
+	const reset = () => {
+		const page = getQueryArg( window.location.href, 'page' );
+		if ( ! page ) {
+			return;
+		}
+		for ( const child of menuRoot.querySelectorAll( 'a' ) ) {
+			const target = getQueryArg( child.href, 'page' );
+			if ( page === target ) {
+				child.classList.add( 'current' );
+				child.parentElement.classList.add( 'current' );
+			} else {
+				child.classList.remove( 'current' );
+				child.parentElement.classList.remove( 'current' );
+			}
+		}
+	};
+
+	const handleChange = ( e ) => {
+		e.preventDefault();
+
+		history.push( {
+			page: getQueryArg( e.target.href, 'page' ),
+		} );
+		reset();
+	};
+
+	useEffect( () => {
+		reset();
+		menuRoot.addEventListener( 'click', handleChange, false );
+
+		return () => {
+			document
+				.querySelector( '#toplevel_page_popper' )
+				.removeEventListener( 'click', handleChange );
+		};
+	}, [] );
+
+	if ( 'formello-settings' === params.page ) {
+		return <Settings />;
+	}
+	if ( 'formello-tools' === params.page ) {
+		return <Tools />;
+	}
+	if ( 'formello-addons' === params.page ) {
+		return <Addons />;
+	}
+	if (
+		'formello' === params.page &&
+		'submission' === params.section &&
+		params.submission_id
+	) {
+		return <Submission />;
+	}
+	if (
+		'formello' === params.page &&
+		'submissions' === params.section &&
+		params.form_id
+	) {
+		return <Submissions />;
+	}
+	return <Forms />;
+};
+
+const App = () => {
 	return (
-		<NavigatorProvider initialPath={ initialPath || '/formello' }>
+		<RouterProvider>
 			<SettingsContextProvider>
-				<NavigatorScreen path="/formello/:tab?">
-					<Forms />
-				</NavigatorScreen>
-				<NavigatorScreen path="/formello/submissions/:id">
-					<Submissions />
-				</NavigatorScreen>
-				<NavigatorScreen path="/formello/submission/:id">
-					<Submission />
-				</NavigatorScreen>
-				<NavigatorScreen path="/formello-settings/:tab?">
-					<Settings />
-				</NavigatorScreen>
-				<NavigatorScreen path="/formello-tools/:tab?">
-					<Tools />
-				</NavigatorScreen>
-				<NavigatorScreen path="/formello-addons/:tab?">
-					<Addons />
-				</NavigatorScreen>
+				<Router />
 			</SettingsContextProvider>
-		</NavigatorProvider>
+		</RouterProvider>
 	);
 };
 
@@ -89,5 +125,3 @@ window.addEventListener( 'DOMContentLoaded', () => {
 
 	root.render( <App /> );
 } );
-
-menuFix( 'formello' );

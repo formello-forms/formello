@@ -6,12 +6,29 @@
 	"description": "A block collection to build forms.",
 	"category": "formello",
 	"textdomain": "formello",
-	"keywords": ["form", "forms", "formello"],
-    "providesContext": {
-        "formello/captchaEnabled": "captchaEnabled",
-        "formello/captchaType": "captchaType",
-        "formello/formId": "successMessage"
-    },
+	"keywords": [
+		"form",
+		"forms",
+		"formello"
+	],
+	"allowedBlocks": [
+		"core/paragraph",
+		"core/heading",
+		"core/columns",
+		"core/group",
+		"formello/input",
+		"formello/textarea",
+		"formello/button",
+		"formello/output",
+		"formello/fieldset",
+		"formello/select",
+		"formello/multichoices"
+	],
+	"providesContext": {
+		"formello/captchaEnabled": "captchaEnabled",
+		"formello/captchaType": "captchaType",
+		"formello/formId": "successMessage"
+	},
 	"attributes": {
 		"id": {
 			"type": "string",
@@ -89,7 +106,10 @@
 			"attribute": "data-hide"
 		},
 		"autoComplete": {
-			"enum": ["on", "off"],
+			"enum": [
+				"on",
+				"off"
+			],
 			"source": "attribute",
 			"selector": "form",
 			"attribute": "autocomplete"
@@ -113,7 +133,7 @@
 			"selector": "form",
 			"attribute": "novalidate",
 			"default": true
-		}		
+		}
 	},
 	"styles": [
 		{
@@ -122,8 +142,8 @@
 			"isDefault": true
 		},
 		{
-			"name": "modern", 
-			"label": "Modern" 
+			"name": "modern",
+			"label": "Modern"
 		}
 	],
 	"editorScript": "file:./index.js",

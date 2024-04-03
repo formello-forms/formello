@@ -2,7 +2,6 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
-	__experimentalText as Text,
 } from '@wordpress/components';
 import { RawHTML } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';

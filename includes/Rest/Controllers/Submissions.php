@@ -112,6 +112,7 @@ class Submissions extends Base {
 		$params = array(
 			'column'      => $wpdb->prefix . 'formello_submissions',
 			'form_id'     => $form_id,
+			'search'      => '',
 			'order_by'    => 'id',
 			'order'       => 'DESC',
 			'per_page'    => $per_page,
@@ -127,7 +128,7 @@ class Submissions extends Base {
 		}
 
 		if ( ! empty( $search ) ) {
-			array_unshift( $params, '%' . sanitize_text_field( $search ) . '%' );
+			$params['search'] = '%' . sanitize_text_field( $search ) . '%';
 			$sql .= ' AND data LIKE %s';
 		}
 
@@ -136,10 +137,6 @@ class Submissions extends Base {
 			$params['order_by'] = sanitize_text_field( $orderby );
 			$params['order']    = ! empty( $order ) ? strtoupper( $order ) : 'ASC';
 		}
-
-		// get total before adding limit.
-		$total = $this->get_total_records( $sql, $params );
-		$totalPages = ceil( $total / $per_page );
 
 		$sql .= ' ORDER BY %1s %1s';
 		$sql .= ' LIMIT %d';
@@ -161,12 +158,7 @@ class Submissions extends Base {
 			$submissions[] = $this->get_object( $data );
 		}
 
-		$response = new \WP_REST_Response( $submissions, 200 );
-
-		$response->header( 'X-WP-Total', (int) $total );
-		$response->header( 'X-WP-Totalpages', (int) $totalPages );
-
-		return $response;
+		return new \WP_REST_Response( $submissions, 200 );
 	}
 
 	/**
@@ -224,27 +216,6 @@ class Submissions extends Base {
 		);
 
 		return rest_ensure_response( $results );
-	}
-
-	/**
-	 * Get one item from the collection
-	 *
-	 * @param string $sql The SQL statement.
-	 * @param array  $params The SQL params.
-	 * @return int
-	 */
-	private function get_total_records( $sql, $params ) {
-
-		global $wpdb;
-		$submissions = $wpdb->get_results(
-			$wpdb->prepare(
-				// phpcs:ignore
-				$sql,
-				$params
-			),
-			ARRAY_A
-		);
-		return count( $submissions );
 	}
 
 	/**

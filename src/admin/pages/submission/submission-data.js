@@ -7,6 +7,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { addQueryArgs } from '@wordpress/url';
 import { dateI18n, getSettings } from '@wordpress/date';
+import { useEntityRecord } from '@wordpress/core-data';
 
 export function SubmissionData( props ) {
 	const { data } = props;
@@ -16,6 +17,12 @@ export function SubmissionData( props ) {
 		post: data.form_id,
 		action: 'edit',
 	} );
+
+	const { record: form } = useEntityRecord(
+		'postType',
+		'formello_form',
+		data.form_id
+	);
 
 	return (
 		<Card>
@@ -34,7 +41,7 @@ export function SubmissionData( props ) {
 							<th>{ __( 'Form ID', 'formello' ) }</th>
 							<td>
 								<ExternalLink href={ formUrl }>
-									{ data.form_id }
+									{ form?.title.raw || __( '(No title)', 'formello' ) }
 								</ExternalLink>
 							</td>
 						</tr>

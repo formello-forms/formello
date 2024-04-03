@@ -224,6 +224,7 @@
   },
   "supports": {
     "html": false,
+    "inserter": true,
     "reusable": false,
     "spacing": {
       "padding": true,

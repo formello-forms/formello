@@ -11,6 +11,19 @@
     "forms",
     "formello"
   ],
+  "allowedBlocks": [
+    "core/paragraph",
+    "core/heading",
+    "core/columns",
+    "core/group",
+    "formello/input",
+    "formello/textarea",
+    "formello/button",
+    "formello/output",
+    "formello/fieldset",
+    "formello/select",
+    "formello/multichoices"
+  ],
   "providesContext": {
     "formello/captchaEnabled": "captchaEnabled",
     "formello/captchaType": "captchaType",
