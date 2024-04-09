@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-
 import {
 	InspectorControls,
 	InspectorAdvancedControls,
@@ -8,11 +7,7 @@ import {
 	useBlockProps,
 	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
-
 import { ToolbarGroup } from '@wordpress/components';
-
-import { useEffect } from '@wordpress/element';
-
 import classnames from 'classnames';
 
 import Label from '../../components/label';
@@ -20,41 +15,17 @@ import Options from '../../components/field-options';
 import ValidationOptions from '../../components/field-options/validation';
 import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
+import { useInputId } from '../../components/hooks';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function Edit( props ) {
-	const { attributes, setAttributes, clientId } = props;
-	const {
-		name,
-		id,
-		cols,
-		rows,
-		value,
-		placeholder,
-		showHelp,
-		help,
-		advanced,
-	} = attributes;
+	const { attributes, setAttributes } = props;
+	const { cols, rows, value, placeholder, showHelp, help, advanced } =
+		attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES.textarea;
-
-	useEffect( () => {
-		const idx = clientId
-			.substr( 2, 6 )
-			.replace( '-', '' )
-			.replace( /-/g, '' );
-		if ( ! id ) {
-			setAttributes( {
-				id: 'field_' + idx,
-			} );
-		}
-		if ( ! name ) {
-			setAttributes( {
-				name: 'field_' + idx,
-			} );
-		}
-	}, [] );
+	const inputId = useInputId( Edit, props );
 
 	const borderProps = useBorderProps( attributes );
 
@@ -96,6 +67,7 @@ export default function Edit( props ) {
 				placeholder={ placeholder }
 				className={ fieldClassName }
 				style={ borderProps.style }
+				id={ inputId }
 			></textarea>
 
 			{ showHelp && (

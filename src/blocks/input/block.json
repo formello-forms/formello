@@ -221,6 +221,8 @@
 		}
 	},
 	"supports": {
+		"lock": false,
+		"anchor": false,
 		"html": false,
 		"inserter": true,
 		"reusable": false,

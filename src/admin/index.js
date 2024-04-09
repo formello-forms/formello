@@ -78,7 +78,7 @@ const Router = () => {
 
 		return () => {
 			document
-				.querySelector( '#toplevel_page_popper' )
+				.querySelector( '#toplevel_page_formello' )
 				.removeEventListener( 'click', handleChange );
 		};
 	}, [] );

@@ -16,14 +16,14 @@ import { layout } from '@wordpress/icons';
 
 import classnames from 'classnames';
 
-import TemplatesModal from './templates-modal.js';
+import { TemplatesModal } from './templates-modal.js';
 import { Settings } from '../settings/basic';
 import { Controls } from '../settings/controls';
 import { AdvancedSettings } from '../settings/advanced';
 import useFormFields from './use-form-fields';
 
 export default function Edit( props ) {
-	const { attributes, className, clientId, hasInnerBlocks } = props;
+	const { attributes, className, clientId, hasInnerBlocks, name } = props;
 
 	const { postType, postId } = useSelect( ( select ) => {
 		return {
@@ -84,7 +84,7 @@ export default function Edit( props ) {
 	} );
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
-		templateLock: false,
+		//templateLock: false,
 		template: [ [ 'formello/button' ] ],
 		renderAppender: hasInnerBlocks
 			? InnerBlocks.DefaultBlockAppender
@@ -125,14 +125,11 @@ export default function Edit( props ) {
 			<AdvancedSettings { ...props } />
 			{ 'templates' === isModalOpen && (
 				<TemplatesModal
-					blockName={ props.name }
-					setIsPatternSelectionModalOpen={ () =>
-						setModalOpen( false )
-					}
 					clientId={ clientId }
+					onRequestClose={ () => setModalOpen( false ) }
+					blockName={ name }
 				/>
 			) }
-
 			{ children }
 		</div>
 	);

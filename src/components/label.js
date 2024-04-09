@@ -16,11 +16,17 @@ export default function Label( { attributes, setAttributes } ) {
 		requiredText,
 	} = attributes;
 
-	const labelClassName = classnames( labelClass, labelAlign, labelVAlign, {
-		hide: hideLabel,
-		required,
-		'textarea-label': multiple || 'textarea' === type,
-	} );
+	const labelClassName = classnames(
+		'label-div',
+		labelClass,
+		labelAlign,
+		labelVAlign,
+		{
+			hide: hideLabel,
+			required,
+			'textarea-label': multiple || 'textarea' === type,
+		}
+	);
 
 	return (
 		<div className={ labelClassName } htmlFor="input">

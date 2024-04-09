@@ -122,10 +122,25 @@ export const Submissions = () => {
 					return (
 						<VStack spacing={ 1 }>
 							{ parseInt( item.details.is_new ) && (
-								<Icon icon={ heading } label={ 'Is new' } />
+								<div className={ 'formello-new' }>
+									<Icon
+										icon={ heading }
+										title={ __( 'Is new', 'formello' ) }
+										fill={ 'currentColor' }
+									/>
+								</div>
 							) }
 							{ parseInt( item.details.starred ) && (
-								<Icon icon={ starFilled } />
+								<div className={ 'formello-star' }>
+									<Icon
+										icon={ starFilled }
+										fill={ 'currentColor' }
+										title={ __(
+											'Is favorite',
+											'formello'
+										) }
+									/>
+								</div>
 							) }
 						</VStack>
 					);

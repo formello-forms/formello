@@ -21,13 +21,18 @@ import UpdateSettings from '../../components/update-settings';
 import LoadingSpinner from '../../components/loading-spinner';
 import Header from '../../components/masthead.js';
 import { SettingsContext } from '../../context/settings-context';
+import { useHistory, useLocation } from '../../router';
 
 export default function Settings() {
-	const { isLoadingSettings, settings, hasUpdates, saveSettings } =
+	const { settings, hasUpdates, saveSettings } =
 		useContext( SettingsContext );
 
-	const { params } = useNavigator();
+	const history = useHistory();
+	const { params } = useLocation();
 	const initialTab = params.tab || 'general';
+	const changeTab = ( tabName ) => {
+		history.push( { page: 'formello-settings', tab: tabName } );
+	};
 
 	const tabs = [
 		{
@@ -57,7 +62,7 @@ export default function Settings() {
 		},
 	];
 
-	if ( isLoadingSettings || ! settings ) {
+	if ( ! settings ) {
 		return (
 			<LoadingSpinner text={ __( 'Fetching data…', 'search-console' ) } />
 		);
@@ -74,7 +79,11 @@ export default function Settings() {
 					this
 				) }
 
-				<TabPanel tabs={ tabs } initialTabName={ initialTab }>
+				<TabPanel
+					tabs={ tabs }
+					initialTabName={ params.tab }
+					onSelect={ ( tabName ) => changeTab( tabName ) }
+				>
 					{ ( tab ) => {
 						const SettingsTab = tab.component;
 						return (

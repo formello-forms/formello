@@ -106,7 +106,7 @@ class Admin {
 		$admin_hook = add_menu_page(
 			__( 'Forms' ),
 			__( 'Forms' ),
-			$capability,
+			'edit_posts',
 			$slug,
 			array( $this, 'settings_page' ),
 			'dashicons-feedback',
@@ -146,6 +146,7 @@ class Admin {
 	public function settings_page() {
 		wp_enqueue_style( 'formello-admin' );
 		wp_enqueue_script( 'formello-admin' );
+		wp_enqueue_script( 'formello-pro-settings' );
 
 		do_action( 'formello_settings_scripts' );
 		?>

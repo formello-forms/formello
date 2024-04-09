@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1657,
+    "title": "Test",
+    "content": "<!-- wp:formello/form {\"storeSubmissions\":true,\"lock\":{\"move\":false,\"remove\":true}} -->\n<form class=\"wp-block-formello-form\" method=\"post\" data-id=\"1657\" data-validate=\"true\" novalidate><input type=\"hidden\" name=\"_formello_id\" value=\"1657\"/><input type=\"text\" name=\"_formello_h1657\" class=\"formello-hp\" aria-label=\"If you are human, leave this field blank.\" tabindex=\"-1\"/><input type=\"hidden\" name=\"action\" value=\"formello\"/><!-- wp:formello/input -->\n<div class=\"formello\"><label class=\"\" for=\"field_f88a83\"><span>Name</span></label><input name=\"name\" id=\"field_f88a83\" type=\"text\" class=\"\"/></div>\n<!-- /wp:formello/input -->\n\n<!-- wp:formello/input -->\n<div class=\"formello\"><label class=\"\" for=\"field_feff16\"><span>Email</span><span class=\"required\">*</span></label><input name=\"email\" id=\"field_feff16\" type=\"email\" required class=\"\"/></div>\n<!-- /wp:formello/input -->\n\n<!-- wp:formello/input -->\n<div class=\"formello\"><label class=\"\" for=\"field_ea0a13\"><span>Subject</span></label><input name=\"subject\" id=\"field_ea0a13\" type=\"text\" class=\"\"/></div>\n<!-- /wp:formello/input -->\n\n<!-- wp:formello/textarea -->\n<div class=\"formello\"><label class=\"textarea-label\" for=\"field_4e5bff\"><span>Message</span></label><textarea name=\"message\" id=\"field_4e5bff\" placeholder=\"\" rows=\"5\" class=\"\"></textarea></div>\n<!-- /wp:formello/textarea -->\n\n<!-- wp:formello/button -->\n<button type=\"submit\" class=\"wp-block-formello-button wp-element-button has-text-color has-background left\" style=\"color:#ffffff;background-color:#000000\"><span>Submit</span><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 40 40\"><path d=\"M20.201 5.169c-8.254 0-14.946 6.692-14.946 14.946 0 8.255 6.692 14.946 14.946 14.946s14.946-6.691 14.946-14.946c-.001-8.254-6.692-14.946-14.946-14.946zm0 26.58c-6.425 0-11.634-5.208-11.634-11.634 0-6.425 5.209-11.634 11.634-11.634 6.425 0 11.633 5.209 11.633 11.634 0 6.426-5.208 11.634-11.633 11.634z\" opacity=\"0.2\"></path><path d=\"m26.013 10.047 1.654-2.866a14.855 14.855 0 0 0-7.466-2.012v3.312c2.119 0 4.1.576 5.812 1.566z\"><animateTransform attributeName=\"transform\" attributeType=\"xml\" dur=\"0.5s\" from=\"0 20 20\" repeatCount=\"indefinite\" to=\"360 20 20\" type=\"rotate\"></animateTransform></path></svg></button>\n<!-- /wp:formello/button --><div class=\"formello-message\" id=\"formello-message-1657\"></div></form>\n<!-- /wp:formello/form -->",
+    "description": "",
+    "blockTypes": [
+      "formello/form"
+    ],
+    "postTypes": [
+      "formello_form"
+    ],
+    "keywords": [],
+    "categories": [
+      "form", "sukaminchia"
+    ],
+    "name": "formello/test"
+  }
+]

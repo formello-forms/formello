@@ -1,5 +1,4 @@
 import { __ } from '@wordpress/i18n';
-
 import {
 	InspectorControls,
 	InspectorAdvancedControls,
@@ -12,7 +11,6 @@ import {
 } from '@wordpress/block-editor';
 
 import { ToolbarGroup } from '@wordpress/components';
-import { useEffect } from '@wordpress/element';
 import classnames from 'classnames';
 
 import { Hidden } from '../../icons/icons';
@@ -21,15 +19,14 @@ import Options from '../../components/field-options';
 import ValidationOptions from '../../components/field-options/validation';
 import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
-
+import { useInputId } from '../../components/hooks';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function Edit( props ) {
-	const { attributes, setAttributes, clientId } = props;
+	const { attributes, setAttributes } = props;
 	const {
 		type,
 		showHelp,
-		id,
 		name,
 		grouped,
 		withButton,
@@ -43,23 +40,7 @@ export default function Edit( props ) {
 
 	const TagName = type === 'textarea' ? 'textarea' : 'input';
 	const supported = SUPPORTED_ATTRIBUTES[ type ];
-
-	useEffect( () => {
-		const idx = clientId
-			.substr( 2, 6 )
-			.replace( '-', '' )
-			.replace( /-/g, '' );
-		if ( ! id ) {
-			setAttributes( {
-				id: 'field_' + idx,
-			} );
-		}
-		if ( ! name ) {
-			setAttributes( {
-				name: 'field_' + idx,
-			} );
-		}
-	} );
+	const inputId = useInputId( Edit, props );
 
 	const borderProps = useBorderProps( attributes );
 	const spacingProps = getSpacingClassesAndStyles( attributes );
@@ -118,7 +99,7 @@ export default function Edit( props ) {
 			) : (
 				<div className="formello-hidden">
 					<Hidden width="30" height="30" />
-					<label htmlFor="input">[{ name }] </label>
+					<div>[{ name }]</div>
 				</div>
 			) }
 
@@ -133,6 +114,7 @@ export default function Edit( props ) {
 				placeholder={ placeholder }
 				disabled={ 'file' === type }
 				autoComplete={ autocomplete || 'new-password' }
+				id={ inputId }
 			/>
 
 			{ children }

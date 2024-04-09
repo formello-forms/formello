@@ -180,6 +180,10 @@ function register_settings() {
 		'enabled_addons' => array(
 			'type' => 'array',
 		),
+		'addons' => array(
+			'type' => 'object',
+			'additionalProperties' => true,
+		),
 	);
 
 	$settings = apply_filters( 'formello_register_settings', $settings );

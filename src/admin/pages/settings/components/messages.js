@@ -1,24 +1,35 @@
 import { Card, CardHeader, CardBody, TextControl } from '@wordpress/components';
 import { Fragment, useContext } from '@wordpress/element';
-
 import { __ } from '@wordpress/i18n';
+import { store as coreStore } from '@wordpress/core-data';
+import { useDispatch } from '@wordpress/data';
+
 import { SettingsContext } from '../../../context/settings-context';
 
 export default function Messages() {
-	const { settings, updateSetting } = useContext( SettingsContext );
-	const messages = settings.messages;
+	const { settings } = useContext( SettingsContext );
+	const { editEntityRecord } = useDispatch( coreStore );
 
-	function setMessage( group, field, value ) {
-		const newSettings = Object.assign( {}, messages );
-		newSettings[ group ][ field ] = value;
-		updateSetting( 'messages', newSettings );
-	}
+	const setMessage = ( group, field, value ) => {
+		editEntityRecord( 'root', 'site', undefined, {
+			formello: {
+				...settings,
+				messages: {
+					...settings.messages,
+					[ group ]: {
+						...settings.messages[ group ],
+						[ field ]: value,
+					},
+				},
+			},
+		} );
+	};
 
-	const formMessages = Object.keys( messages.form );
-	const missingValue = Object.keys( messages.missingValue );
-	const patternMismatch = Object.keys( messages.patternMismatch );
-	const outOfRange = Object.keys( messages.outOfRange );
-	const wrongLength = Object.keys( messages.wrongLength );
+	const formMessages = Object.keys( settings.messages.form );
+	const missingValue = Object.keys( settings.messages.missingValue );
+	const patternMismatch = Object.keys( settings.messages.patternMismatch );
+	const outOfRange = Object.keys( settings.messages.outOfRange );
+	const wrongLength = Object.keys( settings.messages.wrongLength );
 
 	return (
 		<Fragment>
@@ -28,20 +39,20 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ formMessages.map( ( oneKey, i ) => {
+					<p>
+						{ __(
+							'Default messages displayed after form submission. This setting can be overriden on form block panel.',
+							'formello'
+						) }
+					</p>
+					{ formMessages.map( ( key, i ) => {
 						return (
 							<Fragment key={ i }>
 								<TextControl
-									label={ oneKey }
-									value={
-										messages.form[ oneKey ]
-									}
+									label={ key }
+									value={ settings.messages.form[ key ] }
 									onChange={ ( val ) => {
-										setMessage(
-											'form',
-											oneKey,
-											val
-										);
+										setMessage( 'form', key, val );
 									} }
 								/>
 							</Fragment>
@@ -56,20 +67,16 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ missingValue.map( ( oneKey, i ) => {
+					{ missingValue.map( ( key, i ) => {
 						return (
 							<Fragment key={ i }>
 								<TextControl
-									label={ oneKey }
+									label={ key }
 									value={
-										messages.missingValue[ oneKey ]
+										settings.messages.missingValue[ key ]
 									}
 									onChange={ ( val ) => {
-										setMessage(
-											'missingValue',
-											oneKey,
-											val
-										);
+										setMessage( 'missingValue', key, val );
 									} }
 								/>
 							</Fragment>
@@ -84,20 +91,16 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ patternMismatch.map( ( oneKey, i ) => {
+					{ patternMismatch.map( ( key, i ) => {
 						return (
 							<TextControl
 								key={ i }
-								label={ oneKey }
+								label={ key }
 								value={
-									messages.patternMismatch[ oneKey ]
+									settings.messages.patternMismatch[ key ]
 								}
 								onChange={ ( val ) => {
-									setMessage(
-										'patternMismatch',
-										oneKey,
-										val
-									);
+									setMessage( 'patternMismatch', key, val );
 								} }
 							/>
 						);
@@ -111,14 +114,14 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ outOfRange.map( ( oneKey, i ) => {
+					{ outOfRange.map( ( key, i ) => {
 						return (
 							<TextControl
 								key={ i }
-								label={ oneKey }
-								value={ messages.outOfRange[ oneKey ] }
+								label={ key }
+								value={ settings.messages.outOfRange[ key ] }
 								onChange={ ( val ) => {
-									setMessage( 'outOfRange', oneKey, val );
+									setMessage( 'outOfRange', key, val );
 								} }
 							/>
 						);
@@ -132,14 +135,14 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ wrongLength.map( ( oneKey, i ) => {
+					{ wrongLength.map( ( key, i ) => {
 						return (
 							<TextControl
 								key={ i }
-								label={ oneKey }
-								value={ messages.wrongLength[ oneKey ] }
+								label={ key }
+								value={ settings.messages.wrongLength[ key ] }
 								onChange={ ( val ) => {
-									setMessage( 'wrongLength', oneKey, val );
+									setMessage( 'wrongLength', key, val );
 								} }
 							/>
 						);

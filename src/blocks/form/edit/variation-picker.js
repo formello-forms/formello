@@ -9,20 +9,17 @@ import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { Button, Placeholder, Flex } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
-import TemplatesModal from './templates-modal.js';
+import { TemplatesModal } from './templates-modal.js';
 import { useState } from '@wordpress/element';
 import { useSelect, dispatch, select } from '@wordpress/data';
-import {
-	useBlockProps,
-	__experimentalBlockPatternSetup as BlockPatternSetup,
-} from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import {
 	store as blocksStore,
 	createBlocksFromInnerBlocksTemplate,
 } from '@wordpress/blocks';
 
 function BlockVariationPicker( props ) {
-	const { clientId, setAttributes } = props;
+	const { clientId, setAttributes, name } = props;
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const { replaceInnerBlocks } = dispatch( 'core/block-editor' );
 
@@ -31,13 +28,13 @@ function BlockVariationPicker( props ) {
 
 	const variations = useSelect( () => {
 		return getBlockVariations( 'formello/form', 'block' );
-	}, [] );
+	} );
 
 	const defaultVariation = useSelect( () => {
 		return typeof getDefaultBlockVariation === 'undefined'
 			? null
-			: getDefaultBlockVariation( props.name );
-	}, [ name ] );
+			: getDefaultBlockVariation( name );
+	} );
 
 	const classes = classnames( 'block-editor-block-variation-picker', {
 		'has-many-variations': variations.length > 4,
@@ -46,11 +43,6 @@ function BlockVariationPicker( props ) {
 	const blockProps = useBlockProps( {
 		className: classes,
 	} );
-
-	const onBlockPatternSelect = ( blocks ) => {
-		replaceInnerBlocks( clientId, blocks[ 0 ].innerBlocks );
-		setIsPatternSelectionModalOpen( false );
-	};
 
 	const onSelect = ( nextVariation = defaultVariation ) => {
 		if ( nextVariation.attributes ) {
@@ -126,11 +118,9 @@ function BlockVariationPicker( props ) {
 
 				{ 'templates' === isModalOpen && (
 					<TemplatesModal
-						blockName={ props.name }
-						setIsPatternSelectionModalOpen={ () =>
-							setModalOpen( false )
-						}
 						clientId={ clientId }
+						onRequestClose={ () => setModalOpen( false ) }
+						blockName={ name }
 					/>
 				) }
 			</Placeholder>

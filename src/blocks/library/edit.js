@@ -4,7 +4,6 @@
 import { useDispatch, useSelect } from '@wordpress/data';
 import {
 	useEntityBlockEditor,
-	useEntityProp,
 	useEntityRecord,
 	store as coreStore,
 } from '@wordpress/core-data';
@@ -32,20 +31,60 @@ import {
 	InspectorControls,
 	useBlockProps,
 	Warning,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
 import { edit } from '@wordpress/icons';
 import { useState, useCallback, Fragment } from '@wordpress/element';
-import TemplatesModal from '../form/edit/templates-modal';
+import { TemplatesModal } from '../form/edit/templates-modal';
 
 export default function ReusableBlockEdit( {
 	attributes: { ref },
 	clientId,
+	name,
 	setAttributes,
 } ) {
 	const [ isModalOpen, setModalOpen ] = useState( false );
 	const [ isDisabled, setIsDisabled ] = useState( true );
 	const [ titleTemp, createTitle ] = useState( '' );
+
+	const {
+		innerBlocks,
+		userCanEdit,
+		getBlockEditingMode,
+		onNavigateToEntityRecord,
+		editingMode,
+		hasPatternOverridesSource,
+	} = useSelect(
+		( select ) => {
+			const { canUser } = select( coreStore );
+			const {
+				getBlocks,
+				getSettings,
+				getBlockEditingMode: _getBlockEditingMode,
+			} = select( blockEditorStore );
+			const blocks = getBlocks( clientId );
+			const canEdit = canUser( 'update', 'blocks', ref );
+
+			// For editing link to the site editor if the theme and user permissions support it.
+			return {
+				innerBlocks: blocks,
+				userCanEdit: canEdit,
+				getBlockEditingMode: _getBlockEditingMode,
+				onNavigateToEntityRecord:
+					getSettings().onNavigateToEntityRecord,
+				editingMode: _getBlockEditingMode( clientId ),
+			};
+		},
+		[ clientId, ref ]
+	);
+
+	const handleEditOriginal = () => {
+		onNavigateToEntityRecord( {
+			postId: ref,
+			postType: 'formello_form',
+		} );
+	};
 
 	const hasAlreadyRendered = useHasRecursion( ref );
 	const { record, hasResolved } = useEntityRecord(
@@ -107,12 +146,6 @@ export default function ReusableBlockEdit( {
 		'postType',
 		'formello_form',
 		{ id: ref }
-	);
-	const [ title, setTitle ] = useEntityProp(
-		'postType',
-		'formello_form',
-		'title',
-		ref
 	);
 
 	const blockProps = useBlockProps( {
@@ -239,11 +272,9 @@ export default function ReusableBlockEdit( {
 				) }
 				{ 'templates' === isModalOpen && (
 					<TemplatesModal
-						blockName={ 'formello/library' }
-						setIsPatternSelectionModalOpen={ () =>
-							setModalOpen( false )
-						}
 						clientId={ clientId }
+						onRequestClose={ () => setModalOpen( false ) }
+						blockName={ name }
 					/>
 				) }
 			</div>
@@ -284,13 +315,9 @@ export default function ReusableBlockEdit( {
 		<RecursionProvider uniqueId={ ref }>
 			<BlockControls>
 				<ToolbarGroup>
-					<ToolbarButton
-						onClick={ () => setIsDisabled( ! isDisabled ) }
-						label={ __( 'Toggle form edit', 'formello' ) }
-						icon={ edit }
-						isPressed={ ! isDisabled }
-						showTooltip
-					/>
+					<ToolbarButton onClick={ handleEditOriginal }>
+						{ __( 'Edit original' ) }
+					</ToolbarButton>
 				</ToolbarGroup>
 			</BlockControls>
 			<InspectorControls>
@@ -298,14 +325,6 @@ export default function ReusableBlockEdit( {
 					title={ __( 'Form Settings', 'formello' ) }
 					initialOpen={ true }
 				>
-					{ ! isDisabled && (
-						<TextControl
-							__nextHasNoMarginBottom
-							label={ __( 'Name' ) }
-							value={ title }
-							onChange={ setTitle }
-						/>
-					) }
 					<SelectControl
 						label={ __( 'Choose a form', 'formello' ) }
 						value={ ref }

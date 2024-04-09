@@ -4,54 +4,24 @@ import { useState, Fragment } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
 
 import { ActionsModal } from '../actions/modal';
-import { getActions } from '../actions/actions';
+import { integrations, icons } from '../actions/constants';
 
 import {
 	ToolbarButton,
 	ToolbarGroup,
 	ToolbarDropdownMenu,
+	Icon,
 } from '@wordpress/components';
 
 export function Controls( { attributes, clientId } ) {
-	const [ meta, setMeta ] = useEntityProp(
+	const [ meta ] = useEntityProp(
 		'postType',
 		'formello_form',
 		'meta',
 		attributes.id
 	);
 
-	const registeredActions = getActions();
-	const actions = meta?._formello_actions;
-	const [ active, setActive ] = useState( 0 );
 	const [ showActionsModal, setShowActionsModal ] = useState( false );
-
-	const addAction = ( type ) => {
-		registeredActions.forEach( ( a ) => {
-			if ( a.type === type ) {
-				setMeta( { _formello_actions: [ ...actions, a ] } );
-				setShowActionsModal( a );
-				setActive( actions.length );
-			}
-		} );
-	};
-
-	const updateAction = ( settings ) => {
-		// 1. Make a shallow copy of the items
-		const items = [ ...actions ];
-
-		// 2. Make a shallow copy of the item you want to mutate
-		items[ active ] = settings;
-
-		setMeta( { _formello_actions: items } );
-		//setActions( items );
-	};
-
-	const deleteAction = () => {
-		const items = [ ...actions ]; // make a separate copy of the array
-		items.splice( active, 1 );
-		setMeta( { _formello_actions: items } );
-		setShowActionsModal( false );
-	};
 
 	return (
 		<Fragment>
@@ -59,32 +29,25 @@ export function Controls( { attributes, clientId } ) {
 				<ToolbarDropdownMenu
 					icon={ 'admin-generic' }
 					label={ __( 'Add action', 'formello' ) }
-					controls={ registeredActions.map( ( a ) => {
+					controls={ integrations.map( ( a ) => {
 						return {
-							title: a.title,
-							icon: a.icon,
+							title: a.name,
+							icon: icons[ a.name ],
 							onClick: () => {
-								addAction( a.type );
+								setShowActionsModal( a );
 							},
 						};
 					} ) }
 				/>
-				{ actions?.map( ( a, i ) => {
-					const action = registeredActions.find( ( obj ) => {
-						return obj.type === a.type;
-					} );
-					if ( ! action ) {
-						return null;
-					}
+				{ meta._formello_actions.map( ( a, i ) => {
 					return (
 						<ToolbarButton
-							label={ a.title }
-							icon={ action.icon }
-							key={ i }
+							label={ a.name }
+							icon={ <Icon icon={ icons[ a.name ] } /> }
 							onClick={ () => {
-								setActive( i );
 								setShowActionsModal( a );
 							} }
+							key={ i }
 						/>
 					);
 				} ) }
@@ -95,8 +58,6 @@ export function Controls( { attributes, clientId } ) {
 					settings={ showActionsModal }
 					className={ 'formello-modal' }
 					clientId={ clientId }
-					deleteAction={ deleteAction }
-					updateAction={ updateAction }
 					onRequestClose={ () => {
 						setShowActionsModal( false );
 					} }

@@ -112,7 +112,7 @@ export const Forms = () => {
 				getValue: ( { item } ) => item.title?.rendered,
 				render: ( { item } ) => {
 					return (
-						<Fragment>
+						<div>
 							<Button
 								variant="link"
 								onClick={ () => {
@@ -128,11 +128,11 @@ export const Forms = () => {
 								) || __( '(no title)' ) }
 							</Button>
 							{ item.submissions_count.news > 0 && (
-								<span className="badge">
+								<span className="formello-badge">
 									{ item.submissions_count.news }
 								</span>
 							) }
-						</Fragment>
+						</div>
 					);
 				},
 				maxWidth: 300,

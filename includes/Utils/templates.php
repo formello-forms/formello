@@ -35,13 +35,13 @@ function get_templates( $response, $server, $request ) {
 	foreach ( $all_patterns as $pattern ) {
 		$local_patterns[] = array(
 			'title' => $pattern->post_title,
-			'content' => $pattern->post_content,
+			'content' => '<!-- wp:formello/library {"ref":' . $pattern->ID . '} /-->',
 			'description' => '',
 			'blockTypes' => array(
 				'formello/library',
 			),
 			'keywords' => array(),
-			'categories' => array( 'form' ),
+			'categories' => array( 'formello' ),
 			'name' => 'formello/' . sanitize_title( $pattern->post_title ),
 		);
 	}

@@ -51,7 +51,7 @@ function register_cpt() {
 				array(
 					'lock' => array(
 						'move'   => false,
-						'remove' => true,
+						'remove' => false,
 					),
 				),
 			),
@@ -70,7 +70,7 @@ function register_cpt() {
 }
 
 /**
- * Register FOrmello Forms CPT
+ * Register Formello Forms CPT
  *
  * @since 1.0.0
  */

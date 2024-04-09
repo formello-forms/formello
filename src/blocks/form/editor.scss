@@ -1,3 +1,5 @@
+$margin-left: 0.5em;
+
 .wp-block-formello-form {
 
 	input,
@@ -21,6 +23,24 @@
 	button[disabled] {
 		opacity: 1;
 	}
+
+	.label-div.hide {
+		display: none;
+	}
+
+	.formello-checkbox {
+		.label-div {
+			order: 2;
+			padding: 0 $margin-left;
+		}
+	}
+
+	.formello-group {
+		.label-div {
+			width: 100%;
+		}
+	}
+
 }
 
 .formello-templates-list {

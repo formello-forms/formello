@@ -51,12 +51,11 @@ class Frontend {
 	 */
 	public function listen_for_submit() {
 
-		/*if ( ! check_ajax_referer( '_formello', '_formello', false ) ) {
+		if ( ! check_ajax_referer( '_formello', '_formello', false ) ) {
 			wp_send_json_error( array( 'message' => __( 'Wrong nonce', 'formello' ) ), 500 );
 			wp_die();
-		}*/
+		}
 
-        // phpcs:ignore
         $form_id = absint( $_POST['_formello_id'] );
 		$form    = new \Formello\Processor\Form( $form_id );
 		$form->validate();
@@ -70,7 +69,12 @@ class Frontend {
 		$this->process_form( $form );
 		$form->log( 'debug', 'Form sent:', $form->get_response() );
 
-		wp_send_json_success( $form->get_response() );
+		$response = $form->get_response();
+
+		if ( $form->has_errors() ) {
+			wp_send_json_error( $response );
+		}
+		wp_send_json_success( $response );
 		wp_die();
 	}
 

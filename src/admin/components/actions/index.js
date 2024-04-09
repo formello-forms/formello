@@ -23,7 +23,7 @@ export const trashPostAction = {
 	id: 'move-to-trash',
 	label: __( 'Move to Trash' ),
 	isPrimary: true,
-	isBulk: true,
+	supportsBulk: true,
 	icon: trash,
 	isEligible( { status } ) {
 		return status !== 'trash';

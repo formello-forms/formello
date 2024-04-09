@@ -7,10 +7,6 @@
 
 namespace Formello\Processor;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-
 use Formello\Log;
 
 /**
@@ -99,6 +95,15 @@ class Form {
 	 */
 	public function has_errors() {
 		return count( $this->data['errors'] );
+	}
+
+	/**
+	 * Set error.
+	 *
+	 * @param string $error The action name.
+	 */
+	public function add_error( $error ) {
+		$this->data['errors'][] = $error;
 	}
 
 	/**

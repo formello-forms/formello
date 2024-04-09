@@ -35,7 +35,7 @@ export default function Edit( props ) {
 				<BlockControls>
 					<ToolbarGroup>
 						<ToolbarButton
-							label={ __( 'Add options', 'formello' ) }
+							label={ __( 'Edit options', 'formello' ) }
 							icon={ 'editor-ul' }
 							onClick={ () => {
 								setIsModalOpen( true );
@@ -53,6 +53,10 @@ export default function Edit( props ) {
 						onChange={ ( newval ) =>
 							setAttributes( { name: newval } )
 						}
+						help={ __(
+							'Affects the "name" attribute of the input element, and is used as a name for the form submission results.',
+							'formello'
+						) }
 					/>
 					<ToggleControl
 						label={ __( 'Required', 'formello' ) }
@@ -80,12 +84,13 @@ export default function Edit( props ) {
 				/>
 			) }
 			{ options.map( ( opt, index ) => {
+				const id = name + '-' + index;
 				return (
 					<div
 						key={ index }
 						className={ 'formello formello-checkbox' }
 					>
-						<label>{ opt.label }</label>
+						<label htmlFor={ id }>{ opt.label }</label>
 						<input
 							value={ opt.value || opt.label }
 							name={ name }
@@ -93,6 +98,7 @@ export default function Edit( props ) {
 							required={ required }
 							checked={ opt.selected }
 							onChange={ () => console.log( 'change' ) }
+							id={ id }
 						/>
 					</div>
 				);

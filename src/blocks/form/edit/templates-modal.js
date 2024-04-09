@@ -1,15 +1,15 @@
 /**
  * WordPress dependencies
  */
-import { useState } from '@wordpress/element';
+import { useSelect, useDispatch, dispatch } from '@wordpress/data';
 import {
-	BlockContextProvider,
 	store as blockEditorStore,
 	__experimentalBlockPatternsList as BlockPatternsList,
+	BlockContextProvider,
 } from '@wordpress/block-editor';
 import { Modal, SearchControl, Button } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 
 function PatternCategoriesList( {
 	selectedCategory,
@@ -19,18 +19,18 @@ function PatternCategoriesList( {
 	const baseClassName = 'block-editor-block-patterns-explorer__sidebar';
 	return (
 		<div className={ `${ baseClassName }__categories-list` }>
-			{ [ ...new Set( patternCategories ) ].map( ( name ) => {
+			{ [ ...new Set( patternCategories ) ].map( ( category ) => {
 				return (
 					<Button
-						key={ name }
-						label={ name }
+						key={ category.slug }
+						label={ category.name }
 						className={ `${ baseClassName }__categories-list__item` }
-						isPressed={ selectedCategory === name }
+						isPressed={ selectedCategory === category.slug }
 						onClick={ () => {
-							onClickCategory( name );
+							onClickCategory( category.slug );
 						} }
 					>
-						{ name }
+						{ category.name }
 					</Button>
 				);
 			} ) }
@@ -78,28 +78,14 @@ function PatternExplorerSidebar( {
 	);
 }
 
-function TemplatesModal( {
-	clientId,
-	blockName,
-	setIsPatternSelectionModalOpen,
-} ) {
-	const { updateBlockAttributes, replaceInnerBlocks } =
-		useDispatch( blockEditorStore );
-
-	const [ searchValue, setSearchValue ] = useState( '' );
-	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
-
+export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
+	const { replaceBlock } = useDispatch( blockEditorStore );
 	const onBlockPatternSelect = ( pattern ) => {
-		if ( 'formello/library' === blockName ) {
-			updateBlockAttributes( clientId, {
-				ref: parseInt( pattern.blocks[ 0 ].attributes.id ),
-			} );
-			setIsPatternSelectionModalOpen( false );
-		} else {
-			replaceInnerBlocks( clientId, pattern.blocks[ 0 ].innerBlocks );
-			setIsPatternSelectionModalOpen( false );
-		}
+		replaceBlock( clientId, pattern.blocks );
 	};
+
+	const [ searchValue, setSearchValue ] = useState();
+	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
 
 	const patterns = useSelect(
 		( select ) => {
@@ -111,13 +97,6 @@ function TemplatesModal( {
 		[ clientId, blockName ]
 	);
 
-	const patternCategories = patterns
-		.map( ( p ) => {
-			return p.formello_categories;
-		} )
-		.join( ',' )
-		.split( ',' );
-
 	const shownPatterns = patterns.filter( ( p ) => {
 		if ( searchValue ) {
 			return p.title.toLowerCase().includes( searchValue );
@@ -125,15 +104,42 @@ function TemplatesModal( {
 		if ( 'all' === selectedCategory ) {
 			return true;
 		}
-		return p.formello_categories.includes( selectedCategory );
+		return p.categories.includes( selectedCategory );
 	} );
+
+	const patternCategories = [
+		{
+			slug: 'all',
+			name: __( 'All', 'popper' ),
+		},
+		{
+			slug: 'promo',
+			name: __( 'Promo', 'popper' ),
+		},
+		{
+			slug: 'top-bar',
+			name: __( 'Top bar', 'popper' ),
+		},
+		{
+			slug: 'ad-block',
+			name: __( 'Ad Block', 'popper' ),
+		},
+	];
+
+	const patternCategories2 = patterns
+		.map( ( p ) => {
+			return p.categories;
+		} )
+		.join( ',' )
+		.split( ',' );
 
 	return (
 		<Modal
+			className="block-editor-query-pattern__selection-modal"
 			isFullScreen
-			title={ __( 'Choose a pattern' ) }
+			title={ __( 'Choose a form', 'formello' ) }
 			closeLabel={ __( 'Cancel' ) }
-			onRequestClose={ () => setIsPatternSelectionModalOpen( false ) }
+			onRequestClose={ onRequestClose }
 		>
 			<div className="block-editor-block-patterns-explorer">
 				<PatternExplorerSidebar
@@ -158,5 +164,3 @@ function TemplatesModal( {
 		</Modal>
 	);
 }
-
-export default TemplatesModal;

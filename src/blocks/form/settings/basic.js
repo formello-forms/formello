@@ -93,7 +93,12 @@ export function Settings( props ) {
 					setAttributes( { hide: val } );
 				} }
 			/>
-			<BaseControl>
+			<BaseControl
+				help={ __(
+					'Enter a URL you want to redirect your page to after form Submission',
+					'formello'
+				) }
+			>
 				<URLInput
 					label={ __( 'Redirect Url', 'formello' ) }
 					value={ redirectUrl }

@@ -22,40 +22,20 @@ import {
 } from '@wordpress/block-editor';
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 
-import { useState, useEffect, Fragment } from '@wordpress/element';
+import { useState, Fragment } from '@wordpress/element';
 
 import { OptionsModal } from './modal';
 import Label from '../../components/label';
 import Toolbar from '../../components/field-options/toolbar';
 import Options from '../../components/field-options';
 import AdvancedOptions from '../../components/field-options/advanced';
+import { useInputId } from '../../components/hooks';
 
 export default function Edit( props ) {
-	const { attributes, setAttributes, clientId } = props;
-	const {
-		name,
-		id,
-		options,
-		showHelp,
-		help,
-		readonly,
-		multiple,
-		disabled,
-	} = attributes;
-
-	useEffect( () => {
-		const idx = clientId.substr( 2, 6 ).replace( '-', '' ).replace( /-/g, '' );
-		if ( ! id ) {
-			setAttributes( {
-				id: 'field_' + idx,
-			} );
-		}
-		if ( ! name ) {
-			setAttributes( {
-				name: 'field_' + idx,
-			} );
-		}
-	}, [] );
+	const { attributes, setAttributes } = props;
+	const { name, options, showHelp, help, readonly, multiple, disabled } =
+		attributes;
+	const inputId = useInputId( Edit, props );
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
@@ -88,7 +68,11 @@ export default function Edit( props ) {
 						/>
 					</ToolbarGroup>
 				</BlockControls>
-				<Options { ...props } setModalOpen={ setModalOpen } fieldType="select" />
+				<Options
+					{ ...props }
+					setModalOpen={ setModalOpen }
+					fieldType="select"
+				/>
 			</InspectorControls>
 			<InspectorAdvancedControls>
 				<AdvancedOptions { ...props } fieldType="select" />
@@ -97,7 +81,7 @@ export default function Edit( props ) {
 				<Label { ...props } />
 
 				<select
-					id={ id }
+					id={ inputId }
 					name={ name }
 					multiple={ multiple }
 					readOnly={ readonly }
@@ -120,7 +104,7 @@ export default function Edit( props ) {
 					<RichText
 						tagName="small"
 						value={ help }
-						onChange={ ( help ) => setAttributes( { help } ) }
+						onChange={ ( val ) => setAttributes( { val } ) }
 						placeholder={ __( 'Enter help message…', 'formello' ) }
 						allowedFormats={ [
 							'core/bold',

@@ -43,7 +43,7 @@ class Blocks {
 	 */
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_blocks' ) );
-		add_action( 'admin_init', array( $this, 'register_block_pattern_category' ) );
+		add_action( 'init', array( $this, 'register_block_pattern_category' ) );
 		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
 		add_shortcode( 'formello', array( $this, 'do_reusable_block' ) );
 	}
@@ -54,6 +54,12 @@ class Blocks {
 	 * @since 1.2.0
 	 */
 	public function register_blocks() {
+		register_block_type_from_metadata(
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form',
+			array(
+				'render_callback' => array( $this, 'do_formello_block' ),
+			)
+		);
 
 		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/library',
@@ -88,6 +94,10 @@ class Blocks {
 		);
 
 		register_block_type_from_metadata(
+			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/multichoices'
+		);
+
+		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/output'
 		);
 
@@ -95,13 +105,6 @@ class Blocks {
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/button',
 			array(
 				'render_callback' => array( $this, 'do_button_block' ),
-			)
-		);
-
-		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form',
-			array(
-				'render_callback' => array( $this, 'do_formello_block' ),
 			)
 		);
 	}
@@ -113,8 +116,6 @@ class Blocks {
 	 * @param  string $content The bock content.
 	 */
 	public function do_formello_block( $attributes, $content = '' ) {
-
-		do_action( 'formello_block_render' );
 
 		if ( $attributes['captchaEnabled'] && 'reCaptcha' === $attributes['captchaType'] ) {
 			wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
@@ -280,14 +281,26 @@ class Blocks {
 	 * @param  array $categories The categories of Gutenberg.
 	 */
 	public function register_block_category( $categories ) {
+		$currentScreen = get_current_screen();
+		if ( 'formello_form' === $currentScreen->id ) {
+			return array_merge(
+				array(
+					array(
+						'slug'  => 'formello',
+						'title' => __( 'Formello' ),
+					),
+				),
+				$categories
+			);
+		}
 		return array_merge(
+			$categories,
 			array(
 				array(
 					'slug'  => 'formello',
 					'title' => __( 'Formello' ),
 				),
 			),
-			$categories
 		);
 	}
 
@@ -296,22 +309,25 @@ class Blocks {
 	 */
 	public function register_block_pattern_category() {
 		register_block_pattern_category(
-			'form',
-			array( 'label' => __( 'Form', 'formello' ) )
-		);
-		register_block_pattern_category(
 			'formello',
-			array( 'label' => __( 'Formello', 'formello' ) )
+			array( 'label' => __( 'Form', 'formello' ) )
 		);
 
 		$patterns = json_decode(
 			file_get_contents(
-				FORMELLO_PLUGIN_DIR . '/assets/templates/templates.json'
+				FORMELLO_PLUGIN_DIR . '/assets/templates/patterns.json'
 			),
 			true
 		);
 
+		if ( ! $patterns ) {
+			return;
+		}
+
 		foreach ( $patterns as $pattern ) {
+			if ( empty( $pattern['name'] ) ) {
+				continue;
+			}
 			register_block_pattern(
 				$pattern['name'],
 				$pattern

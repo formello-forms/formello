@@ -100,6 +100,7 @@ class Assets {
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
 		wp_add_inline_script( 'formello-admin', 'const formello = ' . wp_json_encode( $settings ), 'before' );
+		wp_add_inline_script( 'formello-form-editor-script', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 	}
 
 	/**

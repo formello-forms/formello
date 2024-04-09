@@ -107,9 +107,9 @@ class Addons extends Base {
 			),
 			array(
 				'id' => 9,
-				'title'   => 'SendinBlue',
-				'slug'   => 'sendinblue',
-				'excerpt' => __( 'Addon to subscribe automatically collected emails to your SendinBlue list.', 'formello' ),
+				'title'   => 'Brevo',
+				'slug'   => 'brevo',
+				'excerpt' => __( 'Addon to subscribe automatically collected emails to your Brevo list.', 'formello' ),
 				'category' => 'integrations',
 			),
 			array(

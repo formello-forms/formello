@@ -21,7 +21,7 @@ const variations = [
 	},
 	{
 		name: 'radios',
-		title: __( 'Single choice (Radio)' ),
+		title: __( 'Single choice (Radio buttons)' ),
 		description: __(
 			'Offer users a list of choices, and allow them to select a single option.',
 			'formello-pro'

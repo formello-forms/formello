@@ -33,7 +33,7 @@ export default function UpdateSettings( props ) {
 		variant,
 		isDestructive = false,
 		withConfirm = false,
-		confirmMessage = __( 'Are you sure?', 'formello' )
+		confirmMessage = __( 'Are you sure?', 'formello' ),
 	} = props;
 
 	const [ showConfirmDialog, setShowConfirmDialog ] = useState( false );
@@ -66,6 +66,7 @@ export default function UpdateSettings( props ) {
 				}
 			} )
 			.catch( ( error ) => {
+				console.log(error)
 				setMessage( {
 					type: 'error',
 					message: error.message,

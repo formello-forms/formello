@@ -48,10 +48,6 @@ export default function save( { attributes, className } ) {
 				type="text"
 				name={ honeypot }
 				className="formello-hp"
-				aria-label={ __(
-					'If you are human, leave this field blank.',
-					'formello'
-				) }
 				tabIndex="-1"
 			/>
 			<input type="hidden" name="action" value="formello" />

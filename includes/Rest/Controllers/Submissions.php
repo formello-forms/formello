@@ -37,7 +37,7 @@ class Submissions extends Base {
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_submissions' ),
 					'permission_callback' => array( $this, 'update_settings_permissions' ),
-					'args' => array(
+					'args'                => array(
 						'id' => array(
 							'description' => __( 'Unique identifier for the submission.' ),
 							'type'        => 'integer',
@@ -110,13 +110,12 @@ class Submissions extends Base {
 				WHERE form_id = %d';
 
 		$params = array(
-			'column'      => $wpdb->prefix . 'formello_submissions',
-			'form_id'     => $form_id,
-			'search'      => '',
-			'order_by'    => 'id',
-			'order'       => 'DESC',
-			'per_page'    => $per_page,
-			'page_number' => ( $page - 1 ) * $per_page,
+			'column'   => $wpdb->prefix . 'formello_submissions',
+			'form_id'  => $form_id,
+			'order_by' => 'id',
+			'order'    => 'DESC',
+			'limit'    => (int) $per_page,
+			'offset'   => ( $page - 1 ) * $per_page,
 		);
 
 		if ( 'is_new' === $status ) {
@@ -129,16 +128,16 @@ class Submissions extends Base {
 
 		if ( ! empty( $search ) ) {
 			$params['search'] = '%' . sanitize_text_field( $search ) . '%';
-			$sql .= ' AND data LIKE %s';
+			$sql             .= ' AND data LIKE %s';
 		}
 
 		if ( ! empty( $orderby ) ) {
 			$order              = sanitize_text_field( $order );
 			$params['order_by'] = sanitize_text_field( $orderby );
 			$params['order']    = ! empty( $order ) ? strtoupper( $order ) : 'ASC';
+			$sql               .= ' ORDER BY %1s %2s';
 		}
 
-		$sql .= ' ORDER BY %1s %1s';
 		$sql .= ' LIMIT %d';
 		$sql .= ' OFFSET %d';
 
@@ -170,7 +169,7 @@ class Submissions extends Base {
 	public function get_submission( $request ) {
 		$id = $request->get_param( 'id' );
 
-		$data = $this->get_from_db( $id );
+		$data       = $this->get_from_db( $id );
 		$submission = $this->get_object( $data );
 
 		return rest_ensure_response( $submission );
@@ -183,9 +182,9 @@ class Submissions extends Base {
 	 * @return WP_Error|WP_REST_Response
 	 */
 	public function edit_submission( $request ) {
-		$id = $request->get_param( 'id' );
+		$id      = $request->get_param( 'id' );
 		$details = $request->get_param( 'details' );
-		$fields = $request->get_param( 'fields' );
+		$fields  = $request->get_param( 'fields' );
 
 		global $wpdb;
 		$submission_table = $wpdb->prefix . 'formello_submissions';
@@ -279,7 +278,7 @@ class Submissions extends Base {
 		);
 
 		$details_data = array_intersect_key( $data, array_flip( $details ) );
-		$fields_data = array_diff( $data, $details_data );
+		$fields_data  = array_diff( $data, $details_data );
 
 		$result['id']      = (int) $data['id'];
 		$result['details'] = $details_data;

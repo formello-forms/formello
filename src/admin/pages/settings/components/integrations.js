@@ -7,34 +7,38 @@ import {
 	__experimentalUseNavigator as useNavigator,
 	Button,
 } from '@wordpress/components';
-
 import {
 	RawHTML,
 	Fragment,
 	createInterpolateElement,
 } from '@wordpress/element';
-
 import { __, sprintf } from '@wordpress/i18n';
+/**
+ * Internal dependencies
+ */
+import { useHistory } from '../../../router';
+import { integrations, icons } from '../../../../blocks/form/actions/constants';
+
+const Integrations = withFilters( 'formello.settings.integrations' )( () => {
+	return <p>This is for premium users.</p>;
+} );
 
 const IntegrationsTab = () => {
-	const navigator = useNavigator();
+
+	const history = useHistory();
 	const noticeString = ( text ) =>
 		createInterpolateElement( text, {
 			a: (
 				<Button
 					text={ __( 'addons page', 'search-console' ) }
 					onClick={ () => {
-						window.dispatchEvent(
-							new CustomEvent( 'changePage', {
-								detail: '?page=formello-addons',
-							} )
-						);
-						navigator.goTo( '/formello-addons/general' );
+						history.push( { page: 'formello-addons' } );
 					} }
 					variant="link"
 				/>
 			),
 		} );
+
 	return (
 		<Fragment>
 			<Card>
@@ -53,10 +57,9 @@ const IntegrationsTab = () => {
 					</p>
 				</CardBody>
 			</Card>
+			<Integrations integrations={ integrations } icons={ icons } />
 		</Fragment>
 	);
 };
 
-export default withFilters( 'formello.settings.integrations' )(
-	IntegrationsTab
-);
+export default IntegrationsTab;

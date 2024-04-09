@@ -1,15 +1,13 @@
 import { addFilter } from '@wordpress/hooks';
 
 import { ToggleControl, BaseControl } from '@wordpress/components';
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
 import MergeTags from '../../../components/merge-tags';
 import { Editor } from '@tinymce/tinymce-react';
 
-export default function Email( content, props, action, handleUpdate ) {
-	const { clientId } = props;
-
+export default function Email( content, clientId, action, handleUpdate ) {
 	const id = `editor-${ clientId }`;
 
 	const { settings } = window.wpEditorL10n.tinymce;
@@ -98,3 +96,23 @@ export default function Email( content, props, action, handleUpdate ) {
 }
 
 addFilter( 'formello.modal.email', 'formello/actions-email', Email );
+
+function withComponentAppended( FilteredComponent ) {
+	return ( props ) => {
+		const { settings } = props;
+		if ( 'Email' === settings.name ) {
+			return null;
+		}
+		return (
+			<>
+				<FilteredComponent { ...props } />
+			</>
+		);
+	};
+}
+
+addFilter(
+	'formello.modal.test',
+	'formello/actions-email-promo',
+	withComponentAppended
+);

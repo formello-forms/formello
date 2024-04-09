@@ -102,6 +102,13 @@ class Validator {
 	}
 
 	/**
+	 * Get settings
+	 */
+	public function get_settings() {
+		return $this->settings;
+	}
+
+	/**
 	 * Check if is spam request
 	 *
 	 * @return boolean
@@ -176,7 +183,7 @@ class Validator {
 
 		// Skip file.
 		if ( 'file' === $fields[ $key ] ) {
-			return sanitize_text_field( $value );
+			return $value;
 		}
 
 		// Skip password. We do not store password.
@@ -272,26 +279,26 @@ class Validator {
 		$settings = get_option( 'formello' );
 		return array(
 			'required'  => ':attribute ' . $settings['messages']['missingValue']['default'],
-			'color'     => ':value ' . $settings['messages']['patternMismatch']['color'],
-			'date'      => ':value ' . $settings['messages']['patternMismatch']['date'],
+			'color'     => ':attribute ' . $settings['messages']['patternMismatch']['color'],
+			'date'      => ':attribute ' . $settings['messages']['patternMismatch']['date'],
 			'email'     => ':attribute ' . $settings['messages']['patternMismatch']['email'],
-			'regex'     => ':value ' . $settings['messages']['patternMismatch']['default'],
-			'month'     => ':value ' . $settings['messages']['patternMismatch']['month'],
-			'numeric'   => ':value ' . $settings['messages']['patternMismatch']['number'],
-			'time'      => ':value ' . $settings['messages']['patternMismatch']['time'],
-			'url'       => ':value ' . $settings['messages']['patternMismatch']['url'],
+			'regex'     => ':attribute ' . $settings['messages']['patternMismatch']['default'],
+			'month'     => ':attribute ' . $settings['messages']['patternMismatch']['month'],
+			'numeric'   => ':attribute ' . $settings['messages']['patternMismatch']['number'],
+			'time'      => ':attribute ' . $settings['messages']['patternMismatch']['time'],
+			'url'       => ':attribute ' . $settings['messages']['patternMismatch']['url'],
 			'minlength' => str_replace(
 				array( '{minLength}', '{length}' ),
-				array( ':minlength', ':value' ),
+				array( ':minlength', ':attribute' ),
 				$settings['messages']['wrongLength']['under']
 			),
 			'maxlength' => str_replace(
 				array( '{maxLength}', '{length}' ),
-				array( ':maxlength', ':value' ),
+				array( ':maxlength', ':attribute' ),
 				$settings['messages']['wrongLength']['over']
 			),
-			'min'       => ':value ' . str_replace( '{min}', ':min', $settings['messages']['outOfRange']['under'] ),
-			'max'       => ':value ' . str_replace( '{max}', ':max', $settings['messages']['outOfRange']['over'] ),
+			'min'       => ':attribute ' . str_replace( '{min}', ':min', $settings['messages']['outOfRange']['under'] ),
+			'max'       => ':attribute ' . str_replace( '{max}', ':max', $settings['messages']['outOfRange']['over'] ),
 		);
 	}
 
