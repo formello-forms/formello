@@ -34,7 +34,7 @@ function register_cpt() {
 			'not_found_in_trash'  => __( 'Not found in Trash', 'formello' ),
 		),
 		'public'              => false,
-		'publicly_queryable'  => true,
+		'publicly_queryable'  => false,
 		'has_archive'         => false,
 		'show_ui'             => true,
 		'menu_icon'           => 'dashicons-feedback',

@@ -35,15 +35,21 @@ html {
 	flex-direction: column;
 	gap: 1em;
 
-	div[hidden="true"],
-	fieldset[hidden="true"],
-	button[hidden="true"] {
+	div[hidden],
+	fieldset[hidden],
+	button[hidden] {
 		display: none;
 	}
 
 	.formello {
 		display: flex;
 		flex-direction: column;
+	}
+
+	.wp-block-group.is-horizontal {
+		.formello {
+			align-self: end;
+		}
 	}
 
 	.is-layout-flex {

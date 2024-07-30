@@ -21,7 +21,7 @@ import {
 } from '../../icons/loading';
 
 export default function save( { attributes } ) {
-	const { text, alignment, type, style } = attributes;
+	const { text, alignment, type, style, noWrapper } = attributes;
 
 	const icons = {
 		Loading,
@@ -63,10 +63,21 @@ export default function save( { attributes } ) {
 		style: colorProps.style,
 	} );
 
+	if ( noWrapper ) {
+		return (
+			<button type="submit" { ...blockProps }>
+				<RichText.Content tagName="span" value={ text } />
+				<ButtonIcon />
+			</button>
+		);
+	}
+
 	return (
-		<button type="submit" { ...blockProps }>
-			<RichText.Content tagName="span" value={ text } />
-			<ButtonIcon />
-		</button>
+		<div className="formello">
+			<button type="submit" { ...blockProps }>
+				<RichText.Content tagName="span" value={ text } />
+				<ButtonIcon />
+			</button>
+		</div>
 	);
 }

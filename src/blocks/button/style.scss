@@ -2,6 +2,10 @@
     flex-direction: row;
     align-self: flex-start;
 
+    button[hidden] {
+        display: none;
+    }
+
     span {
         transition: all 0.2s;
         opacity: 1;

@@ -1,11 +1,8 @@
 import { __ } from '@wordpress/i18n';
 import { useState, Fragment } from '@wordpress/element';
-
 import { useEntityProp } from '@wordpress/core-data';
-
 import { ActionsModal } from '../actions/modal';
 import { integrations, icons } from '../actions/constants';
-
 import {
 	ToolbarButton,
 	ToolbarGroup,

@@ -2,9 +2,9 @@
 Contributors:      Tropicalista
 Donate link: 	   https://formello.net
 Tags:              form, contact form, form block, gutenberg form, block
-Requires at least: 6.5
-Tested up to:      6.5
-Stable tag:        2.5.1
+Requires at least: 6.6
+Tested up to:      6.6
+Stable tag:        2.5.2
 Requires PHP:      7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -129,6 +129,9 @@ Yes. We have a basic honeypot checker to prevent spam bot sending their stuffs. 
 Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
+
+= 2.5.2 =
+* WP 6.6 compatibility
 
 = 2.5.1 =
 * Fix missing data on submissions table

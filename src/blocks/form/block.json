@@ -16,6 +16,7 @@
 		"core/heading",
 		"core/columns",
 		"core/group",
+		"core/separator",
 		"formello/input",
 		"formello/textarea",
 		"formello/button",

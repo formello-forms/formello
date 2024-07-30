@@ -197,10 +197,6 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'regex:' + regEx );
 	}
 
-	if ( field.attributes.advanced && 'date' !== field.attributes.type ) {
-		constraints.push( 'date:' + field.attributes.dateFormat );
-	}
-
 	if ( field.attributes.enableMismatch && '' !== field.attributes.match ) {
 		constraints.push( 'same:' + field.attributes.match );
 	}

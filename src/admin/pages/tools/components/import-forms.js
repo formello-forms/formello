@@ -1,5 +1,4 @@
 import { FormFileUpload } from '@wordpress/components';
-
 import { useState, Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
@@ -14,7 +13,7 @@ export default function ImportForms() {
 		data.append( 'file', files[ 0 ] );
 
 		return apiFetch( {
-			path: '/formello/v1/templates/import',
+			path: '/formello/v1/forms/import',
 			method: 'POST',
 			body: data,
 		} ).finally( () => setFiles( false ) );

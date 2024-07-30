@@ -1,6 +1,6 @@
 <?php
 /**
- * Set our block attribute defaults.
+ * Set Formello block attribute defaults.
  *
  * @package Formello
  */
@@ -93,12 +93,11 @@ class Admin {
 	}
 
 	/**
-	 * Register our menu page
+	 * Register Formello menu page
 	 *
 	 * @return void
 	 */
 	public function admin_menu() {
-		global $submenu;
 
 		$capability = 'manage_options';
 		$slug       = 'formello';
@@ -112,7 +111,8 @@ class Admin {
 			'dashicons-feedback',
 			26
 		);
-		add_submenu_page(
+		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
+		$admin_hook = add_submenu_page(
 			'formello',
 			__( 'Settings' ),
 			__( 'Settings' ),
@@ -120,7 +120,8 @@ class Admin {
 			$slug . '-settings',
 			array( $this, 'settings_page' )
 		);
-		add_submenu_page(
+		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
+		$admin_hook = add_submenu_page(
 			'formello',
 			__( 'Tools' ),
 			__( 'Tools' ),
@@ -128,7 +129,8 @@ class Admin {
 			$slug . '-tools',
 			array( $this, 'settings_page' )
 		);
-		add_submenu_page(
+		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
+		$admin_hook = add_submenu_page(
 			'formello',
 			__( 'Addons', 'formello' ),
 			__( 'Addons', 'formello' ),
@@ -136,22 +138,39 @@ class Admin {
 			$slug . '-addons',
 			array( $this, 'settings_page' )
 		);
+		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
 	}
 
 	/**
-	 * Output our Settings HTML.
+	 * Output Formello Settings HTML.
 	 *
 	 * @since 0.1
 	 */
 	public function settings_page() {
-		wp_enqueue_style( 'formello-admin' );
-		wp_enqueue_script( 'formello-admin' );
-		wp_enqueue_script( 'formello-pro-settings' );
-
-		do_action( 'formello_settings_scripts' );
 		?>
 			<div id="formello-admin"></div>
 		<?php
+	}
+
+	/**
+	 * Output Formello scripts.
+	 *
+	 * @since 0.1
+	 */
+	public function enqueue_formello_scripts() {
+		wp_enqueue_style( 'formello-admin' );
+		wp_enqueue_script( 'formello-admin' );
+		wp_enqueue_script( 'formello-pro-settings' );
+		do_action( 'formello_settings_scripts' );
+	}
+
+	/**
+	 * Output Formello styles.
+	 *
+	 * @since 0.1
+	 */
+	public function load_formello_scripts() {
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_formello_scripts' ) );
 	}
 
 	/**

@@ -26,6 +26,9 @@
       "type": "string",
       "default": "left"
     },
+    "noWrapper": {
+      "type": "boolean"
+    },
     "type": {
       "type": "string",
       "default": "Loading"

@@ -32,8 +32,8 @@
 	<!-- Let's also check that everything is properly documented. -->
 	<rule ref="WordPress-Docs"/>
 
-	<config name="minimum_supported_wp_version" value="6.2"/>
-	<config name="testVersion" value="6.2-"/>
+	<config name="minimum_supported_wp_version" value="6.5"/>
+	<config name="testVersion" value="6.5"/>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>

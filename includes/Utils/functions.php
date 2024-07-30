@@ -168,6 +168,7 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 			'formello/output',
 			'core/image',
 			'core/spacer',
+			'core/separator',
 			'core/paragraph',
 			'core/heading',
 			'core/group',
@@ -252,7 +253,6 @@ function add_submissions_count() {
 		global $wpdb;
 
 		$results = $wpdb->get_results(
-			// phpcs:ignore
 			$wpdb->prepare(
 				'SELECT
 					form_id,

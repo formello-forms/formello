@@ -20,7 +20,7 @@ import { TemplatesModal } from './templates-modal.js';
 import { Settings } from '../settings/basic';
 import { Controls } from '../settings/controls';
 import { AdvancedSettings } from '../settings/advanced';
-import useFormFields from './use-form-fields';
+import { useFormFields } from './use-form-fields';
 
 export default function Edit( props ) {
 	const { attributes, className, clientId, hasInnerBlocks, name } = props;
@@ -38,7 +38,7 @@ export default function Edit( props ) {
 		'postType',
 		'formello_form',
 		'meta',
-		attributes.id
+		postId
 	);
 
 	const [ isModalOpen, setModalOpen ] = useState( false );

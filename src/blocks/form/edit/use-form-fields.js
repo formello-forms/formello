@@ -61,7 +61,7 @@ function getFieldConstraint( field ) {
 		constraints.push( 'regex:' + regEx );
 	}
 
-	if ( field.attributes.advanced && 'date' !== field.attributes.type ) {
+	if ( field.attributes.advanced && 'date' !== field.attributes.type && field.attributes.dateFormat ) {
 		constraints.push( 'date:' + field.attributes.dateFormat );
 	}
 
@@ -78,7 +78,7 @@ function getFieldConstraint( field ) {
 	return constraints.length ? constraints : undefined;
 }
 
-const useFormFields = ( clientId ) => {
+export function useFormFields( clientId ) {
 	const [ data, setData ] = useState( false );
 
 	useSelect(
@@ -125,6 +125,28 @@ const useFormFields = ( clientId ) => {
 	);
 
 	return data;
-};
+}
 
-export default useFormFields;
+export function useFormFieldsBlocks( clientId ) {
+	const fields = useSelect(
+		( select ) => {
+			const childBlocks =
+				select( blockEditorStore ).getClientIdsOfDescendants(
+					clientId
+				);
+
+			const data = [];
+
+			childBlocks.forEach( ( id ) => {
+				const block = select( blockEditorStore ).getBlock( id );
+				if ( ALLOWED_BLOCKS.includes( block.name ) ) {
+					data.push( block );
+				}
+			} );
+			return data;
+		},
+		[ clientId ]
+	);
+
+	return fields;
+}

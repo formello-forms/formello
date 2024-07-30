@@ -72,7 +72,7 @@ export default function Edit( props ) {
 		if ( 'checkbox' === type || 'radio' === type ) {
 			setAttributes( { checked: ! checked } );
 		}
-		setAttributes( { value: e.target.value } );
+		setAttributes( { placeholder: e.target.value } );
 	};
 
 	return (

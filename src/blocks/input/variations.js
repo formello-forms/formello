@@ -152,7 +152,7 @@ const variations = [
 			label: 'Email',
 			withButton: true,
 		},
-		innerBlocks: [ [ 'formello/button' ] ],
+		innerBlocks: [ [ 'formello/button', { noWrapper: true } ] ],
 		scope: [ 'inserter' ],
 	},
 	{

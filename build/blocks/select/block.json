@@ -14,8 +14,7 @@
       "type": "string",
       "source": "attribute",
       "selector": "select",
-      "attribute": "id",
-      "default": ""
+      "attribute": "id"
     },
     "name": {
       "type": "string",

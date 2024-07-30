@@ -12,32 +12,21 @@ import {
 	SelectControl,
 	PanelBody,
 } from '@wordpress/components';
-
-const ALLOWED_BLOCKS = [
-	'formello/input',
-	'formello/textarea',
-	'formello/output',
-	'formello/select',
-	'formello/multichoices',
-];
+import { useFormFieldsBlocks } from '../edit/use-form-fields';
 
 export function AdvancedSettings( props ) {
 	const { attributes, setAttributes, clientId } = props;
 
+	const fields = useFormFieldsBlocks( clientId );
+
 	const changeRequiredText = ( value ) => {
 		setAttributes( { requiredText: value } );
 
-		const innerBlocks =
-			select( blockEditorStore ).getClientIdsOfDescendants( clientId );
-
-		innerBlocks.forEach( ( id ) => {
-			const block = select( blockEditorStore ).getBlock( id );
-			if ( ALLOWED_BLOCKS.includes( block.name ) ) {
-				dispatch( blockEditorStore ).updateBlockAttributes(
-					block.clientId,
-					{ requiredText: value }
-				);
-			}
+		fields.forEach( ( block ) => {
+			dispatch( blockEditorStore ).updateBlockAttributes(
+				block.clientId,
+				{ requiredText: value }
+			);
 		} );
 	};
 

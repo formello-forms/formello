@@ -29,6 +29,7 @@ class Formello {
 	}
 
 	handleSubmit( e ) {
+		console.log(e)
 		// prevent default, we send trough ajax
 		e.preventDefault();
 		e.stopPropagation();
@@ -197,7 +198,7 @@ class Formello {
 	enableJsValidation() {
 		const script = document.createElement( 'script' );
 		script.src =
-			'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1/dist/bouncer.polyfills.min.js';
+			'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.4.6/dist/bouncer.min.js';
 
 		const { id } = this.element.dataset;
 

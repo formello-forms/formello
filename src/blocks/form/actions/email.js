@@ -1,10 +1,14 @@
 import { addFilter } from '@wordpress/hooks';
 
-import { ToggleControl, BaseControl } from '@wordpress/components';
+import {
+	ToggleControl,
+	BaseControl,
+	__experimentalHStack as HStack,
+} from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 
 import { __ } from '@wordpress/i18n';
-import MergeTags from '../../../components/merge-tags';
+import MergeTags, { MergeTagsMenu } from '../../../components/merge-tags';
 import { Editor } from '@tinymce/tinymce-react';
 
 export default function Email( content, clientId, action, handleUpdate ) {
@@ -80,7 +84,26 @@ export default function Email( content, clientId, action, handleUpdate ) {
 				} }
 			/>
 
-			<BaseControl label={ __( 'Message', 'formello' ) } id={ id }>
+			<BaseControl
+				help={ __(
+					'The message you want to send. Use the top right button to add merge fields.',
+					'formello'
+				) }
+				id={ id }
+			>
+				<HStack>
+					<BaseControl.VisualLabel>
+						{ __( 'Message', 'formello' ) }
+					</BaseControl.VisualLabel>
+					<MergeTagsMenu
+						clientId={ clientId }
+						label={ __( 'Subject', 'formello' ) }
+						value={ action.subject }
+						onChange={ ( val ) => {
+							handleUpdate( 'message', action.message + val );
+						} }
+					/>
+				</HStack>
 				<Editor
 					value={ action.message }
 					init={ {

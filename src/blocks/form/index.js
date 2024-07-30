@@ -22,6 +22,7 @@ registerBlockType( metadata, {
 		lock: false,
 		anchor: true,
 		color: true,
+		interactivity: true,
 		inserter: 'formello_form' === window.pagenow ? true : false,
 		multiple: 'formello_form' !== window.pagenow ? true : false,
 		// eslint-disable-next-line

@@ -20,8 +20,9 @@ export default function MergeTags( props ) {
 		onChange,
 		icon = 'list-view',
 		clientId,
-		tabs = useTabs( clientId ),
 	} = props;
+
+	const tabs = useTabs( clientId );
 
 	return (
 		<BaseControl>
@@ -44,5 +45,21 @@ export default function MergeTags( props ) {
 				}
 			/>
 		</BaseControl>
+	);
+}
+
+export function MergeTagsMenu( props ) {
+	const { label, onChange, icon = 'list-view', clientId } = props;
+
+	const tabs = useTabs( clientId );
+
+	return (
+		<DropdownMenu
+			icon={ icon }
+			label={ label }
+			toggleProps={ { isSmall: true } }
+		>
+			{ () => <TabContent tabs={ tabs } onChange={ onChange } /> }
+		</DropdownMenu>
 	);
 }

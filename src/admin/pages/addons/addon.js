@@ -107,12 +107,14 @@ export default function Addon( props ) {
 					) : (
 						<ToggleControl
 							checked={
-								settings?.enabled_addons?.includes(
-									addon.slug
-								) || false
+								'active' === formelloPro.record?.status || false
 							}
 							onChange={ ( checked ) =>
 								toggleAddon( checked, addon.slug )
+							}
+							disabled={
+								formelloPro.isResolving ||
+								'active' === formelloPro.record?.status
 							}
 							__nextHasNoMarginBottom
 						/>

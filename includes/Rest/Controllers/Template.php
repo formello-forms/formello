@@ -19,7 +19,7 @@ class Template extends Base {
 	 */
 	public function __construct() {
 		$this->namespace = 'formello/v1';
-		$this->rest_base = 'templates';
+		$this->rest_base = 'forms';
 	}
 
 	/**
@@ -29,14 +29,14 @@ class Template extends Base {
 	 */
 	public function register_routes() {
 
-		// Get Templates.
+		// Export Templates.
 		register_rest_route(
 			$this->namespace,
 			$this->rest_base . '/export',
 			array(
 				'methods'  => \WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'export_forms' ),
-				'permission_callback' => '__return_true',
+				'permission_callback' => array( $this, 'update_settings_permissions' ),
 			)
 		);
 
@@ -47,28 +47,6 @@ class Template extends Base {
 			array(
 				'methods'  => \WP_REST_Server::EDITABLE,
 				'callback' => array( $this, 'import_forms' ),
-				'permission_callback' => array( $this, 'update_settings_permissions' ),
-			)
-		);
-
-		// Get Patterns.
-		register_rest_route(
-			$this->namespace,
-			'/patterns/',
-			array(
-				'methods'  => \WP_REST_Server::EDITABLE,
-				'callback' => array( $this, 'set_patterns' ),
-				'permission_callback' => array( $this, 'update_settings_permissions' ),
-			)
-		);
-
-		// Sync template from Formello.net.
-		register_rest_route(
-			$this->namespace,
-			'/sync_template_library/',
-			array(
-				'methods'             => \WP_REST_Server::EDITABLE,
-				'callback'            => array( $this, 'sync_template_library' ),
 				'permission_callback' => array( $this, 'update_settings_permissions' ),
 			)
 		);
@@ -118,6 +96,7 @@ class Template extends Base {
 
 		$allowedTypes = array(
 			'application/json' => 'json',
+			'text/plain' => 'json',
 		);
 
 		if ( ! in_array( $filetype, array_keys( $allowedTypes ) ) ) {
@@ -130,117 +109,22 @@ class Template extends Base {
 		foreach ( $forms as $form ) {
 			// Create post object.
 			$my_post = array(
-				'post_title'   => wp_strip_all_tags( $form->post_title ),
-				'post_content' => $form->post_content,
+				'ID' => 0,
+				'post_title'   => wp_strip_all_tags( $form->title->raw ),
+				'post_content' => $form->content->raw,
 				'post_status'  => 'draft',
 				'post_author'  => 1,
-				'post_type'    => $form->post_type,
+				'post_type'    => $form->type,
+				'meta_input' => array(
+					'_formello_actions' => $form->meta->_formello_actions,
+					'_formello_settings' => $form->meta->_formello_settings,
+				),
 			);
 			wp_insert_post( $my_post );
 
 		}
 
 		return $this->success( __( 'Forms imported!', 'formello' ) );
-	}
-
-	/**
-	 * Get patterns.
-	 *
-	 * @return mixed
-	 */
-	public function set_patterns() {
-
-		$local_patterns = $this->get_local_patterns();
-
-		set_transient( 'formello_patterns', $local_patterns );
-
-		if ( is_array( $local_patterns ) ) {
-			return $this->success( $local_patterns );
-		} else {
-			return $this->error( 'no_templates', __( 'Templates not found.', 'formello' ) );
-		}
-	}
-
-	/**
-	 * Sync the template library.
-	 *
-	 * @param WP_REST_Request $request  request object.
-	 *
-	 * @return mixed
-	 */
-	public function sync_template_library( $request ) {
-		delete_transient( 'formello_templates' );
-		delete_transient( 'formello_addons' );
-		delete_transient( 'popper_templates' );
-
-		if ( current_user_can( 'manage_options' ) ) {
-			$templates = $this->get_templates();
-		}
-
-		return $this->success( __( 'Templates synced!', 'formello' ) );
-	}
-
-	/**
-	 * Get local patterns.
-	 *
-	 * @return mixed
-	 */
-	private function get_local_patterns() {
-
-		$all_patterns = $this->get_forms();
-		$local_patterns = array();
-
-		foreach ( $all_patterns as $pattern ) {
-			$local_patterns[] = array(
-				'title' => $pattern->post_title,
-				'content' => $pattern->post_content,
-				'description' => '',
-				'blockTypes' => array(
-					'formello/library',
-				),
-				'keywords' => array(),
-				'categories' => array( 'form' ),
-				'name' => 'formello/' . sanitize_title( $pattern->post_title ),
-			);
-		}
-
-		set_transient( 'formello_patterns', $local_patterns );
-
-		return $local_patterns;
-	}
-
-	/**
-	 * Get templates.
-	 *
-	 * @return mixed
-	 */
-	private function get_templates() {
-		$url       = 'https://formello.net/wp-json/formello/v1/templates?type=formello_form&nocache=' . time();
-		$templates = get_transient( 'formello_templates', false );
-
-		/*
-		 * Get remote templates.
-		 */
-		if ( ! $templates ) {
-			$requested_templates = wp_remote_get( $url );
-
-			if ( ! is_wp_error( $requested_templates ) ) {
-				$new_templates = wp_remote_retrieve_body( $requested_templates );
-				$new_templates = json_decode( $new_templates, true );
-
-				if ( $new_templates && is_array( $new_templates ) ) {
-					$templates = $new_templates;
-
-					set_transient( 'formello_templates', $templates );
-				}
-			} else {
-				$templates = array();
-			}
-		}
-
-		set_transient( 'formello_templates', $templates );
-
-		return $templates;
 	}
 
 	/**

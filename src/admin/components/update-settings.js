@@ -1,21 +1,15 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import {
-	Animate,
 	Button,
-	Notice,
 	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
 	__experimentalConfirmDialog as ConfirmDialog,
 } from '@wordpress/components';
-import { useState, RawHTML, Fragment } from '@wordpress/element';
-import MessageBox from './message-box.js';
+import { useState, Fragment } from '@wordpress/element';
+import { useDispatch } from '@wordpress/data';
+import { store as noticesStore } from '@wordpress/notices';
 
 /**
  * Renders the update settings buttons and animation
@@ -27,7 +21,6 @@ import MessageBox from './message-box.js';
 export default function UpdateSettings( props ) {
 	const {
 		req,
-		withNotice,
 		text,
 		disabled,
 		variant,
@@ -37,8 +30,8 @@ export default function UpdateSettings( props ) {
 	} = props;
 
 	const [ showConfirmDialog, setShowConfirmDialog ] = useState( false );
-	const [ message, setMessage ] = useState( false );
 	const [ loading, setLoading ] = useState( false );
+	const { createNotice } = useDispatch( noticesStore );
 
 	const action = () => {
 		if ( withConfirm ) {
@@ -54,22 +47,23 @@ export default function UpdateSettings( props ) {
 		req()
 			.then( ( data ) => {
 				if ( data?.success ) {
-					setMessage( {
-						type: data.success ? 'success' : 'error',
-						message: data.response,
+					createNotice( 'info', '🎯 ' + data.response, {
+						type: 'snackbar',
 					} );
 				} else {
-					setMessage( {
-						type: 'success',
-						message: __( 'Settings saved.', 'formello' ),
-					} );
+					createNotice(
+						'info',
+						'🎯 ' + __( 'Settings saved.', 'formello' ),
+						{
+							type: 'snackbar',
+						}
+					);
 				}
 			} )
 			.catch( ( error ) => {
-				console.log(error)
-				setMessage( {
-					type: 'error',
-					message: error.message,
+				createNotice( 'error', '⚠️ ' + error.message, {
+					type: 'snackbar',
+					explicitDismiss: true,
 				} );
 			} )
 			.finally( () => setLoading( false ) );
@@ -88,14 +82,6 @@ export default function UpdateSettings( props ) {
 				>
 					{ text }
 				</Button>
-				{ message && ! withNotice && (
-					<MessageBox
-						message={ message.message }
-						messageType={ message.type }
-						handleClose={ setMessage }
-						key="message"
-					/>
-				) }
 				<ConfirmDialog
 					isOpen={ showConfirmDialog }
 					onConfirm={ runAction }
@@ -104,27 +90,6 @@ export default function UpdateSettings( props ) {
 					{ confirmMessage }
 				</ConfirmDialog>
 			</div>
-			{ message && withNotice && (
-				<Animate
-					type="slide-in"
-					options={ { origin: 'top' } }
-					key="loading"
-				>
-					{ ( { className: animateClassName } ) => (
-						<Notice
-							status={ message.type }
-							onRemove={ () => setMessage( false ) }
-							isDismissible={ true }
-							className={ classnames(
-								'message',
-								animateClassName
-							) }
-						>
-							<RawHTML>{ message.message }</RawHTML>
-						</Notice>
-					) }
-				</Animate>
-			) }
 		</Fragment>
 	);
 }

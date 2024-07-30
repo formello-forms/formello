@@ -5,7 +5,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { SVG, Rect, ToolbarButton } from '@wordpress/components';
-
+import { store as blockEditorStore } from '@wordpress/block-editor';
 import { Fragment } from '@wordpress/element';
 import { Asterisk } from '../../icons/icons';
 import { select } from '@wordpress/data';
@@ -14,11 +14,13 @@ export default function Toolbar( props ) {
 	const { attributes, setAttributes, clientId } = props;
 	const { required, showHelp, hideLabel, type } = attributes;
 
-	const setRequiredTxt = () => {
-		const parent =
-			select( 'core/block-editor' ).getBlockParents( clientId );
+	const setRequiredText = () => {
+		const formBlock = select( blockEditorStore ).getBlockParentsByBlockName(
+			clientId,
+			'formello/form'
+		);
 		const parentAtts = select( 'core/block-editor' ).getBlockAttributes(
-			parent[ 0 ]
+			formBlock[ 0 ]
 		);
 		setAttributes( { requiredText: parentAtts.requiredText } );
 	};
@@ -46,7 +48,7 @@ export default function Toolbar( props ) {
 				icon={ Asterisk }
 				isPressed={ required }
 				onClick={ () => {
-					setRequiredTxt();
+					setRequiredText();
 					setAttributes( { required: ! required } );
 				} }
 			/>

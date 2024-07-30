@@ -1,35 +1,26 @@
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { Button } from '@wordpress/components';
-import apiFetch from '@wordpress/api-fetch';
+import { useEntityRecords } from '@wordpress/core-data';
 import { dateI18n } from '@wordpress/date';
 import { downloadBlob } from '@wordpress/blob';
 
 export default function ExportForms() {
-	const [ loading, setLoading ] = useState( false );
+	const { records: forms, isResolving } = useEntityRecords(
+		'postType',
+		'formello_form',
+		{
+			_embed: 'wp:term',
+		}
+	);
 
 	const currentDate = dateI18n( '', new Date() );
 
 	const exportForms = () => {
-		setLoading( true );
+		const fileContent = JSON.stringify( forms, null, 2 );
+		const filename = `formello-forms-export-${ currentDate }.json`;
 
-		return apiFetch( {
-			path: '/formello/v1/templates/export',
-			method: 'POST',
-			parse: false,
-		} )
-			.then( ( res ) => res.blob() )
-			.then( ( blob ) => {
-				const url = window.URL.createObjectURL( blob );
-				const a = document.createElement( 'a' );
-				a.href = url;
-				a.download = `forms-exported-${ currentDate }.json`;
-				document.body.appendChild( a ); // we need to append the element to the dom -> otherwise it will not work in firefox
-				a.click();
-				a.remove(); //afterwards we remove the element again
-			} )
-			.catch( () => setLoading( false ) )
-			.finally( () => setLoading( false ) );
+		downloadBlob( filename, fileContent, 'application/json' );
 	};
 
 	return (
@@ -37,8 +28,7 @@ export default function ExportForms() {
 			onClick={ exportForms }
 			text={ __( 'Export forms', 'formello' ) }
 			variant="primary"
-			isBusy={ loading }
-			disabled={ loading }
+			disabled={ isResolving }
 		/>
 	);
 }

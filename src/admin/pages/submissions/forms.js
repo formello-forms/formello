@@ -13,7 +13,7 @@ import {
 	trashPostAction,
 	usePermanentlyDeletePostAction,
 	useRestorePostAction,
-	useEditPostAction,
+	editPostAction,
 } from '../../components/actions';
 import { commentContent } from '@wordpress/icons';
 import { useHistory } from '../../router';
@@ -185,7 +185,6 @@ export const Forms = () => {
 
 	const permanentlyDeletePostAction = usePermanentlyDeletePostAction();
 	const restorePostAction = useRestorePostAction();
-	const editPostAction = useEditPostAction();
 	const actions = useMemo(
 		() => [
 			{

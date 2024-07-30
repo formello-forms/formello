@@ -29,7 +29,6 @@ export default function Settings() {
 
 	const history = useHistory();
 	const { params } = useLocation();
-	const initialTab = params.tab || 'general';
 	const changeTab = ( tabName ) => {
 		history.push( { page: 'formello-settings', tab: tabName } );
 	};

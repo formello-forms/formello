@@ -11,16 +11,19 @@ $mobile: 426px;
 }
 
 /* Hide WP notices on the settings and addons page */
-.formello_form_page_formello-addons, .formello_form_page_formello-settings, .toplevel_page_formello-settings {
+.formello_form_page_formello-addons,
+.formello_form_page_formello-settings,
+.toplevel_page_formello-settings {
 	.notice {
 		display: none;
 	}
 }
 
-#formello-plugin-settings, #formello-admin {
+#formello-plugin-settings,
+#formello-admin {
 	margin-left: -20px;
 
-	@media ( max-width: $tablet ) {
+	@media (max-width: $tablet ) {
 		margin-left: -10px;
 	}
 
@@ -32,7 +35,8 @@ $mobile: 426px;
 		box-sizing: border-box;
 		background-color: #fff;
 		padding: 20px;
-		> div {
+
+		>div {
 			padding: 0;
 		}
 	}
@@ -43,6 +47,7 @@ $mobile: 426px;
 		border-color: inherit;
 		border-collapse: collapse;
 		position: relative;
+
 		.badge {
 			background-color: #337ab7;
 			color: white;
@@ -51,25 +56,31 @@ $mobile: 426px;
 			border-radius: 20%;
 			margin: 0 1em;
 		}
+
 		a {
 			text-decoration: none;
 		}
+
 		th {
 			text-align: left;
 			font-weight: normal;
 			padding: 0 20px;
 			color: #dedede;
+
 			button {
 				font-weight: bold;
 			}
 		}
+
 		td,
 		th {
 			padding: 15px;
+
 			&:last-child {
 				text-align: right;
 			}
 		}
+
 		tr {
 			border-bottom: 1px solid #dedede;
 		}
@@ -103,7 +114,7 @@ $mobile: 426px;
 			display: flex;
 			justify-content: space-between;
 
-			@media ( max-width: $mobile ) {
+			@media (max-width: $mobile ) {
 				flex-direction: column;
 				margin: 5px auto;
 			}
@@ -121,7 +132,7 @@ $mobile: 426px;
 				font-weight: 400;
 				margin: 0;
 
-				@media ( max-width: $mobile ) {
+				@media (max-width: $mobile ) {
 					justify-content: center;
 				}
 			}
@@ -146,7 +157,7 @@ $mobile: 426px;
 				background: var(--wp-admin-theme-color);
 			}
 
-			@media ( max-width: $mobile ) {
+			@media (max-width: $mobile ) {
 				text-align: center;
 			}
 		}
@@ -181,13 +192,13 @@ $mobile: 426px;
 
 		.components-grid {
 
-			@media ( max-width: $tablet ) {
+			@media (max-width: $tablet ) {
 				grid-template-columns: 4fr;
 			}
 
 		}
 
-		.components-grid > div:not(.components-card) {
+		.components-grid>div:not(.components-card) {
 			display: flex;
 			gap: 1em;
 			flex-direction: column;
@@ -195,11 +206,11 @@ $mobile: 426px;
 
 		.components-card.addon {
 
-			> div {
+			>div {
 				display: flex;
 				flex-direction: column;
 			}
-			
+
 			.components-card__body {
 				flex-grow: 1;
 			}
@@ -251,7 +262,7 @@ $mobile: 426px;
 				-webkit-mask-position: -100px;
 			}
 
-			> * {
+			>* {
 				position: relative;
 				z-index: 1;
 			}
@@ -278,6 +289,13 @@ $mobile: 426px;
 		}
 
 	}
+
+	.components-snackbar-list {
+		bottom: 40px;
+		padding-left: 16px;
+		padding-right: 16px;
+		position: fixed;
+	}
 }
 
 /* -------------- BADGES ------------------ */
@@ -297,10 +315,12 @@ $mobile: 426px;
 
 .formello-icons-group {
 	display: flex;
-    align-items: center;
-    div {
-    	display: flex;
-    }
+	align-items: center;
+
+	div {
+		display: flex;
+	}
+
 	span {
 		width: 1em;
 		height: 1em;
@@ -340,7 +360,7 @@ $mobile: 426px;
 
 	.components-grid {
 
-		@media ( max-width: $tablet ) {
+		@media (max-width: $tablet ) {
 			grid-template-columns: 4fr;
 		}
 

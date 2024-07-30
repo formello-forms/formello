@@ -34,7 +34,7 @@ import {
 } from '../../icons/loading';
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { style, type, alignment } = attributes;
+	const { style, type, alignment, noWrapper } = attributes;
 
 	const icons = {
 		Loading,
@@ -108,53 +108,61 @@ export default function Edit( { attributes, setAttributes } ) {
 	} );
 
 	return (
-		<button { ...blockProps }>
-			<BlockControls>
-				<ToolbarGroup>
-					<ToolbarDropdownMenu
-						icon={ 'align-' + alignment }
-						label={ __( 'Align' ) }
-						controls={ ALIGNMENT_CONTROLS.map( ( control ) => {
-							const { align } = control;
-							const isActive = align === alignment;
+		<div className="formello">
+			<button { ...blockProps }>
+				{ ! noWrapper && (
+					<BlockControls>
+						<ToolbarGroup>
+							<ToolbarDropdownMenu
+								icon={ 'align-' + alignment }
+								label={ __( 'Align' ) }
+								controls={ ALIGNMENT_CONTROLS.map(
+									( control ) => {
+										const { align } = control;
+										const isActive = align === alignment;
 
-							return {
-								...control,
-								isActive,
-								onClick: () =>
-									setAttributes( { alignment: align } ),
-							};
-						} ) }
+										return {
+											...control,
+											isActive,
+											onClick: () =>
+												setAttributes( {
+													alignment: align,
+												} ),
+										};
+									}
+								) }
+							/>
+						</ToolbarGroup>
+					</BlockControls>
+				) }
+				<InspectorAdvancedControls>
+					<ToggleControl
+						label={ __( 'Show Icon', 'formello' ) }
+						checked={ showIcon }
+						onChange={ ( val ) => {
+							setShowIcon( val );
+						} }
 					/>
-				</ToolbarGroup>
-			</BlockControls>
-			<InspectorAdvancedControls>
-				<ToggleControl
-					label={ __( 'Show Icon', 'formello' ) }
-					checked={ showIcon }
-					onChange={ ( val ) => {
-						setShowIcon( val );
-					} }
+					<SelectControl
+						label={ __( 'Icon type', 'formello' ) }
+						value={ attributes.type }
+						options={ Object.keys( icons ).map( ( icon ) => {
+							return { label: icon, value: icon };
+						} ) }
+						onChange={ ( val ) => {
+							setAttributes( { type: val } );
+						} }
+					/>
+				</InspectorAdvancedControls>
+				<RichText
+					tagName="span"
+					value={ attributes.text }
+					onChange={ ( val ) => setAttributes( { text: val } ) }
+					placeholder={ __( 'Enter button text…', 'formello' ) }
+					allowedFormats={ [ 'core/bold' ] }
 				/>
-				<SelectControl
-					label={ __( 'Icon type', 'formello' ) }
-					value={ attributes.type }
-					options={ Object.keys( icons ).map( ( icon ) => {
-						return { label: icon, value: icon };
-					} ) }
-					onChange={ ( val ) => {
-						setAttributes( { type: val } );
-					} }
-				/>
-			</InspectorAdvancedControls>
-			<RichText
-				tagName="span"
-				value={ attributes.text }
-				onChange={ ( val ) => setAttributes( { text: val } ) }
-				placeholder={ __( 'Enter button text…', 'formello' ) }
-				allowedFormats={ [ 'core/bold' ] }
-			/>
-			<ButtonIcon />
-		</button>
+				<ButtonIcon />
+			</button>
+		</div>
 	);
 }

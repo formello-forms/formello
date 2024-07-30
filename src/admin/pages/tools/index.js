@@ -12,9 +12,10 @@ import { __ } from '@wordpress/i18n';
 import { applyFilters } from '@wordpress/hooks';
 import General from './tabs/general.js';
 import Exporter from './tabs/exporter.js';
-import Importer from './tabs/importer.js';
+import { Importer } from './tabs/importer.js';
 import Header from '../../components/masthead.js';
 import Help from '../../components/help.js';
+import { useHistory, useLocation } from '../../router';
 
 export default function Tools() {
 	const toolsTabs = [
@@ -38,8 +39,11 @@ export default function Tools() {
 	// Filter to add a tab
 	applyFilters( 'formello.ToolsTabs', '', toolsTabs );
 
-	const { params } = useNavigator();
-	const initialTab = params.tab || 'general';
+	const history = useHistory();
+	const { params } = useLocation();
+	const changeTab = ( tabName ) => {
+		history.push( { page: 'formello-tools', tab: tabName } );
+	};
 
 	return (
 		<Fragment>
@@ -51,8 +55,11 @@ export default function Tools() {
 					'',
 					this
 				) }
-
-				<TabPanel tabs={ toolsTabs } initialTabName={ initialTab }>
+				<TabPanel
+					tabs={ toolsTabs }
+					initialTabName={ params.tab }
+					onSelect={ ( tabName ) => changeTab( tabName ) }
+				>
 					{ ( tab ) => {
 						const Tab = tab.component;
 						return (

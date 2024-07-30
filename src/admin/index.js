@@ -1,8 +1,9 @@
 /* eslint-disable @wordpress/no-unsafe-wp-apis */
 import { createRoot, useEffect } from '@wordpress/element';
-import { dispatch } from '@wordpress/data';
+import { dispatch, useDispatch, useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
-
+import { store as noticesStore } from '@wordpress/notices';
+import { SnackbarList } from '@wordpress/components';
 import './style.scss';
 import { Forms } from './pages/submissions/forms';
 import { Submissions } from './pages/submissions/submissions';
@@ -114,10 +115,26 @@ const App = () => {
 		<RouterProvider>
 			<SettingsContextProvider>
 				<Router />
+				<Notifications />
 			</SettingsContextProvider>
 		</RouterProvider>
 	);
 };
+
+function Notifications() {
+	const notices = useSelect(
+		( select ) => select( noticesStore ).getNotices(),
+		[]
+	);
+	const { removeNotice } = useDispatch( noticesStore );
+	const snackbarNotices = notices.filter(
+		( { type } ) => type === 'snackbar'
+	);
+
+	return (
+		<SnackbarList notices={ snackbarNotices } onRemove={ removeNotice } />
+	);
+}
 
 window.addEventListener( 'DOMContentLoaded', () => {
 	const domNode = document.getElementById( 'formello-admin' );

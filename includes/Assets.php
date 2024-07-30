@@ -42,11 +42,7 @@ class Assets {
 	 * Constructor
 	 */
 	public function __construct() {
-		if ( is_admin() ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'register' ), 5 );
-		} else {
-			add_action( 'wp_enqueue_scripts', array( $this, 'register' ), 5 );
-		}
+		add_action( 'admin_enqueue_scripts', array( $this, 'register' ) );
 	}
 
 	/**
@@ -55,8 +51,8 @@ class Assets {
 	 * @return void
 	 */
 	public function register() {
-		$this->register_scripts( $this->get_scripts() );
 		$this->register_styles( $this->get_styles() );
+		$this->register_scripts( $this->get_scripts() );
 	}
 
 	/**
@@ -78,8 +74,8 @@ class Assets {
 		wp_set_script_translations( 'formello-admin', 'formello', FORMELLO_ABSPATH . 'languages' );
 
 		$settings = array(
-			'settings' => get_option( 'formello' ),
-			'post_url' => esc_url( admin_url( 'admin-post.php' ) ),
+			'settings'             => get_option( 'formello' ),
+			'post_url'             => esc_url( admin_url( 'admin-post.php' ) ),
 			'can_use_premium_code' => (int) is_plugin_active( 'formello-pro/formello-pro.php' ),
 		);
 
@@ -100,7 +96,6 @@ class Assets {
 		$settings = apply_filters( 'formello_backend_settings', $settings );
 
 		wp_add_inline_script( 'formello-admin', 'const formello = ' . wp_json_encode( $settings ), 'before' );
-		wp_add_inline_script( 'formello-form-editor-script', 'const formello = ' . wp_json_encode( $settings ), 'before' );
 	}
 
 	/**

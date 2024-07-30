@@ -12,8 +12,7 @@
 			"type": "string",
 			"source": "attribute",
 			"selector": "textarea",
-			"attribute": "id",
-			"default": ""
+			"attribute": "id"
 		},
 		"name": {
 			"type": "string",

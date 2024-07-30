@@ -7,7 +7,7 @@ import {
 	store as coreStore,
 	getLastEntityDeleteError,
 } from '@wordpress/core-data';
-import { __, sprintf } from '@wordpress/i18n';
+import { __, sprintf, _n } from '@wordpress/i18n';
 import {
 	__experimentalVStack as VStack,
 	__experimentalHStack as HStack,

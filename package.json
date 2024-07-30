@@ -7,7 +7,6 @@
   "main": "build/index.js",
   "scripts": {
     "build": "wp-scripts build",
-    "build:custom": "wp-scripts build src/index.js src/frontend/frontend.js src/admin/index.js",
     "format": "wp-scripts format",
     "format:src": "wp-scripts format ./src",
     "lint:css": "wp-scripts lint-style",
@@ -17,13 +16,13 @@
     "plugin-zip": "wp-scripts plugin-zip"
   },
   "devDependencies": {
-    "@wordpress/base-styles": "^4.39.0",
-    "@wordpress/scripts": "^26.19.0"
+    "@wordpress/base-styles": "^5.4.0",
+    "@wordpress/scripts": "^28.4.0"
   },
   "dependencies": {
     "@tinymce/tinymce-react": "^4.3.2",
-    "@wordpress/dataviews": "^0.7.0",
-    "@wordpress/icons": "^9.39.0",
+    "@wordpress/dataviews": "^4.0.0",
+    "@wordpress/icons": "^10.4.0",
     "classnames": "^2.3.1",
     "flatpickr": "^4.6.9",
     "formbouncerjs": "^1.4.6",

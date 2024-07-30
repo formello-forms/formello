@@ -24,10 +24,10 @@ export function useInputId( Input, props ) {
 		};
 	}, [] );
 
-	const idx = 'field_' + type + '-' + postId + '-' + instanceId;
+	const idx = 'field_' + postId + '-' + type + '-' + instanceId;
 
 	useEffect( () => {
-		if ( ! id === idx ) {
+		if ( ! id || ! id === idx ) {
 			setAttributes( {
 				id: idx,
 			} );

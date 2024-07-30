@@ -6,10 +6,12 @@ import {
 } from '@wordpress/components';
 
 import { __ } from '@wordpress/i18n';
+import { PromoSettings } from '../../components/promo';
 
 export default function Help() {
 	return (
 		<div className="ads-container">
+			<PromoSettings />
 			<Card>
 				<CardHeader>
 					<h2>{ __( 'Need help?', 'formello' ) }</h2>
