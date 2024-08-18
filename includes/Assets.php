@@ -43,6 +43,7 @@ class Assets {
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'register' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
 	}
 
 	/**
@@ -53,6 +54,28 @@ class Assets {
 	public function register() {
 		$this->register_styles( $this->get_styles() );
 		$this->register_scripts( $this->get_scripts() );
+	}
+
+	/**
+	 * Enqueue frontend scripts
+	 *
+	 * @return void
+	 */
+	public function frontend_scripts() {
+		$settings = array(
+			'settings'             => get_option( 'formello' ),
+			'post_url'             => esc_url( admin_url( 'admin-post.php' ) ),
+			'can_use_premium_code' => (int) is_plugin_active( 'formello-pro/formello-pro.php' ),
+		);
+
+		wp_localize_script(
+			'formello-form-view-script',
+			'formello',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'settings' => formello_frontend_option(),
+			)
+		);
 	}
 
 	/**
