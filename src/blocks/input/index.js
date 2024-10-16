@@ -6,6 +6,8 @@ import deprecated from './deprecated';
 import metadata from './block.json';
 import { Input } from '../../icons/icons';
 
+import './style.scss';
+
 /**
  * Every block starts by registering a new block type definition.
  *

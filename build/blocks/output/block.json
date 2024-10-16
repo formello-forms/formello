@@ -5,9 +5,6 @@
   "title": "Output",
   "description": "A block to display number output.",
   "category": "formello",
-  "parent": [
-    "formello/form"
-  ],
   "icon": "number",
   "textdomain": "formello",
   "attributes": {
@@ -47,5 +44,6 @@
       "fontSize": true
     }
   },
-  "editorScript": "file:./index.js"
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css"
 }

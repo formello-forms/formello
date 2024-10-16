@@ -1,6 +1,6 @@
 import { applyFilters } from '@wordpress/hooks';
 import { useEntityProp } from '@wordpress/core-data';
-import { useSelect, select } from '@wordpress/data';
+import { select } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 
 const allowed = [
@@ -11,37 +11,23 @@ const allowed = [
 ];
 
 /**
- * Find the root form block.
- *
- * @param {string} clientId The id of the block of which we are finding the form block
+ * Find the input fields blocks IDS.
  */
-export function getFormBlock( clientId ) {
-	const formBlock = select( blockEditorStore ).getBlockParentsByBlockName(
-		clientId,
-		'formello/form'
+export function getFieldsBlock() {
+	const fields = [];
+	const inputs =
+		select( blockEditorStore ).getBlocksByName( 'formello/input' );
+	const textareas =
+		select( blockEditorStore ).getBlocksByName( 'formello/textarea' );
+	const selects =
+		select( blockEditorStore ).getBlocksByName( 'formello/select' );
+	const outputs =
+		select( blockEditorStore ).getBlocksByName( 'formello/output' );
+	const multichoices = select( blockEditorStore ).getBlocksByName(
+		'formello/multichoices'
 	);
 
-	if ( formBlock.length ) {
-		return formBlock[ 0 ];
-	}
-
-	const block = select( blockEditorStore ).getBlock( clientId );
-
-	if ( 'formello/form' === block.name ) {
-		return block;
-	}
-}
-
-/**
- * Find the root form block.
- *
- * @param {string} clientId The id of the form block of which we are finding the children fields
- */
-function getFieldsBlock( clientId ) {
-	const fields = [];
-	const fieldsId = select( blockEditorStore ).getClientIdsOfDescendants( [
-		clientId,
-	] );
+	const fieldsId = inputs.concat( textareas, selects, outputs, multichoices );
 
 	fieldsId.forEach( ( b ) => {
 		const block = select( blockEditorStore ).getBlock( b );
@@ -54,13 +40,29 @@ function getFieldsBlock( clientId ) {
 }
 
 /**
- * Get fields type.
- *
- * @param {string} clientId The id of the form block of which we are finding the children fields
+ * Validate form before saving
  */
-export function getFieldsName( clientId ) {
+export function validate() {
+	const fields = {
+		names: [],
+		buttons:
+			select( blockEditorStore ).getBlocksByName( 'formello/button' ),
+	};
+	const fieldsBlock = getFieldsBlock();
+
+	fieldsBlock.forEach( ( b ) => {
+		fields.names.push( b.attributes.name );
+	} );
+
+	return fields;
+}
+
+/**
+ * Get fields type.
+ */
+export function getFieldsType() {
 	const fields = {};
-	const fieldsBlock = getFieldsBlock( clientId );
+	const fieldsBlock = getFieldsBlock();
 
 	fieldsBlock.forEach( ( b ) => {
 		// get block type by name
@@ -81,9 +83,9 @@ export function getFieldsName( clientId ) {
 	return fields;
 }
 
-export function serializeFields( clientId ) {
+export function serializeFields() {
 	const fields = [];
-	const fieldsBlock = getFieldsBlock( clientId );
+	const fieldsBlock = getFieldsBlock();
 
 	fieldsBlock.forEach( ( b ) => {
 		fields.push( {
@@ -95,9 +97,9 @@ export function serializeFields( clientId ) {
 	return fields;
 }
 
-export function serializeFieldsName( clientId ) {
+export function serializeFieldsName() {
 	const fields = [];
-	const fieldsBlock = getFieldsBlock( clientId );
+	const fieldsBlock = getFieldsBlock();
 
 	fieldsBlock.forEach( ( b ) => {
 		fields.push( {
@@ -109,12 +111,8 @@ export function serializeFieldsName( clientId ) {
 	return fields;
 }
 
-export function getFieldsTags( clientId ) {
-	let fields = [];
-	const formBlock = getFormBlock( clientId );
-	if ( formBlock ) {
-		fields = serializeFields( formBlock.clientId );
-	}
+export function getFieldsTags() {
+	const fields = serializeFields();
 
 	return [
 		{
@@ -125,9 +123,9 @@ export function getFieldsTags( clientId ) {
 	];
 }
 
-export function getConstraints( clientId ) {
+export function getConstraints() {
 	const constraints = {};
-	const fields = getFieldsBlock( clientId );
+	const fields = getFieldsBlock();
 
 	if ( fields ) {
 		fields.forEach( ( b ) => {
@@ -211,12 +209,8 @@ export function getFieldConstraint( field ) {
 }
 
 export function getMetaTags() {
-	const { postType, postId } = useSelect( ( select ) => {
-		return {
-			postType: select( 'core/editor' ).getCurrentPostType(),
-			postId: select( 'core/editor' ).getCurrentPostId(),
-		};
-	} );
+	const postType = select( 'core/editor' ).getCurrentPostType();
+	const postId = select( 'core/editor' ).getCurrentPostId();
 
 	const [ meta ] = useEntityProp( 'postType', postType, 'meta', postId );
 	const metaTags = [];

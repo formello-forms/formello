@@ -37,7 +37,7 @@ $mobile: 426px;
 		padding: 20px;
 
 		>div {
-			padding: 0;
+			padding-bottom: 1em;
 		}
 	}
 
@@ -385,6 +385,10 @@ $mobile: 426px;
 		border-bottom: 1px solid #ddd;
 		padding: 12px;
 		word-break: break-word;
+		vertical-align: baseline;
+		div.display-linebreak {
+			white-space: pre-line;
+		}
 	}
 
 	table th {

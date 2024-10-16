@@ -2,7 +2,7 @@
 /**
  * Perform email Action.
  *
- * @package Formello
+ * @package formello
  */
 
 namespace Formello\Actions;

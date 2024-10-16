@@ -134,12 +134,13 @@ html {
 
 	.formello-checkbox {
 		flex-direction: row;
-		align-items: center;
+		align-items: baseline;
 		flex-wrap: wrap;
 
 		label {
 			order: 2;
 			padding: 0 $margin-left;
+			flex: 1;
 		}
 
 		input {

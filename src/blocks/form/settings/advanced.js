@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { select, dispatch } from '@wordpress/data';
+import { dispatch } from '@wordpress/data';
 import { Fragment } from '@wordpress/element';
 import {
 	InspectorAdvancedControls,
@@ -37,6 +37,7 @@ export function AdvancedSettings( props ) {
 					label={ __( 'Required Field Indicator', 'formello' ) }
 					value={ attributes.requiredText }
 					onChange={ changeRequiredText }
+					__nextHasNoMarginBottom
 				/>
 				<SelectControl
 					label={ __( 'Autocomplete', 'formello' ) }
@@ -52,6 +53,7 @@ export function AdvancedSettings( props ) {
 						'Add "autocomplete" attribute fo form tag.',
 						'formello'
 					) }
+					__nextHasNoMarginBottom
 				/>
 				<ToggleControl
 					label={ __( 'Enable Js validation', 'formello' ) }
@@ -59,6 +61,7 @@ export function AdvancedSettings( props ) {
 					onChange={ ( val ) => {
 						setAttributes( { enableJsValidation: val } );
 					} }
+					__nextHasNoMarginBottom
 				/>
 				<ToggleControl
 					label={ __( 'Disable HTML5 validation', 'formello' ) }
@@ -70,6 +73,7 @@ export function AdvancedSettings( props ) {
 						'Add "novalidate" attribute fo form tag.',
 						'formello'
 					) }
+					__nextHasNoMarginBottom
 				/>
 				<ToggleControl
 					label={ __( 'Disable Ajax', 'formello' ) }
@@ -77,6 +81,7 @@ export function AdvancedSettings( props ) {
 					onChange={ ( val ) => {
 						setAttributes( { noAjax: val } );
 					} }
+					__nextHasNoMarginBottom
 				/>
 				<ToggleControl
 					label={ __( 'Enable debug', 'formello' ) }
@@ -84,6 +89,7 @@ export function AdvancedSettings( props ) {
 					onChange={ ( val ) => {
 						setAttributes( { debug: val } );
 					} }
+					__nextHasNoMarginBottom
 				/>
 			</InspectorAdvancedControls>
 			<InspectorControls group="styles">
@@ -95,6 +101,7 @@ export function AdvancedSettings( props ) {
 						label={ __( 'Label on side', 'formello' ) }
 						checked={ attributes.asRow }
 						onChange={ ( val ) => setAttributes( { asRow: val } ) }
+						__nextHasNoMarginBottom
 					/>
 					{ attributes.asRow && (
 						<SelectControl
@@ -110,6 +117,7 @@ export function AdvancedSettings( props ) {
 							onChange={ ( val ) => {
 								setAttributes( { labelAlign: val } );
 							} }
+							__nextHasNoMarginBottom
 						/>
 					) }
 					<ToggleControl
@@ -118,6 +126,7 @@ export function AdvancedSettings( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { labelIsBold: val } )
 						}
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</InspectorControls>

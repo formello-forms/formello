@@ -1,9 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
-import {
-	SelectControl,
-	ToggleControl,
-} from '@wordpress/components';
+import { SelectControl, ToggleControl } from '@wordpress/components';
 
 export default function DatepickerSettings( props ) {
 	const {
@@ -30,6 +27,7 @@ export default function DatepickerSettings( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { minDate: val ? 'today' : false } );
 						} }
+						__nextHasNoMarginBottom
 					/>
 					<SelectControl
 						label={ __( 'Date Format', 'formello' ) }
@@ -42,6 +40,7 @@ export default function DatepickerSettings( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { dateFormat: val } );
 						} }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Enable time', 'formello' ) }
@@ -49,6 +48,7 @@ export default function DatepickerSettings( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { enableTime: val } );
 						} }
+						__nextHasNoMarginBottom
 					/>
 					<SelectControl
 						label={ __( 'Mode', 'formello' ) }
@@ -59,11 +59,15 @@ export default function DatepickerSettings( props ) {
 							{ label: 'Range', value: 'range' },
 						] }
 						onChange={ ( val ) => setAttributes( { mode: val } ) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Inline calendar', 'formello' ) }
 						checked={ inlineCalendar }
-						onChange={ ( val ) => setAttributes( { inlineCalendar: val } ) }
+						onChange={ ( val ) =>
+							setAttributes( { inlineCalendar: val } )
+						}
+						__nextHasNoMarginBottom
 					/>
 				</Fragment>
 			) }

@@ -140,9 +140,6 @@ function register_settings() {
 				),
 			),
 		),
-		'captcha' => array(
-			'type' => 'boolean',
-		),
 		'reCaptcha' => array(
 			'type'       => 'object',
 			'properties' => array(
@@ -205,6 +202,7 @@ function register_settings() {
 				'schema' => array(
 					'type'       => 'object',
 					'properties' => $settings,
+					'additionalProperties' => true,
 				),
 			),
 			'sanitize_callback' => 'Formello\Utils\recursive_sanitize_text_field',

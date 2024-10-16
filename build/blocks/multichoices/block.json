@@ -4,15 +4,12 @@
   "name": "formello/multichoices",
   "title": "Multi choices",
   "category": "formello",
-  "ancestor": [
-    "formello/form"
-  ],
   "textdomain": "formello",
   "attributes": {
     "name": {
       "type": "string",
       "default": "my_choice",
-      "__experimentalRole": "content"
+      "role": "content"
     },
     "type": {
       "enum": [
@@ -27,7 +24,7 @@
     "options": {
       "type": "array",
       "source": "query",
-      "selector": "div.formello-checkbox",
+      "selector": "div.wp-block-formello-input",
       "query": {
         "value": {
           "type": "string",
@@ -66,14 +63,19 @@
   "supports": {
     "anchor": true,
     "html": false,
-    "color": true,
-    "spacing": true,
+    "spacing": {
+      "padding": true,
+      "blockGap": true
+    },
     "inserter": true,
     "__experimentalBorder": true,
     "layout": {
       "allowSwitching": true,
       "allowInheriting": false,
       "allowSizingOnChildren": false,
+      "allowEditing": true,
+      "allowCustomContentAndWideSize": false,
+      "allowJustification": false,
       "default": {
         "type": "flex",
         "justifyContent": "stretch",

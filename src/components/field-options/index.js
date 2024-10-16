@@ -61,6 +61,7 @@ export default function Options( props ) {
 						'Affects the "name" attribute of the input element, and is used as a name for the form submission results.',
 						'formello'
 					) }
+					__nextHasNoMarginBottom
 				/>
 				{ supported.includes( 'value' ) && (
 					<MergeTags
@@ -87,6 +88,7 @@ export default function Options( props ) {
 							'Text that appears in the form control when it has no value set.',
 							'formello'
 						) }
+						__nextHasNoMarginBottom
 					/>
 				) }
 				{ supported.includes( 'required' ) && (
@@ -96,6 +98,7 @@ export default function Options( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { required: val } )
 						}
+						__nextHasNoMarginBottom
 					/>
 				) }
 				{ supported.includes( 'multiple' ) && (
@@ -105,6 +108,7 @@ export default function Options( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { multiple: val } )
 						}
+						__nextHasNoMarginBottom
 					/>
 				) }
 				{ supported.includes( 'checked' ) && (
@@ -114,6 +118,7 @@ export default function Options( props ) {
 						onChange={ ( newval ) =>
 							setAttributes( { checked: newval } )
 						}
+						__nextHasNoMarginBottom
 					/>
 				) }
 				{ ! ( 'hidden' === type ) && (
@@ -123,6 +128,7 @@ export default function Options( props ) {
 						onChange={ ( newval ) =>
 							setAttributes( { showHelp: newval } )
 						}
+						__nextHasNoMarginBottom
 					/>
 				) }
 				{ 'select' === fieldType && (

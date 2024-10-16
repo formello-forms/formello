@@ -1,6 +1,6 @@
 $margin-left: 0.5em;
 
-.wp-block-formello-form {
+body.post-type-popper, .wp-block-formello-form {
 
 	input,
 	select,
@@ -28,10 +28,16 @@ $margin-left: 0.5em;
 		display: none;
 	}
 
+	.label-div>span.required {
+		color: red;
+		margin: 0 5px;
+	}
+
 	.formello-checkbox {
 		.label-div {
 			order: 2;
 			padding: 0 $margin-left;
+			flex: 1;
 		}
 	}
 
@@ -60,9 +66,11 @@ $margin-left: 0.5em;
 }
 
 
-.formello-urlinput input[type="text"] {
-	width: 100%;
-	border: 1px solid #8c8f94 !important;
+.formello-urlinput {
+	min-width: 100%;
+	input[type="text"] {
+		width: 100%;
+	}
 }
 
 .formello-urlinput__suggestions {
@@ -77,7 +85,6 @@ $margin-left: 0.5em;
 
 .wp-block-formello-button {
 	border: 1px solid transparent;
-	display: block;
 	margin: 0;
 
 	&.left {

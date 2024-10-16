@@ -1,8 +1,4 @@
-import {
-	Card,
-	CardHeader,
-	CardBody,
-} from '@wordpress/components';
+import { Card, CardHeader, CardBody } from '@wordpress/components';
 import { RawHTML } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { decodeEntities } from '@wordpress/html-entities';
@@ -32,7 +28,7 @@ export function FieldsData( props ) {
 											.toUpperCase() }
 									</th>
 									<td>
-										<RawHTML>
+										<RawHTML className="display-linebreak">
 											{ 'null' === field
 												? ''
 												: decodeEntities( field ) }

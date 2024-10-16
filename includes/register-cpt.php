@@ -35,6 +35,7 @@ function register_cpt() {
 		),
 		'public'              => false,
 		'publicly_queryable'  => false,
+		'capability_type'     => 'post',
 		'has_archive'         => false,
 		'show_ui'             => true,
 		'menu_icon'           => 'dashicons-feedback',
@@ -47,16 +48,12 @@ function register_cpt() {
 		'show_in_rest'        => true,
 		'template'            => array(
 			array(
-				'formello/form',
+				'formello/input',
 				array(
-					'lock' => array(
-						'move'   => false,
-						'remove' => false,
-					),
+					'type' => 'text',
 				),
 			),
 		),
-		//'template_lock'       => 'insert', // This will block template insertion.
 		'supports'            => array(
 			'author',
 			'title',
@@ -66,7 +63,7 @@ function register_cpt() {
 			'revisions',
 		),
 	);
-	register_post_type( 'formello_form', $args );
+	register_post_type( 'formello', $args );
 }
 
 /**
@@ -78,17 +75,20 @@ function register_cpt_meta() {
 
 	$defaults = array(
 		'storeSubmissions' => true,
-		'recaptchaEnabled' => false,
+		'captchaEnabled' => false,
+		'captchaType' => '',
 		'hide' => false,
 		'debug' => false,
-		'redirect_url' => '',
+		'requiredText' => '',
+		'redirectUrl' => '',
+		'noValidate' => false,
 		'actions' => array(),
 		'constraints' => array(),
 		'fields' => array(),
 	);
 
 	register_post_meta(
-		'formello_form',
+		'formello',
 		'_formello_settings',
 		array(
 			'show_in_rest' => array(
@@ -107,7 +107,7 @@ function register_cpt_meta() {
 	);
 
 	register_post_meta(
-		'formello_form',
+		'formello',
 		'_formello_actions',
 		array(
 			'show_in_rest' => array(

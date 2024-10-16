@@ -8,35 +8,34 @@ import {
 	__experimentalUseBorderProps as useBorderProps,
 } from '@wordpress/block-editor';
 import { ToolbarGroup } from '@wordpress/components';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import Label from '../../components/label';
 import Options from '../../components/field-options';
 import ValidationOptions from '../../components/field-options/validation';
 import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
-import { useInputId } from '../../components/hooks';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
-	const { cols, rows, value, placeholder, showHelp, help, advanced } =
+	const { cols, rows, value, placeholder, showHelp, help, advanced, name } =
 		attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES.textarea;
-	const inputId = useInputId( Edit, props );
 
 	const borderProps = useBorderProps( attributes );
 
-	const className = classnames( 'formello', 'formello-textarea' );
-
-	const fieldClassName = classnames( borderProps.className, {
+	const containerClass = clsx( {
+		'missing-name': ! name,
+	} );
+	const fieldClassName = clsx( borderProps.className, {
 		'formello-rtf': advanced,
 	} );
 
 	const blockProps = useBlockProps( {
-		className,
+		className: containerClass,
 	} );
 
 	return (
@@ -56,7 +55,7 @@ export default function Edit( props ) {
 				<AdvancedOptions { ...props } fieldType="textarea" />
 			</InspectorAdvancedControls>
 
-			<Label { ...props } htmlFor="textarea" />
+			<Label { ...props } />
 			<textarea
 				cols={ cols }
 				rows={ rows }
@@ -67,7 +66,6 @@ export default function Edit( props ) {
 				placeholder={ placeholder }
 				className={ fieldClassName }
 				style={ borderProps.style }
-				id={ inputId }
 			></textarea>
 
 			{ showHelp && (

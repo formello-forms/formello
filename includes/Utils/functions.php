@@ -70,18 +70,43 @@ function formello_default_options() {
 	return $defaults;
 }
 
-
 /**
  * Function to retrieve unencrypted settings
  */
-function formello_frontend_option() {
+function formello_frontend_options() {
 	$settings = get_option( 'formello', formello_default_options() );
 
 	$frontend_settings = array(
 		'messages'  => $settings['messages'],
+		'reCaptcha'      => array(
+			'version'    => $settings['reCaptcha']['version'],
+			'site_key'   => $settings['reCaptcha']['site_key'],
+			'threshold'  => $settings['reCaptcha']['threshold'],
+		),
+		'hCaptcha'      => array(
+			'version'    => $settings['hCaptcha']['version'],
+			'site_key'   => $settings['hCaptcha']['site_key'],
+			'threshold'  => $settings['hCaptcha']['threshold'],
+		),
 	);
 
 	return maybe_unserialize( $frontend_settings );
+}
+
+/**
+ * Undocumented function
+ *
+ * @param int $id The form ID.
+ * @return array
+ */
+function formello_form_context( $id ) {
+	$form_context = get_post_meta( $id, '_formello_settings', true );
+
+	unset( $form_context['actions'] );
+	unset( $form_context['fields'] );
+	unset( $form_context['constraints'] );
+
+	return $form_context;
 }
 
 /**
@@ -155,7 +180,7 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 		return $allowed_blocks;
 	}
 
-	if ( 'formello_form' === $editor_context->post->post_type ) {
+	if ( 'formello' === $editor_context->post->post_type ) {
 		$allowed_blocks = array(
 			'formello/form',
 			'formello/button',
@@ -269,7 +294,7 @@ function add_submissions_count() {
 	}
 
 	register_rest_field(
-		'formello_form',
+		'formello',
 		'submissions_count',
 		array(
 			'get_callback' => function ( $form ) {
@@ -291,6 +316,15 @@ function add_submissions_count() {
 	);
 }
 
+/**
+ * Enqueue Editor assets.
+ */
+function enqueue_editor_assets() {
+	wp_enqueue_script(
+		'formello-new-form',
+	);
+}
+
 // phpcs:ignore.
 add_filter( 'cron_schedules', __NAMESPACE__ . '\formello_cron_schedules' );
 add_filter( 'option_formello', __NAMESPACE__ . '\formello_decrypt_option', 5 );
@@ -298,3 +332,4 @@ add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_opt
 add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
 add_filter( 'upload_mimes', __NAMESPACE__ . '\formello_custom_mime_types', 10 );
 add_action( 'rest_api_init', __NAMESPACE__ . '\add_submissions_count', 10, 2 );
+add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_editor_assets' );

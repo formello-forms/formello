@@ -5,7 +5,6 @@
 	"title": "Fieldset",
 	"description": "A block to display form fieldset.",
 	"category": "formello",
-	"ancestor": ["formello/form"],
 	"textdomain": "formello",
 	"attributes": {
 		"showLegend": {

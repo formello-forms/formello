@@ -12,7 +12,7 @@ import ResetSettings from '../components/reset-settings';
 
 const DefaultCPTView = () => {
 	const defaultUrl = addQueryArgs( 'edit.php', {
-		post_type: 'formello_form',
+		post_type: 'formello',
 	} );
 
 	return (

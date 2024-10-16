@@ -7,7 +7,11 @@ import { ReactComponent as Brevo } from '../../../../assets/integrations/brevo.s
 import { ReactComponent as MailerLite } from '../../../../assets/integrations/mailerlite.svg';
 import { ReactComponent as Email } from '../../../../assets/integrations/email.svg';
 import { ReactComponent as WebHook } from '../../../../assets/integrations/webhook.svg';
-import { post as FrontendPosting, login as Login, commentAuthorAvatar as Registration } from '@wordpress/icons';
+import {
+	post as FrontendPosting,
+	login as Login,
+	commentAuthorAvatar as Registration,
+} from '@wordpress/icons';
 
 export const icons = {
 	ConvertKit,

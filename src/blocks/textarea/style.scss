@@ -1,0 +1,18 @@
+.wp-block-formello-textarea {
+    display: flex;
+    flex-direction: column;
+    label {
+		&.hide {
+			display: none;
+		}
+
+		span.required {
+			color: red;
+			margin: 0 5px;
+			font-weight: normal;
+		}
+	}
+    textarea {
+        min-height: 150px;
+    }
+}

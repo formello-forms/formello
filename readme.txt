@@ -130,6 +130,15 @@ Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
 
+= 2.6 =
+* Fix textarea new line
+* Update dataviews
+* Fix form creation in post/page 
+* Better display of form table
+* Fix required on edtor
+* Fix rcheckbox alignment
+
+
 = 2.5.4 =
 * Fix missing frontend scripts
 

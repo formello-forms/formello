@@ -1,4 +1,4 @@
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useState, useCallback } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 
@@ -38,28 +38,34 @@ export function ActionsModal( props ) {
 		postId
 	);
 
+	const setActions = useCallback( ( actions ) => {
+		setMeta( {
+			...meta,
+			_formello_actions: actions,
+		} );
+	}, [] );
+
 	const save = ( item ) => {
 		if ( ! item.id ) {
 			const newItem = Object.assign( item, {
 				id: meta._formello_actions.length + 1,
 			} );
-			setMeta( {
-				_formello_actions: [ ...meta._formello_actions, newItem ],
-			} );
+			const actions = [ ...meta._formello_actions, newItem ];
+			setActions( actions );
 		} else {
-			const arr = meta._formello_actions.map( ( el ) =>
+			const actions = meta._formello_actions.map( ( el ) =>
 				el.id === item.id ? { ...el, ...item } : el
 			);
-			setMeta( { _formello_actions: arr } );
+			setActions( actions );
 		}
 		onRequestClose( false );
 	};
 
 	const remove = ( item ) => {
-		const arr = meta._formello_actions.filter( ( o ) => {
+		const actions = meta._formello_actions.filter( ( o ) => {
 			return o.id !== item.id;
 		} );
-		setMeta( { _formello_actions: arr } );
+		setActions( actions );
 		onRequestClose( false );
 	};
 
@@ -76,7 +82,9 @@ export function ActionsModal( props ) {
 			shouldCloseOnClickOutside={ false }
 		>
 			<div className="formello-action-modal">
-				<Promo { ...props } mergeTags={ MergeTags } />
+				{ 'email' !== settings.type && (
+					<Promo { ...props } mergeTags={ MergeTags } />
+				) }
 				<Fragment>
 					{ applyFilters(
 						'formello.modal.' + settings.type,

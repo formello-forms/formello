@@ -11,7 +11,6 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-//import './editor.scss';
 
 import {
 	InspectorControls,
@@ -29,18 +28,21 @@ import Label from '../../components/label';
 import Toolbar from '../../components/field-options/toolbar';
 import Options from '../../components/field-options';
 import AdvancedOptions from '../../components/field-options/advanced';
-import { useInputId } from '../../components/hooks';
+import clsx from 'clsx';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
 	const { name, options, showHelp, help, readonly, multiple, disabled } =
 		attributes;
-	const inputId = useInputId( Edit, props );
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
+	const containerClass = clsx( {
+		'missing-name': ! name,
+	} );
+
 	const blockProps = useBlockProps( {
-		className: 'formello',
+		className: containerClass,
 	} );
 
 	const selectedOpts = () => {
@@ -81,7 +83,6 @@ export default function Edit( props ) {
 				<Label { ...props } />
 
 				<select
-					id={ inputId }
 					name={ name }
 					multiple={ multiple }
 					readOnly={ readonly }

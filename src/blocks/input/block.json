@@ -4,7 +4,6 @@
 	"name": "formello/input",
 	"title": "Text Input",
 	"category": "formello",
-	"ancestor": ["formello/form"],
 	"textdomain": "formello",
 	"attributes": {
 		"type": {
@@ -31,7 +30,7 @@
 			"source": "html",
 			"selector": "label span:not(.required)",
 			"default": "Label",
-			"__experimentalRole": "content"
+			"role": "content"
 		},
 		"hideLabel": {
 			"type": "boolean",
@@ -43,7 +42,7 @@
 			"source": "attribute",
 			"selector": "input",
 			"attribute": "placeholder",
-			"__experimentalRole": "content"
+			"role": "content"
 		},
 		"value": {
 			"type": "string",
@@ -193,6 +192,12 @@
 			"selector": "input",
             "attribute": "data-date-format"
         },
+        "minDate": {
+            "type": "string",
+            "source": "attribute",
+			"selector": "input",
+            "attribute": "data-min-date"
+        },
         "timeFormat": {
             "type": "string",
             "source": "attribute",
@@ -200,16 +205,10 @@
             "attribute": "data-time-format"
         },
         "enableTime": {
-            "type": "string",
-            "source": "attribute",
-            "attribute": "data-enable-time",
-            "default": false
+            "type": "boolean"
         },
         "inlineCalendar": {
-            "type": "string",
-            "source": "attribute",
-            "attribute": "data-inline",
-            "default": false
+            "type": "boolean"
         },
         "mode": {
             "type": "string",
@@ -225,6 +224,7 @@
 		"anchor": false,
 		"html": false,
 		"inserter": true,
+		"className": true,
 		"reusable": false,
 		"spacing": {
 			"padding": true,
@@ -244,5 +244,8 @@
 			}
 		}
 	},
-	"editorScript": "file:./index.js"
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
 }

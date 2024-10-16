@@ -132,7 +132,7 @@ class Template extends Base {
 	 */
 	private function get_forms() {
 		$args = array(
-			'post_type'     => 'formello_form',
+			'post_type'     => 'formello',
 			'fields'        => '',
 			'no_found_rows' => true,
 			'post_status'   => 'publish',

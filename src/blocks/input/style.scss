@@ -1,0 +1,72 @@
+.wp-block-formello-input {
+    display: flex;
+    flex-direction: column;
+
+	label {
+		&.hide {
+			display: none;
+		}
+
+		span.required {
+			color: red;
+			margin: 0 5px;
+			font-weight: normal;
+		}
+	}
+
+    input + output, input + div.wp-block-formello-button {
+        margin: 0 0 0 .5rem;
+    }
+
+    input + button {
+        margin: 0 0 0 .5rem;
+    }
+
+    small {
+        color: color-mix(in srgb, currentColor 60%, transparent);
+    }
+
+    &:has(input[type=checkbox]), &:has(input[type=radio]) {
+        flex-direction: row;
+        align-items: baseline;
+        gap: .3em;
+
+        input {
+            order: 1;
+        }
+        label {
+            order: 2;
+        }
+        small {
+            order: 3;
+        }
+    }
+
+    &:has(.wp-block-formello-output) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        input {
+            flex: 1;
+        }
+        small {
+            width: 100%;
+        }
+    }
+
+    &:has(.wp-block-formello-button) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        label {
+            flex-basis: 100%;
+        }
+        input {
+            flex: 1;
+        }
+        small {
+            width: 100%;
+        }
+    }
+
+}

@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "formello/library",
   "title": "Form Library",
   "description": "A block to display or create forms.",
@@ -15,7 +15,11 @@
     "html": false,
     "lock": false,
     "reusable": false,
-    "inserter": true
+    "inserter": true,
+    "interactivity": true
   },
-  "editorScript": "file:./index.js"
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScriptModule": "file:./view.js"
 }

@@ -16,8 +16,7 @@ import {
 	ToolbarGroup,
 } from '@wordpress/components';
 import { useState } from '@wordpress/element';
-
-import classnames from 'classnames';
+import clsx from 'clsx';
 import {
 	Loading,
 	Loading2,
@@ -32,6 +31,29 @@ import {
 	Grid,
 	ThreeDots,
 } from '../../icons/loading';
+
+const ALIGNMENT_CONTROLS = [
+	{
+		icon: 'align-left',
+		title: __( 'Align Left', 'formello' ),
+		align: 'left',
+	},
+	{
+		icon: 'align-center',
+		title: __( 'Align Center', 'formello' ),
+		align: 'center',
+	},
+	{
+		icon: 'align-right',
+		title: __( 'Align Right', 'formello' ),
+		align: 'right',
+	},
+	{
+		icon: 'align-wide',
+		title: __( 'Wide', 'formello' ),
+		align: 'wide',
+	},
+];
 
 export default function Edit( { attributes, setAttributes } ) {
 	const { style, type, alignment, noWrapper } = attributes;
@@ -53,63 +75,30 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	const ButtonIcon = icons[ type ];
 
-	const ALIGNMENT_CONTROLS = [
-		{
-			icon: 'align-left',
-			title: __( 'Align Left', 'formello' ),
-			align: 'left',
-		},
-		{
-			icon: 'align-center',
-			title: __( 'Align Center', 'formello' ),
-			align: 'center',
-		},
-		{
-			icon: 'align-right',
-			title: __( 'Align Right', 'formello' ),
-			align: 'right',
-		},
-		{
-			icon: 'align-wide',
-			title: __( 'Wide', 'formello' ),
-			align: 'wide',
-		},
-	];
-
 	const [ showIcon, setShowIcon ] = useState( false );
-
-	const borderRadius = style?.border?.radius;
-	const borderProps = useBorderProps( attributes );
 
 	// not already merged in Gutenberg
 	// const spacingProps = useSpacingProps( attributes );
 
-	// Check for old deprecated numerical border radius. Done as a separate
-	// check so that a borderRadius style won't overwrite the longhand
-	// per-corner styles.
-	if ( typeof borderRadius === 'number' ) {
-		borderProps.style.borderRadius = `${ borderRadius }px`;
-	}
-
 	const colorProps = useColorProps( attributes );
+	const borderProps = useBorderProps( attributes );
 
-	const buttonClasses = classnames(
+	const buttonClasses = clsx(
 		'wp-element-button',
 		borderProps.className,
 		colorProps.className,
-		alignment,
 		{
 			'wp-block-formello-button--loading': showIcon,
 		}
 	);
 
 	const blockProps = useBlockProps( {
-		className: buttonClasses,
+		className: alignment,
 	} );
 
 	return (
-		<div className="formello">
-			<button { ...blockProps }>
+		<div { ...blockProps }>
+			<button className={ buttonClasses }>
 				{ ! noWrapper && (
 					<BlockControls>
 						<ToolbarGroup>
@@ -160,6 +149,7 @@ export default function Edit( { attributes, setAttributes } ) {
 					onChange={ ( val ) => setAttributes( { text: val } ) }
 					placeholder={ __( 'Enter button text…', 'formello' ) }
 					allowedFormats={ [ 'core/bold' ] }
+					className="buttonClasses"
 				/>
 				<ButtonIcon />
 			</button>

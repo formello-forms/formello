@@ -7,7 +7,7 @@
 
 namespace Formello;
 
-use \Katzgrau\KLogger\Logger;
+use Katzgrau\KLogger\Logger;
 use function Formello\Utils\formello_dir;
 
 if ( ! defined( 'ABSPATH' ) ) {

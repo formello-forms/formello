@@ -1,15 +1,13 @@
 <?php
 /**
- * Set Formello block attribute defaults.
+ * Admin class.
  *
- * @package Formello
+ * @package formello
  */
 
 namespace Formello\Admin;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
+defined( 'ABSPATH' ) || exit;
 
 /**
  * Admin Pages Handler

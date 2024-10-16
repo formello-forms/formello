@@ -11,6 +11,7 @@ import { registerBlockType } from '@wordpress/blocks';
 
 import './style.scss';
 import './editor.scss';
+import transforms from './transforms.js';
 
 registerBlockType( metadata, {
 	icon: Form,
@@ -23,8 +24,8 @@ registerBlockType( metadata, {
 		anchor: true,
 		color: true,
 		interactivity: true,
-		inserter: 'formello_form' === window.pagenow ? true : false,
-		multiple: 'formello_form' !== window.pagenow ? true : false,
+		inserter: 'formello' === window.pagenow ? true : false,
+		multiple: 'formello' !== window.pagenow ? true : false,
 		// eslint-disable-next-line
 		spacing: {
 			padding: true,
@@ -68,6 +69,21 @@ registerBlockType( metadata, {
 		],
 	},
 	deprecated,
+	transforms,
 	edit,
 	save,
+} );
+
+document.addEventListener( 'DOMContentLoaded', function () {
+	if ( 'formello' === window.pagenow ) {
+		// Your code to run since DOM is loaded and ready
+		const menuRoot = document.querySelector( '#toplevel_page_formello' );
+		menuRoot.classList.remove( 'wp-not-current-submenu' );
+		menuRoot.classList.add(
+			'wp-has-current-submenu',
+			'wp-menu-open',
+			'current'
+		);
+		menuRoot.querySelector( '.wp-first-item' ).classList.add( 'current' );
+	}
 } );

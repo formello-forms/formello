@@ -11,10 +11,7 @@ export default function save( { attributes, className } ) {
 			{ options.map( ( opt, index ) => {
 				const id = name + '-' + index;
 				return (
-					<div
-						key={ index }
-						className={ 'formello formello-checkbox' }
-					>
+					<div key={ index } className={ 'wp-block-formello-input' }>
 						<label htmlFor={ id }>{ opt.label }</label>
 						<input
 							value={ opt.value || opt.label }

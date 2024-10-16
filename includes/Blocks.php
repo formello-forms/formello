@@ -70,23 +70,14 @@ class Blocks {
 
 		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/input',
-			array(
-				'render_callback' => array( $this, 'do_input_block' ),
-			)
 		);
 
 		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/textarea',
-			array(
-				'render_callback' => array( $this, 'do_textarea_block' ),
-			)
 		);
 
 		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/select',
-			array(
-				'render_callback' => array( $this, 'do_select_block' ),
-			)
 		);
 
 		register_block_type_from_metadata(
@@ -103,9 +94,6 @@ class Blocks {
 
 		register_block_type_from_metadata(
 			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/button',
-			array(
-				'render_callback' => array( $this, 'do_button_block' ),
-			)
 		);
 	}
 
@@ -140,7 +128,7 @@ class Blocks {
 
 		$form = get_post( $attributes['ref'] );
 
-		if ( ! $form || 'formello_form' !== $form->post_type ) {
+		if ( ! $form || 'formello' !== $form->post_type ) {
 			return '';
 		}
 
@@ -148,131 +136,67 @@ class Blocks {
 			return '';
 		}
 
-		return do_blocks( $form->post_content );
-	}
+		$config = wp_interactivity_config(
+			'formello',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'settings' => \Formello\Utils\formello_frontend_options(),
+			)
+		);
 
-	/**
-	 * Render input block
-	 *
-	 * @param  array  $attributes The attributes of block.
-	 * @param  string $content The bock content.
-	 */
-	public function do_input_block( $attributes, $content = '' ) {
-		$replacer = new TagReplacers\Replacer();
+		$form_context = \Formello\Utils\formello_form_context( $attributes['ref'] );
 
-		do_action( 'formello_input_block_render', $attributes, $content );
+		wp_interactivity_state(
+			'formello',
+			array(
+				'captcha' => array(
+					'enabled' => $form_context['captchaEnabled'] ?? false,
+					'type' => $form_context['captchaType'] ?? 'recaptcha',
+				),
+				'errors' => array(),
+			)
+		);
 
-		if ( ! empty( $attributes['type'] ) && 'password' === $attributes['type'] ) {
-			wp_enqueue_script( 'password-strength-meter' );
+		$form = sprintf(
+			'<form 
+				data-wp-init="callbacks.init"
+				data-wp-on--submit="actions.sendForm" 
+				%s 
+				data-wp-interactive="formello" 
+				data-wp-bind--novalidate="context.noValidate" %s>
+			%s
+			<input type="text" name="_formello_h%d" class="formello-hp" tabindex="-1">
+			%s
+			<div class="formello-message" data-wp-class--success="context.response.success" data-wp-class--error="!context.response.success">
+				<p data-wp-text="state.message"></p>
+				<ul data-wp-context="state.errors">
+					<template data-wp-each="state.errors" >
+						<li data-wp-text="context.item"></li>
+					</template>
+				</ul>
+			</div>
+			%s
+			</form>',
+			get_block_wrapper_attributes(
+				array( 'data-id' => $attributes['ref'] )
+			),
+			wp_interactivity_data_wp_context( $form_context ),
+			wp_nonce_field( '_formello', '_formello', true, false ),
+			$attributes['ref'],
+			do_blocks( $form->post_content ),
+			$form_context['debug'] ?
+				'<div class="formello-debug">
+					<p>Debug output</p>
+					<small>This output is visible only to admin.</small>
+					<pre data-wp-text="state.debugData"></pre>
+				</div>' : '',
+		);
+
+		if ( $form_context['enableJsValidation'] ) {
+			wp_enqueue_script( 'bouncer', 'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.4.6/dist/bouncer.min.js' );
 		}
 
-		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
-			$p = new \WP_HTML_Tag_Processor( $content );
-
-			if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
-
-				$p->set_attribute( 'value', $replacer->parse( $p->get_attribute( 'value' ) ) );
-
-				if ( $p->get_attribute( 'multiple' ) ) {
-					$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
-				}
-				$input_name = $p->get_attribute( 'name' );
-				// phpcs:ignore
-				if ( isset( $_POST[ $input_name ] ) ) {
-					// phpcs:ignore
-					$p->set_attribute( 'value', sanitize_text_field( $_POST[ $input_name ] ) );
-				}
-			}
-
-			return $p->get_updated_html();
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Render input block
-	 *
-	 * @param  array  $attributes The attributes of block.
-	 * @param  string $content The bock content.
-	 */
-	public function do_select_block( $attributes, $content = '' ) {
-
-		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
-			$p = new \WP_HTML_Tag_Processor( $content );
-
-			if ( $p->next_tag( array( 'tag_name' => 'select' ) ) ) {
-
-				if ( $p->get_attribute( 'multiple' ) ) {
-
-					$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
-				}
-			}
-
-			return $p->get_updated_html();
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Render input block
-	 *
-	 * @param  array  $attributes The attributes of block.
-	 * @param  string $content The bock content.
-	 */
-	public function do_textarea_block( $attributes, $content = '' ) {
-		$replacer = new TagReplacers\Replacer();
-		$content  = $replacer->parse( $content );
-
-		if ( class_exists( '\WP_HTML_Tag_Processor' ) ) {
-			$p = new \WP_HTML_Tag_Processor( $content );
-
-			if ( $p->next_tag( array( 'tag_name' => 'textarea' ) ) ) {
-				$textarea_name = $p->get_attribute( 'name' );
-
-				// phpcs:ignore
-				if ( isset( $_POST[ $textarea_name ] ) ) {
-					// phpcs:ignore
-					$content = str_replace( '</textarea>', wp_kses_post( $_POST[ $textarea_name ] ) . '</textarea>', $p->get_updated_html() );
-				}
-			}
-		}
-
-		return $content;
-	}
-
-	/**
-	 * Render button block
-	 *
-	 * @param  array  $attributes The attributes of block.
-	 * @param  string $content The bock content.
-	 * @param  object $block The bock.
-	 */
-	public function do_button_block( $attributes, $content = '', $block ) {
-		if ( ! is_admin() && ! defined( 'REST_REQUEST' ) ) {
-			$nonce    = wp_nonce_field( '_formello', '_formello', true, false );
-			$content .= $nonce;
-		}
-		$settings = get_option( 'formello', formello_default_options() );
-
-		$captcha = '';
-		if ( $block->context['formello/captchaEnabled'] && 'reCaptcha' === $block->context['formello/captchaType'] ) {
-			$captcha = sprintf(
-				'<div class="g-recaptcha" data-sitekey="%s" data-size="%s" data-action="submit"></div>',
-				$settings['reCaptcha']['site_key'],
-				'1' === $settings['reCaptcha']['version'] ? 'normal' : 'invisible',
-			);
-		}
-		if ( $block->context['formello/captchaEnabled'] && 'hCaptcha' === $block->context['formello/captchaType'] ) {
-			$captcha = sprintf(
-				'<div class="h-captcha" data-sitekey="%s" data-size="%s" data-action="submit"></div>',
-				$settings['hCaptcha']['site_key'],
-				'1' === $settings['hCaptcha']['version'] ? 'normal' : 'invisible',
-			);
-		}
-
-		return $captcha . $content;
+		return $form;
 	}
 
 	/**
@@ -282,7 +206,7 @@ class Blocks {
 	 */
 	public function register_block_category( $categories ) {
 		$currentScreen = get_current_screen();
-		if ( 'formello_form' === $currentScreen->id ) {
+		if ( 'formello' === $currentScreen->id ) {
 			return array_merge(
 				array(
 					array(

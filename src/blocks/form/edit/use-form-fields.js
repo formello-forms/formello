@@ -1,4 +1,3 @@
-import { useState } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { applyFilters } from '@wordpress/hooks';
@@ -61,7 +60,11 @@ function getFieldConstraint( field ) {
 		constraints.push( 'regex:' + regEx );
 	}
 
-	if ( field.attributes.advanced && 'date' !== field.attributes.type && field.attributes.dateFormat ) {
+	if (
+		field.attributes.advanced &&
+		'date' !== field.attributes.type &&
+		field.attributes.dateFormat
+	) {
 		constraints.push( 'date:' + field.attributes.dateFormat );
 	}
 
@@ -79,9 +82,7 @@ function getFieldConstraint( field ) {
 }
 
 export function useFormFields( clientId ) {
-	const [ data, setData ] = useState( false );
-
-	useSelect(
+	const data = useSelect(
 		( select ) => {
 			const fieldsBlock =
 				select( blockEditorStore ).getClientIdsOfDescendants(
@@ -119,7 +120,7 @@ export function useFormFields( clientId ) {
 					}
 				}
 			} );
-			setData( { fields, constraints } );
+			return { fields, constraints };
 		},
 		[ clientId ]
 	);
@@ -149,4 +150,29 @@ export function useFormFieldsBlocks( clientId ) {
 	);
 
 	return fields;
+}
+
+export function useFormFields2( clientId ) {
+	const fields = useSelect(
+		( select ) => {
+			const fieldsBlock =
+				select( blockEditorStore ).getClientIdsOfDescendants(
+					clientId
+				);
+
+			const data = {};
+
+			fieldsBlock.forEach( ( id ) => {
+				const block = select( blockEditorStore ).getBlock( id );
+				const type = 'string';
+				if ( ALLOWED_BLOCKS.includes( block.name ) ) {
+					data[ block.attributes.name ?? block.attributes.id ] = type;
+				}
+			} );
+			return data;
+		},
+		[ clientId ]
+	);
+
+	return 'fields';
 }

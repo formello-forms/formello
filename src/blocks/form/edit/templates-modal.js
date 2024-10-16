@@ -150,9 +150,7 @@ export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
 					setSearchValue={ setSearchValue }
 				/>
 				<div className="block-editor-block-patterns-explorer__list">
-					<BlockContextProvider
-						value={ { postType: 'formello_form' } }
-					>
+					<BlockContextProvider value={ { postType: 'formello' } }>
 						<BlockPatternsList
 							blockPatterns={ shownPatterns }
 							shownPatterns={ shownPatterns }

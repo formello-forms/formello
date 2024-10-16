@@ -14,11 +14,7 @@ import MergeTags from '../merge-tags';
 import { SUPPORTED_ATTRIBUTES } from './constants';
 import DatepickerSettings from './date';
 
-import {
-	getPatternTabs,
-	getFormBlock,
-	serializeFieldsName,
-} from '../merge-tags/functions';
+import { getPatternTabs, serializeFieldsName } from '../merge-tags/functions';
 
 function ValidationOptions( props ) {
 	const {
@@ -42,8 +38,11 @@ function ValidationOptions( props ) {
 
 	const supported = SUPPORTED_ATTRIBUTES[ type ?? 'textarea' ];
 
-	const formId = getFormBlock( clientId ).clientId;
-	const fields = serializeFieldsName( formId );
+	if ( 'checkbox' === type || 'email' === type ) {
+		return null;
+	}
+
+	const fields = serializeFieldsName();
 
 	const tabs = getPatternTabs();
 
@@ -59,6 +58,7 @@ function ValidationOptions( props ) {
 					onChange={ ( val ) => {
 						setAttributes( { advanced: val } );
 					} }
+					__nextHasNoMarginBottom
 				/>
 			) }
 			{ ( 'date' === type || 'time' === type ) && (
@@ -77,6 +77,7 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { min: val } );
 						} }
+						__nextHasNoMarginBottom
 					/>
 					<TextControl
 						label={ __( 'Max Value', 'formello' ) }
@@ -86,6 +87,7 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) => {
 							setAttributes( { max: val } );
 						} }
+						__nextHasNoMarginBottom
 					/>
 					<TextControl
 						type="number"
@@ -94,6 +96,7 @@ function ValidationOptions( props ) {
 						onChange={ ( val ) =>
 							setAttributes( { step: Number( val ) } )
 						}
+						__nextHasNoMarginBottom
 					/>
 				</Fragment>
 			) }
@@ -111,6 +114,7 @@ function ValidationOptions( props ) {
 							'Minimum length (number of characters) of value.',
 							'formello'
 						) }
+						__nextHasNoMarginBottom
 					/>
 					<TextControl
 						type="number"
@@ -123,6 +127,7 @@ function ValidationOptions( props ) {
 							'Maximum length (number of characters) of value.',
 							'formello'
 						) }
+						__nextHasNoMarginBottom
 					/>
 				</Fragment>
 			) }
@@ -152,38 +157,54 @@ function ValidationOptions( props ) {
 					) }
 					value={ validation }
 					onChange={ ( val ) => setAttributes( { validation: val } ) }
+					__nextHasNoMarginBottom
 				/>
 			) }
-			<ToggleControl
-				label={ __( 'Enable match field', 'formello' ) }
-				checked={ enableMismatch }
-				onChange={ ( newval ) =>
-					setAttributes( { enableMismatch: newval } )
-				}
-			/>
-			{ enableMismatch && (
+			{ supported.includes( 'mismatch' ) && (
 				<Fragment>
-					<SelectControl
-						label={ __( 'Match', 'formello' ) }
-						value={ match }
-						options={ [
-							{
-								value: '',
-								label: __( 'Select a field', 'formello' ),
-							},
-							...fields,
-						] }
-						onChange={ ( val ) => setAttributes( { match: val } ) }
-						help={ __( 'Select the field to match.', 'formello' ) }
-					/>
-					<TextControl
-						type="text"
-						label={ __( 'Mismatch message', 'formello' ) }
-						value={ mismatchMessage || '' }
-						onChange={ ( val ) =>
-							setAttributes( { mismatchMessage: val } )
+					<ToggleControl
+						label={ __( 'Enable match field', 'formello' ) }
+						checked={ enableMismatch }
+						onChange={ ( newval ) =>
+							setAttributes( { enableMismatch: newval } )
 						}
+						__nextHasNoMarginBottom
 					/>
+					{ enableMismatch && (
+						<Fragment>
+							<SelectControl
+								label={ __( 'Match', 'formello' ) }
+								value={ match }
+								options={ [
+									{
+										value: '',
+										label: __(
+											'Select a field',
+											'formello'
+										),
+									},
+									...fields,
+								] }
+								onChange={ ( val ) =>
+									setAttributes( { match: val } )
+								}
+								help={ __(
+									'Select the field to match.',
+									'formello'
+								) }
+								__nextHasNoMarginBottom
+							/>
+							<TextControl
+								type="text"
+								label={ __( 'Mismatch message', 'formello' ) }
+								value={ mismatchMessage || '' }
+								onChange={ ( val ) =>
+									setAttributes( { mismatchMessage: val } )
+								}
+								__nextHasNoMarginBottom
+							/>
+						</Fragment>
+					) }
 				</Fragment>
 			) }
 		</PanelBody>

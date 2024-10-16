@@ -1,10 +1,10 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { RichText, useBlockProps } from '@wordpress/block-editor';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function save( { attributes } ) {
 	const {
-		id,
 		label,
 		hideLabel,
 		options,
@@ -14,7 +14,7 @@ export default function save( { attributes } ) {
 		help,
 	} = attributes;
 
-	const labelClassName = classnames( 'select-label', {
+	const labelClassName = clsx( 'select-label', {
 		hide: hideLabel,
 	} );
 
@@ -33,7 +33,7 @@ export default function save( { attributes } ) {
 
 	return (
 		<div { ...blockProps }>
-			<label className={ labelClassName } htmlFor={ id }>
+			<label className={ labelClassName }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
 					<span className="required">{ requiredText }</span>

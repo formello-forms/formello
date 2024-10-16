@@ -5,9 +5,6 @@
   "title": "Textarea",
   "description": "Textarea field.",
   "category": "formello",
-  "ancestor": [
-    "formello/form"
-  ],
   "textdomain": "formello",
   "attributes": {
     "id": {
@@ -156,7 +153,6 @@
   "supports": {
     "html": false,
     "inserter": true,
-    "className": false,
     "reusable": false,
     "__experimentalBorder": {
       "color": true,
@@ -172,5 +168,7 @@
       }
     }
   },
-  "editorScript": "file:./index.js"
+  "editorScript": "file:./index.js",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
 }

@@ -5,10 +5,9 @@
 	"title": "Button",
 	"description": "A block to display form button.",
 	"category": "formello",
-	"ancestor": ["formello/form"],
 	"icon": "button",
 	"textdomain": "formello",
-    "usesContext": ["formello/captchaEnabled", "formello/captchaType", "formello/formId"],
+    "usesContext": ["formello/settings"],
 	"attributes": {
 		"text": {
 			"type": "string",
@@ -40,6 +39,14 @@
 			}
 		}
 	},
+    "selectors": {
+        "root": ".wp-block-formello-button",
+        "color": ".wp-block-formello-button > button",
+        "typography": {
+            "root": ".wp-block-formello-button > button",
+            "text-decoration": ".wp-block-formello-button > button"
+        }
+    },
 	"supports": {
 		"html": false,
 		"lock": false,
@@ -49,7 +56,8 @@
 		"color": {
 			"background": true,
 			"text": true,
-			"gradients": true
+			"gradients": true,
+			"__experimentalSkipSerialization": true
 		},
 		"spacing": {
 			"padding": true,
@@ -66,5 +74,6 @@
 	    }
 	},
 	"editorScript": "file:./index.js",
-	"style": "file:./style-index.css"
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
 }

@@ -60,6 +60,7 @@ final class Plugin {
 	public function includes() {
 
 		// Needs to be included at all times due to show_in_rest.
+		require_once FORMELLO_ABSPATH . 'includes/WP_Logging.php';
 		require_once FORMELLO_ABSPATH . 'includes/Assets.php';
 		require_once FORMELLO_ABSPATH . 'includes/Utils/Encryption.php';
 		require_once FORMELLO_ABSPATH . 'includes/Utils/functions.php';
@@ -70,7 +71,6 @@ final class Plugin {
 		require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Forms.php';
 		require_once FORMELLO_ABSPATH . 'includes/Blocks.php';
 		require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
-		require_once FORMELLO_ABSPATH . 'includes/Form.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
 		require_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
 		require_once FORMELLO_ABSPATH . 'includes/TagReplacers/Replacer.php';

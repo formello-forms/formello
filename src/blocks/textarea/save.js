@@ -3,7 +3,7 @@ import {
 	useBlockProps,
 	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
 } from '@wordpress/block-editor';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function save( { attributes } ) {
@@ -21,34 +21,39 @@ export default function save( { attributes } ) {
 
 	const borderProps = getBorderClassesAndStyles( attributes );
 
-	const wrapperClassName = classnames( 'formello' );
-
-	const labelClassName = classnames( 'textarea-label', {
+	const labelClassName = clsx( {
 		hide: hideLabel,
 	} );
 
-	const fieldClassName = classnames( borderProps.className, {
+	const fieldClassName = clsx( borderProps.className, {
 		'formello-rtf': advanced,
 	} );
 
 	// include only supported attributes
-	const htmlAttrs = Object.fromEntries( SUPPORTED_ATTRIBUTES.textarea.map( ( col ) => [ col, attributes[ col ] ] ) );
+	const htmlAttrs = Object.fromEntries(
+		SUPPORTED_ATTRIBUTES.textarea.map( ( col ) => [
+			col,
+			attributes[ col ],
+		] )
+	);
 
 	if ( validation ) {
 		htmlAttrs[ 'data-bouncer-message' ] = validation;
 	}
 
 	return (
-		<div { ...useBlockProps.save() } className={ wrapperClassName }>
+		<div { ...useBlockProps.save() }>
 			<label className={ labelClassName } htmlFor={ id }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
-					<span className="required">
-						{ requiredText }
-					</span>
+					<span className="required">{ requiredText }</span>
 				) }
 			</label>
-			<textarea { ...htmlAttrs } className={ fieldClassName } style={ borderProps.style }>
+			<textarea
+				{ ...htmlAttrs }
+				className={ fieldClassName }
+				style={ borderProps.style }
+			>
 				{ value }
 			</textarea>
 			{ help.length > 0 && (

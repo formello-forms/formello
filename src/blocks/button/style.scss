@@ -1,6 +1,12 @@
 .wp-block-formello-button {
+    display: flex;
     flex-direction: row;
-    align-self: flex-start;
+    align-items: center;
+
+    button {
+        display: flex;
+        align-items: center;
+    }
 
     button[hidden] {
         display: none;
@@ -14,8 +20,9 @@
     svg {
         display: none;
         margin: 0 0.3em;
-        height: 1em;
+        width: 1em;
         transition: all 0.5s;
+        transform: scale(1.3);
 
         path,
         rect {
@@ -24,15 +31,18 @@
     }
 
     &.center {
-        align-self: center;
+        justify-content: center;
     }
 
     &.right {
-        align-self: flex-end;
+        justify-content: flex-end;
     }
 
     &.wide {
-        align-self: auto;
+        button {
+            flex-grow: 1;
+            justify-content: center;
+        }
     }
 
 }

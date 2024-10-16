@@ -5,7 +5,7 @@ import {
 	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 	InnerBlocks,
 } from '@wordpress/block-editor';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function save( { attributes } ) {
@@ -36,24 +36,21 @@ export default function save( { attributes } ) {
 		enableTime,
 		minDate,
 	} = attributes;
+	const blockProps = useBlockProps.save();
 
 	const TagName = type === 'textarea' ? 'textarea' : 'input';
 
 	const borderProps = getBorderClassesAndStyles( attributes );
 	const spacingProps = getSpacingClassesAndStyles( attributes );
 
-	const containerClass = classnames( 'formello', {
-		'formello-group': withButton || withOutput,
-		'formello-group grouped': grouped,
-		'formello-checkbox': 'checkbox' === type || 'radio' === type,
-	} );
+	const containerClass = clsx( blockProps.className );
 
-	const labelClassName = classnames( {
+	const labelClassName = clsx( {
 		hide: hideLabel,
 		'textarea-label': 'textarea' === type,
 	} );
 
-	const fieldClassName = classnames( borderProps.className, {
+	const fieldClassName = clsx( borderProps.className, {
 		'formello-advanced': advanced,
 		'formello-rtf': advanced && 'textarea' === type,
 	} );
@@ -82,10 +79,6 @@ export default function save( { attributes } ) {
 		htmlAttrs[ 'data-bouncer-match' ] = match;
 	}
 
-	if ( withOutput ) {
-		htmlAttrs.oninput = 'this.nextElementSibling.value = this.value';
-	}
-
 	if ( ! enableAutoComplete ) {
 		htmlAttrs.autocomplete = undefined;
 	}
@@ -93,10 +86,10 @@ export default function save( { attributes } ) {
 	if ( advanced && 'date' === type ) {
 		htmlAttrs[ 'data-date-format' ] = dateFormat;
 		htmlAttrs[ 'data-time-format' ] = timeFormat;
-		htmlAttrs[ 'data-enable-time' ] = enableTime || undefined;
 		htmlAttrs[ 'data-mode' ] = mode;
 		htmlAttrs[ 'data-min-date' ] = minDate;
-		htmlAttrs[ 'data-inline' ] = inlineCalendar;
+		htmlAttrs[ 'data-inline' ] = inlineCalendar || undefined;
+		htmlAttrs[ 'data-enable-time' ] = enableTime || undefined;
 	}
 
 	if ( advanced && 'time' === type ) {
@@ -119,10 +112,14 @@ export default function save( { attributes } ) {
 		);
 	}
 
+	if ( ! htmlAttrs.name ) {
+		htmlAttrs.name = label;
+	}
+
 	return (
 		<div { ...useBlockProps.save() } className={ containerClass }>
 			{ 'hidden' !== type && (
-				<label className={ labelClassName } htmlFor={ id }>
+				<label className={ labelClassName } htmlFor="id">
 					<RichText.Content tagName="span" value={ label } />
 					{ required && (
 						<span className="required">{ requiredText }</span>

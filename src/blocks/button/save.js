@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import clsx from 'clsx';
 import {
 	useBlockProps,
 	RichText,
@@ -39,33 +39,24 @@ export default function save( { attributes } ) {
 	};
 
 	const ButtonIcon = icons[ type ];
-	const borderRadius = style?.border?.radius;
+
 	const borderProps = getBorderClassesAndStyles( attributes );
-
-	// Check for old deprecated numerical border radius. Done as a separate
-	// check so that a borderRadius style won't overwrite the longhand
-	// per-corner styles.
-	if ( typeof borderRadius === 'number' ) {
-		borderProps.style.borderRadius = `${ borderRadius }px`;
-	}
-
 	const colorProps = getColorClassesAndStyles( attributes );
 
-	const buttonClasses = classnames(
+	const buttonClasses = clsx(
 		'wp-element-button',
 		borderProps.className,
-		colorProps.className,
-		alignment
+		colorProps.className
 	);
-
-	const blockProps = useBlockProps.save( {
-		className: buttonClasses,
-		style: colorProps.style,
-	} );
 
 	if ( noWrapper ) {
 		return (
-			<button type="submit" { ...blockProps }>
+			<button
+				type="submit"
+				{ ...useBlockProps.save( {
+					className: buttonClasses,
+				} ) }
+			>
 				<RichText.Content tagName="span" value={ text } />
 				<ButtonIcon />
 			</button>
@@ -73,8 +64,12 @@ export default function save( { attributes } ) {
 	}
 
 	return (
-		<div className="formello">
-			<button type="submit" { ...blockProps }>
+		<div
+			{ ...useBlockProps.save( {
+				className: alignment,
+			} ) }
+		>
+			<button type="submit" className={ buttonClasses }>
 				<RichText.Content tagName="span" value={ text } />
 				<ButtonIcon />
 			</button>

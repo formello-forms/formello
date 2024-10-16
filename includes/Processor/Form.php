@@ -2,7 +2,7 @@
 /**
  * Set our block attribute defaults.
  *
- * @package Formello
+ * @package formello
  */
 
 namespace Formello\Processor;
@@ -178,7 +178,7 @@ class Form {
 
 		$response = array(
 			'hide' => (bool) $this->settings['hide'],
-			'redirect_url' => $this->settings['redirect_url'],
+			'redirect_url' => $this->settings['redirectUrl'],
 			'errors' => $this->data['errors'],
 			'message' => $this->get_message( $type ),
 		);

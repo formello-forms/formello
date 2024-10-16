@@ -8,7 +8,8 @@ import {
 	DropdownMenu,
 	__experimentalInputControl as InputControl,
 } from '@wordpress/components';
-import { useTabs } from './use-tabs';
+import { moreVertical } from '@wordpress/icons';
+import { defaultTabs } from './use-tabs';
 import TabContent from './tab-content';
 
 export default function MergeTags( props ) {
@@ -18,14 +19,13 @@ export default function MergeTags( props ) {
 		placeholder,
 		help,
 		onChange,
-		icon = 'list-view',
+		icon = moreVertical,
 		clientId,
+		tabs = defaultTabs( clientId ),
 	} = props;
 
-	const tabs = useTabs( clientId );
-
 	return (
-		<BaseControl>
+		<BaseControl __nextHasNoMarginBottom>
 			<InputControl
 				value={ value }
 				label={ label }
@@ -37,6 +37,7 @@ export default function MergeTags( props ) {
 						icon={ icon }
 						label={ label }
 						toggleProps={ { isSmall: true } }
+						size="small"
 					>
 						{ () => (
 							<TabContent tabs={ tabs } onChange={ onChange } />
@@ -49,9 +50,9 @@ export default function MergeTags( props ) {
 }
 
 export function MergeTagsMenu( props ) {
-	const { label, onChange, icon = 'list-view', clientId } = props;
+	const { label, onChange, icon = moreVertical, clientId } = props;
 
-	const tabs = useTabs( clientId );
+	const tabs = defaultTabs( clientId );
 
 	return (
 		<DropdownMenu

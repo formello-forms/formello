@@ -78,6 +78,8 @@ function formello_activate() {
 		) ENGINE=InnoDB CHARACTER SET={$wpdb->charset};"
 	);
 
+	$wpdb->query( "UPDATE {$wpdb->prefix}posts SET post_type = 'formello' WHERE post_type = 'formello_form';" );
+
 	$upload_dir   = wp_upload_dir();
 	$formello_dir = $upload_dir['basedir'] . '/formello';
 	if ( ! is_dir( $formello_dir ) ) {

@@ -79,136 +79,145 @@ const blockAttributes = {
 	},
 };
 
-const v1 =
-	{
-		attributes: blockAttributes,
-		save( { attributes, className } ) {
-			className = classnames(
-				//blockProps.className,
-				attributes.asRow ? attributes.labelAlign : undefined,
-				{
-					'as-row': attributes.asRow,
-					'is-bold': attributes.labelIsBold,
-					'formello-label-right': 'right' === attributes.labelAlign,
-				}
-			);
-			const honeypot = '_formello_h' + attributes.id;
+const v1 = {
+	attributes: blockAttributes,
+	save( { attributes, className } ) {
+		className = classnames(
+			//blockProps.className,
+			attributes.asRow ? attributes.labelAlign : undefined,
+			{
+				'as-row': attributes.asRow,
+				'is-bold': attributes.labelIsBold,
+				'formello-label-right': 'right' === attributes.labelAlign,
+			}
+		);
+		const honeypot = '_formello_h' + attributes.id;
 
-			return (
-				<form
-					{ ...useBlockProps.save( {
-						className,
-					} ) }
-					method="post"
-					id={ 'formello-' + attributes.id }
-					data-id={ 'formello-' + attributes.id }
-					data-hide={ attributes.hide }
-					data-recaptcha={ attributes.recaptchaEnabled }
-					data-redirect={ attributes.redirectUrl }
-					noValidate
-				>
-					<input type="hidden" name="_formello_id" value={ attributes.id } />
-					<input
-						type="text"
-						name={ honeypot }
-						className="formello-hp"
-						autoComplete="nope"
-					/>
-					<input type="hidden" name="action" value="formello" />
-					<InnerBlocks.Content />
-					<div className="formello-message"></div>
-				</form>
-			);
-		},
-	};
+		return (
+			<form
+				{ ...useBlockProps.save( {
+					className,
+				} ) }
+				method="post"
+				id={ 'formello-' + attributes.id }
+				data-id={ 'formello-' + attributes.id }
+				data-hide={ attributes.hide }
+				data-recaptcha={ attributes.recaptchaEnabled }
+				data-redirect={ attributes.redirectUrl }
+				noValidate
+			>
+				<input
+					type="hidden"
+					name="_formello_id"
+					value={ attributes.id }
+				/>
+				<input
+					type="text"
+					name={ honeypot }
+					className="formello-hp"
+					autoComplete="nope"
+				/>
+				<input type="hidden" name="action" value="formello" />
+				<InnerBlocks.Content />
+				<div className="formello-message"></div>
+			</form>
+		);
+	},
+};
 
-const v2 =
-	{
-		attributes: blockAttributes,
-		save( { attributes, className } ) {
-			className = classnames(
-				//blockProps.className,
-				attributes.asRow ? attributes.labelAlign : undefined,
-				{
-					'as-row': attributes.asRow,
-					'is-bold': attributes.labelIsBold,
-					'formello-label-right': 'right' === attributes.labelAlign,
-				}
-			);
-			const honeypot = '_formello_h' + attributes.id;
+const v2 = {
+	attributes: blockAttributes,
+	save( { attributes, className } ) {
+		className = classnames(
+			//blockProps.className,
+			attributes.asRow ? attributes.labelAlign : undefined,
+			{
+				'as-row': attributes.asRow,
+				'is-bold': attributes.labelIsBold,
+				'formello-label-right': 'right' === attributes.labelAlign,
+			}
+		);
+		const honeypot = '_formello_h' + attributes.id;
 
-			return (
-				<form
-					{ ...useBlockProps.save( {
-						className,
-					} ) }
-					method="post"
-					id={ 'formello-' + attributes.id }
-					data-id={ 'formello-' + attributes.id }
-					data-hide={ attributes.hide }
-					data-recaptcha={ attributes.recaptchaEnabled }
-					data-redirect={ attributes.redirectUrl }
-					noValidate
-					autoComplete={ attributes.autoComplete ? 'on' : 'off' }
-				>
-					<input type="hidden" name="_formello_id" value={ attributes.id } />
-					<input
-						type="text"
-						name={ honeypot }
-						className="formello-hp"
-						autoComplete="nope"
-					/>
-					<input type="hidden" name="action" value="formello" />
-					<InnerBlocks.Content />
-					<div className="formello-message"></div>
-				</form>
-			);
-		},
-	};
+		return (
+			<form
+				{ ...useBlockProps.save( {
+					className,
+				} ) }
+				method="post"
+				id={ 'formello-' + attributes.id }
+				data-id={ 'formello-' + attributes.id }
+				data-hide={ attributes.hide }
+				data-recaptcha={ attributes.recaptchaEnabled }
+				data-redirect={ attributes.redirectUrl }
+				noValidate
+				autoComplete={ attributes.autoComplete ? 'on' : 'off' }
+			>
+				<input
+					type="hidden"
+					name="_formello_id"
+					value={ attributes.id }
+				/>
+				<input
+					type="text"
+					name={ honeypot }
+					className="formello-hp"
+					autoComplete="nope"
+				/>
+				<input type="hidden" name="action" value="formello" />
+				<InnerBlocks.Content />
+				<div className="formello-message"></div>
+			</form>
+		);
+	},
+};
 
-const v3 =
-	{
-		attributes: blockAttributes,
-		save( { attributes, className } ) {
-			className = classnames(
-				//blockProps.className,
-				attributes.asRow ? attributes.labelAlign : undefined,
-				{
-					'as-row': attributes.asRow,
-					'is-bold': attributes.labelIsBold,
-					'formello-label-right': 'right' === attributes.labelAlign,
-				}
-			);
-			const honeypot = '_formello_h' + attributes.id;
+const v3 = {
+	attributes: blockAttributes,
+	save( { attributes, className } ) {
+		className = classnames(
+			//blockProps.className,
+			attributes.asRow ? attributes.labelAlign : undefined,
+			{
+				'as-row': attributes.asRow,
+				'is-bold': attributes.labelIsBold,
+				'formello-label-right': 'right' === attributes.labelAlign,
+			}
+		);
+		const honeypot = '_formello_h' + attributes.id;
 
-			return (
-				<form
-					{ ...useBlockProps.save( {
-						className,
-					} ) }
-					method="post"
-					id={ 'formello-' + attributes.id }
-					data-id={ attributes.id }
-					data-hide={ attributes.hide || undefined }
-					data-recaptcha={ attributes.recaptchaEnabled }
-					data-redirect={ attributes.redirectUrl }
-					noValidate
-					autoComplete={ attributes.autoComplete ? 'on' : 'off' }
-				>
-					<input type="hidden" name="_formello_id" value={ attributes.id } />
-					<input
-						type="text"
-						name={ honeypot }
-						className="formello-hp"
-						autoComplete="nope"
-					/>
-					<input type="hidden" name="action" value="formello" />
-					<InnerBlocks.Content />
-					<div className="formello-message"></div>
-				</form>
-			);
-		},
-	};
+		return (
+			<form
+				{ ...useBlockProps.save( {
+					className,
+				} ) }
+				method="post"
+				id={ 'formello-' + attributes.id }
+				data-id={ attributes.id }
+				data-hide={ attributes.hide || undefined }
+				data-recaptcha={ attributes.recaptchaEnabled }
+				data-redirect={ attributes.redirectUrl }
+				noValidate
+				autoComplete={ attributes.autoComplete ? 'on' : 'off' }
+			>
+				<input
+					type="hidden"
+					name="_formello_id"
+					value={ attributes.id }
+				/>
+				<input
+					type="text"
+					name={ honeypot }
+					className="formello-hp"
+					autoComplete="nope"
+				/>
+				<input type="hidden" name="action" value="formello" />
+				<InnerBlocks.Content />
+				<div className="formello-message"></div>
+			</form>
+		);
+	},
+};
 
 const deprecated = [ v3, v2, v1 ];
 

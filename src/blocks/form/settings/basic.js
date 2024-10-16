@@ -42,6 +42,7 @@ export function Settings( props ) {
 				onChange={ ( val ) => {
 					setAttributes( { storeSubmissions: val } );
 				} }
+				__nextHasNoMarginBottom
 			/>
 			<ToggleControl
 				label={ __( 'Enable Captcha', 'formello' ) }
@@ -49,6 +50,7 @@ export function Settings( props ) {
 				onChange={ ( val ) => {
 					setAttributes( { captchaEnabled: val } );
 				} }
+				__nextHasNoMarginBottom
 			/>
 			{ captchaEnabled && (
 				<SelectControl
@@ -92,12 +94,14 @@ export function Settings( props ) {
 				onChange={ ( val ) => {
 					setAttributes( { hide: val } );
 				} }
+				__nextHasNoMarginBottom
 			/>
 			<BaseControl
 				help={ __(
 					'Enter a URL you want to redirect your page to after form Submission',
 					'formello'
 				) }
+				__nextHasNoMarginBottom
 			>
 				<URLInput
 					label={ __( 'Redirect Url', 'formello' ) }
@@ -114,12 +118,14 @@ export function Settings( props ) {
 				placeholder={ formello.messages.form.success }
 				value={ successMessage }
 				onChange={ ( val ) => setAttributes( { successMessage: val } ) }
+				__nextHasNoMarginBottom
 			/>
 			<TextareaControl
 				label={ __( 'Error Message', 'formello' ) }
 				placeholder={ formello.messages.form.error }
 				value={ errorMessage }
 				onChange={ ( val ) => setAttributes( { errorMessage: val } ) }
+				__nextHasNoMarginBottom
 			/>
 		</PanelBody>
 	);

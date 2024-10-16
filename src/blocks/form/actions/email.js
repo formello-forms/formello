@@ -42,6 +42,7 @@ export default function Email( content, clientId, action, handleUpdate ) {
 					handleUpdate( 'advanced', val );
 				} }
 				checked={ action.advanced }
+				__nextHasNoMarginBottom
 			/>
 
 			{ action.advanced && (
@@ -90,6 +91,7 @@ export default function Email( content, clientId, action, handleUpdate ) {
 					'formello'
 				) }
 				id={ id }
+				__nextHasNoMarginBottom
 			>
 				<HStack>
 					<BaseControl.VisualLabel>
@@ -123,7 +125,7 @@ addFilter( 'formello.modal.email', 'formello/actions-email', Email );
 function withComponentAppended( FilteredComponent ) {
 	return ( props ) => {
 		const { settings } = props;
-		if ( 'Email' === settings.name ) {
+		if ( 'email' === settings.type ) {
 			return null;
 		}
 		return (

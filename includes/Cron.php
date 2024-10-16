@@ -89,7 +89,7 @@ class Cron {
 				array(
 					'table_submissions' => $table_submissions,
 					'table_posts' => $table_posts,
-					'post_type' => 'formello_form',
+					'post_type' => 'formello',
 					'post_status' => 'publish',
 					'post_status_private' => 'formello-private',
 				)

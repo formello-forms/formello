@@ -1,0 +1,50 @@
+/*!******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/library/style.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************/
+.formello-message {
+  display: none;
+  box-sizing: border-box;
+  padding: 1em;
+}
+.formello-message p {
+  margin: 0;
+}
+.formello-message.success {
+  display: block;
+  background-color: #dff0d8;
+  border: 1px solid #d0e9c6;
+  color: #3c763d;
+}
+.formello-message.error:has(p:not(:empty)) {
+  display: block;
+  background-color: #fcf8e3;
+  border: 1px solid #faf2cc;
+  color: #8a6d3b;
+}
+.formello-message ul:not(:has(li)) {
+  display: none;
+}
+
+.wp-block-formello-library {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  /* HONEYPOT position */
+}
+.wp-block-formello-library .wp-block-formello-input, .wp-block-formello-library .wp-block-formello-select, .wp-block-formello-library .wp-block-formello-textarea {
+  flex-basis: 100%;
+}
+.wp-block-formello-library .wp-block-formello-input .wp-block-formello-button, .wp-block-formello-library .wp-block-formello-input .wp-block-formello-output, .wp-block-formello-library .wp-block-formello-select .wp-block-formello-button, .wp-block-formello-library .wp-block-formello-select .wp-block-formello-output, .wp-block-formello-library .wp-block-formello-textarea .wp-block-formello-button, .wp-block-formello-library .wp-block-formello-textarea .wp-block-formello-output {
+  align-self: stretch;
+}
+.wp-block-formello-library .formello-hp {
+  position: absolute !important;
+  right: -5000px;
+}
+.wp-block-formello-library .error {
+  border-color: red;
+}
+.wp-block-formello-library .error-message {
+  color: red;
+  order: 4;
+}

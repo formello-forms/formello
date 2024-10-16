@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 /**
  * WordPress dependencies
@@ -77,7 +77,7 @@ export default function UpdateLicense( props ) {
 			{ '' !== license && license_status && (
 				<Notice
 					isDismissible={ false }
-					className={ classnames( 'message', {
+					className={ clsx( 'message', {
 						'is-success': 'valid' === license_status,
 						'is-warning': 'valid' !== license_status,
 					} ) }

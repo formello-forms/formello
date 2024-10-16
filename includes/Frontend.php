@@ -11,8 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use Formello\Form;
-
 /**
  * Frontend Pages Handler
  *
@@ -56,7 +54,12 @@ class Frontend {
 			wp_die();
 		}
 
-        $form_id = absint( $_POST['_formello_id'] );
+		if ( empty( $_POST['_formello_id'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'Missing ID', 'formello' ) ), 500 );
+			wp_die();
+		}
+
+		$form_id = absint( $_POST['_formello_id'] );
 		$form    = new \Formello\Processor\Form( $form_id );
 		$form->validate();
 

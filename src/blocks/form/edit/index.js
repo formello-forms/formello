@@ -1,35 +1,29 @@
-import { useEffect, useContext } from '@wordpress/element';
+import { useEffect, useContext, useCallback } from '@wordpress/element';
 import { useSelect, dispatch } from '@wordpress/data';
 import { store as blockEditorStore } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
 import BlockVariationPicker from './variation-picker';
 
 import { Disabled } from '@wordpress/components';
-
 import Edit from './edit';
 import FormPreview from './preview';
 
 const FormEdit = ( props ) => {
-	const { clientId, attributes, setAttributes, children } = props;
+	const { clientId, attributes, setAttributes } = props;
 
 	const isDisabled = useContext( Disabled.Context );
 	const { replaceBlock } = dispatch( blockEditorStore );
 
-	const { wasBlockJustInserted, postType, postId } = useSelect(
-		( select ) => {
-			const { wasBlockJustInserted } = select( blockEditorStore );
-
-			return {
-				wasBlockJustInserted: wasBlockJustInserted( clientId ),
-				postType: select( 'core/editor' )?.getCurrentPostType(),
-				postId: select( 'core/editor' )?.getCurrentPostId(),
-			};
-		}
-	);
+	const { postType, postId } = useSelect( ( select ) => {
+		return {
+			postType: select( 'core/editor' )?.getCurrentPostType(),
+			postId: select( 'core/editor' )?.getCurrentPostId(),
+		};
+	} );
 
 	useEffect( () => {
 		if (
-			'formello_form' !== postType &&
+			'formello' !== postType &&
 			Number( attributes.id ) &&
 			! isDisabled
 		) {
@@ -41,12 +35,8 @@ const FormEdit = ( props ) => {
 			);
 		}
 
-		// if is a formello_form CPT always set id eq post_id
-		if (
-			Number( attributes.id ) !== postId &&
-			'formello_form' === postType &&
-			! isDisabled
-		) {
+		// if is a formello CPT always set id eq post_id
+		if ( Number( attributes.id ) !== postId && 'formello' === postType ) {
 			setAttributes( {
 				id: postId,
 			} );
@@ -61,10 +51,6 @@ const FormEdit = ( props ) => {
 		},
 		[ clientId ]
 	);
-
-	if ( isDisabled && children ) {
-		return <FormPreview { ...props } />;
-	}
 
 	const Component = hasInnerBlocks ? Edit : BlockVariationPicker;
 

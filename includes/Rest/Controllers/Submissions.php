@@ -100,7 +100,7 @@ class Submissions extends Base {
 
 		$submission_data = '';
 		foreach ( $columns as $column ) {
-			$submission_data .= ", JSON_UNQUOTE( JSON_EXTRACT( data, '$." . $column . "' ) ) AS $column";
+			$submission_data .= ", JSON_UNQUOTE( JSON_EXTRACT( data, '$." . $column . "' ) ) AS `$column`";
 			// $submission_data .= ", JSON_VALUE( data->'$." . $column . "' ) AS $column"; ONLY FROM MYSQL 8.0.2.1
 		}
 
@@ -118,12 +118,14 @@ class Submissions extends Base {
 			'offset'   => ( $page - 1 ) * $per_page,
 		);
 
-		if ( 'is_new' === $status ) {
-			$sql .= ' AND is_new = 1';
-		}
+		if ( ! empty( $status ) ) {
+			if ( in_array( 'is_new', $status ) ) {
+				$sql .= ' AND is_new = 1';
+			}
 
-		if ( 'starred' === $status ) {
-			$sql .= ' AND starred = 1';
+			if ( in_array( 'starred', $status ) ) {
+				$sql .= ' AND starred = 1';
+			}
 		}
 
 		if ( ! empty( $search ) ) {

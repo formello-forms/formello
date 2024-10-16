@@ -1,0 +1,20 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/textarea/style.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************/
+.wp-block-formello-textarea {
+  display: flex;
+  flex-direction: column;
+}
+.wp-block-formello-textarea label.hide {
+  display: none;
+}
+.wp-block-formello-textarea label span.required {
+  color: red;
+  margin: 0 5px;
+  font-weight: normal;
+}
+.wp-block-formello-textarea textarea {
+  min-height: 150px;
+}
+
+/*# sourceMappingURL=style-index.css.map*/

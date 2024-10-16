@@ -10,7 +10,7 @@ export default function ReSync() {
 			path: '/formello/v1/sync_template_library',
 			method: 'POST',
 			data: {
-				type: 'formello_form',
+				type: 'formello',
 				categories: 'form',
 			},
 		} );
@@ -19,10 +19,7 @@ export default function ReSync() {
 	return (
 		<Fragment>
 			<p>
-				{ __(
-					'If you need to reset template library.',
-					'formello'
-				) }
+				{ __( 'If you need to reset template library.', 'formello' ) }
 			</p>
 			<UpdateSettings
 				req={ reSync }

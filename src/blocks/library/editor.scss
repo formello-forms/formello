@@ -1,0 +1,70 @@
+body.post-type-formello, .wp-block-formello-library {
+	.is-root-container {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+
+		.wp-block, .formello {
+			flex-basis: 100%;
+		}
+	}
+
+	.wp-block-formello-input, .wp-block-formello-select, .wp-block-formello-textarea, .wp-block-formello-multichoices {
+		&.missing-name::before {
+			content: 'Missing name';
+			position: absolute;
+			top: 0;
+			right: 0;
+			background-color: red;
+			color: white;
+			padding: 0 .5em;
+			font-size: small;
+		}
+
+		&:has(input[type=checkbox]), &:has(input[type=radio]) {
+			div.label-div {
+				order: 2;
+			}
+		}
+
+		.label-div>span.required {
+			color: red;
+			margin: 0 5px;
+		}
+
+		.label-div.hide {
+			display: none;
+		}
+
+		&:has(.wp-block-formello-output), &:has(.wp-block-formello-button) {
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+			.label-div {
+				width: 100%;
+			}
+			div.wp-block-formello-button, output {
+				flex-basis: auto;
+			}
+			input {
+				flex-grow: 1;
+				flex-shrink: 1;
+			}
+			small {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.formello-sidebar .components-base-control:where(:not(:last-child)) {
+	margin-bottom: 16px;
+}
+
+.formello-actions-list:not(:empty) {
+    margin: 1em 0;
+	.formello-action-item {
+		padding: 0.5rem;
+		border: 1px solid #efefef;		
+	}
+}

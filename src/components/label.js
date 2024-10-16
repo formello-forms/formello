@@ -1,7 +1,9 @@
 import { __ } from '@wordpress/i18n';
-import { RichText } from '@wordpress/block-editor';
+import { RichText, store as blockEditorStore } from '@wordpress/block-editor';
+import { useEntityProp } from '@wordpress/core-data';
+import { useSelect } from '@wordpress/data';
 
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 export default function Label( { attributes, setAttributes } ) {
 	const {
@@ -13,10 +15,21 @@ export default function Label( { attributes, setAttributes } ) {
 		multiple,
 		type,
 		label,
-		requiredText,
+		name,
 	} = attributes;
 
-	const labelClassName = classnames(
+	const { postType, postId } = useSelect( ( select ) => {
+		const { getSettings } = select( blockEditorStore );
+		return {
+			postType: select( 'core/editor' ).getCurrentPostType(),
+			postId: select( 'core/editor' ).getCurrentPostId(),
+			isPreview: getSettings().__unstableIsPreviewMode,
+		};
+	}, [] );
+
+	const [ meta ] = useEntityProp( 'postType', 'formello', 'meta', postId );
+
+	const labelClassName = clsx(
 		'label-div',
 		labelClass,
 		labelAlign,
@@ -33,12 +46,18 @@ export default function Label( { attributes, setAttributes } ) {
 			<RichText
 				tagName="span"
 				value={ label }
-				onChange={ ( val ) => setAttributes( { label: val } ) }
+				onChange={ ( val ) => {
+					setAttributes( { label: val } );
+				} }
 				placeholder={ __( 'Enter label…', 'formello' ) }
 				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
 			/>
 
-			{ required && <span className="required">{ requiredText }</span> }
+			{ required && (
+				<span className="required">
+					{ meta?._formello_settings.requiredText || '*' }
+				</span>
+			) }
 		</div>
 	);
 }

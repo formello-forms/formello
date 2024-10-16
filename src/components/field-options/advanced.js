@@ -59,6 +59,7 @@ function AdvancedOptions( props ) {
 					onChange={ ( newval ) =>
 						setAttributes( { advanced: newval } )
 					}
+					__nextHasNoMarginBottom
 				/>
 			) }
 			{ supported.includes( 'autocomplete' ) && (
@@ -69,6 +70,7 @@ function AdvancedOptions( props ) {
 						setAttributes( { enableAutoComplete: newval } )
 					}
 					help={ __( 'Hint for form autofill feature.', 'formello' ) }
+					__nextHasNoMarginBottom
 				/>
 			) }
 			{ enableAutoComplete && supported.includes( 'autocomplete' ) && (
@@ -78,6 +80,7 @@ function AdvancedOptions( props ) {
 					onChange={ ( newval ) =>
 						setAttributes( { autocomplete: newval } )
 					}
+					__nextHasNoMarginBottom
 				/>
 			) }
 			{ 'range' === type && (
@@ -93,6 +96,7 @@ function AdvancedOptions( props ) {
 							replaceInnerBlocks( clientId, [], true );
 						}
 					} }
+					__nextHasNoMarginBottom
 				/>
 			) }
 			{ 'hidden' !== type && (
@@ -107,6 +111,7 @@ function AdvancedOptions( props ) {
 							'Make the control not accept clicks.',
 							'formello'
 						) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Read only', 'formello' ) }
@@ -115,6 +120,7 @@ function AdvancedOptions( props ) {
 							setAttributes( { readonly: newval } )
 						}
 						help={ __( 'Make value not editable.', 'formello' ) }
+						__nextHasNoMarginBottom
 					/>
 				</Fragment>
 			) }

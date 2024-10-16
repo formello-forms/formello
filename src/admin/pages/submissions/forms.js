@@ -21,10 +21,8 @@ import { useHistory } from '../../router';
 /**
  * Internal dependencies
  */
-import { DataViews } from '@wordpress/dataviews';
+import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
 import Header from '../../components/masthead.js';
-
-const EMPTY_ARRAY = [];
 
 // See https://github.com/WordPress/gutenberg/issues/55886
 // We do not support custom statutes at the moment.
@@ -36,13 +34,37 @@ const STATUSES = [
 	{ value: 'publish', label: __( 'Published' ) },
 	{ value: 'trash', label: __( 'Trash' ) },
 ];
-const DEFAULT_STATUSES = 'draft,future,pending,private,publish'; // All but 'trash'.
+const DEFAULT_STATUSES = 'draft, future, pending, private, publish'; // All but 'trash'.
+const defaultLayouts = {
+	table: {
+		layout: {
+			primaryField: 'id',
+			combinedFields: [
+				{
+					id: 'form',
+					label: 'Form',
+					children: [ 'title', 'excerpt' ],
+					direction: 'vertical',
+				},
+			],
+		},
+	},
+};
 
 export const Forms = () => {
 	const history = useHistory();
 	const [ view, setView ] = useState( {
 		type: 'table',
 		filters: [],
+		fields: [
+			'form',
+			'title',
+			'excerpt',
+			'entries',
+			'author',
+			'status',
+			'date',
+		],
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -52,21 +74,20 @@ export const Forms = () => {
 		search: '',
 		// All fields are visible by default, so it's
 		// better to keep track of the hidden ones.
-		hiddenFields: [ 'shortcode' ],
-		layout: {},
+		layout: defaultLayouts.table.layout,
 	} );
 
 	const queryArgs = useMemo( () => {
 		const filters = {};
 		view.filters.forEach( ( filter ) => {
-			if ( filter.field === 'status' && filter.operator === 'in' ) {
+			if ( filter.field === 'status' && filter.operator === 'isAny' ) {
 				filters.status = filter.value;
 			}
-			if ( filter.field === 'author' && filter.operator === 'in' ) {
+			if ( filter.field === 'author' && filter.operator === 'isAny' ) {
 				filters.author = filter.value;
 			} else if (
 				filter.field === 'author' &&
-				filter.operator === 'notIn'
+				filter.operator === 'isNone'
 			) {
 				filters.author_exclude = filter.value;
 			}
@@ -86,36 +107,29 @@ export const Forms = () => {
 			...filters,
 		};
 	}, [ view ] );
-	const {
-		records: forms,
-		isResolving: isLoadingForms,
-		totalItems,
-		totalPages,
-	} = useEntityRecords( 'postType', 'formello_form', queryArgs );
+	const { records: forms, isResolving: isLoadingForms } = useEntityRecords(
+		'postType',
+		'formello',
+		queryArgs
+	);
 
 	const { records: authors, isResolving: isLoadingAuthors } =
-		useEntityRecords( 'root', 'user' );
-
-	const paginationInfo = useMemo(
-		() => ( {
-			totalItems,
-			totalPages,
-		} ),
-		[ totalItems, totalPages ]
-	);
+		useEntityRecords( 'root', 'user', { per_page: -1 } );
 
 	const fields = useMemo(
 		() => [
 			{
 				header: __( 'Title' ),
 				id: 'title',
+				label: __( 'Title' ),
 				getValue: ( { item } ) => item.title?.rendered,
 				render: ( { item } ) => {
 					return (
 						<div>
 							<Button
 								variant="link"
-								onClick={ () => {
+								onClick={ ( e ) => {
+									e.stopPropagation();
 									const href = addQueryArgs( 'post.php', {
 										post: item.id,
 										action: 'edit',
@@ -135,14 +149,42 @@ export const Forms = () => {
 						</div>
 					);
 				},
-				maxWidth: 300,
+				enableGlobalSearch: true,
 				enableHiding: false,
+			},
+			{
+				header: __( 'Excerpt' ),
+				label: __( 'Excerpt' ),
+				id: 'excerpt',
+				getValue: ( { item } ) => item.excerpt.raw,
+			},
+			{
+				header: __( 'Entries' ),
+				id: 'entries',
+				render: ( { item } ) => {
+					return (
+						<div>
+							<Button
+								variant="link"
+								onClick={ ( e ) => {
+									e.stopPropagation();
+									history.push( {
+										page: 'formello',
+										section: 'submissions',
+										form_id: item.id,
+									} );
+								} }
+							>
+								{ item.submissions_count.total }
+							</Button>
+						</div>
+					);
+				},
 			},
 			{
 				header: __( 'Author' ),
 				id: 'author',
 				getValue: ( { item } ) => item._embedded?.author[ 0 ]?.name,
-				type: 'enumeration',
 				elements:
 					authors?.map( ( { id, name } ) => ( {
 						value: id,
@@ -152,12 +194,13 @@ export const Forms = () => {
 			{
 				header: __( 'Status' ),
 				id: 'status',
-				getValue: ( { item } ) =>
+				/*getValue: ( { item } ) =>
 					STATUSES.find( ( { value } ) => value === item.status )
-						?.label ?? item.status,
-				type: 'enumeration',
+						?.label ?? item.status,*/
 				elements: STATUSES,
-				enableSorting: false,
+				filterBy: {
+					operators: [ 'isAny', 'isNone', 'isAll', 'isNotAll' ],
+				},
 			},
 			{
 				header: __( 'Date' ),
@@ -173,15 +216,18 @@ export const Forms = () => {
 			{
 				header: 'Shortcode',
 				id: 'shortcode',
-				getValue: ( { item } ) => item.id,
 				render: ( { item } ) => {
 					return <code>{ `[formello id=${ item.id }]` }</code>;
 				},
-				enableSorting: true,
+				enableSorting: false,
 			},
 		],
 		[ authors ]
 	);
+
+	const { data: shownData, paginationInfo } = useMemo( () => {
+		return filterSortAndPaginate( forms, view, fields );
+	}, [ view, forms, fields ] );
 
 	const permanentlyDeletePostAction = usePermanentlyDeletePostAction();
 	const restorePostAction = useRestorePostAction();
@@ -206,12 +252,7 @@ export const Forms = () => {
 			permanentlyDeletePostAction,
 			editPostAction,
 		],
-		[
-			permanentlyDeletePostAction,
-			restorePostAction,
-			editPostAction,
-			history,
-		]
+		[ permanentlyDeletePostAction, restorePostAction, history ]
 	);
 
 	return (
@@ -220,7 +261,7 @@ export const Forms = () => {
 				<Button
 					variant="primary"
 					size="small"
-					href={ 'post-new.php?post_type=formello_form' }
+					href={ 'post-new.php?post_type=formello' }
 				>
 					{ __( 'Add new' ) }
 				</Button>
@@ -231,11 +272,11 @@ export const Forms = () => {
 						paginationInfo={ paginationInfo }
 						fields={ fields }
 						actions={ actions }
-						data={ forms || EMPTY_ARRAY }
+						data={ shownData || [] }
 						isLoading={ isLoadingForms || isLoadingAuthors }
 						view={ view }
 						onChangeView={ setView }
-						supportedLayouts={ [ 'table' ] }
+						defaultLayouts={ defaultLayouts }
 					/>
 				</Card>
 			</div>

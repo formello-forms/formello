@@ -2,7 +2,7 @@
 /**
  * Sanitize and validate form submission. Returns an array with errors and sanitized POST array.
  *
- * @package Formello
+ * @package formello
  */
 
 namespace Formello\Processor;
@@ -166,7 +166,7 @@ class Validator {
 		 * This filter allows you to add fields to request that needs to be validated.
 		 *
 		 * @param array $fields
-		 * @param Formello\Form $form
+		 * @param array $settings
 		 */
 		$this->fields = apply_filters( 'formello_data_fields', $this->fields, $this->settings['fields'] );
 	}
@@ -257,7 +257,7 @@ class Validator {
 		 * Error codes with a specific error message are: "required_field_missing", "invalid_email", and "error"
 		 *
 		 * @param string $errors
-		 * @param Formello\Form $form
+		 * @param Formello\Validator $this
 		 */
 		$errors = apply_filters( 'formello_validate_form', $errors, $this->fields, $this );
 
@@ -278,15 +278,15 @@ class Validator {
 	private function get_validation_messages() {
 		$settings = get_option( 'formello' );
 		return array(
-			'required'  => ':attribute ' . $settings['messages']['missingValue']['default'],
-			'color'     => ':attribute ' . $settings['messages']['patternMismatch']['color'],
-			'date'      => ':attribute ' . $settings['messages']['patternMismatch']['date'],
-			'email'     => ':attribute ' . $settings['messages']['patternMismatch']['email'],
-			'regex'     => ':attribute ' . $settings['messages']['patternMismatch']['default'],
-			'month'     => ':attribute ' . $settings['messages']['patternMismatch']['month'],
-			'numeric'   => ':attribute ' . $settings['messages']['patternMismatch']['number'],
-			'time'      => ':attribute ' . $settings['messages']['patternMismatch']['time'],
-			'url'       => ':attribute ' . $settings['messages']['patternMismatch']['url'],
+			'required'  => 'Field :attribute: ' . $settings['messages']['missingValue']['default'],
+			'color'     => 'Field :attribute: ' . $settings['messages']['patternMismatch']['color'],
+			'date'      => 'Field :attribute: ' . $settings['messages']['patternMismatch']['date'],
+			'email'     => 'Field :attribute: ' . $settings['messages']['patternMismatch']['email'],
+			'regex'     => 'Field :attribute: ' . $settings['messages']['patternMismatch']['default'],
+			'month'     => 'Field :attribute: ' . $settings['messages']['patternMismatch']['month'],
+			'numeric'   => 'Field :attribute: ' . $settings['messages']['patternMismatch']['number'],
+			'time'      => 'Field :attribute: ' . $settings['messages']['patternMismatch']['time'],
+			'url'       => 'Field :attribute: ' . $settings['messages']['patternMismatch']['url'],
 			'minlength' => str_replace(
 				array( '{minLength}', '{length}' ),
 				array( ':minlength', ':attribute' ),
@@ -297,8 +297,8 @@ class Validator {
 				array( ':maxlength', ':attribute' ),
 				$settings['messages']['wrongLength']['over']
 			),
-			'min'       => ':attribute ' . str_replace( '{min}', ':min', $settings['messages']['outOfRange']['under'] ),
-			'max'       => ':attribute ' . str_replace( '{max}', ':max', $settings['messages']['outOfRange']['over'] ),
+			'min'       => 'Field :attribute: ' . str_replace( '{min}', ':min', $settings['messages']['outOfRange']['under'] ),
+			'max'       => 'Field :attribute: ' . str_replace( '{max}', ':max', $settings['messages']['outOfRange']['over'] ),
 		);
 	}
 

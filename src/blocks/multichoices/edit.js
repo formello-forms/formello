@@ -16,13 +16,19 @@ import {
 } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
 import { OptionsModal } from '../select/modal';
+import clsx from 'clsx';
 
 export default function Edit( props ) {
-	const blockProps = useBlockProps();
-	const [ isModalOpen, setIsModalOpen ] = useState( false );
-
 	const { attributes, setAttributes } = props;
 	const { name, required, options, type } = attributes;
+	const [ isModalOpen, setIsModalOpen ] = useState( false );
+
+	const containerClass = clsx( {
+		'missing-name': ! name,
+	} );
+	const blockProps = useBlockProps( {
+		className: containerClass,
+	} );
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		allowedBlocks: false,
@@ -57,6 +63,7 @@ export default function Edit( props ) {
 							'Affects the "name" attribute of the input element, and is used as a name for the form submission results.',
 							'formello'
 						) }
+						__nextHasNoMarginBottom
 					/>
 					<ToggleControl
 						label={ __( 'Required', 'formello' ) }
@@ -64,6 +71,7 @@ export default function Edit( props ) {
 						onChange={ () =>
 							setAttributes( { required: ! required } )
 						}
+						__nextHasNoMarginBottom
 					/>
 					<Button
 						variant={ 'primary' }
@@ -86,10 +94,7 @@ export default function Edit( props ) {
 			{ options.map( ( opt, index ) => {
 				const id = name + '-' + index;
 				return (
-					<div
-						key={ index }
-						className={ 'formello formello-checkbox' }
-					>
+					<div key={ index } className={ 'wp-block-formello-input' }>
 						<label htmlFor={ id }>{ opt.label }</label>
 						<input
 							value={ opt.value || opt.label }

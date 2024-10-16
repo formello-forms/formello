@@ -4,6 +4,8 @@ import save from './save';
 import metadata from './block.json';
 import { ReactComponent as Icon } from '../../../assets/icons/select.svg';
 
+import './style.scss';
+
 registerBlockType( metadata, {
 	/**
 	 * An icon property should be specified to make it easier to identify a block.

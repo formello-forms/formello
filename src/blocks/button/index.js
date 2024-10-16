@@ -30,6 +30,11 @@ registerBlockType( metadata, {
 		src: 'button',
 	},
 
+	supports: {
+		...metadata.supports,
+		multiple: 'formello' !== window.pagenow ? true : false,
+	},
+
 	/**
 	 * @see ./edit.js
 	 */

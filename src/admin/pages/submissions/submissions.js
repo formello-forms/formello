@@ -29,21 +29,32 @@ import Header from '../../components/masthead.js';
 import { useHistory, useLocation } from '../../router';
 
 const EMPTY_ARRAY = [];
-const defaultConfigPerViewType = {
-	list: {},
-};
 
 const STATUSES = [
 	{ value: 'starred', label: __( 'Favorites' ) },
 	{ value: 'is_new', label: __( 'Unread' ) },
 ];
 
+const defaultLayouts = {
+	table: {
+		layout: {
+			primaryField: 'id',
+			styles: {
+				status: {
+					maxWidth: '40px',
+					width: '40px',
+				},
+			},
+		},
+	},
+};
+
 export const Submissions = () => {
 	const history = useHistory();
 	const { params } = useLocation();
 	const [ view, setView ] = useState( {
 		type: 'table',
-		filters: [ { field: 'status', operator: 'isAny', value: 'all' } ],
+		filters: [],
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -51,11 +62,10 @@ export const Submissions = () => {
 			direction: 'desc',
 		},
 		search: '',
-		visibleFilters: [ 'status' ],
 		// All fields are visible by default, so it's
 		// better to keep track of the hidden ones.
 		hiddenFields: [ 'id' ],
-		layout: {},
+		layout: defaultLayouts.table.layout,
 	} );
 
 	const queryArgs = useMemo( () => {
@@ -92,7 +102,7 @@ export const Submissions = () => {
 
 	const { record: form } = useEntityRecord(
 		'postType',
-		'formello_form',
+		'formello',
 		params.form_id
 	);
 
@@ -117,7 +127,6 @@ export const Submissions = () => {
 			{
 				header: __( 'Status' ),
 				id: 'status',
-				getValue: ( { item } ) => item.id,
 				render: ( { item } ) => {
 					return (
 						<VStack spacing={ 1 }>
@@ -147,8 +156,6 @@ export const Submissions = () => {
 				},
 				filters: [ 'isAny' ],
 				elements: STATUSES,
-				maxWidth: 25,
-				width: 25,
 				enableHiding: false,
 				enableSorting: false,
 			},
@@ -164,14 +171,12 @@ export const Submissions = () => {
 							history.push( {
 								page: 'formello',
 								section: 'submission',
-								form_id: item.id,
+								submission_id: item.id,
 							} )
 						}
 					/>
 				),
-				maxWidth: 25,
-				width: 25,
-				enableHiding: true,
+				enableHiding: false,
 				enableSorting: true,
 			},
 		];
@@ -198,37 +203,14 @@ export const Submissions = () => {
 					);
 				},
 				enableSorting: true,
-				maxWidth: 400,
-				width: 200,
 			};
 		} );
 		return _fields.concat( _columns );
 	}, [ history, getColumns ] );
 
-	const onChangeView = useCallback(
-		( viewUpdater ) => {
-			let updatedView =
-				typeof viewUpdater === 'function'
-					? viewUpdater( view )
-					: viewUpdater;
-			if ( updatedView.type !== view.type ) {
-				updatedView = {
-					...updatedView,
-					layout: {
-						...defaultConfigPerViewType[ updatedView.type ],
-					},
-				};
-			}
-
-			setView( updatedView );
-		},
-		[ view ]
-	);
-
 	const { saveEntityRecord } = useDispatch( coreStore );
 	const actions = useMemo(
 		() => [
-			trashSubmissionAction,
 			{
 				id: 'view-submission',
 				label: __( 'View Submission', 'formello' ),
@@ -243,6 +225,7 @@ export const Submissions = () => {
 					} );
 				},
 			},
+			trashSubmissionAction,
 			{
 				id: 'mark-as-starred',
 				label: __( 'Toggle favorite' ),
@@ -307,8 +290,8 @@ export const Submissions = () => {
 						data={ submissions.records || EMPTY_ARRAY }
 						isLoading={ submissions.isResolving }
 						view={ view }
-						onChangeView={ onChangeView }
-						supportedLayouts={ [ 'table' ] }
+						onChangeView={ setView }
+						defaultLayouts={ defaultLayouts }
 					/>
 				</Card>
 			</div>

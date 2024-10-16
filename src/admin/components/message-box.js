@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 /**
  * WordPress dependencies
@@ -34,7 +34,7 @@ export default function MessageBox( props ) {
 	return (
 		<Animate type="slide-in" options={ { origin: 'top' } }>
 			{ ( { animateClassName } ) => (
-				<span className={ classnames(
+				<span className={ clsx(
 					'formello-message',
 					animateClassName,
 					messageType,

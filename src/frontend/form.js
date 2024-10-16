@@ -29,7 +29,6 @@ class Formello {
 	}
 
 	handleSubmit( e ) {
-		console.log(e)
 		// prevent default, we send trough ajax
 		e.preventDefault();
 		e.stopPropagation();

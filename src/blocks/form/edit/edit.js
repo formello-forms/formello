@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
-import { useState, useEffect, useContext } from '@wordpress/element';
+import { useState, useEffect } from '@wordpress/element';
 import { useSelect } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 import {
@@ -9,9 +9,10 @@ import {
 	useBlockProps,
 	useInnerBlocksProps,
 	InnerBlocks,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
-import { ToolbarButton, ToolbarGroup, Disabled } from '@wordpress/components';
+import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 import { layout } from '@wordpress/icons';
 
 import classnames from 'classnames';
@@ -25,18 +26,18 @@ import { useFormFields } from './use-form-fields';
 export default function Edit( props ) {
 	const { attributes, className, clientId, hasInnerBlocks, name } = props;
 
-	const { postType, postId } = useSelect( ( select ) => {
+	const { postType, postId, isPreview } = useSelect( ( select ) => {
+		const { getSettings } = select( blockEditorStore );
 		return {
 			postType: select( 'core/editor' ).getCurrentPostType(),
 			postId: select( 'core/editor' ).getCurrentPostId(),
+			isPreview: getSettings().__unstableIsPreviewMode,
 		};
 	}, [] );
 
-	const isDisabled = useContext( Disabled.Context );
-
 	const [ meta, setMeta ] = useEntityProp(
 		'postType',
-		'formello_form',
+		postType,
 		'meta',
 		postId
 	);
@@ -46,30 +47,40 @@ export default function Edit( props ) {
 	const data = useFormFields( clientId );
 
 	useEffect( () => {
-		if ( isDisabled ) {
-			return;
-		}
-
 		const settings = {
+			...meta._formello_settings,
+			fields: data.fields,
+			constraints: data.constraints,
+		};
+		if ( 'formello' === postType && ! isPreview && meta ) {
+			setMeta( {
+				...meta,
+				_formello_settings: settings,
+			} );
+		}
+	}, [ data ] );
+
+	useEffect( () => {
+		const settings = {
+			...meta._formello_settings,
 			storeSubmissions: attributes.storeSubmissions,
 			captchaEnabled: attributes.captchaEnabled,
 			captchaType: attributes.captchaType,
 			hide: attributes.hide,
 			debug: attributes.debug,
 			redirect_url: attributes.redirectUrl,
-			fields: data.fields,
-			constraints: data.constraints,
 			messages: {
 				success: attributes.successMessage,
 				error: attributes.errorMessage,
 			},
 		};
-
-		setMeta( { _formello_settings: settings } );
-		if ( 'formello_form' !== postType || isDisabled ) {
-			setMeta( { _formello_parent: postId } );
+		if ( 'formello' === postType && ! isPreview && meta ) {
+			setMeta( {
+				...meta,
+				_formello_settings: settings,
+			} );
 		}
-	}, [ attributes, data, isDisabled, postId, postType, setMeta ] );
+	}, [ attributes ] );
 
 	const getBlockClassNames = () => {
 		return classnames( className, {
@@ -97,15 +108,10 @@ export default function Edit( props ) {
 		],
 	} );
 
-	// It's a preview embed.
-	if ( ! postType || isDisabled ) {
-		return <div { ...innerBlocksProps }>{ children }</div>;
-	}
-
 	return (
 		<div { ...innerBlocksProps }>
 			<BlockControls>
-				{ 'formello_form' === postType && (
+				{ 'formello' === postType && (
 					<ToolbarGroup>
 						<ToolbarButton
 							label={ __( 'Template', 'popper' ) }

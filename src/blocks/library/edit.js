@@ -34,7 +34,6 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
-import { edit } from '@wordpress/icons';
 import { useState, useCallback, Fragment } from '@wordpress/element';
 import { TemplatesModal } from '../form/edit/templates-modal';
 
@@ -48,14 +47,7 @@ export default function ReusableBlockEdit( {
 	const [ isDisabled, setIsDisabled ] = useState( true );
 	const [ titleTemp, createTitle ] = useState( '' );
 
-	const {
-		innerBlocks,
-		userCanEdit,
-		getBlockEditingMode,
-		onNavigateToEntityRecord,
-		editingMode,
-		hasPatternOverridesSource,
-	} = useSelect(
+	const { onNavigateToEntityRecord } = useSelect(
 		( select ) => {
 			const { canUser } = select( coreStore );
 			const {
@@ -82,14 +74,14 @@ export default function ReusableBlockEdit( {
 	const handleEditOriginal = () => {
 		onNavigateToEntityRecord( {
 			postId: ref,
-			postType: 'formello_form',
+			postType: 'formello',
 		} );
 	};
 
 	const hasAlreadyRendered = useHasRecursion( ref );
 	const { record, hasResolved } = useEntityRecord(
 		'postType',
-		'formello_form',
+		'formello',
 		ref
 	);
 
@@ -98,7 +90,7 @@ export default function ReusableBlockEdit( {
 	const options = useSelect( ( select ) => {
 		const forms = select( 'core' ).getEntityRecords(
 			'postType',
-			'formello_form',
+			'formello',
 			{
 				per_page: -1,
 			}
@@ -130,21 +122,19 @@ export default function ReusableBlockEdit( {
 				excerpt: '',
 			};
 
-			return saveEntityRecord(
-				'postType',
-				'formello_form',
-				template
-			).then( ( response ) => {
-				setAttributes( { ref: response.id } );
-				setIsDisabled( false );
-			} );
+			return saveEntityRecord( 'postType', 'formello', template ).then(
+				( response ) => {
+					setAttributes( { ref: response.id } );
+					setIsDisabled( true );
+				}
+			);
 		},
 		[ saveEntityRecord, setAttributes ]
 	);
 
 	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
 		'postType',
-		'formello_form',
+		'formello',
 		{ id: ref }
 	);
 
@@ -316,7 +306,7 @@ export default function ReusableBlockEdit( {
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton onClick={ handleEditOriginal }>
-						{ __( 'Edit original' ) }
+						{ __( 'Edit form', 'formello' ) }
 					</ToolbarButton>
 				</ToolbarGroup>
 			</BlockControls>

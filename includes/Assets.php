@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-use function Formello\Utils\formello_frontend_option;
+use function Formello\Utils\formello_frontend_options;
 
 /**
  * Scripts and Styles Class
@@ -43,7 +43,7 @@ class Assets {
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'register' ) );
-		add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'register' ) );
 	}
 
 	/**
@@ -73,7 +73,7 @@ class Assets {
 			'formello',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => formello_frontend_option(),
+				'settings' => formello_frontend_options(),
 			)
 		);
 	}
@@ -107,7 +107,7 @@ class Assets {
 			'formello',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
-				'settings' => formello_frontend_option(),
+				'settings' => formello_frontend_options(),
 			)
 		);
 
@@ -144,6 +144,7 @@ class Assets {
 	 */
 	public function get_scripts() {
 		$admin_asset_path = FORMELLO_ABSPATH . '/build/admin.asset.php';
+		$new_form_asset_path = FORMELLO_ABSPATH . '/build/new-form.asset.php';
 		if ( ! file_exists( $admin_asset_path ) ) {
 			throw new \Error(
 				'You need to run `npm start` or `npm run build` for the "create-block/formello" block first.'
@@ -151,6 +152,7 @@ class Assets {
 		}
 
 		$admin_script_asset = require $admin_asset_path;
+		$new_form_script_asset = require $new_form_asset_path;
 
 		$scripts = array(
 			'formello-admin' => array(
@@ -158,6 +160,18 @@ class Assets {
 				'deps'      => $admin_script_asset['dependencies'],
 				'version'   => $admin_script_asset['version'],
 				'in_footer' => true,
+			),
+			'formello-new-form' => array(
+				'src'       => FORMELLO_ASSETS . '/new-form.js',
+				'deps'      => $new_form_script_asset['dependencies'],
+				'version'   => $new_form_script_asset['version'],
+				'in_footer' => true,
+			),
+			'recaptcha' => array(
+				'src' => 'https://www.google.com/recaptcha/api.js',
+			),
+			'hcaptcha' => array(
+				'src' => 'https://js.hcaptcha.com/1/api.js',
 			),
 		);
 

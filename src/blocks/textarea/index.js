@@ -4,13 +4,14 @@ import metadata from './block.json';
 import { registerBlockType, createBlock } from '@wordpress/blocks';
 import { Textarea } from '../../icons/icons';
 
+import './style.scss';
+
 /**
  * Every block starts by registering a new block type definition.
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
 registerBlockType( metadata, {
-
 	transforms: {
 		from: [
 			{

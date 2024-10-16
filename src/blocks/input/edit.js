@@ -11,7 +11,7 @@ import {
 } from '@wordpress/block-editor';
 
 import { ToolbarGroup } from '@wordpress/components';
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 import { Hidden } from '../../icons/icons';
 import Label from '../../components/label';
@@ -19,7 +19,6 @@ import Options from '../../components/field-options';
 import ValidationOptions from '../../components/field-options/validation';
 import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
-import { useInputId } from '../../components/hooks';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 
 export default function Edit( props ) {
@@ -40,17 +39,12 @@ export default function Edit( props ) {
 
 	const TagName = type === 'textarea' ? 'textarea' : 'input';
 	const supported = SUPPORTED_ATTRIBUTES[ type ];
-	const inputId = useInputId( Edit, props );
 
 	const borderProps = useBorderProps( attributes );
 	const spacingProps = getSpacingClassesAndStyles( attributes );
 
-	const containerClass = classnames( {
-		formello: true,
-		'formello-group': withButton || 'range' === type,
-		'formello-group grouped': grouped,
-		'formello-checkbox':
-			'checkbox' === type || 'radio' === type || 'hidden' === type,
+	const containerClass = clsx( {
+		'missing-name': ! name,
 	} );
 
 	const inputStyle = {
@@ -114,7 +108,6 @@ export default function Edit( props ) {
 				placeholder={ placeholder }
 				disabled={ 'file' === type }
 				autoComplete={ autocomplete || 'new-password' }
-				id={ inputId }
 			/>
 
 			{ children }

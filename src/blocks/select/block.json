@@ -5,7 +5,6 @@
 	"title": "Select",
 	"description": "Dropdown select.",
 	"category": "formello",
-	"ancestor": ["formello/form"],
 	"textdomain": "formello",
 	"attributes": {
 		"id": {
@@ -111,5 +110,7 @@
 			"default": ""
 		}
 	},
-	"editorScript": "file:./index.js"
+	"style": "file:./style-index.css",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php"
 }

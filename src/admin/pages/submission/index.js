@@ -88,7 +88,7 @@ export const Submission = () => {
 				</Button>
 			</Header>
 			{ submission.isResolving && <Spinner /> }
-			{ submission.hasResolved && (
+			{ submission.hasResolved && submission.record && (
 				<div className="formello-submission">
 					<Grid
 						columns={ 4 }

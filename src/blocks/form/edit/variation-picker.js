@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import classnames from 'classnames';
+import clsx from 'clsx';
 
 /**
  * WordPress dependencies
@@ -36,7 +36,7 @@ function BlockVariationPicker( props ) {
 			: getDefaultBlockVariation( name );
 	} );
 
-	const classes = classnames( 'block-editor-block-variation-picker', {
+	const classes = clsx( 'block-editor-block-variation-picker', {
 		'has-many-variations': variations.length > 4,
 	} );
 

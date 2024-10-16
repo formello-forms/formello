@@ -1,8 +1,8 @@
 <?php
 /**
- * Set our block attribute defaults.
+ * Base action class.
  *
- * @package Formello
+ * @package formello
  */
 
 namespace Formello\Actions;
