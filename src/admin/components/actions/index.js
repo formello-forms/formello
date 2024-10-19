@@ -16,7 +16,7 @@ import {
 	Button,
 } from '@wordpress/components';
 import { store as noticesStore } from '@wordpress/notices';
-import { external, trash, backup } from '@wordpress/icons';
+import { external, trash, backup, edit } from '@wordpress/icons';
 import { addQueryArgs } from '@wordpress/url';
 
 function getItemTitle( item ) {
@@ -29,7 +29,6 @@ function getItemTitle( item ) {
 export const trashPostAction = {
 	id: 'move-to-trash',
 	label: __( 'Move to Trash' ),
-	isPrimary: true,
 	supportsBulk: true,
 	icon: trash,
 	isEligible( { status } ) {
@@ -245,7 +244,8 @@ export const viewPostAction = {
 export const editPostAction = {
 	id: 'edit-post',
 	label: __( 'Edit' ),
-	isPrimary: false,
+	isPrimary: true,
+	icon: edit,
 	isEligible( { status } ) {
 		return status !== 'trash';
 	},

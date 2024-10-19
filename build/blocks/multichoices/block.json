@@ -3,6 +3,9 @@
   "apiVersion": 2,
   "name": "formello/multichoices",
   "title": "Multi choices",
+  "ancestor": [
+    "formello/form"
+  ],
   "category": "formello",
   "textdomain": "formello",
   "attributes": {

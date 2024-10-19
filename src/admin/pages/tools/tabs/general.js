@@ -43,7 +43,6 @@ export default function General() {
 				<CardBody>
 					<ResetSettings />
 					<CardDivider />
-					<DefaultCPTView />
 				</CardBody>
 			</Card>
 		</div>

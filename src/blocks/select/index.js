@@ -13,11 +13,6 @@ registerBlockType( metadata, {
 	 */
 	icon: Icon,
 
-	supports: {
-		html: false,
-		reusable: false,
-	},
-
 	/**
 	 * @see ./edit.js
 	 */

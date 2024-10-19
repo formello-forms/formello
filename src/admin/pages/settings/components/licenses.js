@@ -28,7 +28,6 @@ const LicensesTab = ( props ) => {
 				title={ title }
 				name={ name }
 				optionName={ optionName }
-				addonSettings={ settings[ optionName ] }
 				settings={ settings }
 				addonSettings={ settings[ optionName ] }
 				setSettings={ setSettings }

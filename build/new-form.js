@@ -1427,8 +1427,7 @@ function Settings() {
     captchaType,
     hide,
     redirectUrl,
-    successMessage,
-    errorMessage
+    successMessage
   } = meta._formello_settings;
   const settingsUrl = (0,_wordpress_url__WEBPACK_IMPORTED_MODULE_4__.addQueryArgs)('admin.php', {
     tab: 'captcha',
@@ -2016,24 +2015,25 @@ const PluginDocumentSettingPanelExample = () => {
       postType: select('core/editor').getCurrentPostType()
     };
   });
-  if ('formello' !== postType) {
+  if ('formello_form' !== postType) {
     return null;
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__.PluginDocumentSettingPanel, {
-      name: "plugin-sidebar-example",
+      name: "plugin-sidebar-settings",
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Settings'),
       className: "formello-sidebar",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_settings_basic__WEBPACK_IMPORTED_MODULE_3__.Settings, {})
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__.PluginDocumentSettingPanel, {
-      name: "plugin-sidebar-example",
+      name: "plugin-sidebar-actions",
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Actions'),
       className: "formello-sidebar",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_settings_actions__WEBPACK_IMPORTED_MODULE_5__.ActionsSettings, {})
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_editor__WEBPACK_IMPORTED_MODULE_1__.PluginDocumentSettingPanel, {
-      name: "plugin-sidebar-example2",
+      name: "plugin-sidebar-advanced",
       title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Advanced'),
       className: "formello-sidebar",
+      isOpened: true,
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_settings_advanced__WEBPACK_IMPORTED_MODULE_4__.AdvancedSettings, {})
     })]
   });
@@ -2064,10 +2064,12 @@ function validateAll() {
 (0,_wordpress_hooks__WEBPACK_IMPORTED_MODULE_7__.addFilter)('editor.preSavePost', 'editor', edits => {
   const postType = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.select)('core/editor').getCurrentPostType();
   const meta = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.select)('core/editor').getCurrentPostAttribute('meta');
-  if ('formello' === postType) {
+  if ('formello_form' === postType) {
     const fields = (0,_components_merge_tags_functions__WEBPACK_IMPORTED_MODULE_9__.getFieldsType)();
     const constraints = (0,_components_merge_tags_functions__WEBPACK_IMPORTED_MODULE_9__.getConstraints)();
     let newEdits;
+
+    // There are already meta edits?
     if (edits.meta) {
       newEdits = {
         ...edits,
@@ -2081,6 +2083,7 @@ function validateAll() {
         }
       };
     } else {
+      // Add our meta if they're not there
       const newMeta = {
         ...meta,
         _formello_settings: {

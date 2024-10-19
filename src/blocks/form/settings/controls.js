@@ -1,19 +1,20 @@
 import { __ } from '@wordpress/i18n';
 import { useState, Fragment } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
-import { ActionsModal } from '../actions/modal';
-import { integrations, icons } from '../actions/constants';
+import { ActionsModal } from '../../../form-settings/actions/modal';
+import { integrations, icons } from '../../../form-settings/actions/constants';
 import {
 	ToolbarButton,
 	ToolbarGroup,
 	ToolbarDropdownMenu,
 	Icon,
 } from '@wordpress/components';
+import { TemplatesModal } from './templates-modal.js';
 
 export function Controls( { attributes, clientId } ) {
 	const [ meta ] = useEntityProp(
 		'postType',
-		'formello',
+		'formello_form',
 		'meta',
 		attributes.id
 	);
@@ -22,6 +23,15 @@ export function Controls( { attributes, clientId } ) {
 
 	return (
 		<Fragment>
+			<ToolbarGroup>
+				<ToolbarButton
+					label={ __( 'Template', 'popper' ) }
+					icon={ layout }
+					onClick={ () => {
+						setModalOpen( 'templates' );
+					} }
+				/>
+			</ToolbarGroup>
 			<ToolbarGroup>
 				<ToolbarDropdownMenu
 					icon={ 'admin-generic' }
@@ -49,7 +59,13 @@ export function Controls( { attributes, clientId } ) {
 					);
 				} ) }
 			</ToolbarGroup>
-
+			{ 'templates' === isModalOpen && (
+				<TemplatesModal
+					clientId={ clientId }
+					onRequestClose={ () => setModalOpen( false ) }
+					blockName={ name }
+				/>
+			) }
 			{ showActionsModal && (
 				<ActionsModal
 					settings={ showActionsModal }

@@ -948,7 +948,6 @@ function Edit({
   setAttributes
 }) {
   const {
-    style,
     type,
     alignment,
     noWrapper
@@ -1085,8 +1084,8 @@ __webpack_require__.r(__webpack_exports__);
     src: 'button'
   },
   supports: {
-    ..._block_json__WEBPACK_IMPORTED_MODULE_3__.supports,
-    multiple: 'formello' !== window.pagenow ? true : false
+    ..._block_json__WEBPACK_IMPORTED_MODULE_3__.supports
+    //multiple: 'formello' !== window.pagenow ? true : false,
   },
   /**
    * @see ./edit.js
@@ -1127,7 +1126,6 @@ function save({
     text,
     alignment,
     type,
-    style,
     noWrapper
   } = attributes;
   const icons = {
@@ -1329,7 +1327,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \**************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/button","title":"Button","description":"A block to display form button.","category":"formello","icon":"button","textdomain":"formello","usesContext":["formello/settings"],"attributes":{"text":{"type":"string","source":"text","selector":"span","default":"Submit"},"alignment":{"type":"string","default":"left"},"noWrapper":{"type":"boolean"},"type":{"type":"string","default":"Loading"},"style":{"type":"object","default":{"color":{"background":"#000000","text":"#ffffff"},"padding":{"top":"10"}}}},"selectors":{"root":".wp-block-formello-button","color":".wp-block-formello-button > button","typography":{"root":".wp-block-formello-button > button","text-decoration":".wp-block-formello-button > button"}},"supports":{"html":false,"lock":false,"multiple":false,"reusable":false,"inserter":true,"color":{"background":true,"text":true,"gradients":true,"__experimentalSkipSerialization":true},"spacing":{"padding":true,"margin":true},"__experimentalBorder":{"radius":true,"width":true,"color":true,"style":true},"typography":{"fontSize":true}},"editorScript":"file:./index.js","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/button","title":"Button","description":"A block to display form button.","category":"formello","icon":"button","ancestor":["formello/form"],"textdomain":"formello","usesContext":["formello/settings"],"attributes":{"text":{"type":"string","source":"text","selector":"span","default":"Submit"},"alignment":{"type":"string","default":"left"},"noWrapper":{"type":"boolean"},"type":{"type":"string","default":"Loading"},"style":{"type":"object","default":{"color":{"background":"#000000","text":"#ffffff"},"padding":{"top":"10"}}}},"selectors":{"root":".wp-block-formello-button","color":".wp-block-formello-button > button","typography":{"root":".wp-block-formello-button > button","text-decoration":".wp-block-formello-button > button"}},"supports":{"html":false,"lock":false,"multiple":false,"reusable":false,"inserter":true,"color":{"background":true,"text":true,"gradients":true,"__experimentalSkipSerialization":true},"spacing":{"padding":true,"margin":true},"__experimentalBorder":{"radius":true,"width":true,"color":true,"style":true},"typography":{"fontSize":true}},"editorScript":"file:./index.js","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

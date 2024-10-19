@@ -4971,164 +4971,6 @@ function isValid(value, context) {
 
 /***/ }),
 
-/***/ "./node_modules/@wordpress/dataviews/build-module/filter-and-sort-data-view.js":
-/*!*************************************************************************************!*\
-  !*** ./node_modules/@wordpress/dataviews/build-module/filter-and-sort-data-view.js ***!
-  \*************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   filterSortAndPaginate: () => (/* binding */ filterSortAndPaginate)
-/* harmony export */ });
-/* harmony import */ var remove_accents__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! remove-accents */ "./node_modules/remove-accents/index.js");
-/* harmony import */ var remove_accents__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(remove_accents__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./constants */ "./node_modules/@wordpress/dataviews/build-module/constants.js");
-/* harmony import */ var _normalize_fields__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./normalize-fields */ "./node_modules/@wordpress/dataviews/build-module/normalize-fields.js");
-/**
- * External dependencies
- */
-
-
-/**
- * Internal dependencies
- */
-
-
-function normalizeSearchInput(input = '') {
-  return remove_accents__WEBPACK_IMPORTED_MODULE_0___default()(input.trim().toLowerCase());
-}
-const EMPTY_ARRAY = [];
-
-/**
- * Applies the filtering, sorting and pagination to the raw data based on the view configuration.
- *
- * @param data   Raw data.
- * @param view   View config.
- * @param fields Fields config.
- *
- * @return Filtered, sorted and paginated data.
- */
-function filterSortAndPaginate(data, view, fields) {
-  if (!data) {
-    return {
-      data: EMPTY_ARRAY,
-      paginationInfo: {
-        totalItems: 0,
-        totalPages: 0
-      }
-    };
-  }
-  const _fields = (0,_normalize_fields__WEBPACK_IMPORTED_MODULE_1__.normalizeFields)(fields);
-  let filteredData = [...data];
-  // Handle global search.
-  if (view.search) {
-    const normalizedSearch = normalizeSearchInput(view.search);
-    filteredData = filteredData.filter(item => {
-      return _fields.filter(field => field.enableGlobalSearch).map(field => {
-        return normalizeSearchInput(field.getValue({
-          item
-        }));
-      }).some(field => field.includes(normalizedSearch));
-    });
-  }
-  if (view.filters && view.filters?.length > 0) {
-    view.filters.forEach(filter => {
-      const field = _fields.find(_field => _field.id === filter.field);
-      if (field) {
-        if (filter.operator === _constants__WEBPACK_IMPORTED_MODULE_2__.OPERATOR_IS_ANY && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            const fieldValue = field.getValue({
-              item
-            });
-            if (Array.isArray(fieldValue)) {
-              return filter.value.some(filterValue => fieldValue.includes(filterValue));
-            } else if (typeof fieldValue === 'string') {
-              return filter.value.includes(fieldValue);
-            }
-            return false;
-          });
-        } else if (filter.operator === _constants__WEBPACK_IMPORTED_MODULE_2__.OPERATOR_IS_NONE && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            const fieldValue = field.getValue({
-              item
-            });
-            if (Array.isArray(fieldValue)) {
-              return !filter.value.some(filterValue => fieldValue.includes(filterValue));
-            } else if (typeof fieldValue === 'string') {
-              return !filter.value.includes(fieldValue);
-            }
-            return false;
-          });
-        } else if (filter.operator === _constants__WEBPACK_IMPORTED_MODULE_2__.OPERATOR_IS_ALL && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            return filter.value.every(value => {
-              return field.getValue({
-                item
-              })?.includes(value);
-            });
-          });
-        } else if (filter.operator === _constants__WEBPACK_IMPORTED_MODULE_2__.OPERATOR_IS_NOT_ALL && filter?.value?.length > 0) {
-          filteredData = filteredData.filter(item => {
-            return filter.value.every(value => {
-              return !field.getValue({
-                item
-              })?.includes(value);
-            });
-          });
-        } else if (filter.operator === _constants__WEBPACK_IMPORTED_MODULE_2__.OPERATOR_IS) {
-          filteredData = filteredData.filter(item => {
-            return filter.value === field.getValue({
-              item
-            });
-          });
-        } else if (filter.operator === _constants__WEBPACK_IMPORTED_MODULE_2__.OPERATOR_IS_NOT) {
-          filteredData = filteredData.filter(item => {
-            return filter.value !== field.getValue({
-              item
-            });
-          });
-        }
-      }
-    });
-  }
-
-  // Handle sorting.
-  if (view.sort) {
-    const fieldId = view.sort.field;
-    const fieldToSort = _fields.find(field => {
-      return field.id === fieldId;
-    });
-    if (fieldToSort) {
-      filteredData.sort((a, b) => {
-        var _view$sort$direction;
-        return fieldToSort.sort(a, b, (_view$sort$direction = view.sort?.direction) !== null && _view$sort$direction !== void 0 ? _view$sort$direction : 'desc');
-      });
-    }
-  }
-
-  // Handle pagination.
-  let totalItems = filteredData.length;
-  let totalPages = 1;
-  if (view.page !== undefined && view.perPage !== undefined) {
-    const start = (view.page - 1) * view.perPage;
-    totalItems = filteredData?.length || 0;
-    totalPages = Math.ceil(totalItems / view.perPage);
-    filteredData = filteredData?.slice(start, start + view.perPage);
-  }
-  return {
-    data: filteredData,
-    paginationInfo: {
-      totalItems,
-      totalPages
-    }
-  };
-}
-//# sourceMappingURL=filter-and-sort-data-view.js.map
-
-/***/ }),
-
 /***/ "./node_modules/@wordpress/dataviews/build-module/lock-unlock.js":
 /*!***********************************************************************!*\
   !*** ./node_modules/@wordpress/dataviews/build-module/lock-unlock.js ***!
@@ -5745,6 +5587,28 @@ const commentContent = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODUL
 
 /***/ }),
 
+/***/ "./node_modules/@wordpress/icons/build-module/library/edit.js":
+/*!********************************************************************!*\
+  !*** ./node_modules/@wordpress/icons/build-module/library/edit.js ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _pencil__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./pencil */ "./node_modules/@wordpress/icons/build-module/library/pencil.js");
+/**
+ * Internal dependencies
+ */
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_pencil__WEBPACK_IMPORTED_MODULE_0__["default"]);
+//# sourceMappingURL=edit.js.map
+
+/***/ }),
+
 /***/ "./node_modules/@wordpress/icons/build-module/library/external.js":
 /*!************************************************************************!*\
   !*** ./node_modules/@wordpress/icons/build-module/library/external.js ***!
@@ -5998,6 +5862,38 @@ const next = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (next);
 //# sourceMappingURL=next.js.map
+
+/***/ }),
+
+/***/ "./node_modules/@wordpress/icons/build-module/library/pencil.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@wordpress/icons/build-module/library/pencil.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/primitives */ "@wordpress/primitives");
+/* harmony import */ var _wordpress_primitives__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/**
+ * WordPress dependencies
+ */
+
+
+const pencil = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.SVG, {
+  xmlns: "http://www.w3.org/2000/svg",
+  viewBox: "0 0 24 24",
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_wordpress_primitives__WEBPACK_IMPORTED_MODULE_0__.Path, {
+    d: "m19 7-3-3-8.5 8.5-1 4 4-1L19 7Zm-7 11.5H5V20h7v-1.5Z"
+  })
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (pencil);
+//# sourceMappingURL=pencil.js.map
 
 /***/ }),
 
@@ -6260,7 +6156,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_notices__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_notices__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/trash.js");
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/external.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/backup.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/edit.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/backup.js");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
@@ -6287,7 +6184,6 @@ function getItemTitle(item) {
 const trashPostAction = {
   id: 'move-to-trash',
   label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Move to Trash'),
-  isPrimary: true,
   supportsBulk: true,
   icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__["default"],
   isEligible({
@@ -6330,7 +6226,7 @@ const trashPostAction = {
                   throwOnError: true
                 });
               }));
-              createSuccessNotice(posts.length > 1 ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The selected posts were moved to the trash.') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: The page's title. */
+              createSuccessNotice(posts.length > 1 ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The selected posts were moved to the trash.') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(/* translators: The page's title. */
               (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('"%s" moved to the Trash.'), (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_2__.decodeEntities)(posts[0].title.rendered)), {
                 type: 'snackbar',
                 id: 'edit-site-page-trashed'
@@ -6379,7 +6275,7 @@ function usePermanentlyDeletePostAction() {
       }) => status === 'fulfilled')) {
         let successMessage;
         if (promiseResult.length === 1) {
-          successMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: The posts's title. */
+          successMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(/* translators: The posts's title. */
           (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('"%s" permanently deleted.'), getItemTitle(posts[0]));
         } else {
           successMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('The posts were permanently deleted.');
@@ -6415,10 +6311,10 @@ function usePermanentlyDeletePostAction() {
           if (errorMessages.size === 0) {
             errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('An error occurred while permanently deleting the posts.');
           } else if (errorMessages.size === 1) {
-            errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s: an error message */
+            errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(/* translators: %s: an error message */
             (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('An error occurred while permanently deleting the posts: %s'), [...errorMessages][0]);
           } else {
-            errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: %s: a list of comma separated error messages */
+            errorMessage = (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(/* translators: %s: a list of comma separated error messages */
             (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Some errors occurred while permanently deleting the posts: %s'), [...errorMessages].join(','));
           }
         }
@@ -6444,7 +6340,8 @@ const viewPostAction = {
 const editPostAction = {
   id: 'edit-post',
   label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Edit'),
-  isPrimary: false,
+  isPrimary: true,
+  icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
   isEligible({
     status
   }) {
@@ -6557,7 +6454,7 @@ function useRestorePostAction() {
     id: 'restore',
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('Restore'),
     isPrimary: true,
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
     supportsBulk: true,
     isEligible({
       status
@@ -6574,8 +6471,8 @@ function useRestorePostAction() {
             throwOnError: true
           });
         }
-        createSuccessNotice(posts.length > 1 ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: The number of posts. */
-        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('%d posts have been restored.'), posts.length) : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)( /* translators: The number of posts. */
+        createSuccessNotice(posts.length > 1 ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(/* translators: The number of posts. */
+        (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('%d posts have been restored.'), posts.length) : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.sprintf)(/* translators: The number of posts. */
         (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__.__)('"%s" has been restored.'), getItemTitle(posts[0])), {
           type: 'snackbar',
           id: 'edit-site-post-restored'
@@ -6685,8 +6582,8 @@ const trashSubmissionAction = {
                   throwOnError: true
                 });
               }));
-              createSuccessNotice(submissions.length > 1 ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('The selected submissions were moved to the trash.') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)( /* translators: The page's title. */
-              (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('"%s" moved to the Trash.'), (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_1__.decodeEntities)(submissions[0].title.rendered)), {
+              createSuccessNotice(submissions.length > 1 ? (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('The selected submissions were moved to the trash.') : (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.sprintf)(/* translators: The page's title. */
+              (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_3__.__)('Submission "%s" moved to the Trash.'), (0,_wordpress_html_entities__WEBPACK_IMPORTED_MODULE_1__.decodeEntities)(submissions[0].id)), {
                 type: 'snackbar',
                 id: 'edit-site-page-trashed'
               });
@@ -7453,10 +7350,10 @@ function Captcha() {
             selected: reCaptcha.version,
             options: [{
               label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('v2 checkbox', 'formello'),
-              value: '1'
+              value: 'checkbox'
             }, {
               label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('v3 invisible', 'formello'),
-              value: '3'
+              value: 'invisible'
             }],
             onChange: val => {
               setCaptcha('version', val, 'reCaptcha');
@@ -7466,13 +7363,15 @@ function Captcha() {
             value: reCaptcha.site_key,
             onChange: val => {
               setCaptcha('site_key', val, 'reCaptcha');
-            }
+            },
+            __nextHasNoMarginBottom: true
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Secret Key', 'formello'),
             value: reCaptcha.secret_key,
             onChange: val => {
               setCaptcha('secret_key', val, 'reCaptcha');
-            }
+            },
+            __nextHasNoMarginBottom: true
           }), 3 === Number(reCaptcha.version) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Threshold', 'formello'),
             value: reCaptcha.threshold,
@@ -7482,7 +7381,8 @@ function Captcha() {
             type: "number",
             step: '0.1',
             min: '0',
-            max: '1'
+            max: '1',
+            __nextHasNoMarginBottom: true
           })]
         })
       })]
@@ -7510,13 +7410,15 @@ function Captcha() {
             value: hCaptcha?.site_key,
             onChange: val => {
               setCaptcha('site_key', val, 'hCaptcha');
-            }
+            },
+            __nextHasNoMarginBottom: true
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Secret Key', 'formello'),
             value: hCaptcha?.secret_key,
             onChange: val => {
               setCaptcha('secret_key', val, 'hCaptcha');
-            }
+            },
+            __nextHasNoMarginBottom: true
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Threshold', 'formello'),
             value: reCaptcha.threshold,
@@ -7526,7 +7428,8 @@ function Captcha() {
             type: "number",
             step: '0.1',
             min: '0',
-            max: '1'
+            max: '1',
+            __nextHasNoMarginBottom: true
           })]
         })
       })]
@@ -7665,7 +7568,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
 /* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../router */ "./src/admin/router/index.js");
-/* harmony import */ var _blocks_form_actions_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../blocks/form/actions/constants */ "./src/blocks/form/actions/constants.js");
+/* harmony import */ var _form_settings_actions_constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../form-settings/actions/constants */ "./src/form-settings/actions/constants.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__);
 
@@ -7705,8 +7608,8 @@ const Integrations = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.withF
 const IntegrationsTab = () => {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Integrations, {
-      integrations: _blocks_form_actions_constants__WEBPACK_IMPORTED_MODULE_4__.integrations,
-      icons: _blocks_form_actions_constants__WEBPACK_IMPORTED_MODULE_4__.icons
+      integrations: _form_settings_actions_constants__WEBPACK_IMPORTED_MODULE_4__.integrations,
+      icons: _form_settings_actions_constants__WEBPACK_IMPORTED_MODULE_4__.icons
     })
   });
 };
@@ -7756,10 +7659,13 @@ const LoggingTab = () => {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.ToggleControl, {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enable log', 'formello'),
         checked: log,
-        onChange: val => updateSetting('log', val)
-      }), log && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.ExternalLink, {
-        href: '/wp-content/uploads/formello/logs/' + settings.log_file,
-        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('View log', 'formello')
+        onChange: val => updateSetting('log', val),
+        __nextHasNoMarginBottom: true
+      }), log && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.ExternalLink, {
+          href: '/wp-content/uploads/formello/logs/' + settings.log_file,
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('View log', 'formello')
+        })
       })]
     })]
   });
@@ -7841,7 +7747,8 @@ function Messages() {
               value: settings.messages.form[key],
               onChange: val => {
                 setMessage('form', key, val);
-              }
+              },
+              __nextHasNoMarginBottom: true
             })
           }, i);
         })]
@@ -7859,7 +7766,8 @@ function Messages() {
               value: settings.messages.missingValue[key],
               onChange: val => {
                 setMessage('missingValue', key, val);
-              }
+              },
+              __nextHasNoMarginBottom: true
             })
           }, i);
         })
@@ -7876,7 +7784,8 @@ function Messages() {
             value: settings.messages.patternMismatch[key],
             onChange: val => {
               setMessage('patternMismatch', key, val);
-            }
+            },
+            __nextHasNoMarginBottom: true
           }, i);
         })
       })]
@@ -7892,7 +7801,8 @@ function Messages() {
             value: settings.messages.outOfRange[key],
             onChange: val => {
               setMessage('outOfRange', key, val);
-            }
+            },
+            __nextHasNoMarginBottom: true
           }, i);
         })
       })]
@@ -7908,7 +7818,8 @@ function Messages() {
             value: settings.messages.wrongLength[key],
             onChange: val => {
               setMessage('wrongLength', key, val);
-            }
+            },
+            __nextHasNoMarginBottom: true
           }, i);
         })
       })]
@@ -8268,7 +8179,7 @@ function SubmissionData(props) {
   });
   const {
     record: form
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityRecord)('postType', 'formello', data.form_id);
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityRecord)('postType', 'formello_form', data.form_id);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Card, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CardHeader, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("h2", {
@@ -8354,10 +8265,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/url */ "@wordpress/url");
 /* harmony import */ var _wordpress_url__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_wordpress_url__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _components_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/actions */ "./src/admin/components/actions/index.js");
-/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/comment-content.js");
+/* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/comment-content.js");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../router */ "./src/admin/router/index.js");
-/* harmony import */ var _wordpress_dataviews__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/dataviews */ "./node_modules/@wordpress/dataviews/build-module/filter-and-sort-data-view.js");
-/* harmony import */ var _wordpress_dataviews__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @wordpress/dataviews */ "./node_modules/@wordpress/dataviews/build-module/components/dataviews/index.js");
+/* harmony import */ var _wordpress_dataviews__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @wordpress/dataviews */ "./node_modules/@wordpress/dataviews/build-module/components/dataviews/index.js");
 /* harmony import */ var _components_masthead_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/masthead.js */ "./src/admin/components/masthead.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
@@ -8464,8 +8374,16 @@ const Forms = () => {
   }, [view]);
   const {
     records: forms,
-    isResolving: isLoadingForms
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)('postType', 'formello', queryArgs);
+    isResolving: isLoadingForms,
+    totalItems,
+    totalPages
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityRecords)('postType', 'formello_form', queryArgs);
+  const paginationInfo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => {
+    return {
+      totalItems,
+      totalPages
+    };
+  }, [totalItems, totalPages]);
   const {
     records: authors,
     isResolving: isLoadingAuthors
@@ -8571,24 +8489,23 @@ const Forms = () => {
       item
     }) => {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("code", {
-        children: `[formello id=${item.id}]`
+        children: `[formello ref=${item.id}]`
       });
     },
     enableSorting: false
-  }], [authors]);
-  const {
-    data: shownData,
-    paginationInfo
-  } = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => {
-    return (0,_wordpress_dataviews__WEBPACK_IMPORTED_MODULE_11__.filterSortAndPaginate)(forms, view, fields);
-  }, [view, forms, fields]);
+  }], [authors, history]);
+
+  /*const { data: shownData, paginationInfo } = useMemo( () => {
+  	return filterSortAndPaginate( forms, view, fields );
+  }, [ view, forms, fields ] );*/
+
   const permanentlyDeletePostAction = (0,_components_actions__WEBPACK_IMPORTED_MODULE_7__.usePermanentlyDeletePostAction)();
   const restorePostAction = (0,_components_actions__WEBPACK_IMPORTED_MODULE_7__.useRestorePostAction)();
   const actions = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_4__.useMemo)(() => [{
     id: 'view-submissions',
     label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('View Submissions', 'formello'),
     isPrimary: true,
-    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_12__["default"],
+    icon: _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__["default"],
     callback(posts) {
       const post = posts[0];
       history.push({
@@ -8605,17 +8522,17 @@ const Forms = () => {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
         variant: "primary",
         size: "small",
-        href: 'post-new.php?post_type=formello',
+        href: 'post-new.php?post_type=formello_form',
         children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Add new')
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
       className: "formello-content",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Card, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_dataviews__WEBPACK_IMPORTED_MODULE_13__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_dataviews__WEBPACK_IMPORTED_MODULE_12__["default"], {
           paginationInfo: paginationInfo,
           fields: fields,
           actions: actions,
-          data: shownData || [],
+          data: forms || [],
           isLoading: isLoadingForms || isLoadingAuthors,
           view: view,
           onChangeView: setView,
@@ -8741,15 +8658,20 @@ const Submissions = () => {
       page: view.page,
       order: view.sort?.direction,
       orderby: view.sort?.field,
-      search: view.search,
+      search: view.search || undefined,
       ...filters
     };
   }, [view, params]);
-  const submissions = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__.useEntityRecords)('formello/v1', 'submissions', queryArgs);
+  const {
+    records: submissions,
+    isResolving: isLoadingSubmissions,
+    totalItems,
+    totalPages
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__.useEntityRecords)('formello/v1', 'submissions', queryArgs);
   const columns = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__.useEntityRecord)('formello/v1', 'columns', params.form_id);
   const {
     record: form
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__.useEntityRecord)('postType', 'formello', params.form_id);
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__.useEntityRecord)('postType', 'formello_form', params.form_id);
   const getColumns = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useCallback)(() => {
     if (columns.hasResolved) {
       return columns.record.columns;
@@ -8758,10 +8680,10 @@ const Submissions = () => {
   }, [columns]);
   const paginationInfo = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useMemo)(() => {
     return {
-      totalItems: form?.submissions_count.total,
-      totalPages: Math.ceil(form?.submissions_count.total / view.perPage)
+      totalItems,
+      totalPages
     };
-  }, [form, view]);
+  }, [totalItems, totalPages]);
   const fields = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useMemo)(() => {
     const _fields = [{
       header: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Status'),
@@ -8843,6 +8765,11 @@ const Submissions = () => {
     });
     return _fields.concat(_columns);
   }, [history, getColumns]);
+
+  /*const { data: shownData, paginationInfo } = useMemo( () => {
+  	return filterSortAndPaginate( submissions, view, fields );
+  }, [ view, submissions, fields ] );*/
+
   const {
     saveEntityRecord
   } = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_6__.useDispatch)(_wordpress_core_data__WEBPACK_IMPORTED_MODULE_7__.store);
@@ -8913,8 +8840,8 @@ const Submissions = () => {
           paginationInfo: paginationInfo,
           fields: fields,
           actions: actions,
-          data: submissions.records || EMPTY_ARRAY,
-          isLoading: submissions.isResolving,
+          data: submissions || EMPTY_ARRAY,
+          isLoading: isLoadingSubmissions,
           view: view,
           onChangeView: setView,
           defaultLayouts: defaultLayouts
@@ -8962,7 +8889,7 @@ function ExportForms() {
   const {
     records: forms,
     isResolving
-  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityRecords)('postType', 'formello', {
+  } = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_3__.useEntityRecords)('postType', 'formello_form', {
     _embed: 'wp:term'
   });
   const currentDate = (0,_wordpress_date__WEBPACK_IMPORTED_MODULE_4__.dateI18n)('', new Date());
@@ -9272,7 +9199,7 @@ function General() {
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('General', 'formello')
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CardBody, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_reset_settings__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CardDivider, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(DefaultCPTView, {})]
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_reset_settings__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CardDivider, {})]
       })]
     })
   });
@@ -9427,10 +9354,82 @@ function RouterProvider({
 
 /***/ }),
 
-/***/ "./src/blocks/form/actions/constants.js":
-/*!**********************************************!*\
-  !*** ./src/blocks/form/actions/constants.js ***!
-  \**********************************************/
+/***/ "./src/components/promo.js":
+/*!*********************************!*\
+  !*** ./src/components/promo.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Promo: () => (/* binding */ Promo),
+/* harmony export */   PromoSettings: () => (/* binding */ PromoSettings)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+const Promo = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.withFilters)('formello.modal.promo')(() => {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('This action is available only for pro users. You can try one month free.', 'formello')
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+      variant: "primary",
+      href: "https://formello.net",
+      icon: "download",
+      iconPosition: 'right',
+      target: "_blank",
+      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Try it now free!', 'formello')
+    })]
+  });
+});
+const PromoSettings = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.withFilters)('formello.settings.promo')(() => {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardHeader, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
+        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Go Pro', 'formello')
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardBody, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
+        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Empower your forms with our PRO extensions.')
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Conditional fields', 'formello')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('File upload', 'formello')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Frontend posting', 'formello')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Login form', 'formello')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Search autosuggest', 'formello')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Calculator formula', 'formello')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Web Hooks', 'formello')
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
+          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Mail marketing integration', 'formello')
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+        text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Try now free', 'formello'),
+        variant: "primary"
+      })]
+    })]
+  });
+});
+
+/***/ }),
+
+/***/ "./src/form-settings/actions/constants.js":
+/*!************************************************!*\
+  !*** ./src/form-settings/actions/constants.js ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9439,15 +9438,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   icons: () => (/* binding */ icons),
 /* harmony export */   integrations: () => (/* binding */ integrations)
 /* harmony export */ });
-/* harmony import */ var _assets_integrations_mailpoet_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../assets/integrations/mailpoet.svg */ "./assets/integrations/mailpoet.svg");
-/* harmony import */ var _assets_integrations_mailchimp_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../assets/integrations/mailchimp.svg */ "./assets/integrations/mailchimp.svg");
-/* harmony import */ var _assets_integrations_moosend_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../assets/integrations/moosend.svg */ "./assets/integrations/moosend.svg");
-/* harmony import */ var _assets_integrations_convertkit_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../assets/integrations/convertkit.svg */ "./assets/integrations/convertkit.svg");
-/* harmony import */ var _assets_integrations_getresponse_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../assets/integrations/getresponse.svg */ "./assets/integrations/getresponse.svg");
-/* harmony import */ var _assets_integrations_brevo_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../assets/integrations/brevo.svg */ "./assets/integrations/brevo.svg");
-/* harmony import */ var _assets_integrations_mailerlite_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../assets/integrations/mailerlite.svg */ "./assets/integrations/mailerlite.svg");
-/* harmony import */ var _assets_integrations_email_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../assets/integrations/email.svg */ "./assets/integrations/email.svg");
-/* harmony import */ var _assets_integrations_webhook_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../assets/integrations/webhook.svg */ "./assets/integrations/webhook.svg");
+/* harmony import */ var _assets_integrations_mailpoet_svg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../assets/integrations/mailpoet.svg */ "./assets/integrations/mailpoet.svg");
+/* harmony import */ var _assets_integrations_mailchimp_svg__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../assets/integrations/mailchimp.svg */ "./assets/integrations/mailchimp.svg");
+/* harmony import */ var _assets_integrations_moosend_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../assets/integrations/moosend.svg */ "./assets/integrations/moosend.svg");
+/* harmony import */ var _assets_integrations_convertkit_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../assets/integrations/convertkit.svg */ "./assets/integrations/convertkit.svg");
+/* harmony import */ var _assets_integrations_getresponse_svg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../assets/integrations/getresponse.svg */ "./assets/integrations/getresponse.svg");
+/* harmony import */ var _assets_integrations_brevo_svg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../assets/integrations/brevo.svg */ "./assets/integrations/brevo.svg");
+/* harmony import */ var _assets_integrations_mailerlite_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../assets/integrations/mailerlite.svg */ "./assets/integrations/mailerlite.svg");
+/* harmony import */ var _assets_integrations_email_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../assets/integrations/email.svg */ "./assets/integrations/email.svg");
+/* harmony import */ var _assets_integrations_webhook_svg__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../assets/integrations/webhook.svg */ "./assets/integrations/webhook.svg");
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/post.js");
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/login.js");
 /* harmony import */ var _wordpress_icons__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/icons */ "./node_modules/@wordpress/icons/build-module/library/comment-author-avatar.js");
@@ -9546,92 +9545,12 @@ const integrations = [{
 }, {
   async: false,
   type: 'login',
-  name: 'Login',
-  postarr: {
-    post_type: 'post',
-    post_title: '',
-    post_content: '',
-    post_excerpt: '',
-    tax_input: [],
-    meta_input: []
-  }
+  name: 'Login'
 }, {
   async: false,
   type: 'registration',
   name: 'Registration'
 }];
-
-/***/ }),
-
-/***/ "./src/components/promo.js":
-/*!*********************************!*\
-  !*** ./src/components/promo.js ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   Promo: () => (/* binding */ Promo),
-/* harmony export */   PromoSettings: () => (/* binding */ PromoSettings)
-/* harmony export */ });
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
-/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-const Promo = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.withFilters)('formello.modal.promo')(() => {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('This action is available only for pro users. You can try one month free.', 'formello')
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-      variant: "primary",
-      href: "https://formello.net",
-      icon: "download",
-      iconPosition: 'right',
-      target: "_blank",
-      children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Try it now free!', 'formello')
-    })]
-  });
-});
-const PromoSettings = (0,_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.withFilters)('formello.settings.promo')(() => {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Card, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardHeader, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h2", {
-        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Go Pro', 'formello')
-      })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.CardBody, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("p", {
-        children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Empower your forms with our PRO extensions.')
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("ul", {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Conditional fields', 'formello')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('File upload', 'formello')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Frontend posting', 'formello')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Login form', 'formello')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Search autosuggest', 'formello')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Calculator formula', 'formello')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Web Hooks', 'formello')
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("li", {
-          children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Mail marketing integration', 'formello')
-        })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
-        text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Try now free', 'formello'),
-        variant: "primary"
-      })]
-    })]
-  });
-});
 
 /***/ }),
 

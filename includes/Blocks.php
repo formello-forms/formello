@@ -2,12 +2,16 @@
 /**
  * Block handler.
  *
- * @package Formello
+ * @link       https://www.francescopepe.com
+ * @since      1.0.0
+ *
+ * @package    Formello
+ * @subpackage Formello/includes
  */
 
 namespace Formello;
 
-use function Formello\Utils\formello_default_options;
+use WP_HTML_Tag_Processor;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
@@ -19,32 +23,45 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 class Blocks {
-
 	/**
-	 * Class instance.
+	 * The ID of this plugin.
 	 *
-	 * @access private
-	 * @var $instance Class instance.
+	 * @since    2.6.0
+	 * @access   private
+	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private static $instance;
+	private $plugin_name;
 
 	/**
-	 * Initiator
+	 * The version of this plugin.
+	 *
+	 * @since    2.6.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
 	 */
-	public static function get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
+	private $version;
 
 	/**
-	 * Constructor
+	 * The main file of this plugin.
+	 *
+	 * @since    2.6.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
 	 */
-	public function __construct() {
-		add_action( 'init', array( $this, 'register_blocks' ) );
-		add_action( 'init', array( $this, 'register_block_pattern_category' ) );
-		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
+	private $entry_point;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since 2.6.0
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version     The version of this plugin.
+	 * @param string $entry_point The main file of this plugin.
+	 */
+	public function __construct( $plugin_name, $version, $entry_point ) {
+		$this->plugin_name = $plugin_name;
+		$this->version = $version;
+		$this->entry_point = $entry_point;
 		add_shortcode( 'formello', array( $this, 'do_reusable_block' ) );
 	}
 
@@ -54,65 +71,45 @@ class Blocks {
 	 * @since 1.2.0
 	 */
 	public function register_blocks() {
-		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/form',
-			array(
-				'render_callback' => array( $this, 'do_formello_block' ),
-			)
-		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/library',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/library',
 			array(
 				'render_callback' => array( $this, 'do_reusable_block' ),
 			)
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/input',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/form',
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/textarea',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/input',
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/select',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/textarea',
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/fieldset'
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/select',
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/multichoices'
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/fieldset'
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/output'
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/multichoices'
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( FORMELLO_PLUGIN_FILE ) . 'build/blocks/button',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/output'
 		);
-	}
 
-	/**
-	 * Render form block on frontend
-	 *
-	 * @param  array  $attributes The attributes of block.
-	 * @param  string $content The bock content.
-	 */
-	public function do_formello_block( $attributes, $content = '' ) {
-
-		if ( $attributes['captchaEnabled'] && 'reCaptcha' === $attributes['captchaType'] ) {
-			wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
-		}
-		if ( $attributes['captchaEnabled'] && 'hCaptcha' === $attributes['captchaType'] ) {
-			wp_enqueue_script( 'hcaptcha', 'https://js.hcaptcha.com/1/api.js' );
-		}
-
-		return $content;
+		register_block_type_from_metadata(
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/button',
+		);
 	}
 
 	/**
@@ -128,7 +125,7 @@ class Blocks {
 
 		$form = get_post( $attributes['ref'] );
 
-		if ( ! $form || 'formello' !== $form->post_type ) {
+		if ( ! $form || 'formello_form' !== $form->post_type ) {
 			return '';
 		}
 
@@ -136,15 +133,30 @@ class Blocks {
 			return '';
 		}
 
-		$config = wp_interactivity_config(
+		wp_interactivity_config(
 			'formello',
 			array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'nonce' => wp_create_nonce( '_formello' ),
 				'settings' => \Formello\Utils\formello_frontend_options(),
 			)
 		);
 
 		$form_context = \Formello\Utils\formello_form_context( $attributes['ref'] );
+
+		if ( $form_context['enableJsValidation'] ) {
+			// phpcs:ignore
+			wp_enqueue_script( 'bouncer', 'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.4.6/dist/bouncer.min.js' );
+		}
+
+		if ( $form_context['captchaEnabled'] && 'reCaptcha' === $form_context['captchaType'] ) {
+			// phpcs:ignore
+			wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
+		}
+		if ( $form_context['captchaEnabled'] && 'hCaptcha' === $form_context['captchaType'] ) {
+			// phpcs:ignore
+			wp_enqueue_script( 'hcaptcha', 'https://js.hcaptcha.com/1/api.js' );
+		}
 
 		wp_interactivity_state(
 			'formello',
@@ -152,51 +164,30 @@ class Blocks {
 				'captcha' => array(
 					'enabled' => $form_context['captchaEnabled'] ?? false,
 					'type' => $form_context['captchaType'] ?? 'recaptcha',
+					'version' => $form_context['version'] ?? '1',
 				),
 				'errors' => array(),
 			)
 		);
 
-		$form = sprintf(
-			'<form 
-				data-wp-init="callbacks.init"
-				data-wp-on--submit="actions.sendForm" 
-				%s 
-				data-wp-interactive="formello" 
-				data-wp-bind--novalidate="context.noValidate" %s>
-			%s
-			<input type="text" name="_formello_h%d" class="formello-hp" tabindex="-1">
-			%s
-			<div class="formello-message" data-wp-class--success="context.response.success" data-wp-class--error="!context.response.success">
-				<p data-wp-text="state.message"></p>
-				<ul data-wp-context="state.errors">
-					<template data-wp-each="state.errors" >
-						<li data-wp-text="context.item"></li>
-					</template>
-				</ul>
-			</div>
-			%s
-			</form>',
-			get_block_wrapper_attributes(
-				array( 'data-id' => $attributes['ref'] )
-			),
-			wp_interactivity_data_wp_context( $form_context ),
-			wp_nonce_field( '_formello', '_formello', true, false ),
-			$attributes['ref'],
-			do_blocks( $form->post_content ),
-			$form_context['debug'] ?
-				'<div class="formello-debug">
-					<p>Debug output</p>
-					<small>This output is visible only to admin.</small>
-					<pre data-wp-text="state.debugData"></pre>
-				</div>' : '',
-		);
+		$content = do_blocks( $form->post_content );
 
-		if ( $form_context['enableJsValidation'] ) {
-			wp_enqueue_script( 'bouncer', 'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.4.6/dist/bouncer.min.js' );
+		$p = new WP_HTML_Tag_Processor( $content );
+
+		if ( $p->next_tag( 'form' ) ) {
+			$p->set_attribute( 'data-wp-interactive', 'formello' );
+			$p->set_attribute( 'data-wp-init', 'callbacks.init' );
+			$p->set_attribute( 'data-wp-context', wp_json_encode( $form_context ) );
+			$p->set_attribute( 'data-wp-on--submit', 'actions.sendForm' );
+			$p->set_attribute( 'data-id', $attributes['ref'] );
 		}
 
-		return $form;
+		if ( $p->next_tag( array( 'tag_name' => 'input', 'class_name' => 'formello-hp' ) ) ) {
+			$p->set_attribute( 'name', '_formello_h' . $attributes['ref'] );
+			$p->set_attribute( 'aria-label', __( 'If you are human, leave this field blank.', 'formello' ) );
+		}
+
+		return do_blocks( $p->get_updated_html() );
 	}
 
 	/**
@@ -239,7 +230,7 @@ class Blocks {
 
 		$patterns = json_decode(
 			file_get_contents(
-				FORMELLO_PLUGIN_DIR . '/assets/templates/patterns.json'
+				plugin_dir_path( $this->entry_point ) . 'assets/templates/patterns.json'
 			),
 			true
 		);
@@ -259,4 +250,3 @@ class Blocks {
 		}
 	}
 }
-Blocks::get_instance();

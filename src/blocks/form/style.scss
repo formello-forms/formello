@@ -2,10 +2,6 @@ $label-width: 190px;
 $margin-left: 0.5em;
 $small-margin: 0 8px;
 
-html {
-	scroll-behavior: smooth;
-}
-
 .formello-message {
 	display: none;
 	box-sizing: border-box;
@@ -21,192 +17,33 @@ html {
 		color: #3c763d;
 	}
 
-	&.error {
+	&.error:has(p:not(:empty)) {
 		display: block;
 		background-color: #fcf8e3;
 		border: 1px solid #faf2cc;
 		color: #8a6d3b;
 	}
+
+	ul:not(:has(li)) {
+		display: none;
+	}
 }
 
 .wp-block-formello-form {
-
 	display: flex;
-	flex-direction: column;
-	gap: 1em;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: .8em;
 
-	div[hidden],
-	fieldset[hidden],
-	button[hidden] {
-		display: none;
-	}
-
-	.formello {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.wp-block-group.is-horizontal {
-		.formello {
-			align-self: end;
-		}
-	}
-
-	.is-layout-flex {
-		align-items: flex-start;
-	}
-
-	label {
-		padding: 0 $margin-left 0 0;
-		box-sizing: border-box;
-
-		&.hide {
-			display: none;
-		}
-
-		span.required {
-			color: red;
-			margin: 0 5px;
-			font-weight: normal;
-		}
-	}
-
-	input[type],
-	select,
-	textarea {
-		font-size: inherit;
-		font-family: inherit;
-		line-height: inherit;
-		margin: 0;
-	}
-
-	fieldset {
-		padding: 1em;
-		border: 1px solid;
-	}
-
-	fieldset.no-border {
-		border: none;
-		padding: 0;
-	}
-
-	legend {
-		margin: 0.5em 0;
-	}
-
-	output {
-		border: 1px solid #d7dbdd;
-		font-size: 1em;
-		border-radius: 3px;
-		min-width: 1rem;
-		min-height: 1rem;
-		text-align: center;
-		padding: 0 0.5em;
-	}
-
-	button {
-		cursor: pointer;
-		position: relative;
-		justify-content: center;
-		align-items: center;
-		display: flex;
-	}
-
-	button[disabled] {
-		opacity: 0.5;
-		cursor: not-allowed;
-	}
-
-	&.is-style-bolded {
-
-		label,
-		legend {
-			font-weight: bold;
-		}
-
-		.formello-checkbox {
-
-			label {
-				font-weight: normal;
-			}
-		}
-	}
-
-	.formello-checkbox {
-		flex-direction: row;
-		align-items: baseline;
-		flex-wrap: wrap;
-
-		label {
-			order: 2;
-			padding: 0 $margin-left;
-			flex: 1;
-		}
-
-		input {
-			order: 1;
-		}
-
-		small {
-			order: 3;
-			width: auto;
-			margin: $small-margin;
-		}
-
-		.error-message {
-			order: 4;
-			width: 100%;
-		}
-	}
-
-	.formello-group {
-		flex-direction: row;
-		flex-wrap: wrap;
-		align-items: center;
-
-		label {
-			width: 100%;
-		}
-
-		input {
-			flex: auto;
-			width: 1%;
+	> .wp-block-formello-input,
+	> .wp-block-formello-select,
+	> .wp-block-formello-textarea,
+	> .wp-block-formello-fieldset,
+	.formello-message {
+		flex-basis: 100%;
+		.wp-block-formello-button, .wp-block-formello-output {
 			align-self: stretch;
 		}
-
-		small {
-			width: 100%;
-		}
-
-		button {
-			margin-bottom: 0;
-			margin-top: 0;
-			align-self: stretch;
-			margin-left: $margin-left;
-		}
-
-		&.grouped {
-
-			input {
-				border-right: 0;
-				border-top-right-radius: 0;
-				border-bottom-right-radius: 0;
-			}
-
-			button {
-				margin: 0;
-			}
-		}
-
-		.error-message {
-			order: 4;
-			width: 100%;
-		}
-	}
-
-	.wp-block-formello-form button:disabled:not(.running),
-	.wp-block-formello-form button[disabled]:not(.running) {
-		cursor: revert;
 	}
 
 	/* HONEYPOT position */
@@ -221,134 +58,6 @@ html {
 
 	.error-message {
 		color: red;
-	}
-
-	@media (min-width: 768px) {
-
-		&.as-row {
-
-			&.formello-label-right {
-
-				label {
-					text-align: right;
-				}
-			}
-
-			.formello {
-				flex-direction: row;
-				flex-wrap: wrap;
-
-				label {
-					min-width: $label-width;
-					width: $label-width;
-					align-self: center;
-
-					&.hide {
-						visibility: hidden;
-						display: block;
-					}
-
-					&.textarea-label {
-						align-self: auto;
-					}
-
-					&.select-label {
-						align-self: auto;
-					}
-				}
-
-				input,
-				textarea,
-				select {
-					flex: 1;
-				}
-
-				small {
-					width: 100%;
-					margin-left: $label-width;
-				}
-
-				.error-message {
-					width: 100%;
-					margin-left: $label-width;
-				}
-			}
-
-			.formello-checkbox {
-				margin-left: $label-width;
-
-				label {
-					min-width: auto;
-					width: auto;
-				}
-
-				input {
-					flex: 0;
-				}
-
-				small {
-					margin: $small-margin;
-					width: auto;
-				}
-
-				.error-message {
-					width: 100%;
-					margin-left: 0;
-				}
-			}
-
-			.formello-textarea {
-
-				label {
-					align-self: baseline;
-				}
-			}
-
-			.formello-group {
-
-				.error-message {
-					width: 100%;
-				}
-
-				button {
-					margin-left: $margin-left;
-				}
-
-				&.grouped {
-
-					button {
-						margin-left: 0;
-					}
-				}
-
-			}
-
-			fieldset {
-				margin-left: $label-width;
-
-				.formello-checkbox {
-					margin-left: 0;
-				}
-			}
-
-			.wp-block-formello-button {
-				margin-left: $label-width;
-				flex-direction: row;
-			}
-		}
-
-	}
-
-}
-
-.wp-block-formello-form.is-style-modern {
-
-	input,
-	select,
-	textarea {
-		border: none;
-		border-bottom: 1px solid;
-		border-radius: 0;
-		background-color: transparent;
+		order: 4;
 	}
 }

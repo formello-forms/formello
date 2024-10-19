@@ -18,16 +18,35 @@ $captcha = '';
 if ( ! is_admin() && $state['captcha']['enabled'] ) {
 	$captcha = sprintf(
 		'<div class="%s" data-sitekey="%s" data-size="%s" data-action="submit"></div>',
-		'reCaptcha' === $state['captcha']['type'] ? 'g-recaptcha' : 'hCaptcha',
+		'reCaptcha' === $state['captcha']['type'] ? 'g-recaptcha' : 'h-captcha',
 		$config['settings'][ $state['captcha']['type'] ]['site_key'],
 		'1' === $config['settings'][ $state['captcha']['type'] ]['version'] ? 'normal' : 'invisible',
 	);
-	if ( 'reCaptcha' === $state['captcha']['type'] ) {
-		wp_enqueue_script( 'recaptcha' );
-	}
-	if ( 'hCaptcha' === $state['captcha']['type'] ) {
-		wp_enqueue_script( 'hcaptcha' );
-	}
 }
 
-echo $captcha . $content;
+$message = '<div class="formello-message" data-wp-class--success="context.response.success" data-wp-class--error="!context.response.success">
+				<p data-wp-text="state.message"></p>
+				<ul data-wp-context="state.errors">
+					<template data-wp-each="state.errors" >
+						<li data-wp-text="context.item"></li>
+					</template>
+				</ul>
+			</div>';
+
+$debug = '<div class="formello-debug">
+	<p>Debug output</p>
+	<small>This output is visible only to admin.</small>
+	<pre data-wp-text="state.debugData"></pre>
+</div>';
+
+$p = new WP_HTML_Tag_Processor( $content );
+
+if ( ! is_admin() &&
+	$p->next_tag( 'button' ) &&
+	$state['captcha']['enabled'] &&
+	'invisible' !== $state['captcha']['version']
+	) {
+	$p->set_attribute( 'data-wp-on--click', 'actions.validateCaptcha' );
+}
+
+echo $captcha . $p->get_updated_html() . $message;

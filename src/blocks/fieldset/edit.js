@@ -39,6 +39,7 @@ export default function Edit( { attributes, className, setAttributes } ) {
 						onChange={ ( newval ) =>
 							setAttributes( { showLegend: newval } )
 						}
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</InspectorControls>

@@ -764,7 +764,8 @@ function Edit({
           checked: attributes.showLegend,
           onChange: newval => setAttributes({
             showLegend: newval
-          })
+          }),
+          __nextHasNoMarginBottom: true
         })
       })
     }), attributes.showLegend && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.RichText, {
@@ -960,7 +961,7 @@ module.exports = window["wp"]["i18n"];
   \****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/fieldset","title":"Fieldset","description":"A block to display form fieldset.","category":"formello","textdomain":"formello","attributes":{"showLegend":{"type":"boolean","default":true},"legend":{"type":"string","source":"text","selector":"legend","default":"Legend"}},"supports":{"anchor":true,"html":false,"color":true,"spacing":true,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"__experimentalLayout":{"allowSwitching":false,"allowInheriting":false,"allowSizingOnChildren":true,"default":{"type":"flex","justifyContent":"stretch","orientation":"vertical","flexWrap":"nowrap"}}},"editorScript":"file:./index.js"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/fieldset","title":"Fieldset","ancestor":["formello/form"],"description":"A block to display form fieldset.","category":"formello","textdomain":"formello","attributes":{"showLegend":{"type":"boolean","default":true},"legend":{"type":"string","source":"text","selector":"legend","default":"Legend"}},"supports":{"anchor":true,"html":false,"color":{"text":true},"spacing":{"padding":true},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}},"__experimentalLayout":{"allowSwitching":false,"allowInheriting":false,"allowSizingOnChildren":true,"default":{"type":"flex","justifyContent":"stretch","orientation":"vertical","flexWrap":"nowrap"}}},"editorScript":"file:./index.js"}');
 
 /***/ })
 

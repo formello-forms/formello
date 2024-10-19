@@ -5,7 +5,7 @@ import { useSelect } from '@wordpress/data';
 
 import clsx from 'clsx';
 
-export default function Label( { attributes, setAttributes } ) {
+export default function Label( { attributes, setAttributes, context } ) {
 	const {
 		labelClass,
 		labelAlign,
@@ -15,7 +15,6 @@ export default function Label( { attributes, setAttributes } ) {
 		multiple,
 		type,
 		label,
-		name,
 	} = attributes;
 
 	const { postType, postId } = useSelect( ( select ) => {
@@ -27,7 +26,12 @@ export default function Label( { attributes, setAttributes } ) {
 		};
 	}, [] );
 
-	const [ meta ] = useEntityProp( 'postType', 'formello', 'meta', postId );
+	const [ meta ] = useEntityProp(
+		'postType',
+		'formello_form',
+		'meta',
+		postId
+	);
 
 	const labelClassName = clsx(
 		'label-div',
@@ -55,7 +59,7 @@ export default function Label( { attributes, setAttributes } ) {
 
 			{ required && (
 				<span className="required">
-					{ meta?._formello_settings.requiredText || '*' }
+					{ context[ 'formello/requiredText' ] || '*' }
 				</span>
 			) }
 		</div>

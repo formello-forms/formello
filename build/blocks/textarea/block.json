@@ -3,6 +3,9 @@
   "apiVersion": 2,
   "name": "formello/textarea",
   "title": "Textarea",
+  "ancestor": [
+    "formello/form"
+  ],
   "description": "Textarea field.",
   "category": "formello",
   "textdomain": "formello",
@@ -154,6 +157,15 @@
     "html": false,
     "inserter": true,
     "reusable": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "__experimentalSkipSerialization": true
+    },
+    "spacing": {
+      "padding": true,
+      "__experimentalSkipSerialization": true
+    },
     "__experimentalBorder": {
       "color": true,
       "radius": true,
@@ -166,6 +178,20 @@
         "style": true,
         "width": true
       }
+    }
+  },
+  "selectors": {
+    "root": ".wp-block-formello-textarea",
+    "color": {
+      "background": ".wp-block-formello-textarea > textarea",
+      "text": ".wp-block-formello-textarea"
+    },
+    "spacing": {
+      "root": ".wp-block-formello-textarea",
+      "padding": ".wp-block-formello-textarea > textarea"
+    },
+    "border": {
+      "root": ".wp-block-formello-textarea > textarea"
     }
   },
   "editorScript": "file:./index.js",

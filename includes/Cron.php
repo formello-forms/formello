@@ -2,16 +2,16 @@
 /**
  * Block handler.
  *
- * @package Formello
+ * @link       https://www.francescopepe.com
+ * @since      1.0.0
+ *
+ * @package    Formello
+ * @subpackage Formello/includes
  */
 
 namespace Formello;
 
 use function Formello\Utils\formello_dir;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
 
 /**
  * Block Handler
@@ -19,40 +19,34 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 class Cron {
-
 	/**
-	 * Class instance.
+	 * The ID of this plugin.
 	 *
-	 * @access private
-	 * @var $instance Class instance.
+	 * @since    2.6.0
+	 * @access   private
+	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private static $instance;
+	private $plugin_name;
 
 	/**
-	 * Class instance.
+	 * The version of this plugin.
 	 *
-	 * @access private
-	 * @var $instance Class instance.
+	 * @since    2.6.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
 	 */
-	private $logger;
+	private $version;
 
 	/**
-	 * Initiator
+	 * Initialize the class and set its properties.
+	 *
+	 * @since 2.6.0
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version     The version of this plugin.
 	 */
-	public static function get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		add_action( 'formello_retrieve_news', array( $this, 'get_news' ) );
-		add_action( 'formello_delete_logs', array( $this, 'delete_logs' ) );
-		add_action( 'formello_delete_tmp', array( $this, 'delete_tmp' ) );
+	public function __construct( $plugin_name, $version ) {
+		$this->plugin_name = $plugin_name;
+		$this->version = $version;
 		$this->cron();
 	}
 
@@ -69,7 +63,7 @@ class Cron {
 			wp_schedule_event( time(), 'daily', 'formello_delete_logs' );
 		}
 		if ( ! wp_next_scheduled( 'formello_delete_tmp' ) ) {
-			wp_schedule_event( time(), '5min', 'formello_delete_tmp' );
+			wp_schedule_event( time(), 'daily', 'formello_delete_tmp' );
 		}
 	}
 
@@ -89,7 +83,7 @@ class Cron {
 				array(
 					'table_submissions' => $table_submissions,
 					'table_posts' => $table_posts,
-					'post_type' => 'formello',
+					'post_type' => 'formello_form',
 					'post_status' => 'publish',
 					'post_status_private' => 'formello-private',
 				)
@@ -119,4 +113,3 @@ class Cron {
 		array_map( 'unlink', array_filter( (array) glob( $tmp_folder . '/*' ) ) );
 	}
 }
-Cron::get_instance();

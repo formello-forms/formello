@@ -17,6 +17,7 @@ import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
 
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
+import { getInputClassesAndStyles } from '../input/use-field-props';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
@@ -25,17 +26,10 @@ export default function Edit( props ) {
 
 	const supported = SUPPORTED_ATTRIBUTES.textarea;
 
-	const borderProps = useBorderProps( attributes );
-
-	const containerClass = clsx( {
-		'missing-name': ! name,
-	} );
-	const fieldClassName = clsx( borderProps.className, {
-		'formello-rtf': advanced,
-	} );
+	const fieldProps = getInputClassesAndStyles( attributes );
 
 	const blockProps = useBlockProps( {
-		className: containerClass,
+		className: fieldProps.containerClass,
 	} );
 
 	return (
@@ -64,8 +58,8 @@ export default function Edit( props ) {
 					setAttributes( { value: event.target.value } )
 				}
 				placeholder={ placeholder }
-				className={ fieldClassName }
-				style={ borderProps.style }
+				style={ fieldProps.inputStyle }
+				className={ fieldProps.inputClass }
 			></textarea>
 
 			{ showHelp && (

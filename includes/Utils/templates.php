@@ -21,7 +21,7 @@ function get_templates( $response, $server, $request ) {
 	}
 
 	$args = array(
-		'post_type'     => 'formello',
+		'post_type'     => 'formello_form',
 		'fields'        => '',
 		'no_found_rows' => true,
 		'post_status'   => 'publish',

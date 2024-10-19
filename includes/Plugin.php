@@ -1,154 +1,216 @@
 <?php
 /**
- * Setup Formello
+ * The file that defines the core plugin class
  *
- * @package formello
- * @since   1.0.0
+ * A class definition that includes attributes and functions used across both the
+ * public-facing side of the site and the admin area.
+ *
+ * @link       https://www.francescopepe.com
+ * @since      1.0.0
+ *
+ * @package    Formello
+ * @subpackage Formello/includes
  */
 
 namespace Formello;
 
-defined( 'ABSPATH' ) || exit;
-
 /**
- * Main Block Visibility Class.
+ * The core plugin class.
  *
- * @since 1.0.0
+ * This is used to define internationalization, admin-specific hooks, and
+ * public-facing site hooks.
+ *
+ * Also maintains the unique identifier of this plugin as well as the current
+ * version of the plugin.
+ *
+ * @since      1.0.0
+ * @package    Formello
+ * @subpackage Formello/includes
+ * @author     Francesco Pepe <sgozzapolli@gmail.com>
  */
-final class Plugin {
+class Plugin {
 
 	/**
-	 * Return singleton instance of the Block Visibility plugin.
+	 * The loader that's responsible for maintaining and registering all hooks that power
+	 * the plugin.
 	 *
-	 * @since 1.0.0
-	 * @return Formello
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      Formello_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
-	public static function instance() {
-		static $instance = false;
+	protected $loader;
 
-		if ( ! $instance ) {
-			$instance = new self();
-		}
-		return $instance;
+	/**
+	 * The unique identifier of this plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 */
+	protected $plugin_name;
+
+	/**
+	 * The current version of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    The current version of the plugin.
+	 */
+	protected $version;
+
+	/**
+	 * The current version of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   protected
+	 * @var      string    $version    The current version of the plugin.
+	 */
+	protected $entry_point;
+
+	/**
+	 * Define the core functionality of the plugin.
+	 *
+	 * Set the plugin name and the plugin version that can be used throughout the plugin.
+	 * Load the dependencies, define the locale, and set the hooks for the admin area and
+	 * the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 * @param string $entry_point The entry point of this plugin.
+	 */
+	public function __construct( $entry_point ) {
+		$this->version = get_file_data( $entry_point, array( 'Version' ) )[0];
+		$this->entry_point = $entry_point;
+		$this->plugin_name = 'formello';
+		$this->load_dependencies();
+		$this->set_locale();
+		$this->define_admin_hooks();
+		$this->define_public_hooks();
 	}
 
 	/**
-	 * Initialise the plugin.
+	 * Load the required dependencies for this plugin.
+	 *
+	 * Include the following files that make up the plugin:
+	 *
+	 * - Formello_Loader. Orchestrates the hooks of the plugin.
+	 * - Formello_i18n. Defines internationalization functionality.
+	 * - Formello_Admin. Defines all hooks for the admin area.
+	 * - Formello_Public. Defines all hooks for the public side of the site.
+	 *
+	 * Create an instance of the loader which will be used to register the hooks
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
 	 */
-	private function __construct() {
-		$this->define_constants();
-		$this->includes();
-		$this->actions();
+	private function load_dependencies() {
+		$this->loader = new Loader();
 	}
 
 	/**
-	 * Load required actions.
+	 * Define the locale for this plugin for internationalization.
 	 *
-	 * @since 1.0.0
+	 * Uses the Formello_i18n class in order to set the domain and to register the hook
+	 * with WordPress.
+	 *
+	 * @since    1.0.0
+	 * @access   private
 	 */
-	public function actions() {
-		$email_action = new \Formello\Actions\Email();
-		$email_action->hook();
-		add_action( 'init', array( $this, 'load_textdomain' ) );
+	private function set_locale() {
+
+		$plugin_i18n = new I18n();
+
+		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 	}
 
 	/**
-	 * Include required files.
+	 * Register all of the hooks related to the admin area functionality
+	 * of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since    1.0.0
+	 * @access   private
 	 */
-	public function includes() {
+	private function define_admin_hooks() {
 
-		// Needs to be included at all times due to show_in_rest.
-		require_once FORMELLO_ABSPATH . 'includes/WP_Logging.php';
-		require_once FORMELLO_ABSPATH . 'includes/Assets.php';
-		require_once FORMELLO_ABSPATH . 'includes/Utils/Encryption.php';
-		require_once FORMELLO_ABSPATH . 'includes/Utils/functions.php';
-		require_once FORMELLO_ABSPATH . 'includes/Utils/templates.php';
-		require_once FORMELLO_ABSPATH . 'includes/register-settings.php';
-		require_once FORMELLO_ABSPATH . 'includes/register-cpt.php';
-		require_once FORMELLO_ABSPATH . 'includes/Rest/register-routes.php';
-		require_once FORMELLO_ABSPATH . 'includes/Rest/Controllers/Forms.php';
-		require_once FORMELLO_ABSPATH . 'includes/Blocks.php';
-		require_once FORMELLO_ABSPATH . 'includes/Frontend.php';
-		require_once FORMELLO_ABSPATH . 'includes/Actions/Action.php';
-		require_once FORMELLO_ABSPATH . 'includes/Actions/Email.php';
-		require_once FORMELLO_ABSPATH . 'includes/TagReplacers/Replacer.php';
-		require_once FORMELLO_ABSPATH . 'includes/Log.php';
-		require_once FORMELLO_ABSPATH . 'includes/Cron.php';
-		require_once FORMELLO_ABSPATH . 'includes/Admin/Admin.php';
+		$plugin_admin = new Admin( $this->plugin_name, $this->version, $this->entry_point );
 
-		do_action( 'formello_loaded' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_editor_scripts' );
+		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'admin_bar_item', 1000 );
 	}
 
 	/**
-	 * Define the contants for the Block Visibility plugin.
+	 * Register all of the hooks related to the public-facing functionality
+	 * of the plugin.
 	 *
-	 * @since 1.4.0
+	 * @since    1.0.0
+	 * @access   private
 	 */
-	private function define_constants() {
-		$this->define( 'FORMELLO_ABSPATH', dirname( FORMELLO_PLUGIN_FILE ) . '/' );
-        $this->define( 'FORMELLO_VERSION', get_file_data( FORMELLO_PLUGIN_FILE, [ 'Version' ] )[0]); // phpcs:ignore
-		$this->define( 'FORMELLO_PLUGIN_URL', plugin_dir_url( FORMELLO_PLUGIN_FILE ) );
-		$this->define( 'FORMELLO_ASSETS', FORMELLO_PLUGIN_URL . 'build' );
-		$this->define( 'FORMELLO_PLUGIN_BASENAME', plugin_basename( FORMELLO_PLUGIN_FILE ) );
-		$this->define( 'FORMELLO_SUPPORT_URL', 'https://wordpress.org/support/plugin/formello/' );
-		$this->define( 'FORMELLO_SETTINGS_URL', admin_url( 'options-general.php?page=formello-settings' ) );
-		// this is the URL our updater / license checker pings. This should be the URL of the site with EDD installed.
-		$this->define( 'FORMELLO_STORE_URL', 'https://formello.net' );
+	private function define_public_hooks() {
+		$blocks = new Blocks( $this->plugin_name, $this->version, $this->entry_point );
+
+		$this->loader->add_action( 'init', $blocks, 'register_blocks' );
+		$this->loader->add_action( 'init', $blocks, 'register_block_pattern_category' );
+		$this->loader->add_action( 'block_categories_all', $blocks, 'register_block_category' );
+
+		$frontend = new Frontend( $this->plugin_name, $this->version );
+
+		$this->loader->add_action( 'wp_ajax_formello', $frontend, 'listen_for_submit' );
+		$this->loader->add_action( 'wp_ajax_nopriv_formello', $frontend, 'listen_for_submit' );
+
+		// REST handlers.
+		$addons = new Rest\Addons( $this->plugin_name, $this->version );
+		$this->loader->add_action( 'rest_api_init', $addons, 'register_routes' );
+		$submissions = new Rest\Submissions( $this->plugin_name, $this->version );
+		$this->loader->add_action( 'rest_api_init', $submissions, 'register_routes' );
+		$columns = new Rest\Columns( $this->plugin_name, $this->version );
+		$this->loader->add_action( 'rest_api_init', $columns, 'register_routes' );
+		$license = new Rest\License( $this->plugin_name, $this->version );
+		$this->loader->add_action( 'rest_api_init', $license, 'register_routes' );
+
+		$cron = new Cron( $this->plugin_name, $this->version );
+		$this->loader->add_action( 'formello_retrieve_news', $cron, 'get_news' );
+		$this->loader->add_action( 'formello_delete_logs', $cron, 'delete_logs' );
+		$this->loader->add_action( 'formello_delete_tmp', $cron, 'delete_tmp' );
 	}
 
 	/**
-	 * Define constant if not already set.
+	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since 1.4.0
-	 *
-	 * @param string      $name  Constant name.
-	 * @param string|bool $value Constant value.
+	 * @since    1.0.0
 	 */
-	private function define( $name, $value ) {
-		if ( ! defined( $name ) ) {
-            // phpcs:ignore
-            define( $name, $value );
-		}
+	public function run() {
+		$this->loader->run();
 	}
 
 	/**
-	 * Loads the plugin language files.
+	 * The name of the plugin used to uniquely identify it within the context of
+	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since 1.0.0
+	 * @since     1.0.0
+	 * @return    string    The name of the plugin.
 	 */
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			'formello',
-			false,
-			dirname( FORMELLO_PLUGIN_BASENAME ) . '/languages/'
-		);
+	public function get_plugin_name() {
+		return $this->plugin_name;
 	}
 
 	/**
-	 * Cloning instances of the class is forbidden.
+	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since     1.0.0
+	 * @return    Formello_Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function __clone() {
-		_doing_it_wrong(
-			__FUNCTION__,
-			esc_html__( 'Cloning instances of the class is forbidden.', 'formello' ),
-			'1.0'
-		);
+	public function get_loader() {
+		return $this->loader;
 	}
 
 	/**
-	 * Unserializing instances of the class is forbidden.
+	 * Retrieve the version number of the plugin.
 	 *
-	 * @since 1.0.0
+	 * @since     1.0.0
+	 * @return    string    The version number of the plugin.
 	 */
-	public function __wakeup() {
-		_doing_it_wrong(
-			__FUNCTION__,
-			esc_html__( 'Unserializing instances of the class is forbidden.', 'formello' ),
-			'1.0'
-		);
+	public function get_version() {
+		return $this->version;
 	}
 }

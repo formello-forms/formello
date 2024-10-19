@@ -748,6 +748,57 @@ const moreVertical = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_
 
 /***/ }),
 
+/***/ "./src/blocks/input/use-field-props.js":
+/*!*********************************************!*\
+  !*** ./src/blocks/input/use-field-props.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getInputClassesAndStyles: () => (/* binding */ getInputClassesAndStyles)
+/* harmony export */ });
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
+
+
+function getInputClassesAndStyles(attributes) {
+  const borderProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetBorderClassesAndStyles)(attributes);
+  const spacingProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetSpacingClassesAndStyles)(attributes);
+  const colorProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetColorClassesAndStyles)(attributes);
+  const {
+    name,
+    type,
+    advanced,
+    hideLabel
+  } = attributes;
+  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    'missing-name': !name
+  });
+  const labelClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    hide: hideLabel,
+    'textarea-label': 'textarea' === type
+  });
+  const inputClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(borderProps.className, spacingProps.className, colorProps.className, {
+    'formello-advanced': advanced,
+    'formello-rtf': advanced && 'textarea' === type
+  });
+  const inputStyle = {
+    ...borderProps.style,
+    ...spacingProps.style,
+    ...colorProps.style
+  };
+  return {
+    containerClass,
+    labelClass,
+    inputClass,
+    inputStyle
+  };
+}
+
+/***/ }),
+
 /***/ "./src/blocks/textarea/edit.js":
 /*!*************************************!*\
   !*** ./src/blocks/textarea/edit.js ***!
@@ -771,8 +822,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_field_options_advanced__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/field-options/advanced */ "./src/components/field-options/advanced.js");
 /* harmony import */ var _components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/field-options/toolbar */ "./src/components/field-options/toolbar.js");
 /* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _input_use_field_props__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../input/use-field-props */ "./src/blocks/input/use-field-props.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__);
+
 
 
 
@@ -800,40 +853,34 @@ function Edit(props) {
     name
   } = attributes;
   const supported = _components_field_options_constants__WEBPACK_IMPORTED_MODULE_9__.SUPPORTED_ATTRIBUTES.textarea;
-  const borderProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__experimentalUseBorderProps)(attributes);
-  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_3__["default"])({
-    'missing-name': !name
-  });
-  const fieldClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_3__["default"])(borderProps.className, {
-    'formello-rtf': advanced
-  });
+  const fieldProps = (0,_input_use_field_props__WEBPACK_IMPORTED_MODULE_10__.getInputClassesAndStyles)(attributes);
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
-    className: containerClass
+    className: fieldProps.containerClass
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
     ...blockProps,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockControls, {
-      children: supported.includes('required') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToolbarGroup, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockControls, {
+      children: supported.includes('required') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToolbarGroup, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_8__["default"], {
           ...props
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_field_options__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options__WEBPACK_IMPORTED_MODULE_5__["default"], {
         ...props,
         fieldType: "textarea"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_field_options_validation__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_validation__WEBPACK_IMPORTED_MODULE_6__["default"], {
         ...props,
         fieldType: "textarea"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorAdvancedControls, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_field_options_advanced__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorAdvancedControls, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_advanced__WEBPACK_IMPORTED_MODULE_7__["default"], {
         ...props,
         fieldType: "textarea"
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_components_label__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_label__WEBPACK_IMPORTED_MODULE_4__["default"], {
       ...props
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("textarea", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("textarea", {
       cols: cols,
       rows: rows,
       value: value,
@@ -841,9 +888,9 @@ function Edit(props) {
         value: event.target.value
       }),
       placeholder: placeholder,
-      className: fieldClassName,
-      style: borderProps.style
-    }), showHelp && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
+      style: fieldProps.inputStyle,
+      className: fieldProps.inputClass
+    }), showHelp && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.RichText, {
       tagName: "small",
       value: help,
       onChange: val => setAttributes({
@@ -923,8 +970,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
-/* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
+/* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
+/* harmony import */ var _input_use_field_props__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../input/use-field-props */ "./src/blocks/input/use-field-props.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
 
@@ -936,8 +983,6 @@ function save({
 }) {
   const {
     id,
-    hideLabel,
-    advanced,
     validation,
     help,
     value,
@@ -945,23 +990,17 @@ function save({
     required,
     requiredText
   } = attributes;
-  const borderProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetBorderClassesAndStyles)(attributes);
-  const labelClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    hide: hideLabel
-  });
-  const fieldClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(borderProps.className, {
-    'formello-rtf': advanced
-  });
+  const fieldProps = (0,_input_use_field_props__WEBPACK_IMPORTED_MODULE_2__.getInputClassesAndStyles)(attributes);
 
   // include only supported attributes
-  const htmlAttrs = Object.fromEntries(_components_field_options_constants__WEBPACK_IMPORTED_MODULE_2__.SUPPORTED_ATTRIBUTES.textarea.map(col => [col, attributes[col]]));
+  const htmlAttrs = Object.fromEntries(_components_field_options_constants__WEBPACK_IMPORTED_MODULE_1__.SUPPORTED_ATTRIBUTES.textarea.map(col => [col, attributes[col]]));
   if (validation) {
     htmlAttrs['data-bouncer-message'] = validation;
   }
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save(),
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-      className: labelClassName,
+      className: fieldProps.labelClass,
       htmlFor: id,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
         tagName: "span",
@@ -972,8 +1011,8 @@ function save({
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("textarea", {
       ...htmlAttrs,
-      className: fieldClassName,
-      style: borderProps.style,
+      style: fieldProps.inputStyle,
+      className: fieldProps.inputClass,
       children: value
     }), help.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
       tagName: "small",
@@ -1692,7 +1731,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function Label({
   attributes,
-  setAttributes
+  setAttributes,
+  context
 }) {
   const {
     labelClass,
@@ -1702,8 +1742,7 @@ function Label({
     required,
     multiple,
     type,
-    label,
-    name
+    label
   } = attributes;
   const {
     postType,
@@ -1718,7 +1757,7 @@ function Label({
       isPreview: getSettings().__unstableIsPreviewMode
     };
   }, []);
-  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'formello', 'meta', postId);
+  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'formello_form', 'meta', postId);
   const labelClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_4__["default"])('label-div', labelClass, labelAlign, labelVAlign, {
     hide: hideLabel,
     required,
@@ -1739,7 +1778,7 @@ function Label({
       allowedFormats: ['core/bold', 'core/italic', 'core/link']
     }), required && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
       className: "required",
-      children: meta?._formello_settings.requiredText || '*'
+      children: context['formello/requiredText'] || '*'
     })]
   });
 }
@@ -2444,7 +2483,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/textarea","title":"Textarea","description":"Textarea field.","category":"formello","textdomain":"formello","attributes":{"id":{"type":"string","source":"attribute","selector":"textarea","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"textarea","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"My textarea"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"placeholder":{"type":"string","source":"attribute","selector":"textarea","attribute":"placeholder","default":""},"value":{"type":"string","source":"text","selector":"textarea","default":""},"validation":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-message","default":""},"enableMismatch":{"type":"boolean","default":false},"mismatchMessage":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-mismatch-message","default":""},"match":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-match","default":""},"required":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"required","default":false},"autocomplete":{"enum":["on","off"],"source":"attribute","selector":"textarea","attribute":"autocomplete","default":"off"},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"disabled":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"disabled","default":false},"readonly":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"readonly","default":false},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","source":"html","selector":"small","default":""},"cols":{"type":"string","source":"attribute","selector":"textarea","attribute":"cols"},"rows":{"type":"string","source":"attribute","selector":"textarea","attribute":"rows"},"minlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"minlength"},"maxlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"maxlength"},"pattern":{"type":"string","source":"attribute","selector":"textarea","attribute":"pattern"},"advanced":{"type":"boolean","selector":"textarea.formello-rft"}},"supports":{"html":false,"inserter":true,"reusable":false,"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"editorScript":"file:./index.js","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/textarea","title":"Textarea","ancestor":["formello/form"],"description":"Textarea field.","category":"formello","textdomain":"formello","attributes":{"id":{"type":"string","source":"attribute","selector":"textarea","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"textarea","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"My textarea"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"placeholder":{"type":"string","source":"attribute","selector":"textarea","attribute":"placeholder","default":""},"value":{"type":"string","source":"text","selector":"textarea","default":""},"validation":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-message","default":""},"enableMismatch":{"type":"boolean","default":false},"mismatchMessage":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-mismatch-message","default":""},"match":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-match","default":""},"required":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"required","default":false},"autocomplete":{"enum":["on","off"],"source":"attribute","selector":"textarea","attribute":"autocomplete","default":"off"},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"disabled":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"disabled","default":false},"readonly":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"readonly","default":false},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","source":"html","selector":"small","default":""},"cols":{"type":"string","source":"attribute","selector":"textarea","attribute":"cols"},"rows":{"type":"string","source":"attribute","selector":"textarea","attribute":"rows"},"minlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"minlength"},"maxlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"maxlength"},"pattern":{"type":"string","source":"attribute","selector":"textarea","attribute":"pattern"},"advanced":{"type":"boolean","selector":"textarea.formello-rft"}},"supports":{"html":false,"inserter":true,"reusable":false,"color":{"background":true,"text":true,"__experimentalSkipSerialization":true},"spacing":{"padding":true,"__experimentalSkipSerialization":true},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"selectors":{"root":".wp-block-formello-textarea","color":{"background":".wp-block-formello-textarea > textarea","text":".wp-block-formello-textarea"},"spacing":{"root":".wp-block-formello-textarea","padding":".wp-block-formello-textarea > textarea"},"border":{"root":".wp-block-formello-textarea > textarea"}},"editorScript":"file:./index.js","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

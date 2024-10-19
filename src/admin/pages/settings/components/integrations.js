@@ -11,7 +11,10 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { useHistory } from '../../../router';
-import { integrations, icons } from '../../../../blocks/form/actions/constants';
+import {
+	integrations,
+	icons,
+} from '../../../../form-settings/actions/constants';
 
 const Integrations = withFilters( 'formello.settings.integrations' )( () => {
 	const history = useHistory();

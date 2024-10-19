@@ -1,21 +1,11 @@
-import {
-	RichText,
-	useBlockProps,
-	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
-	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
-	InnerBlocks,
-} from '@wordpress/block-editor';
+import { RichText, useBlockProps, InnerBlocks } from '@wordpress/block-editor';
 import clsx from 'clsx';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
+import { getInputClassesAndStyles } from './use-field-props';
 
 export default function save( { attributes } ) {
 	const {
 		type,
-		value,
-		id,
-		withButton,
-		withOutput,
-		grouped,
 		advanced,
 		validation,
 		enableMismatch,
@@ -26,7 +16,6 @@ export default function save( { attributes } ) {
 		required,
 		requiredText,
 		label,
-		hideLabel,
 		showHelp,
 		help,
 		dateFormat,
@@ -40,20 +29,9 @@ export default function save( { attributes } ) {
 
 	const TagName = type === 'textarea' ? 'textarea' : 'input';
 
-	const borderProps = getBorderClassesAndStyles( attributes );
-	const spacingProps = getSpacingClassesAndStyles( attributes );
-
 	const containerClass = clsx( blockProps.className );
 
-	const labelClassName = clsx( {
-		hide: hideLabel,
-		'textarea-label': 'textarea' === type,
-	} );
-
-	const fieldClassName = clsx( borderProps.className, {
-		'formello-advanced': advanced,
-		'formello-rtf': advanced && 'textarea' === type,
-	} );
+	const fieldProps = getInputClassesAndStyles( attributes );
 
 	// include only supported attributes
 	const htmlAttrs = Object.fromEntries(
@@ -97,17 +75,12 @@ export default function save( { attributes } ) {
 		htmlAttrs[ 'data-enable-time' ] = enableTime;
 	}
 
-	const inputStyle = {
-		...borderProps.style,
-		...spacingProps.style,
-	};
-
 	if ( noWrapper || 'hidden' === type ) {
 		return (
 			<input
 				{ ...htmlAttrs }
-				className={ fieldClassName }
-				style={ inputStyle }
+				className={ fieldProps.inputClass }
+				style={ fieldProps.inputStyle }
 			/>
 		);
 	}
@@ -119,7 +92,7 @@ export default function save( { attributes } ) {
 	return (
 		<div { ...useBlockProps.save() } className={ containerClass }>
 			{ 'hidden' !== type && (
-				<label className={ labelClassName } htmlFor="id">
+				<label className={ fieldProps.label } htmlFor="id">
 					<RichText.Content tagName="span" value={ label } />
 					{ required && (
 						<span className="required">{ requiredText }</span>
@@ -129,8 +102,8 @@ export default function save( { attributes } ) {
 
 			<TagName
 				{ ...htmlAttrs }
-				className={ fieldClassName }
-				style={ inputStyle }
+				className={ fieldProps.inputClass }
+				style={ fieldProps.inputStyle }
 			/>
 
 			<InnerBlocks.Content />

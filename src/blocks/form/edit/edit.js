@@ -52,7 +52,7 @@ export default function Edit( props ) {
 			fields: data.fields,
 			constraints: data.constraints,
 		};
-		if ( 'formello' === postType && ! isPreview && meta ) {
+		if ( 'formello_form' === postType && ! isPreview && meta ) {
 			setMeta( {
 				...meta,
 				_formello_settings: settings,
@@ -74,7 +74,7 @@ export default function Edit( props ) {
 				error: attributes.errorMessage,
 			},
 		};
-		if ( 'formello' === postType && ! isPreview && meta ) {
+		if ( 'formello_form' === postType && ! isPreview && meta ) {
 			setMeta( {
 				...meta,
 				_formello_settings: settings,
@@ -111,7 +111,7 @@ export default function Edit( props ) {
 	return (
 		<div { ...innerBlocksProps }>
 			<BlockControls>
-				{ 'formello' === postType && (
+				{ 'formello_form' === postType && (
 					<ToolbarGroup>
 						<ToolbarButton
 							label={ __( 'Template', 'popper' ) }

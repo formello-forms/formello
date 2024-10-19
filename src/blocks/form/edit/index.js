@@ -23,7 +23,7 @@ const FormEdit = ( props ) => {
 
 	useEffect( () => {
 		if (
-			'formello' !== postType &&
+			'formello_form' !== postType &&
 			Number( attributes.id ) &&
 			! isDisabled
 		) {
@@ -36,7 +36,10 @@ const FormEdit = ( props ) => {
 		}
 
 		// if is a formello CPT always set id eq post_id
-		if ( Number( attributes.id ) !== postId && 'formello' === postType ) {
+		if (
+			Number( attributes.id ) !== postId &&
+			'formello_form' === postType
+		) {
 			setAttributes( {
 				id: postId,
 			} );

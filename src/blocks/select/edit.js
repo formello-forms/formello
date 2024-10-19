@@ -1,23 +1,13 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
 import { __ } from '@wordpress/i18n';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-
 import {
 	InspectorControls,
 	InspectorAdvancedControls,
 	BlockControls,
 	RichText,
 	useBlockProps,
+	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
+	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
+	__experimentalGetColorClassesAndStyles as getColorClassesAndStyles,
 } from '@wordpress/block-editor';
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
 
@@ -28,7 +18,7 @@ import Label from '../../components/label';
 import Toolbar from '../../components/field-options/toolbar';
 import Options from '../../components/field-options';
 import AdvancedOptions from '../../components/field-options/advanced';
-import clsx from 'clsx';
+import { getInputClassesAndStyles } from '../input/use-field-props';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
@@ -37,12 +27,10 @@ export default function Edit( props ) {
 
 	const [ isModalOpen, setModalOpen ] = useState( false );
 
-	const containerClass = clsx( {
-		'missing-name': ! name,
-	} );
+	const fieldProps = getInputClassesAndStyles( attributes );
 
 	const blockProps = useBlockProps( {
-		className: containerClass,
+		className: fieldProps.containerClass,
 	} );
 
 	const selectedOpts = () => {
@@ -88,6 +76,8 @@ export default function Edit( props ) {
 					readOnly={ readonly }
 					disabled={ disabled }
 					defaultValue={ selectedOpts() }
+					style={ fieldProps.inputStyle }
+					className={ fieldProps.inputClass }
 				>
 					{ options.map( ( opt, index ) => {
 						return (

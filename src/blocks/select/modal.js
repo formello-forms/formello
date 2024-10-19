@@ -42,6 +42,10 @@ export function OptionsModal( props ) {
 		setAttributes( { options: items } );
 	};
 
+	const changeOrder = ( items ) => {
+		setAttributes( { options: items } );
+	};
+
 	const bulkOpts = ( val ) => {
 		const opts = val.match( /[^\r\n]+/g );
 		const newSettings = [];
@@ -59,14 +63,15 @@ export function OptionsModal( props ) {
 		<Modal
 			title={ __( 'Options', 'formello' ) }
 			onRequestClose={ onRequestClose }
-			className={ 'formello-modal' }
+			size="medium"
 			shouldCloseOnClickOutside={ false }
 		>
-			<div>
+			<div className="formello-action-modal">
 				<ToggleControl
 					label={ __( 'Bulk add', 'formello' ) }
 					checked={ showRaw }
 					onChange={ ( newval ) => setShowRaw( newval ) }
+					__nextHasNoMarginBottom
 				/>
 
 				{ showRaw && (
@@ -95,23 +100,31 @@ export function OptionsModal( props ) {
 							label={ __( 'Show value', 'formello' ) }
 							checked={ showValue }
 							onChange={ ( newval ) => setShowValue( newval ) }
+							__nextHasNoMarginBottom
 						/>
 						<OptionsList
-							delete={ deleteRow }
+							deleteRow={ deleteRow }
 							onChange={ handleChange }
+							changeOrder={ changeOrder }
 							options={ attributes.options }
 							showValue={ showValue }
 						/>
-						<Button isPrimary isSmall onClick={ addNewRow }>
-							Add option
-						</Button>
+						<div>
+							<Button
+								variant="primary"
+								size="small"
+								onClick={ addNewRow }
+							>
+								Add option
+							</Button>
+						</div>
 					</Fragment>
 				) }
-			</div>
-			<div className="formello-modal-buttons">
-				<Button isPrimary onClick={ onRequestClose }>
-					Save
-				</Button>
+				<div className="formello-modal-buttons">
+					<Button variant="primary" onClick={ onRequestClose }>
+						Save
+					</Button>
+				</div>
 			</div>
 		</Modal>
 	);

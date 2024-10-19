@@ -107,11 +107,18 @@ export const Forms = () => {
 			...filters,
 		};
 	}, [ view ] );
-	const { records: forms, isResolving: isLoadingForms } = useEntityRecords(
+	const { records: forms, isResolving: isLoadingForms, totalItems, totalPages } = useEntityRecords(
 		'postType',
-		'formello',
+		'formello_form',
 		queryArgs
 	);
+
+	const paginationInfo = useMemo( () => {
+		return {
+			totalItems,
+			totalPages,
+		};
+	}, [ totalItems, totalPages ] );
 
 	const { records: authors, isResolving: isLoadingAuthors } =
 		useEntityRecords( 'root', 'user', { per_page: -1 } );
@@ -217,17 +224,17 @@ export const Forms = () => {
 				header: 'Shortcode',
 				id: 'shortcode',
 				render: ( { item } ) => {
-					return <code>{ `[formello id=${ item.id }]` }</code>;
+					return <code>{ `[formello ref=${ item.id }]` }</code>;
 				},
 				enableSorting: false,
 			},
 		],
-		[ authors ]
+		[ authors, history ]
 	);
 
-	const { data: shownData, paginationInfo } = useMemo( () => {
+	/*const { data: shownData, paginationInfo } = useMemo( () => {
 		return filterSortAndPaginate( forms, view, fields );
-	}, [ view, forms, fields ] );
+	}, [ view, forms, fields ] );*/
 
 	const permanentlyDeletePostAction = usePermanentlyDeletePostAction();
 	const restorePostAction = useRestorePostAction();
@@ -261,7 +268,7 @@ export const Forms = () => {
 				<Button
 					variant="primary"
 					size="small"
-					href={ 'post-new.php?post_type=formello' }
+					href={ 'post-new.php?post_type=formello_form' }
 				>
 					{ __( 'Add new' ) }
 				</Button>
@@ -272,7 +279,7 @@ export const Forms = () => {
 						paginationInfo={ paginationInfo }
 						fields={ fields }
 						actions={ actions }
-						data={ shownData || [] }
+						data={ forms || [] }
 						isLoading={ isLoadingForms || isLoadingAuthors }
 						view={ view }
 						onChangeView={ setView }

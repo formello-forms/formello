@@ -54,6 +54,7 @@ export default function Messages() {
 									onChange={ ( val ) => {
 										setMessage( 'form', key, val );
 									} }
+									__nextHasNoMarginBottom
 								/>
 							</Fragment>
 						);
@@ -78,6 +79,7 @@ export default function Messages() {
 									onChange={ ( val ) => {
 										setMessage( 'missingValue', key, val );
 									} }
+									__nextHasNoMarginBottom
 								/>
 							</Fragment>
 						);
@@ -102,6 +104,7 @@ export default function Messages() {
 								onChange={ ( val ) => {
 									setMessage( 'patternMismatch', key, val );
 								} }
+								__nextHasNoMarginBottom
 							/>
 						);
 					} ) }
@@ -123,6 +126,7 @@ export default function Messages() {
 								onChange={ ( val ) => {
 									setMessage( 'outOfRange', key, val );
 								} }
+								__nextHasNoMarginBottom
 							/>
 						);
 					} ) }
@@ -144,6 +148,7 @@ export default function Messages() {
 								onChange={ ( val ) => {
 									setMessage( 'wrongLength', key, val );
 								} }
+								__nextHasNoMarginBottom
 							/>
 						);
 					} ) }

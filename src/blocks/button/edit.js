@@ -56,7 +56,7 @@ const ALIGNMENT_CONTROLS = [
 ];
 
 export default function Edit( { attributes, setAttributes } ) {
-	const { style, type, alignment, noWrapper } = attributes;
+	const { type, alignment, noWrapper } = attributes;
 
 	const icons = {
 		Loading,

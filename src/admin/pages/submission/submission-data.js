@@ -20,7 +20,7 @@ export function SubmissionData( props ) {
 
 	const { record: form } = useEntityRecord(
 		'postType',
-		'formello',
+		'formello_form',
 		data.form_id
 	);
 

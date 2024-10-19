@@ -38,7 +38,13 @@
     "autoload": {
         "psr-4": {
             "Formello\\": "includes/"
-        }
+        },
+        "files": [
+            "includes/Utils/templates.php",
+            "includes/Utils/functions.php",
+            "includes/Utils/register-cpt.php",
+            "includes/Utils/register-settings.php"
+        ]
     },
     "config": {
         "sort-packages": true,

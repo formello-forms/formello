@@ -79,11 +79,10 @@ export const trashSubmissionAction = {
 										: sprintf(
 												/* translators: The page's title. */
 												__(
-													'"%s" moved to the Trash.'
+													'Submission "%s" moved to the Trash.'
 												),
 												decodeEntities(
-													submissions[ 0 ].title
-														.rendered
+													submissions[ 0 ].id
 												)
 										  ),
 									{

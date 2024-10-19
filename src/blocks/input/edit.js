@@ -6,12 +6,9 @@ import {
 	RichText,
 	useBlockProps,
 	useInnerBlocksProps,
-	__experimentalUseBorderProps as useBorderProps,
-	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/block-editor';
 
 import { ToolbarGroup } from '@wordpress/components';
-import clsx from 'clsx';
 
 import { Hidden } from '../../icons/icons';
 import Label from '../../components/label';
@@ -20,15 +17,14 @@ import ValidationOptions from '../../components/field-options/validation';
 import AdvancedOptions from '../../components/field-options/advanced';
 import Toolbar from '../../components/field-options/toolbar';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
+import { getInputClassesAndStyles } from './use-field-props';
 
 export default function Edit( props ) {
-	const { attributes, setAttributes } = props;
+	const { attributes, setAttributes, context } = props;
 	const {
 		type,
 		showHelp,
 		name,
-		grouped,
-		withButton,
 		checked,
 		value,
 		step,
@@ -40,20 +36,10 @@ export default function Edit( props ) {
 	const TagName = type === 'textarea' ? 'textarea' : 'input';
 	const supported = SUPPORTED_ATTRIBUTES[ type ];
 
-	const borderProps = useBorderProps( attributes );
-	const spacingProps = getSpacingClassesAndStyles( attributes );
-
-	const containerClass = clsx( {
-		'missing-name': ! name,
-	} );
-
-	const inputStyle = {
-		...borderProps.style,
-		...spacingProps.style,
-	};
+	const fieldProps = getInputClassesAndStyles( attributes );
 
 	const blockProps = useBlockProps( {
-		className: containerClass,
+		className: fieldProps.containerClass,
 	} );
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
@@ -98,8 +84,8 @@ export default function Edit( props ) {
 			) }
 
 			<TagName
-				className={ borderProps.className }
-				style={ inputStyle }
+				className={ fieldProps.inputClass }
+				style={ fieldProps.inputStyle }
 				type={ 'password' !== type ? type : 'text' }
 				value={ 'password' !== type ? value : '' }
 				checked={ checked || false }

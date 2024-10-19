@@ -21,7 +21,7 @@ import {
 } from '../../icons/loading';
 
 export default function save( { attributes } ) {
-	const { text, alignment, type, style, noWrapper } = attributes;
+	const { text, alignment, type, noWrapper } = attributes;
 
 	const icons = {
 		Loading,

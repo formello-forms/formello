@@ -1196,14 +1196,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
-/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../icons/icons */ "./src/icons/icons.js");
-/* harmony import */ var _components_label__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/label */ "./src/components/label.js");
-/* harmony import */ var _components_field_options__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/field-options */ "./src/components/field-options/index.js");
-/* harmony import */ var _components_field_options_validation__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/field-options/validation */ "./src/components/field-options/validation.js");
-/* harmony import */ var _components_field_options_advanced__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/field-options/advanced */ "./src/components/field-options/advanced.js");
-/* harmony import */ var _components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/field-options/toolbar */ "./src/components/field-options/toolbar.js");
-/* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../icons/icons */ "./src/icons/icons.js");
+/* harmony import */ var _components_label__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/label */ "./src/components/label.js");
+/* harmony import */ var _components_field_options__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/field-options */ "./src/components/field-options/index.js");
+/* harmony import */ var _components_field_options_validation__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/field-options/validation */ "./src/components/field-options/validation.js");
+/* harmony import */ var _components_field_options_advanced__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/field-options/advanced */ "./src/components/field-options/advanced.js");
+/* harmony import */ var _components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/field-options/toolbar */ "./src/components/field-options/toolbar.js");
+/* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
+/* harmony import */ var _use_field_props__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./use-field-props */ "./src/blocks/input/use-field-props.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__);
 
@@ -1221,14 +1221,13 @@ __webpack_require__.r(__webpack_exports__);
 function Edit(props) {
   const {
     attributes,
-    setAttributes
+    setAttributes,
+    context
   } = props;
   const {
     type,
     showHelp,
     name,
-    grouped,
-    withButton,
     checked,
     value,
     step,
@@ -1237,18 +1236,10 @@ function Edit(props) {
     help
   } = attributes;
   const TagName = type === 'textarea' ? 'textarea' : 'input';
-  const supported = _components_field_options_constants__WEBPACK_IMPORTED_MODULE_10__.SUPPORTED_ATTRIBUTES[type];
-  const borderProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__experimentalUseBorderProps)(attributes);
-  const spacingProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.__experimentalGetSpacingClassesAndStyles)(attributes);
-  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_3__["default"])({
-    'missing-name': !name
-  });
-  const inputStyle = {
-    ...borderProps.style,
-    ...spacingProps.style
-  };
+  const supported = _components_field_options_constants__WEBPACK_IMPORTED_MODULE_9__.SUPPORTED_ATTRIBUTES[type];
+  const fieldProps = (0,_use_field_props__WEBPACK_IMPORTED_MODULE_10__.getInputClassesAndStyles)(attributes);
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
-    className: containerClass
+    className: fieldProps.containerClass
   });
   const {
     children,
@@ -1272,37 +1263,37 @@ function Edit(props) {
     ...innerBlocksProps,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.BlockControls, {
       children: supported.includes('required') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToolbarGroup, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_9__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_8__["default"], {
           ...props
         })
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorControls, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options__WEBPACK_IMPORTED_MODULE_5__["default"], {
         ...props,
         fieldType: type
-      }), 'hidden' !== type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_validation__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      }), 'hidden' !== type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_validation__WEBPACK_IMPORTED_MODULE_6__["default"], {
         ...props,
         fieldType: type
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InspectorAdvancedControls, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_advanced__WEBPACK_IMPORTED_MODULE_8__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_field_options_advanced__WEBPACK_IMPORTED_MODULE_7__["default"], {
         ...props,
         fieldType: type
       })
-    }), 'hidden' !== type ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_label__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    }), 'hidden' !== type ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_components_label__WEBPACK_IMPORTED_MODULE_4__["default"], {
       ...props,
       htmlFor: "input"
     }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
       className: "formello-hidden",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_icons_icons__WEBPACK_IMPORTED_MODULE_4__.Hidden, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_icons_icons__WEBPACK_IMPORTED_MODULE_3__.Hidden, {
         width: "30",
         height: "30"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("div", {
         children: ["[", name, "]"]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(TagName, {
-      className: borderProps.className,
-      style: inputStyle,
+      className: fieldProps.inputClass,
+      style: fieldProps.inputStyle,
       type: 'password' !== type ? type : 'text',
       value: 'password' !== type ? value : '',
       checked: checked || false,
@@ -1401,8 +1392,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
 /* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _use_field_props__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./use-field-props */ "./src/blocks/input/use-field-props.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -1412,11 +1405,6 @@ function save({
 }) {
   const {
     type,
-    value,
-    id,
-    withButton,
-    withOutput,
-    grouped,
     advanced,
     validation,
     enableMismatch,
@@ -1427,7 +1415,6 @@ function save({
     required,
     requiredText,
     label,
-    hideLabel,
     showHelp,
     help,
     dateFormat,
@@ -1439,17 +1426,8 @@ function save({
   } = attributes;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save();
   const TagName = type === 'textarea' ? 'textarea' : 'input';
-  const borderProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetBorderClassesAndStyles)(attributes);
-  const spacingProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetSpacingClassesAndStyles)(attributes);
   const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(blockProps.className);
-  const labelClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    hide: hideLabel,
-    'textarea-label': 'textarea' === type
-  });
-  const fieldClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(borderProps.className, {
-    'formello-advanced': advanced,
-    'formello-rtf': advanced && 'textarea' === type
-  });
+  const fieldProps = (0,_use_field_props__WEBPACK_IMPORTED_MODULE_3__.getInputClassesAndStyles)(attributes);
 
   // include only supported attributes
   const htmlAttrs = Object.fromEntries(_components_field_options_constants__WEBPACK_IMPORTED_MODULE_2__.SUPPORTED_ATTRIBUTES[type].map(col => [col, attributes[col]]));
@@ -1478,42 +1456,90 @@ function save({
     htmlAttrs['data-time-format'] = timeFormat;
     htmlAttrs['data-enable-time'] = enableTime;
   }
-  const inputStyle = {
-    ...borderProps.style,
-    ...spacingProps.style
-  };
   if (noWrapper || 'hidden' === type) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("input", {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("input", {
       ...htmlAttrs,
-      className: fieldClassName,
-      style: inputStyle
+      className: fieldProps.inputClass,
+      style: fieldProps.inputStyle
     });
   }
   if (!htmlAttrs.name) {
     htmlAttrs.name = label;
   }
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save(),
     className: containerClass,
-    children: ['hidden' !== type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-      className: labelClassName,
+    children: ['hidden' !== type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("label", {
+      className: fieldProps.label,
       htmlFor: "id",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
         tagName: "span",
         value: label
-      }), required && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
+      }), required && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("span", {
         className: "required",
         children: requiredText
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(TagName, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(TagName, {
       ...htmlAttrs,
-      className: fieldClassName,
-      style: inputStyle
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InnerBlocks.Content, {}), 'hidden' !== type && showHelp && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
+      className: fieldProps.inputClass,
+      style: fieldProps.inputStyle
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.InnerBlocks.Content, {}), 'hidden' !== type && showHelp && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
       tagName: "small",
       value: help
     })]
   });
+}
+
+/***/ }),
+
+/***/ "./src/blocks/input/use-field-props.js":
+/*!*********************************************!*\
+  !*** ./src/blocks/input/use-field-props.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getInputClassesAndStyles: () => (/* binding */ getInputClassesAndStyles)
+/* harmony export */ });
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
+
+
+function getInputClassesAndStyles(attributes) {
+  const borderProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetBorderClassesAndStyles)(attributes);
+  const spacingProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetSpacingClassesAndStyles)(attributes);
+  const colorProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetColorClassesAndStyles)(attributes);
+  const {
+    name,
+    type,
+    advanced,
+    hideLabel
+  } = attributes;
+  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    'missing-name': !name
+  });
+  const labelClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    hide: hideLabel,
+    'textarea-label': 'textarea' === type
+  });
+  const inputClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(borderProps.className, spacingProps.className, colorProps.className, {
+    'formello-advanced': advanced,
+    'formello-rtf': advanced && 'textarea' === type
+  });
+  const inputStyle = {
+    ...borderProps.style,
+    ...spacingProps.style,
+    ...colorProps.style
+  };
+  return {
+    containerClass,
+    labelClass,
+    inputClass,
+    inputStyle
+  };
 }
 
 /***/ }),
@@ -2433,7 +2459,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function Label({
   attributes,
-  setAttributes
+  setAttributes,
+  context
 }) {
   const {
     labelClass,
@@ -2443,8 +2470,7 @@ function Label({
     required,
     multiple,
     type,
-    label,
-    name
+    label
   } = attributes;
   const {
     postType,
@@ -2459,7 +2485,7 @@ function Label({
       isPreview: getSettings().__unstableIsPreviewMode
     };
   }, []);
-  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'formello', 'meta', postId);
+  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'formello_form', 'meta', postId);
   const labelClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_4__["default"])('label-div', labelClass, labelAlign, labelVAlign, {
     hide: hideLabel,
     required,
@@ -2480,7 +2506,7 @@ function Label({
       allowedFormats: ['core/bold', 'core/italic', 'core/link']
     }), required && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
       className: "required",
-      children: meta?._formello_settings.requiredText || '*'
+      children: context['formello/requiredText'] || '*'
     })]
   });
 }
@@ -3271,7 +3297,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/input","title":"Text Input","category":"formello","textdomain":"formello","attributes":{"type":{"type":"string","source":"attribute","selector":"input","attribute":"type","default":"text"},"id":{"type":"string","source":"attribute","selector":"input","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"input","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"Label","role":"content"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"placeholder":{"type":"string","source":"attribute","selector":"input","attribute":"placeholder","role":"content"},"value":{"type":"string","source":"attribute","selector":"input","attribute":"value"},"validation":{"type":"string","source":"attribute","selector":"input","attribute":"data-bouncer-message","default":""},"enableMismatch":{"type":"boolean","default":false},"mismatchMessage":{"type":"string","source":"attribute","selector":"input","attribute":"data-bouncer-mismatch-message","default":""},"match":{"type":"string","source":"attribute","selector":"input","attribute":"data-bouncer-match"},"required":{"type":"boolean","source":"attribute","selector":"input","attribute":"required","default":false},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"enableAutoComplete":{"type":"boolean","default":false},"autocomplete":{"type":"string","source":"attribute","selector":"input","attribute":"autocomplete","default":"off"},"disabled":{"type":"boolean","source":"attribute","selector":"input","attribute":"disabled","default":false},"readonly":{"type":"boolean","source":"attribute","selector":"input","attribute":"readonly","default":false},"checked":{"type":"boolean","source":"attribute","selector":"input","attribute":"checked","default":false},"multiple":{"type":"boolean","source":"attribute","selector":"input","attribute":"multiple","default":false},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","default":""},"minlength":{"type":"string","source":"attribute","selector":"input","attribute":"minlength"},"maxlength":{"type":"string","source":"attribute","selector":"input","attribute":"maxlength"},"pattern":{"type":"string","source":"attribute","selector":"input","attribute":"pattern"},"min":{"type":"string","source":"attribute","selector":"input","attribute":"min"},"max":{"type":"string","source":"attribute","selector":"input","attribute":"max"},"withButton":{"type":"boolean","default":false},"grouped":{"type":"boolean","default":false},"withOutput":{"type":"boolean","default":false},"noWrapper":{"type":"boolean","default":false},"step":{"type":"number","source":"attribute","selector":"input","attribute":"step"},"dateFormat":{"type":"string","source":"attribute","selector":"input","attribute":"data-date-format"},"minDate":{"type":"string","source":"attribute","selector":"input","attribute":"data-min-date"},"timeFormat":{"type":"string","source":"attribute","selector":"input","attribute":"data-time-format"},"enableTime":{"type":"boolean"},"inlineCalendar":{"type":"boolean"},"mode":{"type":"string","source":"attribute","attribute":"data-mode"},"advanced":{"type":"boolean"}},"supports":{"lock":false,"anchor":false,"html":false,"inserter":true,"className":true,"reusable":false,"spacing":{"padding":true,"__experimentalSkipSerialization":true},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"editorStyle":"file:./index.css","style":"file:./style-index.css","editorScript":"file:./index.js","render":"file:./render.php"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/input","title":"Text Input","ancestor":["formello/form"],"usesContext":["formello/requiredText"],"category":"formello","textdomain":"formello","attributes":{"type":{"type":"string","source":"attribute","selector":"input","attribute":"type","default":"text"},"id":{"type":"string","source":"attribute","selector":"input","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"input","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"Label","role":"content"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"placeholder":{"type":"string","source":"attribute","selector":"input","attribute":"placeholder","role":"content"},"value":{"type":"string","source":"attribute","selector":"input","attribute":"value"},"validation":{"type":"string","source":"attribute","selector":"input","attribute":"data-bouncer-message","default":""},"enableMismatch":{"type":"boolean","default":false},"mismatchMessage":{"type":"string","source":"attribute","selector":"input","attribute":"data-bouncer-mismatch-message","default":""},"match":{"type":"string","source":"attribute","selector":"input","attribute":"data-bouncer-match"},"required":{"type":"boolean","source":"attribute","selector":"input","attribute":"required","default":false},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"enableAutoComplete":{"type":"boolean","default":false},"autocomplete":{"type":"string","source":"attribute","selector":"input","attribute":"autocomplete","default":"off"},"disabled":{"type":"boolean","source":"attribute","selector":"input","attribute":"disabled","default":false},"readonly":{"type":"boolean","source":"attribute","selector":"input","attribute":"readonly","default":false},"checked":{"type":"boolean","source":"attribute","selector":"input","attribute":"checked","default":false},"multiple":{"type":"boolean","source":"attribute","selector":"input","attribute":"multiple","default":false},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","default":""},"minlength":{"type":"string","source":"attribute","selector":"input","attribute":"minlength"},"maxlength":{"type":"string","source":"attribute","selector":"input","attribute":"maxlength"},"pattern":{"type":"string","source":"attribute","selector":"input","attribute":"pattern"},"min":{"type":"string","source":"attribute","selector":"input","attribute":"min"},"max":{"type":"string","source":"attribute","selector":"input","attribute":"max"},"noWrapper":{"type":"boolean","default":false},"step":{"type":"number","source":"attribute","selector":"input","attribute":"step"},"dateFormat":{"type":"string","source":"attribute","selector":"input","attribute":"data-date-format"},"minDate":{"type":"string","source":"attribute","selector":"input","attribute":"data-min-date"},"timeFormat":{"type":"string","source":"attribute","selector":"input","attribute":"data-time-format"},"enableTime":{"type":"boolean"},"inlineCalendar":{"type":"boolean"},"mode":{"type":"string","source":"attribute","attribute":"data-mode"},"advanced":{"type":"boolean"}},"supports":{"lock":false,"anchor":false,"html":false,"inserter":true,"className":true,"reusable":false,"color":{"background":true,"text":true,"__experimentalSkipSerialization":true,"__experimentalSelector":"input"},"spacing":{"padding":true,"__experimentalSkipSerialization":true},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"selectors":{"root":".wp-block-formello-input","color":{"background":".wp-block-formello-input > input","text":".wp-block-formello-input"},"spacing":{"root":".wp-block-formello-input","padding":".wp-block-formello-input > input"},"border":{"root":".wp-block-formello-input > input"}},"editorStyle":"file:./index.css","style":"file:./style-index.css","editorScript":"file:./index.js","render":"file:./render.php"}');
 
 /***/ })
 

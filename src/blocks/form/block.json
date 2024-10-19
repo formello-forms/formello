@@ -26,85 +26,18 @@
 		"formello/multichoices"
 	],
 	"providesContext": {
-		"formello/captchaEnabled": "captchaEnabled",
-		"formello/captchaType": "captchaType",
-		"formello/formId": "successMessage"
+		"formello/requiredText": "requiredText"
 	},
 	"attributes": {
-		"id": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-id"
-		},
-		"name": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "name"
-		},
 		"action": {
 			"type": "string",
 			"source": "attribute",
 			"selector": "form",
 			"attribute": "action"
 		},
-		"successMessage": {
-			"type": "string",
-			"default": ""
-		},
-		"errorMessage": {
-			"type": "string",
-			"default": ""
-		},
-		"redirectUrl": {
-			"type": "string",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-redirect",
-			"default": ""
-		},
-		"debug": {
-			"type": "boolean",
-			"default": false
-		},
-		"captchaEnabled": {
-			"type": "boolean",
-			"default": false
-		},
-		"captchaType": {
-			"type": "string",
-			"default": "reCaptcha"
-		},
-		"labelIsBold": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": ".is-style-bolded",
-			"default": false
-		},
-		"asRow": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": ".as-row",
-			"default": false
-		},
-		"labelAlign": {
-			"type": "string",
-			"default": ""
-		},
 		"requiredText": {
 			"type": "string",
 			"default": "*"
-		},
-		"storeSubmissions": {
-			"type": "boolean",
-			"default": false
-		},
-		"hide": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-hide"
 		},
 		"autoComplete": {
 			"enum": [
@@ -114,19 +47,6 @@
 			"source": "attribute",
 			"selector": "form",
 			"attribute": "autocomplete"
-		},
-		"enableJsValidation": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-validate",
-			"default": true
-		},
-		"noAjax": {
-			"type": "boolean",
-			"source": "attribute",
-			"selector": "form",
-			"attribute": "data-noajax"
 		},
 		"noValidate": {
 			"type": "boolean",
@@ -149,7 +69,5 @@
 	],
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
-	"style": "file:./style-index.css",
-	"viewScript": "file:../../frontend/frontend.js",
-	"render": "file:./render.php"
+	"style": "file:./style-index.css"
 }

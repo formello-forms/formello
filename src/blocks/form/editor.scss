@@ -1,70 +1,76 @@
-$margin-left: 0.5em;
+body.post-type-formello_form {
+    .is-root-container {
+		//display: flex;
+		//flex-wrap: wrap;
+		//width: 100%;
 
-body.post-type-popper, .wp-block-formello-form {
-
-	input,
-	select,
-	textarea {
-		padding: 8px;
-	}
-
-	select,
-	textarea {
-		max-width: 100%;
-	}
-
-	.wp-block {
-		margin: 0;
-	}
-
-	input[disabled],
-	select[disabled],
-	textarea[disabled],
-	button[disabled] {
-		opacity: 1;
-	}
-
-	.label-div.hide {
-		display: none;
-	}
-
-	.label-div>span.required {
-		color: red;
-		margin: 0 5px;
-	}
-
-	.formello-checkbox {
-		.label-div {
-			order: 2;
-			padding: 0 $margin-left;
-			flex: 1;
-		}
-	}
-
-	.formello-group {
-		.label-div {
-			width: 100%;
-		}
-	}
-
-}
-
-.formello-templates-list {
-	display: flex;
-	flex-wrap: wrap;
-
-	li {
-		padding: 10px;
-		flex: 1 1 33.333%;
-		width: 33.333%;
-
-		a {
-			text-align: center;
-			cursor: pointer;
+		.wp-block, .formello {
+			flex-basis: 100%;
 		}
 	}
 }
 
+.wp-block-formello-form {
+
+	.wp-block-formello-input, .wp-block-formello-select, .wp-block-formello-textarea, .wp-block-formello-multichoices {
+		&.missing-name::before {
+			content: 'Missing name';
+			position: absolute;
+			top: 0;
+			right: 0;
+			background-color: red;
+			color: white;
+			padding: 0 .5em;
+			font-size: small;
+		}
+
+		&:has(input[type=checkbox]), &:has(input[type=radio]) {
+			div.label-div {
+				order: 2;
+			}
+		}
+
+		.label-div>span.required {
+			color: red;
+			margin: 0 5px;
+		}
+
+		.label-div.hide {
+			display: none;
+		}
+
+		&:has(.wp-block-formello-output), &:has(.wp-block-formello-button) {
+			flex-direction: row;
+			flex-wrap: wrap;
+			align-items: center;
+			.label-div {
+				width: 100%;
+			}
+			div.wp-block-formello-button, output {
+				flex-basis: auto;
+			}
+			input {
+				flex-grow: 1;
+				flex-shrink: 1;
+			}
+			small {
+				width: 100%;
+			}
+		}
+	}
+}
+
+.formello-sidebar .components-base-control:where(:not(:last-child)) {
+	margin-bottom: 16px;
+}
+
+.formello-actions-list:not(:empty) {
+    margin: 1em 0;
+	.formello-action-item {
+		padding: 0.5rem;
+		border: 1px solid #efefef;		
+	}
+}
 
 .formello-urlinput {
 	min-width: 100%;
@@ -74,127 +80,11 @@ body.post-type-popper, .wp-block-formello-form {
 }
 
 .formello-urlinput__suggestions {
-	width: 260px;
+	width: 240px;
 }
 
-.formello-hidden {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-}
-
-.wp-block-formello-button {
-	border: 1px solid transparent;
-	margin: 0;
-
-	&.left {
-		margin-left: 0;
-	}
-
-	&.right {
-		margin-right: 0;
-	}
-
-	&.wide {
-		width: auto;
-	}
-}
-
-/* ------------------ ACTION MODAL ------------------ */
-
-.formello-modal {
-
-	@media only screen and (min-width: 768px) {
-		min-width: 640px;
-	}
-
-	.formello-action-modal {
-		display: flex;
-		flex-direction: column;
-		gap: 1em;
-
-		.components-base-control__help {
-			margin-bottom: 0;
-		}
-	}
-
-	select {
-		min-width: 100%;
-	}
-
-	fieldset {
-		border: 1px solid #dedede;
-		padding: 10px 20px;
-		margin-bottom: 10px;
-
-		legend {
-			display: flex;
-			align-items: center;
-		}
-	}
-
-	.block-editor-block-pattern-setup__toolbar {
-		left: 0;
-	}
-
-}
-
-.formello-modal-buttons {
-	display: flex;
-	margin: 20px 0;
-	justify-content: space-between;
-	flex-flow: row-reverse;
-}
-
-/* ------------------ END ACTION MODAL ------------------ */
-
-/* ------------------ FIELDS -------------------------- */
-
-
-.formello-fields-row {
-	margin-bottom: 1em;
-
-	.components-base-control {
-		margin-bottom: 0;
-	}
-
-	.components-base-control__field {
-		margin-bottom: 0;
-	}
-}
-
-.formello-fields-margin {
-	margin-bottom: 10px;
-}
-
-.formello-mergetags-container {
-	min-width: 300px;
-}
-
-.formello-tag-option {
-	cursor: pointer;
-	margin-bottom: 5px;
-}
-
-.formello-tag-option:hover {
-	background-color: #007cba;
-	color: #fff;
-}
-
-.formello-notice {
-	margin: 1em 0;
-}
-
-/* ------------------ END FIELDS -------------------------- */
-
-/* ------------------ MCE EDITOR ------------------------------- */
-
-.mce-container {
-	z-index: 9000000 !important;
-}
-
-/* ------------------ END MCE EDITOR ------------------------------- */
-
-.block-editor-block-variation-picker__skip button {
-	display: inline;
+.formello-action-modal {
+    > div {
+        margin-block-start: 1rem;
+    }
 }

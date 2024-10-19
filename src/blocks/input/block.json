@@ -3,6 +3,8 @@
 	"apiVersion": 2,
 	"name": "formello/input",
 	"title": "Text Input",
+	"ancestor": ["formello/form"],
+	"usesContext": ["formello/requiredText"],
 	"category": "formello",
 	"textdomain": "formello",
 	"attributes": {
@@ -164,18 +166,6 @@
 			"selector": "input",
 			"attribute": "max"
 		},
-		"withButton": {
-			"type": "boolean",
-			"default": false
-		},
-		"grouped": {
-			"type": "boolean",
-			"default": false
-		},
-		"withOutput": {
-			"type": "boolean",
-			"default": false
-		},
 		"noWrapper": {
 			"type": "boolean",
 			"default": false
@@ -226,6 +216,12 @@
 		"inserter": true,
 		"className": true,
 		"reusable": false,
+		"color": {
+			"background": true,
+			"text": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalSelector": "input"
+		},
 		"spacing": {
 			"padding": true,
 			"__experimentalSkipSerialization": true
@@ -244,6 +240,20 @@
 			}
 		}
 	},
+	"selectors": {
+        "root": ".wp-block-formello-input",
+        "color": {
+            "background": ".wp-block-formello-input > input",
+            "text": ".wp-block-formello-input"
+        },
+        "spacing": {
+            "root": ".wp-block-formello-input",
+            "padding": ".wp-block-formello-input > input"
+        },
+        "border": {
+            "root": ".wp-block-formello-input > input"
+        }
+    },
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js",

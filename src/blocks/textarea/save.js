@@ -1,33 +1,12 @@
-import {
-	RichText,
-	useBlockProps,
-	__experimentalGetBorderClassesAndStyles as getBorderClassesAndStyles,
-} from '@wordpress/block-editor';
-import clsx from 'clsx';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
+import { getInputClassesAndStyles } from '../input/use-field-props';
 
 export default function save( { attributes } ) {
-	const {
-		id,
-		hideLabel,
-		advanced,
-		validation,
-		help,
-		value,
-		label,
-		required,
-		requiredText,
-	} = attributes;
+	const { id, validation, help, value, label, required, requiredText } =
+		attributes;
 
-	const borderProps = getBorderClassesAndStyles( attributes );
-
-	const labelClassName = clsx( {
-		hide: hideLabel,
-	} );
-
-	const fieldClassName = clsx( borderProps.className, {
-		'formello-rtf': advanced,
-	} );
+	const fieldProps = getInputClassesAndStyles( attributes );
 
 	// include only supported attributes
 	const htmlAttrs = Object.fromEntries(
@@ -43,7 +22,7 @@ export default function save( { attributes } ) {
 
 	return (
 		<div { ...useBlockProps.save() }>
-			<label className={ labelClassName } htmlFor={ id }>
+			<label className={ fieldProps.labelClass } htmlFor={ id }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
 					<span className="required">{ requiredText }</span>
@@ -51,8 +30,8 @@ export default function save( { attributes } ) {
 			</label>
 			<textarea
 				{ ...htmlAttrs }
-				className={ fieldClassName }
-				style={ borderProps.style }
+				style={ fieldProps.inputStyle }
+				className={ fieldProps.inputClass }
 			>
 				{ value }
 			</textarea>

@@ -36,11 +36,11 @@ export default function Captcha() {
 							options={ [
 								{
 									label: __( 'v2 checkbox', 'formello' ),
-									value: '1',
+									value: 'checkbox',
 								},
 								{
 									label: __( 'v3 invisible', 'formello' ),
-									value: '3',
+									value: 'invisible',
 								},
 							] }
 							onChange={ ( val ) => {
@@ -53,6 +53,7 @@ export default function Captcha() {
 							onChange={ ( val ) => {
 								setCaptcha( 'site_key', val, 'reCaptcha' );
 							} }
+							__nextHasNoMarginBottom
 						/>
 						<TextControl
 							label={ __( 'Secret Key', 'formello' ) }
@@ -60,6 +61,7 @@ export default function Captcha() {
 							onChange={ ( val ) => {
 								setCaptcha( 'secret_key', val, 'reCaptcha' );
 							} }
+							__nextHasNoMarginBottom
 						/>
 						{ 3 === Number( reCaptcha.version ) && (
 							<TextControl
@@ -72,6 +74,7 @@ export default function Captcha() {
 								step={ '0.1' }
 								min={ '0' }
 								max={ '1' }
+								__nextHasNoMarginBottom
 							/>
 						) }
 					</VStack>
@@ -106,6 +109,7 @@ export default function Captcha() {
 							onChange={ ( val ) => {
 								setCaptcha( 'site_key', val, 'hCaptcha' );
 							} }
+							__nextHasNoMarginBottom
 						/>
 						<TextControl
 							label={ __( 'Secret Key', 'formello' ) }
@@ -113,6 +117,7 @@ export default function Captcha() {
 							onChange={ ( val ) => {
 								setCaptcha( 'secret_key', val, 'hCaptcha' );
 							} }
+							__nextHasNoMarginBottom
 						/>
 						<TextControl
 							label={ __( 'Threshold', 'formello' ) }
@@ -124,6 +129,7 @@ export default function Captcha() {
 							step={ '0.1' }
 							min={ '0' }
 							max={ '1' }
+							__nextHasNoMarginBottom
 						/>
 					</VStack>
 				</CardBody>

@@ -57,6 +57,7 @@
 }
 .wp-block-formello-input:has(.wp-block-formello-button) input {
   flex: 1;
+  align-self: stretch;
 }
 .wp-block-formello-input:has(.wp-block-formello-button) small {
   width: 100%;

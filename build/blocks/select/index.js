@@ -748,6 +748,57 @@ const moreVertical = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_
 
 /***/ }),
 
+/***/ "./src/blocks/input/use-field-props.js":
+/*!*********************************************!*\
+  !*** ./src/blocks/input/use-field-props.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   getInputClassesAndStyles: () => (/* binding */ getInputClassesAndStyles)
+/* harmony export */ });
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
+
+
+function getInputClassesAndStyles(attributes) {
+  const borderProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetBorderClassesAndStyles)(attributes);
+  const spacingProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetSpacingClassesAndStyles)(attributes);
+  const colorProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.__experimentalGetColorClassesAndStyles)(attributes);
+  const {
+    name,
+    type,
+    advanced,
+    hideLabel
+  } = attributes;
+  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    'missing-name': !name
+  });
+  const labelClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])({
+    hide: hideLabel,
+    'textarea-label': 'textarea' === type
+  });
+  const inputClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(borderProps.className, spacingProps.className, colorProps.className, {
+    'formello-advanced': advanced,
+    'formello-rtf': advanced && 'textarea' === type
+  });
+  const inputStyle = {
+    ...borderProps.style,
+    ...spacingProps.style,
+    ...colorProps.style
+  };
+  return {
+    containerClass,
+    labelClass,
+    inputClass,
+    inputStyle
+  };
+}
+
+/***/ }),
+
 /***/ "./src/blocks/select/edit.js":
 /*!***********************************!*\
   !*** ./src/blocks/select/edit.js ***!
@@ -771,22 +822,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/field-options/toolbar */ "./src/components/field-options/toolbar.js");
 /* harmony import */ var _components_field_options__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/field-options */ "./src/components/field-options/index.js");
 /* harmony import */ var _components_field_options_advanced__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/field-options/advanced */ "./src/components/field-options/advanced.js");
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
+/* harmony import */ var _input_use_field_props__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../input/use-field-props */ "./src/blocks/input/use-field-props.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__);
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
 
 
 
@@ -813,11 +851,9 @@ function Edit(props) {
     disabled
   } = attributes;
   const [isModalOpen, setModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_9__["default"])({
-    'missing-name': !name
-  });
+  const fieldProps = (0,_input_use_field_props__WEBPACK_IMPORTED_MODULE_9__.getInputClassesAndStyles)(attributes);
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps)({
-    className: containerClass
+    className: fieldProps.containerClass
   });
   const selectedOpts = () => {
     const selection = options.filter(x => true === x.selected).map(x => x.value);
@@ -860,6 +896,8 @@ function Edit(props) {
         readOnly: readonly,
         disabled: disabled,
         defaultValue: selectedOpts(),
+        style: fieldProps.inputStyle,
+        className: fieldProps.inputClass,
         children: options.map((opt, index) => {
           return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("option", {
             value: opt.value || opt.label,
@@ -912,10 +950,6 @@ __webpack_require__.r(__webpack_exports__);
    * These can be any of WordPress’ Dashicons, or a custom svg element.
    */
   icon: _assets_icons_select_svg__WEBPACK_IMPORTED_MODULE_4__.ReactComponent,
-  supports: {
-    html: false,
-    reusable: false
-  },
   /**
    * @see ./edit.js
    */
@@ -991,6 +1025,11 @@ function OptionsModal(props) {
       options: items
     });
   };
+  const changeOrder = items => {
+    setAttributes({
+      options: items
+    });
+  };
   const bulkOpts = val => {
     const opts = val.match(/[^\r\n]+/g);
     const newSettings = [];
@@ -1005,16 +1044,18 @@ function OptionsModal(props) {
       options: newSettings
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Modal, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Modal, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Options', 'formello'),
     onRequestClose: onRequestClose,
-    className: 'formello-modal',
+    size: "medium",
     shouldCloseOnClickOutside: false,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+      className: "formello-action-modal",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Bulk add', 'formello'),
         checked: showRaw,
-        onChange: newval => setShowRaw(newval)
+        onChange: newval => setShowRaw(newval),
+        __nextHasNoMarginBottom: true
       }), showRaw && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
         label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Options', 'formello'),
         help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Enter one option per row separated by comma. Ex.: [US, United States Of America]', 'formello'),
@@ -1028,27 +1069,31 @@ function OptionsModal(props) {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Show value', 'formello'),
           checked: showValue,
-          onChange: newval => setShowValue(newval)
+          onChange: newval => setShowValue(newval),
+          __nextHasNoMarginBottom: true
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_opts__WEBPACK_IMPORTED_MODULE_3__["default"], {
-          delete: deleteRow,
+          deleteRow: deleteRow,
           onChange: handleChange,
+          changeOrder: changeOrder,
           options: attributes.options,
           showValue: showValue
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-          isPrimary: true,
-          isSmall: true,
-          onClick: addNewRow,
-          children: "Add option"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+            variant: "primary",
+            size: "small",
+            onClick: addNewRow,
+            children: "Add option"
+          })
         })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "formello-modal-buttons",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+          variant: "primary",
+          onClick: onRequestClose,
+          children: "Save"
+        })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-      className: "formello-modal-buttons",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-        isPrimary: true,
-        onClick: onRequestClose,
-        children: "Save"
-      })
-    })]
+    })
   });
 }
 
@@ -1066,41 +1111,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
 /* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
 const OptionsList = props => {
-  return props.options.map((obj, index) => {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Flex, {
+  const {
+    options,
+    onChange,
+    showValue,
+    deleteRow
+  } = props;
+  const dragItem = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+  const dragOverItem = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useRef)();
+  const dragStart = (e, position) => {
+    dragItem.current = position;
+  };
+  const dragEnter = (e, position) => {
+    dragOverItem.current = position;
+  };
+  const drop = () => {
+    const copyListItems = [...options];
+    const dragItemContent = copyListItems[dragItem.current];
+    copyListItems.splice(dragItem.current, 1);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    props.changeOrder(copyListItems);
+  };
+  return options.map((obj, index) => {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Flex, {
       justify: "flex-start",
       className: 'formello-fields-row',
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CheckboxControl, {
+      onDragStart: e => dragStart(e, index),
+      onDragEnter: e => dragEnter(e, index),
+      onDragEnd: drop,
+      draggable: true,
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CheckboxControl, {
           checked: obj.selected,
-          onChange: val => props.onChange(val, index, 'selected')
+          onChange: val => onChange(val, index, 'selected'),
+          __nextHasNoMarginBottom: true
         })
-      }), props.showValue && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Value', 'formello'),
+      }), showValue && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Value', 'formello'),
           value: obj.value,
-          onChange: val => props.onChange(val, index, 'value')
+          onChange: val => onChange(val, index, 'value'),
+          __nextHasNoMarginBottom: true
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Label', 'formello'),
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Label', 'formello'),
           value: obj.label,
-          onChange: val => props.onChange(val, index, 'label')
+          onChange: val => onChange(val, index, 'label'),
+          __nextHasNoMarginBottom: true
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
           isSmall: true,
           icon: 'no',
           iconSize: 16,
-          onClick: () => props.delete(obj, index)
+          onClick: () => deleteRow(obj, index)
         })
       })]
     }, index);
@@ -1122,8 +1200,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
-/* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
+/* harmony import */ var _components_field_options_constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/field-options/constants */ "./src/components/field-options/constants.js");
+/* harmony import */ var _input_use_field_props__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../input/use-field-props */ "./src/blocks/input/use-field-props.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__);
 /* eslint-disable jsx-a11y/label-has-associated-control */
@@ -1136,27 +1214,22 @@ function save({
 }) {
   const {
     label,
-    hideLabel,
     options,
     required,
     requiredText,
     showHelp,
     help
   } = attributes;
-  const labelClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])('select-label', {
-    hide: hideLabel
-  });
-  const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save({
-    className: 'formello'
-  });
+  const fieldProps = (0,_input_use_field_props__WEBPACK_IMPORTED_MODULE_2__.getInputClassesAndStyles)(attributes);
+  const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.useBlockProps.save();
 
   // include only supported attributes
-  const htmlAttrs = Object.fromEntries(_components_field_options_constants__WEBPACK_IMPORTED_MODULE_2__.SUPPORTED_ATTRIBUTES.select.map(col => [col, attributes[col]]));
+  const htmlAttrs = Object.fromEntries(_components_field_options_constants__WEBPACK_IMPORTED_MODULE_1__.SUPPORTED_ATTRIBUTES.select.map(col => [col, attributes[col]]));
   const selectedOpts = options.filter(x => true === x.selected).map(x => x.value);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
     ...blockProps,
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("label", {
-      className: labelClassName,
+      className: fieldProps.labelClass,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_0__.RichText.Content, {
         tagName: "span",
         value: label
@@ -1167,6 +1240,8 @@ function save({
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("select", {
       ...htmlAttrs,
       defaultValue: selectedOpts,
+      style: fieldProps.inputStyle,
+      className: fieldProps.inputClass,
       children: options.map((opt, index) => {
         return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("option", {
           value: opt.value || opt.label,
@@ -1601,7 +1676,8 @@ __webpack_require__.r(__webpack_exports__);
 
 function Label({
   attributes,
-  setAttributes
+  setAttributes,
+  context
 }) {
   const {
     labelClass,
@@ -1611,8 +1687,7 @@ function Label({
     required,
     multiple,
     type,
-    label,
-    name
+    label
   } = attributes;
   const {
     postType,
@@ -1627,7 +1702,7 @@ function Label({
       isPreview: getSettings().__unstableIsPreviewMode
     };
   }, []);
-  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'formello', 'meta', postId);
+  const [meta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_2__.useEntityProp)('postType', 'formello_form', 'meta', postId);
   const labelClassName = (0,clsx__WEBPACK_IMPORTED_MODULE_4__["default"])('label-div', labelClass, labelAlign, labelVAlign, {
     hide: hideLabel,
     required,
@@ -1648,7 +1723,7 @@ function Label({
       allowedFormats: ['core/bold', 'core/italic', 'core/link']
     }), required && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {
       className: "required",
-      children: meta?._formello_settings.requiredText || '*'
+      children: context['formello/requiredText'] || '*'
     })]
   });
 }
@@ -2353,7 +2428,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \**************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/select","title":"Select","description":"Dropdown select.","category":"formello","textdomain":"formello","attributes":{"id":{"type":"string","source":"attribute","selector":"select","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"select","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"My input"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"options":{"type":"array","source":"query","selector":"option","query":{"value":{"type":"string","source":"attribute","attribute":"value"},"label":{"type":"string","source":"text"},"selected":{"type":"boolean","source":"attribute","attribute":"selected"}},"default":[{"value":"","label":"Select an option"},{"value":"1","label":"One"},{"value":"2","label":"Two"},{"value":"3","label":"Three"}]},"multiple":{"type":"boolean","source":"attribute","selector":"select","attribute":"multiple"},"required":{"type":"boolean","source":"attribute","selector":"select","attribute":"required"},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"disabled":{"type":"boolean","source":"attribute","selector":"select","attribute":"disabled"},"readonly":{"type":"boolean","source":"attribute","selector":"select","attribute":"readonly"},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","source":"html","selector":"small","default":""}},"style":"file:./style-index.css","editorScript":"file:./index.js","render":"file:./render.php"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/select","title":"Select","ancestor":["formello/form"],"description":"Dropdown select.","category":"formello","textdomain":"formello","attributes":{"id":{"type":"string","source":"attribute","selector":"select","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"select","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"My input"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"options":{"type":"array","source":"query","selector":"option","query":{"value":{"type":"string","source":"attribute","attribute":"value"},"label":{"type":"string","source":"text"},"selected":{"type":"boolean","source":"attribute","attribute":"selected"}},"default":[{"value":"","label":"Select an option"},{"value":"1","label":"One"},{"value":"2","label":"Two"},{"value":"3","label":"Three"}]},"multiple":{"type":"boolean","source":"attribute","selector":"select","attribute":"multiple"},"required":{"type":"boolean","source":"attribute","selector":"select","attribute":"required"},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"disabled":{"type":"boolean","source":"attribute","selector":"select","attribute":"disabled"},"readonly":{"type":"boolean","source":"attribute","selector":"select","attribute":"readonly"},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","source":"html","selector":"small","default":""}},"supports":{"html":false,"reusable":false,"color":{"background":true,"text":true,"__experimentalSkipSerialization":true},"spacing":{"padding":true,"__experimentalSkipSerialization":true},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"selectors":{"root":".wp-block-formello-select","color":{"background":".wp-block-formello-select > select","text":".wp-block-formello-select"},"spacing":{"root":".wp-block-formello-select","padding":".wp-block-formello-select > select"},"border":{"root":".wp-block-formello-select > select"}},"style":"file:./style-index.css","editorScript":"file:./index.js","render":"file:./render.php"}');
 
 /***/ })
 

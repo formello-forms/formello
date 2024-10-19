@@ -24,7 +24,7 @@ import {
 /**
  * Internal dependencies
  */
-import { DataViews } from '@wordpress/dataviews';
+import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
 import Header from '../../components/masthead.js';
 import { useHistory, useLocation } from '../../router';
 
@@ -87,22 +87,23 @@ export const Submissions = () => {
 			page: view.page,
 			order: view.sort?.direction,
 			orderby: view.sort?.field,
-			search: view.search,
+			search: view.search || undefined,
 			...filters,
 		};
 	}, [ view, params ] );
 
-	const submissions = useEntityRecords(
-		'formello/v1',
-		'submissions',
-		queryArgs
-	);
+	const {
+		records: submissions,
+		isResolving: isLoadingSubmissions,
+		totalItems,
+		totalPages,
+	} = useEntityRecords( 'formello/v1', 'submissions', queryArgs );
 
 	const columns = useEntityRecord( 'formello/v1', 'columns', params.form_id );
 
 	const { record: form } = useEntityRecord(
 		'postType',
-		'formello',
+		'formello_form',
 		params.form_id
 	);
 
@@ -115,12 +116,10 @@ export const Submissions = () => {
 
 	const paginationInfo = useMemo( () => {
 		return {
-			totalItems: form?.submissions_count.total,
-			totalPages: Math.ceil(
-				form?.submissions_count.total / view.perPage
-			),
+			totalItems,
+			totalPages,
 		};
-	}, [ form, view ] );
+	}, [ totalItems, totalPages ] );
 
 	const fields = useMemo( () => {
 		const _fields = [
@@ -208,6 +207,10 @@ export const Submissions = () => {
 		return _fields.concat( _columns );
 	}, [ history, getColumns ] );
 
+	/*const { data: shownData, paginationInfo } = useMemo( () => {
+		return filterSortAndPaginate( submissions, view, fields );
+	}, [ view, submissions, fields ] );*/
+
 	const { saveEntityRecord } = useDispatch( coreStore );
 	const actions = useMemo(
 		() => [
@@ -287,8 +290,8 @@ export const Submissions = () => {
 						paginationInfo={ paginationInfo }
 						fields={ fields }
 						actions={ actions }
-						data={ submissions.records || EMPTY_ARRAY }
-						isLoading={ submissions.isResolving }
+						data={ submissions || EMPTY_ARRAY }
+						isLoading={ isLoadingSubmissions }
 						view={ view }
 						onChangeView={ setView }
 						defaultLayouts={ defaultLayouts }

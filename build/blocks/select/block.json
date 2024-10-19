@@ -3,6 +3,9 @@
   "apiVersion": 2,
   "name": "formello/select",
   "title": "Select",
+  "ancestor": [
+    "formello/form"
+  ],
   "description": "Dropdown select.",
   "category": "formello",
   "textdomain": "formello",
@@ -108,6 +111,46 @@
       "source": "html",
       "selector": "small",
       "default": ""
+    }
+  },
+  "supports": {
+    "html": false,
+    "reusable": false,
+    "color": {
+      "background": true,
+      "text": true,
+      "__experimentalSkipSerialization": true
+    },
+    "spacing": {
+      "padding": true,
+      "__experimentalSkipSerialization": true
+    },
+    "__experimentalBorder": {
+      "color": true,
+      "radius": true,
+      "style": true,
+      "width": true,
+      "__experimentalSkipSerialization": true,
+      "__experimentalDefaultControls": {
+        "color": true,
+        "radius": true,
+        "style": true,
+        "width": true
+      }
+    }
+  },
+  "selectors": {
+    "root": ".wp-block-formello-select",
+    "color": {
+      "background": ".wp-block-formello-select > select",
+      "text": ".wp-block-formello-select"
+    },
+    "spacing": {
+      "root": ".wp-block-formello-select",
+      "padding": ".wp-block-formello-select > select"
+    },
+    "border": {
+      "root": ".wp-block-formello-select > select"
     }
   },
   "style": "file:./style-index.css",

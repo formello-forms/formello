@@ -2,14 +2,17 @@
 /**
  * Manage the frontend submissions.
  *
- * @package Formello
+ * A class definition that includes attributes and functions used across both the
+ * public-facing side of the site and the admin area.
+ *
+ * @link       https://www.francescopepe.com
+ * @since      1.0.0
+ *
+ * @package    Formello
+ * @subpackage Formello/includes
  */
 
 namespace Formello;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
 
 /**
  * Frontend Pages Handler
@@ -17,31 +20,34 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since 1.0.0
  */
 class Frontend {
-
 	/**
-	 * Class instance.
+	 * The ID of this plugin.
 	 *
-	 * @access private
-	 * @var $instance Class instance.
+	 * @since    2.6.0
+	 * @access   private
+	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
-	private static $instance;
+	private $plugin_name;
 
 	/**
-	 * Initiator
+	 * The version of this plugin.
+	 *
+	 * @since    2.6.0
+	 * @access   private
+	 * @var      string    $version    The current version of this plugin.
 	 */
-	public static function get_instance() {
-		if ( ! isset( self::$instance ) ) {
-			self::$instance = new self();
-		}
-		return self::$instance;
-	}
+	private $version;
 
 	/**
-	 * Constructor
+	 * Initialize the class and set its properties.
+	 *
+	 * @since 2.6.0
+	 * @param string $plugin_name The name of this plugin.
+	 * @param string $version     The version of this plugin.
 	 */
-	public function __construct() {
-		add_action( 'wp_ajax_formello', array( $this, 'listen_for_submit' ) );
-		add_action( 'wp_ajax_nopriv_formello', array( $this, 'listen_for_submit' ) );
+	public function __construct( $plugin_name, $version ) {
+		$this->plugin_name = $plugin_name;
+		$this->version = $version;
 	}
 
 	/**
@@ -64,13 +70,11 @@ class Frontend {
 		$form->validate();
 
 		if ( $form->has_errors() ) {
-			$form->log( 'debug', 'Not validated:', $form->get_response() );
 			wp_send_json_error( $form->get_response() );
 			wp_die();
 		}
 
 		$this->process_form( $form );
-		$form->log( 'debug', 'Form sent:', $form->get_response() );
 
 		$response = $form->get_response();
 
@@ -97,8 +101,6 @@ class Frontend {
 		$form->save();
 
 		$actions = $form->get_actions();
-
-		$form->log( 'debug', 'Actions to run:', $actions );
 
 		// process form actions asynchronously.
 		if ( isset( $actions ) ) {
@@ -141,4 +143,3 @@ class Frontend {
 		do_action( 'formello_form_success', $form );
 	}
 }
-Frontend::get_instance();

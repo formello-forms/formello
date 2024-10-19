@@ -3,6 +3,9 @@
   "apiVersion": 2,
   "name": "formello/fieldset",
   "title": "Fieldset",
+  "ancestor": [
+    "formello/form"
+  ],
   "description": "A block to display form fieldset.",
   "category": "formello",
   "textdomain": "formello",
@@ -21,8 +24,12 @@
   "supports": {
     "anchor": true,
     "html": false,
-    "color": true,
-    "spacing": true,
+    "color": {
+      "text": true
+    },
+    "spacing": {
+      "padding": true
+    },
     "__experimentalBorder": {
       "color": true,
       "radius": true,

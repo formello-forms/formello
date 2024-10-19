@@ -1,58 +1,59 @@
 /*!****************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/form/editor.scss ***!
   \****************************************************************************************************************************************************************************************************************************************************/
-body.post-type-popper input,
-body.post-type-popper select,
-body.post-type-popper textarea, .wp-block-formello-form input,
-.wp-block-formello-form select,
-.wp-block-formello-form textarea {
-  padding: 8px;
+body.post-type-formello_form .is-root-container .wp-block, body.post-type-formello_form .is-root-container .formello {
+  flex-basis: 100%;
 }
-body.post-type-popper select,
-body.post-type-popper textarea, .wp-block-formello-form select,
-.wp-block-formello-form textarea {
-  max-width: 100%;
+
+.wp-block-formello-form .wp-block-formello-input.missing-name::before, .wp-block-formello-form .wp-block-formello-select.missing-name::before, .wp-block-formello-form .wp-block-formello-textarea.missing-name::before, .wp-block-formello-form .wp-block-formello-multichoices.missing-name::before {
+  content: "Missing name";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  color: white;
+  padding: 0 0.5em;
+  font-size: small;
 }
-body.post-type-popper .wp-block, .wp-block-formello-form .wp-block {
-  margin: 0;
+.wp-block-formello-form .wp-block-formello-input:has(input[type=checkbox]) div.label-div, .wp-block-formello-form .wp-block-formello-input:has(input[type=radio]) div.label-div, .wp-block-formello-form .wp-block-formello-select:has(input[type=checkbox]) div.label-div, .wp-block-formello-form .wp-block-formello-select:has(input[type=radio]) div.label-div, .wp-block-formello-form .wp-block-formello-textarea:has(input[type=checkbox]) div.label-div, .wp-block-formello-form .wp-block-formello-textarea:has(input[type=radio]) div.label-div, .wp-block-formello-form .wp-block-formello-multichoices:has(input[type=checkbox]) div.label-div, .wp-block-formello-form .wp-block-formello-multichoices:has(input[type=radio]) div.label-div {
+  order: 2;
 }
-body.post-type-popper input[disabled],
-body.post-type-popper select[disabled],
-body.post-type-popper textarea[disabled],
-body.post-type-popper button[disabled], .wp-block-formello-form input[disabled],
-.wp-block-formello-form select[disabled],
-.wp-block-formello-form textarea[disabled],
-.wp-block-formello-form button[disabled] {
-  opacity: 1;
-}
-body.post-type-popper .label-div.hide, .wp-block-formello-form .label-div.hide {
-  display: none;
-}
-body.post-type-popper .label-div > span.required, .wp-block-formello-form .label-div > span.required {
+.wp-block-formello-form .wp-block-formello-input .label-div > span.required, .wp-block-formello-form .wp-block-formello-select .label-div > span.required, .wp-block-formello-form .wp-block-formello-textarea .label-div > span.required, .wp-block-formello-form .wp-block-formello-multichoices .label-div > span.required {
   color: red;
   margin: 0 5px;
 }
-body.post-type-popper .formello-checkbox .label-div, .wp-block-formello-form .formello-checkbox .label-div {
-  order: 2;
-  padding: 0 0.5em;
-  flex: 1;
+.wp-block-formello-form .wp-block-formello-input .label-div.hide, .wp-block-formello-form .wp-block-formello-select .label-div.hide, .wp-block-formello-form .wp-block-formello-textarea .label-div.hide, .wp-block-formello-form .wp-block-formello-multichoices .label-div.hide {
+  display: none;
 }
-body.post-type-popper .formello-group .label-div, .wp-block-formello-form .formello-group .label-div {
+.wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-output), .wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-button), .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-output), .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-button), .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-output), .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-button), .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-output), .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-button) {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-output) .label-div, .wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-button) .label-div, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-output) .label-div, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-button) .label-div, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-output) .label-div, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-button) .label-div, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-output) .label-div, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-button) .label-div {
+  width: 100%;
+}
+.wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-output) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-output) output, .wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-button) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-button) output, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-output) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-output) output, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-button) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-button) output, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-output) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-output) output, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-button) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-button) output, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-output) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-output) output, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-button) div.wp-block-formello-button, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-button) output {
+  flex-basis: auto;
+}
+.wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-output) input, .wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-button) input, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-output) input, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-button) input, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-output) input, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-button) input, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-output) input, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-button) input {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-output) small, .wp-block-formello-form .wp-block-formello-input:has(.wp-block-formello-button) small, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-output) small, .wp-block-formello-form .wp-block-formello-select:has(.wp-block-formello-button) small, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-output) small, .wp-block-formello-form .wp-block-formello-textarea:has(.wp-block-formello-button) small, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-output) small, .wp-block-formello-form .wp-block-formello-multichoices:has(.wp-block-formello-button) small {
   width: 100%;
 }
 
-.formello-templates-list {
-  display: flex;
-  flex-wrap: wrap;
+.formello-sidebar .components-base-control:where(:not(:last-child)) {
+  margin-bottom: 16px;
 }
-.formello-templates-list li {
-  padding: 10px;
-  flex: 1 1 33.333%;
-  width: 33.333%;
+
+.formello-actions-list:not(:empty) {
+  margin: 1em 0;
 }
-.formello-templates-list li a {
-  text-align: center;
-  cursor: pointer;
+.formello-actions-list:not(:empty) .formello-action-item {
+  padding: 0.5rem;
+  border: 1px solid #efefef;
 }
 
 .formello-urlinput {
@@ -63,107 +64,9 @@ body.post-type-popper .formello-group .label-div, .wp-block-formello-form .forme
 }
 
 .formello-urlinput__suggestions {
-  width: 260px;
+  width: 240px;
 }
 
-.formello-hidden {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.wp-block-formello-button {
-  border: 1px solid transparent;
-  margin: 0;
-}
-.wp-block-formello-button.left {
-  margin-right: 0;
-}
-.wp-block-formello-button.right {
-  margin-left: 0;
-}
-.wp-block-formello-button.wide {
-  width: auto;
-}
-
-/* ------------------ ACTION MODAL ------------------ */
-@media only screen and (min-width: 768px) {
-  .formello-modal {
-    min-width: 640px;
-  }
-}
-.formello-modal .formello-action-modal {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
-}
-.formello-modal .formello-action-modal .components-base-control__help {
-  margin-bottom: 0;
-}
-.formello-modal select {
-  min-width: 100%;
-}
-.formello-modal fieldset {
-  border: 1px solid #dedede;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-}
-.formello-modal fieldset legend {
-  display: flex;
-  align-items: center;
-}
-.formello-modal .block-editor-block-pattern-setup__toolbar {
-  right: 0;
-}
-
-.formello-modal-buttons {
-  display: flex;
-  margin: 20px 0;
-  justify-content: space-between;
-  flex-flow: row-reverse;
-}
-
-/* ------------------ END ACTION MODAL ------------------ */
-/* ------------------ FIELDS -------------------------- */
-.formello-fields-row {
-  margin-bottom: 1em;
-}
-.formello-fields-row .components-base-control {
-  margin-bottom: 0;
-}
-.formello-fields-row .components-base-control__field {
-  margin-bottom: 0;
-}
-
-.formello-fields-margin {
-  margin-bottom: 10px;
-}
-
-.formello-mergetags-container {
-  min-width: 300px;
-}
-
-.formello-tag-option {
-  cursor: pointer;
-  margin-bottom: 5px;
-}
-
-.formello-tag-option:hover {
-  background-color: #007cba;
-  color: #fff;
-}
-
-.formello-notice {
-  margin: 1em 0;
-}
-
-/* ------------------ END FIELDS -------------------------- */
-/* ------------------ MCE EDITOR ------------------------------- */
-.mce-container {
-  z-index: 9000000 !important;
-}
-
-/* ------------------ END MCE EDITOR ------------------------------- */
-.block-editor-block-variation-picker__skip button {
-  display: inline;
+.formello-action-modal > div {
+  margin-block-start: 1rem;
 }

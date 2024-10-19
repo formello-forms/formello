@@ -8,7 +8,7 @@ import { downloadBlob } from '@wordpress/blob';
 export default function ExportForms() {
 	const { records: forms, isResolving } = useEntityRecords(
 		'postType',
-		'formello',
+		'formello_form',
 		{
 			_embed: 'wp:term',
 		}

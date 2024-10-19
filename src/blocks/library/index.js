@@ -3,9 +3,6 @@ import metadata from './block.json';
 import edit from './edit';
 import { Logo } from '../../icons/icons';
 
-import './style.scss';
-import './editor.scss';
-
 /**
  * Every block starts by registering a new block type definition.
  *

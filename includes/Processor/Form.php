@@ -7,8 +7,6 @@
 
 namespace Formello\Processor;
 
-use Formello\Log;
-
 /**
  * Get defaults for our general options.
  *
@@ -45,13 +43,6 @@ class Form {
 	protected $settings = array();
 
 	/**
-	 * The form log
-	 *
-	 * @var Formello\Log
-	 */
-	protected $logger;
-
-	/**
 	 * The actions array
 	 *
 	 * @var array
@@ -68,7 +59,6 @@ class Form {
 			$this->ID       = $id;
 			$this->settings = get_post_meta( $id, '_formello_settings', true );
 			$this->actions  = get_post_meta( $id, '_formello_actions', true );
-			$this->logger   = Log::get_instance();
 		}
 	}
 
@@ -104,17 +94,6 @@ class Form {
 	 */
 	public function add_error( $error ) {
 		$this->data['errors'][] = $error;
-	}
-
-	/**
-	 * Add debug
-	 *
-	 * @param string $level The actions response.
-	 * @param string $message The actions response.
-	 * @param array  $context The actions response.
-	 */
-	public function log( $level, $message, $context = array() ) {
-		$this->logger->log( $level, $message, $context );
 	}
 
 	/**

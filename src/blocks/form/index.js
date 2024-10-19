@@ -1,6 +1,5 @@
 import variations from './variations';
-import edit from './edit/index.js';
-import './actions/email.js';
+import edit from './edit';
 import save from './save';
 import deprecated from './deprecated';
 import metadata from './block.json';
@@ -11,21 +10,19 @@ import { registerBlockType } from '@wordpress/blocks';
 
 import './style.scss';
 import './editor.scss';
-import transforms from './transforms.js';
 
 registerBlockType( metadata, {
 	icon: Form,
 	variations,
 	supports: {
 		reusable: false,
-		className: true,
 		html: false,
 		lock: false,
 		anchor: true,
 		color: true,
 		interactivity: true,
-		inserter: 'formello' === window.pagenow ? true : false,
-		multiple: 'formello' !== window.pagenow ? true : false,
+		inserter: 'formello_form' === window.pagenow ? true : false,
+		multiple: 'formello_form' !== window.pagenow ? true : false,
 		// eslint-disable-next-line
 		spacing: {
 			padding: true,
@@ -69,13 +66,12 @@ registerBlockType( metadata, {
 		],
 	},
 	deprecated,
-	transforms,
 	edit,
 	save,
 } );
 
 document.addEventListener( 'DOMContentLoaded', function () {
-	if ( 'formello' === window.pagenow ) {
+	if ( 'formello_form' === window.pagenow ) {
 		// Your code to run since DOM is loaded and ready
 		const menuRoot = document.querySelector( '#toplevel_page_formello' );
 		menuRoot.classList.remove( 'wp-not-current-submenu' );

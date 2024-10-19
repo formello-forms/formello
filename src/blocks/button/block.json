@@ -6,6 +6,7 @@
 	"description": "A block to display form button.",
 	"category": "formello",
 	"icon": "button",
+	"ancestor": ["formello/form"],
 	"textdomain": "formello",
     "usesContext": ["formello/settings"],
 	"attributes": {

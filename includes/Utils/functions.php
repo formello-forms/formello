@@ -180,7 +180,7 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 		return $allowed_blocks;
 	}
 
-	if ( 'formello' === $editor_context->post->post_type ) {
+	if ( 'formello_form' === $editor_context->post->post_type ) {
 		$allowed_blocks = array(
 			'formello/form',
 			'formello/button',
@@ -294,7 +294,7 @@ function add_submissions_count() {
 	}
 
 	register_rest_field(
-		'formello',
+		'formello_form',
 		'submissions_count',
 		array(
 			'get_callback' => function ( $form ) {
@@ -317,12 +317,16 @@ function add_submissions_count() {
 }
 
 /**
- * Enqueue Editor assets.
+ * Redirect CPT page to Popper page
+ *
+ * @return void
  */
-function enqueue_editor_assets() {
-	wp_enqueue_script(
-		'formello-new-form',
-	);
+function redirect_post_type() {
+	$screen = get_current_screen();
+	if ( 'edit-formello_form' === $screen->id ) {
+		wp_safe_redirect( 'admin.php?page=formello' );
+		exit;
+	}
 }
 
 // phpcs:ignore.
@@ -332,4 +336,4 @@ add_filter( 'pre_update_option_formello', __NAMESPACE__ . '\formello_encrypt_opt
 add_filter( 'allowed_block_types_all', __NAMESPACE__ . '\formello_allowed_blocks', 10, 2 );
 add_filter( 'upload_mimes', __NAMESPACE__ . '\formello_custom_mime_types', 10 );
 add_action( 'rest_api_init', __NAMESPACE__ . '\add_submissions_count', 10, 2 );
-add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\enqueue_editor_assets' );
+add_action( 'load-edit.php', __NAMESPACE__ . '\redirect_post_type' );

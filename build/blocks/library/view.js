@@ -143,18 +143,53 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const showLoading = e => {
-  const btn = e.submitter;
+  const btn = e.submitter || e.target.closest('button');
   btn.classList.toggle('wp-block-formello-button--loading');
   btn.toggleAttribute('disabled');
+};
+const formSubmit = async e => {
+  const {
+    ref
+  } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
+  const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+  const config = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
+  const {
+    id
+  } = ref.dataset;
+  const formData = new FormData(ref);
+  formData.append('action', 'formello');
+  formData.append('_formello', config.nonce);
+  formData.append('_formello_id', id);
+  try {
+    showLoading(e);
+    const req = await fetch(config.ajax_url, {
+      method: 'POST',
+      body: formData
+    });
+    const res = await req.json();
+    context.response = res;
+    showLoading(e);
+    response(ref, res);
+  } catch (err) {
+    showLoading(e);
+    state.response = {
+      data: {
+        message: err
+      },
+      success: false
+    };
+  }
 };
 const captchaChallenge = async () => {
   const config = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
   const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
   if (context.captchaEnabled && 'reCaptcha' === context.captchaType && '3' === config.settings.reCaptcha.version) {
-    await window.grecaptcha.execute();
+    return window.grecaptcha.execute();
   }
   if (context.captchaEnabled && 'hCaptcha' === context.captchaType) {
-    await window.hcaptcha.execute();
+    await window.hcaptcha.execute({
+      async: true
+    });
   }
 };
 const response = (ref, res) => {
@@ -211,20 +246,37 @@ const {
     }
   },
   actions: {
-    sendForm: async e => {
-      e.preventDefault();
-      e.stopPropagation();
+    validateCaptcha: e => {
       const {
         ref
       } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
-      const {
-        id
-      } = ref.dataset;
-      const formData = new FormData(ref);
-      formData.append('action', 'formello');
-      formData.append('_formello_id', id);
+      const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
+      e.preventDefault();
+      if (context.enableJsValidation) {
+        const errors = context.validator.validateAll(ref.closest('form'));
+        if (errors.length) {
+          errors[0].scrollIntoView({
+            behavior: 'smooth',
+            block: 'end',
+            inline: 'nearest'
+          });
+          return;
+        }
+      }
+      showLoading(e);
+      captchaChallenge().then(() => {
+        showLoading(e);
+        ref.closest('form').requestSubmit(ref);
+      });
+    },
+    sendForm: e => {
+      e.preventDefault();
+      e.stopPropagation();
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
       if (context.enableJsValidation) {
+        const {
+          ref
+        } = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getElement)();
         const errors = context.validator.validateAll(ref);
         if (errors.length) {
           errors[0].scrollIntoView({
@@ -235,29 +287,7 @@ const {
           return;
         }
       }
-      if (context.captchaEnabled) {
-        captchaChallenge();
-      }
-      showLoading(e);
-      try {
-        const config = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
-        const req = await fetch(config.ajax_url, {
-          method: 'POST',
-          body: formData
-        });
-        const res = await req.json();
-        context.response = res;
-        response(ref, res);
-        showLoading(e);
-      } catch (err) {
-        showLoading(e);
-        state.response = {
-          data: {
-            message: err
-          },
-          success: false
-        };
-      }
+      formSubmit(e);
     },
     setOutput: () => {
       const {
@@ -271,9 +301,6 @@ const {
   callbacks: {
     init: () => {
       const context = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getContext)();
-      if (context.captchaEnabled) {
-        captchaChallenge();
-      }
       if (context.enableJsValidation) {
         const config = (0,_wordpress_interactivity__WEBPACK_IMPORTED_MODULE_0__.getConfig)();
         const {
@@ -282,7 +309,7 @@ const {
         const {
           id
         } = ref.dataset;
-        context.validator = new window.Bouncer(`.wp-block-formello-library[data-id='${id}']`, {
+        context.validator = new window.Bouncer(`.wp-block-formello-form[data-id='${id}']`, {
           ..._config__WEBPACK_IMPORTED_MODULE_1__.config.bouncer,
           messages: {
             ..._config__WEBPACK_IMPORTED_MODULE_1__.config.bouncer.messages,

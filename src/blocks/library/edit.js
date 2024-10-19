@@ -74,14 +74,14 @@ export default function ReusableBlockEdit( {
 	const handleEditOriginal = () => {
 		onNavigateToEntityRecord( {
 			postId: ref,
-			postType: 'formello',
+			postType: 'formello_form',
 		} );
 	};
 
 	const hasAlreadyRendered = useHasRecursion( ref );
 	const { record, hasResolved } = useEntityRecord(
 		'postType',
-		'formello',
+		'formello_form',
 		ref
 	);
 
@@ -90,7 +90,7 @@ export default function ReusableBlockEdit( {
 	const options = useSelect( ( select ) => {
 		const forms = select( 'core' ).getEntityRecords(
 			'postType',
-			'formello',
+			'formello_form',
 			{
 				per_page: -1,
 			}
@@ -116,25 +116,31 @@ export default function ReusableBlockEdit( {
 			const template = {
 				title,
 				content: `<!-- wp:formello/form {"lock":{"move":false,"remove":true}} -->
-				<form class="wp-block-formello-form" method="post" data-id="11" data-validate="true" novalidate action=""><input type="hidden" name="_formello_id" value="11"/><input type="text" name="_formello_h11" class="formello-hp" tabindex="-1"/><input type="hidden" name="action" value="formello"/><div class="formello-message" id="formello-message-11"></div></form>
+				<form method="post" class="wp-block-formello-form" novalidate>
+				<input type="hidden" name="_formello_id"/>
+				<input type="text" class="formello-hp" tabindex="-1"/>
+				<input type="hidden" name="action" value="formello"/>
+				</form>
 				<!-- /wp:formello/form -->`,
 				status: 'publish',
 				excerpt: '',
 			};
 
-			return saveEntityRecord( 'postType', 'formello', template ).then(
-				( response ) => {
-					setAttributes( { ref: response.id } );
-					setIsDisabled( true );
-				}
-			);
+			return saveEntityRecord(
+				'postType',
+				'formello_form',
+				template
+			).then( ( response ) => {
+				setAttributes( { ref: response.id } );
+				setIsDisabled( true );
+			} );
 		},
 		[ saveEntityRecord, setAttributes ]
 	);
 
 	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
 		'postType',
-		'formello',
+		'formello_form',
 		{ id: ref }
 	);
 

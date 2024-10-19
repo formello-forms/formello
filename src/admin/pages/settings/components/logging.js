@@ -31,16 +31,19 @@ const LoggingTab = () => {
 					label={ __( 'Enable log', 'formello' ) }
 					checked={ log }
 					onChange={ ( val ) => updateSetting( 'log', val ) }
+					__nextHasNoMarginBottom
 				/>
 				{ log && (
-					<ExternalLink
-						href={
-							'/wp-content/uploads/formello/logs/' +
-							settings.log_file
-						}
-					>
-						{ __( 'View log', 'formello' ) }
-					</ExternalLink>
+					<p>
+						<ExternalLink
+							href={
+								'/wp-content/uploads/formello/logs/' +
+								settings.log_file
+							}
+						>
+							{ __( 'View log', 'formello' ) }
+						</ExternalLink>
+					</p>
 				) }
 			</CardBody>
 		</Card>

@@ -15,11 +15,8 @@ function extendScriptConfig( config ) {
 		entry: {
 			...config.entry(),
 			admin: [ path.resolve( __dirname, 'src', 'admin', 'index.js' ) ],
-			'new-form': [
-				path.resolve( __dirname, 'src', 'new-form', 'index.js' ),
-			],
-			frontend: [
-				path.resolve( __dirname, 'src', 'frontend', 'frontend.js' ),
+			'form-settings': [
+				path.resolve( __dirname, 'src', 'form-settings', 'index.js' ),
 			],
 		},
 		output: {
