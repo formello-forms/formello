@@ -9,7 +9,7 @@ import { Fragment } from '@wordpress/element';
 import { Asterisk } from '../../icons/icons';
 
 export default function Toolbar( props ) {
-	const { attributes, setAttributes } = props;
+	const { attributes, setAttributes, name } = props;
 	const { required, showHelp, hideLabel, type } = attributes;
 
 	const toggleLabel = (
@@ -48,14 +48,16 @@ export default function Toolbar( props ) {
 					} }
 				/>
 			) }
-			<ToolbarButton
-				label={ __( 'Show help message', 'formello' ) }
-				icon={ 'editor-help' }
-				isPressed={ showHelp }
-				onClick={ () => {
-					setAttributes( { showHelp: ! showHelp } );
-				} }
-			/>
+			{ 'formello/multichoices' !== name && (
+				<ToolbarButton
+					label={ __( 'Show help message', 'formello' ) }
+					icon={ 'editor-help' }
+					isPressed={ showHelp }
+					onClick={ () => {
+						setAttributes( { showHelp: ! showHelp } );
+					} }
+				/>
+			) }
 		</Fragment>
 	);
 }

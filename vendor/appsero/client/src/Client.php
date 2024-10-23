@@ -14,7 +14,7 @@ class Client {
      *
      * @var string
      */
-    public $version = '1.3.0';
+    public $version = '2.0.3';
 
     /**
      * Hash identifier of the plugin
@@ -125,6 +125,26 @@ class Client {
         $this->insights = new Insights( $this );
 
         return $this->insights;
+    }
+
+    /**
+     * Initialize plugin/theme updater
+     *
+     * @return void
+     */
+    public function updater() {
+        // do not show update notice on ajax request and rest api request
+        if ( wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+            return;
+        }
+
+        // show deprecated notice
+        _deprecated_function( __CLASS__ . '::updater', '2.0', '\Appsero\Updater::init($client);, for more details please visit: https://appsero.com/docs/appsero-developers-guide/appsero-client/appsero-sdk-updater-changes/' );
+
+        // initialize the new updater
+        if ( method_exists( '\Appsero\Updater', 'init' ) ) {
+            \Appsero\Updater::init( $this );
+        }
     }
 
     /**

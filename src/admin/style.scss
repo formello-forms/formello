@@ -401,3 +401,12 @@ $mobile: 426px;
 .formello-actions svg {
 	width: 24px;
 }
+
+div.field-content {
+	display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+}

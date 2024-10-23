@@ -62,7 +62,7 @@ class Email extends Action {
 	 *
 	 * @param array $action_settings Te action settings.
 	 */
-	public function process( $action_settings ) {
+	public function process( $action_settings, $form ) {
 		$settings = array_merge( $this->settings, $action_settings );
 		$this->log( 'debug', 'Mail Settings:', $settings );
 
@@ -96,7 +96,10 @@ class Email extends Action {
 
 		$result = wp_mail( $to, $subject, $message, $headers );
 
-		$this->log( 'debug', __METHOD__ . '(). Mail details:', array( $to, $subject, $message, $headers ) );
+		if ( ! $result ) {
+			$this->log( 'debug', __METHOD__ . '(). Mail details:', array( $to, $subject, $message, $headers ) );
+			$this->log( 'debug', __METHOD__ . '(). Form details:', $form->get_response() );
+		}
 
 		return true;
 	}

@@ -16,6 +16,7 @@ import {
 import { integrations, icons } from '../actions/constants';
 import { close, cog } from '@wordpress/icons';
 import { ActionsModal } from '../actions/modal';
+import { InlineEdit } from '../../components/inline-edit';
 
 export function ActionsSettings() {
 	const { postType, postId } = useSelect( ( select ) => {

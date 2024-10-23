@@ -62,7 +62,6 @@ class Blocks {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 		$this->entry_point = $entry_point;
-		add_shortcode( 'formello', array( $this, 'do_reusable_block' ) );
 	}
 
 	/**
@@ -80,19 +79,19 @@ class Blocks {
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( $this->entry_point ) . 'build/blocks/form',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/form'
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( $this->entry_point ) . 'build/blocks/input',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/input'
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( $this->entry_point ) . 'build/blocks/textarea',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/textarea'
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( $this->entry_point ) . 'build/blocks/select',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/select'
 		);
 
 		register_block_type_from_metadata(
@@ -108,7 +107,7 @@ class Blocks {
 		);
 
 		register_block_type_from_metadata(
-			plugin_dir_path( $this->entry_point ) . 'build/blocks/button',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/button'
 		);
 	}
 
@@ -144,7 +143,7 @@ class Blocks {
 
 		$form_context = \Formello\Utils\formello_form_context( $attributes['ref'] );
 
-		if ( $form_context['enableJsValidation'] ) {
+		if ( ! empty( $form_context['enableJsValidation'] ) ) {
 			// phpcs:ignore
 			wp_enqueue_script( 'bouncer', 'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.4.6/dist/bouncer.min.js' );
 		}
@@ -167,6 +166,7 @@ class Blocks {
 					'version' => $form_context['version'] ?? '1',
 				),
 				'errors' => array(),
+				'debug' => $form_context['debug'],
 			)
 		);
 
@@ -182,7 +182,12 @@ class Blocks {
 			$p->set_attribute( 'data-id', $attributes['ref'] );
 		}
 
-		if ( $p->next_tag( array( 'tag_name' => 'input', 'class_name' => 'formello-hp' ) ) ) {
+		if ( $p->next_tag(
+			array(
+				'tag_name' => 'input',
+				'class_name' => 'formello-hp',
+			)
+		) ) {
 			$p->set_attribute( 'name', '_formello_h' . $attributes['ref'] );
 			$p->set_attribute( 'aria-label', __( 'If you are human, leave this field blank.', 'formello' ) );
 		}
@@ -215,7 +220,7 @@ class Blocks {
 					'slug'  => 'formello',
 					'title' => __( 'Formello' ),
 				),
-			),
+			)
 		);
 	}
 

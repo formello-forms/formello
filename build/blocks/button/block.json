@@ -46,7 +46,10 @@
   },
   "selectors": {
     "root": ".wp-block-formello-button",
-    "color": ".wp-block-formello-button > button",
+    "color": {
+      "background": ".wp-block-formello-button > button",
+      "text": ".wp-block-formello-button > button"
+    },
     "typography": {
       "root": ".wp-block-formello-button > button",
       "text-decoration": ".wp-block-formello-button > button"
@@ -76,6 +79,11 @@
     },
     "typography": {
       "fontSize": true
+    }
+  },
+  "example": {
+    "attributes": {
+      "text": "Submit"
     }
   },
   "editorScript": "file:./index.js",

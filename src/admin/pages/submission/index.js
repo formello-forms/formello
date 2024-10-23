@@ -28,7 +28,9 @@ export const Submission = () => {
 		params.submission_id ||
 			getQueryArg( window.location.href, 'submission_id' )
 	);
-	const { saveEntityRecord } = useDispatch( coreStore );
+
+	const { saveEntityRecord, invalidateResolutionForStore } =
+		useDispatch( coreStore );
 
 	useEffect( () => {
 		if ( parseInt( submission.record?.details.is_new ) ) {
@@ -36,27 +38,40 @@ export const Submission = () => {
 				id: submission.record.id,
 				details: { is_new: false },
 			} );
+			invalidateResolutionForStore();
 		}
 	}, [] );
 
 	if ( 'ERROR' === submission.status ) {
 		return (
-			<Notice status="warning" isDismissible={ false }>
-				<p>{ __( 'Submission Not Found.', 'formello' ) }</p>
-				<Button
-					variant="primary"
-					size="small"
-					icon={ 'arrow-left' }
-					onClick={ () => {
-						history.push( {
-							page: 'formello',
-							section: 'submissions',
-						} );
-					} }
-				>
-					{ __( 'Go back', 'formello' ) }
-				</Button>
-			</Notice>
+			<Fragment>
+				<Header
+					title={ sprintf(
+						/* Translators: %d The submission id. */
+						__( 'Submission %d', 'formello' ),
+						params.submission_id
+					) }
+					className="full-width"
+				></Header>
+				<div className="formello-content">
+					<Notice status="warning" isDismissible={ false }>
+						<p>{ __( 'Submission Not Found.', 'formello' ) }</p>
+						<Button
+							variant="primary"
+							size="small"
+							icon={ 'arrow-left' }
+							onClick={ () => {
+								history.push( {
+									page: 'formello',
+									section: 'submissions',
+								} );
+							} }
+						>
+							{ __( 'Go back', 'formello' ) }
+						</Button>
+					</Notice>
+				</div>
+			</Fragment>
 		);
 	}
 

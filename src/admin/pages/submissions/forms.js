@@ -107,11 +107,12 @@ export const Forms = () => {
 			...filters,
 		};
 	}, [ view ] );
-	const { records: forms, isResolving: isLoadingForms, totalItems, totalPages } = useEntityRecords(
-		'postType',
-		'formello_form',
-		queryArgs
-	);
+	const {
+		records: forms,
+		isResolving: isLoadingForms,
+		totalItems,
+		totalPages,
+	} = useEntityRecords( 'postType', 'formello_form', queryArgs );
 
 	const paginationInfo = useMemo( () => {
 		return {
@@ -148,11 +149,6 @@ export const Forms = () => {
 									item.title?.rendered || item.slug
 								) || __( '(no title)' ) }
 							</Button>
-							{ item.submissions_count.news > 0 && (
-								<span className="formello-badge">
-									{ item.submissions_count.news }
-								</span>
-							) }
 						</div>
 					);
 				},
@@ -183,6 +179,11 @@ export const Forms = () => {
 								} }
 							>
 								{ item.submissions_count.total }
+								{ item.submissions_count.news > 0 && (
+									<span className="formello-badge">
+										{ item.submissions_count.news }
+									</span>
+								) }
 							</Button>
 						</div>
 					);

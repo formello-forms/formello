@@ -84,7 +84,7 @@ abstract class Base extends WP_REST_Controller {
 	protected function response( $data ) {
 		return new \WP_REST_Response(
 			$data,
-			200,
+			200
 		);
 	}
 

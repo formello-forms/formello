@@ -70,3 +70,8 @@ body.post-type-formello_form .is-root-container .wp-block, body.post-type-formel
 .formello-action-modal > div {
   margin-block-start: 1rem;
 }
+.formello-action-modal .formello-modal-buttons {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}

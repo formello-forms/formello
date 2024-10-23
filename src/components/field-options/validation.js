@@ -51,9 +51,9 @@ function ValidationOptions( props ) {
 			title={ __( 'Validation', 'formello' ) }
 			initialOpen={ false }
 		>
-			{ 'date' === type && (
+			{ ( 'date' === type || 'tel' === type ) && (
 				<ToggleControl
-					label={ __( 'Advanced Date', 'formello' ) }
+					label={ __( 'Advanced', 'formello' ) }
 					checked={ advanced }
 					onChange={ ( val ) => {
 						setAttributes( { advanced: val } );

@@ -16,10 +16,9 @@ export function FieldsData( props ) {
 				<table>
 					<tbody>
 						{ Object.keys( data ).map( ( key, i ) => {
-							const field =
-								'string' !== typeof data[ key ]
-									? JSON.stringify( data[ key ] )
-									: data[ key ];
+							const field = JSON.parse(
+								JSON.stringify( data[ key ] )
+							);
 							return (
 								<tr key={ i }>
 									<th>
@@ -29,8 +28,8 @@ export function FieldsData( props ) {
 									</th>
 									<td>
 										<RawHTML className="display-linebreak">
-											{ 'null' === field
-												? ''
+											{ Array.isArray( field )
+												? field.join( ', ' )
 												: decodeEntities( field ) }
 										</RawHTML>
 									</td>

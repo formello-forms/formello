@@ -72,7 +72,7 @@ export function getFieldsType() {
 		}
 
 		fields[ b.attributes.name ] = type;
-		if ( b.attributes.enableRtf ) {
+		if ( b.attributes.advanced && 'textarea' === 'textarea' ) {
 			fields[ b.attributes.name ] = 'richtext';
 		}
 		if ( b.attributes.multiple && 'select' === type ) {

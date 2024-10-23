@@ -9,17 +9,6 @@
  * @subpackage Formello/includes
  */
 
-/**
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
- * @package    Formello
- * @subpackage Formello2
- * @author     Francesco Pepe <sgozzapolli@gmail.com>
- */
-
 namespace Formello;
 
 /**

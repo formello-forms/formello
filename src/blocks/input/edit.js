@@ -20,7 +20,7 @@ import { SUPPORTED_ATTRIBUTES } from '../../components/field-options/constants';
 import { getInputClassesAndStyles } from './use-field-props';
 
 export default function Edit( props ) {
-	const { attributes, setAttributes, context } = props;
+	const { attributes, setAttributes } = props;
 	const {
 		type,
 		showHelp,

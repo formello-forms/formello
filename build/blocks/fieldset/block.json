@@ -54,5 +54,24 @@
       }
     }
   },
+  "example": {
+    "attributes": {
+      "legend": "Preferences"
+    },
+    "innerBlocks": [
+      {
+        "name": "formello/input",
+        "attributes": {
+          "label": "Job"
+        }
+      },
+      {
+        "name": "formello/textarea",
+        "attributes": {
+          "label": "Description"
+        }
+      }
+    ]
+  },
   "editorScript": "file:./index.js"
 }

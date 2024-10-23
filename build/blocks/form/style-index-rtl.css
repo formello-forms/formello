@@ -1,6 +1,50 @@
 /*!***************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/form/style.scss ***!
   \***************************************************************************************************************************************************************************************************************************************************/
+.wp-block-formello-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.8em;
+  /* HONEYPOT position */
+}
+.wp-block-formello-form > .wp-block-formello-input,
+.wp-block-formello-form > .wp-block-formello-select,
+.wp-block-formello-form > .wp-block-formello-textarea,
+.wp-block-formello-form > .wp-block-formello-fieldset,
+.wp-block-formello-form > .wp-block-formello-multichoices {
+  flex-basis: 100%;
+}
+.wp-block-formello-form > .wp-block-formello-input .wp-block-formello-button, .wp-block-formello-form > .wp-block-formello-input .wp-block-formello-output,
+.wp-block-formello-form > .wp-block-formello-select .wp-block-formello-button,
+.wp-block-formello-form > .wp-block-formello-select .wp-block-formello-output,
+.wp-block-formello-form > .wp-block-formello-textarea .wp-block-formello-button,
+.wp-block-formello-form > .wp-block-formello-textarea .wp-block-formello-output,
+.wp-block-formello-form > .wp-block-formello-fieldset .wp-block-formello-button,
+.wp-block-formello-form > .wp-block-formello-fieldset .wp-block-formello-output,
+.wp-block-formello-form > .wp-block-formello-multichoices .wp-block-formello-button,
+.wp-block-formello-form > .wp-block-formello-multichoices .wp-block-formello-output {
+  align-self: stretch;
+}
+.wp-block-formello-form .formello-message,
+.wp-block-formello-form .formello-debug {
+  flex-basis: 100%;
+}
+.wp-block-formello-form .formello-hp {
+  position: absolute !important;
+  right: -5000px;
+}
+.wp-block-formello-form .error {
+  border-color: red;
+}
+.wp-block-formello-form .error-message {
+  color: red;
+  order: 4;
+}
+.wp-block-formello-form input:user-invalid {
+  border-color: red;
+}
+
 .formello-message {
   display: none;
   box-sizing: border-box;
@@ -25,39 +69,6 @@
   display: none;
 }
 
-.wp-block-formello-form {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.8em;
-  /* HONEYPOT position */
-}
-.wp-block-formello-form > .wp-block-formello-input,
-.wp-block-formello-form > .wp-block-formello-select,
-.wp-block-formello-form > .wp-block-formello-textarea,
-.wp-block-formello-form > .wp-block-formello-fieldset,
-.wp-block-formello-form .formello-message {
-  flex-basis: 100%;
-}
-.wp-block-formello-form > .wp-block-formello-input .wp-block-formello-button, .wp-block-formello-form > .wp-block-formello-input .wp-block-formello-output,
-.wp-block-formello-form > .wp-block-formello-select .wp-block-formello-button,
-.wp-block-formello-form > .wp-block-formello-select .wp-block-formello-output,
-.wp-block-formello-form > .wp-block-formello-textarea .wp-block-formello-button,
-.wp-block-formello-form > .wp-block-formello-textarea .wp-block-formello-output,
-.wp-block-formello-form > .wp-block-formello-fieldset .wp-block-formello-button,
-.wp-block-formello-form > .wp-block-formello-fieldset .wp-block-formello-output,
-.wp-block-formello-form .formello-message .wp-block-formello-button,
-.wp-block-formello-form .formello-message .wp-block-formello-output {
-  align-self: stretch;
-}
-.wp-block-formello-form .formello-hp {
-  position: absolute !important;
-  right: -5000px;
-}
-.wp-block-formello-form .error {
-  border-color: red;
-}
-.wp-block-formello-form .error-message {
-  color: red;
-  order: 4;
+.formello-debug pre {
+  white-space: break-spaces;
 }

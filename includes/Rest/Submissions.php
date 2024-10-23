@@ -187,7 +187,13 @@ class Submissions extends Base {
 	public function get_submission( $request ) {
 		$id = $request->get_param( 'id' );
 
-		$data       = $this->get_from_db( $id );
+		$data = $this->get_from_db( $id );
+		if ( ! $data ) {
+			return new \WP_REST_Response(
+				'Not found',
+				404
+			);
+		}
 		$submission = $this->get_object( $data );
 
 		return $submission;

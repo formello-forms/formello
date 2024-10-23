@@ -11,7 +11,13 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { decodeEntities } from '@wordpress/html-entities';
-import { useState, useMemo, useCallback, Fragment } from '@wordpress/element';
+import {
+	useState,
+	useMemo,
+	useCallback,
+	Fragment,
+	RawHTML,
+} from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { heading, seen, starFilled } from '@wordpress/icons';
 import { trashSubmissionAction } from '../../components/actions/submission.js';
@@ -24,7 +30,7 @@ import {
 /**
  * Internal dependencies
  */
-import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
+import { DataViews } from '@wordpress/dataviews';
 import Header from '../../components/masthead.js';
 import { useHistory, useLocation } from '../../router';
 
@@ -64,7 +70,6 @@ export const Submissions = () => {
 		search: '',
 		// All fields are visible by default, so it's
 		// better to keep track of the hidden ones.
-		hiddenFields: [ 'id' ],
 		layout: defaultLayouts.table.layout,
 	} );
 
@@ -100,12 +105,6 @@ export const Submissions = () => {
 	} = useEntityRecords( 'formello/v1', 'submissions', queryArgs );
 
 	const columns = useEntityRecord( 'formello/v1', 'columns', params.form_id );
-
-	const { record: form } = useEntityRecord(
-		'postType',
-		'formello_form',
-		params.form_id
-	);
 
 	const getColumns = useCallback( () => {
 		if ( columns.hasResolved ) {
@@ -170,6 +169,7 @@ export const Submissions = () => {
 							history.push( {
 								page: 'formello',
 								section: 'submission',
+								form_id: params.form_id,
 								submission_id: item.id,
 							} )
 						}
@@ -196,9 +196,9 @@ export const Submissions = () => {
 						return <time>{ formattedDate }</time>;
 					}
 					return (
-						<Text numberOfLines={ 4 } truncate>
+						<RawHTML className="field-content">
 							{ decodeEntities( item.fields[ key ] ) }
-						</Text>
+						</RawHTML>
 					);
 				},
 				enableSorting: true,
@@ -207,11 +207,8 @@ export const Submissions = () => {
 		return _fields.concat( _columns );
 	}, [ history, getColumns ] );
 
-	/*const { data: shownData, paginationInfo } = useMemo( () => {
-		return filterSortAndPaginate( submissions, view, fields );
-	}, [ view, submissions, fields ] );*/
-
 	const { saveEntityRecord } = useDispatch( coreStore );
+
 	const actions = useMemo(
 		() => [
 			{
@@ -233,7 +230,7 @@ export const Submissions = () => {
 				id: 'mark-as-starred',
 				label: __( 'Toggle favorite' ),
 				isPrimary: false,
-				isBulk: true,
+				supportsBulk: true,
 				isEligible: () => true,
 				icon: starFilled,
 				callback: ( posts ) => {
@@ -250,7 +247,7 @@ export const Submissions = () => {
 				id: 'mark-as-new',
 				label: __( 'Toggle new' ),
 				isPrimary: false,
-				isBulk: true,
+				supportsBulk: true,
 				icon: heading,
 				callback: ( posts ) => {
 					const post = posts[ 0 ];

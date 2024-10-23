@@ -16,6 +16,7 @@ import {
 } from '@wordpress/block-editor';
 import { useState } from '@wordpress/element';
 import { OptionsModal } from '../select/modal';
+import Toolbar from '../../components/field-options/toolbar';
 import clsx from 'clsx';
 
 export default function Edit( props ) {
@@ -40,6 +41,7 @@ export default function Edit( props ) {
 			<InspectorControls>
 				<BlockControls>
 					<ToolbarGroup>
+						<Toolbar { ...props } />
 						<ToolbarButton
 							label={ __( 'Edit options', 'formello' ) }
 							icon={ 'editor-ul' }
@@ -102,7 +104,6 @@ export default function Edit( props ) {
 							type={ type }
 							required={ required }
 							checked={ opt.selected }
-							onChange={ () => console.log( 'change' ) }
 							id={ id }
 						/>
 					</div>

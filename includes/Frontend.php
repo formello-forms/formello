@@ -115,7 +115,10 @@ class Frontend {
 					wp_schedule_single_event(
 						time() + 60,
 						'formello_process_form_action_' . $action_settings['type'],
-						array( 'action_settings' => $action_settings ),
+						array(
+							'action_settings' => $action_settings,
+							'form' => $form,
+						),
 						true
 					);
 				} else {

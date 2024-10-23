@@ -87,5 +87,20 @@
       }
     }
   },
+  "example": {
+    "attributes": {
+      "options": [
+        {
+          "label": "Windows"
+        },
+        {
+          "label": "MacOS"
+        },
+        {
+          "label": "Linux"
+        }
+      ]
+    }
+  },
   "editorScript": "file:./index.js"
 }

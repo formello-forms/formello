@@ -8,6 +8,11 @@
  *     $block (WP_Block): The block instance.
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ * @link       https://www.francescopepe.com
+ * @since      1.0.0
+ *
+ * @package    Formello
+ * @subpackage Formello/includes
  */
 
 $p = new \WP_HTML_Tag_Processor( $content );
@@ -20,6 +25,23 @@ if ( $p->next_tag( 'label' ) ) {
 
 if ( $p->next_tag( array( 'tag_name' => 'select' ) ) ) {
 	$p->set_attribute( 'id', $unique_id );
+	if ( $p->get_attribute( 'multiple' ) ) {
+		$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
+	}
+	if ( $p->has_class( 'formello-advanced' ) ) {
+			$p->set_attribute( 'autocomplete', 'off' );
+		wp_enqueue_script(
+			'tom-select',
+			'https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js',
+			array(),
+			false, // phpcs:ignore
+			array(
+				'strategy' => 'defer',
+			)
+		);
+		// phpcs:ignore
+		wp_enqueue_style( 'tom-select', 'https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css' );
+	}
 }
 
 echo $p->get_updated_html();

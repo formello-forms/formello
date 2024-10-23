@@ -8,6 +8,11 @@
  *     $block (WP_Block): The block instance.
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ * @link       https://www.francescopepe.com
+ * @since      1.0.0
+ *
+ * @package    Formello
+ * @subpackage Formello/includes
  */
 
 $replacer = new Formello\TagReplacers\Replacer();
@@ -28,6 +33,20 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 		$p->set_attribute( 'data-wp-on--input', 'actions.setOutput' );
 	}
 
+	if ( 'tel' === $p->get_attribute( 'type' ) ) {
+		wp_enqueue_script(
+			'intl-tel',
+			'https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/intlTelInput.min.js',
+			array(),
+			false, // phpcs:ignore
+			array(
+				'strategy' => 'defer',
+			)
+		);
+		// phpcs:ignore
+		wp_enqueue_style( 'intl-tel', 'https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/css/intlTelInput.css' );
+	}
+
 	if ( 'password' === $p->get_attribute( 'type' ) ) {
 		wp_enqueue_script( 'password-strength-meter' );
 	}
@@ -36,11 +55,12 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 			'flatpickr',
 			'https://cdn.jsdelivr.net/npm/flatpickr',
 			array(),
-			false,
+			false, // phpcs:ignore
 			array(
 				'strategy' => 'defer',
-			),
+			)
 		);
+		// phpcs:ignore
 		wp_enqueue_style( 'flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css' );
 	}
 }

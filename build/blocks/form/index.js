@@ -3241,7 +3241,7 @@ function getFieldsType() {
       type = b.attributes.type;
     }
     fields[b.attributes.name] = type;
-    if (b.attributes.enableRtf) {
+    if (b.attributes.advanced && 'textarea' === 'textarea') {
       fields[b.attributes.name] = 'richtext';
     }
     if (b.attributes.multiple && 'select' === type) {
@@ -3586,7 +3586,8 @@ function TabContent({
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SearchControl, {
       value: searchInput,
-      onChange: setSearchInput
+      onChange: setSearchInput,
+      __nextHasNoMarginBottom: true
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TabPanel, {
       tabs: tabs,
       children: tab => tab.data.filter(element => {

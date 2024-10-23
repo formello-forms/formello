@@ -41,7 +41,8 @@ export function SubmissionData( props ) {
 							<th>{ __( 'Form ID', 'formello' ) }</th>
 							<td>
 								<ExternalLink href={ formUrl }>
-									{ form?.title.raw || __( '(No title)', 'formello' ) }
+									{ form?.title.raw ||
+										__( '(No title)', 'formello' ) }
 								</ExternalLink>
 							</td>
 						</tr>

@@ -2,6 +2,48 @@ $label-width: 190px;
 $margin-left: 0.5em;
 $small-margin: 0 8px;
 
+.wp-block-formello-form {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: .8em;
+
+	> .wp-block-formello-input,
+	> .wp-block-formello-select,
+	> .wp-block-formello-textarea,
+	> .wp-block-formello-fieldset,
+	> .wp-block-formello-multichoices {
+		flex-basis: 100%;
+		.wp-block-formello-button, .wp-block-formello-output {
+			align-self: stretch;
+		}
+	}
+
+	.formello-message,
+	.formello-debug {
+		flex-basis: 100%;
+	}
+
+	/* HONEYPOT position */
+	.formello-hp {
+		position: absolute !important;
+		left: -5000px;
+	}
+
+	.error {
+		border-color: red;
+	}
+
+	.error-message {
+		color: red;
+		order: 4;
+	}
+
+	input:user-invalid {
+		border-color: red;
+	}
+}
+
 .formello-message {
 	display: none;
 	box-sizing: border-box;
@@ -29,35 +71,6 @@ $small-margin: 0 8px;
 	}
 }
 
-.wp-block-formello-form {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	gap: .8em;
-
-	> .wp-block-formello-input,
-	> .wp-block-formello-select,
-	> .wp-block-formello-textarea,
-	> .wp-block-formello-fieldset,
-	.formello-message {
-		flex-basis: 100%;
-		.wp-block-formello-button, .wp-block-formello-output {
-			align-self: stretch;
-		}
-	}
-
-	/* HONEYPOT position */
-	.formello-hp {
-		position: absolute !important;
-		left: -5000px;
-	}
-
-	.error {
-		border-color: red;
-	}
-
-	.error-message {
-		color: red;
-		order: 4;
-	}
+.formello-debug pre {
+	white-space: break-spaces;
 }

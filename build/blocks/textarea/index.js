@@ -781,8 +781,7 @@ function getInputClassesAndStyles(attributes) {
     'textarea-label': 'textarea' === type
   });
   const inputClass = (0,clsx__WEBPACK_IMPORTED_MODULE_1__["default"])(borderProps.className, spacingProps.className, colorProps.className, {
-    'formello-advanced': advanced,
-    'formello-rtf': advanced && 'textarea' === type
+    'formello-advanced': advanced
   });
   const inputStyle = {
     ...borderProps.style,
@@ -848,9 +847,7 @@ function Edit(props) {
     value,
     placeholder,
     showHelp,
-    help,
-    advanced,
-    name
+    help
   } = attributes;
   const supported = _components_field_options_constants__WEBPACK_IMPORTED_MODULE_9__.SUPPORTED_ATTRIBUTES.textarea;
   const fieldProps = (0,_input_use_field_props__WEBPACK_IMPORTED_MODULE_10__.getInputClassesAndStyles)(attributes);
@@ -1348,7 +1345,8 @@ function Options(props) {
     required,
     multiple,
     checked,
-    showHelp
+    showHelp,
+    advanced
   } = attributes;
   const supported = _constants__WEBPACK_IMPORTED_MODULE_4__.SUPPORTED_ATTRIBUTES[fieldType];
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
@@ -1409,14 +1407,23 @@ function Options(props) {
           showHelp: newval
         }),
         __nextHasNoMarginBottom: true
-      }), 'select' === fieldType && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+      }), 'select' === fieldType && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+          label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Advanced', 'formello'),
+          checked: advanced,
+          onChange: val => {
+            setAttributes({
+              advanced: val
+            });
+          },
+          __nextHasNoMarginBottom: true
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
           variant: 'primary',
           onClick: () => {
             setModalOpen(true);
           },
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Manage Options', 'formello')
-        })
+        })]
       })]
     })
   });
@@ -1456,7 +1463,8 @@ __webpack_require__.r(__webpack_exports__);
 function Toolbar(props) {
   const {
     attributes,
-    setAttributes
+    setAttributes,
+    name
   } = props;
   const {
     required,
@@ -1503,7 +1511,7 @@ function Toolbar(props) {
           hideLabel: !hideLabel
         });
       }
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+    }), 'formello/multichoices' !== name && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
       label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show help message', 'formello'),
       icon: 'editor-help',
       isPressed: showHelp,
@@ -1579,8 +1587,8 @@ function ValidationOptions(props) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Validation', 'formello'),
     initialOpen: false,
-    children: ['date' === type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Advanced Date', 'formello'),
+    children: [('date' === type || 'tel' === type) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Advanced', 'formello'),
       checked: advanced,
       onChange: val => {
         setAttributes({
@@ -1869,7 +1877,7 @@ function getFieldsType() {
       type = b.attributes.type;
     }
     fields[b.attributes.name] = type;
-    if (b.attributes.enableRtf) {
+    if (b.attributes.advanced && 'textarea' === 'textarea') {
       fields[b.attributes.name] = 'richtext';
     }
     if (b.attributes.multiple && 'select' === type) {
@@ -2212,7 +2220,8 @@ function TabContent({
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.SearchControl, {
       value: searchInput,
-      onChange: setSearchInput
+      onChange: setSearchInput,
+      __nextHasNoMarginBottom: true
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TabPanel, {
       tabs: tabs,
       children: tab => tab.data.filter(element => {
@@ -2483,7 +2492,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/textarea","title":"Textarea","ancestor":["formello/form"],"description":"Textarea field.","category":"formello","textdomain":"formello","attributes":{"id":{"type":"string","source":"attribute","selector":"textarea","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"textarea","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"My textarea"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"placeholder":{"type":"string","source":"attribute","selector":"textarea","attribute":"placeholder","default":""},"value":{"type":"string","source":"text","selector":"textarea","default":""},"validation":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-message","default":""},"enableMismatch":{"type":"boolean","default":false},"mismatchMessage":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-mismatch-message","default":""},"match":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-match","default":""},"required":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"required","default":false},"autocomplete":{"enum":["on","off"],"source":"attribute","selector":"textarea","attribute":"autocomplete","default":"off"},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"disabled":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"disabled","default":false},"readonly":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"readonly","default":false},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","source":"html","selector":"small","default":""},"cols":{"type":"string","source":"attribute","selector":"textarea","attribute":"cols"},"rows":{"type":"string","source":"attribute","selector":"textarea","attribute":"rows"},"minlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"minlength"},"maxlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"maxlength"},"pattern":{"type":"string","source":"attribute","selector":"textarea","attribute":"pattern"},"advanced":{"type":"boolean","selector":"textarea.formello-rft"}},"supports":{"html":false,"inserter":true,"reusable":false,"color":{"background":true,"text":true,"__experimentalSkipSerialization":true},"spacing":{"padding":true,"__experimentalSkipSerialization":true},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"selectors":{"root":".wp-block-formello-textarea","color":{"background":".wp-block-formello-textarea > textarea","text":".wp-block-formello-textarea"},"spacing":{"root":".wp-block-formello-textarea","padding":".wp-block-formello-textarea > textarea"},"border":{"root":".wp-block-formello-textarea > textarea"}},"editorScript":"file:./index.js","style":"file:./style-index.css","render":"file:./render.php"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/textarea","title":"Textarea","ancestor":["formello/form"],"usesContext":["formello/requiredText"],"description":"Textarea field.","category":"formello","textdomain":"formello","attributes":{"id":{"type":"string","source":"attribute","selector":"textarea","attribute":"id"},"name":{"type":"string","source":"attribute","selector":"textarea","attribute":"name"},"label":{"type":"string","source":"html","selector":"label span:not(.required)","default":"My textarea"},"hideLabel":{"type":"boolean","selector":"label.hide","default":false},"placeholder":{"type":"string","source":"attribute","selector":"textarea","attribute":"placeholder","default":""},"value":{"type":"string","source":"text","selector":"textarea","default":""},"validation":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-message","default":""},"enableMismatch":{"type":"boolean","default":false},"mismatchMessage":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-mismatch-message","default":""},"match":{"type":"string","source":"attribute","selector":"textarea","attribute":"data-bouncer-match","default":""},"required":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"required","default":false},"autocomplete":{"enum":["on","off"],"source":"attribute","selector":"textarea","attribute":"autocomplete","default":"off"},"requiredText":{"type":"string","source":"text","selector":"label span.required","default":"*"},"disabled":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"disabled","default":false},"readonly":{"type":"boolean","source":"attribute","selector":"textarea","attribute":"readonly","default":false},"showHelp":{"type":"boolean","default":false},"help":{"type":"string","source":"html","selector":"small","default":""},"cols":{"type":"string","source":"attribute","selector":"textarea","attribute":"cols"},"rows":{"type":"string","source":"attribute","selector":"textarea","attribute":"rows"},"minlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"minlength"},"maxlength":{"type":"string","source":"attribute","selector":"textarea","attribute":"maxlength"},"pattern":{"type":"string","source":"attribute","selector":"textarea","attribute":"pattern"},"advanced":{"type":"boolean","selector":"textarea.formello-rft"}},"supports":{"html":false,"inserter":true,"reusable":false,"color":{"background":true,"text":true,"__experimentalSkipSerialization":true},"spacing":{"padding":true,"__experimentalSkipSerialization":true},"__experimentalBorder":{"color":true,"radius":true,"style":true,"width":true,"__experimentalSkipSerialization":true,"__experimentalDefaultControls":{"color":true,"radius":true,"style":true,"width":true}}},"selectors":{"root":".wp-block-formello-textarea","color":{"background":".wp-block-formello-textarea > textarea","text":".wp-block-formello-textarea"},"spacing":{"root":".wp-block-formello-textarea","padding":".wp-block-formello-textarea > textarea"},"border":{"root":".wp-block-formello-textarea > textarea"}},"editorScript":"file:./index.js","style":"file:./style-index.css","render":"file:./render.php"}');
 
 /***/ })
 

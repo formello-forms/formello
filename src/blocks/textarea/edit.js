@@ -21,8 +21,7 @@ import { getInputClassesAndStyles } from '../input/use-field-props';
 
 export default function Edit( props ) {
 	const { attributes, setAttributes } = props;
-	const { cols, rows, value, placeholder, showHelp, help, advanced, name } =
-		attributes;
+	const { cols, rows, value, placeholder, showHelp, help } = attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES.textarea;
 

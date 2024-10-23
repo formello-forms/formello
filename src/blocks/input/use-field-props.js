@@ -27,7 +27,6 @@ export function getInputClassesAndStyles( attributes ) {
 		colorProps.className,
 		{
 			'formello-advanced': advanced,
-			'formello-rtf': advanced && 'textarea' === type,
 		}
 	);
 

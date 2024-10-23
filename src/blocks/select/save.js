@@ -37,7 +37,7 @@ export default function save( { attributes } ) {
 				{ options.map( ( opt, index ) => {
 					return (
 						<option
-							value={ opt.value || opt.label }
+							value={ opt.value || index > 0 ? opt.label : '' }
 							key={ index }
 							selected={ opt.selected }
 						>

@@ -21,7 +21,11 @@ export default function TabContent( { tabs, onChange } ) {
 
 	return (
 		<Fragment>
-			<SearchControl value={ searchInput } onChange={ setSearchInput } />
+			<SearchControl
+				value={ searchInput }
+				onChange={ setSearchInput }
+				__nextHasNoMarginBottom
+			/>
 			<TabPanel tabs={ tabs }>
 				{ ( tab ) =>
 					tab.data

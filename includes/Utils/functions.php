@@ -304,13 +304,26 @@ function add_submissions_count() {
 				$news = array_column( $query, 'news', 'form_id' );
 
 				return array(
-					'total' => $total[ $form['id'] ] ?? '',
-					'news' => $news[ $form['id'] ] ?? '',
+					'total' => isset( $total[ $form['id'] ] ) ? (int) $total[ $form['id'] ] : 0,
+					'news' => isset( $news[ $form['id'] ] ) ? (int) $news[ $form['id'] ] : 0,
 				);
 			},
 			'schema'       => array(
 				'description' => 'List number of submissions attached to this form.',
-				'type'        => 'integer',
+				'type'                 => 'object',
+				// In JSON Schema you can specify object properties in the properties attribute.
+				'properties'           => array(
+					'total' => array(
+						'type'         => 'integer',
+						'context'      => array( 'view', 'edit', 'embed' ),
+						'readonly'     => true,
+					),
+					'news' => array(
+						'type'         => 'integer',
+						'context'      => array( 'view', 'edit', 'embed' ),
+						'readonly'     => true,
+					),
+				),
 			),
 		)
 	);

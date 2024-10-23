@@ -33,7 +33,7 @@ class Fields {
 	 */
 	public function all_fields() {
 		if ( is_rtl() ) {
-			$return = '<table style="direction: rtl;">';
+			$return = '<table style="direction: rtl; border: 1px solid #dedede;">';
 		} else {
 			$return = '<table>';
 		}

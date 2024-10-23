@@ -95,7 +95,7 @@ export default function Edit( props ) {
 					<RichText
 						tagName="small"
 						value={ help }
-						onChange={ ( val ) => setAttributes( { val } ) }
+						onChange={ ( val ) => setAttributes( { help: val } ) }
 						placeholder={ __( 'Enter help message…', 'formello' ) }
 						allowedFormats={ [
 							'core/bold',

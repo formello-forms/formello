@@ -38,7 +38,7 @@ class Activator {
 			"CREATE TABLE IF NOT EXISTS {$wpdb->prefix}formello_submissions (
 			`id` INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
 			`form_id` INT UNSIGNED NOT NULL,
-			`data` TEXT NOT NULL,
+			`data` JSON NOT NULL,
 			`is_new` BOOLEAN DEFAULT true,
 			`starred` BOOLEAN DEFAULT false,
 			`user_agent` TEXT NULL,

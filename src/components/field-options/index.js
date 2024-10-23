@@ -41,6 +41,7 @@ export default function Options( props ) {
 		multiple,
 		checked,
 		showHelp,
+		advanced,
 	} = attributes;
 
 	const supported = SUPPORTED_ATTRIBUTES[ fieldType ];
@@ -133,6 +134,14 @@ export default function Options( props ) {
 				) }
 				{ 'select' === fieldType && (
 					<Fragment>
+						<ToggleControl
+							label={ __( 'Advanced', 'formello' ) }
+							checked={ advanced }
+							onChange={ ( val ) => {
+								setAttributes( { advanced: val } );
+							} }
+							__nextHasNoMarginBottom
+						/>
 						<Button
 							variant={ 'primary' }
 							onClick={ () => {

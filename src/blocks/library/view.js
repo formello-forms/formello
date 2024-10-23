@@ -9,10 +9,10 @@ import {
 } from '@wordpress/interactivity';
 import { config as jsConfig } from './config';
 
-const showLoading = ( e ) => {
+const showLoading = ( e, force ) => {
 	const btn = e.submitter || e.target.closest( 'button' );
-	btn.classList.toggle( 'wp-block-formello-button--loading' );
-	btn.toggleAttribute( 'disabled' );
+	btn.classList.toggle( 'wp-block-formello-button--loading', force );
+	btn.toggleAttribute( 'disabled', force );
 };
 
 const formSubmit = async ( e ) => {
@@ -26,7 +26,7 @@ const formSubmit = async ( e ) => {
 	formData.append( '_formello_id', id );
 
 	try {
-		showLoading( e );
+		showLoading( e, true );
 		const req = await fetch( config.ajax_url, {
 			method: 'POST',
 			body: formData,
@@ -35,11 +35,19 @@ const formSubmit = async ( e ) => {
 		const res = await req.json();
 		context.response = res;
 
-		showLoading( e );
+		showLoading( e, false );
+
 		response( ref, res );
 	} catch ( err ) {
-		showLoading( e );
-		state.response = { data: { message: err }, success: false };
+		showLoading( e, false );
+		if ( typeof err === 'string' || err instanceof String ) {
+			context.response = { data: { message: err }, success: false };
+		} else {
+			context.response = {
+				data: { message: 'An error occurred' },
+				success: false,
+			};
+		}
 	}
 };
 
@@ -81,10 +89,6 @@ const response = ( ref, res ) => {
 
 	if ( data.debug && res.success ) {
 		// eslint-disable-next-line no-console
-		const deguagData = ref.querySelector( '.formello-debug' );
-		const position = data.hide ? 'beforebegin' : 'afterend';
-		ref.insertAdjacentElement( position, deguagData );
-		// eslint-disable-next-line no-console
 		console.log( data.debug );
 	}
 
@@ -96,6 +100,9 @@ const response = ( ref, res ) => {
 
 const { state } = store( 'formello', {
 	state: {
+		get pattern() {
+			return 'ciao';
+		},
 		get debugData() {
 			const context = getContext();
 			return JSON.stringify( context.response.data.debug, undefined, 2 );
@@ -184,6 +191,32 @@ const { state } = store( 'formello', {
 			}
 			window.tinymce?.init( jsConfig.tinyMce );
 			window.flatpickr?.( 'input.formello-advanced[type=date]' );
+
+			document
+				.querySelectorAll( 'input[type="tel"].formello-advanced' )
+				.forEach( ( el ) => {
+					window.intlTelInput?.( el, {
+						loadUtilsOnInit:
+							'https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/utils.js',
+						hiddenInput( telInputName ) {
+							return {
+								phone: telInputName + '_full',
+								country: telInputName + '_country_code',
+							};
+						},
+					} );
+				} );
+			document
+				.querySelectorAll( 'select.formello-advanced' )
+				.forEach( ( el ) => {
+					new window.TomSelect( el, {
+						create: true,
+						sortField: {
+							field: 'text',
+							direction: 'asc',
+						},
+					} );
+				} );
 		},
 	},
 } );

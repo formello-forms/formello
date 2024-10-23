@@ -9,10 +9,11 @@ import {
 	Notice,
 	TextareaControl,
 	BaseControl,
+	__experimentalDivider as Divider,
 } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
 import { useSelect } from '@wordpress/data';
-import { URLInput, store as blockEditorStore } from '@wordpress/block-editor';
+import { URLInput } from '@wordpress/block-editor';
 
 export function Settings() {
 	const { postType, postId } = useSelect( ( select ) => {
@@ -81,6 +82,7 @@ export function Settings() {
 					label={ __( 'Captcha service', 'formello' ) }
 					value={ captchaType }
 					options={ [
+						{ label: __( 'Select a captcha type' ) },
 						{ label: 'reCaptcha', value: 'reCaptcha' },
 						{ label: 'hCaptcha', value: 'hCaptcha' },
 					] }
@@ -110,6 +112,7 @@ export function Settings() {
 						</RawHTML>
 					</Notice>
 				) }
+			<Divider />
 			<ToggleControl
 				label={ __( 'Hide form after submission', 'formello' ) }
 				checked={ hide }

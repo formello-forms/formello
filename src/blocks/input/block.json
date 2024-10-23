@@ -254,6 +254,11 @@
             "root": ".wp-block-formello-input > input"
         }
     },
+	"example": {
+		"attributes": {
+			"label": "Name"
+		}
+	},
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
 	"editorScript": "file:./index.js",

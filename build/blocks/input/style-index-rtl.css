@@ -23,9 +23,10 @@
   color: color-mix(in srgb, currentColor 60%, transparent);
 }
 .wp-block-formello-input:has(input[type=checkbox]), .wp-block-formello-input:has(input[type=radio]) {
-  flex-direction: row;
   align-items: baseline;
   gap: 0.3em;
+  display: grid;
+  grid-template-columns: min-content auto;
 }
 .wp-block-formello-input:has(input[type=checkbox]) input, .wp-block-formello-input:has(input[type=radio]) input {
   order: 1;
@@ -35,6 +36,10 @@
 }
 .wp-block-formello-input:has(input[type=checkbox]) small, .wp-block-formello-input:has(input[type=radio]) small {
   order: 3;
+  grid-column: 2/-1;
+}
+.wp-block-formello-input:has(input[type=checkbox]) .error-message, .wp-block-formello-input:has(input[type=radio]) .error-message {
+  grid-column: 2/-1;
 }
 .wp-block-formello-input:has(.wp-block-formello-output) {
   flex-direction: row;

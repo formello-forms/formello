@@ -6,6 +6,9 @@
   "ancestor": [
     "formello/form"
   ],
+  "usesContext": [
+    "formello/requiredText"
+  ],
   "description": "Dropdown select.",
   "category": "formello",
   "textdomain": "formello",
@@ -111,6 +114,9 @@
       "source": "html",
       "selector": "small",
       "default": ""
+    },
+    "advanced": {
+      "type": "boolean"
     }
   },
   "supports": {
@@ -151,6 +157,22 @@
     },
     "border": {
       "root": ".wp-block-formello-select > select"
+    }
+  },
+  "example": {
+    "attributes": {
+      "label": "Your OS",
+      "options": [
+        {
+          "label": "Windows"
+        },
+        {
+          "label": "MacOS"
+        },
+        {
+          "label": "Linux"
+        }
+      ]
     }
   },
   "style": "file:./style-index.css",

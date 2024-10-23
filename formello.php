@@ -34,7 +34,7 @@ require __DIR__ . '/vendor/autoload.php';
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'FORMELLO2_VERSION', '1.0.0' );
+define( 'FORMELLO_VERSION', '2.5.4' );
 
 /**
  * The code that runs during plugin activation.
@@ -53,7 +53,7 @@ function formello_deactivate() {
 }
 
 register_activation_hook( __FILE__, 'formello_activate' );
-register_deactivation_hook( __FILE__, 'deformello_deactivate' );
+register_deactivation_hook( __FILE__, 'formello_deactivate' );
 
 /**
  * Begins execution of the plugin.

@@ -87,4 +87,9 @@ body.post-type-formello_form {
     > div {
         margin-block-start: 1rem;
     }
+	.formello-modal-buttons {
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: space-between;
+	}
 }

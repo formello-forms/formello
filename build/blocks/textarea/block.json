@@ -6,6 +6,9 @@
   "ancestor": [
     "formello/form"
   ],
+  "usesContext": [
+    "formello/requiredText"
+  ],
   "description": "Textarea field.",
   "category": "formello",
   "textdomain": "formello",

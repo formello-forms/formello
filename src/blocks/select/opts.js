@@ -4,6 +4,7 @@ import {
 	Flex,
 	FlexItem,
 	Button,
+	Tooltip,
 } from '@wordpress/components';
 
 import { useRef } from '@wordpress/element';
@@ -44,33 +45,50 @@ const OptionsList = ( props ) => {
 				draggable
 			>
 				<FlexItem>
-					<CheckboxControl
-						checked={ obj.selected }
-						onChange={ ( val ) =>
-							onChange( val, index, 'selected' )
-						}
-						__nextHasNoMarginBottom
-					/>
-				</FlexItem>
-				{ showValue && (
-					<FlexItem>
-						<TextControl
-							placeholder={ __( 'Value', 'formello' ) }
-							value={ obj.value }
+					<Tooltip
+						text={ __( 'Mark selected', 'formello' ) }
+						delay="200"
+					>
+						<CheckboxControl
+							checked={ obj.selected }
 							onChange={ ( val ) =>
-								onChange( val, index, 'value' )
+								onChange( val, index, 'selected' )
 							}
 							__nextHasNoMarginBottom
 						/>
+					</Tooltip>
+				</FlexItem>
+				{ showValue && (
+					<FlexItem>
+						<Tooltip
+							text={ __( 'The value of the option', 'formello' ) }
+							delay="200"
+						>
+							<TextControl
+								placeholder={ __( 'Value', 'formello' ) }
+								value={ obj.value }
+								onChange={ ( val ) =>
+									onChange( val, index, 'value' )
+								}
+								__nextHasNoMarginBottom
+							/>
+						</Tooltip>
 					</FlexItem>
 				) }
 				<FlexItem>
-					<TextControl
-						placeholder={ __( 'Label', 'formello' ) }
-						value={ obj.label }
-						onChange={ ( val ) => onChange( val, index, 'label' ) }
-						__nextHasNoMarginBottom
-					/>
+					<Tooltip
+						text={ __( 'The label of the option', 'formello' ) }
+						delay="200"
+					>
+						<TextControl
+							placeholder={ __( 'Label', 'formello' ) }
+							value={ obj.label }
+							onChange={ ( val ) =>
+								onChange( val, index, 'label' )
+							}
+							__nextHasNoMarginBottom
+						/>
+					</Tooltip>
 				</FlexItem>
 				<FlexItem>
 					<Button

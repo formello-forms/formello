@@ -66,9 +66,10 @@ abstract class Action {
 	/**
 	 * Process action.
 	 *
-	 * @param array $action_settings The action settings.
+	 * @param array         $action_settings The action settings.
+	 * @param Formello\Form $form The form object.
 	 */
-	abstract public function process( $action_settings );
+	abstract public function process( $action_settings, $form );
 
 	/**
 	 * Register the actions.

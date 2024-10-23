@@ -27,10 +27,11 @@
     }
 
     &:has(input[type=checkbox]), &:has(input[type=radio]) {
-        flex-direction: row;
+        //flex-direction: row;
         align-items: baseline;
         gap: .3em;
-
+        display: grid;
+        grid-template-columns: min-content auto;
         input {
             order: 1;
         }
@@ -39,6 +40,10 @@
         }
         small {
             order: 3;
+            grid-column: 2 / -1;
+        }
+        .error-message {
+            grid-column: 2 / -1;
         }
     }
 

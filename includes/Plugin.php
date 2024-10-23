@@ -152,6 +152,7 @@ class Plugin {
 		$this->loader->add_action( 'init', $blocks, 'register_blocks' );
 		$this->loader->add_action( 'init', $blocks, 'register_block_pattern_category' );
 		$this->loader->add_action( 'block_categories_all', $blocks, 'register_block_category' );
+		$this->loader->add_shortcode( 'formello', $blocks, 'do_reusable_block' );
 
 		$frontend = new Frontend( $this->plugin_name, $this->version );
 
@@ -167,11 +168,19 @@ class Plugin {
 		$this->loader->add_action( 'rest_api_init', $columns, 'register_routes' );
 		$license = new Rest\License( $this->plugin_name, $this->version );
 		$this->loader->add_action( 'rest_api_init', $license, 'register_routes' );
+		$importer = new Rest\Importer( $this->plugin_name, $this->version );
+		$this->loader->add_action( 'rest_api_init', $importer, 'register_routes' );
 
+		// Cron Tasks.
 		$cron = new Cron( $this->plugin_name, $this->version );
+
 		$this->loader->add_action( 'formello_retrieve_news', $cron, 'get_news' );
 		$this->loader->add_action( 'formello_delete_logs', $cron, 'delete_logs' );
 		$this->loader->add_action( 'formello_delete_tmp', $cron, 'delete_tmp' );
+
+		// Actions.
+		$email = new Actions\Email();
+		$email->hook();
 	}
 
 	/**

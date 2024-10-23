@@ -55,6 +55,7 @@ export default function save( { attributes } ) {
 				type="submit"
 				{ ...useBlockProps.save( {
 					className: buttonClasses,
+					style: colorProps.style,
 				} ) }
 			>
 				<RichText.Content tagName="span" value={ text } />
@@ -69,7 +70,11 @@ export default function save( { attributes } ) {
 				className: alignment,
 			} ) }
 		>
-			<button type="submit" className={ buttonClasses }>
+			<button
+				type="submit"
+				className={ buttonClasses }
+				style={ colorProps.style }
+			>
 				<RichText.Content tagName="span" value={ text } />
 				<ButtonIcon />
 			</button>

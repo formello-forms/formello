@@ -133,7 +133,7 @@ class License extends Base {
 			} else {
 				$message = __( 'License key not valid.' );
 			}
-			return $this->failed( $message );
+			return $this->error( 'generic_error', $message );
 		}
 
 		$license_data = json_decode( wp_remote_retrieve_body( $response ) );

@@ -98,7 +98,7 @@ export default function Edit( { attributes, setAttributes } ) {
 
 	return (
 		<div { ...blockProps }>
-			<button className={ buttonClasses }>
+			<button className={ buttonClasses } style={ colorProps.style }>
 				{ ! noWrapper && (
 					<BlockControls>
 						<ToolbarGroup>
@@ -149,7 +149,6 @@ export default function Edit( { attributes, setAttributes } ) {
 					onChange={ ( val ) => setAttributes( { text: val } ) }
 					placeholder={ __( 'Enter button text…', 'formello' ) }
 					allowedFormats={ [ 'core/bold' ] }
-					className="buttonClasses"
 				/>
 				<ButtonIcon />
 			</button>

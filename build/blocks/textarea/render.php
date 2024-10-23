@@ -8,6 +8,11 @@
  *     $block (WP_Block): The block instance.
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ * @link       https://www.francescopepe.com
+ * @since      1.0.0
+ *
+ * @package    Formello
+ * @subpackage Formello/includes
  */
 
 $replacer = new Formello\TagReplacers\Replacer();
@@ -22,15 +27,15 @@ if ( $p->next_tag( 'label' ) ) {
 if ( $p->next_tag( array( 'tag_name' => 'textarea' ) ) ) {
 
 	$p->set_attribute( 'id', $unique_id );
-	if ( 'formello-rtf' === $p->get_attribute( 'class' ) ) {
+	if ( 'formello-advanced' === $p->get_attribute( 'class' ) ) {
 		wp_enqueue_script(
 			'tiny-mce',
 			'https://cdnjs.cloudflare.com/ajax/libs/tinymce/5.10.3/tinymce.min.js',
 			array(),
-			false,
+			false, // phpcs:ignore
 			array(
 				'strategy' => 'defer',
-			),
+			)
 		);
 	}
 }

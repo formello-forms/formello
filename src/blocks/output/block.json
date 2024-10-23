@@ -5,6 +5,7 @@
 	"title": "Output",
 	"description": "A block to display number output.",
 	"category": "formello",
+	"ancestor": ["formello/form"],
 	"icon": "number",
 	"textdomain": "formello",
 	"attributes": {

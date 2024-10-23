@@ -736,9 +736,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _select_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../select/modal */ "./src/blocks/select/modal.js");
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/field-options/toolbar */ "./src/components/field-options/toolbar.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.mjs");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -758,7 +760,7 @@ function Edit(props) {
     type
   } = attributes;
   const [isModalOpen, setIsModalOpen] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_5__["default"])({
+  const containerClass = (0,clsx__WEBPACK_IMPORTED_MODULE_6__["default"])({
     'missing-name': !name
   });
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)({
@@ -771,23 +773,25 @@ function Edit(props) {
     allowedBlocks: false,
     templateLock: false
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
     ...innerBlocksProps,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarGroup, {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.BlockControls, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarGroup, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_field_options_toolbar__WEBPACK_IMPORTED_MODULE_5__["default"], {
+            ...props
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
             label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Edit options', 'formello'),
             icon: 'editor-ul',
             onClick: () => {
               setIsModalOpen(true);
             }
-          })
+          })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.PanelBody, {
         title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Options', 'formello'),
         initialOpen: true,
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.TextControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Name', 'formello'),
           value: name,
           onChange: newval => setAttributes({
@@ -795,14 +799,14 @@ function Edit(props) {
           }),
           help: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Affects the "name" attribute of the input element, and is used as a name for the form submission results.', 'formello'),
           __nextHasNoMarginBottom: true
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToggleControl, {
           label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Required', 'formello'),
           checked: required,
           onChange: () => setAttributes({
             required: !required
           }),
           __nextHasNoMarginBottom: true
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Button, {
           variant: 'primary',
           onClick: () => {
             setIsModalOpen(true);
@@ -810,25 +814,24 @@ function Edit(props) {
           children: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Manage Options', 'formello')
         })]
       })]
-    }), isModalOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_select_modal__WEBPACK_IMPORTED_MODULE_4__.OptionsModal, {
+    }), isModalOpen && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_select_modal__WEBPACK_IMPORTED_MODULE_4__.OptionsModal, {
       ...props,
       onRequestClose: () => {
         setIsModalOpen(false);
       }
     }), options.map((opt, index) => {
       const id = name + '-' + index;
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
         className: 'wp-block-formello-input',
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("label", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("label", {
           htmlFor: id,
           children: opt.label
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("input", {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("input", {
           value: opt.value || opt.label,
           name: name,
           type: type,
           required: required,
           checked: opt.selected,
-          onChange: () => console.log('change'),
           id: id
         })]
       }, index);
@@ -1134,24 +1137,36 @@ const OptionsList = props => {
       onDragEnd: drop,
       draggable: true,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CheckboxControl, {
-          checked: obj.selected,
-          onChange: val => onChange(val, index, 'selected'),
-          __nextHasNoMarginBottom: true
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Tooltip, {
+          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Mark selected', 'formello'),
+          delay: "200",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.CheckboxControl, {
+            checked: obj.selected,
+            onChange: val => onChange(val, index, 'selected'),
+            __nextHasNoMarginBottom: true
+          })
         })
       }), showValue && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Value', 'formello'),
-          value: obj.value,
-          onChange: val => onChange(val, index, 'value'),
-          __nextHasNoMarginBottom: true
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Tooltip, {
+          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('The value of the option', 'formello'),
+          delay: "200",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+            placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Value', 'formello'),
+            value: obj.value,
+            onChange: val => onChange(val, index, 'value'),
+            __nextHasNoMarginBottom: true
+          })
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
-          placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Label', 'formello'),
-          value: obj.label,
-          onChange: val => onChange(val, index, 'label'),
-          __nextHasNoMarginBottom: true
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Tooltip, {
+          text: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('The label of the option', 'formello'),
+          delay: "200",
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.TextControl, {
+            placeholder: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__.__)('Label', 'formello'),
+            value: obj.label,
+            onChange: val => onChange(val, index, 'label'),
+            __nextHasNoMarginBottom: true
+          })
         })
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.FlexItem, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_0__.Button, {
@@ -1165,6 +1180,101 @@ const OptionsList = props => {
   });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OptionsList);
+
+/***/ }),
+
+/***/ "./src/components/field-options/toolbar.js":
+/*!*************************************************!*\
+  !*** ./src/components/field-options/toolbar.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Toolbar)
+/* harmony export */ });
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/components */ "@wordpress/components");
+/* harmony import */ var _wordpress_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
+/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _icons_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../icons/icons */ "./src/icons/icons.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "react/jsx-runtime");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__);
+/**
+ * Retrieves the translation of text.
+ *
+ * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
+ */
+
+
+
+
+
+function Toolbar(props) {
+  const {
+    attributes,
+    setAttributes,
+    name
+  } = props;
+  const {
+    required,
+    showHelp,
+    hideLabel,
+    type
+  } = attributes;
+  const toggleLabel = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.SVG, {
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Rect, {
+      x: "4.75",
+      y: "17.25",
+      width: "5.5",
+      height: "14.5",
+      transform: "rotate(-90 4.75 17.25)",
+      stroke: "currentColor",
+      fill: "none",
+      strokeWidth: "1.5"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.Rect, {
+      x: "4",
+      y: "7",
+      width: "10",
+      height: "2",
+      fill: "currentColor"
+    })]
+  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Required', 'formello'),
+      icon: _icons_icons__WEBPACK_IMPORTED_MODULE_3__.Asterisk,
+      isPressed: required,
+      onClick: () => {
+        setAttributes({
+          required: !required
+        });
+      }
+    }), ('checkbox' || 0) !== type && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Toggle label visibility', 'formello'),
+      icon: toggleLabel,
+      isPressed: !hideLabel,
+      onClick: () => {
+        setAttributes({
+          hideLabel: !hideLabel
+        });
+      }
+    }), 'formello/multichoices' !== name && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_wordpress_components__WEBPACK_IMPORTED_MODULE_1__.ToolbarButton, {
+      label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__.__)('Show help message', 'formello'),
+      icon: 'editor-help',
+      isPressed: showHelp,
+      onClick: () => {
+        setAttributes({
+          showHelp: !showHelp
+        });
+      }
+    })]
+  });
+}
 
 /***/ }),
 
@@ -1338,7 +1448,7 @@ function r(e){var t,f,n="";if("string"==typeof e||"number"==typeof e)n+=e;else i
   \********************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/multichoices","title":"Multi choices","ancestor":["formello/form"],"category":"formello","textdomain":"formello","attributes":{"name":{"type":"string","default":"my_choice","role":"content"},"type":{"enum":["radio","checkbox"],"default":"checkbox"},"required":{"type":"boolean"},"options":{"type":"array","source":"query","selector":"div.wp-block-formello-input","query":{"value":{"type":"string","selector":"input","source":"attribute","attribute":"value"},"label":{"type":"string","selector":"label","source":"html"},"selected":{"type":"boolean","selector":"input","source":"attribute","attribute":"checked"}},"default":[{"value":"1","label":"One"},{"value":"2","label":"Two"},{"value":"3","label":"Three"}]}},"supports":{"anchor":true,"html":false,"spacing":{"padding":true,"blockGap":true},"inserter":true,"__experimentalBorder":true,"layout":{"allowSwitching":true,"allowInheriting":false,"allowSizingOnChildren":false,"allowEditing":true,"allowCustomContentAndWideSize":false,"allowJustification":false,"default":{"type":"flex","justifyContent":"stretch","orientation":"vertical","flexWrap":"nowrap"}}},"editorScript":"file:./index.js"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/multichoices","title":"Multi choices","ancestor":["formello/form"],"category":"formello","textdomain":"formello","attributes":{"name":{"type":"string","default":"my_choice","role":"content"},"type":{"enum":["radio","checkbox"],"default":"checkbox"},"required":{"type":"boolean"},"options":{"type":"array","source":"query","selector":"div.wp-block-formello-input","query":{"value":{"type":"string","selector":"input","source":"attribute","attribute":"value"},"label":{"type":"string","selector":"label","source":"html"},"selected":{"type":"boolean","selector":"input","source":"attribute","attribute":"checked"}},"default":[{"value":"1","label":"One"},{"value":"2","label":"Two"},{"value":"3","label":"Three"}]}},"supports":{"anchor":true,"html":false,"spacing":{"padding":true,"blockGap":true},"inserter":true,"__experimentalBorder":true,"layout":{"allowSwitching":true,"allowInheriting":false,"allowSizingOnChildren":false,"allowEditing":true,"allowCustomContentAndWideSize":false,"allowJustification":false,"default":{"type":"flex","justifyContent":"stretch","orientation":"vertical","flexWrap":"nowrap"}}},"example":{"attributes":{"options":[{"label":"Windows"},{"label":"MacOS"},{"label":"Linux"}]}},"editorScript":"file:./index.js"}');
 
 /***/ })
 

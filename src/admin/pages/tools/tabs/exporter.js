@@ -1,7 +1,5 @@
 import { Card, CardHeader, CardBody, withFilters } from '@wordpress/components';
 
-import { applyFilters } from '@wordpress/hooks';
-
 import { __ } from '@wordpress/i18n';
 import ExportForms from '../components/export-forms';
 
@@ -23,8 +21,6 @@ const Exporter = () => {
 			</CardBody>
 		</Card>
 	);
-}
+};
 
-export default withFilters( 'formello.settings.exporter' )(
-	Exporter
-);
+export default withFilters( 'formello.settings.exporter' )( Exporter );

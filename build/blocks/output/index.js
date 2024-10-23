@@ -151,7 +151,7 @@ module.exports = window["wp"]["blocks"];
   \**************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/output","title":"Output","description":"A block to display number output.","category":"formello","icon":"number","textdomain":"formello","attributes":{"text":{"type":"string","source":"text","selector":"span","default":""}},"supports":{"html":false,"lock":false,"reusable":false,"inserter":true,"color":{"background":true,"text":true},"spacing":{"padding":["left","right"],"margin":["left","right"]},"__experimentalBorder":{"radius":true,"width":true,"color":true,"style":true},"typography":{"fontSize":true}},"editorScript":"file:./index.js","style":"file:./style-index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"formello/output","title":"Output","description":"A block to display number output.","category":"formello","ancestor":["formello/form"],"icon":"number","textdomain":"formello","attributes":{"text":{"type":"string","source":"text","selector":"span","default":""}},"supports":{"html":false,"lock":false,"reusable":false,"inserter":true,"color":{"background":true,"text":true},"spacing":{"padding":["left","right"],"margin":["left","right"]},"__experimentalBorder":{"radius":true,"width":true,"color":true,"style":true},"typography":{"fontSize":true}},"editorScript":"file:./index.js","style":"file:./style-index.css"}');
 
 /***/ })
 

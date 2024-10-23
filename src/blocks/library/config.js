@@ -37,7 +37,7 @@ export const config = {
 		},
 	},
 	tinyMce: {
-		selector: '.formello-rtf',
+		selector: 'textarea.formello-advanced',
 		setup: ( editor ) => {
 			editor.on( 'change', () => {
 				window.tinymce.triggerSave();
