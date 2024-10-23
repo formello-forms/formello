@@ -1,5 +1,13 @@
 {
-	"landingPage": "/wp-admin/post-new.php?post_type=formello",
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"landingPage": "/wp-admin/post.php?post=6&action=edit",
+	"preferredVersions": {
+		"php": "8.0",
+		"wp": "latest"
+	},
+	"phpExtensionBundles": [
+		"kitchen-sink"
+	],
 	"features": {
 		"networking": true
 	},
@@ -7,11 +15,18 @@
 		{
 			"step": "installPlugin",
 			"pluginZipFile": {
-				"resource": "wordpress.org/plugins",
-				"slug": "formello"
+				"resource": "url",
+				"url": "https:\/\/downloads.wordpress.org\/plugin\/formello.zip"
 			},
 			"options": {
 				"activate": true
+			}
+		},
+		{
+			"step": "importFile",
+			"file": {
+				"resource": "url",
+				"url": "https://raw.githubusercontent.com/tropicalista/pdf-embed/master/.playground/demo-content.xml"
 			}
 		},
 		{
