@@ -1,4 +1,10 @@
 .wp-block-formello-select {
     display: flex;
     flex-direction: column;
+
+    label span.required {
+        color: red;
+        margin: 0 5px;
+        font-weight: normal;
+    }
 }

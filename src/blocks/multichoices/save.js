@@ -20,6 +20,9 @@ export default function save( { attributes, className } ) {
 							type={ type }
 							required={ required }
 							id={ id }
+							data-wp-on--input="actions.validateInput"
+							data-wp-on--blur="actions.validateInput"
+							data-wp-on--invalid="actions.validateInput"
 						/>
 					</div>
 				);

@@ -34,8 +34,24 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 
-import { useState, useCallback, Fragment } from '@wordpress/element';
+import { useState, useCallback, Fragment, useEffect } from '@wordpress/element';
 import { TemplatesModal } from '../form/edit/templates-modal';
+
+const NOOP = () => {};
+
+function setBlockEditMode( setEditMode, blocks ) {
+	blocks.forEach( ( block ) => {
+		const editMode = 'disabled';
+		setEditMode( block.clientId, editMode );
+
+		setBlockEditMode(
+			setEditMode,
+			block.innerBlocks,
+			// Disable editing for nested patterns.
+			block.name === 'disabled'
+		);
+	} );
+}
 
 export default function ReusableBlockEdit( {
 	attributes: { ref },
@@ -47,7 +63,7 @@ export default function ReusableBlockEdit( {
 	const [ isDisabled, setIsDisabled ] = useState( true );
 	const [ titleTemp, createTitle ] = useState( '' );
 
-	const { onNavigateToEntityRecord } = useSelect(
+	const { onNavigateToEntityRecord, innerBlocks, editingMode } = useSelect(
 		( select ) => {
 			const { canUser } = select( coreStore );
 			const {
@@ -110,6 +126,17 @@ export default function ReusableBlockEdit( {
 	}, [] );
 
 	const { saveEntityRecord } = useDispatch( coreStore );
+	const { setBlockEditingMode } = useDispatch( blockEditorStore );
+
+	// Sync the editing mode of the pattern block with the inner blocks.
+	useEffect( () => {
+		setBlockEditMode(
+			setBlockEditingMode,
+			innerBlocks,
+			// Disable editing if the pattern itself is disabled.
+			editingMode === 'disabled'
+		);
+	}, [ editingMode, innerBlocks, setBlockEditingMode ] );
 
 	const create = useCallback(
 		async ( title = null ) => {
@@ -138,20 +165,20 @@ export default function ReusableBlockEdit( {
 		[ saveEntityRecord, setAttributes ]
 	);
 
-	const [ blocks, onInput, onChange ] = useEntityBlockEditor(
-		'postType',
-		'formello_form',
-		{ id: ref }
-	);
+	const [ blocks ] = useEntityBlockEditor( 'postType', 'formello_form', {
+		id: ref,
+	} );
 
 	const blockProps = useBlockProps( {
 		className: 'block-library-block__reusable-block-container',
 	} );
 
 	const innerBlocksProps = useInnerBlocksProps( blockProps, {
+		templateLock: 'all',
 		value: blocks,
-		onInput,
-		onChange,
+		onInput: NOOP,
+		onChange: NOOP,
+		editingMode: 'disabled',
 		allowedBlocks: [ 'formello/form' ],
 		renderAppender: blocks?.length
 			? undefined
@@ -330,13 +357,12 @@ export default function ReusableBlockEdit( {
 						onChange={ ( val ) => {
 							setAttributes( { ref: parseInt( val ) } );
 						} }
+						__nextHasNoMarginBottom
 					/>
 				</PanelBody>
 			</InspectorControls>
 			<div { ...blockProps }>
-				<Disabled isDisabled={ isDisabled }>
-					<div { ...innerBlocksProps } />
-				</Disabled>
+				<div { ...innerBlocksProps } />
 			</div>
 		</RecursionProvider>
 	);

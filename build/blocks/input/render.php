@@ -29,6 +29,10 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 	$p->set_attribute( 'id', $unique_id );
 	$p->set_attribute( 'value', $replacer->parse( $p->get_attribute( 'value' ) ) );
 
+	$p->set_attribute( 'data-wp-on--input', 'actions.validateInput' );
+	$p->set_attribute( 'data-wp-on--blur', 'actions.validateInput' );
+	$p->set_attribute( 'data-wp-on--invalid', 'actions.validateInput' );
+
 	if ( 'range' === $p->get_attribute( 'type' ) ) {
 		$p->set_attribute( 'data-wp-on--input', 'actions.setOutput' );
 	}
@@ -50,6 +54,7 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 	if ( 'password' === $p->get_attribute( 'type' ) ) {
 		wp_enqueue_script( 'password-strength-meter' );
 	}
+
 	if ( 'formello-advanced' === $p->get_attribute( 'class' ) && 'date' === $p->get_attribute( 'type' ) ) {
 		wp_enqueue_script(
 			'flatpickr',

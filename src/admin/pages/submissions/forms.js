@@ -9,12 +9,19 @@ import { decodeEntities } from '@wordpress/html-entities';
 import { useState, useMemo, Fragment } from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { addQueryArgs } from '@wordpress/url';
-import {
+/*import {
 	trashPostAction,
 	usePermanentlyDeletePostAction,
 	useRestorePostAction,
 	editPostAction,
-} from '../../components/actions';
+} from '../../components/actions';*/
+import {
+	trashPost,
+	permanentlyDeletePost,
+	restorePost,
+	editPost,
+} from '../../actions';
+
 import { commentContent } from '@wordpress/icons';
 import { useHistory } from '../../router';
 
@@ -98,7 +105,7 @@ export const Forms = () => {
 			filters.status = DEFAULT_STATUSES;
 		}
 		return {
-			per_page: view.perPage,
+			per_page: -1,
 			page: view.page,
 			_embed: 'author',
 			order: view.sort?.direction,
@@ -107,19 +114,12 @@ export const Forms = () => {
 			...filters,
 		};
 	}, [ view ] );
-	const {
-		records: forms,
-		isResolving: isLoadingForms,
-		totalItems,
-		totalPages,
-	} = useEntityRecords( 'postType', 'formello_form', queryArgs );
 
-	const paginationInfo = useMemo( () => {
-		return {
-			totalItems,
-			totalPages,
-		};
-	}, [ totalItems, totalPages ] );
+	const { records: forms, isResolving: isLoadingForms } = useEntityRecords(
+		'postType',
+		'formello_form',
+		queryArgs
+	);
 
 	const { records: authors, isResolving: isLoadingAuthors } =
 		useEntityRecords( 'root', 'user', { per_page: -1 } );
@@ -154,6 +154,7 @@ export const Forms = () => {
 				},
 				enableGlobalSearch: true,
 				enableHiding: false,
+				enableSorting: true,
 			},
 			{
 				header: __( 'Excerpt' ),
@@ -163,12 +164,13 @@ export const Forms = () => {
 			},
 			{
 				header: __( 'Entries' ),
+				label: __( 'Entries' ),
 				id: 'entries',
+				enableSorting: false,
 				render: ( { item } ) => {
 					return (
 						<div>
 							<Button
-								variant="link"
 								onClick={ ( e ) => {
 									e.stopPropagation();
 									history.push( {
@@ -177,8 +179,11 @@ export const Forms = () => {
 										form_id: item.id,
 									} );
 								} }
+								icon={ commentContent }
+								iconSize="20"
+								label={ __( 'View submissions', 'formello' ) }
+								showTooltip
 							>
-								{ item.submissions_count.total }
 								{ item.submissions_count.news > 0 && (
 									<span className="formello-badge">
 										{ item.submissions_count.news }
@@ -191,6 +196,7 @@ export const Forms = () => {
 			},
 			{
 				header: __( 'Author' ),
+				label: __( 'Author' ),
 				id: 'author',
 				getValue: ( { item } ) => item._embedded?.author[ 0 ]?.name,
 				elements:
@@ -201,6 +207,7 @@ export const Forms = () => {
 			},
 			{
 				header: __( 'Status' ),
+				label: __( 'Status' ),
 				id: 'status',
 				/*getValue: ( { item } ) =>
 					STATUSES.find( ( { value } ) => value === item.status )
@@ -212,6 +219,7 @@ export const Forms = () => {
 			},
 			{
 				header: __( 'Date' ),
+				label: __( 'Date' ),
 				id: 'date',
 				render: ( { item } ) => {
 					const formattedDate = dateI18n(
@@ -233,12 +241,10 @@ export const Forms = () => {
 		[ authors, history ]
 	);
 
-	/*const { data: shownData, paginationInfo } = useMemo( () => {
+	const { data: shownData, paginationInfo } = useMemo( () => {
 		return filterSortAndPaginate( forms, view, fields );
-	}, [ view, forms, fields ] );*/
+	}, [ view, forms, fields ] );
 
-	const permanentlyDeletePostAction = usePermanentlyDeletePostAction();
-	const restorePostAction = useRestorePostAction();
 	const actions = useMemo(
 		() => [
 			{
@@ -255,12 +261,12 @@ export const Forms = () => {
 					} );
 				},
 			},
-			trashPostAction,
-			restorePostAction,
-			permanentlyDeletePostAction,
-			editPostAction,
+			trashPost,
+			permanentlyDeletePost,
+			restorePost,
+			editPost,
 		],
-		[ permanentlyDeletePostAction, restorePostAction, history ]
+		[ history ]
 	);
 
 	return (
@@ -280,7 +286,7 @@ export const Forms = () => {
 						paginationInfo={ paginationInfo }
 						fields={ fields }
 						actions={ actions }
-						data={ forms || [] }
+						data={ shownData || [] }
 						isLoading={ isLoadingForms || isLoadingAuthors }
 						view={ view }
 						onChangeView={ setView }

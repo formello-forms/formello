@@ -27,6 +27,11 @@ if ( $p->next_tag( 'label' ) ) {
 if ( $p->next_tag( array( 'tag_name' => 'textarea' ) ) ) {
 
 	$p->set_attribute( 'id', $unique_id );
+
+	$p->set_attribute( 'data-wp-on--input', 'actions.validateInput' );
+	$p->set_attribute( 'data-wp-on--blur', 'actions.validateInput' );
+	$p->set_attribute( 'data-wp-on--invalid', 'actions.validateInput' );
+
 	if ( 'formello-advanced' === $p->get_attribute( 'class' ) ) {
 		wp_enqueue_script(
 			'tiny-mce',

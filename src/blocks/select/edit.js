@@ -102,6 +102,7 @@ export default function Edit( props ) {
 							'core/italic',
 							'core/link',
 						] }
+						disableLineBreaks
 					/>
 				) }
 			</Fragment>

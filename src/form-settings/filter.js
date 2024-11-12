@@ -1,5 +1,6 @@
 import { select } from '@wordpress/data';
 import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 import {
 	getConstraints,
 	getFieldsType,

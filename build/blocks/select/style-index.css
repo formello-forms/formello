@@ -1,9 +1,1 @@
-/*!*****************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/select/style.scss ***!
-  \*****************************************************************************************************************************************************************************************************************************************************/
-.wp-block-formello-select {
-  display: flex;
-  flex-direction: column;
-}
-
-/*# sourceMappingURL=style-index.css.map*/
+.wp-block-formello-select{display:flex;flex-direction:column}.wp-block-formello-select label span.required{color:red;font-weight:400;margin:0 5px}

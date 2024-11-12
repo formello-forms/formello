@@ -3,8 +3,8 @@ Contributors:      Tropicalista
 Donate link: 	   https://formello.net
 Tags:              form, contact form, form block, gutenberg form, block
 Requires at least: 6.6
-Tested up to:      6.6
-Stable tag:        2.5.4
+Tested up to:      6.7
+Stable tag:        2.6.0
 Requires PHP:      7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -130,14 +130,15 @@ Yes, you can insert Formello forms using a shortcode.
 
 == Changelog ==
 
-= 2.6 =
+= 2.6.0 =
 * Fix textarea new line
 * Update dataviews
 * Fix form creation in post/page 
 * Better display of form table
 * Fix required on edtor
-* Fix rcheckbox alignment
-
+* Fix checkbox alignment
+* Code cleanup
+* Better handling of dataviews
 
 = 2.5.4 =
 * Fix missing frontend scripts

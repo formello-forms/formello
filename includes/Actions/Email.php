@@ -60,7 +60,8 @@ class Email extends Action {
 	/**
 	 * Processes this action
 	 *
-	 * @param array $action_settings Te action settings.
+	 * @param array         $action_settings Te action settings.
+	 * @param Formello\Form $form The form object.
 	 */
 	public function process( $action_settings, $form ) {
 		$settings = array_merge( $this->settings, $action_settings );

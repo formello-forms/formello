@@ -382,7 +382,6 @@ $mobile: 426px;
 
 	table th,
 	table td {
-		border-bottom: 1px solid #ddd;
 		padding: 12px;
 		word-break: break-word;
 		vertical-align: baseline;
@@ -394,6 +393,10 @@ $mobile: 426px;
 	table th {
 		width: 160px;
 		text-align: left;
+	}
+
+	table tr:not(:last-child) {
+		border-bottom: 1px solid #ddd;		
 	}
 
 }

@@ -3,10 +3,7 @@
  */
 import { useDispatch } from '@wordpress/data';
 import { decodeEntities } from '@wordpress/html-entities';
-import {
-	store as coreStore,
-	getLastEntityDeleteError,
-} from '@wordpress/core-data';
+import { store as coreStore } from '@wordpress/core-data';
 import { __, sprintf, _n } from '@wordpress/i18n';
 import {
 	__experimentalVStack as VStack,
@@ -40,16 +37,14 @@ export const trashSubmissionAction = {
 								__(
 									'Are you sure you want to delete %s submissions?'
 								),
-								decodeEntities( submissions.length )
+								submissions.length
 						  )
 						: sprintf(
 								// translators: %s: The page's title.
 								__(
 									'Are you sure you want to delete submission N° %s?'
 								),
-								decodeEntities(
-									submissions && submissions[ 0 ]?.id
-								)
+								submissions[ 0 ].id
 						  ) }
 				</Text>
 				<HStack justify="right">
@@ -96,8 +91,8 @@ export const trashSubmissionAction = {
 									error.code !== 'unknown_error'
 										? error.message
 										: _n(
-												'An error occurred while moving the page to the trash.',
-												'An error occurred while moving the pages to the trash.',
+												'An error occurred while moving the submission to the trash.',
+												'An error occurred while moving the submissions to the trash.',
 												submissions.length
 										  );
 

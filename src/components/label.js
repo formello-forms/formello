@@ -17,22 +17,6 @@ export default function Label( { attributes, setAttributes, context } ) {
 		label,
 	} = attributes;
 
-	const { postType, postId } = useSelect( ( select ) => {
-		const { getSettings } = select( blockEditorStore );
-		return {
-			postType: select( 'core/editor' ).getCurrentPostType(),
-			postId: select( 'core/editor' ).getCurrentPostId(),
-			isPreview: getSettings().__unstableIsPreviewMode,
-		};
-	}, [] );
-
-	const [ meta ] = useEntityProp(
-		'postType',
-		'formello_form',
-		'meta',
-		postId
-	);
-
 	const labelClassName = clsx(
 		'label-div',
 		labelClass,
@@ -55,6 +39,7 @@ export default function Label( { attributes, setAttributes, context } ) {
 				} }
 				placeholder={ __( 'Enter label…', 'formello' ) }
 				allowedFormats={ [ 'core/bold', 'core/italic', 'core/link' ] }
+				disableLineBreaks
 			/>
 
 			{ required && (

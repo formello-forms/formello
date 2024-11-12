@@ -6,15 +6,19 @@ $small-margin: 0 8px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	gap: .8em;
+	//gap: .8em;
 
 	> .wp-block-formello-input,
 	> .wp-block-formello-select,
 	> .wp-block-formello-textarea,
 	> .wp-block-formello-fieldset,
+	> .wp-block-formello-button,
 	> .wp-block-formello-multichoices {
 		flex-basis: 100%;
+		margin-block-start: 1rem;
+
 		.wp-block-formello-button, .wp-block-formello-output {
+			flex: 0 1;
 			align-self: stretch;
 		}
 	}
@@ -37,10 +41,21 @@ $small-margin: 0 8px;
 	.error-message {
 		color: red;
 		order: 4;
+		display: none;
 	}
 
-	input:user-invalid {
+	.wp-block-formello-multichoices:has(.wp-block-formello-input input:user-invalid) {
+		.error-message {
+			display: block;
+		}
+	}
+
+	input:user-invalid, select:user-invalid, textarea:user-invalid {
 		border-color: red;
+	}
+
+	input:user-invalid + div.error-message, select:user-invalid + div.error-message, textarea:user-invalid + div.error-message {
+		display: block;
 	}
 }
 
@@ -48,6 +63,8 @@ $small-margin: 0 8px;
 	display: none;
 	box-sizing: border-box;
 	padding: 1em;
+	margin-block-start: 1rem;
+
 	p {
 		margin: 0;
 	}

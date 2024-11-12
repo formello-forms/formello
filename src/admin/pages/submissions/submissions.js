@@ -4,7 +4,6 @@
  */
 import {
 	__experimentalVStack as VStack,
-	__experimentalText as Text,
 	Button,
 	Card,
 	Icon,
@@ -20,7 +19,7 @@ import {
 } from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { heading, seen, starFilled } from '@wordpress/icons';
-import { trashSubmissionAction } from '../../components/actions/submission.js';
+import { trashSubmissionAction } from '../../actions/trash-submission.js';
 import { useDispatch } from '@wordpress/data';
 import {
 	store as coreStore,
@@ -225,7 +224,6 @@ export const Submissions = () => {
 					} );
 				},
 			},
-			trashSubmissionAction,
 			{
 				id: 'mark-as-starred',
 				label: __( 'Toggle favorite' ),
@@ -257,6 +255,7 @@ export const Submissions = () => {
 					} );
 				},
 			},
+			trashSubmissionAction,
 		],
 		[ history, saveEntityRecord ]
 	);

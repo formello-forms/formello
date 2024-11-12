@@ -9,6 +9,37 @@ import {
 } from '@wordpress/interactivity';
 import { config as jsConfig } from './config';
 
+const toggleInputError = () => {
+	const { ref } = getElement();
+	let error = ref.parentNode.querySelector( '.error-message' );
+	if ( ! error ) {
+		const checked = ref
+			.closest( '.wp-block-formello-multichoices' )
+			.querySelector( 'input[type=checkbox]:checked' );
+
+		const unchecked = ref
+			.closest( '.wp-block-formello-multichoices' )
+			.querySelectorAll( 'input[type=checkbox]:not(:checked)' );
+
+		if ( checked ) {
+			unchecked.forEach( ( c ) => {
+				c.required = false;
+			} );
+		} else {
+			ref.closest( '.wp-block-formello-multichoices' )
+				.querySelectorAll( 'input[type=checkbox]' )
+				.forEach( ( c ) => {
+					c.required = true;
+				} );
+		}
+
+		error = ref
+			.closest( '.wp-block-formello-multichoices' )
+			.querySelector( '.error-message' );
+	}
+	error.innerHTML = 'dasd asdasd';
+};
+
 const showLoading = ( e, force ) => {
 	const btn = e.submitter || e.target.closest( 'button' );
 	btn.classList.toggle( 'wp-block-formello-button--loading', force );
@@ -57,7 +88,7 @@ const captchaChallenge = async () => {
 	if (
 		context.captchaEnabled &&
 		'reCaptcha' === context.captchaType &&
-		'3' === config.settings.reCaptcha.version
+		'invisible' === config.settings.reCaptcha.version
 	) {
 		return window.grecaptcha.execute();
 	}
@@ -100,9 +131,6 @@ const response = ( ref, res ) => {
 
 const { state } = store( 'formello', {
 	state: {
-		get pattern() {
-			return 'ciao';
-		},
 		get debugData() {
 			const context = getContext();
 			return JSON.stringify( context.response.data.debug, undefined, 2 );
@@ -119,27 +147,17 @@ const { state } = store( 'formello', {
 	actions: {
 		validateCaptcha: ( e ) => {
 			const { ref } = getElement();
-			const context = getContext();
 			e.preventDefault();
 
-			if ( context.enableJsValidation ) {
-				const errors = context.validator.validateAll(
-					ref.closest( 'form' )
-				);
-				if ( errors.length ) {
-					errors[ 0 ].scrollIntoView( {
-						behavior: 'smooth',
-						block: 'end',
-						inline: 'nearest',
-					} );
-					return;
-				}
+			const isFormValid = ref.closest( 'form' ).checkValidity();
+
+			if ( ! isFormValid ) {
+				ref.closest( 'form' ).requestSubmit( ref );
+				return false;
 			}
 
 			showLoading( e );
-
 			captchaChallenge().then( () => {
-				showLoading( e );
 				ref.closest( 'form' ).requestSubmit( ref );
 			} );
 		},
@@ -147,21 +165,24 @@ const { state } = store( 'formello', {
 			e.preventDefault();
 			e.stopPropagation();
 
-			const context = getContext();
-			if ( context.enableJsValidation ) {
-				const { ref } = getElement();
-				const errors = context.validator.validateAll( ref );
-				if ( errors.length ) {
-					errors[ 0 ].scrollIntoView( {
-						behavior: 'smooth',
-						block: 'end',
-						inline: 'nearest',
-					} );
-					return;
-				}
+			const { ref } = getElement();
+
+			const isFormValid = ref.checkValidity();
+
+			if ( isFormValid ) {
+				formSubmit( e );
 			}
 
-			formSubmit( e );
+			// Set the focus to the first invalid input.
+			const firstInvalidInputEl = ref.querySelector(
+				'input:invalid, select:invalid'
+			);
+			firstInvalidInputEl?.scrollIntoView( {
+				behavior: 'smooth',
+				block: 'end',
+				inline: 'nearest',
+			} );
+			firstInvalidInputEl?.focus();
 		},
 		setOutput: () => {
 			const { ref } = getElement();
@@ -169,29 +190,40 @@ const { state } = store( 'formello', {
 				ref.nextElementSibling.value = ref.value;
 			}
 		},
+		validateInput: () => {
+			toggleInputError();
+		},
 	},
 	callbacks: {
 		init: () => {
 			const context = getContext();
 
-			if ( context.enableJsValidation ) {
-				const config = getConfig();
-				const { ref } = getElement();
-				const { id } = ref.dataset;
-				context.validator = new window.Bouncer(
-					`.wp-block-formello-form[data-id='${ id }']`,
-					{
-						...jsConfig.bouncer,
-						messages: {
-							...jsConfig.bouncer.messages,
-							...config.settings.messages,
-						},
-					}
-				);
-			}
+			const config = getConfig();
+			context.messages = {
+				...jsConfig.bouncer.messages,
+				...config.settings.messages,
+			};
+
 			window.tinymce?.init( jsConfig.tinyMce );
 			window.flatpickr?.( 'input.formello-advanced[type=date]' );
 
+			document
+				.querySelectorAll(
+					'.wp-block-formello-input, .wp-block-formello-select, .wp-block-formello-textarea, .wp-block-formello-multichoices'
+				)
+				.forEach( ( el ) => {
+					// don't add error div to multichoices inputs
+					if (
+						el.parentNode.classList.contains(
+							'wp-block-formello-multichoices'
+						)
+					) {
+						return;
+					}
+					const error = document.createElement( 'div' );
+					error.classList.add( 'error-message' );
+					el.appendChild( error );
+				} );
 			document
 				.querySelectorAll( 'input[type="tel"].formello-advanced' )
 				.forEach( ( el ) => {

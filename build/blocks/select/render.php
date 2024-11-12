@@ -28,8 +28,13 @@ if ( $p->next_tag( array( 'tag_name' => 'select' ) ) ) {
 	if ( $p->get_attribute( 'multiple' ) ) {
 		$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
 	}
+
+	$p->set_attribute( 'data-wp-on--input', 'actions.validateInput' );
+	$p->set_attribute( 'data-wp-on--blur', 'actions.validateInput' );
+	$p->set_attribute( 'data-wp-on--invalid', 'actions.validateInput' );
+
 	if ( $p->has_class( 'formello-advanced' ) ) {
-			$p->set_attribute( 'autocomplete', 'off' );
+		$p->set_attribute( 'autocomplete', 'off' );
 		wp_enqueue_script(
 			'tom-select',
 			'https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js',

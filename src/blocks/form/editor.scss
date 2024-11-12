@@ -48,6 +48,7 @@ body.post-type-formello_form {
 			}
 			div.wp-block-formello-button, output {
 				flex-basis: auto;
+				flex: 0 1;
 			}
 			input {
 				flex-grow: 1;
@@ -58,6 +59,11 @@ body.post-type-formello_form {
 			}
 		}
 	}
+
+	.wp-block-formello-select select {
+		max-width: none;
+	}
+
 }
 
 .formello-sidebar .components-base-control:where(:not(:last-child)) {

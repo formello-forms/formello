@@ -72,7 +72,7 @@ export default function Edit( props ) {
 						'core/italic',
 						'core/link',
 					] }
-					multiline={ false }
+					disableLineBreaks
 				/>
 			) }
 		</div>

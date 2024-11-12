@@ -143,11 +143,6 @@ class Blocks {
 
 		$form_context = \Formello\Utils\formello_form_context( $attributes['ref'] );
 
-		if ( ! empty( $form_context['enableJsValidation'] ) ) {
-			// phpcs:ignore
-			wp_enqueue_script( 'bouncer', 'https://cdn.jsdelivr.net/gh/cferdinandi/bouncer@1.4.6/dist/bouncer.min.js' );
-		}
-
 		if ( $form_context['captchaEnabled'] && 'reCaptcha' === $form_context['captchaType'] ) {
 			// phpcs:ignore
 			wp_enqueue_script( 'recaptcha', 'https://www.google.com/recaptcha/api.js' );
