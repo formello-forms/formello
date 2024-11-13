@@ -11,6 +11,10 @@ import { config as jsConfig } from './config';
 
 const toggleInputError = () => {
 	const { ref } = getElement();
+	const context = getContext();
+	if ( ! ref.validity.valid ) {
+		console.log( ref.validity, ref );
+	}
 	let error = ref.parentNode.querySelector( '.error-message' );
 	if ( ! error ) {
 		const checked = ref
@@ -37,7 +41,15 @@ const toggleInputError = () => {
 			.closest( '.wp-block-formello-multichoices' )
 			.querySelector( '.error-message' );
 	}
-	error.innerHTML = 'dasd asdasd';
+
+	if ( ref.validity.typeMismatch || ref.validity.badInput ) {
+		error.innerHTML = context.messages.patternMismatch[ ref.type ];
+	}
+	if ( ref.validity.valueMissing ) {
+		error.innerHTML = context.messages.missingValue.hasOwnProperty( ref.type )
+			? context.messages.missingValue[ ref.type ]
+			: context.messages.missingValue.default;
+	}
 };
 
 const showLoading = ( e, force ) => {
@@ -166,23 +178,27 @@ const { state } = store( 'formello', {
 			e.stopPropagation();
 
 			const { ref } = getElement();
+			const context = getContext();
 
-			const isFormValid = ref.checkValidity();
+			if ( context.enableJsValidation ) {
+				const isFormValid = ref.checkValidity();
+				if ( ! isFormValid ) {
+					// Set the focus to the first invalid input.
+					const firstInvalidInputEl = ref.querySelector(
+						'input:invalid, select:invalid'
+					);
+					firstInvalidInputEl?.scrollIntoView( {
+						behavior: 'smooth',
+						block: 'end',
+						inline: 'nearest',
+					} );
+					firstInvalidInputEl?.focus();
 
-			if ( isFormValid ) {
-				formSubmit( e );
+					return;
+				}
 			}
 
-			// Set the focus to the first invalid input.
-			const firstInvalidInputEl = ref.querySelector(
-				'input:invalid, select:invalid'
-			);
-			firstInvalidInputEl?.scrollIntoView( {
-				behavior: 'smooth',
-				block: 'end',
-				inline: 'nearest',
-			} );
-			firstInvalidInputEl?.focus();
+			formSubmit( e );
 		},
 		setOutput: () => {
 			const { ref } = getElement();
@@ -191,7 +207,10 @@ const { state } = store( 'formello', {
 			}
 		},
 		validateInput: () => {
-			toggleInputError();
+			const context = getContext();
+			if ( context.enableJsValidation ) {
+				toggleInputError();
+			}
 		},
 	},
 	callbacks: {
@@ -199,6 +218,7 @@ const { state } = store( 'formello', {
 			const context = getContext();
 
 			const config = getConfig();
+
 			context.messages = {
 				...jsConfig.bouncer.messages,
 				...config.settings.messages,
