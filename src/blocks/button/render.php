@@ -31,7 +31,7 @@ if ( ! is_admin() && $state['captcha']['enabled'] ) {
 $message = '<div class="formello-message" data-wp-class--success="context.response.success" data-wp-class--error="!context.response.success">
 				<p data-wp-text="state.message"></p>
 				<ul data-wp-context="state.errors">
-					<template data-wp-each="state.errors" >
+					<template data-wp-each="state.errors">
 						<li data-wp-text="context.item"></li>
 					</template>
 				</ul>
@@ -44,6 +44,11 @@ $debug = '<div class="formello-debug">
 </div>';
 
 $p = new WP_HTML_Tag_Processor( $content );
+
+if ( $p->next_tag( 'div' ) ) {
+	$p->set_attribute( 'data-wp-bind--disabled', 'context.isLoading' );
+	$p->set_attribute( 'data-wp-class--wp-block-formello-button--loading', 'context.isLoading' );
+}
 
 if ( ! is_admin() &&
 	$p->next_tag( 'button' ) &&

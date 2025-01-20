@@ -9,12 +9,6 @@ import { decodeEntities } from '@wordpress/html-entities';
 import { useState, useMemo, Fragment } from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { addQueryArgs } from '@wordpress/url';
-/*import {
-	trashPostAction,
-	usePermanentlyDeletePostAction,
-	useRestorePostAction,
-	editPostAction,
-} from '../../components/actions';*/
 import {
 	trashPost,
 	permanentlyDeletePost,
@@ -28,7 +22,7 @@ import { useHistory } from '../../router';
 /**
  * Internal dependencies
  */
-import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews';
+import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews/wp';
 import Header from '../../components/masthead.js';
 
 // See https://github.com/WordPress/gutenberg/issues/55886
@@ -133,23 +127,21 @@ export const Forms = () => {
 				getValue: ( { item } ) => item.title?.rendered,
 				render: ( { item } ) => {
 					return (
-						<div>
-							<Button
-								variant="link"
-								onClick={ ( e ) => {
-									e.stopPropagation();
-									const href = addQueryArgs( 'post.php', {
-										post: item.id,
-										action: 'edit',
-									} );
-									document.location.href = href;
-								} }
-							>
-								{ decodeEntities(
-									item.title?.rendered || item.slug
-								) || __( '(no title)' ) }
-							</Button>
-						</div>
+						<Button
+							variant="link"
+							onClick={ ( e ) => {
+								e.stopPropagation();
+								const href = addQueryArgs( 'post.php', {
+									post: item.id,
+									action: 'edit',
+								} );
+								document.location.href = href;
+							} }
+						>
+							{ decodeEntities(
+								item.title?.rendered || item.slug
+							) || __( '(no title)' ) }
+						</Button>
 					);
 				},
 				enableGlobalSearch: true,

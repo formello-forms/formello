@@ -75,4 +75,12 @@
         }
     }
 
+    .iti {
+        border: 1px solid;
+        display: flex;
+        input {
+            border: none;
+            flex: 1;
+        }
+    }
 }

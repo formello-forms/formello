@@ -29,7 +29,7 @@ import {
 /**
  * Internal dependencies
  */
-import { DataViews } from '@wordpress/dataviews';
+import { DataViews } from '@wordpress/dataviews/wp';
 import Header from '../../components/masthead.js';
 import { useHistory, useLocation } from '../../router';
 
@@ -60,6 +60,7 @@ export const Submissions = () => {
 	const [ view, setView ] = useState( {
 		type: 'table',
 		filters: [],
+		fields: [ 'id', 'status' ],
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -181,7 +182,6 @@ export const Submissions = () => {
 		const cols = getColumns();
 		const _columns = cols?.map( ( key ) => {
 			return {
-				accessor: key,
 				id: key,
 				header: key.replaceAll( '_', ' ' ).toUpperCase(),
 				getValue: ( item ) => item[ key ],
@@ -204,7 +204,7 @@ export const Submissions = () => {
 			};
 		} );
 		return _fields.concat( _columns );
-	}, [ history, getColumns ] );
+	}, [ history, getColumns, params.form_id ] );
 
 	const { saveEntityRecord } = useDispatch( coreStore );
 
@@ -260,7 +260,6 @@ export const Submissions = () => {
 		[ history, saveEntityRecord ]
 	);
 
-	// TODO: we need to handle properly `data={ data || EMPTY_ARRAY }` for when `isLoading`.
 	return (
 		<Fragment>
 			<Header

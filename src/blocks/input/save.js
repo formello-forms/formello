@@ -90,12 +90,18 @@ export default function save( { attributes } ) {
 	}
 
 	return (
-		<div { ...useBlockProps.save() } className={ containerClass }>
+		<div
+			{ ...useBlockProps.save() }
+			className={ containerClass }
+			data-wp-context
+		>
 			{ 'hidden' !== type && (
 				<label className={ fieldProps.label } htmlFor="id">
 					<RichText.Content tagName="span" value={ label } />
 					{ required && (
-						<span className="required">{ requiredText }</span>
+						<span className="required" aria-hidden="true">
+							{ requiredText }
+						</span>
 					) }
 				</label>
 			) }
@@ -105,6 +111,8 @@ export default function save( { attributes } ) {
 				className={ fieldProps.inputClass }
 				style={ fieldProps.inputStyle }
 			/>
+
+			<div className="error-message" data-wp-text="context.error"></div>
 
 			<InnerBlocks.Content />
 			{ 'hidden' !== type && showHelp && (

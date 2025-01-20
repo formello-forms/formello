@@ -79,7 +79,13 @@ class Cron {
 
 		$result = $wpdb->get_row(
 			$wpdb->prepare(
-				'SELECT count(*) as total FROM `%1s` s WHERE s.is_new = 1 AND EXISTS( SELECT * FROM `%1s` f WHERE f.id = s.form_id AND f.post_type = %s AND ( f.post_status = %s OR f.post_status = %s )  );',
+				'SELECT count(*) as total FROM %i s 
+				WHERE s.is_new = 1 AND 
+				EXISTS( SELECT * FROM %i f 
+					WHERE f.id = s.form_id 
+					AND f.post_type = %s 
+					AND ( f.post_status = %s OR f.post_status = %s )  
+				);',
 				array(
 					'table_submissions' => $table_submissions,
 					'table_posts' => $table_posts,

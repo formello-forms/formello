@@ -21,11 +21,13 @@ export default function save( { attributes } ) {
 		.map( ( x ) => x.value );
 
 	return (
-		<div { ...blockProps }>
+		<div { ...blockProps } data-wp-context>
 			<label className={ fieldProps.labelClass }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
-					<span className="required">{ requiredText }</span>
+					<span className="required" aria-hidden="true">
+						{ requiredText }
+					</span>
 				) }
 			</label>
 			<select
@@ -46,6 +48,7 @@ export default function save( { attributes } ) {
 					);
 				} ) }
 			</select>
+			<div className="error-message" data-wp-text="context.error"></div>
 			{ showHelp && <RichText.Content tagName="small" value={ help } /> }
 		</div>
 	);

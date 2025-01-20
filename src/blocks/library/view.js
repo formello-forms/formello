@@ -12,11 +12,29 @@ import { config as jsConfig } from './config';
 const toggleInputError = () => {
 	const { ref } = getElement();
 	const context = getContext();
-	if ( ! ref.validity.valid ) {
-		console.log( ref.validity, ref );
+	const { settings } = getConfig();
+
+	console.log( window.intlTelInput.getInstance( ref )?.isValidNumber() )
+
+	if (
+		'tel' === ref.type &&
+		ref.classList.contains( 'formello-advanced' ) &&
+		! window.intlTelInput.getInstance( ref ).isValidNumber()
+	) {
+		const error = window.intlTelInput
+			.getInstance( ref )
+			.getValidationError();
+
+		ref.setCustomValidity( 'Please match the number format.' );
+		context.error = ref.validationMessage;
+	} else {
+		ref.setCustomValidity( '' );
 	}
-	let error = ref.parentNode.querySelector( '.error-message' );
-	if ( ! error ) {
+
+	if (
+		'checkbox' === ref.type &&
+		ref.getAttribute( 'name' ).includes( '[]' )
+	) {
 		const checked = ref
 			.closest( '.wp-block-formello-multichoices' )
 			.querySelector( 'input[type=checkbox]:checked' );
@@ -36,26 +54,46 @@ const toggleInputError = () => {
 					c.required = true;
 				} );
 		}
-
-		error = ref
-			.closest( '.wp-block-formello-multichoices' )
-			.querySelector( '.error-message' );
 	}
 
+	if ( ref.validity.rangeOverflow ) {
+		context.error = settings.messages.wrongLength.under.replace(
+			'{max}',
+			ref.getAttribute( 'max' ).replace( '{length}', ref.value.length )
+		);
+	}
+	if ( ref.validity.rangeUnderflow ) {
+		context.error = settings.messages.wrongLength.under.replace(
+			'{min}',
+			ref.getAttribute( 'min' ).replace( '{length}', ref.value.length )
+		);
+	}
+	if ( ref.validity.tooShort ) {
+		context.error = settings.messages.wrongLength.under.replace(
+			'{minLength}',
+			ref
+				.getAttribute( 'minlength' )
+				.replace( '{length}', ref.value.length )
+		);
+	}
+	if ( ref.validity.tooLong ) {
+		context.error = settings.messages.wrongLength.over.replace(
+			'{maxLength}',
+			ref
+				.getAttribute( 'maxlength' )
+				.replace( '{length}', ref.value.length )
+		);
+	}
 	if ( ref.validity.typeMismatch || ref.validity.badInput ) {
-		error.innerHTML = context.messages.patternMismatch[ ref.type ];
+		context.error = settings.messages.patternMismatch[ ref.type ];
 	}
 	if ( ref.validity.valueMissing ) {
-		error.innerHTML = context.messages.missingValue.hasOwnProperty( ref.type )
-			? context.messages.missingValue[ ref.type ]
-			: context.messages.missingValue.default;
+		context.error = settings.messages.missingValue.hasOwnProperty(
+			ref.type
+		)
+			? settings.messages.missingValue[ ref.type ]
+			: settings.messages.missingValue.default;
 	}
-};
-
-const showLoading = ( e, force ) => {
-	const btn = e.submitter || e.target.closest( 'button' );
-	btn.classList.toggle( 'wp-block-formello-button--loading', force );
-	btn.toggleAttribute( 'disabled', force );
 };
 
 const formSubmit = async ( e ) => {
@@ -69,7 +107,7 @@ const formSubmit = async ( e ) => {
 	formData.append( '_formello_id', id );
 
 	try {
-		showLoading( e, true );
+		context.isLoading = true;
 		const req = await fetch( config.ajax_url, {
 			method: 'POST',
 			body: formData,
@@ -78,11 +116,11 @@ const formSubmit = async ( e ) => {
 		const res = await req.json();
 		context.response = res;
 
-		showLoading( e, false );
+		context.isLoading = false;
 
 		response( ref, res );
 	} catch ( err ) {
-		showLoading( e, false );
+		context.isLoading = false;
 		if ( typeof err === 'string' || err instanceof String ) {
 			context.response = { data: { message: err }, success: false };
 		} else {
@@ -168,7 +206,8 @@ const { state } = store( 'formello', {
 				return false;
 			}
 
-			showLoading( e );
+			const context = getContext();
+			context.isLoading = true;
 			captchaChallenge().then( () => {
 				ref.closest( 'form' ).requestSubmit( ref );
 			} );
@@ -197,7 +236,7 @@ const { state } = store( 'formello', {
 					return;
 				}
 			}
-
+			context.isLoading = true;
 			formSubmit( e );
 		},
 		setOutput: () => {
@@ -227,23 +266,6 @@ const { state } = store( 'formello', {
 			window.tinymce?.init( jsConfig.tinyMce );
 			window.flatpickr?.( 'input.formello-advanced[type=date]' );
 
-			document
-				.querySelectorAll(
-					'.wp-block-formello-input, .wp-block-formello-select, .wp-block-formello-textarea, .wp-block-formello-multichoices'
-				)
-				.forEach( ( el ) => {
-					// don't add error div to multichoices inputs
-					if (
-						el.parentNode.classList.contains(
-							'wp-block-formello-multichoices'
-						)
-					) {
-						return;
-					}
-					const error = document.createElement( 'div' );
-					error.classList.add( 'error-message' );
-					el.appendChild( error );
-				} );
 			document
 				.querySelectorAll( 'input[type="tel"].formello-advanced' )
 				.forEach( ( el ) => {

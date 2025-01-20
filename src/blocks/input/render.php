@@ -37,7 +37,7 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 		$p->set_attribute( 'data-wp-on--input', 'actions.setOutput' );
 	}
 
-	if ( 'tel' === $p->get_attribute( 'type' ) ) {
+	if ( 'tel' === $p->get_attribute( 'type' ) && ! empty( $attributes['advanced'] ) ) {
 		wp_enqueue_script(
 			'intl-tel',
 			'https://cdn.jsdelivr.net/npm/intl-tel-input@24.6.0/build/js/intlTelInput.min.js',
@@ -55,7 +55,7 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 		wp_enqueue_script( 'password-strength-meter' );
 	}
 
-	if ( 'formello-advanced' === $p->get_attribute( 'class' ) && 'date' === $p->get_attribute( 'type' ) ) {
+	if ( ! empty( $attributes['advanced'] ) && 'date' === $p->get_attribute( 'type' ) ) {
 		wp_enqueue_script(
 			'flatpickr',
 			'https://cdn.jsdelivr.net/npm/flatpickr',

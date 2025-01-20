@@ -8,16 +8,17 @@ $small-margin: 0 8px;
 	flex-wrap: wrap;
 	//gap: .8em;
 
-	> .wp-block-formello-input,
-	> .wp-block-formello-select,
-	> .wp-block-formello-textarea,
-	> .wp-block-formello-fieldset,
-	> .wp-block-formello-button,
-	> .wp-block-formello-multichoices {
+	>.wp-block-formello-input,
+	>.wp-block-formello-select,
+	>.wp-block-formello-textarea,
+	>.wp-block-formello-fieldset,
+	>.wp-block-formello-button,
+	>.wp-block-formello-multichoices {
 		flex-basis: 100%;
 		margin-block-start: 1rem;
 
-		.wp-block-formello-button, .wp-block-formello-output {
+		.wp-block-formello-button,
+		.wp-block-formello-output {
 			flex: 0 1;
 			align-self: stretch;
 		}
@@ -34,7 +35,7 @@ $small-margin: 0 8px;
 		left: -5000px;
 	}
 
-	.error {
+	.error, select:user-invalid + .ts-wrapper.formello-advanced.invalid > .ts-control {
 		border-color: red;
 	}
 
@@ -44,17 +45,28 @@ $small-margin: 0 8px;
 		display: none;
 	}
 
+	&:has(input[type=tel]:user-invalid) {
+		.iti + .error-message {
+			display: block;
+		}
+	}
+
 	.wp-block-formello-multichoices:has(.wp-block-formello-input input:user-invalid) {
 		.error-message {
 			display: block;
 		}
 	}
 
-	input:user-invalid, select:user-invalid, textarea:user-invalid {
+	input:user-invalid,
+	select:user-invalid,
+	textarea:user-invalid {
 		border-color: red;
 	}
 
-	input:user-invalid + div.error-message, select:user-invalid + div.error-message, textarea:user-invalid + div.error-message {
+	select.formello-advanced+div.invalid+div.error-message,
+	input:user-invalid+div.error-message,
+	select:user-invalid+div.error-message,
+	textarea:user-invalid+div.error-message {
 		display: block;
 	}
 }

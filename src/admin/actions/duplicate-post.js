@@ -7,7 +7,7 @@ import { store as coreStore } from '@wordpress/core-data';
 import { __, sprintf, _x } from '@wordpress/i18n';
 import { store as noticesStore } from '@wordpress/notices';
 import { useState } from '@wordpress/element';
-import { DataForm } from '@wordpress/dataviews';
+import { DataForm } from '@wordpress/dataviews/wp';
 import {
 	Button,
 	__experimentalHStack as HStack,

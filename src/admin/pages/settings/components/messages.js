@@ -1,4 +1,10 @@
-import { Card, CardHeader, CardBody, TextControl } from '@wordpress/components';
+import {
+	Card,
+	CardHeader,
+	CardBody,
+	TextControl,
+	__experimentalVStack as VStack,
+} from '@wordpress/components';
 import { Fragment, useContext } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
@@ -45,20 +51,22 @@ export default function Messages() {
 							'formello'
 						) }
 					</p>
-					{ formMessages.map( ( key, i ) => {
-						return (
-							<Fragment key={ i }>
-								<TextControl
-									label={ key }
-									value={ settings.messages.form[ key ] }
-									onChange={ ( val ) => {
-										setMessage( 'form', key, val );
-									} }
-									__nextHasNoMarginBottom
-								/>
-							</Fragment>
-						);
-					} ) }
+					<VStack>
+						{ formMessages.map( ( key, i ) => {
+							return (
+								<Fragment key={ i }>
+									<TextControl
+										label={ key }
+										value={ settings.messages.form[ key ] }
+										onChange={ ( val ) => {
+											setMessage( 'form', key, val );
+										} }
+										__nextHasNoMarginBottom
+									/>
+								</Fragment>
+							);
+						} ) }
+					</VStack>
 				</CardBody>
 			</Card>
 
@@ -68,22 +76,30 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ missingValue.map( ( key, i ) => {
-						return (
-							<Fragment key={ i }>
-								<TextControl
-									label={ key }
-									value={
-										settings.messages.missingValue[ key ]
-									}
-									onChange={ ( val ) => {
-										setMessage( 'missingValue', key, val );
-									} }
-									__nextHasNoMarginBottom
-								/>
-							</Fragment>
-						);
-					} ) }
+					<VStack>
+						{ missingValue.map( ( key, i ) => {
+							return (
+								<Fragment key={ i }>
+									<TextControl
+										label={ key }
+										value={
+											settings.messages.missingValue[
+												key
+											]
+										}
+										onChange={ ( val ) => {
+											setMessage(
+												'missingValue',
+												key,
+												val
+											);
+										} }
+										__nextHasNoMarginBottom
+									/>
+								</Fragment>
+							);
+						} ) }
+					</VStack>
 				</CardBody>
 			</Card>
 
@@ -93,21 +109,27 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ patternMismatch.map( ( key, i ) => {
-						return (
-							<TextControl
-								key={ i }
-								label={ key }
-								value={
-									settings.messages.patternMismatch[ key ]
-								}
-								onChange={ ( val ) => {
-									setMessage( 'patternMismatch', key, val );
-								} }
-								__nextHasNoMarginBottom
-							/>
-						);
-					} ) }
+					<VStack>
+						{ patternMismatch.map( ( key, i ) => {
+							return (
+								<TextControl
+									key={ i }
+									label={ key }
+									value={
+										settings.messages.patternMismatch[ key ]
+									}
+									onChange={ ( val ) => {
+										setMessage(
+											'patternMismatch',
+											key,
+											val
+										);
+									} }
+									__nextHasNoMarginBottom
+								/>
+							);
+						} ) }
+					</VStack>
 				</CardBody>
 			</Card>
 
@@ -117,19 +139,23 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ outOfRange.map( ( key, i ) => {
-						return (
-							<TextControl
-								key={ i }
-								label={ key }
-								value={ settings.messages.outOfRange[ key ] }
-								onChange={ ( val ) => {
-									setMessage( 'outOfRange', key, val );
-								} }
-								__nextHasNoMarginBottom
-							/>
-						);
-					} ) }
+					<VStack>
+						{ outOfRange.map( ( key, i ) => {
+							return (
+								<TextControl
+									key={ i }
+									label={ key }
+									value={
+										settings.messages.outOfRange[ key ]
+									}
+									onChange={ ( val ) => {
+										setMessage( 'outOfRange', key, val );
+									} }
+									__nextHasNoMarginBottom
+								/>
+							);
+						} ) }
+					</VStack>
 				</CardBody>
 			</Card>
 
@@ -139,19 +165,23 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					{ wrongLength.map( ( key, i ) => {
-						return (
-							<TextControl
-								key={ i }
-								label={ key }
-								value={ settings.messages.wrongLength[ key ] }
-								onChange={ ( val ) => {
-									setMessage( 'wrongLength', key, val );
-								} }
-								__nextHasNoMarginBottom
-							/>
-						);
-					} ) }
+					<VStack>
+						{ wrongLength.map( ( key, i ) => {
+							return (
+								<TextControl
+									key={ i }
+									label={ key }
+									value={
+										settings.messages.wrongLength[ key ]
+									}
+									onChange={ ( val ) => {
+										setMessage( 'wrongLength', key, val );
+									} }
+									__nextHasNoMarginBottom
+								/>
+							);
+						} ) }
+					</VStack>
 				</CardBody>
 			</Card>
 		</Fragment>

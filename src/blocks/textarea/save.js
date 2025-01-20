@@ -21,11 +21,13 @@ export default function save( { attributes } ) {
 	}
 
 	return (
-		<div { ...useBlockProps.save() }>
+		<div { ...useBlockProps.save() } data-wp-context>
 			<label className={ fieldProps.labelClass } htmlFor={ id }>
 				<RichText.Content tagName="span" value={ label } />
 				{ required && (
-					<span className="required">{ requiredText }</span>
+					<span className="required" aria-hidden="true">
+						{ requiredText }
+					</span>
 				) }
 			</label>
 			<textarea
@@ -35,6 +37,7 @@ export default function save( { attributes } ) {
 			>
 				{ value }
 			</textarea>
+			<div className="error-message" data-wp-text="context.error"></div>
 			{ help.length > 0 && (
 				<RichText.Content tagName="small" value={ help } />
 			) }

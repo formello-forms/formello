@@ -7,7 +7,7 @@ export default function save( { attributes, className } ) {
 	} );
 
 	return (
-		<div { ...blockProps }>
+		<div { ...blockProps } data-wp-context>
 			{ options.map( ( opt, index ) => {
 				const id = name + '-' + index;
 				return (
@@ -27,6 +27,7 @@ export default function save( { attributes, className } ) {
 					</div>
 				);
 			} ) }
+			<div className="error-message" data-wp-text="context.error"></div>
 		</div>
 	);
 }
