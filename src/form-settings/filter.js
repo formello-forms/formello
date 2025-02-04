@@ -32,6 +32,7 @@ function validateAll() {
 addFilter( 'editor.preSavePost', 'editor', ( edits ) => {
 	const postType = select( 'core/editor' ).getCurrentPostType();
 	const meta = select( 'core/editor' ).getCurrentPostAttribute( 'meta' );
+	//const meta = select( 'core/editor' ).getEditedPostAttribute( 'meta' );
 
 	if ( 'formello_form' === postType ) {
 		const fields = getFieldsType();

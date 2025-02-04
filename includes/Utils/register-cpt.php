@@ -19,8 +19,8 @@ function register_cpt() {
 
 	$args = array(
 		'labels' => array(
-			'name'                => _x( 'Forms', 'formello' ),
-			'singular_name'       => _x( 'Form', 'formello' ),
+			'name'                => __( 'Forms', 'formello' ),
+			'singular_name'       => __( 'Form', 'formello' ),
 			'menu_name'           => __( 'Forms', 'formello' ),
 			'parent_item_colon'   => __( 'Parent Form', 'formello' ),
 			'all_items'           => __( 'Forms', 'formello' ),
@@ -126,7 +126,7 @@ function register_cpt_meta() {
 					'cc' => '',
 					'bcc' => '',
 					'replyTo' => '',
-					'subject' => __( '[Formello] New form submission' ),
+					'subject' => __( '[Formello] New form submission', 'formello' ),
 					'message' => '{{fields.all_data}}',
 					'advanced' => false,
 					'id' => 1,

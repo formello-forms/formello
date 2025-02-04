@@ -42,7 +42,7 @@ class License extends Base {
 				'permission_callback' => array( $this, 'update_settings_permissions' ),
 				'args' => array(
 					'endpoint' => array(
-						'description' => __( 'Unique identifier for the submission.' ),
+						'description' => __( 'Unique identifier for the submission.', 'formello' ),
 						'type'        => 'string',
 						'default'     => 'validate',
 					),
@@ -84,7 +84,7 @@ class License extends Base {
 			if ( is_wp_error( $response ) ) {
 				$message = $response->get_error_message();
 			} else {
-				$message = __( 'License key not valid.' );
+				$message = __( 'License key not valid.', 'formello' );
 			}
 			return $response;
 		}
@@ -131,7 +131,7 @@ class License extends Base {
 			if ( is_wp_error( $response ) ) {
 				$message = $response->get_error_message();
 			} else {
-				$message = __( 'License key not valid.' );
+				$message = __( 'License key not valid.', 'formello' );
 			}
 			return $this->error( 'generic_error', $message );
 		}
@@ -171,7 +171,7 @@ class License extends Base {
 			if ( is_wp_error( $response ) ) {
 				$message = $response->get_error_message();
 			} else {
-				$message = __( 'License key not valid.' );
+				$message = __( 'License key not valid.', 'formello' );
 			}
 			return $response;
 		}

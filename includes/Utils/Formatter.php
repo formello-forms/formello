@@ -61,7 +61,7 @@ class Formatter {
 		}
 
 		if ( 'on' === $value ) {
-			$value = __( 'Yes' );
+			$value = __( 'Yes', 'formello' );
 		}
 
 		if ( is_array( $value ) ) {
@@ -181,7 +181,7 @@ class Formatter {
 		}
 
 		if ( 'on' === $value ) {
-			$value = __( 'Yes' );
+			$value = __( 'Yes', 'formello' );
 		}
 
 		// escape value.

@@ -42,9 +42,9 @@ const defaultLayouts = {
 			primaryField: 'id',
 			combinedFields: [
 				{
-					id: 'form',
-					label: 'Form',
-					children: [ 'title', 'excerpt' ],
+					id: 'title',
+					label: 'Title',
+					children: [ 'excerpt' ],
 					direction: 'vertical',
 				},
 			],
@@ -57,15 +57,8 @@ export const Forms = () => {
 	const [ view, setView ] = useState( {
 		type: 'table',
 		filters: [],
-		fields: [
-			'form',
-			'title',
-			'excerpt',
-			'entries',
-			'author',
-			'status',
-			'date',
-		],
+		fields: [ 'entries', 'author', 'status', 'date', 'form' ],
+		titleField: 'title',
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -124,6 +117,7 @@ export const Forms = () => {
 				header: __( 'Title' ),
 				id: 'title',
 				label: __( 'Title' ),
+				children: [ 'excerpt' ],
 				getValue: ( { item } ) => item.title?.rendered,
 				render: ( { item } ) => {
 					return (
@@ -222,7 +216,7 @@ export const Forms = () => {
 				},
 			},
 			{
-				header: 'Shortcode',
+				label: __( 'Shortcode' ),
 				id: 'shortcode',
 				render: ( { item } ) => {
 					return <code>{ `[formello ref=${ item.id }]` }</code>;

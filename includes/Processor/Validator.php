@@ -193,7 +193,7 @@ class Validator {
 
 		if ( 'checkbox' === $fields[ $key ] ) {
 			$value = sanitize_text_field( $value );
-			return $value ? $value : __( 'yes' );
+			return $value ? $value : __( 'yes', 'formello' );
 		}
 
 		if ( is_array( $value ) ) {

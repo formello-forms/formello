@@ -202,7 +202,7 @@ class Blocks {
 				array(
 					array(
 						'slug'  => 'formello',
-						'title' => __( 'Formello' ),
+						'title' => __( 'Formello', 'formello' ),
 					),
 				),
 				$categories
@@ -213,7 +213,7 @@ class Blocks {
 			array(
 				array(
 					'slug'  => 'formello',
-					'title' => __( 'Formello' ),
+					'title' => __( 'Formello', 'formello' ),
 				),
 			)
 		);

@@ -14,8 +14,6 @@ const toggleInputError = () => {
 	const context = getContext();
 	const { settings } = getConfig();
 
-	console.log( window.intlTelInput.getInstance( ref )?.isValidNumber() )
-
 	if (
 		'tel' === ref.type &&
 		ref.classList.contains( 'formello-advanced' ) &&
@@ -62,12 +60,14 @@ const toggleInputError = () => {
 			ref.getAttribute( 'max' ).replace( '{length}', ref.value.length )
 		);
 	}
+
 	if ( ref.validity.rangeUnderflow ) {
 		context.error = settings.messages.wrongLength.under.replace(
 			'{min}',
 			ref.getAttribute( 'min' ).replace( '{length}', ref.value.length )
 		);
 	}
+
 	if ( ref.validity.tooShort ) {
 		context.error = settings.messages.wrongLength.under.replace(
 			'{minLength}',
@@ -76,6 +76,7 @@ const toggleInputError = () => {
 				.replace( '{length}', ref.value.length )
 		);
 	}
+
 	if ( ref.validity.tooLong ) {
 		context.error = settings.messages.wrongLength.over.replace(
 			'{maxLength}',
@@ -84,9 +85,11 @@ const toggleInputError = () => {
 				.replace( '{length}', ref.value.length )
 		);
 	}
+
 	if ( ref.validity.typeMismatch || ref.validity.badInput ) {
 		context.error = settings.messages.patternMismatch[ ref.type ];
 	}
+
 	if ( ref.validity.valueMissing ) {
 		context.error = settings.messages.missingValue.hasOwnProperty(
 			ref.type

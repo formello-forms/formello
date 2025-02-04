@@ -68,8 +68,8 @@ class Admin {
 		$slug       = 'formello';
 
 		$admin_hook = add_menu_page(
-			__( 'Forms' ),
-			__( 'Forms' ),
+			__( 'Forms', 'formello' ),
+			__( 'Forms', 'formello' ),
 			'edit_posts',
 			$slug,
 			array( $this, 'settings_page' ),
@@ -79,8 +79,8 @@ class Admin {
 		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
 		$admin_hook = add_submenu_page(
 			'formello',
-			__( 'Settings' ),
-			__( 'Settings' ),
+			__( 'Settings', 'formello' ),
+			__( 'Settings', 'formello' ),
 			$capability,
 			$slug . '-settings',
 			array( $this, 'settings_page' )
@@ -88,8 +88,8 @@ class Admin {
 		add_action( 'load-' . $admin_hook, array( $this, 'load_formello_scripts' ) );
 		$admin_hook = add_submenu_page(
 			'formello',
-			__( 'Tools' ),
-			__( 'Tools' ),
+			__( 'Tools', 'formello' ),
+			__( 'Tools', 'formello' ),
 			$capability,
 			$slug . '-tools',
 			array( $this, 'settings_page' )

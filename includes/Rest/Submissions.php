@@ -33,7 +33,7 @@ class Submissions extends Base {
 					'permission_callback' => array( $this, 'update_settings_permissions' ),
 					'args'                => array(
 						'id' => array(
-							'description' => __( 'Unique identifier for the submission.' ),
+							'description' => __( 'Unique identifier for the submission.', 'formello' ),
 							'type'        => 'integer',
 							'required'    => true,
 						),
@@ -47,7 +47,7 @@ class Submissions extends Base {
 			array(
 				'args' => array(
 					'id' => array(
-						'description' => __( 'Unique identifier for the submission.' ),
+						'description' => __( 'Unique identifier for the submission.', 'formello' ),
 						'type'        => 'integer',
 					),
 				),
