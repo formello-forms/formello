@@ -43,7 +43,7 @@ jobs:
       - name: Set up test
         run: |
           bin/install-wp-tests.sh wordpress_test wordpress wordpress localhost latest
-          yes
+          y
 
       # Runs a single command using the runners shell
       - name: Install all dependencies
