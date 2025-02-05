@@ -41,7 +41,9 @@ jobs:
         run: sudo apt-get update -y && sudo apt-get install -y subversion
 
       - name: Set up test
-        run: bin/install-wp-tests.sh
+        run: |
+          bin/install-wp-tests.sh wordpress_test wordpress wordpress localhost latest
+          yes
 
       # Runs a single command using the runners shell
       - name: Install all dependencies
