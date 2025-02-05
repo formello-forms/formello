@@ -24,7 +24,7 @@ class Meta {
 	 * @param string $meta The meta.
 	 */
 	public function post_meta( $meta ) {
-		$post_id = $this->post_id();
+		$post_id = get_the_ID();
 		if ( ! $post_id ) {
 			return;
 		}

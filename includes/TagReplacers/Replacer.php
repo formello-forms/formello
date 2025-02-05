@@ -21,13 +21,22 @@ class Replacer {
 	 *
 	 * @var replacers
 	 */
+	protected $data = array();
+
+	/**
+	 * Array containing the replacers.
+	 *
+	 * @var replacers
+	 */
 	protected $replacers = array();
 
 	/**
 	 * Constructor
+	 *
+	 * @param array $data The data to replace.
 	 */
-	public function __construct() {
-		$this->replacers['fields'] = new Fields();
+	public function __construct( $data = array() ) {
+		$this->replacers['fields'] = new Fields( $data );
 		$this->replacers['other']  = new Other();
 		$this->replacers['meta']   = new Meta();
 		$this->replacers['wp']     = new Wp();
@@ -88,5 +97,4 @@ class Replacer {
 
 		return ! empty( $value ) ? $value : $value;
 	}
-
 }

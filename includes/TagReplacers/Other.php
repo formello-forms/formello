@@ -27,7 +27,7 @@ class Other {
 	 * Retrieve system time
 	 */
 	public function system_time() {
-		return date_i18n( get_option( 'time_format' ), current_time( 'timestamp' ) );
+		return date_i18n( get_option( 'time_format' ), time() );
 	}
 
 	/**

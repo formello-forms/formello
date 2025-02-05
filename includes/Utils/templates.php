@@ -7,6 +7,8 @@
 
 namespace Formello\Utils;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Add Formello templates to patterns
  *

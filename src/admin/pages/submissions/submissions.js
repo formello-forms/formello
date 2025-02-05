@@ -4,19 +4,15 @@
  */
 import {
 	__experimentalVStack as VStack,
+	__experimentalHStack as HStack,
 	Button,
 	Card,
 	Icon,
+	Spinner,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { decodeEntities } from '@wordpress/html-entities';
-import {
-	useState,
-	useMemo,
-	useCallback,
-	Fragment,
-	RawHTML,
-} from '@wordpress/element';
+import { useState, useMemo, Fragment, RawHTML } from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { heading, seen, starFilled } from '@wordpress/icons';
 import { trashSubmissionAction } from '../../actions/trash-submission.js';
@@ -44,7 +40,19 @@ const defaultLayouts = {
 	table: {
 		layout: {
 			primaryField: 'id',
+			combinedFields: [
+				{
+					id: 'title',
+					label: 'Title',
+					children: [ 'status' ],
+					direction: 'vertical',
+				},
+			],
 			styles: {
+				id: {
+					maxWidth: '40px',
+					width: '40px',
+				},
 				status: {
 					maxWidth: '40px',
 					width: '40px',
@@ -54,13 +62,14 @@ const defaultLayouts = {
 	},
 };
 
-export const Submissions = () => {
+const DataView = ( { columns } ) => {
 	const history = useHistory();
 	const { params } = useLocation();
 	const [ view, setView ] = useState( {
 		type: 'table',
 		filters: [],
-		fields: [ 'id', 'status' ],
+		titleField: 'id',
+		fields: [ 'status', ...columns ],
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -103,15 +112,6 @@ export const Submissions = () => {
 		totalItems,
 		totalPages,
 	} = useEntityRecords( 'formello/v1', 'submissions', queryArgs );
-
-	const columns = useEntityRecord( 'formello/v1', 'columns', params.form_id );
-
-	const getColumns = useCallback( () => {
-		if ( columns.hasResolved ) {
-			return columns.record.columns;
-		}
-		return [];
-	}, [ columns ] );
 
 	const paginationInfo = useMemo( () => {
 		return {
@@ -179,8 +179,7 @@ export const Submissions = () => {
 				enableSorting: true,
 			},
 		];
-		const cols = getColumns();
-		const _columns = cols?.map( ( key ) => {
+		const _columns = columns?.map( ( key ) => {
 			return {
 				id: key,
 				header: key.replaceAll( '_', ' ' ).toUpperCase(),
@@ -204,7 +203,7 @@ export const Submissions = () => {
 			};
 		} );
 		return _fields.concat( _columns );
-	}, [ history, getColumns, params.form_id ] );
+	}, [ history, columns, params.form_id ] );
 
 	const { saveEntityRecord } = useDispatch( coreStore );
 
@@ -261,6 +260,26 @@ export const Submissions = () => {
 	);
 
 	return (
+		<DataViews
+			paginationInfo={ paginationInfo }
+			fields={ fields }
+			actions={ actions }
+			data={ submissions || EMPTY_ARRAY }
+			isLoading={ isLoadingSubmissions }
+			view={ view }
+			onChangeView={ setView }
+			defaultLayouts={ defaultLayouts }
+		/>
+	);
+};
+
+export const Submissions = () => {
+	const history = useHistory();
+	const { params } = useLocation();
+
+	const columns = useEntityRecord( 'formello/v1', 'columns', params.form_id );
+
+	return (
 		<Fragment>
 			<Header
 				title={ __( 'Submissions', 'formello' ) }
@@ -281,16 +300,11 @@ export const Submissions = () => {
 			</Header>
 			<div className="formello-content">
 				<Card>
-					<DataViews
-						paginationInfo={ paginationInfo }
-						fields={ fields }
-						actions={ actions }
-						data={ submissions || EMPTY_ARRAY }
-						isLoading={ isLoadingSubmissions }
-						view={ view }
-						onChangeView={ setView }
-						defaultLayouts={ defaultLayouts }
-					/>
+					{ columns.hasResolved ? (
+						<DataView columns={ columns.record.columns } />
+					) : (
+						<Spinner />
+					) }
 				</Card>
 			</div>
 		</Fragment>

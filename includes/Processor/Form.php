@@ -7,6 +7,8 @@
 
 namespace Formello\Processor;
 
+use function Formello\Utils\formello_default_options as default_options;
+
 /**
  * Get defaults for our general options.
  *
@@ -57,9 +59,25 @@ class Form {
 	public function __construct( $id ) {
 		if ( ! empty( $id ) ) {
 			$this->ID       = $id;
-			$this->settings = get_post_meta( $id, '_formello_settings', true );
+			$this->settings = $this->get_settings( $id );
 			$this->actions  = get_post_meta( $id, '_formello_actions', true );
 		}
+	}
+
+	/**
+	 * Set settings.
+	 *
+	 * @param [type] $id The form ID.
+	 * @return array
+	 */
+	private function get_settings( $id ) {
+		$default = array(
+			'debug' => false,
+			'hide' => true,
+			'captchaEnabled' => false,
+			'redirectUrl' => '',
+		);
+		return wp_parse_args( get_post_meta( $id, '_formello_settings', true ), $default );
 	}
 
 	/**
@@ -230,7 +248,7 @@ class Form {
 	 * @param mixed $template String template.
 	 */
 	private function replace_tags( $template ) {
-		$replacer = new \Formello\TagReplacers\Replacer();
+		$replacer = new \Formello\TagReplacers\Replacer( $this->data );
 		$result   = $replacer->parse( $template );
 
 		return $result;

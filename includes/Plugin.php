@@ -104,6 +104,14 @@ class Plugin {
 	 * @access   private
 	 */
 	private function load_dependencies() {
+		/**
+		 * The helper files.
+		 */
+		require_once plugin_dir_path( __DIR__ ) . 'includes/Utils/functions.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/Utils/templates.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/Utils/register-cpt.php';
+		require_once plugin_dir_path( __DIR__ ) . 'includes/Utils/register-settings.php';
+
 		$this->loader = new Loader();
 	}
 

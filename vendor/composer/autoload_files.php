@@ -6,8 +6,8 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
-    '0d73450dcae6c75c8ae55e881f84b8fd' => $baseDir . '/includes/Utils/templates.php',
-    '518f2fdfcbdb55daf7b7cf17bf9eb26a' => $baseDir . '/includes/Utils/functions.php',
-    '58b6f653b973bcb18404f2deee61cd27' => $baseDir . '/includes/Utils/register-cpt.php',
-    '4a35791182d24fc74a6adc8c9518683a' => $baseDir . '/includes/Utils/register-settings.php',
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+    'ec07570ca5a812141189b1fa81503674' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+    '38fbb71d514eee25044aa9d94851ee76' => $vendorDir . '/wp-phpunit/wp-phpunit/__loaded.php',
+    '7d3b315c4f303f2fc14aca642a738e50' => $vendorDir . '/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php',
 );

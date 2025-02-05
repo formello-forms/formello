@@ -90,6 +90,13 @@ const toggleInputError = () => {
 		context.error = settings.messages.patternMismatch[ ref.type ];
 	}
 
+	if ( ref.validity.patternMismatch ) {
+		context.error =
+			settings.messages.patternMismatch[ ref.type ] ??
+			ref.getAttribute( 'data-bouncer-message' ) ??
+			settings.messages.patternMismatch.default;
+	}
+
 	if ( ref.validity.valueMissing ) {
 		context.error = settings.messages.missingValue.hasOwnProperty(
 			ref.type

@@ -59,6 +59,7 @@ export const Forms = () => {
 		filters: [],
 		fields: [ 'entries', 'author', 'status', 'date', 'form' ],
 		titleField: 'title',
+		descriptionField: 'excerpt',
 		page: 1,
 		perPage: 10,
 		sort: {
