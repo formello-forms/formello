@@ -45,7 +45,7 @@ jobs:
         run: composer install
 
       - name: Set up test
-        run: bin/install-wp-tests.sh wordpress_test wordpress ${{ env.MYSQL_PASSWORD }} localhost
+        run: bin/install-wp-tests.sh wordpress_test wordpress ${{ env.MYSQL_PASSWORD }} localhost:3306
 
       - name: Run Tests
         run: vendor/bin/phpunit
