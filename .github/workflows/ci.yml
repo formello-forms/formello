@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Automatic testing
 
 # Controls when the workflow will run
 on:
@@ -37,3 +37,6 @@ jobs:
 
       - name: Install all dependencies
         run: composer install
+
+      - name: Run Tests
+        run: phpunit
