@@ -24,9 +24,7 @@ jobs:
               run: npm run build
             - name: Build zip
               run: npm run plugin-zip
-            - name: Archive Release
-              uses: thedoctor0/zip-release@0.7.5
-              with:
-                type: 'zip'
-                filename: 'release.zip'
-                exclusions: '*.git* /*node_modules/* .editorconfig'
+            - name: Zip Folder
+              run: |
+                rm -rf formello.zip
+                zip -r formello.zip formello -x ".git/*" ".github/*"
