@@ -30,7 +30,7 @@ jobs:
           MARIADB_INITDB_SKIP_TZINFO: 1
           MYSQL_USER: wordpress
           MYSQL_PASSWORD: wordpress
-          MYSQL_DATABASE: wordpress_test
+          MYSQL_DATABASE: wp_test
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -41,9 +41,7 @@ jobs:
         run: sudo apt-get update -y && sudo apt-get install -y subversion
 
       - name: Set up test
-        run: |
-          bin/install-wp-tests.sh wordpress_test wordpress wordpress localhost latest
-          y
+        run: bin/install-wp-tests.sh wp_test wordpress wordpress localhost latest
 
       # Runs a single command using the runners shell
       - name: Install all dependencies
