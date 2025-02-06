@@ -1,4 +1,4 @@
-name: 'Deploy to WordPress.org'
+name: 'Test action'
 # Controls when the workflow will run
 on:
     # Triggers the workflow on push or pull request events but only for the master branch
@@ -11,9 +11,11 @@ jobs:
         name: Prova build
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@master
+            - uses: actions/checkout@v2
             - name: Install composer deps
               run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
+            - name: Install npm deps
+              run: npm ci
             - name: Build files
               run: npm run build
             - name: Build zip
