@@ -1,31 +1,38 @@
 <?php
 /**
- * PHPUnit bootstrap file.
- *
- * @package Starter_Plugin
- */
+* PHPUnit bootstrap file
+*
+* @package features-plugin-v2
+*/
 
-$_tests_dir = getenv( 'WP_TESTS_DIR' );
+define( 'TESTS_PLUGIN_DIR', dirname( __FILE__, 2 ) );
+define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', dirname( TESTS_PLUGIN_DIR ) . '/vendor/yoast/phpunit-polyfills' );
 
-// Forward custom PHPUnit Polyfills configuration to PHPUnit bootstrap file.
-$_phpunit_polyfills_path = getenv( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH' );
-if ( false !== $_phpunit_polyfills_path ) {
-	define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', $_phpunit_polyfills_path );
+// Determine correct location for plugins directory to use.
+define( 'WP_PLUGIN_DIR', dirname( dirname( TESTS_PLUGIN_DIR ) ) );
+
+define( 'WP_PHPUNIT__DIR', dirname( TESTS_PLUGIN_DIR ) . '/vendor/wp-phpunit/wp-phpunit/' );
+
+// Load Composer dependencies if applicable.
+if ( file_exists( dirname( TESTS_PLUGIN_DIR ) . '/vendor/autoload.php' ) ) {
+    require_once dirname( TESTS_PLUGIN_DIR ) . '/vendor/autoload.php';
 }
 
-require 'vendor/yoast/phpunit-polyfills/phpunitpolyfills-autoload.php';
+// Detect where to load the WordPress tests environment from.
 
-// Give access to tests_add_filter() function.
-require_once "{$_tests_dir}/includes/functions.php";
+$_test_root = WP_PHPUNIT__DIR;
+
+require_once $_test_root . '/includes/functions.php';
 
 /**
- * Manually load the plugin being tested.
- */
-function _manually_load_plugin() {
-	require dirname( dirname( __FILE__ ) ) . '/starter-plugin.php';
+* Load plugin in test env.
+*
+* @return void
+*/
+function features_plugin_unit_test_load_plugin_file() {
+    require_once dirname( TESTS_PLUGIN_DIR ) . '/you-plugin-init-file.php';
 }
 
-tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
+tests_add_filter( 'muplugins_loaded', 'features_plugin_unit_test_load_plugin_file' );
 
-// Start up the WP testing environment.
-require "{$_tests_dir}/includes/bootstrap.php";
+require $_test_root . '/includes/bootstrap2.php';
