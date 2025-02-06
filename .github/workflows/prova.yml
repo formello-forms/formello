@@ -15,6 +15,7 @@ jobs:
         name: Prova build
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v2
             - name: Install composer deps
               run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
             - name: Install npm deps
@@ -23,13 +24,3 @@ jobs:
               run: npm run build
             - name: Build zip
               run: npm run plugin-zip
-            - uses: actions/checkout@v2
-            - name: Create release
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                tag: ${{ github.ref_name }}
-              run: |
-                gh release create "$tag" \
-                    --repo="$GITHUB_REPOSITORY" \
-                    --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
-                    --generate-notes
