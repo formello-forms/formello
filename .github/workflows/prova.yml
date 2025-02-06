@@ -19,4 +19,4 @@ jobs:
             - name: Build files
               run: npm run build
             - name: Build zip
-              run: npm run dist
+              run: npm run plugin-zip
