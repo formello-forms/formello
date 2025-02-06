@@ -27,10 +27,10 @@ vendor/
 
 # dotenv environment variables file
 .env
-
 *.zip
 
 composer.lock
 formello.sublime-project
 formello.sublime-workspace
 .phpunit.result.cache
+.vscode/
