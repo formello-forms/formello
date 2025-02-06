@@ -11,8 +11,30 @@ jobs:
             - name: Install Subversion
               run: sudo apt-get update -y && sudo apt-get install -y subversion
             - uses: actions/checkout@master
-            - name: Install composer deps
+
+            - name: Get Composer Cache Directory
+              id: get-composer-cache-dir # Instead of composer-cache
+              run: |
+                echo "::set-output name=dir::$(composer config cache-files-dir)"
+            
+            - name: Cache Composer
+              uses: actions/cache@v2
+              id: composer-cache
+              with:
+                path: ${{ steps.get-composer-cache-dir.outputs.dir }}
+                key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                restore-keys: |
+                    ${{ runner.os }}-composer-
+            
+            - name: Install composer dependencies
               run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
+            
+            - name: Install npm deps
+              run: npm ci
+            
+            - name: Build files
+              run: npm run build            
+
             - name: WordPress Plugin Deploy
               uses: 10up/action-wordpress-plugin-deploy@stable
               env:
