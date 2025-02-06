@@ -40,7 +40,6 @@ jobs:
               ${{ runner.os }}-composer-
       
       - name: Install composer dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Start wp-env
