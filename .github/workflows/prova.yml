@@ -32,6 +32,4 @@ jobs:
               run: npm ci
             - name: Build files
               run: npm run build
-            - name: Zip Folder
-              run: zip -r ${{ github.event.repository.name }}.zip . -x ".git/*" ".github/*" "phpcs.xml" "composer.json" "composer.lock" ".gitignore"
         
