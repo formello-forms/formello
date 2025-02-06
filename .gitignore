@@ -29,5 +29,7 @@ wordpress/
 
 *.zip
 
+.phpunit.result.cache
+composer.lock
 formello.sublime-project
 formello.sublime-workspace
