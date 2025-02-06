@@ -30,8 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Formello\\": "includes/",
-            "Tests\\": "tests/"
+            "Formello\\": "includes/"
         }
     }
 }

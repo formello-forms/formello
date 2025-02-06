@@ -6,6 +6,10 @@ on:
       branches: [ master ]
     pull_request:
       branches: [ master ]
+
+permissions:
+    contents: write
+
 jobs:
     tag:
         name: Prova build
@@ -20,3 +24,9 @@ jobs:
               run: npm run build
             - name: Build zip
               run: npm run plugin-zip
+            - name: Create release
+              run: |
+                gh release create "$tag" \
+                    --repo="$GITHUB_REPOSITORY" \
+                    --title="${GITHUB_REPOSITORY#*/} ${tag#v}" \
+                    --generate-notes
