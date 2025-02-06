@@ -36,4 +36,4 @@ jobs:
           phpVersion: '7.4'
 
       - name: Run Tests
-        run: wp-env run tests-cli phpunit -c phpunit.xml --verbose
+        run: wp-env run tests-cli phpunit -c phpunit.xml.dist --verbose
