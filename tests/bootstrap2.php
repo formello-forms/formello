@@ -30,7 +30,7 @@ require_once $_test_root . '/includes/functions.php';
 * @return void
 */
 function features_plugin_unit_test_load_plugin_file() {
-    require_once dirname( TESTS_PLUGIN_DIR ) . '/you-plugin-init-file.php';
+    require_once dirname( TESTS_PLUGIN_DIR ) . '/formello.php';
 }
 
 tests_add_filter( 'muplugins_loaded', 'features_plugin_unit_test_load_plugin_file' );
