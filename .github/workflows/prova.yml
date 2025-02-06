@@ -32,7 +32,6 @@ jobs:
                     ${{ runner.os }}-composer-
             
             - name: Install composer dependencies
-              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
             
             - name: Install npm deps
