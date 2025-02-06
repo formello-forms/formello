@@ -8,7 +8,7 @@
 /**
  * Base test case
  */
-class Base_Test extends WP_UnitTestCase {
+abstract class Base_Test extends WP_UnitTestCase {
 
 	/**
 	 * Holds the WP REST Server object
