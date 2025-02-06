@@ -25,15 +25,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@master
 
+      # Runs a single command using the runners shell
+      - name: Install all dependencies
+        run: composer install
+
       - name: Start wp-env
         uses: godaddy-wordpress/setup-wp-env@v1
         with:
           core: 'WordPress/WordPress#6.6'
           phpVersion: '7.4'
 
-      # Runs a single command using the runners shell
-      - name: Install all dependencies
-        run: composer install
-
       - name: Run Tests
-        run: vendor/bin/phpunit
+        run: ./vendor/bin/phpunit
