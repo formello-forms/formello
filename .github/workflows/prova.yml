@@ -16,20 +16,28 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
+            
             - name: Get Composer Cache Directory
-              id: composer-cache
+              id: get-composer-cache-dir # Instead of composer-cache
               run: |
-                echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-            - uses: actions/cache@v2
+                echo "::set-output name=dir::$(composer config cache-files-dir)"
+            
+            - name: Cache Composer
+              uses: actions/cache@v1
+              id: composer-cache
               with:
-                  path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: |
-                    ${{ runner.os }}-composer-            
-            - name: Install composer deps
+                path: ${{ steps.get-composer-cache-dir.outputs.dir }}
+                key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                restore-keys: |
+                    ${{ runner.os }}-composer-
+            
+            - name: Install composer dependencies
+              if: steps.composer-cache.outputs.cache-hit != 'true'
               run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
+            
             - name: Install npm deps
               run: npm ci
+            
             - name: Build files
               run: npm run build
         
