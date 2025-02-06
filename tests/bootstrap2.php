@@ -5,7 +5,7 @@
 * @package features-plugin-v2
 */
 
-define( 'TESTS_PLUGIN_DIR', dirname( __FILE__, 2 ) );
+define( 'TESTS_PLUGIN_DIR', dirname( __FILE__, 1 ) );
 define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', dirname( TESTS_PLUGIN_DIR ) . '/vendor/yoast/phpunit-polyfills' );
 
 // Determine correct location for plugins directory to use.
@@ -35,4 +35,4 @@ function features_plugin_unit_test_load_plugin_file() {
 
 tests_add_filter( 'muplugins_loaded', 'features_plugin_unit_test_load_plugin_file' );
 
-require $_test_root . '/includes/bootstrap2.php';
+require $_test_root . '/includes/bootstrap.php';
