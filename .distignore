@@ -1,5 +1,6 @@
 /.wordpress-org
 /wordpress
+/node_modules
 /.git
 /.github
 /.storybook
