@@ -132,6 +132,7 @@ Yes, you can insert Formello forms using a shortcode.
 
 = 2.6.5 =
 * Fix cron
+* COde clean up
 
 = 2.6.4 =
 * Code improvement
