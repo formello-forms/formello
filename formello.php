@@ -30,13 +30,6 @@ defined( 'ABSPATH' ) || exit;
 require __DIR__ . '/vendor/autoload.php';
 
 /**
- * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
- * Rename this for your plugin and update it as you release new versions.
- */
-define( 'FORMELLO_VERSION', '2.6.4' );
-
-/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-formello2-activator.php
  */
