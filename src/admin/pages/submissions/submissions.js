@@ -16,12 +16,7 @@ import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { heading, seen, starFilled } from '@wordpress/icons';
 import { trashSubmissionAction } from '../../actions/trash-submission.js';
 import { toggleNew, toggleStar } from '../../actions/toggle.js';
-import { useDispatch } from '@wordpress/data';
-import {
-	store as coreStore,
-	useEntityRecord,
-	useEntityRecords,
-} from '@wordpress/core-data';
+import { useEntityRecord, useEntityRecords } from '@wordpress/core-data';
 /**
  * Internal dependencies
  */
@@ -204,8 +199,6 @@ const DataView = ( { columns } ) => {
 		} );
 		return _fields.concat( _columns );
 	}, [ history, columns, params.form_id ] );
-
-	const { saveEntityRecord } = useDispatch( coreStore );
 
 	const actions = useMemo(
 		() => [
