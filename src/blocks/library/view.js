@@ -54,17 +54,17 @@ const toggleInputError = () => {
 		}
 	}
 
-	if ( ref.validity.rangeOverflow ) {
-		context.error = settings.messages.wrongLength.under.replace(
+	if ( ref.validity.rangeOverflow && 'time' === ref.type ) {
+		context.error = settings.messages.outOfRange.over.replace(
 			'{max}',
-			ref.getAttribute( 'max' ).replace( '{length}', ref.value.length )
+			ref.getAttribute( 'max' ).replace( '{max}', ref.value.max )
 		);
 	}
 
-	if ( ref.validity.rangeUnderflow ) {
-		context.error = settings.messages.wrongLength.under.replace(
+	if ( ref.validity.rangeUnderflow && 'time' === ref.type ) {
+		context.error = settings.messages.outOfRange.under.replace(
 			'{min}',
-			ref.getAttribute( 'min' ).replace( '{length}', ref.value.length )
+			ref.getAttribute( 'min' ).replace( '{min}', ref.value.min )
 		);
 	}
 
