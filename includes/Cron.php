@@ -47,7 +47,6 @@ class Cron {
 	public function __construct( $plugin_name, $version ) {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
-		$this->cron();
 	}
 
 	/**
@@ -55,7 +54,7 @@ class Cron {
 	 *
 	 * @since 1.2.0
 	 */
-	private function cron() {
+	public function cron() {
 		if ( ! wp_next_scheduled( 'formello_retrieve_news' ) ) {
 			wp_schedule_event( time(), '5min', 'formello_retrieve_news' );
 		}

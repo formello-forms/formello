@@ -248,7 +248,7 @@ class Form {
 	 * @param mixed $template String template.
 	 */
 	private function replace_tags( $template ) {
-		$replacer = new \Formello\TagReplacers\Replacer( $this->data );
+		$replacer = new \Formello\TagReplacers\Replacer( $this->data['fields'] );
 		$result   = $replacer->parse( $template );
 
 		return $result;

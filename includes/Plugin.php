@@ -181,6 +181,7 @@ class Plugin {
 
 		// Cron Tasks.
 		$cron = new Cron( $this->plugin_name, $this->version );
+		$cron->cron();
 
 		$this->loader->add_action( 'formello_retrieve_news', $cron, 'get_news' );
 		$this->loader->add_action( 'formello_delete_logs', $cron, 'delete_logs' );

@@ -56,11 +56,11 @@ class Fields {
 		foreach ( $this->data as $field => $value ) {
 			if ( '_' === $field[0] || 'action' === $field ) {
 				continue;
-			};
+			}
 
 			if ( is_array( $value ) ) {
 				$value = implode( ', ', $value );
-			};
+			}
 
 			$value = wp_kses_post( $value );
 
