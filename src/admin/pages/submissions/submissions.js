@@ -15,6 +15,7 @@ import { useState, useMemo, Fragment, RawHTML } from '@wordpress/element';
 import { dateI18n, getDate, getSettings } from '@wordpress/date';
 import { heading, seen, starFilled } from '@wordpress/icons';
 import { trashSubmissionAction } from '../../actions/trash-submission.js';
+import { toggleNew, toggleStar } from '../../actions/toggle.js';
 import { useDispatch } from '@wordpress/data';
 import {
 	store as coreStore,
@@ -222,40 +223,11 @@ const DataView = ( { columns } ) => {
 					} );
 				},
 			},
-			{
-				id: 'mark-as-starred',
-				label: __( 'Toggle favorite' ),
-				isPrimary: false,
-				supportsBulk: true,
-				isEligible: () => true,
-				icon: starFilled,
-				callback: ( posts ) => {
-					const post = posts[ 0 ];
-					saveEntityRecord( 'formello/v1', 'submissions', {
-						id: post.id,
-						details: {
-							starred: ! parseInt( post.details.starred ),
-						},
-					} );
-				},
-			},
-			{
-				id: 'mark-as-new',
-				label: __( 'Toggle new' ),
-				isPrimary: false,
-				supportsBulk: true,
-				icon: heading,
-				callback: ( posts ) => {
-					const post = posts[ 0 ];
-					saveEntityRecord( 'formello/v1', 'submissions', {
-						id: post.id,
-						details: { is_new: ! parseInt( post.details.is_new ) },
-					} );
-				},
-			},
 			trashSubmissionAction,
+			toggleNew,
+			toggleStar,
 		],
-		[ history, saveEntityRecord ]
+		[ history ]
 	);
 
 	return (
