@@ -126,24 +126,22 @@ export default function Edit( { attributes, setAttributes } ) {
 				) }
 				<InspectorAdvancedControls>
 					<ToggleControl
-						label={ __( 'Show Icon', 'formello' ) }
+						label={ __( 'Preview Icon', 'formello' ) }
 						checked={ showIcon }
 						onChange={ ( val ) => {
 							setShowIcon( val );
 						} }
 					/>
-					{ showIcon && (
-						<SelectControl
-							label={ __( 'Icon type', 'formello' ) }
-							value={ attributes.type }
-							options={ Object.keys( icons ).map( ( icon ) => {
-								return { label: icon, value: icon };
-							} ) }
-							onChange={ ( val ) => {
-								setAttributes( { type: val } );
-							} }
-						/>
-					) }
+					<SelectControl
+						label={ __( 'Icon type', 'formello' ) }
+						value={ attributes.type }
+						options={ Object.keys( icons ).map( ( icon ) => {
+							return { label: icon, value: icon };
+						} ) }
+						onChange={ ( val ) => {
+							setAttributes( { type: val } );
+						} }
+					/>
 				</InspectorAdvancedControls>
 				<RichText
 					tagName="span"
