@@ -7,7 +7,7 @@ import {
 	validate,
 } from '../components/merge-tags/functions';
 
-function validateAll() {
+function validateAll( edits ) {
 	const validation = validate();
 
 	if ( ! validation.buttons.length ) {
@@ -27,7 +27,11 @@ function validateAll() {
 			message: __( 'One or more fields have no name', 'formello' ),
 		} );
 	}
+
+	return Promise.resolve( edits );
 }
+
+addFilter( 'editor.preSavePost', 'editor', ( edits ) => validateAll( edits ) );
 
 addFilter( 'editor.preSavePost', 'editor', ( edits ) => {
 	const postType = select( 'core/editor' ).getCurrentPostType();

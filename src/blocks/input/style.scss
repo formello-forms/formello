@@ -2,23 +2,21 @@
     display: flex;
     flex-direction: column;
 
-	label {
-		&.hide {
-			display: none;
-		}
+    label {
+        &.hide {
+            display: none;
+        }
 
-		span.required {
-			color: red;
-			margin: 0 5px;
-			font-weight: normal;
-		}
-	}
-
-    input + output, input + div.wp-block-formello-button {
-        margin: 0 0 0 .5rem;
+        span.required {
+            color: red;
+            margin: 0 5px;
+            font-weight: normal;
+        }
     }
 
-    input + button {
+    input+output,
+    input+.wp-block-formello-button,
+    input+button {
         margin: 0 0 0 .5rem;
     }
 
@@ -26,22 +24,27 @@
         color: color-mix(in srgb, currentColor 60%, transparent);
     }
 
-    &:has(input[type=checkbox]), &:has(input[type=radio]) {
+    &:has(input[type=checkbox]),
+    &:has(input[type=radio]) {
         //flex-direction: row;
         align-items: baseline;
         gap: .3em;
         display: grid;
         grid-template-columns: min-content auto;
+
         input {
             order: 1;
         }
+
         label {
             order: 2;
         }
+
         small {
             order: 3;
             grid-column: 2 / -1;
         }
+
         .error-message {
             grid-column: 2 / -1;
         }
@@ -51,9 +54,21 @@
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
+
+        label {
+            flex-basis: 100%;
+        }
+
+        output {
+            margin: .5rem;
+        }
+
         input {
             flex: 1;
+            align-self: stretch;
+            flex-basis: 10%;
         }
+
         small {
             width: 100%;
         }
@@ -63,13 +78,16 @@
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
+
         label {
             flex-basis: 100%;
         }
+
         input {
             flex: 1;
             align-self: stretch;
         }
+
         small {
             width: 100%;
         }
@@ -78,6 +96,7 @@
     .iti {
         border: 1px solid;
         display: flex;
+
         input {
             border: none;
             flex: 1;

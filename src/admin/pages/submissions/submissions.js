@@ -4,7 +4,6 @@
  */
 import {
 	__experimentalVStack as VStack,
-	__experimentalHStack as HStack,
 	Button,
 	Card,
 	Icon,

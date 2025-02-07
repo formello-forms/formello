@@ -63,6 +63,7 @@ export default function Options( props ) {
 						'formello'
 					) }
 					__nextHasNoMarginBottom
+					__next40pxDefaultSize
 				/>
 				{ supported.includes( 'value' ) && (
 					<MergeTags
@@ -90,6 +91,7 @@ export default function Options( props ) {
 							'formello'
 						) }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				) }
 				{ supported.includes( 'required' ) && (
@@ -100,6 +102,7 @@ export default function Options( props ) {
 							setAttributes( { required: val } )
 						}
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				) }
 				{ supported.includes( 'multiple' ) && (
@@ -110,6 +113,7 @@ export default function Options( props ) {
 							setAttributes( { multiple: val } )
 						}
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				) }
 				{ supported.includes( 'checked' ) && (
@@ -120,6 +124,7 @@ export default function Options( props ) {
 							setAttributes( { checked: newval } )
 						}
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				) }
 				{ ! ( 'hidden' === type ) && (
@@ -130,6 +135,7 @@ export default function Options( props ) {
 							setAttributes( { showHelp: newval } )
 						}
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				) }
 				{ 'select' === fieldType && (
@@ -141,6 +147,7 @@ export default function Options( props ) {
 								setAttributes( { advanced: val } );
 							} }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 						<Button
 							variant={ 'primary' }

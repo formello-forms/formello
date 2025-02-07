@@ -13,7 +13,7 @@ jobs:
             - uses: actions/checkout@master
 
             - name: Get Composer Cache Directory
-              id: get-composer-cache-dir # Instead of composer-cache
+              id: get-composer-cache-dir
               run: |
                 echo "::set-output name=dir::$(composer config cache-files-dir)"
             

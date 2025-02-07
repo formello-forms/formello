@@ -274,5 +274,7 @@ class Admin {
 	public function load_formello_scripts() {
 		$this->enqueue_styles();
 		$this->enqueue_scripts();
+
+		do_action( 'formello_settings_scripts' );
 	}
 }

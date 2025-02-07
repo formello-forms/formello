@@ -44,6 +44,7 @@ export default function MergeTags( props ) {
 						) }
 					</DropdownMenu>
 				}
+				__next40pxDefaultSize
 			/>
 		</BaseControl>
 	);

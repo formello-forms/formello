@@ -14,7 +14,9 @@ build/Release
 # Dependency directories
 node_modules/
 wordpress/
+build/
 vendor/
+.vscode/
 
 # Optional npm cache directory
 .npm
@@ -33,4 +35,3 @@ composer.lock
 formello.sublime-project
 formello.sublime-workspace
 .phpunit.result.cache
-.vscode/

@@ -59,6 +59,7 @@ function ValidationOptions( props ) {
 						setAttributes( { advanced: val } );
 					} }
 					__nextHasNoMarginBottom
+					__next40pxDefaultSize
 				/>
 			) }
 			{ ( 'date' === type || 'time' === type ) && (
@@ -78,6 +79,7 @@ function ValidationOptions( props ) {
 							setAttributes( { min: val } );
 						} }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<TextControl
 						label={ __( 'Max Value', 'formello' ) }
@@ -88,6 +90,7 @@ function ValidationOptions( props ) {
 							setAttributes( { max: val } );
 						} }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<TextControl
 						type="number"
@@ -97,6 +100,7 @@ function ValidationOptions( props ) {
 							setAttributes( { step: Number( val ) } )
 						}
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				</Fragment>
 			) }
@@ -115,6 +119,7 @@ function ValidationOptions( props ) {
 							'formello'
 						) }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<TextControl
 						type="number"
@@ -128,6 +133,7 @@ function ValidationOptions( props ) {
 							'formello'
 						) }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 				</Fragment>
 			) }
@@ -158,6 +164,7 @@ function ValidationOptions( props ) {
 					value={ validation }
 					onChange={ ( val ) => setAttributes( { validation: val } ) }
 					__nextHasNoMarginBottom
+					__next40pxDefaultSize
 				/>
 			) }
 			{ supported.includes( 'mismatch' ) && (
@@ -169,6 +176,7 @@ function ValidationOptions( props ) {
 							setAttributes( { enableMismatch: newval } )
 						}
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					{ enableMismatch && (
 						<Fragment>
@@ -193,6 +201,7 @@ function ValidationOptions( props ) {
 									'formello'
 								) }
 								__nextHasNoMarginBottom
+								__next40pxDefaultSize
 							/>
 							<TextControl
 								type="text"
@@ -202,6 +211,7 @@ function ValidationOptions( props ) {
 									setAttributes( { mismatchMessage: val } )
 								}
 								__nextHasNoMarginBottom
+								__next40pxDefaultSize
 							/>
 						</Fragment>
 					) }

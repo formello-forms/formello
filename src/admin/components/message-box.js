@@ -34,14 +34,15 @@ export default function MessageBox( props ) {
 	return (
 		<Animate type="slide-in" options={ { origin: 'top' } }>
 			{ ( { animateClassName } ) => (
-				<span className={ clsx(
-					'formello-message',
-					animateClassName,
-					messageType,
-					{
-						show: message,
-					}
-				) }
+				<span
+					className={ clsx(
+						'formello-message',
+						animateClassName,
+						messageType,
+						{
+							show: message,
+						}
+					) }
 				>
 					{ message }
 				</span>

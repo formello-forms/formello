@@ -19,7 +19,6 @@ import {
 	TextControl,
 	PanelBody,
 	SelectControl,
-	Disabled,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import {
@@ -35,7 +34,7 @@ import {
 } from '@wordpress/block-editor';
 
 import { useState, useCallback, Fragment, useEffect } from '@wordpress/element';
-import { TemplatesModal } from '../form/edit/templates-modal';
+import { TemplatesModal } from '../form/templates-modal';
 
 const NOOP = () => {};
 

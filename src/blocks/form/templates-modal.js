@@ -22,15 +22,15 @@ function PatternCategoriesList( {
 			{ [ ...new Set( patternCategories ) ].map( ( category ) => {
 				return (
 					<Button
-						key={ category.slug }
-						label={ category.name }
+						key={ category }
+						label={ category }
 						className={ `${ baseClassName }__categories-list__item` }
-						isPressed={ selectedCategory === category.slug }
+						isPressed={ selectedCategory === category }
 						onClick={ () => {
-							onClickCategory( category.slug );
+							onClickCategory( category );
 						} }
 					>
-						{ category.name }
+						{ category }
 					</Button>
 				);
 			} ) }
@@ -107,26 +107,7 @@ export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
 		return p.categories.includes( selectedCategory );
 	} );
 
-	const patternCategories = [
-		{
-			slug: 'all',
-			name: __( 'All', 'popper' ),
-		},
-		{
-			slug: 'promo',
-			name: __( 'Promo', 'popper' ),
-		},
-		{
-			slug: 'top-bar',
-			name: __( 'Top bar', 'popper' ),
-		},
-		{
-			slug: 'ad-block',
-			name: __( 'Ad Block', 'popper' ),
-		},
-	];
-
-	const patternCategories2 = patterns
+	const patternCategories = patterns
 		.map( ( p ) => {
 			return p.categories;
 		} )

@@ -14,7 +14,7 @@ body.post-type-formello_form {
 
 	.wp-block-formello-input, .wp-block-formello-select, .wp-block-formello-textarea, .wp-block-formello-multichoices {
 		&.missing-name::before {
-			content: 'Missing name';
+			content: 'Missing field name';
 			position: absolute;
 			top: 0;
 			right: 0;
@@ -47,8 +47,7 @@ body.post-type-formello_form {
 				width: 100%;
 			}
 			div.wp-block-formello-button, output {
-				flex-basis: auto;
-				flex: 0 1;
+				flex: 0 1 auto;
 			}
 			input {
 				flex-grow: 1;

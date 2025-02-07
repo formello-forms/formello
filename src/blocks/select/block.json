@@ -19,7 +19,8 @@
 			"type": "string",
 			"source": "attribute",
 			"selector": "select",
-			"attribute": "name"
+			"attribute": "name",
+			"default": ""
 		},
 		"label": {
 			"type": "string",

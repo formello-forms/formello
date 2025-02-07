@@ -112,12 +112,13 @@ export default function save( { attributes } ) {
 				style={ fieldProps.inputStyle }
 			/>
 
-			<div className="error-message" data-wp-text="context.error"></div>
-
 			<InnerBlocks.Content />
+
 			{ 'hidden' !== type && showHelp && (
 				<RichText.Content tagName="small" value={ help } />
 			) }
+
+			<div className="error-message" data-wp-text="context.error"></div>
 		</div>
 	);
 }

@@ -23,7 +23,7 @@ registerBlockType( metadata, {
 				value={ attributes.text }
 				onChange={ ( val ) => setAttributes( { text: val } ) }
 				placeholder={ '55' }
-				allowedFormats={ [ 'core/bold' ] }
+				allowedFormats={ [] }
 			/>
 		);
 	},
