@@ -23,6 +23,7 @@
 .gitignore
 .phpunit.result.cache
 .travis.yml
+.wp-env.json
 
 package-lock.json
 package.json
@@ -35,6 +36,8 @@ config.json
 phpunit.xml.dist
 webpack.config.js
 formello.code-workspace
+jsconfig.js
+phpunit.xml
 
 
 *.zip
