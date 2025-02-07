@@ -1,7 +1,7 @@
 {
   "name": "formello",
-  "version": "1.0.0",
-  "description": "Example block written with ESNext standard and JSX support – build step required.",
+  "version": "2.6.6",
+  "description": "WordPress plugin to build form inside Gutenberg.",
   "author": "Francesco Pepe",
   "license": "GPL-2.0-or-later",
   "main": "build/index.js",
