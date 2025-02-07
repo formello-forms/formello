@@ -4,7 +4,7 @@ Donate link: 	   https://formello.net
 Tags:              form, contact form, form block, gutenberg form, block
 Requires at least: 6.6
 Tested up to:      6.7
-Stable tag:        2.6.4
+Stable tag:        2.6.5
 Requires PHP:      7.0
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
