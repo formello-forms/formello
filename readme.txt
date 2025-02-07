@@ -31,7 +31,7 @@ This is the next generation **WordPress form builder plugin**. You can create fo
 
 == Extensions ==
 
-If you wanna extend the form functionality with more useful features, you can download, from our [site](https://formello.net), an advanced version which includes this addons:
+If you wanna extend the form functionality with more useful features, you can download, from [official site](https://formello.net), an advanced version which includes this addons:
 
 * [Mailchimp](https://formello.net/addons/mailchimp): action to send subscriber emails to your Mailchimp lists.
 * [MailPoet](https://formello.net/addons/mailpoet): action to send subscriber emails to your MailPoet lists.
