@@ -1,0 +1,23 @@
+name: Build release zip
+
+on:
+  push:
+    branches:
+    - trunk
+
+jobs:
+  build:
+    name: Build release zip
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Build plugin # Remove or modify this step as needed
+      run: |
+        composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
+        npm install
+        npm run build
+
+    - name: Generate zip
+      uses: 10up/action-wordpress-plugin-build-zip@stable
