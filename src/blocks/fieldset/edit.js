@@ -8,21 +8,10 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 
-const ALLOWED_BLOCKS = [
-	'core/paragraph',
-	'core/heading',
-	'core/columns',
-	'core/group',
-	'formello/input',
-	'formello/email',
-	'formello/select',
-];
-
 export default function Edit( { attributes, className, setAttributes } ) {
 	const blockProps = useBlockProps();
 
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
-		allowedBlocks: ALLOWED_BLOCKS,
 		templateLock: false,
 	} );
 

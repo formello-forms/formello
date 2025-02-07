@@ -7,6 +7,19 @@
 	"description": "A block to display form fieldset.",
 	"category": "formello",
 	"textdomain": "formello",
+	"allowedBlocks": [
+		"core/paragraph",
+		"core/heading",
+		"core/columns",
+		"core/group",
+		"core/separator",
+		"formello/input",
+		"formello/textarea",
+		"formello/button",
+		"formello/output",
+		"formello/select",
+		"formello/multichoices"
+	],
 	"attributes": {
 		"showLegend": {
 			"type": "boolean",
