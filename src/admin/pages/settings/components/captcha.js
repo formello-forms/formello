@@ -30,7 +30,7 @@ export default function Captcha() {
 				</CardHeader>
 
 				<CardBody>
-					<VStack>
+					<VStack spacing="3">
 						<RadioControl
 							selected={ reCaptcha.version }
 							options={ [
@@ -54,6 +54,7 @@ export default function Captcha() {
 								setCaptcha( 'site_key', val, 'reCaptcha' );
 							} }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 						<TextControl
 							label={ __( 'Secret Key', 'formello' ) }
@@ -62,6 +63,7 @@ export default function Captcha() {
 								setCaptcha( 'secret_key', val, 'reCaptcha' );
 							} }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 						{ 3 === Number( reCaptcha.version ) && (
 							<TextControl
@@ -75,6 +77,7 @@ export default function Captcha() {
 								min={ '0' }
 								max={ '1' }
 								__nextHasNoMarginBottom
+								__next40pxDefaultSize
 							/>
 						) }
 					</VStack>
@@ -86,7 +89,7 @@ export default function Captcha() {
 				</CardHeader>
 
 				<CardBody>
-					<VStack>
+					<VStack spacing="3">
 						<RadioControl
 							selected={ hCaptcha?.version }
 							options={ [
@@ -110,6 +113,7 @@ export default function Captcha() {
 								setCaptcha( 'site_key', val, 'hCaptcha' );
 							} }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 						<TextControl
 							label={ __( 'Secret Key', 'formello' ) }
@@ -118,6 +122,7 @@ export default function Captcha() {
 								setCaptcha( 'secret_key', val, 'hCaptcha' );
 							} }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 						<TextControl
 							label={ __( 'Threshold', 'formello' ) }
@@ -130,6 +135,7 @@ export default function Captcha() {
 							min={ '0' }
 							max={ '1' }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 					</VStack>
 				</CardBody>

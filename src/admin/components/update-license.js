@@ -73,6 +73,7 @@ export default function UpdateLicense( props ) {
 						{ __( 'Check', 'formello' ) }
 					</Button>
 				}
+				__next40pxDefaultSize
 			/>
 			{ '' !== license && license_status && (
 				<Notice

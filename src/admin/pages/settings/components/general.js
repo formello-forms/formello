@@ -91,6 +91,7 @@ export default function General() {
 							/>
 						</Fragment>
 					}
+					__next40pxDefaultSize
 				/>
 				{ message && (
 					<Notice

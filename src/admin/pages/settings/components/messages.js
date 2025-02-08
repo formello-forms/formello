@@ -51,7 +51,7 @@ export default function Messages() {
 							'formello'
 						) }
 					</p>
-					<VStack>
+					<VStack spacing="3">
 						{ formMessages.map( ( key, i ) => {
 							return (
 								<Fragment key={ i }>
@@ -62,6 +62,7 @@ export default function Messages() {
 											setMessage( 'form', key, val );
 										} }
 										__nextHasNoMarginBottom
+										__next40pxDefaultSize
 									/>
 								</Fragment>
 							);
@@ -76,7 +77,7 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					<VStack>
+					<VStack spacing="3">
 						{ missingValue.map( ( key, i ) => {
 							return (
 								<Fragment key={ i }>
@@ -95,6 +96,7 @@ export default function Messages() {
 											);
 										} }
 										__nextHasNoMarginBottom
+										__next40pxDefaultSize
 									/>
 								</Fragment>
 							);
@@ -109,7 +111,7 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					<VStack>
+					<VStack spacing="3">
 						{ patternMismatch.map( ( key, i ) => {
 							return (
 								<TextControl
@@ -126,6 +128,7 @@ export default function Messages() {
 										);
 									} }
 									__nextHasNoMarginBottom
+									__next40pxDefaultSize
 								/>
 							);
 						} ) }
@@ -139,7 +142,7 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					<VStack>
+					<VStack spacing="3">
 						{ outOfRange.map( ( key, i ) => {
 							return (
 								<TextControl
@@ -152,6 +155,7 @@ export default function Messages() {
 										setMessage( 'outOfRange', key, val );
 									} }
 									__nextHasNoMarginBottom
+									__next40pxDefaultSize
 								/>
 							);
 						} ) }
@@ -165,7 +169,7 @@ export default function Messages() {
 				</CardHeader>
 
 				<CardBody>
-					<VStack>
+					<VStack spacing="3">
 						{ wrongLength.map( ( key, i ) => {
 							return (
 								<TextControl
@@ -178,6 +182,7 @@ export default function Messages() {
 										setMessage( 'wrongLength', key, val );
 									} }
 									__nextHasNoMarginBottom
+									__next40pxDefaultSize
 								/>
 							);
 						} ) }
