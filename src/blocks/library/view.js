@@ -17,7 +17,8 @@ const toggleInputError = () => {
 	if (
 		'tel' === ref.type &&
 		ref.classList.contains( 'formello-advanced' ) &&
-		! window.intlTelInput.getInstance( ref ).isValidNumber()
+		! window.intlTelInput.getInstance( ref ).isValidNumber() && 
+		ref.value
 	) {
 		const error = window.intlTelInput
 			.getInstance( ref )
