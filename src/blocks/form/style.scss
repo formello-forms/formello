@@ -72,7 +72,8 @@ $small-margin: 0 8px;
 	select.formello-advanced+div.invalid+div.error-message,
 	input:user-invalid+div.error-message,
 	select:user-invalid+div.error-message,
-	textarea:user-invalid+div.error-message {
+	textarea:user-invalid+div.error-message,
+	textarea:user-invalid+div.tox-tinymce+div.error-message {
 		display: block;
 	}
 }
