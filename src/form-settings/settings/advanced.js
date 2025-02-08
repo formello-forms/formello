@@ -11,7 +11,7 @@ export function AdvancedSettings() {
 		return {
 			postType: select( 'core/editor' ).getCurrentPostType(),
 			postId: select( 'core/editor' ).getCurrentPostId(),
-			isPreview: getSettings().__unstableIsPreviewMode,
+			isPreview: getSettings().IsPreviewMode,
 		};
 	}, [] );
 
