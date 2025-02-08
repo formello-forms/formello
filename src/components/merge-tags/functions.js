@@ -72,11 +72,15 @@ export function getFieldsType() {
 		}
 
 		fields[ b.attributes.name ] = type;
-		if ( b.attributes.advanced && 'textarea' === 'textarea' ) {
+		if ( b.attributes.advanced && 'textarea' === type ) {
 			fields[ b.attributes.name ] = 'richtext';
 		}
 		if ( b.attributes.multiple && 'select' === type ) {
 			fields[ b.attributes.name ] = type + '-multiple';
+		}
+
+		if ( b.attributes.advanced && 'tel' === type ) {
+			fields[ b.attributes.name + '_full' ] = type;
 		}
 	} );
 
