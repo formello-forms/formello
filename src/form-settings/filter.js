@@ -10,6 +10,11 @@ import {
 function validateAll( edits ) {
 	const validation = validate();
 
+	// if form is empty, always valid.
+	if ( ! validation.names.length ) {
+		return Promise.resolve( edits );
+	}
+
 	if ( ! validation.buttons.length ) {
 		return Promise.reject( {
 			message: __( 'Missing button', 'formello' ),
