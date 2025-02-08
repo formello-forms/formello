@@ -120,7 +120,7 @@ class Importer extends Base {
 	 */
 	private function get_forms() {
 		$args = array(
-			'post_type'     => 'formello',
+			'post_type'     => 'formello_form',
 			'fields'        => '',
 			'no_found_rows' => true,
 			'post_status'   => 'publish',
