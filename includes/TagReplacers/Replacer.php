@@ -19,14 +19,14 @@ class Replacer {
 	/**
 	 * Array containing the replacers.
 	 *
-	 * @var replacers
+	 * @var array
 	 */
 	protected $data = array();
 
 	/**
 	 * Array containing the replacers.
 	 *
-	 * @var replacers
+	 * @var array
 	 */
 	protected $replacers = array();
 
@@ -38,6 +38,7 @@ class Replacer {
 	public function __construct( $data = array() ) {
 		$this->replacers['fields'] = new Fields( $data );
 		$this->replacers['other']  = new Other();
+		$this->replacers['query']  = new Other();
 		$this->replacers['meta']   = new Meta();
 		$this->replacers['wp']     = new Wp();
 	}
@@ -85,6 +86,10 @@ class Replacer {
 
 		if ( array_key_exists( $tag, $this->replacers ) ) {
 			$value = method_exists( $replacement, $param ) ? $replacement->$param() : $value;
+		}
+
+		if ( 'query' === $tag ) {
+			$value = $this->replacers['other']->get_query( $param );
 		}
 
 		if ( 'fields' === $tag ) {
