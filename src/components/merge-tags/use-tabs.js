@@ -1,9 +1,4 @@
-import {
-	getFieldsTags,
-	getWordpressTags,
-	getOtherTags,
-	getMetaTags,
-} from './functions';
+import { getFieldsTags, getWordpressTags, getOtherTags } from './functions';
 
 export function defaultTabs( clientId ) {
 	const tabs = [
