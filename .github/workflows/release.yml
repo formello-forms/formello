@@ -7,7 +7,10 @@ jobs:
     tag:
         name: New tag
         runs-on: ubuntu-latest
-        steps:            
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+            
             - name: Install composer dependencies
               run: composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
             
@@ -17,7 +20,6 @@ jobs:
             - name: Build files
               run: npm run build            
 
-            - uses: actions/checkout@master
             - name: WordPress Plugin Deploy
               uses: 10up/action-wordpress-plugin-deploy@stable
               env:
