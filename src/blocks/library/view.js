@@ -25,6 +25,15 @@ const toggleInputError = () => {
 
 		ref.setCustomValidity( 'Please match the number format.' );
 		context.error = ref.validationMessage;
+	} else if (
+		'tel' === ref.type &&
+		ref.classList.contains( 'formello-advanced' )
+	) {
+		const num = window.intlTelInput?.getInstance( ref ).getNumber();
+		document
+			.querySelector( 'input[name="' + ref.name + '_full"]' )
+			.setAttribute( 'value', num );
+		ref.setCustomValidity( '' );
 	} else {
 		ref.setCustomValidity( '' );
 	}
@@ -106,7 +115,7 @@ const toggleInputError = () => {
 	}
 };
 
-const formSubmit = async ( e ) => {
+const formSubmit = async () => {
 	const { ref } = getElement();
 	const context = getContext();
 	const config = getConfig();
@@ -231,6 +240,7 @@ const { state } = store( 'formello', {
 
 			if ( context.enableJsValidation ) {
 				const isFormValid = ref.checkValidity();
+
 				if ( ! isFormValid ) {
 					// Set the focus to the first invalid input.
 					const firstInvalidInputEl = ref.querySelector(
@@ -247,6 +257,7 @@ const { state } = store( 'formello', {
 				}
 			}
 			context.isLoading = true;
+
 			formSubmit( e );
 		},
 		setOutput: () => {
@@ -287,6 +298,15 @@ const { state } = store( 'formello', {
 								phone: telInputName + '_full',
 								country: telInputName + '_country_code',
 							};
+						},
+						initialCountry: 'auto',
+						geoIpLookup: ( callback ) => {
+							fetch( 'https://ipapi.co/json' )
+								.then( ( res ) => res.json() )
+								.then( ( data ) =>
+									callback( data.country_code )
+								)
+								.catch( () => callback( 'us' ) );
 						},
 					} );
 				} );
