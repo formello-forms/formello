@@ -16,7 +16,6 @@ import {
 import { integrations, icons } from '../actions/constants';
 import { close, cog } from '@wordpress/icons';
 import { ActionsModal } from '../actions/modal';
-import { InlineEdit } from '../../components/inline-edit';
 
 export function ActionsSettings() {
 	const { postType, postId } = useSelect( ( select ) => {
@@ -24,7 +23,7 @@ export function ActionsSettings() {
 		return {
 			postType: select( 'core/editor' ).getCurrentPostType(),
 			postId: select( 'core/editor' ).getCurrentPostId(),
-			isPreview: getSettings().__unstableIsPreviewMode,
+			isPreview: getSettings().IsPreviewMode,
 		};
 	}, [] );
 
