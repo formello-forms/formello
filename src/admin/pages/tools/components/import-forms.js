@@ -26,6 +26,7 @@ export default function ImportForms() {
 					accept="application/json"
 					onChange={ ( event ) => setFiles( event.target.files ) }
 					variant="secondary"
+					__next40pxDefaultSize
 				>
 					{ __( 'Choose file', 'formello' ) }
 				</FormFileUpload>
