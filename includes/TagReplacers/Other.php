@@ -25,6 +25,16 @@ class Other {
 
 	/**
 	 * Retrieve system time
+	 *
+	 * @param string $param The url param.
+	 */
+	public function get_query( $param ) {
+		parse_str( $_SERVER['QUERY_STRING'], $res );
+		return isset( $res[ $param ] ) ? esc_html( $res[ $param ] ) : '';
+	}
+
+	/**
+	 * Retrieve var from query string
 	 */
 	public function system_time() {
 		return date_i18n( get_option( 'time_format' ), time() );
