@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 
 export const toggleNew = {
 	id: 'seen-unseen',
-	label: __( 'Start/Stop', 'popper' ),
+	label: __( 'Toggle new', 'formello' ),
 	isPrimary: false,
 	icon: heading,
 	isEligible: () => true,
