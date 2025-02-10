@@ -52,17 +52,6 @@
 				"style": true,
 				"width": true
 			}
-		},
-		"__experimentalLayout": {
-			"allowSwitching": false,
-			"allowInheriting": false,
-			"allowSizingOnChildren": true,
-			"default": {
-				"type": "flex",
-				"justifyContent": "stretch",
-				"orientation": "vertical",
-				"flexWrap": "nowrap"
-			}
 		}
 	},
 	"example": {
