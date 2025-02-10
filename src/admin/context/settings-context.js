@@ -31,6 +31,7 @@ function SettingsContextProvider( props ) {
 	};
 
 	const updateSetting = ( key, val ) => {
+		console.log(key, val)
 		editEntityRecord( 'root', 'site', undefined, {
 			formello: {
 				...settings,
