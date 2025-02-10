@@ -20,15 +20,12 @@ const LoggingTab = () => {
 			</CardHeader>
 
 			<CardBody>
-				<p>
-					{ __(
+				<ToggleControl
+					label={ __( 'Enable debug log', 'formello' ) }
+					help={ __(
 						'Enable logging can hurt site performance. Please activate logging only for debug purpose.',
 						'formello'
 					) }
-				</p>
-
-				<ToggleControl
-					label={ __( 'Enable log', 'formello' ) }
 					checked={ log }
 					onChange={ ( val ) => updateSetting( 'log', val ) }
 					__nextHasNoMarginBottom
