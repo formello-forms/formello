@@ -2,12 +2,10 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import { RawHTML, Fragment } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
-
 import {
 	SelectControl,
 	ToggleControl,
 	Notice,
-	TextareaControl,
 	BaseControl,
 	__experimentalDivider as Divider,
 } from '@wordpress/components';
@@ -35,14 +33,8 @@ export function Settings() {
 		return <></>;
 	}
 
-	const {
-		storeSubmissions,
-		captchaEnabled,
-		captchaType,
-		hide,
-		redirectUrl,
-		successMessage,
-	} = meta._formello_settings;
+	const { storeSubmissions, captchaEnabled, captchaType, hide, redirectUrl } =
+		meta._formello_settings;
 
 	const settingsUrl = addQueryArgs( 'admin.php', {
 		tab: 'captcha',
@@ -138,13 +130,6 @@ export function Settings() {
 					__nextHasNoMarginBottom
 				/>
 			</BaseControl>
-			<TextareaControl
-				label={ __( 'Success Message', 'formello' ) }
-				placeholder={ formello?.messages.form.success }
-				value={ successMessage }
-				onChange={ ( val ) => setOptions( 'successMessage', val ) }
-				__nextHasNoMarginBottom
-			/>
 		</Fragment>
 	);
 }
