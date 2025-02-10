@@ -14,7 +14,7 @@
 			"step": "installPlugin",
 			"pluginData": {
 				"resource": "wordpress.org/plugins",
-				"slug": "gutenberg"
+				"slug": "formello"
 			},
 			"options": {
 				"activate": true
