@@ -11,11 +11,8 @@
       "formello_form"
     ],
     "keywords": [],
-    "categories": [{
-      "FORM": "form"
-    }],
-    "name": "formello/inline-newsletter",
-    "pro": true
+    "categories": [],
+    "name": "formello/inline-newsletter"
   },
   {
     "id": 58,
@@ -30,8 +27,7 @@
     ],
     "keywords": [],
     "categories": [
-      "contact",
-      "form"
+      "contact"
     ],
     "name": "formello/room-booking"
   },
@@ -48,8 +44,7 @@
     ],
     "keywords": [],
     "categories": [
-      "contact",
-      "form"
+      "contact"
     ],
     "name": "formello/contact-with-advanced-field"
   },
@@ -66,8 +61,7 @@
     ],
     "keywords": [],
     "categories": [
-      "contact",
-      "form"
+      "contact"
     ],
     "name": "formello/lead-magnet"
   },
@@ -83,9 +77,7 @@
       "formello_form"
     ],
     "keywords": [],
-    "categories": [
-      "form"
-    ],
+    "categories": [],
     "name": "formello/barber-shop-booking"
   },
   {
@@ -100,9 +92,7 @@
       "formello_form"
     ],
     "keywords": [],
-    "categories": [
-      "form"
-    ],
+    "categories": [],
     "name": "formello/request-a-call-back-form"
   },
   {
@@ -117,9 +107,7 @@
       "formello_form"
     ],
     "keywords": [],
-    "categories": [
-      "form"
-    ],
+    "categories": [],
     "name": "formello/accident-report"
   },
   {
@@ -134,9 +122,7 @@
       "formello_form"
     ],
     "keywords": [],
-    "categories": [
-      "form"
-    ],
+    "categories": [],
     "name": "formello/request-a-quote"
   }
 ]
