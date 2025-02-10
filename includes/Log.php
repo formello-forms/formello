@@ -10,10 +10,6 @@ namespace Formello;
 use Katzgrau\KLogger\Logger;
 use function Formello\Utils\formello_dir;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
-}
-
 /**
  * Block Handler
  *
@@ -67,14 +63,13 @@ class Log {
 				formello_dir() . '/logs',
 				'debug',
 				array(
-					'filename' => 'formellog_' . get_option( 'formello_installed' ),
+					'filename' => $settings['log_file'],
 					'flushFrequency' => 300,
 				)
 			);
 			$this->log_active = true;
 		}
-		// phpcs:ignore
-		// add_action( 'wp_error_added', array( $this, 'log_wp_error' ), 10, 4 );
+		//add_action( 'wp_error_added', array( $this, 'log_wp_error' ), 10, 4 );
 	}
 
 	/**
