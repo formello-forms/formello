@@ -1,4 +1,4 @@
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 import Edit from './edit';
 import save from './save';
 import metadata from './block.json';
@@ -12,6 +12,24 @@ registerBlockType( metadata, {
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
 	icon: Icon,
+
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'formello/multichoices' ],
+				transform: ( attrs ) => {
+					const { name, type, required, options } = attrs;
+					return createBlock( 'formello/multichoices', {
+						name,
+						type,
+						required,
+						options,
+					} );
+				},
+			},
+		],
+	},
 
 	/**
 	 * @see ./edit.js
