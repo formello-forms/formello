@@ -16,6 +16,7 @@ jobs:
         composer install --no-dev --optimize-autoloader --prefer-dist --no-progress --no-suggest
         npm ci
         npm run build
+        npm run build-blocks-manifest
 
     - name: Generate zip
       uses: 10up/action-wordpress-plugin-build-zip@stable
