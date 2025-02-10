@@ -18,6 +18,14 @@ function extendScriptConfig( config ) {
 			'form-settings': [
 				path.resolve( __dirname, 'src', 'form-settings', 'index.js' ),
 			],
+			'field-variations': [
+				path.resolve(
+					__dirname,
+					'src/blocks/',
+					'input',
+					'multi-fields.js'
+				),
+			],
 		},
 		output: {
 			filename: '[name].js',
