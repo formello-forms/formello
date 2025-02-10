@@ -23,7 +23,7 @@ const variations = [
 		title: __( 'Text' ),
 		icon: Input,
 		description: __( 'A basic single-line text field.', 'formello' ),
-		attributes: { type: 'text' },
+		attributes: { type: 'text', name: 'text' },
 		scope: [ 'transform' ],
 	},
 	{
@@ -39,7 +39,7 @@ const variations = [
 		title: __( 'Checkbox' ),
 		description: __( 'A simple checkbox input.' ),
 		icon: Checkbox,
-		attributes: { type: 'checkbox' },
+		attributes: { type: 'checkbox', name: 'my_choice' },
 		scope: [ 'inserter' ],
 	},
 	{
@@ -47,7 +47,7 @@ const variations = [
 		title: __( 'Radio' ),
 		description: __( 'A simple radio input.' ),
 		icon: Radio,
-		attributes: { type: 'radio' },
+		attributes: { type: 'radio', name: 'my_choice' },
 		scope: [ 'block' ],
 	},
 	{
@@ -55,7 +55,7 @@ const variations = [
 		title: __( 'GDPR' ),
 		icon: GDPR,
 		attributes: {
-			name: 'checkbox',
+			name: 'gdpr',
 			type: 'checkbox',
 			label: __(
 				'I agree with the Terms of service and Privacy policy',
@@ -69,7 +69,7 @@ const variations = [
 		name: 'range',
 		title: __( 'Range' ),
 		icon: Range,
-		attributes: { type: 'range' },
+		attributes: { type: 'range', name: 'range' },
 		scope: [ 'inserter' ],
 	},
 	{
@@ -77,49 +77,49 @@ const variations = [
 		title: __( 'Email' ),
 		description: __( 'Used for email addresses.' ),
 		icon: Email,
-		attributes: { type: 'email' },
+		attributes: { type: 'email', name: 'email' },
 		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'number',
 		title: __( 'Number' ),
 		icon: NumberField,
-		attributes: { type: 'number' },
+		attributes: { type: 'number', name: 'number' },
 		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'color',
 		title: __( 'Color' ),
 		icon: Color,
-		attributes: { type: 'color' },
+		attributes: { type: 'color', name: 'color' },
 		scope: [ 'inserter' ],
 	},
 	{
 		name: 'date',
 		title: __( 'Date' ),
 		icon: Calendar,
-		attributes: { type: 'date' },
+		attributes: { type: 'date', name: 'date' },
 		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'time',
 		title: __( 'Time' ),
 		icon: Clock,
-		attributes: { type: 'time' },
+		attributes: { type: 'time', name: 'time' },
 		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'tel',
 		title: __( 'Tel' ),
 		icon: Tel,
-		attributes: { type: 'tel' },
+		attributes: { type: 'tel', name: 'phone' },
 		scope: [ 'inserter', 'transform' ],
 	},
 	{
 		name: 'url',
 		title: __( 'Url' ),
 		icon: Url,
-		attributes: { type: 'url' },
+		attributes: { type: 'url', name: 'url' },
 		scope: [ 'inserter', 'transform' ],
 	},
 	{
@@ -150,6 +150,7 @@ const variations = [
 		attributes: {
 			type: 'email',
 			label: 'Email',
+			name: 'email',
 			withButton: true,
 		},
 		innerBlocks: [ [ 'formello/button', { noWrapper: true } ] ],
@@ -161,6 +162,7 @@ const variations = [
 		icon: Password,
 		attributes: {
 			type: 'password',
+			name: 'password',
 			pattern:
 				'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$',
 			validation:
@@ -182,8 +184,16 @@ variations.forEach( ( variation ) => {
 	if ( 'radio' !== variation.name || 'checkbox' !== variation.name ) {
 		variation.attributes.checked = undefined;
 	}
-	if ( 'date' !== variation.name ) {
-		variation.attributes.advanced = false;
+	if ( 'date' === variation.name ) {
+		variation.attributes.flatpickr = {
+			noCalendar: false,
+		};
+	}
+	if ( 'time' === variation.name ) {
+		variation.attributes.flatpickr = {
+			noCalendar: true,
+			enableTime: true,
+		};
 	}
 	variation.isActive = ( blockAttributes, variationAttributes ) =>
 		blockAttributes.type === variationAttributes.type;

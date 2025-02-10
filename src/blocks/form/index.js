@@ -7,6 +7,7 @@ import { Form } from '../../icons/icons';
 
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+import { dispatch } from '@wordpress/data';
 
 import './style.scss';
 import './editor.scss';
@@ -23,7 +24,6 @@ registerBlockType( metadata, {
 		interactivity: true,
 		inserter: 'formello_form' === window.pagenow ? true : false,
 		multiple: 'formello_form' !== window.pagenow ? true : false,
-		// eslint-disable-next-line
 		spacing: {
 			padding: true,
 		},
@@ -83,3 +83,31 @@ document.addEventListener( 'DOMContentLoaded', function () {
 		menuRoot.querySelector( '.wp-first-item' ).classList.add( 'current' );
 	}
 } );
+
+dispatch( 'core' ).addEntities( [
+	{
+		label: __( 'Formello submissions', 'formello' ),
+		kind: 'formello/v1',
+		name: 'submissions',
+		baseURL: '/formello/v1/submissions',
+		supportsPagination: true,
+	},
+	{
+		label: __( 'Formello addons', 'formello' ),
+		kind: 'formello/v1',
+		name: 'addons',
+		baseURL: '/formello/v1/addons',
+	},
+	{
+		label: __( 'Formello columns', 'formello' ),
+		kind: 'formello/v1',
+		name: 'columns',
+		baseURL: '/formello/v1/columns',
+	},
+	{
+		label: __( 'Formello patterns', 'formello' ),
+		kind: 'formello/v1',
+		name: 'patterns',
+		baseURL: '/formello/v1/patterns',
+	},
+] );

@@ -7,9 +7,15 @@ import {
 	__experimentalBlockPatternsList as BlockPatternsList,
 	BlockContextProvider,
 } from '@wordpress/block-editor';
-import { Modal, SearchControl, Button } from '@wordpress/components';
+import {
+	Modal,
+	SearchControl,
+	Button,
+	__experimentalConfirmDialog as ConfirmDialog,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
+import { useEntityRecords } from '@wordpress/core-data';
 
 function PatternCategoriesList( {
 	selectedCategory,
@@ -79,13 +85,20 @@ function PatternExplorerSidebar( {
 }
 
 export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
-	const { replaceBlock } = useDispatch( blockEditorStore );
-	const onBlockPatternSelect = ( pattern ) => {
-		replaceBlock( clientId, pattern.blocks );
-	};
-
+	const [ showConfirmDialog, setShowConfirmDialog ] = useState( false );
 	const [ searchValue, setSearchValue ] = useState();
 	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
+
+	const { records: patterns2 } = useEntityRecords( 'formello/v1', 'patterns' );
+console.log(patterns2)
+	const { replaceBlock } = useDispatch( blockEditorStore );
+	const onBlockPatternSelect = ( pattern ) => {
+		if ( pattern.isPro ) {
+			setShowConfirmDialog( true );
+		} else {
+			replaceBlock( clientId, pattern.blocks );
+		}
+	};
 
 	const patterns = useSelect(
 		( select ) => {
@@ -134,6 +147,13 @@ export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
 					<BlockContextProvider
 						value={ { postType: 'formello_form' } }
 					>
+						<ConfirmDialog
+							isOpen={ showConfirmDialog }
+							onConfirm={ () => console.log( 'CONFIRM' ) }
+							onCancel={ () => setShowConfirmDialog( false ) }
+						>
+							CIAO STRONZO
+						</ConfirmDialog>
 						<BlockPatternsList
 							blockPatterns={ shownPatterns }
 							shownPatterns={ shownPatterns }

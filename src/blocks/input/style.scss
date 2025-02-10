@@ -1,6 +1,7 @@
 .wp-block-formello-input {
     display: flex;
     flex-direction: column;
+    flex: 0;
 
     label {
         &.hide {
@@ -91,6 +92,10 @@
         small {
             width: 100%;
         }
+    }
+
+    button+div.error-message, small+div.error-message {
+        width: 100%;
     }
 
     .iti {

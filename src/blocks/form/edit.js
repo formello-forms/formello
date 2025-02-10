@@ -25,9 +25,7 @@ function FormEdit( props ) {
 	const { children, ...innerBlocksProps } = useInnerBlocksProps( blockProps, {
 		//templateLock: false,
 		template: [ [ 'formello/button' ] ],
-		renderAppender: hasInnerBlocks
-			? InnerBlocks.DefaultBlockAppender
-			: null,
+		renderAppender: hasInnerBlocks ? InnerBlocks.ButtonBlockAppender : null,
 		prioritizedInserterBlocks: [
 			'formello/input',
 			'formello/select',

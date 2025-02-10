@@ -18,12 +18,7 @@ export default function save( { attributes } ) {
 		label,
 		showHelp,
 		help,
-		dateFormat,
-		mode,
-		inlineCalendar,
-		timeFormat,
-		enableTime,
-		minDate,
+		flatpickr,
 	} = attributes;
 	const blockProps = useBlockProps.save();
 
@@ -61,18 +56,11 @@ export default function save( { attributes } ) {
 		htmlAttrs.autocomplete = undefined;
 	}
 
-	if ( advanced && 'date' === type ) {
-		htmlAttrs[ 'data-date-format' ] = dateFormat;
-		htmlAttrs[ 'data-time-format' ] = timeFormat;
-		htmlAttrs[ 'data-mode' ] = mode;
-		htmlAttrs[ 'data-min-date' ] = minDate;
-		htmlAttrs[ 'data-inline' ] = inlineCalendar || undefined;
-		htmlAttrs[ 'data-enable-time' ] = enableTime || undefined;
-	}
-
-	if ( advanced && 'time' === type ) {
-		htmlAttrs[ 'data-time-format' ] = timeFormat;
-		htmlAttrs[ 'data-enable-time' ] = enableTime;
+	if ( ( advanced && 'date' === type ) || ( advanced && 'time' === type ) ) {
+		if ( required ) {
+			flatpickr.allowInput = true;
+		}
+		htmlAttrs[ 'data-flatpickr' ] = JSON.stringify( flatpickr );
 	}
 
 	if ( noWrapper || 'hidden' === type ) {

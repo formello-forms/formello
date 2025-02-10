@@ -1,0 +1,43 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "formello/message",
+	"title": "Message",
+	"description": "Message for form submissions.",
+	"category": "formello",
+	"ancestor": ["formello/form"],
+	"icon": "megaphone",
+	"textdomain": "formello",
+	"attributes": {
+		"text": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"interactivity": true,
+		"html": false,
+		"lock": false,
+		"reusable": false,
+		"inserter": true,
+		"color": {
+			"background": true,
+			"text": true
+		},
+		"spacing": {
+			"padding": true,
+			"margin": [ "top", "bottom" ]
+		},
+		"__experimentalBorder": {
+			"radius": true,
+			"width": true,
+			"color": true,
+			"style": true
+		},
+		"typography": {
+			"fontSize": true
+		}
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

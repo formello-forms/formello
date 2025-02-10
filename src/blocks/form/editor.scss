@@ -1,10 +1,6 @@
 body.post-type-formello_form {
     .is-root-container {
-		//display: flex;
-		//flex-wrap: wrap;
-		//width: 100%;
-
-		.wp-block, .formello {
+		.wp-block {
 			flex-basis: 100%;
 		}
 	}

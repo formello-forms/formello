@@ -1,0 +1,29 @@
+.wp-block-formello-message {
+	display: none;
+	box-sizing: border-box;
+	padding: 1em;
+	margin-block-start: 1rem;
+    flex-basis: 100%;
+
+	p {
+		margin: 0;
+	}
+
+	&.success {
+		display: block;
+		background-color: #dff0d8;
+		border: 1px solid #d0e9c6;
+		color: #3c763d;
+	}
+
+	&.error:has(p:not(:empty)) {
+		display: block;
+		background-color: #fcf8e3;
+		border: 1px solid #faf2cc;
+		color: #8a6d3b;
+	}
+
+	ul:not(:has(li)) {
+		display: none;
+	}
+}

@@ -20,6 +20,10 @@ $p = new \WP_HTML_Tag_Processor( $content );
 // Generate unique id for aria-controls.
 $unique_id = wp_unique_id( 'field-' );
 
+if ( $p->next_tag( array( 'tag_name' => 'div' ) ) ) {
+	$p->set_attribute( 'data-wp-context', wp_json_encode( array() ) );
+}
+
 if ( $p->next_tag( 'label' ) ) {
 	$p->set_attribute( 'for', $unique_id );
 }
@@ -55,7 +59,9 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 		wp_enqueue_script( 'password-strength-meter' );
 	}
 
-	if ( ! empty( $attributes['advanced'] ) && 'date' === $p->get_attribute( 'type' ) ) {
+	if ( ! empty( $attributes['advanced'] ) && ( 'date' === $p->get_attribute( 'type' ) || 'time' === $p->get_attribute( 'type' ) )) {
+		$p->set_attribute( 'type', 'text' );
+
 		wp_enqueue_script(
 			'flatpickr',
 			'https://cdn.jsdelivr.net/npm/flatpickr',
@@ -68,6 +74,11 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 		// phpcs:ignore
 		wp_enqueue_style( 'flatpickr', 'https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css' );
 	}
+}
+
+if ( $p->next_tag( 'button' ) ) {
+	$p->set_attribute( 'data-wp-bind--disabled', 'context.isLoading' );
+	$p->set_attribute( 'data-wp-class--wp-block-formello-button--loading', 'context.isLoading' );
 }
 
 echo $p->get_updated_html();
