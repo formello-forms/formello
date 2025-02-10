@@ -21,6 +21,9 @@ defined( 'ABSPATH' ) || exit;
  */
 function register_settings() {
 	$settings = array(
+		'ip_logging' => array(
+			'type' => 'boolean',
+		),
 		'log' => array(
 			'type' => 'boolean',
 		),
