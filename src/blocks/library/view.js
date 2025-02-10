@@ -17,12 +17,10 @@ const toggleInputError = () => {
 	if (
 		'tel' === ref.type &&
 		ref.classList.contains( 'formello-advanced' ) &&
-		! window.intlTelInput.getInstance( ref ).isValidNumber() && 
+		! window.intlTelInput.getInstance( ref ).isValidNumber() &&
 		ref.value
 	) {
-		const error = window.intlTelInput
-			.getInstance( ref )
-			.getValidationError();
+		window.intlTelInput.getInstance( ref ).getValidationError();
 
 		ref.setCustomValidity( 'Please match the number format.' );
 		context.error = ref.validationMessage;
@@ -207,7 +205,12 @@ const { state } = store( 'formello', {
 		},
 		get message() {
 			const context = getContext();
-			return context.response?.data?.message || '';
+			if ( context.response?.data?.errors ) {
+				return context.response?.data?.message;
+			}
+			return context.successMessage.length
+				? context.successMessage
+				: context.response?.data?.message;
 		},
 		get errors() {
 			const context = getContext();
@@ -286,7 +289,13 @@ const { state } = store( 'formello', {
 			};
 
 			window.tinymce?.init( jsConfig.tinyMce );
-			window.flatpickr?.( 'input.formello-advanced[type=date]' );
+
+			document
+				.querySelectorAll( 'input.formello-advanced[type=text]' )
+				.forEach( ( el ) => {
+					const { flatpickr } = el.dataset;
+					window.flatpickr?.( el, JSON.parse( flatpickr ) );
+				} );
 
 			document
 				.querySelectorAll( 'input[type="tel"].formello-advanced' )
