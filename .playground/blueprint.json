@@ -5,25 +5,23 @@
 		"php": "8.0",
 		"wp": "latest"
 	},
-	"phpExtensionBundles": [
-		"kitchen-sink"
-	],
+	"login": true,
 	"features": {
 		"networking": true
 	},
 	"steps": [
 		{
 			"step": "installPlugin",
-			"pluginZipFile": {
-				"resource": "url",
-				"url": "https:\/\/downloads.wordpress.org\/plugin\/formello.zip"
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "gutenberg"
 			},
 			"options": {
 				"activate": true
 			}
 		},
 		{
-			"step": "importFile",
+			"step": "importWxr",
 			"file": {
 				"resource": "url",
 				"url": "https://github.com/formello-forms/formello/blob/master/.playground/demo-content.xml"
@@ -31,8 +29,7 @@
 		},
 		{
 			"step": "login",
-			"username": "admin",
-			"password": "password"
+			"username": "admin"
 		}
 	]
 }
