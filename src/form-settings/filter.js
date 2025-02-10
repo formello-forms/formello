@@ -8,6 +8,12 @@ import {
 } from '../components/merge-tags/functions';
 
 function validateAll( edits ) {
+	const postType = select( 'core/editor' ).getCurrentPostType();
+
+	if ( 'formello_form' !== postType ) {
+		return Promise.resolve( edits );
+	}
+
 	const validation = validate();
 
 	// if form is empty, always valid.
