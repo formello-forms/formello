@@ -52,16 +52,6 @@ function AdvancedOptions( props ) {
 
 	return (
 		<Fragment>
-			{ supported.includes( 'cols' ) && (
-				<ToggleControl
-					label={ __( 'Enable Rich Text', 'formello' ) }
-					checked={ advanced }
-					onChange={ ( newval ) =>
-						setAttributes( { advanced: newval } )
-					}
-					__nextHasNoMarginBottom
-				/>
-			) }
 			{ supported.includes( 'autocomplete' ) && (
 				<ToggleControl
 					label={ __( 'Autocomplete', 'formello' ) }

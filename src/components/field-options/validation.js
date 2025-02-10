@@ -51,17 +51,6 @@ function ValidationOptions( props ) {
 			title={ __( 'Validation', 'formello' ) }
 			initialOpen={ false }
 		>
-			{ ( 'date' === type || 'tel' === type ) && (
-				<ToggleControl
-					label={ __( 'Advanced', 'formello' ) }
-					checked={ advanced }
-					onChange={ ( val ) => {
-						setAttributes( { advanced: val } );
-					} }
-					__nextHasNoMarginBottom
-					__next40pxDefaultSize
-				/>
-			) }
 			{ ( 'date' === type || 'time' === type ) && (
 				<DatepickerSettings { ...props } />
 			) }
@@ -152,20 +141,20 @@ function ValidationOptions( props ) {
 							'formello'
 						) }
 					/>
+					<TextControl
+						label={ __( 'Custom Validation Message', 'formello' ) }
+						help={ __(
+							'The message to show if pattern validation fails.',
+							'formello'
+						) }
+						value={ validation }
+						onChange={ ( val ) =>
+							setAttributes( { validation: val } )
+						}
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
+					/>
 				</Fragment>
-			) }
-			{ supported.includes( 'pattern' ) && (
-				<TextControl
-					label={ __( 'Custom Validation Message', 'formello' ) }
-					help={ __(
-						'The message to show if pattern validation fails.',
-						'formello'
-					) }
-					value={ validation }
-					onChange={ ( val ) => setAttributes( { validation: val } ) }
-					__nextHasNoMarginBottom
-					__next40pxDefaultSize
-				/>
 			) }
 			{ supported.includes( 'mismatch' ) && (
 				<Fragment>

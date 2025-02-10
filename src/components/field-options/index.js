@@ -138,26 +138,34 @@ export default function Options( props ) {
 						__next40pxDefaultSize
 					/>
 				) }
+				{ ( 'select' === fieldType ||
+					'textarea' === fieldType ||
+					'date' === type ||
+					'time' === type ||
+					'tel' === type ) && (
+					<ToggleControl
+						label={
+							'textarea' === fieldType
+								? __( 'Enable Rich Text', 'formello' )
+								: __( 'Advanced', 'formello' )
+						}
+						checked={ advanced }
+						onChange={ ( newval ) =>
+							setAttributes( { advanced: newval } )
+						}
+						__nextHasNoMarginBottom
+						__next40pxDefaultSize
+					/>
+				) }
 				{ 'select' === fieldType && (
-					<Fragment>
-						<ToggleControl
-							label={ __( 'Advanced', 'formello' ) }
-							checked={ advanced }
-							onChange={ ( val ) => {
-								setAttributes( { advanced: val } );
-							} }
-							__nextHasNoMarginBottom
-							__next40pxDefaultSize
-						/>
-						<Button
-							variant={ 'primary' }
-							onClick={ () => {
-								setModalOpen( true );
-							} }
-						>
-							{ __( 'Manage Options', 'formello' ) }
-						</Button>
-					</Fragment>
+					<Button
+						variant={ 'primary' }
+						onClick={ () => {
+							setModalOpen( true );
+						} }
+					>
+						{ __( 'Manage Options', 'formello' ) }
+					</Button>
 				) }
 			</PanelBody>
 		</Fragment>
