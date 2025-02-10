@@ -17,10 +17,11 @@ defined( 'ABSPATH' ) || exit;
  */
 function formello_default_options() {
 	$defaults = array(
+		'ip_logging'     => false,
 		'log'            => false,
-		'log_file'       => 'formello_' . time() . '.txt',
+		'log_file'       => 'formello_' . time() . '.log',
 		'license'        => array(),
-		'version'        => '1.0',
+		'version'        => get_option( 'formello_version', '1.0.0' ),
 		'messages'       => array(
 			'form'            => array(
 				'success' => __( 'Thanks for submitting this form.', 'formello' ),
@@ -191,6 +192,7 @@ function formello_allowed_blocks( $allowed_blocks, $editor_context ) {
 			'formello/fieldset',
 			'formello/multichoices',
 			'formello/output',
+			'formello/message',
 			'core/image',
 			'core/spacer',
 			'core/separator',
