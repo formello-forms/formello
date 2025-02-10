@@ -264,6 +264,17 @@ class Admin {
 			$new_form_script_asset['version'],
 			true
 		);
+
+		$screen = get_current_screen();
+		if ( 'formello_form' === $screen->post_type ) {
+			wp_enqueue_script(
+				$this->plugin_name . 'field-variations',
+				plugin_dir_url( $this->entry_point ) . 'build/field-variations.js',
+				$new_form_script_asset['dependencies'],
+				$new_form_script_asset['version'],
+				true
+			);
+		}
 	}
 
 	/**
