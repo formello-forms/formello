@@ -22,14 +22,6 @@ registerBlockType( metadata, {
 		],
 	},
 
-	icon: {
-		// Specifying a background color to appear with the icon e.g.: in the inserter.
-		background: '#fff',
-		// Specifying a color for the icon (optional: if not set, a readable color will be automatically defined)
-		foreground: '#000000',
-		src: 'button',
-	},
-
 	supports: {
 		...metadata.supports,
 		//multiple: 'formello' !== window.pagenow ? true : false,

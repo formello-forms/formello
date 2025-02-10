@@ -28,15 +28,6 @@ if ( ! is_admin() && $state['captcha']['enabled'] ) {
 	);
 }
 
-$message = '<div class="formello-message" data-wp-class--success="context.response.success" data-wp-class--error="!context.response.success">
-				<p data-wp-text="state.message"></p>
-				<ul data-wp-context="state.errors">
-					<template data-wp-each="state.errors">
-						<li data-wp-text="context.item"></li>
-					</template>
-				</ul>
-			</div>';
-
 $debug = '<div class="formello-debug">
 	<p>Debug output</p>
 	<small>This output is visible only to admin.</small>
@@ -58,7 +49,7 @@ if ( ! is_admin() &&
 	$p->set_attribute( 'data-wp-on--click', 'actions.validateCaptcha' );
 }
 
-echo $captcha . $p->get_updated_html() . $message;
+echo $captcha . $p->get_updated_html();
 
 if ( ! is_admin() && current_user_can( 'manage_options' ) && $state['debug'] ) {
 	echo $debug;
