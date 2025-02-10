@@ -49,9 +49,14 @@ function register_cpt() {
 		'template'            => array(
 			array(
 				'formello/form',
+				array(
+					'lock' => array(
+						'move'   => false,
+						'remove' => true,
+					),
+				),
 			),
 		),
-		//'template_lock'       => 'insert',
 		'supports'            => array(
 			'author',
 			'title',
