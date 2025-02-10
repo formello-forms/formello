@@ -230,8 +230,11 @@ class Form {
 	 * @return void
 	 */
 	private function add_details() {
+		$settings = get_option( 'formello' );
 		// add details on response.
-		$this->data['details']['ip_address']   = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+		if ( ! empty( $settings['ip_logging'] ) ) {
+			$this->data['details']['ip_address'] = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+		}
 		$this->data['details']['user_agent']   = ! empty( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
 		$this->data['details']['referer_url']  = ! empty( $_SERVER['HTTP_REFERER'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_REFERER'] ) ) : '';
 		$this->data['details']['submitted_at'] = wp_date( 'Y-m-d H:i:s' );
