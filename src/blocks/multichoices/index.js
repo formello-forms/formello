@@ -1,4 +1,4 @@
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 
 /**
  * Internal dependencies
@@ -22,6 +22,19 @@ registerBlockType( metadata, {
 	 * These can be any of WordPress’ Dashicons, or a custom svg element.
 	 */
 	icon: Fieldset,
+
+	transforms: {
+		to: [
+			{
+				type: 'block',
+				blocks: [ 'formello/select' ],
+				transform: ( attrs ) => {
+					const { type, ...restAttrs } = attrs;
+					return createBlock( 'formello/select', restAttrs );
+				},
+			},
+		],
+	},
 
 	/**
 	 * @see ./edit.js

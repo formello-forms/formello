@@ -7,7 +7,7 @@ export default function save( { attributes, className } ) {
 	} );
 
 	return (
-		<div { ...blockProps } data-wp-context>
+		<div { ...blockProps }>
 			{ options.map( ( opt, index ) => {
 				const id = name + '-' + index;
 				return (

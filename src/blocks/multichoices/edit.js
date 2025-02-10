@@ -66,6 +66,7 @@ export default function Edit( props ) {
 							'formello'
 						) }
 						__nextHasNoMarginBottom
+						__next40pxDefaultSize
 					/>
 					<ToggleControl
 						label={ __( 'Required', 'formello' ) }
@@ -105,6 +106,7 @@ export default function Edit( props ) {
 							required={ required }
 							checked={ opt.selected }
 							id={ id }
+							readOnly
 						/>
 					</div>
 				);
