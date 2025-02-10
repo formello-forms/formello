@@ -107,6 +107,10 @@ class Blocks {
 		);
 
 		register_block_type_from_metadata(
+			plugin_dir_path( $this->entry_point ) . 'build/blocks/message'
+		);
+
+		register_block_type_from_metadata(
 			plugin_dir_path( $this->entry_point ) . 'build/blocks/button'
 		);
 	}
