@@ -178,6 +178,8 @@ class Plugin {
 		$this->loader->add_action( 'rest_api_init', $license, 'register_routes' );
 		$importer = new Rest\Importer( $this->plugin_name, $this->version );
 		$this->loader->add_action( 'rest_api_init', $importer, 'register_routes' );
+		$settings = new Rest\Settings( $this->plugin_name, $this->version );
+		$this->loader->add_action( 'rest_api_init', $settings, 'register_routes' );
 
 		// Cron Tasks.
 		$cron = new Cron( $this->plugin_name, $this->version );
