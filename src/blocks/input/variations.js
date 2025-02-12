@@ -25,6 +25,7 @@ const variations = [
 		description: __( 'A basic single-line text field.', 'formello' ),
 		attributes: { type: 'text', name: 'text' },
 		scope: [ 'transform' ],
+		isDefault: true,
 	},
 	{
 		name: 'hidden',
