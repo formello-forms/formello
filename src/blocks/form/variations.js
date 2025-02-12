@@ -21,7 +21,11 @@ const variations = [
 			</SVG>
 		),
 		isDefault: true,
-		innerBlocks: [ [ 'core/paragraph' ], [ 'formello/button' ], [ 'formello/message' ] ],
+		innerBlocks: [
+			[ 'core/paragraph' ],
+			[ 'formello/button' ],
+			[ 'formello/message' ],
+		],
 		scope: [ 'block' ],
 	},
 	{
@@ -83,12 +87,7 @@ const variations = [
 		innerBlocks: [
 			[
 				'core/group',
-				{
-					layout: {
-						type: 'flex',
-						flexWrap: 'wrap',
-					},
-				},
+				{ layout: { type: 'flex', flexWrap: 'nowrap' } },
 				[
 					[
 						'formello/input',
