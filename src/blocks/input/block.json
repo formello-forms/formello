@@ -178,7 +178,9 @@
 		},
         "flatpickr": {
 			"type": "object",
-			"default": {}
+			"default": {
+				"allowInput": true
+			}
 		},
 		"advanced": {
 			"type": "boolean"
