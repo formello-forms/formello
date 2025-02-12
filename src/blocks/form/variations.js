@@ -21,7 +21,7 @@ const variations = [
 			</SVG>
 		),
 		isDefault: true,
-		innerBlocks: [ [ 'core/paragraph' ], [ 'formello/button' ] ],
+		innerBlocks: [ [ 'core/paragraph' ], [ 'formello/button' ], [ 'formello/message' ] ],
 		scope: [ 'block' ],
 	},
 	{
@@ -62,6 +62,7 @@ const variations = [
 				},
 			],
 			[ 'formello/button', { txt: 'Send' } ],
+			[ 'formello/message' ],
 		],
 		scope: [ 'block' ],
 	},
@@ -153,6 +154,7 @@ const variations = [
 				},
 			],
 			[ 'formello/button', { txt: 'Book appointment' } ],
+			[ 'formello/message' ],
 		],
 		scope: [ 'block' ],
 	},

@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useSelect, useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import {
 	store as blockEditorStore,
 	__experimentalBlockPatternsList as BlockPatternsList,
@@ -12,10 +12,12 @@ import {
 	SearchControl,
 	Button,
 	__experimentalConfirmDialog as ConfirmDialog,
+	Spinner,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { useEntityRecords } from '@wordpress/core-data';
+import { parse } from '@wordpress/blocks';
 
 function PatternCategoriesList( {
 	selectedCategory,
@@ -28,15 +30,15 @@ function PatternCategoriesList( {
 			{ [ ...new Set( patternCategories ) ].map( ( category ) => {
 				return (
 					<Button
-						key={ category }
-						label={ category }
+						key={ category.slug }
+						label={ category.name }
 						className={ `${ baseClassName }__categories-list__item` }
-						isPressed={ selectedCategory === category }
+						isPressed={ selectedCategory === category.slug }
 						onClick={ () => {
-							onClickCategory( category );
+							onClickCategory( category.slug );
 						} }
 					>
-						{ category }
+						{ category.name }
 					</Button>
 				);
 			} ) }
@@ -65,6 +67,7 @@ function PatternExplorerSidebar( {
 	onClickCategory,
 	searchValue,
 	setSearchValue,
+	blockName,
 } ) {
 	const baseClassName = 'block-editor-block-patterns-explorer__sidebar';
 	return (
@@ -73,7 +76,7 @@ function PatternExplorerSidebar( {
 				searchValue={ searchValue }
 				setSearchValue={ setSearchValue }
 			/>
-			{ ! searchValue && (
+			{ ! searchValue && 'formello/form' === blockName && (
 				<PatternCategoriesList
 					selectedCategory={ selectedCategory }
 					patternCategories={ patternCategories }
@@ -89,17 +92,6 @@ export function TemplatesModal( { clientId, blockName, onRequestClose } ) {
 	const [ searchValue, setSearchValue ] = useState();
 	const [ selectedCategory, setSelectedCategory ] = useState( 'all' );
 
-	const { records: patterns2 } = useEntityRecords( 'formello/v1', 'patterns' );
-console.log(patterns2)
-	const { replaceBlock } = useDispatch( blockEditorStore );
-	const onBlockPatternSelect = ( pattern ) => {
-		if ( pattern.isPro ) {
-			setShowConfirmDialog( true );
-		} else {
-			replaceBlock( clientId, pattern.blocks );
-		}
-	};
-
 	const patterns = useSelect(
 		( select ) => {
 			const { getBlockRootClientId, getPatternsByBlockTypes } =
@@ -109,6 +101,15 @@ console.log(patterns2)
 		},
 		[ clientId, blockName ]
 	);
+	console.log( blockName );
+	const { replaceBlock } = useDispatch( blockEditorStore );
+	const onBlockPatternSelect = ( pattern ) => {
+		if ( pattern.isPro ) {
+			setShowConfirmDialog( true );
+		} else {
+			replaceBlock( clientId, pattern.blocks );
+		}
+	};
 
 	const shownPatterns = patterns.filter( ( p ) => {
 		if ( searchValue ) {
@@ -120,12 +121,28 @@ console.log(patterns2)
 		return p.categories.includes( selectedCategory );
 	} );
 
-	const patternCategories = patterns
-		.map( ( p ) => {
-			return p.categories;
-		} )
-		.join( ',' )
-		.split( ',' );
+	const patternCategories = [
+		{
+			slug: 'all',
+			name: __( 'All', 'formello' ),
+		},
+		{
+			slug: 'contact',
+			name: __( 'Contact', 'formello' ),
+		},
+		{
+			slug: 'leads',
+			name: __( 'Top bar', 'formello' ),
+		},
+		{
+			slug: 'question',
+			name: __( 'Ad Block', 'formello' ),
+		},
+		{
+			slug: 'login',
+			name: __( 'Login', 'formello' ),
+		},
+	];
 
 	return (
 		<Modal
@@ -142,6 +159,7 @@ console.log(patterns2)
 					onClickCategory={ setSelectedCategory }
 					searchValue={ searchValue }
 					setSearchValue={ setSearchValue }
+					blockName={ blockName }
 				/>
 				<div className="block-editor-block-patterns-explorer__list">
 					<BlockContextProvider
@@ -154,11 +172,16 @@ console.log(patterns2)
 						>
 							CIAO STRONZO
 						</ConfirmDialog>
-						<BlockPatternsList
-							blockPatterns={ shownPatterns }
-							shownPatterns={ shownPatterns }
-							onClickPattern={ onBlockPatternSelect }
-						/>
+
+						{ patterns.length ? (
+							<BlockPatternsList
+								blockPatterns={ shownPatterns }
+								shownPatterns={ shownPatterns }
+								onClickPattern={ onBlockPatternSelect }
+							/>
+						) : (
+							<Spinner />
+						) }
 					</BlockContextProvider>
 				</div>
 			</div>
