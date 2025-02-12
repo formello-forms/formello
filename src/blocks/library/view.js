@@ -14,6 +14,8 @@ const toggleInputError = () => {
 	const context = getContext();
 	const { settings } = getConfig();
 
+	context.error = '';
+
 	if (
 		'tel' === ref.type &&
 		ref.classList.contains( 'formello-advanced' ) &&
@@ -136,7 +138,7 @@ const formSubmit = async () => {
 
 		context.isLoading = false;
 
-		response( ref, res );
+		response( ref, res, state );
 	} catch ( err ) {
 		context.isLoading = false;
 		if ( typeof err === 'string' || err instanceof String ) {
@@ -165,7 +167,7 @@ const captchaChallenge = async () => {
 	}
 };
 
-const response = ( ref, res ) => {
+const response = ( ref, res, state ) => {
 	const { data } = res;
 
 	// Should we redirect?
@@ -176,7 +178,7 @@ const response = ( ref, res ) => {
 
 	// Should we hide form?
 	if ( data.hide && res.success ) {
-		const msg = ref.querySelector( '.formello-message' );
+		const msg = ref.querySelector( '.wp-block-formello-message' );
 		ref.insertAdjacentElement( 'beforebegin', msg );
 		setTimeout( () => {
 			ref.style.display = 'none';
@@ -186,9 +188,10 @@ const response = ( ref, res ) => {
 		}, '300' );
 	}
 
-	if ( data.debug && res.success ) {
+	if ( data.debug ) {
 		// eslint-disable-next-line no-console
-		console.log( data.debug );
+		console.info( data.debug );
+		state.debugData = JSON.stringify( res.data.debug, undefined, 2 );
 	}
 
 	// clear form
@@ -199,16 +202,12 @@ const response = ( ref, res ) => {
 
 const { state } = store( 'formello', {
 	state: {
-		get debugData() {
-			const context = getContext();
-			return JSON.stringify( context.response.data.debug, undefined, 2 );
-		},
 		get message() {
 			const context = getContext();
 			if ( context.response?.data?.errors ) {
 				return context.response?.data?.message;
 			}
-			return context.successMessage.length
+			return context.response && context.successMessage.length
 				? context.successMessage
 				: context.response?.data?.message;
 		},

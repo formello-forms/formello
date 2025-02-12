@@ -209,6 +209,7 @@ export default function ReusableBlockEdit( {
 								setAttributes( { ref: parseInt( val ) } );
 							} }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 					</PanelBody>
 				</InspectorControls>
@@ -228,6 +229,7 @@ export default function ReusableBlockEdit( {
 								setAttributes( { ref: parseInt( val ) } );
 							} }
 							__nextHasNoMarginBottom
+							__next40pxDefaultSize
 						/>
 					) : (
 						<Fragment>
