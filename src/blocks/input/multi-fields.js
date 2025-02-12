@@ -4,6 +4,7 @@ import { __ } from '@wordpress/i18n';
 registerBlockVariation( 'core/group', {
 	name: 'full-name',
 	title: __( 'Full Name' ),
+	description: __( 'First and last name on same row.', 'formello' ),
 	attributes: { layout: { type: 'flex', flexWrap: 'nowrap' } },
 	innerBlocks: [
 		[
