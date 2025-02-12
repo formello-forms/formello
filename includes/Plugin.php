@@ -36,7 +36,7 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Formello_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Formello_Loader $loader Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -45,7 +45,7 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+	 * @var      string    $plugin_name The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
 
@@ -54,16 +54,16 @@ class Plugin {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string    $version     The current version of the plugin.
 	 */
 	protected $version;
 
 	/**
-	 * The current version of the plugin.
+	 * The main plugin file.
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
+	 * @var      string    $entry_point The entry point of the plugin.
 	 */
 	protected $entry_point;
 
@@ -145,6 +145,10 @@ class Plugin {
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'admin_menu' );
 		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_editor_scripts' );
 		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'admin_bar_item', 1000 );
+
+		$activator = new Activator( $this->plugin_name, $this->version, $this->entry_point );
+		$this->loader->add_action( 'upgrader_process_complete', $activator, 'plugin_update' );
+		$activator->add_message();
 	}
 
 	/**
@@ -168,17 +172,17 @@ class Plugin {
 		$this->loader->add_action( 'wp_ajax_nopriv_formello', $frontend, 'listen_for_submit' );
 
 		// REST handlers.
-		$addons = new Rest\Addons( $this->plugin_name, $this->version );
+		$addons = new Rest\Addons( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $addons, 'register_routes' );
-		$submissions = new Rest\Submissions( $this->plugin_name, $this->version );
+		$submissions = new Rest\Submissions( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $submissions, 'register_routes' );
-		$columns = new Rest\Columns( $this->plugin_name, $this->version );
+		$columns = new Rest\Columns( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $columns, 'register_routes' );
-		$license = new Rest\License( $this->plugin_name, $this->version );
+		$license = new Rest\License( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $license, 'register_routes' );
-		$importer = new Rest\Importer( $this->plugin_name, $this->version );
+		$importer = new Rest\Importer( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $importer, 'register_routes' );
-		$settings = new Rest\Settings( $this->plugin_name, $this->version );
+		$settings = new Rest\Settings( $this->entry_point );
 		$this->loader->add_action( 'rest_api_init', $settings, 'register_routes' );
 
 		// Cron Tasks.
