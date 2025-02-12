@@ -134,16 +134,24 @@ export function getConstraints() {
 	if ( fields ) {
 		fields.forEach( ( b ) => {
 			const constraint = getFieldConstraint( b );
-			let name = b.attributes.name;
+			const name = b.attributes.name;
 
-			if ( b.attributes.multiple ) {
-				name += '.*';
-			}
 			if ( constraint ) {
 				constraints[ name ] = constraint;
 			}
+
+			if (
+				'formello/multichoices' === b.name &&
+				'checkbox' === b.attributes.type
+			) {
+				constraints[ name ] = constraint
+					? 'array|' + constraint
+					: 'array';
+			}
 		} );
 	}
+
+	applyFilters( 'formello.constraints', fields, constraints );
 
 	return constraints;
 }
@@ -203,7 +211,9 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'same:' + field.attributes.match );
 	}
 
-	applyFilters( 'formello.constraints', constraints, field );
+	if ( field.attributes.name.endsWith( '[]' ) || field.attributes.multiple ) {
+		constraints.push( 'array' );
+	}
 
 	if ( constraints.length ) {
 		constraints = constraints.join( '|' );
