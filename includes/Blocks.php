@@ -71,10 +71,11 @@ class Blocks {
 	 */
 	public function register_blocks() {
 
-		wp_register_block_metadata_collection(
+		// Requires WP 6.7 min.
+		/*wp_register_block_metadata_collection(
 			plugin_dir_path( $this->entry_point ) . 'build/blocks',
 			plugin_dir_path( $this->entry_point ) . 'build/blocks-manifest.php'
-		);
+		);*/
 
 		register_block_type_from_metadata(
 			plugin_dir_path( $this->entry_point ) . 'build/blocks/library',
