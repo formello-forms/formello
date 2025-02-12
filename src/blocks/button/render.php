@@ -19,20 +19,6 @@ $config = wp_interactivity_config( 'formello' );
 $state = wp_interactivity_state( 'formello' );
 
 $captcha = '';
-if ( ! is_admin() && $state['captcha']['enabled'] ) {
-	$captcha = sprintf(
-		'<div class="%s" data-sitekey="%s" data-size="%s" data-action="submit"></div>',
-		'reCaptcha' === $state['captcha']['type'] ? 'g-recaptcha' : 'h-captcha',
-		$config['settings'][ $state['captcha']['type'] ]['site_key'],
-		'1' === $config['settings'][ $state['captcha']['type'] ]['version'] ? 'normal' : 'invisible'
-	);
-}
-
-$debug = '<div class="formello-debug">
-	<p>Debug output</p>
-	<small>This output is visible only to admin.</small>
-	<pre data-wp-text="state.debugData"></pre>
-</div>';
 
 $p = new WP_HTML_Tag_Processor( $content );
 
@@ -41,16 +27,17 @@ if ( $p->next_tag( 'div' ) ) {
 	$p->set_attribute( 'data-wp-class--wp-block-formello-button--loading', 'context.isLoading' );
 }
 
-if ( ! is_admin() &&
-	$p->next_tag( 'button' ) &&
-	$state['captcha']['enabled'] &&
-	'invisible' !== $state['captcha']['version']
-	) {
-	$p->set_attribute( 'data-wp-on--click', 'actions.validateCaptcha' );
+if ( ! is_admin() && isset( $state['captcha'] ) && $state['captcha']['enabled'] ) {
+	if ( $p->next_tag( 'button' ) && 'invisible' !== $state['captcha']['version'] ) {
+		$p->set_attribute( 'data-wp-on--click', 'actions.validateCaptcha' );
+	}
+
+	$captcha = sprintf(
+		'<div class="%s" data-sitekey="%s" data-size="%s" data-action="submit"></div>',
+		'reCaptcha' === $state['captcha']['type'] ? 'g-recaptcha' : 'h-captcha',
+		$config['settings'][ $state['captcha']['type'] ]['site_key'],
+		'1' === $config['settings'][ $state['captcha']['type'] ]['version'] ? 'normal' : 'invisible'
+	);
 }
 
 echo $captcha . $p->get_updated_html();
-
-if ( ! is_admin() && current_user_can( 'manage_options' ) && $state['debug'] ) {
-	echo $debug;
-}

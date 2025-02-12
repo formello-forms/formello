@@ -54,7 +54,6 @@
 	"supports": {
 		"html": false,
 		"lock": false,
-		"multiple": false,
 		"reusable": false,
 		"inserter": true,
 		"color": {

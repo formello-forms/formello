@@ -4,6 +4,10 @@
     align-items: center;
     flex: 1;
 
+    &[hidden] {
+        display: none;
+    }
+
     button {
         display: flex;
         align-items: center;
