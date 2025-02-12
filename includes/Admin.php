@@ -39,7 +39,7 @@ class Admin {
 	 *
 	 * @since    2.6.0
 	 * @access   private
-	 * @var      string    $version    The current version of this plugin.
+	 * @var      string    $version    The main file of this plugin.
 	 */
 	private $entry_point;
 
