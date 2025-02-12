@@ -211,7 +211,10 @@ export function getFieldConstraint( field ) {
 		constraints.push( 'same:' + field.attributes.match );
 	}
 
-	if ( field.attributes.name.endsWith( '[]' ) || field.attributes.multiple ) {
+	if (
+		field.attributes.name?.endsWith( '[]' ) ||
+		field.attributes.multiple
+	) {
 		constraints.push( 'array' );
 	}
 
@@ -220,27 +223,6 @@ export function getFieldConstraint( field ) {
 	}
 
 	return constraints.length ? constraints : undefined;
-}
-
-export function getMetaTags() {
-	const postType = select( 'core/editor' ).getCurrentPostType();
-	const postId = select( 'core/editor' ).getCurrentPostId();
-
-	const [ meta ] = useEntityProp( 'postType', postType, 'meta', postId );
-	const metaTags = [];
-
-	for ( const key in meta ) {
-		if ( meta[ key ] !== Object( key ) ) {
-			continue;
-		}
-		const tag = {
-			title: key,
-			tag: `{{meta.${ key }}}`,
-		};
-		metaTags.push( tag );
-	}
-
-	return metaTags;
 }
 
 export function getWordpressTags() {
