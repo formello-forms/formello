@@ -11,6 +11,7 @@ import {
 	post as FrontendPosting,
 	login as Login,
 	commentAuthorAvatar as Registration,
+	lock as Password,
 } from '@wordpress/icons';
 
 export const icons = {
@@ -26,6 +27,7 @@ export const icons = {
 	FrontendPosting,
 	Login,
 	Registration,
+	Password,
 };
 
 export const integrations = [
@@ -111,10 +113,22 @@ export const integrations = [
 		async: false,
 		type: 'login',
 		name: 'Login',
+		username: '{{fields.user_login}}',
+		password: '{{fields.user_pass}}',
+		remember: '{{fields.rememberme}}',
 	},
 	{
 		async: false,
 		type: 'registration',
 		name: 'Registration',
+		reg_type: 'simple',
+		user_login: '{{fields.user_login}}',
+		user_pass: '{{fields.user_pass}}',
+		user_email: '{{fields.user_email}}',
+	},
+	{
+		async: false,
+		type: 'password',
+		name: 'Password',
 	},
 ];

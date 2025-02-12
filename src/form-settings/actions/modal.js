@@ -6,6 +6,7 @@ import {
 	Button,
 	Icon,
 	__experimentalHStack as HStack,
+	__experimentalConfirmDialog as ConfirmDialog,
 } from '@wordpress/components';
 import { applyFilters } from '@wordpress/hooks';
 import { __, sprintf } from '@wordpress/i18n';
@@ -18,6 +19,7 @@ export function ActionsModal( props ) {
 	const { onRequestClose, settings, clientId } = props;
 
 	const [ action, setAction ] = useState( Object.assign( {}, settings ) );
+	const [ isOpen, setIsOpen ] = useState( false );
 
 	const updateSettings = ( prop, val ) => {
 		setAction( { ...action, [ prop ]: val } );
@@ -37,12 +39,15 @@ export function ActionsModal( props ) {
 		postId
 	);
 
-	const setActions = useCallback( ( actions ) => {
-		setMeta( {
-			...meta,
-			_formello_actions: actions,
-		} );
-	}, [] );
+	const setActions = useCallback(
+		( actions ) => {
+			setMeta( {
+				...meta,
+				_formello_actions: actions,
+			} );
+		},
+		[ meta, setMeta ]
+	);
 
 	const save = ( item ) => {
 		if ( ! item.id ) {
@@ -93,7 +98,6 @@ export function ActionsModal( props ) {
 						updateSettings,
 						MergeTags
 					) }
-
 					<div className="formello-modal-buttons">
 						<Button
 							variant="primary"
@@ -106,27 +110,21 @@ export function ActionsModal( props ) {
 						{ settings.id && (
 							<Button
 								isDestructive={ true }
-								onClick={ () => {
-									if (
-										window.confirm(
-											/* translators: %s: Name of form action */
-											sprintf(
-												__(
-													`Delete action %s?`,
-													'formello'
-												),
-												settings.name
-											)
-										)
-									) {
-										remove( action );
-									}
-								} }
+								onClick={ () => setIsOpen( true ) }
 							>
 								{ __( 'Delete', 'formello' ) }
 							</Button>
 						) }
 					</div>
+					{ isOpen && (
+						<ConfirmDialog onConfirm={ () => remove( action ) }>
+							{ sprintf(
+								/* translators: %s: Name of form action */
+								__( `Delete action %s?`, 'formello' ),
+								settings.name
+							) }
+						</ConfirmDialog>
+					) }
 				</Fragment>
 			</div>
 		</Modal>
