@@ -199,11 +199,13 @@ class Blocks {
 		}
 
 		if ( ! is_admin() && current_user_can( 'manage_options' ) && $form_context['debug'] ) {
-			$debug = '<div class="formello-debug" data-wp-interactive="formello" data-wp-bind--hidden="!state.debugData">
-				<p>Debug output</p>
-				<small>This output is visible only to admin.</small>
-				<pre data-wp-text="formello::state.debugData"></pre>
-			</div>';
+			// phpcs:ignore
+			wp_enqueue_script( 'renderjson', 'https://cdn.jsdelivr.net/npm/renderjson@1.4.0/renderjson.min.js' );
+
+			$debug = '<div data-wp-interactive="formello" data-wp-bind--hidden="!state.debugData">
+			<p>Debug output</p>
+			<small>This output is visible only to admin.</small>
+			<div data-wp-watch="callbacks.showDebug"></div></div>';
 
 			return do_blocks( $p->get_updated_html() ) . $debug;
 		}

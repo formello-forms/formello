@@ -277,6 +277,15 @@ const { state } = store( 'formello', {
 		},
 	},
 	callbacks: {
+		showDebug: () => {
+			const { ref } = getElement();
+			if ( state.debugData ) {
+				window.renderjson.set_show_to_level( 2 );
+				ref.appendChild(
+					window.renderjson( JSON.parse( state.debugData ) )
+				);
+			}
+		},
 		init: () => {
 			const context = getContext();
 
