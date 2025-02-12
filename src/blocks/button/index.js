@@ -24,7 +24,7 @@ registerBlockType( metadata, {
 
 	supports: {
 		...metadata.supports,
-		//multiple: 'formello' !== window.pagenow ? true : false,
+		//multiple: 'formello_form' !== window.pagenow ? true : false,
 	},
 
 	/**
