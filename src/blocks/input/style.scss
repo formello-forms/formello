@@ -3,6 +3,10 @@
     flex-direction: column;
     flex: 0;
 
+    &[hidden] {
+        display: none;
+    }
+
     label {
         &.hide {
             display: none;

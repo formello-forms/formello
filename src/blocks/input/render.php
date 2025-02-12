@@ -21,7 +21,7 @@ $p = new \WP_HTML_Tag_Processor( $content );
 $unique_id = wp_unique_id( 'field-' );
 
 if ( $p->next_tag( array( 'tag_name' => 'div' ) ) ) {
-	$p->set_attribute( 'data-wp-context', wp_json_encode( array() ) );
+	$p->set_attribute( 'data-wp-context', '' );
 }
 
 if ( $p->next_tag( 'label' ) ) {
@@ -39,6 +39,10 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 
 	if ( 'range' === $p->get_attribute( 'type' ) ) {
 		$p->set_attribute( 'data-wp-on--input', 'actions.setOutput' );
+	}
+
+	if ( $p->get_attribute( 'multiple' ) ) {
+		$p->set_attribute( 'name', $p->get_attribute( 'name' ) . '[]' );
 	}
 
 	if ( 'tel' === $p->get_attribute( 'type' ) && ! empty( $attributes['advanced'] ) ) {
@@ -59,7 +63,7 @@ if ( $p->next_tag( array( 'tag_name' => 'input' ) ) ) {
 		wp_enqueue_script( 'password-strength-meter' );
 	}
 
-	if ( ! empty( $attributes['advanced'] ) && ( 'date' === $p->get_attribute( 'type' ) || 'time' === $p->get_attribute( 'type' ) )) {
+	if ( ! empty( $attributes['advanced'] ) && ( 'date' === $p->get_attribute( 'type' ) || 'time' === $p->get_attribute( 'type' ) ) ) {
 		$p->set_attribute( 'type', 'text' );
 
 		wp_enqueue_script(

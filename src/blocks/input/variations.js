@@ -163,10 +163,9 @@ const variations = [
 		attributes: {
 			type: 'password',
 			name: 'password',
-			pattern:
-				'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$',
+			pattern: `^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$`,
 			validation:
-				'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, and 1 number.',
+				'Please choose a password that includes at least 1 uppercase character, 1 lowercase character, 1 special character, and 1 number.',
 		},
 		scope: [ 'inserter' ],
 	},
