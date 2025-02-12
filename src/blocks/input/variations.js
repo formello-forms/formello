@@ -21,8 +21,8 @@ const variations = [
 	{
 		name: 'text-field',
 		title: __( 'Text' ),
-		icon: Input,
 		description: __( 'A basic single-line text field.', 'formello' ),
+		icon: Input,
 		attributes: { type: 'text', name: 'text' },
 		scope: [ 'transform' ],
 		isDefault: true,

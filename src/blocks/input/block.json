@@ -3,6 +3,7 @@
 	"apiVersion": 3,
 	"name": "formello/input",
 	"title": "Text Input",
+	"description": "A text input field",
 	"ancestor": ["formello/form"],
 	"usesContext": ["formello/requiredText"],
 	"category": "formello",
