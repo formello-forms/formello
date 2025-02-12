@@ -227,10 +227,7 @@ class Validator {
 			$validator->addValidator( 'maxlength', new \Formello\Validators\MaxLengthRule() );
 			$validator->addValidator( 'minlength', new \Formello\Validators\MinLengthRule() );
 
-			$validation = $validator->make( $this->fields, $this->settings['constraints'] );
-
-			// then validate.
-			$validation->validate();
+			$validation = $validator->validate( $this->fields, $this->settings['constraints'] );
 
 			if ( $validation->fails() ) {
 				// handling errors.
