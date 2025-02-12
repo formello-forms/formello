@@ -2,12 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-	__experimentalGrid as Grid,
-	TabPanel,
-	// eslint-disable-next-line @wordpress/no-unsafe-wp-apis
-	__experimentalUseNavigator as useNavigator,
-} from '@wordpress/components';
+import { __experimentalGrid as Grid, TabPanel } from '@wordpress/components';
 import { Fragment, useContext } from '@wordpress/element';
 import { applyFilters } from '@wordpress/hooks';
 import Help from '../../components/help.js';
@@ -15,7 +10,6 @@ import General from './components/general.js';
 import Captcha from './components/captcha.js';
 import Messages from './components/messages.js';
 import Integrations from './components/integrations.js';
-import Logging from './components/logging.js';
 //import Licenses from '../components/settings/licenses.js';
 import UpdateSettings from '../../components/update-settings';
 import LoadingSpinner from '../../components/loading-spinner';
@@ -53,11 +47,6 @@ export default function Settings() {
 			name: 'integrations',
 			title: __( 'Integrations', 'formello' ),
 			component: Integrations,
-		},
-		{
-			name: 'logging',
-			title: 'Logging',
-			component: Logging,
 		},
 	];
 

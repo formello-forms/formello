@@ -1,5 +1,13 @@
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
 import { ReactComponent as Logo } from '../../../assets/icons/logo.svg';
-import { __experimentalHStack as HStack } from '@wordpress/components';
+import {
+	__experimentalHStack as HStack,
+	withFilters,
+} from '@wordpress/components';
+
+export const HeaderSlot = withFilters( 'formello.header.slot' )( () => {
+	return null;
+} );
 
 export default function Header( { title, className, children } ) {
 	return (
@@ -14,6 +22,9 @@ export default function Header( { title, className, children } ) {
 					<Logo />
 					<h1>{ title }</h1>
 					{ children }
+				</HStack>
+				<HStack>
+					<HeaderSlot />
 				</HStack>
 			</div>
 		</div>

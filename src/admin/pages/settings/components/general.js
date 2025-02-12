@@ -5,6 +5,7 @@ import {
 	ExternalLink,
 	Button,
 	__experimentalInputControl as InputControl,
+	__experimentalVStack as VStack,
 	Notice,
 	ToggleControl,
 } from '@wordpress/components';
@@ -24,7 +25,7 @@ import { SettingsContext } from '../../../context/settings-context';
 
 export default function General() {
 	const { settings, updateSetting } = useContext( SettingsContext );
-
+	const { log, ipLogging, optionDelete } = settings;
 	const licenseKey = useRef( settings.license?.license_key?.key ?? '' );
 
 	const [ loading, setLoading ] = useState( false );
@@ -152,22 +153,62 @@ export default function General() {
 			</Card>
 			<Card>
 				<CardHeader>
-					<h2>{ __( 'Ip logging', 'formello' ) }</h2>
+					<h2>{ __( 'General settings', 'formello' ) }</h2>
 				</CardHeader>
 
 				<CardBody>
-					<ToggleControl
-						label={ __( 'Enable IP logging', 'formello' ) }
-						checked={ settings.ip_logging }
-						onChange={ ( val ) =>
-							updateSetting( 'ip_logging', val )
-						}
-						help={ __(
-							"If this option is turned on, the user's IP address will be saved with the form data",
-							'formello'
+					<VStack spacing="4">
+						<ToggleControl
+							label={ __( 'Enable IP logging', 'formello' ) }
+							checked={ ipLogging }
+							onChange={ ( val ) =>
+								updateSetting( 'ipLogging', val )
+							}
+							help={ __(
+								"If this option is turned on, the user's IP address will be saved with the form data",
+								'formello'
+							) }
+							__nextHasNoMarginBottom
+						/>
+						<hr />
+						<ToggleControl
+							label={ __(
+								'Delete settings on uninstall',
+								'formello'
+							) }
+							checked={ optionDelete }
+							onChange={ ( val ) =>
+								updateSetting( 'optionDelete', val )
+							}
+							help={ __(
+								'If this option is turned on, all the settings of Formello will be deleted when it will be uninstalled.',
+								'formello'
+							) }
+							__nextHasNoMarginBottom
+						/>
+						<ToggleControl
+							label={ __( 'Enable debug log', 'formello' ) }
+							help={ __(
+								'Enable logging can hurt site performance. Please activate logging only for debug purpose.',
+								'formello'
+							) }
+							checked={ log }
+							onChange={ ( val ) => updateSetting( 'log', val ) }
+							__nextHasNoMarginBottom
+						/>
+						{ log && (
+							<p>
+								<ExternalLink
+									href={
+										'/wp-content/uploads/formello/logs/' +
+										settings.log_file
+									}
+								>
+									{ __( 'View log', 'formello' ) }
+								</ExternalLink>
+							</p>
 						) }
-						__nextHasNoMarginBottom
-					/>
+					</VStack>
 				</CardBody>
 			</Card>
 		</Fragment>
