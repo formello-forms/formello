@@ -11,13 +11,12 @@ namespace Formello\Rest;
  * REST_API Handler
  */
 class Settings extends Base {
-
 	/**
 	 * {inheritDoc}
+	 *
+	 * @var string
 	 */
-	public function __construct() {
-		$this->rest_base = 'settings';
-	}
+	protected $rest_base = 'settings';
 
 	/**
 	 * {inheritDoc}

@@ -11,13 +11,12 @@ namespace Formello\Rest;
  * REST_API Handler
  */
 class Columns extends Base {
-
 	/**
 	 * {inheritDoc}
+	 *
+	 * @var string
 	 */
-	public function __construct() {
-		$this->rest_base = 'columns';
-	}
+	protected $rest_base = 'columns';
 
 	/**
 	 * {inheritDoc}

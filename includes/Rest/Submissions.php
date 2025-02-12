@@ -11,13 +11,12 @@ namespace Formello\Rest;
  * REST_API Handler
  */
 class Submissions extends Base {
-
 	/**
 	 * {inheritDoc}
+	 *
+	 * @var string
 	 */
-	public function __construct() {
-		$this->rest_base = 'submissions';
-	}
+	protected $rest_base = 'submissions';
 
 	/**
 	 * {inheritDoc}

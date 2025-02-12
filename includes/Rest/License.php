@@ -11,13 +11,12 @@ namespace Formello\Rest;
  * REST_API Handler
  */
 class License extends Base {
-
 	/**
 	 * {inheritDoc}
+	 *
+	 * @var string
 	 */
-	public function __construct() {
-		$this->rest_base = 'license';
-	}
+	protected $rest_base = 'license';
 
 	/**
 	 * {inheritDoc}

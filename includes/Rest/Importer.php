@@ -11,13 +11,12 @@ namespace Formello\Rest;
  * REST_API Handler
  */
 class Importer extends Base {
-
 	/**
 	 * {inheritDoc}
+	 *
+	 * @var string
 	 */
-	public function __construct() {
-		$this->rest_base = 'forms';
-	}
+	protected $rest_base = 'forms';
 
 	/**
 	 * {inheritDoc}

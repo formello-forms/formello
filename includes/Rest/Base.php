@@ -37,8 +37,7 @@ abstract class Base extends WP_REST_Controller {
 	 *
 	 * @since 2.6.0
 	 */
-	public function __construct() {
-	}
+	public function __construct() {}
 
 	/**
 	 * Register the routes
