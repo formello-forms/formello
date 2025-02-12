@@ -23,7 +23,7 @@ export default function Header( { title, className, children } ) {
 					<h1>{ title }</h1>
 					{ children }
 				</HStack>
-				<HStack>
+				<HStack expanded={ false }>
 					<HeaderSlot />
 				</HStack>
 			</div>

@@ -2,7 +2,11 @@
 /**
  * WordPress dependencies
  */
-import { Button, Card } from '@wordpress/components';
+import {
+	Button,
+	Card,
+	__experimentalHStack as HStack,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useEntityRecords } from '@wordpress/core-data';
 import { decodeEntities } from '@wordpress/html-entities';
@@ -156,7 +160,7 @@ export const Forms = () => {
 				enableSorting: false,
 				render: ( { item } ) => {
 					return (
-						<div>
+						<HStack expanded={ false } spacing="0">
 							<Button
 								onClick={ ( e ) => {
 									e.stopPropagation();
@@ -170,14 +174,13 @@ export const Forms = () => {
 								iconSize="20"
 								label={ __( 'View submissions', 'formello' ) }
 								showTooltip
-							>
-								{ item.submissions_count.news > 0 && (
-									<span className="formello-badge">
-										{ item.submissions_count.news }
-									</span>
-								) }
-							</Button>
-						</div>
+							></Button>
+							<span className="components-badge is-info has-icon">
+								<span className="components-badge__content">
+									{ item.submissions_count.news }
+								</span>
+							</span>
+						</HStack>
 					);
 				},
 			},

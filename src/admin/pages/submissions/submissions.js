@@ -3,11 +3,11 @@
  * WordPress dependencies
  */
 import {
-	__experimentalVStack as VStack,
 	Button,
 	Card,
 	Icon,
 	Spinner,
+	__experimentalHStack as HStack,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { decodeEntities } from '@wordpress/html-entities';
@@ -40,7 +40,7 @@ const defaultLayouts = {
 					id: 'title',
 					label: 'Title',
 					children: [ 'status' ],
-					direction: 'vertical',
+					direction: 'horizontal',
 				},
 			],
 			styles: {
@@ -64,7 +64,8 @@ const DataView = ( { columns } ) => {
 		type: 'table',
 		filters: [],
 		titleField: 'id',
-		fields: [ 'status', ...columns ],
+		descriptionField: 'status',
+		fields: [ ...columns ],
 		page: 1,
 		perPage: 10,
 		sort: {
@@ -122,10 +123,11 @@ const DataView = ( { columns } ) => {
 				id: 'status',
 				render: ( { item } ) => {
 					return (
-						<VStack spacing={ 1 }>
+						<HStack spacing={ 1 }>
 							{ parseInt( item.details.is_new ) && (
 								<div className={ 'formello-new' }>
 									<Icon
+										size="18"
 										icon={ heading }
 										title={ __( 'Is new', 'formello' ) }
 										fill={ 'currentColor' }
@@ -135,6 +137,7 @@ const DataView = ( { columns } ) => {
 							{ parseInt( item.details.starred ) && (
 								<div className={ 'formello-star' }>
 									<Icon
+										size="18"
 										icon={ starFilled }
 										fill={ 'currentColor' }
 										title={ __(
@@ -144,7 +147,7 @@ const DataView = ( { columns } ) => {
 									/>
 								</div>
 							) }
-						</VStack>
+						</HStack>
 					);
 				},
 				filters: [ 'isAny' ],
@@ -195,6 +198,8 @@ const DataView = ( { columns } ) => {
 					);
 				},
 				enableSorting: true,
+				maxWidth: '240px',
+				width: '240px',
 			};
 		} );
 		return _fields.concat( _columns );
