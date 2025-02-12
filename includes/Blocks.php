@@ -71,6 +71,11 @@ class Blocks {
 	 */
 	public function register_blocks() {
 
+		wp_register_block_metadata_collection(
+			plugin_dir_path( $this->entry_point ) . 'build/blocks',
+			plugin_dir_path( $this->entry_point ) . 'build/blocks-manifest.php'
+		);
+
 		register_block_type_from_metadata(
 			plugin_dir_path( $this->entry_point ) . 'build/blocks/library',
 			array(
@@ -179,6 +184,7 @@ class Blocks {
 			$p->set_attribute( 'data-wp-context', wp_json_encode( $form_context ) );
 			$p->set_attribute( 'data-wp-on--submit', 'actions.sendForm' );
 			$p->set_attribute( 'data-id', $attributes['ref'] );
+			$p->set_attribute( 'id', 'formello-' . $attributes['ref'] );
 		}
 
 		if ( $p->next_tag(
@@ -189,6 +195,16 @@ class Blocks {
 		) ) {
 			$p->set_attribute( 'name', '_formello_h' . $attributes['ref'] );
 			$p->set_attribute( 'aria-label', __( 'If you are human, leave this field blank.', 'formello' ) );
+		}
+
+		if ( ! is_admin() && current_user_can( 'manage_options' ) && $form_context['debug'] ) {
+			$debug = '<div class="formello-debug" data-wp-interactive="formello" data-wp-bind--hidden="!state.debugData">
+				<p>Debug output</p>
+				<small>This output is visible only to admin.</small>
+				<pre data-wp-text="formello::state.debugData"></pre>
+			</div>';
+
+			return do_blocks( $p->get_updated_html() ) . $debug;
 		}
 
 		return do_blocks( $p->get_updated_html() );
