@@ -1,4 +1,4 @@
-import { select } from '@wordpress/data';
+import { select, dispatch } from '@wordpress/data';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 import {
@@ -28,15 +28,25 @@ function validateAll( edits ) {
 	}
 
 	if ( validation.buttons.length > 1 ) {
-		return Promise.reject( {
-			message: __( 'You have more than one button', 'formello' ),
-		} );
+		dispatch( 'core/notices' ).createNotice(
+			'warning',
+			__( 'You have more than one button', 'formello' ),
+			{
+				id: 'formello-notice',
+				isDismissible: true,
+			}
+		);
 	}
 
 	if ( validation.names.some( ( item ) => item === undefined ) ) {
-		return Promise.reject( {
-			message: __( 'One or more fields have no name', 'formello' ),
-		} );
+		dispatch( 'core/notices' ).createNotice(
+			'warning',
+			__( 'One or more fields have no name', 'formello' ),
+			{
+				id: 'formello-notice',
+				isDismissible: true,
+			}
+		);
 	}
 
 	return Promise.resolve( edits );
