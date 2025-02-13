@@ -24,7 +24,9 @@ const variations = [
 		innerBlocks: [
 			[ 'core/paragraph' ],
 			[ 'formello/button' ],
-			[ 'formello/message' ],
+			[ 'formello/message', {
+				"lock":{"move":false,"remove":true}
+			} ],
 		],
 		scope: [ 'block' ],
 	},
@@ -66,7 +68,9 @@ const variations = [
 				},
 			],
 			[ 'formello/button', { txt: 'Send' } ],
-			[ 'formello/message' ],
+			[ 'formello/message', {
+				"lock":{"move":false,"remove":true}
+			} ],
 		],
 		scope: [ 'block' ],
 	},
@@ -153,7 +157,9 @@ const variations = [
 				},
 			],
 			[ 'formello/button', { txt: 'Book appointment' } ],
-			[ 'formello/message' ],
+			[ 'formello/message', {
+				"lock":{"move":false,"remove":true}
+			} ],
 		],
 		scope: [ 'block' ],
 	},
