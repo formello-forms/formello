@@ -4,6 +4,7 @@
  */
 import {
 	Button,
+	Icon,
 	Card,
 	__experimentalHStack as HStack,
 } from '@wordpress/components';
@@ -28,6 +29,8 @@ import { useHistory } from '../../router';
  */
 import { DataViews, filterSortAndPaginate } from '@wordpress/dataviews/wp';
 import Header from '../../components/masthead.js';
+import Shortcode from '../../components/shortcode.js';
+import { icons } from '../../../form-settings/actions/constants';
 
 // See https://github.com/WordPress/gutenberg/issues/55886
 // We do not support custom statutes at the moment.
@@ -61,7 +64,7 @@ export const Forms = () => {
 	const [ view, setView ] = useState( {
 		type: 'table',
 		filters: [],
-		fields: [ 'entries', 'author', 'status', 'date', 'form' ],
+		fields: [ 'entries', 'author', 'status', 'date', 'form', 'actions' ],
 		titleField: 'title',
 		descriptionField: 'excerpt',
 		page: 1,
@@ -199,9 +202,6 @@ export const Forms = () => {
 				header: __( 'Status' ),
 				label: __( 'Status' ),
 				id: 'status',
-				/*getValue: ( { item } ) =>
-					STATUSES.find( ( { value } ) => value === item.status )
-						?.label ?? item.status,*/
 				elements: STATUSES,
 				filterBy: {
 					operators: [ 'isAny', 'isNone', 'isAll', 'isNotAll' ],
@@ -220,11 +220,31 @@ export const Forms = () => {
 				},
 			},
 			{
+				header: __( 'Actions' ),
+				label: __( 'Actions' ),
+				id: 'actions',
+				render: ( { item } ) => {
+					return (
+						<HStack
+							expanded={ false }
+							spacing="2"
+							onClick={ () => console.log( 123 ) }
+						>
+							{ item.meta._formello_actions.map( ( a, i ) => (
+								<Icon
+									key={ i }
+									width={ 18 }
+									icon={ icons[ a.name ] }
+								/>
+							) ) }
+						</HStack>
+					);
+				},
+			},
+			{
 				label: __( 'Shortcode' ),
 				id: 'shortcode',
-				render: ( { item } ) => {
-					return <code>{ `[formello ref=${ item.id }]` }</code>;
-				},
+				render: ( { item } ) => <Shortcode item={ item } />,
 				enableSorting: false,
 			},
 		],
