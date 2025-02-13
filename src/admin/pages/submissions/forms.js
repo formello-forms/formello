@@ -64,7 +64,7 @@ export const Forms = () => {
 	const [ view, setView ] = useState( {
 		type: 'table',
 		filters: [],
-		fields: [ 'entries', 'author', 'status', 'date', 'form', 'actions' ],
+		fields: [ 'entries', 'actions', 'author', 'status', 'date', 'form' ],
 		titleField: 'title',
 		descriptionField: 'excerpt',
 		page: 1,
