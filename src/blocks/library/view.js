@@ -281,6 +281,7 @@ const { state } = store( 'formello', {
 			const { ref } = getElement();
 			if ( state.debugData ) {
 				window.renderjson.set_show_to_level( 2 );
+				ref.innerHTML = '';
 				ref.appendChild(
 					window.renderjson( JSON.parse( state.debugData ) )
 				);
