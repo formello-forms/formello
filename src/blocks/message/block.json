@@ -16,7 +16,7 @@
 	"supports": {
 		"interactivity": true,
 		"html": false,
-		"lock": false,
+		"lock": true,
 		"reusable": false,
 		"inserter": true,
 		"color": {
