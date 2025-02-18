@@ -147,7 +147,7 @@ class Plugin {
 		$this->loader->add_action( 'admin_bar_menu', $plugin_admin, 'admin_bar_item', 1000 );
 
 		$activator = new Activator( $this->plugin_name, $this->version, $this->entry_point );
-		$this->loader->add_action( 'upgrader_process_complete', $activator, 'update_completed' );
+		$this->loader->add_action( 'upgrader_process_complete', $activator, 'update_completed', 10, 2 );
 	}
 
 	/**
