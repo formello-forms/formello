@@ -232,25 +232,37 @@ export default function ReusableBlockEdit( {
 							__next40pxDefaultSize
 						/>
 					) : (
-						<Fragment>
-							<Button
-								isPrimary
-								icon={ 'book' }
-								onClick={ () => {
-									setModalOpen( 'templates' );
+						<VStack style={ { width: '100%' } }>
+							<SelectControl
+								label={ __( 'Choose a form', 'formello' ) }
+								value={ ref }
+								options={ options }
+								onChange={ ( val ) => {
+									setAttributes( { ref: parseInt( val ) } );
 								} }
-							>
-								{ __( 'Open Library', 'formello' ) }
-							</Button>
-							<Button
-								variant="secondary"
-								onClick={ () => {
-									setModalOpen( 'create' );
-								} }
-							>
-								{ __( 'Create a new form', 'formello' ) }
-							</Button>
-						</Fragment>
+								__nextHasNoMarginBottom
+								__next40pxDefaultSize
+							/>
+							<HStack alignment={ 'left' }>
+								<Button
+									isPrimary
+									icon={ 'book' }
+									onClick={ () => {
+										setModalOpen( 'templates' );
+									} }
+								>
+									{ __( 'Open Library', 'formello' ) }
+								</Button>
+								<Button
+									variant="secondary"
+									onClick={ () => {
+										setModalOpen( 'create' );
+									} }
+								>
+									{ __( 'Create a new form', 'formello' ) }
+								</Button>
+							</HStack>
+						</VStack>
 					) }
 				</Placeholder>
 				{ 'create' === isModalOpen && (
