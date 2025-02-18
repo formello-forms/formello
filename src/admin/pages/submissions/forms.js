@@ -230,6 +230,10 @@ export const Forms = () => {
 							spacing="2"
 							onClick={ () => console.log( 123 ) }
 						>
+							{ item.meta._formello_settings.storeSubmissions && (
+								<Icon icon={ icons.Database } width={ 18 } />
+							) }
+
 							{ item.meta._formello_actions.map( ( a, i ) => (
 								<Icon
 									key={ i }

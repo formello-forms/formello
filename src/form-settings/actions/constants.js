@@ -7,6 +7,7 @@ import { ReactComponent as Brevo } from '../../../assets/integrations/brevo.svg'
 import { ReactComponent as MailerLite } from '../../../assets/integrations/mailerlite.svg';
 import { ReactComponent as Email } from '../../../assets/integrations/email.svg';
 import { ReactComponent as WebHook } from '../../../assets/integrations/webhook.svg';
+import { ReactComponent as Database } from '../../../assets/icons/database.svg';
 import {
 	post as FrontendPosting,
 	login as Login,
@@ -28,6 +29,7 @@ export const icons = {
 	Login,
 	Registration,
 	Password,
+	Database,
 };
 
 export const integrations = [
