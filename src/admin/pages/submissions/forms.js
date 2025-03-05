@@ -178,7 +178,7 @@ export const Forms = () => {
 								label={ __( 'View submissions', 'formello' ) }
 								showTooltip
 							></Button>
-							<span className="components-badge is-info has-icon">
+							<span className="components-badge is-info">
 								<span className="components-badge__content">
 									{ item.submissions_count.news }
 								</span>

@@ -132,8 +132,8 @@ class Activator {
 	/**
 	 * COde to run after plugin update.
 	 *
-	 * @param [type] $upgrader_object
-	 * @param [type] $options
+	 * @param WP_Upgrader $upgrader_object The upgrader object.
+	 * @param array       $options The options.
 	 * @return void
 	 */
 	public function update_completed( $upgrader_object, $options ) {

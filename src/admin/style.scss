@@ -41,21 +41,34 @@ $mobile: 426px;
 		}
 	}
 
+	.components-badge.is-info {
+	    --base-color: #3858e9;
+	}
+
+	.components-badge {
+	    align-items: center;
+	    background-color: 
+		color-mix(in srgb, #fff 90%, var(--base-color));
+	    border-radius: 2px;
+	    box-sizing: border-box;
+	    color: 
+		color-mix(in srgb, #000 50%, var(--base-color));
+	    display: inline-flex;
+	    font-size: 12px;
+	    font-weight: bold;
+	    gap: 2px;
+	    line-height: 20px;
+	    max-width: 100%;
+	    min-height: 24px;
+	    padding: 0 8px;
+	}
+
 	.dataviews-list-view {
 		width: 100%;
 		text-indent: 0;
 		border-color: inherit;
 		border-collapse: collapse;
 		position: relative;
-
-		.badge {
-			background-color: #337ab7;
-			color: white;
-			padding: 2px .5em;
-			text-align: center;
-			border-radius: 20%;
-			margin: 0 1em;
-		}
 
 		a {
 			text-decoration: none;
