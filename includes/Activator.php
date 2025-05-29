@@ -141,8 +141,8 @@ class Activator {
 		// If an update has taken place and the updated type is plugins and the plugins element exists.
 		if ( 'update' === $options['action'] && 'plugin' === $options['type'] && isset( $options['plugins'] ) ) {
 			foreach ( $options['plugins'] as $plugin ) {
-				// Check to ensure it's my plugin.
-				if ( plugin_basename( $this->entry_point ) === $plugin ) {
+				// Check to ensure it's Formello v. 2.7.0 or previous.
+				if ( plugin_basename( $this->entry_point ) === $plugin && version_compare( $this->version, '2.7.0', '<' ) ) {
 					$this->add_message();
 				}
 			}

@@ -1,9 +1,15 @@
 .wp-block-formello-message {
+	--error-bg-color: #fcf8e3;
+	--error-text-color: #8a6d3b;
 	display: none;
 	box-sizing: border-box;
 	padding: 1em;
 	margin-block-start: 1rem;
     flex-basis: 100%;
+
+	&[hidden] {
+		display: none;
+	}
 
 	p {
 		margin: 0;
@@ -16,11 +22,11 @@
 		color: #3c763d;
 	}
 
-	&.error:has(p:not(:empty)) {
+	&.error:not([hidden]) {
 		display: block;
-		background-color: #fcf8e3;
+		background-color: var(--error-bg-color);
 		border: 1px solid #faf2cc;
-		color: #8a6d3b;
+		color: var(--error-text-color);
 	}
 
 	ul:not(:has(li)) {

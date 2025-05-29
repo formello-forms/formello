@@ -27,7 +27,7 @@ if ( $p->next_tag( 'div' ) ) {
 	$p->set_attribute( 'data-wp-class--wp-block-formello-button--loading', 'context.isLoading' );
 }
 
-if ( ! is_admin() && isset( $state['captcha'] ) && $state['captcha']['enabled'] ) {
+if ( ! is_admin() && isset( $state['captcha'] ) && $state['captcha']['enabled'] && $state['captcha']['type'] ) {
 	if ( $p->next_tag( 'button' ) && 'invisible' !== $state['captcha']['version'] ) {
 		$p->set_attribute( 'data-wp-on--click', 'actions.validateCaptcha' );
 	}

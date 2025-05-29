@@ -24,7 +24,7 @@ class Email extends Action {
 	 */
 	public function __construct() {
 		parent::__construct();
-		$this->label    = __( 'Send Email', 'formello' );
+		$this->label    = 'Email';
 		$this->settings = $this->get_default_settings();
 
 		add_action( 'wp_mail_failed', array( $this, 'onMailError' ), 10, 1 );

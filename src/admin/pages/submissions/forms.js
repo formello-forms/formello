@@ -128,23 +128,7 @@ export const Forms = () => {
 				children: [ 'excerpt' ],
 				getValue: ( { item } ) => item.title?.rendered,
 				render: ( { item } ) => {
-					return (
-						<Button
-							variant="link"
-							onClick={ ( e ) => {
-								e.stopPropagation();
-								const href = addQueryArgs( 'post.php', {
-									post: item.id,
-									action: 'edit',
-								} );
-								document.location.href = href;
-							} }
-						>
-							{ decodeEntities(
-								item.title?.rendered || item.slug
-							) || __( '(no title)' ) }
-						</Button>
-					);
+					return decodeEntities( item.title?.rendered || 'Form #' + item.slug )
 				},
 				enableGlobalSearch: true,
 				enableHiding: false,
@@ -305,6 +289,13 @@ export const Forms = () => {
 						view={ view }
 						onChangeView={ setView }
 						defaultLayouts={ defaultLayouts }
+						onClickItem={ (item) => {
+							const href = addQueryArgs( 'post.php', {
+								post: item.id,
+								action: 'edit',
+							} );
+							document.location.href = href;
+						} }
 					/>
 				</Card>
 			</div>

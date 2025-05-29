@@ -11,6 +11,26 @@
 	"attributes": {
 		"text": {
 			"type": "string"
+		},
+		"background": {
+			"type": "string",
+			"default": "#dedede"
+		},
+		"color": {
+			"type": "string",
+			"default": ""
+		},
+		"errorBgColor": {
+			"type": "string"
+		},
+		"customErrorBgColor": {
+			"type": "string"
+		},
+		"errorTextColor": {
+			"type": "string"
+		},
+		"customErrorTextColor": {
+			"type": "string"
 		}
 	},
 	"supports": {

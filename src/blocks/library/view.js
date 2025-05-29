@@ -128,6 +128,7 @@ const formSubmit = async () => {
 
 	try {
 		context.isLoading = true;
+		context.response = false;
 		const req = await fetch( config.ajax_url, {
 			method: 'POST',
 			body: formData,
@@ -176,9 +177,13 @@ const response = ( ref, res, state ) => {
 		return false;
 	}
 
+	const msg = ref.querySelector( '.wp-block-formello-message' );
+	if ( res.success && ! msg.firstElementChild.textContent ) {
+		msg.firstElementChild.innerHTML = data.message;
+	}
+
 	// Should we hide form?
 	if ( data.hide && res.success ) {
-		const msg = ref.querySelector( '.wp-block-formello-message' );
 		ref.insertAdjacentElement( 'beforebegin', msg );
 		setTimeout( () => {
 			ref.style.display = 'none';
@@ -204,9 +209,11 @@ const { state } = store( 'formello', {
 	state: {
 		get message() {
 			const context = getContext();
+
 			if ( context.response?.data?.errors ) {
 				return context.response?.data?.message;
 			}
+
 			return context.response && context.successMessage.length
 				? context.successMessage
 				: context.response?.data?.message;
